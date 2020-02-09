@@ -20,6 +20,10 @@ mix.scripts([
         'node_modules/owl.carousel/dist/owl.carousel.min.js',
     ], 'public/js/home.js');
 
+mix.scripts([
+        'node_modules/apexcharts/dist/apexcharts.js',
+    ], 'public/js/chart.js');
+
 mix.styles([
     'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
 ], 'public/css/home.css')
