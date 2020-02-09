@@ -26,6 +26,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.12.0",
         "node": "^12.14.1",
-        "npm": "^6.13.7"
+        "npm": "^6.13.7",
+        "owl.carousel": "^2.3.4"
     }
 }
