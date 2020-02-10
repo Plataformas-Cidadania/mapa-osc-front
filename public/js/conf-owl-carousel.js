@@ -4,7 +4,7 @@ owl.owlCarousel({
     loop: true,
     margin: 10,
     nav: true,
-    navText: ["<i class='fas fa-chevron-circle-left fa-4x'></i>","<i class='fas fa-chevron-circle-right fa-4x'></i>"],
+    navText: ["<i class='fas fa-chevron-circle-left fa-3x'></i>","<i class='fas fa-chevron-circle-right fa-3x'></i>"],
     autoplay:true,
     autoplayTimeout:5000,
     responsive: {

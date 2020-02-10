@@ -1,0 +1,32 @@
+.bg-pri{
+    background-color: $color-pri !important;
+}
+.bg-sec{
+    background-color: $color-sec !important;
+}
+.bg-ter{
+    background-color: $color-ter !important;
+}
+.bg-lgt{
+    background-color: $color-lgt !important;
+}
+.space{
+    margin: 100px 0 100px 0;
+}
+figcaption{
+    font-size: 12px;
+    padding: 10px 0;
+}
+#acessibilidade{
+    padding-top: 10px;
+    font-size: 12px;
+}
+#atalhos li, #botoes li{
+    display: inline;
+    margin-right: 5px;
+}
+.btn-acessibilidade{
+    border-radius: 3px;
+    padding: 2px 4px;
+    color: #FFFFFF;
+}

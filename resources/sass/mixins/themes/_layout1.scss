@@ -1,0 +1,41 @@
+.list-user img{
+    margin-right: 10px;
+}
+.list-user h4{}
+.list-user p{
+    font-size: 12px;
+    margin-top: -10px;
+}
+.item-calendar svg{
+    color: $color-pri;
+}
+.line-color{
+    background-color: $color-pri;
+    height: 4px;
+    margin: 0 0 20px 0;
+}
+.aspa{
+    font-size: 30px;
+    color: $color-pri;
+}
+.login{
+    max-width: 175px;
+    font-size: 12px;
+    line-height: 13px;
+    cursor: pointer;
+}
+.login-icon{
+    width: 40px;
+    height: 40px;
+    background-color: $color-pri;
+    float: left;
+    margin: 0 10px 0 10px;
+}
+.login svg{
+    font-size: 20px;
+    color: #FFFFFF;
+    margin: 9px 0 0 10px;
+}
+.login p{
+    margin-top: 8px;
+}
