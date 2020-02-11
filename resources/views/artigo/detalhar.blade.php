@@ -31,7 +31,6 @@
                 <article>
                     <br>
 
-
                     <picture>
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
