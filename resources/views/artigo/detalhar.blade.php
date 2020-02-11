@@ -36,7 +36,7 @@
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
+                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload">
                         <figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
                     </picture>
 
