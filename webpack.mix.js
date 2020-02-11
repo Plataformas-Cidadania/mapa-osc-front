@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
+        'node_modules/lazysizes/plugins/parent-fit/ls.parent-fit.js',
     ], 'public/js/app.js');
 
 mix.scripts([

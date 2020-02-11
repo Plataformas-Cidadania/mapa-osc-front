@@ -11356,6 +11356,227 @@ a.text-dark:focus {
   }
 }
 
-/*// Fontawesome
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';*/
+body {
+  font-family: opensans-regular, Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 23px;
+  letter-spacing: 0.035em;
+  color: #333333;
+}
+
+h2 {
+  font-size: 23px;
+  line-height: 28px;
+  letter-spacing: 0.03em;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 23px;
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: 30px;
+}
+
+h5 {
+  font-size: 0.9rem;
+  color: #949494;
+}
+
+.img-rede {
+  display: none;
+}
+
+.img-hover {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.img-hover:hover {
+  -webkit-filter: brightness(50%);
+          filter: brightness(50%);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.img-box:hover .img-rede {
+  display: block;
+  position: absolute;
+  top: 20%;
+  text-align: center;
+  left: 43%;
+  margin: 0 -15px;
+}
+
+.img-rede svg {
+  margin: 0 5px;
+  font-size: 25px;
+  left: 200px;
+  color: #FFFFFF;
+}
+
+.img-rede svg:hover {
+  color: #3498DB;
+}
+
+.bg-pri {
+  background-color: #3498DB !important;
+}
+
+.bg-sec {
+  background-color: #006BB7 !important;
+}
+
+.bg-ter {
+  background-color: #34A853 !important;
+}
+
+.bg-lgt {
+  background-color: #EEEEEE !important;
+}
+
+.space {
+  margin: 100px 0 100px 0;
+}
+
+figcaption {
+  font-size: 12px;
+  padding: 10px 0;
+}
+
+#acessibilidade {
+  padding-top: 10px;
+  font-size: 12px;
+}
+
+#atalhos li,
+#botoes li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.btn-acessibilidade {
+  border-radius: 3px;
+  padding: 2px 4px;
+  color: #FFFFFF;
+}
+
+.btn-plus {
+  color: #3498DB;
+  text-decoration: underline;
+}
+
+.input-icon input {
+  padding-right: 40px;
+}
+
+.input-icon svg {
+  float: right;
+  margin-top: -28px;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.fa-svg svg {
+  font-size: 18px;
+  margin: 0 4px 15px 0;
+  color: #777777;
+}
+
+.fa-svg svg:hover {
+  color: #3498DB;
+}
+
+.list-user img {
+  margin-right: 10px;
+}
+
+.list-user p {
+  font-size: 12px;
+  margin-top: -10px;
+}
+
+.item-calendar svg {
+  color: #3498DB;
+}
+
+.line-color {
+  background-color: #3498DB;
+  height: 4px;
+  margin: 0 0 20px 0;
+}
+
+.aspa {
+  font-size: 30px;
+  color: #3498DB;
+}
+
+.login {
+  max-width: 175px;
+  font-size: 12px;
+  line-height: 13px;
+  cursor: pointer;
+}
+
+.login-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #3498DB;
+  float: left;
+  margin: 0 10px 0 10px;
+}
+
+.login svg {
+  font-size: 20px;
+  color: #FFFFFF;
+  margin: 9px 0 0 10px;
+}
+
+.login p {
+  margin-top: 8px;
+}
+
+#chart {
+  max-width: 100%;
+  margin: 35px auto;
+}
+
+.chart-custom-icon {
+  font-size: 20px;
+  margin: 5px 5px 0 8px;
+}
+
+.chart-custom-icon-reset {
+  font-size: 18px;
+  margin: 5px 0 0 0px;
+}
+
+.apexcharts-toolbar {
+  top: 0px;
+  max-width: 100% !important;
+}
+
+.apexcharts-menu-icon {
+  margin-right: 10px;
+}
+
+.position-bottom {
+  /*right: 0px;
+  position: absolute;
+  left: 0px;
+  top: auto;*/
+  bottom: 20px !important;
+}
+
+.apexcharts-svg {
+  height: 400px !important;
+}
+
+foreignObject {
+  height: 400px;
+}
 

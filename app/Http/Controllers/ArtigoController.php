@@ -17,11 +17,17 @@ class ArtigoController extends Controller{
 
     }
 
-    public function detalhar($id){
+    public function detalhar(){
 
         return view('artigo.detalhar');
 
     }
+
+    /*public function detalhar($id){
+
+        return view('artigo.detalhar');
+
+    }*/
 
 
 }
