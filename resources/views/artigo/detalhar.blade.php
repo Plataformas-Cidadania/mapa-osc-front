@@ -51,12 +51,17 @@
                         </div>
                     </div>
                     <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo facilisis elit, eu mattis nunc iaculis vel. Duis ac dolor velit. Donec id massa enim. Sed maximus ipsum ut neque tristique, a ultricies orci ornare. Mauris eget purus vel leo pulvinar sodales sodales in neque. Aenean efficitur ligula in mauris ullamcorper, venenatis dapibus est laoreet. Vivamus rutrum purus ante, vel ultrices ipsum porta gravida. Duis vulputate nulla in erat consequat lobortis. In sit amet leo at orci interdum placerat eu vel est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam augue tellus, egestas eu feugiat a, cursus vitae dolor.
+                    <p>
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo facilisis elit, eu mattis nunc iaculis vel. Duis ac dolor velit. Donec id massa enim. Sed maximus ipsum ut neque tristique, a ultricies orci ornare. Mauris eget purus vel leo pulvinar sodales sodales in neque. Aenean efficitur ligula in mauris ullamcorper, venenatis dapibus est laoreet. Vivamus rutrum purus ante, vel ultrices ipsum porta gravida. Duis vulputate nulla in erat consequat lobortis. In sit amet leo at orci interdum placerat eu vel est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam augue tellus, egestas eu feugiat a, cursus vitae dolor.
                         <br>
                         <br>
 
                         Nam pulvinar dui lorem, non fringilla enim finibus ut. Sed et pharetra odio, eu euismod erat. Aenean eu mi nec sem tempor vestibulum. Duis eu justo id nisl venenatis venenatis sit amet quis nunc. Donec maximus, tortor eget vestibulum lobortis, ex nisl volutpat nunc, ut mattis nisl lacus non massa. Quisque ut ex diam. Phasellus et congue leo, et ullamcorper nulla. In fermentum consectetur aliquam. Mauris ac auctor odio. Cras gravida ex ut blandit luctus. Donec quis porta mi, eget scelerisque ipsum. Sed enim justo, consectetur ut ex condimentum, dictum interdum augue.
                         <br>
+                    <div style="margin: 15px 15px 15px 0;  float: left; max-width: 250px; ">
+                        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
+                    </div>
                         <br>
                         Phasellus vulputate quis quam eu vehicula. Ut suscipit, lacus eget sagittis ullamcorper, mi est elementum libero, quis posuere ex libero vitae nulla. Aliquam erat volutpat. Ut vitae quam nec massa volutpat interdum quis at eros. Donec mollis, ligula nec consectetur dapibus, nulla enim blandit turpis, a luctus ipsum augue id nibh. Pellentesque at suscipit nunc. Pellentesque lectus metus, placerat nec porttitor vel, rhoncus id lorem. Integer placerat leo nec placerat tincidunt. In ullamcorper rhoncus massa, quis vestibulum odio vestibulum vel.
                         <br>
@@ -69,7 +74,17 @@
                     <hr>
                 </article>
 
+
+
+                <div class="space"></div>
                 <div class="row">
+                    <div class="col-md-12">
+                        <h2>126 comentários</h2>
+                        <hr>
+                        <br>
+                    </div>
+
+                    {{--Formulário--}}
                     <div class="col-md-6">
                         <div><input type="text" placeholder="Nome" class="form-control"></div>
                         <br>
@@ -87,15 +102,10 @@
                             <button class="btn btn-primary" >Enviar</button>
                         </div>
                     </div>
-                </div>
 
-                <div class="space"></div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Comentários</h2>
-                        <br>
-                    </div>
-                    <div class="col-md-12">
+                    {{--Formulário--}}
+
+                    <div class="col-md-12 space">
                         <div>
                             <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
                             <div class="row">
