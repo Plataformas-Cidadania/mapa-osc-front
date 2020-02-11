@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('home');
 });
+Route::get('artigos/', 'ArtigoController@listar');
+Route::get('artigo/', 'ArtigoController@detalhar');//Teste deletar
+/*Route::get('artigo/{id}', 'ArtigoController@detalhar');
+Route::get('artigo/{id}/{titulo}', 'ArtigoController@detalhar');*/

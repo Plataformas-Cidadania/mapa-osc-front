@@ -7,5 +7,23 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-/*// Fontawesome
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';*/
+// Layout
+@import "mixins/layout/fonts";
+@import "mixins/layout/items";
+@import "mixins/layout/style";
+
+// Pages
+@import "mixins/pages/home";
+
+// Theme
+@import "mixins/themes/btn";
+@import "mixins/themes/form";
+@import "mixins/themes/icon";
+@import "mixins/themes/layout1";
+
+// Utils
+@import "mixins/utils/chart";
+
+
+
+
