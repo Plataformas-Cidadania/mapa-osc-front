@@ -11357,10 +11357,10 @@ a.text-dark:focus {
 }
 
 body {
-  font-family: opensans-regular, Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 17px;
-  line-height: 23px;
-  letter-spacing: 0.035em;
+  font-family: Arial, verdana, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.3px;
   color: #333333;
 }
 
@@ -11374,7 +11374,7 @@ h2 {
 
 h3 {
   font-size: 20px;
-  line-height: 23px;
+  line-height: 28px;
 }
 
 h4 {
@@ -11420,11 +11420,158 @@ h5 {
 }
 
 .img-rede svg:hover {
-  color: #3498DB;
+  color: #3A559B;
+}
+
+/*//////////////////////MENU CEL//////////////////////////////*/
+
+.header-cel {
+  width: 100%;
+  top: 0;
+  position: fixed;
+  z-index: 100000000000000020000;
+  padding: 8px;
+  border-bottom: solid 1px #CCCCCC;
+  background-color: #FFFFFF;
+  height: 75px;
+}
+
+.header-cel img {
+  width: 220px;
+}
+
+.footer-cel {
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  z-index: 100000000000000020000;
+  padding: 6px 0 2px 0;
+  border-top: solid 1px #CCCCCC;
+  background-color: #FFFFFF;
+}
+
+.footer-cel p {
+  margin: -7px 0 0 0;
+  padding: 0;
+  font-size: 11px;
+}
+
+.footer-cel i {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+.footer-cel a {
+  margin: 0;
+  padding: 0;
+}
+
+.btn-cel {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.btn-cel:hover .btn-line-off {
+  display: none;
+}
+
+.btn-cel:hover .btn-line-rotate {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-transition: width 2s;
+  transition: width 2s;
+  margin-top: 8px;
+}
+
+.btn-line-close {
+  display: none;
+}
+
+.btn-cel:hover .btn-line-close {
+  width: 30px;
+  height: 3px;
+  background-color: #333333;
+  margin: 2px;
+  display: block;
+  position: relative;
+  margin-top: -5px;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-transition: width 2s;
+  transition: width 2s;
+}
+
+.btn-line {
+  width: 30px;
+  height: 3px;
+  background-color: #333333;
+  margin: 2px;
+}
+
+.box-menu {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all linear 0.6s;
+  transition: all linear 0.6s;
+  z-index: 9999999;
+}
+
+.menu-cel {
+  background-color: #FFFFFF;
+  width: 80%;
+  height: 100%;
+  margin-top: 72px;
+  position: fixed;
+  z-index: 999999999;
+  padding-top: 10px;
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.menu-cel ul {
+  margin: 0;
+  padding: 0;
+}
+
+.menu-cel ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-cel ul li a {
+  padding: 10px;
+  display: block;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  color: #333333 !important;
+  font-size: 17px;
+}
+
+.menu-cel ul li a:hover {
+  background-color: #006BB7;
+  color: #FFFFFF !important;
+}
+
+.menu-cel-redes i {
+  font-size: 40px;
+  padding: 0 8px 8px 8px;
+}
+
+.hr-cel {
+  padding: 0;
+  margin: 0;
+}
+
+.ng-hide {
+  width: 150px;
+  opacity: 0;
 }
 
 .bg-pri {
-  background-color: #3498DB !important;
+  background-color: #3A559B !important;
 }
 
 .bg-sec {
@@ -11465,8 +11612,46 @@ figcaption {
   color: #FFFFFF;
 }
 
+.items {
+  padding: 0 50px;
+  margin: 80px 0;
+}
+
+.items img {
+  border: solid 1px #CCCCCC;
+  width: 150px;
+  height: 150px;
+}
+
+.items-hover {
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+}
+
+.items:hover .items-hover {
+  -webkit-transform: scale(0.99);
+  transform: scale(0.99);
+  -webkit-transition: 1s;
+  transition: 1s;
+  border: solid 4px #CCCCCC;
+  padding: 15px;
+  box-shadow: 0 0 10px #333333;
+}
+
+.items h2 {
+  margin: 15px 0 0 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+.items p {
+  text-align: center;
+}
+
 .btn-plus {
-  color: #3498DB;
+  color: #3A559B;
   text-decoration: underline;
 }
 
@@ -11488,7 +11673,7 @@ figcaption {
 }
 
 .fa-svg svg:hover {
-  color: #3498DB;
+  color: #3A559B;
 }
 
 .list-user img {
@@ -11501,18 +11686,18 @@ figcaption {
 }
 
 .item-calendar svg {
-  color: #3498DB;
+  color: #3A559B;
 }
 
 .line-color {
-  background-color: #3498DB;
+  background-color: #3A559B;
   height: 4px;
   margin: 0 0 20px 0;
 }
 
 .aspa {
   font-size: 30px;
-  color: #3498DB;
+  color: #3A559B;
 }
 
 .login {
@@ -11525,7 +11710,7 @@ figcaption {
 .login-icon {
   width: 40px;
   height: 40px;
-  background-color: #3498DB;
+  background-color: #3A559B;
   float: left;
   margin: 0 10px 0 10px;
 }
@@ -11557,7 +11742,7 @@ figcaption {
 
 .apexcharts-toolbar {
   top: 0px;
-  max-width: 100%;
+  max-width: 100% !important;
 }
 
 .apexcharts-menu-icon {
