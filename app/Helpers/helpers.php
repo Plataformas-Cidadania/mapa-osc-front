@@ -21,15 +21,15 @@ if ( ! function_exists('dataEn2Br') ){
         if($tipo=='mes_abreviado'){
             return $meses_abreviados[$valor];
         }
-        
-        
+
+
         return false;
     }
 }
 
 if ( ! function_exists('nomeMes') ){
     function nomeMes($valor, $tipo){
-        
+
         //\Illuminate\Support\Facades\Log::info($valor);
 
         $meses_extenso = [
@@ -66,7 +66,7 @@ if ( ! function_exists('clean') ) {
     function clean($string) {
 
         $string = str_replace(' ', '-', $string); // troca espaços por hífens.
-        
+
         $string = strtolower($string);
 
         $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
@@ -75,7 +75,7 @@ if ( ! function_exists('clean') ) {
         $string = preg_replace("/[óòôõö]/u", "o", $string);
         $string = preg_replace("/[úùü]/u", "u", $string);
         $string = preg_replace("/[ç]/u", "c", $string);
-        
+
         $string = preg_replace('/[^A-Za-z0-9\-.]/', '', $string); // remove caracteres especiais.
 
         return preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
@@ -254,6 +254,31 @@ if ( ! function_exists('to') ) {
 if ( ! function_exists('onlyNumbers') ) {
     function onlyNumbers($string) {
         $string = preg_replace("/[^0-9]/", "", $string);
+
+        return $string;
+    }
+}
+
+if ( ! function_exists('clean') ) {
+    function clean($string, $permitir = null) {
+
+        $string = str_replace(' ', '-', $string); // troca espaços por hífens.
+
+        $string = strtolower($string);
+
+
+        $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
+        $string = preg_replace("/[éèê]/u", "e", $string);
+        $string = preg_replace("/[íì]/u", "i", $string);
+        $string = preg_replace("/[óòôõö]/u", "o", $string);
+        $string = preg_replace("/[úùü]/u", "u", $string);
+        $string = preg_replace("/[ç]/u", "c", $string);
+
+        $string = preg_replace("/[^A-Za-z0-9\-.$permitir]/", '', $string); // remove caracteres especiais.
+
+        $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+
+        //\Illuminate\Support\Facades\Log::info($string);
 
         return $string;
     }

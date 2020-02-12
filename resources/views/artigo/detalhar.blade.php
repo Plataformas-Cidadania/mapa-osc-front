@@ -17,7 +17,7 @@
                     <header>
                         <br>
                         <h1>{{$plural}}</h1>
-                        <h5><a href="">Home</a> / <a href="">{{$plural}}</a> / Lorem Ipsum is simply dummy...</h5>
+                        <h5><a href="">Home</a> / <a href="">{{$plural}}</a> / {{str_limit(strip_tags($noticia->descricao), 25)."..."}}</h5>
                         <br>
                     </header>
                 </div>
@@ -41,7 +41,7 @@
 
                     <div class="row">
                         <div class="col-md-6 item-calendar">
-                            <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
+                            <h5><i class="fas fa-calendar"></i> {{$noticia->data}}</h5>
                         </div>
                         <div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>
@@ -50,26 +50,8 @@
                             <i class="fab fa-whatsapp"></i>
                         </div>
                     </div>
-                    <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                    <p>
-
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo facilisis elit, eu mattis nunc iaculis vel. Duis ac dolor velit. Donec id massa enim. Sed maximus ipsum ut neque tristique, a ultricies orci ornare. Mauris eget purus vel leo pulvinar sodales sodales in neque. Aenean efficitur ligula in mauris ullamcorper, venenatis dapibus est laoreet. Vivamus rutrum purus ante, vel ultrices ipsum porta gravida. Duis vulputate nulla in erat consequat lobortis. In sit amet leo at orci interdum placerat eu vel est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam augue tellus, egestas eu feugiat a, cursus vitae dolor.
-                        <br>
-                        <br>
-
-                        Nam pulvinar dui lorem, non fringilla enim finibus ut. Sed et pharetra odio, eu euismod erat. Aenean eu mi nec sem tempor vestibulum. Duis eu justo id nisl venenatis venenatis sit amet quis nunc. Donec maximus, tortor eget vestibulum lobortis, ex nisl volutpat nunc, ut mattis nisl lacus non massa. Quisque ut ex diam. Phasellus et congue leo, et ullamcorper nulla. In fermentum consectetur aliquam. Mauris ac auctor odio. Cras gravida ex ut blandit luctus. Donec quis porta mi, eget scelerisque ipsum. Sed enim justo, consectetur ut ex condimentum, dictum interdum augue.
-                        <br>
-                    <div style="margin: 15px 15px 15px 0;  float: left; max-width: 250px; ">
-                        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
-                    </div>
-                        <br>
-                        Phasellus vulputate quis quam eu vehicula. Ut suscipit, lacus eget sagittis ullamcorper, mi est elementum libero, quis posuere ex libero vitae nulla. Aliquam erat volutpat. Ut vitae quam nec massa volutpat interdum quis at eros. Donec mollis, ligula nec consectetur dapibus, nulla enim blandit turpis, a luctus ipsum augue id nibh. Pellentesque at suscipit nunc. Pellentesque lectus metus, placerat nec porttitor vel, rhoncus id lorem. Integer placerat leo nec placerat tincidunt. In ullamcorper rhoncus massa, quis vestibulum odio vestibulum vel.
-                        <br>
-                        <br>
-                        Vestibulum faucibus placerat facilisis. Quisque sed tempor augue, non suscipit ipsum. Vestibulum in arcu mauris. Ut enim sem, pulvinar at lacus rhoncus, euismod porta quam. Nullam dictum porta urna, in venenatis dui lobortis gravida. Phasellus at sapien at metus accumsan venenatis. Sed scelerisque purus dui, sed vulputate purus placerat id.
-                        <br>
-                        <br>
-                        Nulla sit amet sollicitudin orci. Nullam lacinia iaculis dui, eget lacinia erat accumsan dignissim. Ut ut accumsan sapien, quis sagittis risus. Vivamus metus nunc, aliquam sit amet tempor eu, maximus id nunc. Suspendisse potenti. Sed tortor magna, rutrum in diam ut, hendrerit condimentum orci. Nulla mattis justo ornare nisi elementum congue. Nulla volutpat vitae mauris non laoreet. Duis mollis ullamcorper urna, vitae eleifend orci. Nam gravida commodo orci in aliquet. Etiam ut mi pulvinar, mollis lectus ut, laoreet augue. Aenean mollis lectus arcu, rhoncus vestibulum mauris facilisis a. Cras fermentum justo et sapien pretium commodo. Aliquam ut nibh id nulla feugiat gravida. Nunc pretium urna laoreet lacus auctor, eget elementum sem pulvinar. Ut lobortis urna nec lacus feugiat, vel ultrices libero semper.</p>
+                    <h2>{{$noticia->titulo}}</h2>
+                    <p>{!! $noticia->descricao !!}</p>
                     <br>
                     <hr>
                 </article>

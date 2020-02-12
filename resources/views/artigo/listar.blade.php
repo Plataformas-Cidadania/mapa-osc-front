@@ -23,28 +23,37 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <article>
-                    <br>
-                    <h5 class="float-right"><i class="fas fa-comment"></i> 5</h5>
-                    <img data-src="holder.js/200x200" class="img-fluid" alt="200x200" src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true" width="100%">
-                    <br><br>
-                    <div class="row">
-                        <div class="col-md-6 item-calendar">
-                            <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
+
+                @foreach($noticias as $noticia)
+                    <a href="artigo/{{$noticia->id}}/{{$noticia->titulo}}">
+                        <div>
+                            <br>
+                            <h5 class="float-right"><i class="fas fa-comment"></i> 5</h5>
+                            <img data-src="holder.js/200x200" class="img-fluid" alt="200x200" src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true" width="100%">
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-6 item-calendar">
+                                    <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
+                                </div>
+                                {{--<div class="col-md-6 text-right fa-svg">
+                                    <i class="fab fa-facebook-f"></i>
+                                    <i class="fab fa-instagram"></i>
+                                    <i class="fab fa-twitter"></i>
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>--}}
+                            </div>
+                            <h2>{{$noticia->titulo}}</h2>
+                            <p>{!! $noticia->resumida !!}</p>
+                            <h4 class="btn-plus">Continue lendo</h4>
+                            <br>
+                            <hr>
                         </div>
-                        <div class="col-md-6 text-right fa-svg">
-                            <i class="fab fa-facebook-f"></i>
-                            <i class="fab fa-instagram"></i>
-                            <i class="fab fa-twitter"></i>
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                    </div>
-                    <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    <h4 class="btn-plus"><a href="artigo">Continue lendo</a></h4>
-                    <br>
-                    <hr>
-                </article>
+                    </a>
+                @endforeach
+
+
+                <br><br>
+                <div>{{ $noticias->links() }}</div>
 
 
             </div>
