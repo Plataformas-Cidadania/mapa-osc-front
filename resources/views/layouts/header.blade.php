@@ -24,20 +24,15 @@
 
 <style>
     .box-font-size{
-        width: 28px;
-        height: 28px;
+        width: 25px;
+        height: 25px;
         color: #FFFFFF;
         cursor: pointer;
         text-align: center;
-        padding-top: 2px;
+        padding-top: -1px;
     }
     .box-font-size a{
-        padding: 20px;
-        margin: 10px;
-        line-height: 20px;
-        width: 28px;
-        height: 28px;
-
+        display: block;
     }
 </style>
 
@@ -157,5 +152,3 @@
     @endif
 
 </header>
-
-

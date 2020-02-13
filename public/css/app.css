@@ -11602,7 +11602,7 @@ figcaption {
 
 #atalhos li,
 #botoes li {
-  display: inline;
+  display: inline-block;
   margin-right: 5px;
 }
 

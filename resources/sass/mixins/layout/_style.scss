@@ -23,7 +23,7 @@ figcaption{
     font-size: 12px;
 }
 #atalhos li, #botoes li{
-    display: inline;
+    display: inline-block;
     margin-right: 5px;
 }
 .btn-acessibilidade{
@@ -31,7 +31,6 @@ figcaption{
     padding: 2px 4px;
     color: #FFFFFF;
 }
-
 //Items
 .items {
     padding: 0 50px;
