@@ -1,11 +1,5 @@
 <?php
 
-$rotasPlural = "artigos";
-$rotasSingular = "artigo";
-$rotasController = "Noticia";
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,17 +11,54 @@ $rotasController = "Noticia";
 |
 */
 
-
 Route::get('/', function () {
     return view('home');
 });
-/*Route::get('artigos/', 'ArtigoController@listar');
-Route::get('artigo/', 'ArtigoController@detalhar');//Teste deletar*/
+
+/*
+$listRoutes = [["artigos", "Article"], "noticias", 'produtos'];
+$detailsRoutes = ["artigo", "noticia", 'produto'];
+$searchRoutes = ["noticias"];*/
+
+$routes = [
+    //controller, listing, details
+    ['Article', 'artigos', 'artigo'],
+    ['New', 'noticias', 'noticia'],
+    ['Product', 'produtos', 'produto'],
+];
+$routesSearch = [
+    //controller, search
+    ['New', 'noticias'],
+];
+
+//ROTAS PADRÕES
+
+foreach ($routes as $route) {
+    Route::get($route[1].'/', $route[0].'Controller@listing');
+    Route::get($route[2].'/{id}/{titulo}', $route[0].'Controller@details');
+}
+foreach ($routesSearch as $route) {
+    Route::get($route[1].'/{search}', $route[0].'Controller@listing');
+}
 
 
-//NOTÍCIAS
-Route::get($rotasPlural.'/', $rotasController.'Controller@listar');
-Route::get($rotasPlural.'/{titulo}', $rotasController.'Controller@listar');
-Route::get($rotasSingular.'/{id}', $rotasController.'Controller@detalhar');
-Route::get($rotasSingular.'/{id}/{titulo}', $rotasController.'Controller@detalhar');
+
+/*foreach ($detailsRoutes as $route) {
+    Route::get($route[0].'/', $route[1].'Controller@listing');
+}*/
+/*foreach ($listRoutes as $route) {
+    Route::get($route.'/{id}/{titulo}', ucfirst($rota).'Controller@details');
+}
+foreach ($searchRoutes as $route) {
+    Route::get($route.'/{search}', ucfirst($rota).'Controller@listing');
+}*/
+
+//ROTAS AVULSAS
+
+/*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
+Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
+
+Route::get('produtos/{categoria_id}', ucfirst($rota).'Controller@listar');
+Route::get('produtos/{categoria_id}/{subcategoria_id}', ucfirst($rota).'Controller@listar');*/
+
 

@@ -24,8 +24,8 @@
         <div class="row">
             <div class="col-md-8">
 
-                @foreach($noticias as $noticia)
-                    <a href="artigo/{{$noticia->id}}/{{$noticia->titulo}}">
+                @foreach($lists as $list)
+                    <a href="artigo/{{$list->id}}/{{$list->title}}">
                         <div>
                             <br>
                             <h5 class="float-right"><i class="fas fa-comment"></i> 5</h5>
@@ -33,7 +33,7 @@
                             <br><br>
                             <div class="row">
                                 <div class="col-md-6 item-calendar">
-                                    <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
+                                    <h5><i class="fas fa-calendar"></i> {{$list->date}}</h5>
                                 </div>
                                 {{--<div class="col-md-6 text-right fa-svg">
                                     <i class="fab fa-facebook-f"></i>
@@ -42,8 +42,8 @@
                                     <i class="fab fa-whatsapp"></i>
                                 </div>--}}
                             </div>
-                            <h2>{{$noticia->titulo}}</h2>
-                            <p>{!! $noticia->resumida !!}</p>
+                            <h2>{{$list->title}}</h2>
+                            <p>{!! $list->tease !!}</p>
                             <h4 class="btn-plus">Continue lendo</h4>
                             <br>
                             <hr>
@@ -53,7 +53,7 @@
 
 
                 <br><br>
-                <div>{{ $noticias->links() }}</div>
+                <div>{{ $lists->links() }}</div>
 
 
             </div>

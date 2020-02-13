@@ -5,10 +5,7 @@
 @section('image', '')
 @section('content')
 
-    <?php
-        $plural = "Artigos";
-        $singular = "Artigo";
-    ?>
+
 
     <div class="bg-lgt">
         <div class="container">
@@ -16,8 +13,8 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{$plural}}</h1>
-                        <h5><a href="">Home</a> / <a href="">{{$plural}}</a> / {{str_limit(strip_tags($noticia->descricao), 25)."..."}}</h5>
+                        <h1>{{$detail->title}}</h1>
+                        <h5><a href="">Home</a> / <a href="">Artigos</a> / {{str_limit(strip_tags($detail->title), 25)."..."}}</h5>
                         <br>
                     </header>
                 </div>
@@ -41,7 +38,7 @@
 
                     <div class="row">
                         <div class="col-md-6 item-calendar">
-                            <h5><i class="fas fa-calendar"></i> {{$noticia->data}}</h5>
+                            <h5><i class="fas fa-calendar"></i> {{$detail->date}}</h5>
                         </div>
                         <div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>
@@ -50,8 +47,8 @@
                             <i class="fab fa-whatsapp"></i>
                         </div>
                     </div>
-                    <h2>{{$noticia->titulo}}</h2>
-                    <p>{!! $noticia->descricao !!}</p>
+                    <h2>{{$detail->title}}</h2>
+                    <p>{!! $detail->description !!}</p>
                     <br>
                     <hr>
                 </article>
@@ -110,10 +107,10 @@
                 <div class="space">
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <div><i class="fas fa-angle-left"></i> {{$singular}} anterior</div>
+                            <div><i class="fas fa-angle-left"></i> Artigo anterior</div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <div>Próximo {{$singular}} <i class="fas fa-angle-right"></i></div>
+                            <div>Próximo artigo <i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -145,7 +142,7 @@
                 <div class="float-none">
                     <br><br>
                     <div class="line-color"></div>
-                    <h2><i class="far fa-user"></i> Autores do {{$singular}}</h2>
+                    <h2><i class="far fa-user"></i> Autores do artigo</h2>
                     <hr>
                     <div class="list-user">
                         <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
