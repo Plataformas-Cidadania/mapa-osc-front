@@ -1,5 +1,11 @@
 <?php
 
+$rotasPlural = "artigos";
+$rotasSingular = "artigo";
+$rotasController = "Noticia";
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +17,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('home');
 });
@@ -19,7 +26,8 @@ Route::get('artigo/', 'ArtigoController@detalhar');//Teste deletar*/
 
 
 //NOTÍCIAS
-Route::get('artigos/', 'NoticiaController@listar');
-Route::get('artigos/{titulo}', 'NoticiaController@listar');
-Route::get('artigo/{id}', 'NoticiaController@detalhar');
-Route::get('artigo/{id}/{titulo}', 'NoticiaController@detalhar');
+Route::get($rotasPlural.'/', $rotasController.'Controller@listar');
+Route::get($rotasPlural.'/{titulo}', $rotasController.'Controller@listar');
+Route::get($rotasSingular.'/{id}', $rotasController.'Controller@detalhar');
+Route::get($rotasSingular.'/{id}/{titulo}', $rotasController.'Controller@detalhar');
+

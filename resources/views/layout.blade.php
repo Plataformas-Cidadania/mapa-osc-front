@@ -18,7 +18,7 @@
         @include('layouts.links')--}}
         @include('conexoes.css')
      </head>
-    <body>
+    <body class="acessibilidade">
         @include('layouts.layout1')
     </body>
 </html>

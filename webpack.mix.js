@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'node_modules/jquery/dist/jquery.js',
+        'node_modules/jquery-animate-scroll/dist/jquery.animate-scroll.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/lazysizes/lazysizes.js',
     ], 'public/js/app.js');

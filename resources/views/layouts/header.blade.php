@@ -1,4 +1,4 @@
-<div class="bg-lgt" id="acessibilidade">
+<div class="bg-lgt" id="acessibilidade" >
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -6,16 +6,18 @@
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodoconteudo" accesskey="1">Ir para o Conteúdo [1]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodomenu" accesskey="2">Ir para o Menu [2]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#busca" accesskey="3">Ir para a busca [3]</a></li>
-                    <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4">Ir para o rodapé [4]</a></li>
+                    <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
             <div class="col-md-6 text-lg-right text-md-right">
                 <ul id="botoes" >
-                    <li>A+</li>
-                    <li>A</li>
-                    <li>A-</li>
+                    <li onClick="fonte('a');">A+</li>
+                    <li onClick="fonte('p');">A</li>
+                    <li onClick="fonte('d');">A-</li>
                     <li><a id="bt_contraste" ><i class="fa fa-adjust" aria-hidden="true"></i> Acessibilidade</a></li>
                     <li><a href="acessibilidade"><i class="fa fa-universal-access" aria-hidden="true"></i> Alto contraste </a></li>
+
+
                 </ul>
             </div>
         </div>

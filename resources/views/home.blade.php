@@ -104,24 +104,26 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div class="img-box">
-                    <picture>
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
-                    </picture>
-                    <div class="img-rede">
-                        <i class="fab fa-facebook-f"></i>
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-twitter"></i>
+                <a href="artigos">
+                    <div class="img-box">
+                        <picture>
+                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
+                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
+                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
+                            <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
+                        </picture>
+                        <div class="img-rede">
+                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-twitter"></i>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
-                <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                <h4 class="btn-plus">Continue lendo</h4>
+                    <br>
+                    <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
+                    <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
+                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <h4 class="btn-plus">Continue lendo</h4>
+                </a>
             </div>
             <div class="col-md-3">2</div>
             <div class="col-md-3">3</div>
@@ -284,6 +286,7 @@
         }
 
     </style>
+
 @endsection
 
 

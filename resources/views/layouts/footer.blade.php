@@ -17,5 +17,34 @@
             </div>
         </div>
     </div>
+
+<div>
+    <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
+        <p>Top</p>
+        <i class="fas fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <style>
+        .btn-circle{
+            float: right;
+            width: 60px;
+            height: 60px;
+            color: #FFFFFF!important;
+            text-align: center;
+            margin: 20px;
+        }
+        .btn-circle:hover{
+            transform: scale(1.1);
+            /*border: solid 5px rgba(0,0,0, 0.1);*/
+            box-shadow: 0 0 3px #000000;
+        }
+        .btn-circle p{
+            margin: 10px 0 -5px 0;
+            padding: 0;
+        }
+    </style>
 </footer>
+
 
