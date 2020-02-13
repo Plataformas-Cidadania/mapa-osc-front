@@ -11,18 +11,35 @@
             </div>
             <div class="col-md-6 text-lg-right text-md-right">
                 <ul id="botoes" >
-                    <li onClick="fonte('a');">A+</li>
-                    <li onClick="fonte('p');">A</li>
-                    <li onClick="fonte('d');">A-</li>
+                    <li class="bg-pri box-font-size rounded-circle"><a onClick="fonte('a');" href="#">A+</a></li>
+                    <li class="bg-sec box-font-size rounded-circle"><a onClick="fonte('p');" href="#">A&nbsp;</a></li>
+                    <li class="bg-ter box-font-size rounded-circle"><a onClick="fonte('d');" href="#">A-</a></li>
                     <li><a id="bt_contraste" ><i class="fa fa-adjust" aria-hidden="true"></i> Acessibilidade</a></li>
                     <li><a href="acessibilidade"><i class="fa fa-universal-access" aria-hidden="true"></i> Alto contraste </a></li>
-
-
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .box-font-size{
+        width: 28px;
+        height: 28px;
+        color: #FFFFFF;
+        cursor: pointer;
+        text-align: center;
+        padding-top: 2px;
+    }
+    .box-font-size a{
+        padding: 20px;
+        margin: 10px;
+        line-height: 20px;
+        width: 28px;
+        height: 28px;
+
+    }
+</style>
 
 {{--CEl--}}
 <div class="header-cel text-center  d-block d-sm-none" >
