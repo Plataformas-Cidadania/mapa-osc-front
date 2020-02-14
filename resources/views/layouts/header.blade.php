@@ -14,8 +14,8 @@
                     <li class="bg-pri box-font-size rounded-circle"><a onClick="fonte('a');" href="#">A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle"><a onClick="fonte('p');" href="#">A&nbsp;</a></li>
                     <li class="bg-ter box-font-size rounded-circle"><a onClick="fonte('d');" href="#">A-</a></li>
-                    <li><a id="bt_contraste" ><i class="fa fa-adjust" aria-hidden="true"></i> Acessibilidade</a></li>
-                    <li><a href="acessibilidade"><i class="fa fa-universal-access" aria-hidden="true"></i> Alto contraste </a></li>
+                    <li><a id="#" onclick="contrast();"><i class="fas fa-adjust fa-2x"></i> Alto contraste</a></li>
+                    <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x"></i> Acessibilidade</a></li>
                 </ul>
             </div>
         </div>

@@ -28,6 +28,7 @@ class ArticleController extends Controller{
 
     public function details($id){
         $detail = $this->obj->find($id);
-        return view($this->module.'.detail', ['detail' => $detail]);
+        $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();
+        return view($this->module.'.detail', ['detail' => $detail, 'lasts' => $lasts]);
     }
 }

@@ -120,24 +120,18 @@
                     <br>
                     <div class="line-color"></div>
                     <h2><i class="far fa-clock"></i> Recentes</h2>
-                    <div>
-                        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
-                        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                        <h4 class="btn-plus">Continue lendo</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
-                        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                        <h4 class="btn-plus">Continue lendo</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
-                        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                        <h4 class="btn-plus">Continue lendo</h4>
-                        <hr>
-                    </div>
+
+                    @foreach($lasts as $last)
+                        <a href="artigo/{{$last->id}}/{{$last->title}}">
+                            <div>
+                                <h3>{{$last->title}}</h3>
+                                <p>{{$last->tease}}</p>
+                                <h4 class="btn-plus">Continue lendo</h4>
+                                <hr>
+                            </div>
+                        </a>
+                    @endforeach
+
                 </div>
                 <div class="float-none">
                     <br><br>

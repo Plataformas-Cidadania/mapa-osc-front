@@ -278,8 +278,6 @@ if ( ! function_exists('clean') ) {
 
         $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
 
-        //\Illuminate\Support\Facades\Log::info($string);
-
         return $string;
     }
 }
