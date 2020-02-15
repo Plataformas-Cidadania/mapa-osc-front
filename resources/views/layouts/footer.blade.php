@@ -1,4 +1,4 @@
-<footer id="iniciodorodape" role="contentinfo" >
+<footer id="iniciodorodape" role="contentinfo">
     <div class="footer-cel d-block d-sm-none">
         <div class="container">
             <div class="row">
@@ -18,12 +18,23 @@
         </div>
     </div>
 
-<div>
-    <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
-        <p>Top</p>
-        <i class="fas fa-angle-up"></i>
-    </a>
-</div>
+    <div class="bg-lgt" style="position: relative;">
+        aa <br>
+        aa <br>
+        aa <br>
+        aa <br>
+        aa <br>
+        aa <br>
+        aa <br>
+        <div>
+            <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
+                <p>Top</p>
+                <i class="fas fa-angle-up"></i>
+            </a>
+        </div>
+    </div>
+
+
 
 
     <style>
@@ -34,6 +45,9 @@
             color: #FFFFFF!important;
             text-align: center;
             margin: 20px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
         .btn-circle:hover{
             transform: scale(1.1);

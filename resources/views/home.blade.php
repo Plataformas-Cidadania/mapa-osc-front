@@ -103,8 +103,9 @@
 
     <div class="container">
         <div class="row">
+            @foreach($articles as $item)
             <div class="col-md-4">
-                <a href="artigos">
+                <a href="artigo/{{$item->id}}/{{$item->title}}">
                     <div class="img-box">
                         <picture>
                             <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
@@ -119,14 +120,14 @@
                         </div>
                     </div>
                     <br>
-                    <h5><i class="fas fa-calendar"></i> 25 fev 2020</h5>
-                    <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <h5><i class="fas fa-calendar"></i> {{$item->date}}</h5>
+                    <h2>{{$item->title}}</h2>
+                    <p>{{$item->tease}}</p>
                     <h4 class="btn-plus">Continue lendo</h4>
                 </a>
             </div>
-            <div class="col-md-3">2</div>
-            <div class="col-md-3">3</div>
+                @endforeach
+
         </div>
     </div>
 

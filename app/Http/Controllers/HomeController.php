@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public function index(){
-        return view('home');
+
+        $articles = \App\Article::take(3)->get();
+
+        return view('home', ['articles' => $articles]);
     }
 }
 

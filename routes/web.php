@@ -11,14 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index');
 
-/*
-$listRoutes = [["artigos", "Article"], "noticias", 'produtos'];
-$detailsRoutes = ["artigo", "noticia", 'produto'];
-$searchRoutes = ["noticias"];*/
 
 $routes = [
     //controller, listing, details
@@ -41,17 +35,6 @@ foreach ($routesSearch as $route) {
     Route::get($route[1].'/{search}', $route[0].'Controller@listing');
 }
 
-
-
-/*foreach ($detailsRoutes as $route) {
-    Route::get($route[0].'/', $route[1].'Controller@listing');
-}*/
-/*foreach ($listRoutes as $route) {
-    Route::get($route.'/{id}/{titulo}', ucfirst($rota).'Controller@details');
-}
-foreach ($searchRoutes as $route) {
-    Route::get($route.'/{search}', ucfirst($rota).'Controller@listing');
-}*/
 
 //ROTAS AVULSAS
 
