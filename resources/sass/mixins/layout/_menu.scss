@@ -1,3 +1,116 @@
+/*//////////////////////MENU DESC//////////////////////////////*/
+#menu-desk,
+#menu-desk ul {
+    list-style:none;
+    padding:0px;
+    margin:0px;
+}
+#menu-desk {
+}
+#menu-desk > li {
+    display: inline-block;
+}
+#menu-desk li a {
+    width: 100%;
+    font-size: 16px;
+    display: block;
+    /*height: 68px;*/
+    line-height: 45px;
+    padding: 8px 20px;
+    text-decoration: none;
+}
+#menu-desk ul {
+    position:absolute;
+    display:none;
+    z-index:99999999999;
+}
+#menu-desk ul li a {
+    min-width:100px;
+    text-align:left;
+    height:40px!important;
+    line-height:20px!important;
+}
+#menu-desk > li > a {
+    color:#333333;
+    border-bottom: solid 3px #F1F1F1;
+    -webkit-transition:All 1.02s ease;
+    -moz-transition:All 1.02s ease;
+    -o-transition:All 1.02s ease;
+}
+#menu-desk > li:hover > a{
+    border-bottom: solid 3px $color-pri;
+    -webkit-transition: All 1.02s ease;
+    -moz-transition: All 1.02s ease;
+    -o-transition: All 1.02s ease;
+}
+#menu-desk > li:focus > a{
+    background-color: #333333;
+}
+#menu-desk ul {
+    padding: 0px;
+}
+#menu-desk ul li a {
+    color:#FFFFFF;
+    display: block;
+    background-color: $color-pri;
+    margin-bottom: 1px;
+    width: 200px;
+}
+#menu-desk ul li:hover a{
+    background-color: $color-pri;
+    -webkit-transition: All 1.02s ease;
+    -moz-transition: All 1.02s ease;
+    -o-transition: All 1.02s ease;
+}
+#menu-desk li:hover ul.noJS {
+    display: block;
+}
+@media  only screen and (max-width : 1201px) {
+    #menu-desk li a {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+@media  only screen and (max-width : 995px) {
+    #menu-desk li a {
+        font-size: 12px;
+        padding: 8px 5px;
+    }
+}
+@media  only screen and (max-width : 900px) {
+    #menu-desk li a {
+        padding: 8px 9px;
+    }
+}
+@media  only screen and (max-width : 768px) {
+    #menu-desk li a {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+    #menu-desk {
+        float:none;
+    }
+    #menu-desk > li {
+        float:none;
+    }
+    #menu-desk li a {
+        clear:both;
+        padding: 8px 25px;
+    }
+    #menu-desk ul {
+        position:inherit;
+    }
+    #menu-desk ul li a {
+        color:#FFFFFF;
+    }
+    #menu-desk li:hover ul.noJS {
+        display: block;
+        width:100%;
+    }
+    #menu-desk ul li:hover a, ul.active{
+        display: block;
+    }
+}
 /*//////////////////////MENU CEL//////////////////////////////*/
 .header-cel{
     width: 100%;

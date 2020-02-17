@@ -105,7 +105,7 @@
         <div class="row">
             @foreach($articles as $item)
             <div class="col-md-4">
-                <a href="artigo/{{$item->id}}/{{$item->title}}">
+                <a href="artigo/{{$item->id}}/{{clean($item->title)}}">
                     <div class="img-box">
                         <picture>
                             <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <br>
-                    <h5><i class="fas fa-calendar"></i> {{$item->date}}</h5>
+                    <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{--{{dataEn2Br($item->date, 'mes_extenso')}}--}}</h5>
                     <h2>{{$item->title}}</h2>
                     <p>{{$item->tease}}</p>
                     <h4 class="btn-plus">Continue lendo</h4>

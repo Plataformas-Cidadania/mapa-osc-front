@@ -25,7 +25,7 @@
             <div class="col-md-8">
 
                 @foreach($lists as $list)
-                    <a href="artigo/{{$list->id}}/{{$list->title}}">
+                    <a href="artigo/{{$list->id}}/{{clean($list->title)}}">
                         <div>
                             <br>
                             <h5 class="float-right"><i class="fas fa-comment"></i> 5</h5>
