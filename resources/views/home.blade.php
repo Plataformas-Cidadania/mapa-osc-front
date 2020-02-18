@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <br>
-                    <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->date, 'ext')}} </h5>
+                    <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->date, 'ext')}} </time>
                     <h2>{{$item->title}}</h2>
                     <p>{{$item->tease}}</p>
                     <h4 class="btn-plus">Continue lendo</h4>
@@ -135,9 +135,11 @@
 
     <div class="container">
         <div class="space">
+            <h2>Número de OSCs, por natureza jurídica, segundo Grandes Regiões, 2018</h2>
+            <hr><br><br>
             <div id="chart"></div>
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+            <button type="button" class="btn btn btn-outline-primary float-right" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-table"></i> Visualize os dados em tabela</button>
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">

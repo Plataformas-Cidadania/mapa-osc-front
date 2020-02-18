@@ -33,7 +33,7 @@
                             <br><br>
                             <div class="row">
                                 <div class="col-md-6 item-calendar">
-                                    <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($list->date, 'ext')}}</h5>
+                                    <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($list->date, 'ext')}}</time>
                                 </div>
                                 {{--<div class="col-md-6 text-right fa-svg">
                                     <i class="fab fa-facebook-f"></i>

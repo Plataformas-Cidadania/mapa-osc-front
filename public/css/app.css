@@ -11391,6 +11391,11 @@ h5 {
   color: #949494;
 }
 
+time {
+  font-size: 0.9rem;
+  color: #949494;
+}
+
 .img-rede {
   display: none;
 }
