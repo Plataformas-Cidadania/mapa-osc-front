@@ -12,7 +12,7 @@
                     <header>
                         <br>
                         <h1>Artigos</h1>
-                        <h5>Home / News</h5>
+                        <h5><a href="/">Home</a></a></h5>
                         <br>
                     </header>
                 </div>

@@ -11364,6 +11364,10 @@ body {
   color: #333333;
 }
 
+h1 {
+  /*font-size: 28px!important;*/
+}
+
 h2 {
   font-size: 23px;
   line-height: 28px;

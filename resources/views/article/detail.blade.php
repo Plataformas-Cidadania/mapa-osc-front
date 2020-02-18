@@ -14,7 +14,7 @@
                     <header>
                         <br>
                         <h1>{{$detail->title}}</h1>
-                        <h5><a href="">Home</a> / <a href="">Artigos</a> / {{str_limit(strip_tags($detail->title), 25)."..."}}</h5>
+                        <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / {{str_limit(strip_tags($detail->title), 25)."..."}}</h5>
                         <br>
                     </header>
                 </div>
