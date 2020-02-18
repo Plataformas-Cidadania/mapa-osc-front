@@ -283,7 +283,7 @@ if ( ! function_exists('onlyNumbers') ) {
 
 
 if ( ! function_exists('formatBr') ) {
-    function formatBr($string, $type = null)
+    function formatBr($string, $type = null, $hour = null)
     {
 
         $monthEnExt = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
@@ -292,17 +292,19 @@ if ( ! function_exists('formatBr') ) {
         $monthEnAbb = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         $monthBrAbb = array("de jan de", "de fev de", "de mar de", "de abr de", "de mai de", "de jun de", "de jul de", "de ago de", "de set de", "de out de", "de nov de", "de dez de");
 
-
+        if ($hour == 'hs') {
+            $hour = " - H:i:s";
+        }
         if ($type == 'num'){
             $string = date_create($string);
-            $string = date_format($string, 'd/m/Y - H:i:s');
+            $string = date_format($string, 'd/m/Y'.$hour);
         }else if($type == 'ext'){
             $string = date_create($string);
-            $string = date_format($string, 'd F Y - H:i:s');
+            $string = date_format($string, 'd F Y'.$hour);
             $string = str_replace($monthEnExt, $monthBrExt, $string);
         }else if($type == 'abb'){
             $string = date_create($string);
-            $string = date_format($string, 'd M Y - H:i:s');
+            $string = date_format($string, 'd M Y'.$hour);
             $string = str_replace($monthEnAbb, $monthBrAbb, $string);
         }
 

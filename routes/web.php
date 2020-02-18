@@ -17,6 +17,7 @@ Route::get('/', 'HomeController@index');
 $routes = [
     //controller, listing, details
     ['Article', 'artigos', 'artigo'],
+    ['Page', 'sobres', 'sobre'],
     ['New', 'noticias', 'noticia'],
     ['Product', 'produtos', 'produto'],
 ];
@@ -34,7 +35,17 @@ foreach ($routes as $route) {
 foreach ($routesSearch as $route) {
     Route::get($route[1].'/{search}', $route[0].'Controller@listing');
 }
+///////////////////////////////////////////////////////////////////////
+$pages = \Illuminate\Support\Facades\DB::table('pages')->select('slug')->get();
 
+foreach ($pages as $page) {
+    if(!empty($page->slug)){
+        Route::get($page->slug.'/', 'PageController@details');
+    }
+}
+///////////////////////////////////////////////////////////////////////
+/*Route::get('sobre', 'PageController@details');
+Route::get('metodologia', 'PageController@details');*/
 
 //ROTAS AVULSAS
 
