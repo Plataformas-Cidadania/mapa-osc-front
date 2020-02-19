@@ -117,7 +117,7 @@
                             <i class="fab fa-facebook-f"></i>
                             <i class="fab fa-instagram"></i>
                             <i class="fab fa-twitter"></i>
-                        </div>
+                        </div>sla
                     </div>
                     <br>
                     <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{--{{dataEn2Br($item->date, 'mes_extenso')}}--}}</h5>
