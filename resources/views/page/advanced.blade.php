@@ -38,7 +38,7 @@
 
                     <div class="row">
                         <div class="col-md-6 item-calendar">
-                            <time pubdate class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'ext', 'hs')}}</time>
+                            <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'ext', 'hs')}}</h5>
                         </div>
                         <div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>
@@ -92,7 +92,7 @@
                                     <h4><strong>Ricardo Pereira</strong></h4>
                                 </div>
                                 <div class="col-md-6 text-right item-calendar">
-                                    <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'abb')}}</time>
+                                    <h5 class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'abb')}}</h5>
                                 </div>
                                 <div class="col-md-12">
                                     <p><strong class="aspa">"</strong>Nulla sit amet sollicitudin orci. Nullam lacinia iaculis dui, eget lacinia erat accumsan dignissim. Ut ut accumsan sapien, quis sagittis risus. Vivamus metus nunc, aliquam sit amet tempor eu, maximus id nunc. Suspendisse potenti.<strong class="aspa">"</strong></p>

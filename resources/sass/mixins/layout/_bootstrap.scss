@@ -14,3 +14,22 @@ a:active {
     text-decoration: none!important;
     color: inherit;
 }
+.active{
+    background-color: $color-pri!important;
+    border-radius: 0;
+}
+.list-group-item{
+    background-color: inherit;
+    border-radius: 0;
+    border-top: solid 0;
+    border-right: solid 0;
+    border-left: solid 0;
+}
+.list-group-item:hover{
+    background-color: $color-pri!important;
+    color: #FFFFFF;
+    border-radius: 0;
+}
+.list-group-item a{
+    display: block;
+}

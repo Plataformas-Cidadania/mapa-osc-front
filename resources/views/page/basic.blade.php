@@ -1,0 +1,53 @@
+<?php $rota = Route::getCurrentRoute()->uri();?>
+@extends('layout')
+@section('title', '')
+@section('keywords', '')
+@section('description', '')
+@section('image', '')
+@section('content')
+
+
+    <div class="bg-lgt">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <header>
+                        <br>
+                        <h1>{{$detail->title}}</h1>
+                        <h5><a href="/">Home</a> / {{$detail->title}}</h5>
+                        <br>
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="list-group">
+                    @foreach($menus as $menu)
+                        <li class="list-group-item list-group-item-action @if($menu->slug==$rota) active @endif">
+                            <a href="{{$menu->slug}}">{{$menu->title}}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <article>
+                    <picture>
+                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
+                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
+                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
+                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload">
+                    </picture>
+                    <h2>{{$detail->title}}</h2>
+                    <p>{!! $detail->description !!}</p>
+                    <br>
+                </article>
+            </div>
+        </div>
+    </div>
+
+
+@endsection

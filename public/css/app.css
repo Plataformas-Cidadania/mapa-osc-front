@@ -11364,6 +11364,10 @@ body {
   color: #333333;
 }
 
+h1 {
+  /*font-size: 28px!important;*/
+}
+
 h2 {
   font-size: 23px;
   line-height: 28px;
@@ -11383,6 +11387,11 @@ h4 {
 }
 
 h5 {
+  font-size: 0.9rem;
+  color: #949494;
+}
+
+time {
   font-size: 0.9rem;
   color: #949494;
 }
@@ -11803,13 +11812,26 @@ figcaption {
 }
 
 .fa-svg svg {
-  font-size: 18px;
+  font-size: 25px;
   margin: 0 4px 15px 0;
   color: #777777;
+  background-color: #EEEEEE;
+  border-radius: 50%;
+  border: solid 1px inherit;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  padding: 5px;
 }
 
 .fa-svg svg:hover {
-  color: #3A559B;
+  color: #FFFFFF;
+  border: double 5px #FFFFFF;
+  background-color: #3A559B;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 .list-user img {
@@ -11919,5 +11941,28 @@ a:hover {
 a:active {
   text-decoration: none !important;
   color: inherit;
+}
+
+.active {
+  background-color: #3A559B !important;
+  border-radius: 0;
+}
+
+.list-group-item {
+  background-color: inherit;
+  border-radius: 0;
+  border-top: solid 0;
+  border-right: solid 0;
+  border-left: solid 0;
+}
+
+.list-group-item:hover {
+  background-color: #3A559B !important;
+  color: #FFFFFF;
+  border-radius: 0;
+}
+
+.list-group-item a {
+  display: block;
 }
 

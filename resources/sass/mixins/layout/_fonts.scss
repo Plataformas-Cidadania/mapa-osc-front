@@ -6,7 +6,7 @@ body {
     color: $color-text;
 }
 h1{
-
+    /*font-size: 28px!important;*/
 }
 h2{
     font-size: 23px;
@@ -29,4 +29,9 @@ h5{
 }
 p{
 
+}
+
+time{
+    font-size: 0.9rem;
+    color: #949494;
 }

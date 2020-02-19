@@ -12,7 +12,7 @@
                     <header>
                         <br>
                         <h1>Artigos</h1>
-                        <h5>Home / News</h5>
+                        <h5><a href="/">Home</a></h5>
                         <br>
                     </header>
                 </div>
@@ -33,7 +33,7 @@
                             <br><br>
                             <div class="row">
                                 <div class="col-md-6 item-calendar">
-                                    <h5><i class="fas fa-calendar"></i> {{$list->date}}</h5>
+                                    <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($list->date, 'ext')}}</time>
                                 </div>
                                 {{--<div class="col-md-6 text-right fa-svg">
                                     <i class="fab fa-facebook-f"></i>
@@ -70,18 +70,21 @@
                     <div class="line-color"></div>
                     <h2><i class="far fa-calendar"></i> Arquivo</h2>
 
-                    <div>
-                        <h4>Fevereiro de 2020</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Janeiro de 2020</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Dezembro de 2019</h4>
-                        <hr>
-                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Fevereiro de 2020
+                            <span class="badge badge-primary badge-pill">7</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Janeiro de 2020
+                            <span class="badge badge-primary badge-pill">x</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Dezembro de 2019
+                            <span class="badge badge-primary badge-pill">1</span>
+                        </li>
+                    </ul>
+
                     <h4 class="btn-plus float-right">Mais 15</h4>
                 </div>
                 <div>
@@ -89,18 +92,21 @@
                     <div class="line-color"></div>
                     <h2><i class="far fa-folder-open"></i> Categorias</h2>
 
-                    <div>
-                        <h4>Saúde</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Política</h4>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Esportes</h4>
-                        <hr>
-                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Saúde
+                            <span class="badge badge-primary badge-pill">7</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Política
+                            <span class="badge badge-primary badge-pill">x</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Esportes
+                            <span class="badge badge-primary badge-pill">1</span>
+                        </li>
+                    </ul>
+
                     <h4 class="btn-plus float-right"><i class="fas fa-angle-down"></i></h4>
                 </div>
                 <div class="float-none">

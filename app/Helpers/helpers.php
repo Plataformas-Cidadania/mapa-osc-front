@@ -61,7 +61,7 @@ if ( ! function_exists('nomeMes') ){
     }
 }
 
-if ( ! function_exists('clean') ) {
+/*if ( ! function_exists('clean') ) {
     function clean($string) {
 
         $string = str_replace(' ', '-', $string); // troca espaços por hífens.
@@ -78,6 +78,29 @@ if ( ! function_exists('clean') ) {
         $string = preg_replace('/[^A-Za-z0-9\-.]/', '', $string); // remove caracteres especiais.
 
         return preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+    }
+}*/
+
+if ( ! function_exists('clean') ) {
+    function clean($string, $permitir = null) {
+
+        $string = str_replace(' ', '-', $string); // troca espaços por hífens.
+
+        $string = strtolower($string);
+
+
+        $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
+        $string = preg_replace("/[éèê]/u", "e", $string);
+        $string = preg_replace("/[íì]/u", "i", $string);
+        $string = preg_replace("/[óòôõö]/u", "o", $string);
+        $string = preg_replace("/[úùü]/u", "u", $string);
+        $string = preg_replace("/[ç]/u", "c", $string);
+
+        $string = preg_replace("/[^A-Za-z0-9\-.$permitir]/", '', $string); // remove caracteres especiais.
+
+        $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+
+        return $string;
     }
 }
 
@@ -258,24 +281,32 @@ if ( ! function_exists('onlyNumbers') ) {
     }
 }
 
-if ( ! function_exists('clean') ) {
-    function clean($string, $permitir = null) {
 
-        $string = str_replace(' ', '-', $string); // troca espaços por hífens.
+if ( ! function_exists('formatBr') ) {
+    function formatBr($string, $type = null, $hour = null)
+    {
 
-        $string = strtolower($string);
+        $monthEnExt = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        $monthBrExt = array("de janeiro de", "de fevereiro de", "de março de", "de abril de", "de maio de", "de junho de", "de julho de", "de agosto de", "de setembro de", "de outubro de", "de novembro de", "de dezembro de");
 
+        $monthEnAbb = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        $monthBrAbb = array("de jan de", "de fev de", "de mar de", "de abr de", "de mai de", "de jun de", "de jul de", "de ago de", "de set de", "de out de", "de nov de", "de dez de");
 
-        $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
-        $string = preg_replace("/[éèê]/u", "e", $string);
-        $string = preg_replace("/[íì]/u", "i", $string);
-        $string = preg_replace("/[óòôõö]/u", "o", $string);
-        $string = preg_replace("/[úùü]/u", "u", $string);
-        $string = preg_replace("/[ç]/u", "c", $string);
-
-        $string = preg_replace("/[^A-Za-z0-9\-.$permitir]/", '', $string); // remove caracteres especiais.
-
-        $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+        if ($hour == 'hs') {
+            $hour = " - H:i:s";
+        }
+        if ($type == 'num'){
+            $string = date_create($string);
+            $string = date_format($string, 'd/m/Y'.$hour);
+        }else if($type == 'ext'){
+            $string = date_create($string);
+            $string = date_format($string, 'd F Y'.$hour);
+            $string = str_replace($monthEnExt, $monthBrExt, $string);
+        }else if($type == 'abb'){
+            $string = date_create($string);
+            $string = date_format($string, 'd M Y'.$hour);
+            $string = str_replace($monthEnAbb, $monthBrAbb, $string);
+        }
 
         return $string;
     }
