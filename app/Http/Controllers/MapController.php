@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
-class PageController extends Controller{
+class MapController extends Controller{
 
     private $obj;
     private $module;
@@ -18,18 +18,13 @@ class PageController extends Controller{
 
 
     public function __construct(){
-        $this->obj = new \App\Page();
-        $this->module = 'page';
-        $this->table = 'pages';
+        $this->obj = new \App\Map();
+        $this->module = 'map';
+        $this->table = 'maps';
 
     }
 
     public function details(){
-
-        $rota = Route::getCurrentRoute()->uri();
-
-        $detail = $this->obj->where('slug', $rota)->first();
-        $menus = $this->obj->orderBy('id', 'desc')->get();
-        return view($this->module.'.basic', ['detail' => $detail, 'menus' => $menus]);
+        return view($this->module.'.detail');
     }
 }

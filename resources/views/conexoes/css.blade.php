@@ -3,7 +3,9 @@
 @if($rota=='/')
     <link rel="stylesheet" href="css/home.css">
 @endif
-
+@if($rota=='mapa')
+    <link rel="stylesheet" href="css/map.css">
+@endif
 <style>
     .owl-nav{
         text-align: center;

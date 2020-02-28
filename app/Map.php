@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model{
+class Map extends Model{
 
     protected $fillable = [
         'title',  'tease', 'description', 'date',

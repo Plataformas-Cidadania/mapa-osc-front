@@ -41,7 +41,7 @@
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
                         <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload">
                     </picture>
-                    <h2>{{$detail->title}}</h2>
+                    <br><br>
                     <p>{!! $detail->description !!}</p>
                     <br>
                 </article>

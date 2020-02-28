@@ -27,10 +27,22 @@ mix.scripts([
         'node_modules/apexcharts/dist/apexcharts.js',
     ], 'public/js/chart.js');
 
+mix.scripts([
+        'node_modules/leaflet/dist/leaflet.js',
+        'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+    ], 'public/js/map.js');
+
 /*CSS*/
 mix.styles([
     'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-], 'public/css/home.css')
+], 'public/css/home.css');
+
+/*CSS*/
+mix.styles([
+    'node_modules/leaflet/dist/leaflet.css',
+    'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
+    'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+], 'public/css/map.css')
 
     .sass('resources/sass/app.scss', 'public/css');
 

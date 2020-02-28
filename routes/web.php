@@ -20,6 +20,7 @@ $routes = [
     ['Page', 'sobres', 'sobre'],
     ['New', 'noticias', 'noticia'],
     ['Product', 'produtos', 'produto'],
+
 ];
 $routesSearch = [
     //controller, search
@@ -48,6 +49,8 @@ foreach ($pages as $page) {
 Route::get('metodologia', 'PageController@details');*/
 
 //ROTAS AVULSAS
+
+Route::get('mapa', 'MapController@details');
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
 Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');

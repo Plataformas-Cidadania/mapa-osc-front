@@ -57,14 +57,167 @@
 
 </div>
 
+<style>
+    .colo-lgt{
+        color: #FFFFFF;
+    }
+    .colo-lgt div{
+        background-color: #FFFFFF;
+    }
+    .colo-lgt hr{
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+    }
+</style>
+
     <div class="bg-pri space">
         <div class="container">
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="row">
+                <div class="col-md-12">
+                    <br><br>
+                    <div class="title-style colo-lgt">
+                        <h2>OSCs com atualizações mais recentes</h2>
+                        <div class="line line-fix"></div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="list-user list-lgt">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                        <p>Saúde</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="list-user list-lgt">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                        <p>Saúde</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="list-user list-lgt">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                        <p>Saúde</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="list-user list-lgt">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                        <p>Saúde</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="list-user list-lgt">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                        <p>Saúde</p>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                    <br><br>
+                    <button type="button" class="btn btn-outline-light">Visualize todas as OSCs</button>
+                    <br><br><br>
+                </div>
+
+            </div>
         </div>
     </div>
 
+<style>
+    .menu-items li{
+        display: inline-block;
+        width: 60px;
+        margin: 10px;
+        vertical-align:top;
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+        -webkit-transition: 1s;
+        transition: 1s;
+    }
+    .menu-items li:hover{
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        -webkit-transition: 1s;
+        transition: 1s;
+    }
+    .menu-items p{
+        height: 40px;
+        line-height: 12px;
+        font-size: 10px;
+    }
+    .menu-items svg{
+        font-size: 10px;
+        border-radius: 50%;
+        background-color: #1b4b72;
+        color: #FFFFFF;
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        padding: 15px;
+    }
+    /*/////////////////////*/
+    .title-style{
+
+    }
+    .title-style hr{
+        margin-top: 0;
+        margin-bottom: 50px;
+    }
+    .line{
+        background-color: #1b4b72;
+        height: 5px;
+    }
+    .line-fix{
+        width: 80px;
+    }
+</style>
+
+
+    <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <div class="title-style">
+                    <h2>5 OSCs mais próximas de você, por área de atuação</h2>
+                    <div class="line line-fix"></div>
+                    <hr/>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <ul class="menu-items">
+                    <li>
+                        <a href="">
+                            <i class="fa fa-user"></i>
+                            <p>Saúde</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-user"></i>
+                            <p>Cultura e recreação</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-user"></i>
+                            <p>Educação e pesquisa</p>
+                        </a>
+                    </li>
+                </ul>
+                <br>
+            </div>
             <div class="col-md-8">
                 <div class="circle">
                     <div id="a" class="rotate">
@@ -100,198 +253,86 @@
         </div>
     </div>
 
-
     <div class="container">
         <div class="row">
-            @foreach($articles as $item)
-            <div class="col-md-4">
-                <a href="artigo/{{$item->id}}/{{clean($item->title)}}">
-                    <div class="img-box">
-                        <picture>
-                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
-                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
-                            <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                            <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
-                        </picture>
-                        <div class="img-rede">
-                            <i class="fab fa-facebook-f"></i>
-                            <i class="fab fa-instagram"></i>
-                            <i class="fab fa-twitter"></i>
-                        </div>sla
-                    </div>
-                    <br>
-                    <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->date, 'ext')}} </time>
-                    <h2>{{$item->title}}</h2>
-                    <p>{{$item->tease}}</p>
-                    <h4 class="btn-plus">Continue lendo</h4>
-                </a>
+            <div class="col-md-12">
+                <div class="title-style">
+                    <h2>Número de OSCs, por natureza jurídica, segundo Grandes Regiões, 2018</h2>
+                    <div class="line line-fix"></div>
+                    <hr/>
+                </div>
             </div>
-                @endforeach
-
-
-
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="space">
-            <h2>Número de OSCs, por natureza jurídica, segundo Grandes Regiões, 2018</h2>
-            <hr><br><br>
-            <div id="chart"></div>
-            <!-- Large modal -->
-            <button type="button" class="btn btn btn-outline-primary float-right" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-table"></i> Visualize os dados em tabela</button>
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="col-md-12">
+                <div id="chart"></div>
+                <!-- Large modal -->
+                <button type="button" class="btn btn btn-outline-primary float-right" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-table"></i> Visualize os dados em tabela</button>
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="space">&nbsp;</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-style">
+                    <h2>Artigos</h2>
+                    <div class="line line-fix"></div>
+                    <hr/>
+                </div>
+            </div>
+            @foreach($articles as $item)
+                <div class="col-md-4">
+                    <a href="artigo/{{$item->id}}/{{clean($item->title)}}">
+                        <div class="img-box">
+                            <picture>
+                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
+                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
+                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
+                                <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
+                            </picture>
+                            <div class="img-rede">
+                                <i class="fab fa-facebook-f"></i>
+                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->date, 'ext')}} </time>
+                        <h2>{{$item->title}}</h2>
+                        <p>{{$item->tease}}</p>
+                        <h4 class="btn-plus">Continue lendo</h4>
+                    </a>
+                </div>
+            @endforeach
+            <div class="col-md-12 text-center">
+                <br>
+                <br>
+                <button type="button" class="btn btn-outline-primary">Visualize todas as OSCs</button>
+            </div>
+        </div>
+    </div>
+    <div class="space">&nbsp;</div>
 
 
-    <style>
-        .circle {
-            height: 410px;
-            width: 410px;
-            border-radius: 100%;
-            border: solid 1px #CCCCCC;
-            margin:  auto;
-            position: relative;
-        }
-
-        .circle2 {
-            height: 260px;
-            width: 260px;
-            border-radius: 100%;
-            border: solid 1px #CCCCCC;
-            margin: -340px  auto 380px auto;
-            position: relative;
-
-        }
-
-        .rotate {
-            height: 60%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10vh;
-            margin-left: -50px;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .rotate2 {
-            height: 60%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10vh;
-            margin-left: -50px;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .rotate div {
-            border-radius: 100%;
-            border: solid 3px #CCCCCC;
-            height: 65px;
-            width: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #FFFFFF;
-        }
-
-        .rotate2 div {
-            border-radius: 100%;
-            border: solid 3px #CCCCCC;
-            height: 65px;
-            width: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #FFFFFF;
-        }
-
-        #a, #a div,#b, #b div, #c, #c div, #d, #d div, #e, #e div , #f, #f div {
-            transition: 1s;
-        }
-
-        #a, #b, #c, #d, #e , #f {
-            transform-origin: 50px 0;
-        }
-
-        #a {
-            z-index: 1;
-        }
-
-        .circle-item {
-            cursor: pointer
-        }
-
-        .circle #b {
-            transform: rotate(0deg);
-        }
-
-        .circle #b div {
-            transform: rotate(-0deg);
-        }
-
-        .circle #c {
-            transform: rotate(-180deg);/*Rotaciona no eixo*/
-        }
-
-        .circle #c div {
-            transform: rotate(180deg);/*Coloca virado para cima*/
-        }
-
-        .circle #d {
-            transform: rotate(300deg);
-        }
-
-        .circle #d div {
-            transform: rotate(60deg);
-        }
-
-        .circle #e {
-            transform: rotate(60deg);
-        }
-
-        .circle #e div {
-            transform: rotate(-60deg);
-        }
-
-        .circle #a {
-            transform: rotate(30deg);
-        }
-
-        .circle #a div {
-            transform: rotate(-30deg);
-        }
-
-        .circle2 #f {
-            transform: rotate(30deg); /*Rotaciona no eixo*/
-        }
-
-        .circle2 #f div {
-            transform: rotate(-30deg); /*Coloca virado para cima*/
-        }
-
-    </style>
 
 @endsection
+
 
 
