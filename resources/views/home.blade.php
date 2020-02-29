@@ -382,7 +382,6 @@
         z-index: 9;
 
     }
-
 </style>
 @endsection
 
