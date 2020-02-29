@@ -380,7 +380,6 @@
         height: 2px;
         width: 100%;
         z-index: 9;
-
     }
 </style>
 @endsection
