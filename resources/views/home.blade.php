@@ -9,6 +9,39 @@
 
 <div class="container">
 
+    <div class="row justify-content-md-center">
+        <div class="col-md-5">
+            <br><br>
+            <div class="input-icon">
+                <input type="text" class="form-control" placeholder="Encontre uma OSC, digite o nome ou CNPJ...">
+                <i class="fas fa-search"></i>
+            </div>
+            <ul class="menu-small">
+                <li>Organização</li>
+                <li>Município</li>
+                <li>Estado </li>
+                <li>Região</li>
+                <li class="float-right"><i class="fas fa-filter"></i> Filtro</li>
+            </ul>
+            <br><br><br>
+        </div>
+    </div>
+    <style>
+        .menu-small{
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+        }
+        .menu-small li{
+            display: inline-block;
+            padding: 5px 10px 3px 10px;
+            border-bottom: solid 2px #CCCCCC;
+        }
+        .menu-small li:hover{
+            border-bottom: solid 2px #1b4b72;
+        }
+    </style>
+
 
     <section>
         <div class="row">
@@ -84,7 +117,7 @@
                     <br><br>
                     <div class="title-style colo-lgt">
                         <h2>OSCs com atualizações mais recentes</h2>
-                        <div class="line line-fix"></div>
+                        <div class="line line-fix block" data-move-x="980px"></div>
                         <hr/>
                     </div>
                 </div>
@@ -192,14 +225,13 @@
     }
 </style>
 
-
     <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="title-style">
                     <h2>5 OSCs mais próximas de você, por área de atuação</h2>
-                    <div class="line line-fix"></div>
+                    <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
             </div>
@@ -266,7 +298,7 @@
             <div class="col-md-12">
                 <div class="title-style">
                     <h2>Número de OSCs, por natureza jurídica, segundo Grandes Regiões, 2018</h2>
-                    <div class="line line-fix"></div>
+                    <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
             </div>
@@ -301,7 +333,7 @@
             <div class="col-md-12">
                 <div class="title-style">
                     <h2>Artigos</h2>
-                    <div class="line line-fix"></div>
+                    <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
             </div>
@@ -382,4 +414,14 @@
         z-index: 9;
     }
 </style>
+<script>
+
+   /* $(".foo, .bar").smoove({
+        offset  : '15%',
+
+        moveX   : '100px',
+        moveY   : '100px',
+    });*/
+</script>
+
 @endsection

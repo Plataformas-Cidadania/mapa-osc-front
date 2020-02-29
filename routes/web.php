@@ -42,6 +42,9 @@ foreach ($pages as $page) {
         Route::get($page->slug.'/', 'PageController@details');
     }
 }
+
+Route::get('editar-osc', 'OscController@edit');
+
 ///////////////////////////////////////////////////////////////////////
 /*Route::get('sobre', 'PageController@details');
 Route::get('metodologia', 'PageController@details');*/

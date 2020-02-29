@@ -94,3 +94,4 @@
         //console.log(scrollPercent);
     })
 </script>
+<script>$('.block').smoove({offset:'40%'});</script>

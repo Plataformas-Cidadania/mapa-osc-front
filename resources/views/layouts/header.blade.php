@@ -123,7 +123,7 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">Configurar conta</button>
-                                <button class="dropdown-item " type="button">Editar</button>
+                                <button class="dropdown-item " type="button"><a href="editar-osc">Editar</a></button>
                                 <button class="dropdown-item" type="button">Sair</button>
                             </div>
                         </div>

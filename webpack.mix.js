@@ -12,12 +12,13 @@ const mix = require('laravel-mix');
  */
 /*JS*/
 mix.scripts([
-        'node_modules/@fortawesome/fontawesome-free/js/all.js',
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/jquery-animate-scroll/dist/jquery.animate-scroll.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/lazysizes/lazysizes.js',
-        'node_modules/pace-js/pace.min.js',
+    'node_modules/@fortawesome/fontawesome-free/js/all.js',
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/jquery-animate-scroll/dist/jquery.animate-scroll.js',
+    'node_modules/jquery-smoove/dist/jquery.smoove.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.js',
+    'node_modules/lazysizes/lazysizes.js',
+    'node_modules/pace-js/pace.min.js',
     ], 'public/js/app.js');
 
 mix.scripts([
