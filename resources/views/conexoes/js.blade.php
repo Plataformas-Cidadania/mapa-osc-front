@@ -79,3 +79,18 @@
         console.log(fonte);
     }
 </script>
+<script>
+    //Barra scroll
+    $(window).on('scroll', function(){
+        var s = $(window).scrollTop(),
+            d = $(document).height(),
+            c = $(window).height();
+
+        var scrollPercent = (s / (d - c)) * 100;
+        scrollPercent = Math.round(scrollPercent);
+        document.getElementById('progress').style.width = scrollPercent+'%';
+
+        //console.clear();
+        //console.log(scrollPercent);
+    })
+</script>

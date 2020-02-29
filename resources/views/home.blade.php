@@ -12,7 +12,7 @@
 
     <section>
         <div class="row">
-            <div class="col-md-4 items text-center">
+            <div class="col-md-3 items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -23,9 +23,8 @@
                     <h2>Mapa das OSCs</h2>
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
-
             </div>
-            <div class="col-md-4 items text-center">
+            <div class="col-md-3 items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -36,9 +35,8 @@
                     <h2>Mapa das OSCs</h2>
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
-
             </div>
-            <div class="col-md-4 items text-center">
+            <div class="col-md-3 items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -49,7 +47,18 @@
                     <h2>Mapa das OSCs</h2>
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
-
+            </div>
+            <div class="col-md-3 items text-center">
+                <picture>
+                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
+                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
+                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" class="img-responsive">
+                    <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                </picture>
+                <div class="items-text">
+                    <h2>Mapa das OSCs</h2>
+                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                </div>
             </div>
 
         </div>
@@ -330,8 +339,52 @@
     </div>
     <div class="space">&nbsp;</div>
 
+<script>
+    //Barra carregamento
+    paceOptions = {
+        elements: false,
+        restartOnRequestAfter: false
+    }
 
+</script>
+<style>
+    /*Barra carregamento*/
+    .pace {
+        -webkit-pointer-events: none;
+        pointer-events: none;
 
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+    .pace-inactive {
+        display: none;
+    }
+    .pace .pace-progress {
+        background: #29d;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        right: 100%;
+        width: 100%;
+        height: 2px;
+    }
+
+    /*Barra scroll*/
+    html{ height:100%; }
+    body{ height:300%; }
+    .progress{
+        position: fixed;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        z-index: 9;
+
+    }
+
+</style>
 @endsection
 
 

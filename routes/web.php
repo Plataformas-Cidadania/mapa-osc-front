@@ -20,7 +20,6 @@ $routes = [
     ['Page', 'sobres', 'sobre'],
     ['New', 'noticias', 'noticia'],
     ['Product', 'produtos', 'produto'],
-
 ];
 $routesSearch = [
     //controller, search
@@ -28,7 +27,6 @@ $routesSearch = [
 ];
 
 //ROTAS PADRÕES
-
 foreach ($routes as $route) {
     Route::get($route[1].'/', $route[0].'Controller@listing');
     Route::get($route[2].'/{id}/{titulo}', $route[0].'Controller@details');

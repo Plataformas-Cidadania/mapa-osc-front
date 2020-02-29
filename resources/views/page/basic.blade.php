@@ -25,9 +25,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <ul class="list-group">
+                <ul class="menu-left">
                     @foreach($menus as $menu)
-                        <li class="list-group-item list-group-item-action @if($menu->slug==$rota) active @endif">
+                        <li class="list-group-item-theme @if($menu->slug==$rota) menu-left-active @endif" >
                             <a href="{{$menu->slug}}">{{$menu->title}}</a>
                         </li>
                     @endforeach
@@ -48,6 +48,5 @@
             </div>
         </div>
     </div>
-
 
 @endsection

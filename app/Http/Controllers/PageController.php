@@ -29,7 +29,8 @@ class PageController extends Controller{
         $rota = Route::getCurrentRoute()->uri();
 
         $detail = $this->obj->where('slug', $rota)->first();
-        $menus = $this->obj->orderBy('id', 'desc')->get();
+        $menus = $this->obj->orderBy('id', 'desc')->where('type', $detail->type)->get();
         return view($this->module.'.basic', ['detail' => $detail, 'menus' => $menus]);
+        //return view('page.equipe.versoes', ['detail' => $detail, 'menus' => $menus]);
     }
 }

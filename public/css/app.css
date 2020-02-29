@@ -11715,6 +11715,35 @@ time {
   opacity: 0;
 }
 
+.menu-left {
+  margin: 0;
+  padding: 0;
+}
+
+.menu-left li {
+  display: inline-block;
+  width: 100%;
+  padding: 3px;
+  border-bottom: solid 1px #EEEEEE;
+}
+
+.menu-left li a {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-left: solid 3px #CCCCCC;
+}
+
+.menu-left li a:hover {
+  border-left: solid 3px #3A559B;
+}
+
+.menu-left-active a {
+  border-left: solid 3px #3A559B !important;
+  color: #3A559B !important;
+  font-weight: bold;
+}
+
 .bg-pri {
   background-color: #3A559B !important;
 }

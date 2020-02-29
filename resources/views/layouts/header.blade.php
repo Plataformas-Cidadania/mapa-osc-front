@@ -1,3 +1,7 @@
+<div class="progress">
+    <div  id="progress" class="progress-bar bg-success" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
 <div class="bg-lgt" id="acessibilidade" >
     <div class="container">
         <div class="row">
@@ -164,5 +168,7 @@
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">
         </div>
     @endif
+
+
 
 </header>
