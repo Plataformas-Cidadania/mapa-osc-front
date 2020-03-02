@@ -93,45 +93,12 @@
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-2">
-                            <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                            <label for="inputEmail4">Sigla da OSC</label>
+                            <input type="text" class="form-control" id="inputEmail4" placeholder="Email">
                         </div>
                         <div class="form-group col-md-10">
-                            <label for="inputPassword4">Senha</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Endereço</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2">Endereço 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">Cidade</label>
-                            <input type="text" class="form-control" id="inputCity">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputEstado">Estado</label>
-                            <select id="inputEstado" class="form-control">
-                                <option selected>Escolher...</option>
-                                <option>...</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputCEP">CEP</label>
-                            <input type="text" class="form-control" id="inputCEP">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Clique em mim
-                            </label>
+                            <label for="inputPassword4">Nome Fantasia</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Senha">
                         </div>
                     </div>
 
@@ -141,6 +108,110 @@
                         Rua Capitão Silvio Conçalves de Farias, 981, Lote 02<br>
                         Bosque Ouro Preto do Oeste, Rondônia - RO<br>
                         <strong>CEP.:</strong> 76920000
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="inputEstado">Situação do Imóvel</label>
+                            <select id="inputEstado" class="form-control">
+                                <option selected>Escolher...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
+                            <input type="date" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">Ano de Fundação</label>
+                            <input type="date" class="form-control" id="inputCity">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress">Responsável Legal</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">E-mail oficial da OSC</label>
+                            <input type="emil" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Site</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Senha">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputEmail4">Telefone</label>
+                            <input type="text" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword4">Celular</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Senha">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">O que a OSC faz</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+
+                    <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
+
+                    <div>
+                        <ul class="menu-txt-icon">
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                        </ul>
+                    </div>
+
+                    <style>
+                        .menu-txt-icon{
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .menu-txt-icon li{
+                            width: 120px;
+                            height: 120px;
+                            margin: 2px;
+                            background-color: #CCCCCC;
+                            font-size: 9px;
+                            display: inline-block;
+                            padding: 5px;
+                        }
+                        .menu-txt-icon li span:first-child{
+                            font-size: 22px;
+                        }
+                    </style>
+
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                Clique em mim
+                            </label>
+                        </div>
                     </div>
 
 
@@ -156,12 +227,61 @@
             </div>
             <div class="col-md-3">
                 <div class="alert alert-secondary box-floating">
-                   s
+                   <ul class="menu-icons">
+                       <li><i class="fas fa-times float-right"></i></li>
+                       <li><div><i class="far fa-file-alt"></i></div> <p>Dados gerais</p></li>
+                       <li><div><i class="fas fa-share-alt"></i></div> <p>Área de atuação</p></li>
+                       <li><div><i class="fas fa-align-justify"></i></div> <p>Descrição da OSC</p></li>
+                       <li><div><i class="fas fa-certificate"></i></div> <p>Titulações e Certificações</p></li>
+                       <li><div><i class="fas fa-briefcase"></i></div> <p>Releções de trabalho e Governança</p></li>
+                       <li><div><i class="fas fa-users"></i></div> <p>Participação social</p></li>
+                       <li><div><i class="fas fa-project-diagram"></i></div> <p>Projetos</p></li>
+                       <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
+                   </ul>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <style>
+        .menu-icons{
+            margin: 0;
+            padding: 0;
+        }
+        .menu-icons li{
+            display: inline-block;
+            width: 100%;
+            padding: 6px 0 0 0;
+            border-bottom: solid 1px #CCCCCC;
+        }
+        .menu-icons li:first-child{
+            border-bottom: 0;
+            margin-top: -10px;
+        }
+        .menu-icons li:last-child{
+            border-bottom: 0;
+        }
+        .menu-icons div{
+            background-color: #1b4b72;
+            border-radius: 50%;
+            padding: 4px;
+            width: 45px;
+            height: 45px;
+            float: left;
+            text-align: center;
+            margin: 0 10px 0 0;
+        }
+        .menu-icons div svg{
+            color: #FFFFFF;
+            padding: 5px;
+            font-size: 35px;
+            margin-top: 2px;
+        }
+        .menu-icons p{
+            padding: 12px 0 0 0;
+        }
+    </style>
 
 
 @endsection
