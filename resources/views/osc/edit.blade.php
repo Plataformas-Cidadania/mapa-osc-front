@@ -165,23 +165,23 @@
 
                     <div>
                         <ul class="menu-txt-icon">
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
-                            <li><span>1</span> <span>ENRRADICAÇÃO DA POBREZA</span></li>
+                            <li><img src="/img/ods/01.png" alt=""></li>
+                            <li><img src="/img/ods/02.png" alt=""></li>
+                            <li><img src="/img/ods/03.png" alt=""></li>
+                            <li><img src="/img/ods/04.png" alt=""></li>
+                            <li><img src="/img/ods/05.png" alt=""></li>
+                            <li><img src="/img/ods/06.png" alt=""></li>
+                            <li><img src="/img/ods/07.png" alt=""></li>
+                            <li><img src="/img/ods/08.png" alt=""></li>
+                            <li><img src="/img/ods/09.png" alt=""></li>
+                            <li><img src="/img/ods/10.png" alt=""></li>
+                            <li><img src="/img/ods/11.png" alt=""></li>
+                            <li><img src="/img/ods/12.png" alt=""></li>
+                            <li><img src="/img/ods/13.png" alt=""></li>
+                            <li><img src="/img/ods/14.png" alt=""></li>
+                            <li><img src="/img/ods/15.png" alt=""></li>
+                            <li><img src="/img/ods/16.png" alt=""></li>
+                            <li><img src="/img/ods/17.png" alt=""></li>
                         </ul>
                     </div>
 
@@ -191,6 +191,10 @@
                             padding: 0;
                         }
                         .menu-txt-icon li{
+                            display: inline-block;
+                            margin-bottom: 5px;
+                        }
+                        /*.menu-txt-icon li{
                             width: 120px;
                             height: 120px;
                             margin: 2px;
@@ -201,7 +205,7 @@
                         }
                         .menu-txt-icon li span:first-child{
                             font-size: 22px;
-                        }
+                        }*/
                     </style>
 
 
