@@ -21,43 +21,16 @@
             </div>
         </div>
     </div>
-    <style>
-        label{
-            font-size: 13px;
-            margin-bottom: 0;
-        }
-        .img-upload img{
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            border: solid 4px #CCCCCC;
-        }
-        .img-upload-i{
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            border: solid 1px #CCCCCC;
-            position: absolute;
-            line-height: 50px;
-            text-align: center;
-            font-size: 30px;
-            background-color: #FFFFFF;
-            margin-top: -50px;
-            margin-left: 110px;
-        }
-        .box-floating{
-            position: fixed;
-        }
-    </style>
+
 
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-11">
 
                 <div class="row">
                     <div class="col-md-12">
                         <br><br>
-                        <div class="title-style colo-lgt">
+                        <div class="title-style">
                             <h2>Dados Gerais</h2>
                             <div class="line line-fix"></div>
                             <hr/>
@@ -84,11 +57,7 @@
                     </div>
                 </div>
 
-
-
                 <br><br>
-
-
 
                 <form>
                     <div class="form-row">
@@ -112,14 +81,14 @@
 
 
                     <div class="form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="inputEstado">Situação do Imóvel</label>
                             <select id="inputEstado" class="form-control">
                                 <option selected>Escolher...</option>
                                 <option>...</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <label for="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
                             <input type="date" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
                         </div>
@@ -165,71 +134,137 @@
 
                     <div>
                         <ul class="menu-txt-icon">
-                            <li><img src="/img/ods/01.png" alt=""></li>
-                            <li><img src="/img/ods/02.png" alt=""></li>
-                            <li><img src="/img/ods/03.png" alt=""></li>
-                            <li><img src="/img/ods/04.png" alt=""></li>
-                            <li><img src="/img/ods/05.png" alt=""></li>
-                            <li><img src="/img/ods/06.png" alt=""></li>
-                            <li><img src="/img/ods/07.png" alt=""></li>
-                            <li><img src="/img/ods/08.png" alt=""></li>
-                            <li><img src="/img/ods/09.png" alt=""></li>
-                            <li><img src="/img/ods/10.png" alt=""></li>
-                            <li><img src="/img/ods/11.png" alt=""></li>
-                            <li><img src="/img/ods/12.png" alt=""></li>
-                            <li><img src="/img/ods/13.png" alt=""></li>
-                            <li><img src="/img/ods/14.png" alt=""></li>
-                            <li><img src="/img/ods/15.png" alt=""></li>
-                            <li><img src="/img/ods/16.png" alt=""></li>
-                            <li><img src="/img/ods/17.png" alt=""></li>
+                            <li><img src="img/ods/01.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/02.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/03.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/04.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/05.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/06.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/07.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/08.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/09.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/10.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/11.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/12.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/13.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/14.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/15.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/16.png" alt="" class="item-off"></li>
+                            <li><img src="img/ods/17.png" alt="" class="item-off"></li>
                         </ul>
-                    </div>
-
-                    <style>
-                        .menu-txt-icon{
-                            margin: 0;
-                            padding: 0;
-                        }
-                        .menu-txt-icon li{
-                            display: inline-block;
-                            margin-bottom: 5px;
-                        }
-                        /*.menu-txt-icon li{
-                            width: 120px;
-                            height: 120px;
-                            margin: 2px;
-                            background-color: #CCCCCC;
-                            font-size: 9px;
-                            display: inline-block;
-                            padding: 5px;
-                        }
-                        .menu-txt-icon li span:first-child{
-                            font-size: 22px;
-                        }*/
-                    </style>
-
-
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Clique em mim
-                            </label>
+                        <div>
+                            <div>
+                                <br>
+                                <h3>1 - Acabar com a pobreza em todas as suas formas, em todos os lugares</h3>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                                        <label class="form-check-label" for="gridCheck">
+                                            1.1 Até 2030, erradicar a pobreza extrema para todas as pessoas em todos os lugares, atualmente medida como pessoas vivendo com menos de US$ 1,25 por dia
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck2">
+                                        <label class="form-check-label" for="gridCheck2">
+                                            1.2 Até 2030, reduzir pelo menos à metade a proporção de homens, mulheres e crianças, de todas as idades, que vivem na pobreza, em todas as suas dimensões, de acordo com as definições nacionais
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck3">
+                                        <label class="form-check-label" for="gridCheck3">
+                                            1.3 Implementar, em nível nacional, medidas e sistemas de proteção social adequados, para todos, incluindo pisos, e até 2030 atingir a cobertura substancial dos pobres e vulneráveis
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck4">
+                                        <label class="form-check-label" for="gridCheck4">
+                                            1.4 Até 2030, garantir que todos os homens e mulheres, particularmente os pobres e vulneráveis, tenham direitos iguais aos recursos econômicos, bem como o acesso a serviços básicos, propriedade e controle sobre a terra e outras formas de propriedade, herança, recursos naturais, novas tecnologias apropriadas e serviços financeiros, incluindo microfinanças
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck5">
+                                        <label class="form-check-label" for="gridCheck5">
+                                            1.5 Até 2030, construir a resiliência dos pobres e daqueles em situação de vulnerabilidade, e reduzir a exposição e vulnerabilidade destes a eventos extremos relacionados com o clima e outros choques e desastres econômicos, sociais e ambientais
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br><br>
+                            <div class="title-style">
+                                <h2>Áreas e Subáreas de atuação da OSC</h2>
+                                <div class="line line-fix"></div>
+                                <hr/>
+                            </div>
+                            <div class="text-center">Atividade econômica (CNAE)</div>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert alert-secondary">
+                                <h2 class="text-center">Área de atuação 1</h2>
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Busque um artigo...">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Educação infantil
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gridCheck2">
+                                            <label class="form-check-label" for="gridCheck2">
+                                                Ensino médio
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-secondary">
+                                <h2 class="text-center">Área de atuação 2</h2>
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Busque um artigo...">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br><br>
+                            <div class="title-style">
+                                <h2>Descrição da OSC</h2>
+                                <div class="line line-fix"></div>
+                                <hr/>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Entrar</button>
                 </form>
-
-
-
-
 
                 <div class="space"></div>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <div class="alert alert-secondary box-floating">
                    <ul class="menu-icons">
                        <li><i class="fas fa-times float-right"></i></li>
@@ -237,7 +272,7 @@
                        <li><div><i class="fas fa-share-alt"></i></div> <p>Área de atuação</p></li>
                        <li><div><i class="fas fa-align-justify"></i></div> <p>Descrição da OSC</p></li>
                        <li><div><i class="fas fa-certificate"></i></div> <p>Titulações e Certificações</p></li>
-                       <li><div><i class="fas fa-briefcase"></i></div> <p>Releções de trabalho e Governança</p></li>
+                       <li><div><i class="fas fa-briefcase"></i></div> <p>Trabalho e Governança</p></li>
                        <li><div><i class="fas fa-users"></i></div> <p>Participação social</p></li>
                        <li><div><i class="fas fa-project-diagram"></i></div> <p>Projetos</p></li>
                        <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
@@ -249,42 +284,25 @@
     </div>
 
     <style>
-        .menu-icons{
-            margin: 0;
-            padding: 0;
+        .item-off {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            -webkit-filter: gray;
+            filter: gray;
+            opacity: 0.5;
         }
-        .menu-icons li{
-            display: inline-block;
-            width: 100%;
-            padding: 6px 0 0 0;
-            border-bottom: solid 1px #CCCCCC;
+        .item-off:hover {
+            -webkit-filter: none;
+            filter: none;
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            opacity: 9;
         }
-        .menu-icons li:first-child{
-            border-bottom: 0;
-            margin-top: -10px;
+        .item-off, .item-off:hover {
+            -webkit-transition: .3s;
+            transition: .3s;
         }
-        .menu-icons li:last-child{
-            border-bottom: 0;
-        }
-        .menu-icons div{
-            background-color: #1b4b72;
-            border-radius: 50%;
-            padding: 4px;
-            width: 45px;
-            height: 45px;
-            float: left;
-            text-align: center;
-            margin: 0 10px 0 0;
-        }
-        .menu-icons div svg{
-            color: #FFFFFF;
-            padding: 5px;
-            font-size: 35px;
-            margin-top: 2px;
-        }
-        .menu-icons p{
-            padding: 12px 0 0 0;
-        }
+
     </style>
 
 

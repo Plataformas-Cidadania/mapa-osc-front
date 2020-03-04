@@ -160,3 +160,24 @@
 .circle2 #f div {
     transform: rotate(-30deg); /*Coloca virado para cima*/
 }
+
+.img-upload img{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    border: solid 4px #CCCCCC;
+}
+.img-upload-i{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: solid 1px #CCCCCC;
+    position: absolute;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    background-color: #FFFFFF;
+    margin-top: -50px;
+    margin-left: 110px;
+}
+

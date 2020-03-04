@@ -26,22 +26,6 @@
             <br><br><br>
         </div>
     </div>
-    <style>
-        .menu-small{
-            margin: 0;
-            padding: 0;
-            font-size: 13px;
-        }
-        .menu-small li{
-            display: inline-block;
-            padding: 5px 10px 3px 10px;
-            border-bottom: solid 2px #CCCCCC;
-        }
-        .menu-small li:hover{
-            border-bottom: solid 2px #1b4b72;
-        }
-    </style>
-
 
     <section>
         <div class="row">
@@ -97,18 +81,6 @@
         </div>
     </section>
 </div>
-
-<style>
-    .colo-lgt{
-        color: #FFFFFF;
-    }
-    .colo-lgt div{
-        background-color: #FFFFFF;
-    }
-    .colo-lgt hr{
-        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
-    }
-</style>
 
     <div class="bg-pri space">
         <div class="container">
@@ -176,54 +148,7 @@
         </div>
     </div>
 
-<style>
-    .menu-items li{
-        display: inline-block;
-        width: 60px;
-        margin: 10px;
-        vertical-align:top;
-        -webkit-transform: scale(1.0);
-        transform: scale(1.0);
-        -webkit-transition: 1s;
-        transition: 1s;
-    }
-    .menu-items li:hover{
-        -webkit-transform: scale(1.2);
-        transform: scale(1.2);
-        -webkit-transition: 1s;
-        transition: 1s;
-    }
-    .menu-items p{
-        height: 40px;
-        line-height: 12px;
-        font-size: 10px;
-    }
-    .menu-items svg{
-        font-size: 10px;
-        border-radius: 50%;
-        background-color: #1b4b72;
-        color: #FFFFFF;
-        width: 60px;
-        height: 60px;
-        min-width: 60px;
-        padding: 15px;
-    }
-    /*/////////////////////*/
-    .title-style{
 
-    }
-    .title-style hr{
-        margin-top: 0;
-        margin-bottom: 50px;
-    }
-    .line{
-        background-color: #1b4b72;
-        height: 5px;
-    }
-    .line-fix{
-        width: 80px;
-    }
-</style>
 
     <div class="space">&nbsp;</div>
     <div class="container">
@@ -376,52 +301,6 @@
         elements: false,
         restartOnRequestAfter: false
     }
-
-</script>
-<style>
-    /*Barra carregamento*/
-    .pace {
-        -webkit-pointer-events: none;
-        pointer-events: none;
-
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-    }
-    .pace-inactive {
-        display: none;
-    }
-    .pace .pace-progress {
-        background: #29d;
-        position: fixed;
-        z-index: 2000;
-        top: 0;
-        right: 100%;
-        width: 100%;
-        height: 2px;
-    }
-
-    /*Barra scroll*/
-    html{ height:100%; }
-    body{ height:300%; }
-    .progress{
-        position: fixed;
-        border-radius: 0;
-        top: 0;
-        left: 0;
-        height: 2px;
-        width: 100%;
-        z-index: 9;
-    }
-</style>
-<script>
-
-   /* $(".foo, .bar").smoove({
-        offset  : '15%',
-
-        moveX   : '100px',
-        moveY   : '100px',
-    });*/
 </script>
 
 @endsection

@@ -259,3 +259,100 @@
     color: #3A559B!important;
     font-weight: bold;
 }
+/*Menu*/
+.box-floating{
+    position: fixed;
+    z-index: 2;
+}
+.menu-icons{
+    margin: 0;
+    padding: 0;
+
+}
+.menu-icons li{
+    display: inline-block;
+    width: 100%;
+    padding: 6px 0 0 0;
+    border-bottom: solid 1px #CCCCCC;
+}
+.menu-icons li:first-child{
+    border-bottom: 0;
+    margin-top: -10px;
+}
+.menu-icons li:last-child{
+    border-bottom: 0;
+}
+.menu-icons div{
+    background-color: #1b4b72;
+    border-radius: 50%;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    float: left;
+    text-align: center;
+    margin: 0 10px 0 0;
+}
+.menu-icons div svg{
+    color: #FFFFFF;
+    padding: 5px;
+    font-size: 35px;
+    margin-top: 2px;
+}
+.menu-icons p{
+    padding: 12px 0 0 0;
+}
+/**/
+.menu-txt-icon{
+    margin: 0;
+    padding: 0;
+}
+.menu-txt-icon li{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+/**/
+.menu-items li{
+    display: inline-block;
+    width: 60px;
+    margin: 10px;
+    vertical-align:top;
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+.menu-items li:hover{
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+.menu-items p{
+    height: 40px;
+    line-height: 12px;
+    font-size: 10px;
+}
+.menu-items svg{
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: #1b4b72;
+    color: #FFFFFF;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    padding: 15px;
+}
+/**/
+.menu-small{
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+}
+.menu-small li{
+    display: inline-block;
+    padding: 5px 10px 3px 10px;
+    border-bottom: solid 2px #CCCCCC;
+}
+.menu-small li:hover{
+    border-bottom: solid 2px #1b4b72;
+}
