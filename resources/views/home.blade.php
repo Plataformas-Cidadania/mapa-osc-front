@@ -150,6 +150,15 @@
 
 
 
+     <style>
+         .bg-map{
+             background-image: url("img/bg-map.png");
+             background-size: 100%;
+             background-position: top;
+             background-repeat: no-repeat;
+         }
+     </style>
+
     <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
@@ -183,7 +192,7 @@
                 </ul>
                 <br>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 bg-map">
                 <div class="circle">
                     <div id="a" class="rotate">
                         <div class="circle-item">
