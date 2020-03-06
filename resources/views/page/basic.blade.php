@@ -43,6 +43,12 @@
                     </picture>
                     <br><br>
                     <p>{!! $detail->description !!}</p>
+                    <div>
+                        @include('page.about.team')
+                    </div>
+                    <div>
+                        @include('page.about.item')
+                    </div>
                     <br>
                 </article>
             </div>
