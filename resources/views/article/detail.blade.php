@@ -58,7 +58,7 @@
                 <div class="space"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>126 comentários</h2>
+                        <h2><i class="fas fa-comment"></i> 126 comentários</h2>
                         <hr>
                         <br>
                     </div>
@@ -95,7 +95,7 @@
                                     <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'abb')}}</time>
                                 </div>
                                 <div class="col-md-12">
-                                    <p><strong class="aspa">"</strong>Nulla sit amet sollicitudin orci. Nullam lacinia iaculis dui, eget lacinia erat accumsan dignissim. Ut ut accumsan sapien, quis sagittis risus. Vivamus metus nunc, aliquam sit amet tempor eu, maximus id nunc. Suspendisse potenti.<strong class="aspa">"</strong></p>
+                                    <p><i class="fas fa-quote-left aspa"></i>Nulla sit amet sollicitudin orci. Nullam lacinia iaculis dui, eget lacinia erat accumsan dignissim. Ut ut accumsan sapien, quis sagittis risus. Vivamus metus nunc, aliquam sit amet tempor eu, maximus id nunc. Suspendisse potenti.<i class="fas fa-quote-right aspa aspa-r"></i></p>
                                 </div>
                             </div>
                             <hr>

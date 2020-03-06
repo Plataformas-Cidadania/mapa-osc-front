@@ -31,8 +31,12 @@
     margin: 0 0 20px 0;
 }
 .aspa{
-    font-size: 30px;
+    font-size: 15px;
     color: $color-pri;
+    margin-right: 5px;
+}
+.aspa-r{
+    margin-left: 5px;
 }
 .login{
     max-width: 175px;
@@ -69,7 +73,7 @@
     width: 260px;
     border-radius: 100%;
     border: solid 1px #CCCCCC;
-    margin: -340px  auto 380px auto;
+    margin: -340px  auto 280px auto;
     position: relative;
 }
 .rotate {

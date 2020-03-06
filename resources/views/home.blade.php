@@ -82,7 +82,7 @@
     </section>
 </div>
 
-    <div class="bg-pri space">
+    <div class="bg-pri space bg-line">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -154,8 +154,14 @@
          .bg-map{
              background-image: url("img/bg-map.png");
              background-size: 100%;
-             background-position: top;
+             background-position: center -50px;
              background-repeat: no-repeat;
+         }
+         .bg-line{
+             background-image: url("img/bg-line.png");
+             background-repeat: no-repeat;
+             background-position: right;
+             background-size: 40%;
          }
      </style>
 

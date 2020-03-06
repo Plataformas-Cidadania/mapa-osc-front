@@ -11813,15 +11813,15 @@ time {
   width: 60px;
   margin: 10px;
   vertical-align: top;
-  -webkit-transform: scale(1);
-  transform: scale(1);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
   -webkit-transition: 1s;
   transition: 1s;
 }
 
 .menu-items li:hover {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: translateY(-20px);
+  transform: translateY(-20px);
   -webkit-transition: 1s;
   transition: 1s;
 }
@@ -12174,8 +12174,13 @@ input[type=radio]:checked + label::after {
 }
 
 .aspa {
-  font-size: 30px;
+  font-size: 15px;
   color: #3A559B;
+  margin-right: 5px;
+}
+
+.aspa-r {
+  margin-left: 5px;
 }
 
 .login {
@@ -12217,7 +12222,7 @@ input[type=radio]:checked + label::after {
   width: 260px;
   border-radius: 100%;
   border: solid 1px #CCCCCC;
-  margin: -340px auto 380px auto;
+  margin: -340px auto 280px auto;
   position: relative;
 }
 
