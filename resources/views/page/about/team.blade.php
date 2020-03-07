@@ -24,7 +24,7 @@
         </div>
     </div>
 </div>
-<hr>
+<br>
 <div class="row">
     <div class="col-md-12">
         <strong>Equipe</strong><br><br>
@@ -55,3 +55,4 @@
         </div>
     </div>
 </div>
+<hr>
