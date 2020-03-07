@@ -81,7 +81,6 @@
                             <button class="btn btn-primary" >Enviar</button>
                         </div>
                     </div>
-
                     {{--Formulário--}}
 
                     <div class="col-md-12 space">

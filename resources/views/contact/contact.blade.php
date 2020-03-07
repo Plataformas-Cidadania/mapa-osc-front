@@ -1,0 +1,93 @@
+@extends('layout')
+@section('title', '')
+@section('keywords', '')
+@section('description', '')
+@section('image', '')
+@section('content')
+
+    <div class="bg-lgt">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <header>
+                        <br>
+                        <h1>Contato</h1>
+                        <h5><a href="/">Home</a></h5>
+                        <br>
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <br><br>
+                <h3>Contact Details</h3>
+                <p>Our Medical Center is the preferred choice for diplomats and employees from 64 embassies, consulates and UN agencies, as well as private patients from over 60 countries.</p>
+            </div>
+            <div class="col-md-7">
+                <br><br>
+                <div class="row">
+                    {{--Formulário--}}
+                    <div class="col-md-6">
+                        <div><input type="text" placeholder="Nome" class="form-control"></div>
+                        <br>
+                    </div>
+                    <div class="col-md-6">
+                        <div><input type="email" placeholder="E-mail" class="form-control"></div>
+                        <br>
+                    </div>
+                    <div class="col-md-4">
+                        <div><input type="text" placeholder="Telefone" class="form-control"></div>
+                        <br>
+                    </div>
+                    <div class="col-md-4">
+                        <div><input type="text" placeholder="Celular" class="form-control"></div>
+                        <br>
+                    </div>
+                    <div class="col-md-12">
+                        <div><textarea class="form-control" ></textarea></div>
+                        <br>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <button class="btn btn-primary" >Enviar</button>
+                        </div>
+                    </div>
+                    {{--Formulário--}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <style>
+                #map {
+                    width: 100%;
+                    height: 600px;
+                }
+            </style>
+            <br>
+            <div id='map'></div>
+            <br>
+        </div>
+        <div class="col-md-6">
+            <address>
+                <h2 class="tx-pri">Rio de Janeiro</h2>
+                Av. Rio de Janeiro - Centro - RJ<br>
+                CEP.: 24456-422<br>
+                <abbr title="Phone">+55 (21) 2523-2655</abbr>
+            </address>
+            <br>
+            <address>
+                <h2 class="tx-pri">Brasília</h2>
+                Av. Rio de Janeiro - Centro - RJ<br>
+                CEP.: 24456-422<br>
+                <abbr title="Phone">+55 (21) 2523-2655</abbr>
+            </address>
+        </div>
+    </div>
+@endsection

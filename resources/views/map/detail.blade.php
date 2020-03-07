@@ -33,8 +33,7 @@
                 <br>
                 <div id='map'></div>
                 <br>
-
-               </div>
+           </div>
         </div>
     </div>
 

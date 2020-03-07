@@ -10,7 +10,7 @@
 {{--<script src="/js/react/react.development.js" crossorigin></script>
 <script src="/js/react/react-dom.development.js" crossorigin></script>--}}
 @endif
-@if($rota=='mapa')
+@if($rota=='mapa' || $rota=='contato')
 <script src="js/map.js"></script>
 <script>
     var cities = L.layerGroup();

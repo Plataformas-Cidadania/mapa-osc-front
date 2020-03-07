@@ -11365,7 +11365,7 @@ body {
 }
 
 h1 {
-  /*font-size: 28px!important;*/
+  font-size: 28px !important;
 }
 
 h2 {
@@ -12480,5 +12480,9 @@ a:active {
 
 .list-group-item a {
   display: block;
+}
+
+.alert-secondary {
+  background-color: #EEEEEE !important;
 }
 

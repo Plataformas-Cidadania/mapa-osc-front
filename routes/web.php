@@ -53,6 +53,7 @@ Route::get('metodologia', 'PageController@details');*/
 //ROTAS AVULSAS
 
 Route::get('mapa', 'MapController@details');
+Route::get('contato', 'ContactController@details');
 
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
