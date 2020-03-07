@@ -29,12 +29,23 @@
                 <iframe width="100%" height="450" src="https://www.youtube.com/embed/-wcivHC5ZmQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <br>
                 <div class="box-video">
-                    <p class="float-left">180 visualizações</p>
-                    <p class="float-right">2 meses atrás</p>
+                    <p class="float-left"><i class="far fa-eye"></i> 180 visualizações</p>
+                    <p class="float-right"><i class="far fa-clock"></i> 2 meses atrás</p>
                     <br><br>
                 </div>
                 <h3>{{$detail->teaser}}</h3>
                 <p>{{$detail->description}}</p>
+
+                <div class="space">
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+                            <div><i class="fas fa-angle-left"></i> Vídeo anterior</div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div>Próximo vídeo <i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div>
