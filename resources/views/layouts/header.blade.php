@@ -18,13 +18,64 @@
                     <li class="bg-pri box-font-size rounded-circle"><a onClick="fonte('a');" href="#">A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle"><a onClick="fonte('p');" href="#">A&nbsp;</a></li>
                     <li class="bg-ter box-font-size rounded-circle"><a onClick="fonte('d');" href="#">A-</a></li>
-                    <li><a id="#" onclick="contrast();"><i class="fas fa-adjust fa-2x"></i> Alto contraste</a></li>
+                    <li><a href="#" class="btn-constrat"><i class="fas fa-adjust fa-2x"></i> Alto contraste</a></li>
                     <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x"></i> Acessibilidade</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+{{--<span class="btnSetItem"><i class="fas fa-adjust"></i></span>
+<span class="btnGetItem">Pegar Item</span>
+<span class="btnRemoveItem">Remover Item</span>--}}
+<script>
+    (function (){
+        'use strict';
+
+        var btnSetItem = document.querySelector('.btn-constrat')
+        var btnGetItem = document.querySelector('.btn-constrat')
+        var btnRemoveItem = document.querySelector('.btnRemoveItem')
+
+        function setLocalStorage(){
+
+            if(localStorage.getItem('contrast')==='true'){
+                document.getElementById('contrast').className = 'contrast';
+            }else{
+                document.getElementById('contrast').className = 'contrast-off';
+            }
+
+            btnSetItem.addEventListener('click', () => {
+                if(localStorage.getItem('contrast')==='true'){
+                    localStorage.setItem('contrast', false);
+                    document.getElementById('contrast').className = 'contrast-off';
+                }else{
+                    localStorage.setItem('contrast', true);
+                    document.getElementById('contrast').className = 'contrast';
+                }
+                console.log(localStorage.getItem('contrast'));
+            })
+
+            console.log(localStorage.getItem('contrast'));
+           }
+
+        /*function getLocalStorage(){
+            btnGetItem.addEventListener('click', () => {
+                console.log( localStorage.getItem('contrast') )
+            })
+        }
+
+        function removeLocalStorage(){
+            btnRemoveItem.addEventListener('click', () => {
+                localStorage.removeItem('contrast')
+            })
+        }*/
+        setLocalStorage();
+        /*getLocalStorage();
+        removeLocalStorage();*/
+
+    }());
+</script>
 
 <style>
     .box-font-size{

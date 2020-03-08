@@ -49,17 +49,5 @@
         color: #FFFFFF!important;
     }
 </style>
-<script language="JavaScript" type="text/javascript">
-    <!--
-    function contrast(){
-        classe = document.getElementById('contrast').className;
-        if(classe == 'contrast-off'){
-            document.getElementById('contrast').className = 'contrast';
-        }else{
-            document.getElementById('contrast').className = 'contrast-off';
-        }
-    }
-    //-->
-</script>
 
 @include('conexoes.js')
