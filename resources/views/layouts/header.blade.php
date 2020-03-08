@@ -41,10 +41,10 @@
 </style>
 
 {{--CEl--}}
-<div class="header-cel text-center  d-block d-sm-none" >
+<div class="header-cel text-center d-block d-sm-none" >
     <div class="row">
         <div class="col-xs-2">
-            <div class="btn-cel" ng-click="MinhaDiv = !MinhaDiv">
+            <div class="btn-cel">
                 <div class="btn-line btn-line-off"></div>
                 <div class="btn-line btn-line-rotate"></div>
                 <div class="btn-line btn-line-close"></div>
@@ -64,7 +64,8 @@
         <div class="col-xs-2"></div>
     </div>
 </div>
-<div class="menu-cel hidden-lg hidden-md hidden-sm ng-hide"  ng-show="MinhaDiv">
+
+<div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide">
     <div class="menu-cel-redes">
         {{--@if($setting->pinterest!="")<a href="{{$setting->pinterest}}" target="_blank"><i class="fab fa-pinterest-square font-color" aria-hidden="true"></i></a>@endif
         @if($setting->instagram!="")<a href="{{$setting->instagram}}" target="_blank"><i class="fab fa-instagram font-color" aria-hidden="true"></i></a>@endif
@@ -72,7 +73,9 @@
         @if($setting->youtube!="")<a href="{{$setting->youtube}}" target="_blank"><i class="fab fa-youtube-square font-color" aria-hidden="true"></i></a>@endif
         @if($setting->blog!="")<a href="{{$setting->blog}}" target="_blank"><i class="fab fa-blogger font-color" aria-hidden="true"></i></a>@endif
         @if($setting->facebook!="")<a href="{{$setting->facebook}}" target="_blank"><i class="fab fa-facebook-square font-color" aria-hidden="true"></i></a>@endif--}}
-        <i class="fa fa-ins" aria-hidden="true"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp-square"></i>
         <hr class="hr-cel">
     </div>
     <ul>
@@ -83,7 +86,7 @@
         <li><a href="/contato">Contato</a></li>
     </ul>
 </div>
-<div class="box-menu ng-hide" ng-show="MinhaDiv"></div>
+<div class="box-menu menu-cel-hide"></div>
 {{--CEl--}}
 
 
@@ -169,6 +172,7 @@
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">
         </div>
     @endif
+
 
 
 

@@ -95,3 +95,12 @@
     })
 </script>
 <script>$('.block').smoove({offset:'40%'});</script>
+<script>
+    $(document).ready(function() {
+        $('.menu-cel-hide').hide();
+
+        $('.btn-cel').click(function() {
+            $('.menu-cel-hide').toggle('slow, 1000');
+        });
+    });
+</script>
