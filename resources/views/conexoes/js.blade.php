@@ -98,9 +98,14 @@
 <script>
     $(document).ready(function() {
         $('.menu-cel-hide').hide();
+        $('.menu-cel-login-hide').hide();
 
         $('.btn-cel').click(function() {
-            $('.menu-cel-hide').toggle('slow, 1000');
+            $('.menu-cel-hide').animate({width:'toggle'},350);
+            $('.menu-cel-icon').toggle('slow, 1000');
+        });
+        $('#btn-cel-login').click(function() {
+            $('.menu-cel-login-hide').animate({height:'toggle'},350);
         });
     });
 </script>

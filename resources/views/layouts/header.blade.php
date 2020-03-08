@@ -44,12 +44,8 @@
 <div class="header-cel text-center d-block d-sm-none" >
     <div class="row">
         <div class="col-xs-2">
-            <div class="btn-cel">
-                <div class="btn-line btn-line-off"></div>
-                <div class="btn-line btn-line-rotate"></div>
-                <div class="btn-line btn-line-close"></div>
-                <div class="btn-line btn-line-off"></div>
-            </div>
+            <i class="fas fa-bars fa-2x btn-cel menu-cel-icon"></i>
+            <i class="fas fa-times fa-2x btn-cel menu-cel-hide"></i>
         </div>
         <div class="col-xs-8">
             {{-- <img src="img/logo.png" alt="" >--}}
@@ -73,17 +69,16 @@
         @if($setting->youtube!="")<a href="{{$setting->youtube}}" target="_blank"><i class="fab fa-youtube-square font-color" aria-hidden="true"></i></a>@endif
         @if($setting->blog!="")<a href="{{$setting->blog}}" target="_blank"><i class="fab fa-blogger font-color" aria-hidden="true"></i></a>@endif
         @if($setting->facebook!="")<a href="{{$setting->facebook}}" target="_blank"><i class="fab fa-facebook-square font-color" aria-hidden="true"></i></a>@endif--}}
-        <i class="fab fa-facebook"></i>
+        <i class="fab fa-facebook-square"></i>
         <i class="fab fa-instagram"></i>
-        <i class="fab fa-whatsapp-square"></i>
+        <i class="fab fa-whatsapp"></i>
         <hr class="hr-cel">
     </div>
     <ul>
         <li><a href="/">Ínicio</a></li>
-        <li><a href="/institucional">Empresa</a></li>
-        <li><a href="/produtos">Produtos</a></li>
-        <li><a href="/seguradoras">Seguradoras</a></li>
-        <li><a href="/contato">Contato</a></li>
+        <li><a href="sobre">Sobre</a></li>
+        <li><a href="mapa">Mapa</a></li>
+        <li><a href="contato">Contato</a></li>
     </ul>
 </div>
 <div class="box-menu menu-cel-hide"></div>
@@ -93,7 +88,7 @@
 
 <header id="iniciodoconteudo"  role="banner">
 
-    <div class="container">
+    <div class="container d-none d-xl-block">
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-light bg-light">

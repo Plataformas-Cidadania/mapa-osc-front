@@ -11613,45 +11613,8 @@ time {
 }
 
 .btn-cel {
-  padding: 20px;
   cursor: pointer;
-}
-
-.btn-cel:hover .btn-line-off {
-  display: none;
-}
-
-.btn-cel:hover .btn-line-rotate {
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-  -webkit-transition: width 2s;
-  transition: width 2s;
-  margin-top: 8px;
-}
-
-.btn-line-close {
-  display: none;
-}
-
-.btn-cel:hover .btn-line-close {
-  width: 30px;
-  height: 3px;
-  background-color: #333333;
-  margin: 2px;
-  display: block;
-  position: relative;
-  margin-top: -5px;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: width 2s;
-  transition: width 2s;
-}
-
-.btn-line {
-  width: 30px;
-  height: 3px;
-  background-color: #333333;
-  margin: 2px;
+  margin: 10px 0 0 28px;
 }
 
 .box-menu {
@@ -11659,8 +11622,7 @@ time {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
-  -webkit-transition: all linear 0.6s;
-  transition: all linear 0.6s;
+  /*transition: all linear 0.6s;*/
   z-index: 9999999;
   margin-top: -50px;
 }
@@ -11673,8 +11635,7 @@ time {
   position: fixed;
   z-index: 999999999;
   padding-top: 10px;
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
+  /*transition: all linear 0.5s;*/
 }
 
 .menu-cel ul {
@@ -11701,10 +11662,40 @@ time {
   color: #FFFFFF !important;
 }
 
+.menu-cel-redes {
+  width: 400px;
+}
+
 .menu-cel-redes svg {
   font-size: 60px;
   padding: 0 8px 8px 8px;
   color: #3A559B;
+}
+
+.menu-cel-login {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+.menu-cel-login li {
+  display: block;
+  margin: 35px 10px;
+}
+
+.menu-cel-login li a {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.menu-cel-login li:first-child {
+  margin-top: 50px;
+}
+
+.menu-cel-login li:last-child {
+  margin-bottom: 50px;
+  margin-right: 20px;
+  border-bottom: 0;
 }
 
 .hr-cel {
@@ -11861,6 +11852,12 @@ time {
 
 .menu-small li:hover {
   border-bottom: solid 2px #1b4b72;
+}
+
+@media only screen and (max-width: 480px) {
+  .cel-footer {
+    margin-bottom: 50px;
+  }
 }
 
 .bg-pri {
