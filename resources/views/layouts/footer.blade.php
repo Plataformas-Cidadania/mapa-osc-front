@@ -4,7 +4,7 @@
     <div class="menu-cel-footer bg-lgt menu-cel-login-hide">
         <div class="text-center">
             <br>
-            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle" width="60">
+            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle" width="80">
             <h4>Nome OSC</h4>
         </div>
         <hr>

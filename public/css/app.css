@@ -11622,9 +11622,8 @@ time {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
-  /*transition: all linear 0.6s;*/
   z-index: 9999999;
-  margin-top: -50px;
+  top: 0;
 }
 
 .menu-cel {
@@ -11635,7 +11634,6 @@ time {
   position: fixed;
   z-index: 999999999;
   padding-top: 10px;
-  /*transition: all linear 0.5s;*/
 }
 
 .menu-cel ul {
