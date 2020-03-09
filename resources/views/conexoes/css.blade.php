@@ -3,7 +3,7 @@
 @if($rota=='/')
     <link rel="stylesheet" href="css/home.css">
 @endif
-@if($rota=='mapa')
+@if($rota=='mapa' || $rota=='contato')
     <link rel="stylesheet" href="css/map.css">
 @endif
 <style>

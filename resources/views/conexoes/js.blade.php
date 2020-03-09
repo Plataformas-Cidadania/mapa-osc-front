@@ -63,20 +63,25 @@
 
         var elemento = $(".acessibilidade");
         var fonte = elemento.css('font-size');
-        if (e == 'a') {
-            console.log('a');
-            elemento.css("fontSize", parseInt(fonte) + 2);
-        }
-        if(e == 'd'){
-            console.log('d');
-            elemento.css("fontSize", parseInt(fonte) - 2);
-        }
-        if(e == 'p'){
-            console.log('p');
-            elemento.css("fontSize", 16);
+
+        if(parseInt(fonte) < 24 || parseInt(fonte) > 10 ){
+            if (e == 'a') {
+                console.log('a');
+                elemento.css("fontSize", parseInt(fonte) + 2);
+
+            }
+            if(e == 'd'){
+                console.log('d');
+                elemento.css("fontSize", parseInt(fonte) - 2);
+            }
+            if(e == 'p'){
+                console.log('p');
+                elemento.css("fontSize", 16);
+            }
+            console.log(parseInt(fonte));
         }
 
-        console.log(fonte);
+
     }
 </script>
 <script>

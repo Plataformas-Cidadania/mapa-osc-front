@@ -40,18 +40,18 @@
         function setLocalStorage(){
 
             if(localStorage.getItem('contrast')==='true'){
-                document.getElementById('contrast').className = 'contrast';
+                document.getElementById('contrast').className = 'acessibilidade contrast';
             }else{
-                document.getElementById('contrast').className = 'contrast-off';
+                document.getElementById('contrast').className = 'acessibilidade contrast-off';
             }
 
             btnSetItem.addEventListener('click', () => {
                 if(localStorage.getItem('contrast')==='true'){
                     localStorage.setItem('contrast', false);
-                    document.getElementById('contrast').className = 'contrast-off';
+                    document.getElementById('contrast').className = 'acessibilidade contrast-off';
                 }else{
                     localStorage.setItem('contrast', true);
-                    document.getElementById('contrast').className = 'contrast';
+                    document.getElementById('contrast').className = 'acessibilidade contrast';
                 }
                 console.log(localStorage.getItem('contrast'));
             })

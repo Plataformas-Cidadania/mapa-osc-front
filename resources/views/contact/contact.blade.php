@@ -67,7 +67,7 @@
             <style>
                 #map {
                     width: 100%;
-                    height: 600px;
+                    height: 400px;
                 }
             </style>
             <br>
@@ -75,6 +75,7 @@
             <br>
         </div>
         <div class="col-md-6">
+            <br><br>
             <address>
                 <h2 class="tx-pri">Rio de Janeiro</h2>
                 Av. Rio de Janeiro - Centro - RJ<br>
