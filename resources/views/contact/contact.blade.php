@@ -19,6 +19,7 @@
             </div>
         </div>
     </div>
+    <br>
 
     <div class="container">
         <div class="row">
@@ -48,7 +49,7 @@
                         <br>
                     </div>
                     <div class="col-md-12">
-                        <div><textarea class="form-control" ></textarea></div>
+                        <div><textarea class="form-control" rows="5"></textarea></div>
                         <br>
                     </div>
                     <div class="col-md-3">
@@ -61,9 +62,40 @@
             </div>
         </div>
     </div>
+    <br><br>
+
+
+
+    <div class="bg-pri">
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <address>
+                        <h2 class="tx-pri">Rio de Janeiro</h2>
+                        Av. Rio de Janeiro - Centro - RJ<br>
+                        CEP.: 24456-422<br>
+                        <abbr title="Phone">+55 (21) 2523-2655</abbr>
+                    </address>
+                </div>
+                <br>
+                <div class="col-md-6">
+                    <address>
+                        <h2 class="tx-pri">Brasília</h2>
+                        Av. Rio de Janeiro - Centro - RJ<br>
+                        CEP.: 24456-422<br>
+                        <abbr title="Phone">+55 (21) 2523-2655</abbr>
+                    </address>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <style>
                 #map {
                     width: 100%;
@@ -73,22 +105,6 @@
             <br>
             <div id='map'></div>
             <br>
-        </div>
-        <div class="col-md-6">
-            <br><br>
-            <address>
-                <h2 class="tx-pri">Rio de Janeiro</h2>
-                Av. Rio de Janeiro - Centro - RJ<br>
-                CEP.: 24456-422<br>
-                <abbr title="Phone">+55 (21) 2523-2655</abbr>
-            </address>
-            <br>
-            <address>
-                <h2 class="tx-pri">Brasília</h2>
-                Av. Rio de Janeiro - Centro - RJ<br>
-                CEP.: 24456-422<br>
-                <abbr title="Phone">+55 (21) 2523-2655</abbr>
-            </address>
         </div>
     </div>
 @endsection
