@@ -15,11 +15,11 @@
             </div>
             <div class="col-md-6 text-lg-right text-md-right">
                 <ul id="botoes" >
-                    <li class="bg-pri box-font-size rounded-circle"><a onClick="fonte('a');" href="#">A+</a></li>
-                    <li class="bg-sec box-font-size rounded-circle"><a onClick="fonte('p');" href="#">A&nbsp;</a></li>
-                    <li class="bg-ter box-font-size rounded-circle"><a onClick="fonte('d');" href="#">A-</a></li>
-                    <li><a href="#" class="btn-constrat"><i class="fas fa-adjust fa-2x"></i> Alto contraste</a></li>
-                    <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x"></i> Acessibilidade</a></li>
+                    <li class="bg-pri box-font-size rounded-circle"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}} href="#">A+</a></li>
+                    <li class="bg-sec box-font-size rounded-circle"><a id="reset_fonte" href="#">A&nbsp;</a></li>
+                    <li class="bg-ter box-font-size rounded-circle"><a id="reduz_fonte" href="#">A-</a></li>
+                    <li><a href="#" class="btn-constrat"><i class="fas fa-adjust fa-2x" style="vertical-align: middle;"></i> Alto contraste</a></li>
+                    <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x" style="vertical-align: middle;"></i> Acessibilidade</a></li>
                 </ul>
             </div>
         </div>
@@ -34,29 +34,29 @@
         'use strict';
 
         var btnSetItem = document.querySelector('.btn-constrat')
-        var btnGetItem = document.querySelector('.btn-constrat')
-        var btnRemoveItem = document.querySelector('.btnRemoveItem')
+        //var btnGetItem = document.querySelector('.btn-constrat')
+        //var btnRemoveItem = document.querySelector('.btnRemoveItem')
 
         function setLocalStorage(){
 
             if(localStorage.getItem('contrast')==='true'){
-                document.getElementById('contrast').className = 'acessibilidade contrast';
+                document.getElementById('contrast').className = 'contrast';
             }else{
-                document.getElementById('contrast').className = 'acessibilidade contrast-off';
+                document.getElementById('contrast').className = 'contrast-off';
             }
 
             btnSetItem.addEventListener('click', () => {
                 if(localStorage.getItem('contrast')==='true'){
                     localStorage.setItem('contrast', false);
-                    document.getElementById('contrast').className = 'acessibilidade contrast-off';
+                    document.getElementById('contrast').className = 'contrast-off';
                 }else{
                     localStorage.setItem('contrast', true);
-                    document.getElementById('contrast').className = 'acessibilidade contrast';
+                    document.getElementById('contrast').className = 'contrast';
                 }
-                console.log(localStorage.getItem('contrast'));
+                //console.log(localStorage.getItem('contrast'));
             })
 
-            console.log(localStorage.getItem('contrast'));
+            //console.log(localStorage.getItem('contrast'));
            }
 
         /*function getLocalStorage(){

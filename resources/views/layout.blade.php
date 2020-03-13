@@ -18,7 +18,7 @@
         @include('layouts.links')--}}
         @include('conexoes.css')
      </head>
-    <body class="acessibilidade" id="contrast">
+    <body {{--class="acessibilidade"--}} id="contrast" >
         @include('layouts.layout1')
     </body>
 </html>

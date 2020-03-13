@@ -59,30 +59,32 @@
     });
 </script>
 <script>
-    function fonte(e){
+    $(document).ready(function(){
+        var fonte = 16;
 
-        var elemento = $(".acessibilidade");
-        var fonte = elemento.css('font-size');
-
-        if(parseInt(fonte) < 24 || parseInt(fonte) > 10 ){
-            if (e == 'a') {
-                console.log('a');
-                elemento.css("fontSize", parseInt(fonte) + 2);
-
-            }
-            if(e == 'd'){
-                console.log('d');
-                elemento.css("fontSize", parseInt(fonte) - 2);
-            }
-            if(e == 'p'){
-                console.log('p');
-                elemento.css("fontSize", 16);
-            }
-            console.log(parseInt(fonte));
+        if(fonte==16){
+            $('#contrast').css({'font-size' : localStorage.getItem('fonte')+'px'});
         }
-
-
-    }
+        $('#aumenta_fonte').click(function(){
+            if (fonte<22){
+                fonte = fonte+2;
+                localStorage.setItem('fonte', fonte);
+                $('#contrast').css({'font-size' : fonte+'px'});
+            }
+        });
+        $('#reset_fonte').click(function(){
+            fonte = 16;
+            localStorage.setItem('fonte', fonte);
+            $('#contrast').css({'font-size': '16px'});
+        });
+        $('#reduz_fonte').click(function(){
+            if (fonte>10){
+                fonte = fonte-2;
+                localStorage.setItem('fonte', fonte);
+                $('#contrast').css({'font-size' : fonte+'px'});
+            }
+        });
+    });
 </script>
 <script>
     //Barra scroll
