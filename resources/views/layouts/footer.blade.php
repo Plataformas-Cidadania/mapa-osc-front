@@ -1,7 +1,7 @@
 <footer id="iniciodorodape" role="contentinfo" class="cel-footer">
 
     {{--CEL--}}
-    <div class="menu-cel-footer bg-lgt menu-cel-login-hide">
+    <div class="menu-cel-footer bg-lgt menu-cel-login-hide" style="display: none;">
         <div class="text-center">
             <br>
             <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle" width="80">

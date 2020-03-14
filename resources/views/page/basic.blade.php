@@ -39,13 +39,15 @@
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload">
+                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre criar uma coluna para descrever a imagem" width="100%" class="img-fluid lazyload">
                     </picture>
                     <br><br>
-                    <p>{!! $detail->description !!}</p>
-                    <div>
-                        @include('page.about.team')
-                    </div>
+                    <p  data-message="Esse é do primeiro botão" tabindex="0">{!! $detail->description !!}</p>
+                    @if($rota=="equipe")
+                        <div>
+                            @include('page.about.team')
+                        </div>
+                    @endif
                     <div>
                         @include('page.about.item')
                     </div>

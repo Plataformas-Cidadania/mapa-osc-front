@@ -42,8 +42,8 @@
                                     <i class="fab fa-whatsapp"></i>
                                 </div>--}}
                             </div>
-                            <h2>{{$list->title}}</h2>
-                            <p>{!! $list->tease !!}</p>
+                            <h2 data-message="{{$list->title}}" tabindex="0">{{$list->title}}</h2>
+                            <p data-message="{{$list->tease}}" tabindex="0">{!! $list->tease !!}</p>
                             <h4 class="btn-plus">Continue lendo</h4>
                             <br>
                             <hr>

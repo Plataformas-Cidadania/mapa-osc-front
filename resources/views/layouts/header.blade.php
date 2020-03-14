@@ -112,7 +112,7 @@
     </div>
 </div>
 
-<div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide">
+<div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide" style="display: none;">
     <div class="menu-cel-redes">
         {{--@if($setting->pinterest!="")<a href="{{$setting->pinterest}}" target="_blank"><i class="fab fa-pinterest-square font-color" aria-hidden="true"></i></a>@endif
         @if($setting->instagram!="")<a href="{{$setting->instagram}}" target="_blank"><i class="fab fa-instagram font-color" aria-hidden="true"></i></a>@endif
@@ -132,7 +132,7 @@
         <li><a href="contato">Contato</a></li>
     </ul>
 </div>
-<div class="box-menu menu-cel-hide"></div>
+<div class="box-menu menu-cel-hide" style="display: none;"></div>
 {{--CEl--}}
 
 
