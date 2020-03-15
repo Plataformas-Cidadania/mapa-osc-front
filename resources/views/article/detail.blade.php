@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{$detail->title}}</h1>
+                        <h1 data-message="{{$detail->title}}" tabindex="0">{{$detail->title}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / {{str_limit(strip_tags($detail->title), 25)."..."}}</h5>
                         <br>
                     </header>
@@ -32,13 +32,13 @@
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload">
-                        <figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
+                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload" data-message="Imagem sobre " tabindex="0">
+                        <figcaption data-message="Fig.1 - Trulli, Puglia, Italy." tabindex="0">Fig.1 - Trulli, Puglia, Italy.</figcaption>
                     </picture>
 
                     <div class="row">
                         <div class="col-md-6 item-calendar">
-                            <time pubdate class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'ext', 'hs')}}</time>
+                            <time pubdate class="item-calendar" data-message="Imagem sobre {{formatBr($detail->date, 'ext', 'hs')}}" tabindex="0"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'ext', 'hs')}}</time>
                         </div>
                         <div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>
@@ -47,8 +47,7 @@
                             <i class="fab fa-whatsapp"></i>
                         </div>
                     </div>
-                    <h2>{{$detail->title}}</h2>
-                    <p>{!! $detail->description !!}</p>
+                    <p data-message="{!! $detail->description !!}" tabindex="0">{!! $detail->description !!}</p>
                     <br>
                     <hr>
                 </article>
@@ -58,7 +57,7 @@
                 <div class="space"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h2><i class="fas fa-comment"></i> 126 comentários</h2>
+                        <h2 data-message="Deixe seu comentários" tabindex="0"><i class="fas fa-comment"></i> 126 comentários</h2>
                         <hr>
                         <br>
                     </div>
