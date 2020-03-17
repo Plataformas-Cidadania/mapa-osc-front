@@ -36,11 +36,12 @@ foreach ($routesSearch as $route) {
     Route::get($route[1].'/{search}', $route[0].'Controller@listing');
 }
 ///////////////////////////////////////////////////////////////////////
-$pages = \Illuminate\Support\Facades\DB::table('pages')->select('slug')->get();
-
-foreach ($pages as $page) {
-    if(!empty($page->slug)){
-        Route::get($page->slug.'/', 'PageController@details');
+if(env('DYNAMIC_ROUTES')=='true'){
+    $pages = \Illuminate\Support\Facades\DB::table('pages')->select('slug')->get();
+    foreach ($pages as $page) {
+        if(!empty($page->slug)){
+            Route::get($page->slug.'/', 'PageController@details');
+        }
     }
 }
 
