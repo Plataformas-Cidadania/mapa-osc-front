@@ -7,8 +7,8 @@
 <script src="js/chart.js"></script>
 <script src="js/charts/mixed.js"></script>
 
-{{--<script src="/js/react/react.development.js" crossorigin></script>
-<script src="/js/react/react-dom.development.js" crossorigin></script>--}}
+<script src="/js/react/react-dom.development.js" crossorigin></script>
+<script src="/js/react/react.development.js" crossorigin></script>
 @endif
 @if($rota=='mapa' || $rota=='contato')
 <script src="js/map.js"></script>
@@ -116,3 +116,10 @@
         });
     });
 </script>
+
+
+<!--///////////////////////////////REACT////////////////////////////-->
+
+@if($rota=="contato")
+    <script src="/js/components/forms/contact.js"></script>
+@endif

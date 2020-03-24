@@ -19,7 +19,7 @@ class ContactController extends Controller{
 
     public function __construct(){
         //$this->obj = new \App\Contact();
-        $this->module = 'contact';
+        $this->module = 'forms';
         $this->table = 'contacts';
 
     }
