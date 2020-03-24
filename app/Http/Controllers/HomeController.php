@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index(){
 
-        $articles = \App\Article::take(3)->get();
+        $articles = \App\PubArticle::take(3)->get();
 
         return view('home', ['articles' => $articles]);
     }

@@ -16,7 +16,7 @@ class ArticleController extends Controller{
     private $table;
 
     public function __construct(){
-        $this->obj = new \App\Article();
+        $this->obj = new \App\PubArticle();
         $this->module = 'article';
         $this->table = 'articles';
     }
