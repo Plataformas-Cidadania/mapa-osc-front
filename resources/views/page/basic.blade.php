@@ -26,11 +26,11 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="menu-left">
-                    @foreach($menus as $menu)
+                    {{--@foreach($menus as $menu)
                         <li class="list-group-item-theme @if($menu->slug==$rota) menu-left-active @endif" >
                             <a href="{{$menu->slug}}">{{$menu->title}}</a>
                         </li>
-                    @endforeach
+                    @endforeach--}}
                 </ul>
             </div>
             <div class="col-md-9">
