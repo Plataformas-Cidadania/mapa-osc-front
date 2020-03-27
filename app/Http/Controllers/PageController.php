@@ -19,7 +19,7 @@ class PageController extends Controller{
 
     public function __construct(){
         $this->obj = new \App\PubPage();
-        //$this->obj = new \App\LngPubPage();
+        $this->lngObj = new \App\LngPubPage();
         $this->module = 'page';
         $this->table = 'pages';
 
@@ -30,6 +30,8 @@ class PageController extends Controller{
 
         $rota = Route::getCurrentRoute()->uri();
 
+        //return $rota;
+
         /*$detail = $this->obj
             ->select('authors.*')
             ->join('author_artigo', 'authors.id', '=', 'author_artigo.author_id')
@@ -39,11 +41,14 @@ class PageController extends Controller{
             ->first();*/
 
 
-        $detail = $this->obj->lngPubPage()->where('slug', $rota)->first();
-        //$detail = $this->obj->pubPage()->where('slug', $rota)->first();
-        return $detail."--";
+        //$detail = $this->obj->where('slug', $rota)->first()->lngPubPage()->first();
+        $detail = $this->lngObj->where('slug', $rota)->first()->pubPage()->first();
+        //return $detail."--";
+
+        return $detail;
 
         //$menus = $this->obj->orderBy('id', 'desc')->where('type', $detail->type)->get();
+
 
         return view($this->module.'.basic', ['detail' => $detail, /*'menus' => $menus*/]);
 
