@@ -31,14 +31,26 @@ class PageController extends Controller{
         $lngPage = $this->lngObj->where('slug', $rota)->first();
         $page = $lngPage->pubPage()->first();
 
-        //return [$lngPage, $page];
+
+        //$subMenus = $this->lngObj->get();
+
+
+        $lngPageMenus = $this->lngObj->get();
+        $subMenus = $lngPageMenus->pubPage()->where('type', $page->type)->get();
+
+
 
         //$subMenus = $this->obj->orderBy('id', 'desc')->where('type', $detail->type)->get();
 
-        //$subMenus = $this->lngObj->where('type', $page->type)->orderBy('id', 'desc')->get();
-        $subMenus = [];
+        //$subMenus = $this->obj->where('type', $page->type)->orderBy('id', 'desc')->get();
+        //$subMenus = [];
 
-        return view($this->module.'.basic', ['lngPage' => $lngPage, 'page' => $page, 'subMenus' => $subMenus]);
+        return view($this->module.'.basic', [
+            'lngPage' => $lngPage,
+            'lngPageMenus' => $lngPageMenus,
+            'page' => $page,
+            'subMenus' => $subMenus
+        ]);
 
     }
 }
