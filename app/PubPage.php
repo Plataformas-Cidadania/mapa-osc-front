@@ -13,7 +13,7 @@ class PubPage extends Model
     ];
 
     public function lngPubPage(){
-        return $this->hasMany('App\LngPubPage', 'publish_id', 'publish_id');
+        return $this->hasMany('App\LngPubPage', 'publish_id');
     }
 
     /*public function lngPubPage(){
