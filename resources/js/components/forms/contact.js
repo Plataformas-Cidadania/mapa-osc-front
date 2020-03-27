@@ -83,7 +83,7 @@ class Contact extends React.Component{
             valid = false;
         }*/
 
-        this.contact();
+        //this.contact();
         console.log(requireds);
 
         this.setState({requireds: requireds});
