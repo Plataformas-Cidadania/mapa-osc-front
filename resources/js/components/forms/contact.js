@@ -7,10 +7,6 @@ class Contact extends React.Component{
                 email: this.props.email,
                 cel: '',
                 whatsapp: '',
-                endereco: '',
-                bairro: '',
-                cidade: '',
-                estado: ''
             },
             button: true,
             loading: false,
@@ -26,39 +22,15 @@ class Contact extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.contact = this.contact.bind(this);
-        /*this.checkCity = this.checkCity.bind(this);*/
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
+
     }
 
     componentDidMount(){
-        this.getAddress();
+
     }
 
-    getAddress(){
-        this.setState({loadingCep: true});
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/'+this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
 
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({loadingCep: false, form: form})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
 
     handleInputChange(event) {
         const target = event.target;
@@ -74,6 +46,8 @@ class Contact extends React.Component{
 
         let form = this.state.form;
         form[name] = value;
+
+        console.log(form);
 
         this.setState({form: form});
     }
@@ -109,10 +83,11 @@ class Contact extends React.Component{
             valid = false;
         }*/
 
-
-        //console.log(requireds);
+        this.contact();
+        console.log(requireds);
 
         this.setState({requireds: requireds});
+        //this.contact(); // Chamada Ajax
         return valid;
     }
 
@@ -129,7 +104,7 @@ class Contact extends React.Component{
 
     validateCel(cel){
         cel = cel.replace(/[^0-9]/g,'');
-        console.log(cel);
+        //console.log(cel);
         let qtd = cel.length;
 
         if(qtd < 10 || qtd > 11){
@@ -163,8 +138,9 @@ class Contact extends React.Component{
         }else{
             this.contact();
         }
-
     }*/
+
+
 
     cancel(){
         location.href = '/';
@@ -172,23 +148,27 @@ class Contact extends React.Component{
 
     contact(e){
 
-        e.preventDefault();
 
-        if(!this.validate()){
+        //e.preventDefault();
+
+       /* if(!this.validate()){
             return;
-        }
+        }*/
+
+
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+
             $.ajax({
                 method:'POST',
                 url: '/contact',
                 data:{
                     form: this.state.form,
-                    plan_id: this.props.plan_id
                 },
                 cache: false,
                 success: function(data) {
                     console.log('reg', data);
+
 
                     /*let msg = 'Já existe cadastro com esse';
 
@@ -218,7 +198,7 @@ class Contact extends React.Component{
 
     render(){
 
-        console.log(this.state.requireds.name);
+        //console.log(this.state.requireds.name);
 
         return (
             <div>
@@ -246,7 +226,6 @@ class Contact extends React.Component{
                                     <input className={"form-control form-m "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
                                 </div>
 
-
                                 <div className="clear-float"></div>
 
                                 <div className="div-left">
@@ -260,9 +239,7 @@ class Contact extends React.Component{
                                 </div>
 
                                 <div className="clear-float"></div>
-
                                 <p><i>* campos obrigatórios</i></p>
-
 
                                 <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-style-primary" onClick={this.contact}>Cadastrar</button>
                                 <br/>

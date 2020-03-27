@@ -6,7 +6,6 @@
 @section('content')
 
     <script>
-
         email = "relison@cd10.com.br";
     </script>
     <div id="contact"></div>
