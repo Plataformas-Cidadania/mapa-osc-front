@@ -27,4 +27,9 @@ class ContactController extends Controller{
     public function details(){
         return view($this->module.'.contact');
     }
+
+    public function send(Request $request){
+        $data = $request->all();
+        return $data;
+    }
 }

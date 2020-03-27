@@ -7,6 +7,10 @@ class Contact extends React.Component{
                 email: this.props.email,
                 cel: '',
                 whatsapp: '',
+                endereco: '',
+                bairro: '',
+                cidade: '',
+                estado: ''
             },
             button: true,
             loading: false,
@@ -22,7 +26,7 @@ class Contact extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.contact = this.contact.bind(this);
-        this.checkCity = this.checkCity.bind(this);
+        /*this.checkCity = this.checkCity.bind(this);*/
         this.validate = this.validate.bind(this);
         this.getAddress = this.getAddress.bind(this);
     }
@@ -62,10 +66,10 @@ class Contact extends React.Component{
         const name = target.name;
 
         if(target.name==='cel'){
-            value = maskCel(value);
+            //value = maskCel(value);
         }
         if(target.name==='whatsapp'){
-            value = maskCel(value);
+            //value = maskCel(value);
         }
 
         let form = this.state.form;
@@ -100,10 +104,10 @@ class Contact extends React.Component{
             valid = false;
         }
 
-        if(!validateCpf(this.state.form.cpf)){
+        /*if(!validateCpf(this.state.form.cpf)){
             requireds.cpf = false;
             valid = false;
-        }
+        }*/
 
 
         //console.log(requireds);
@@ -151,7 +155,7 @@ class Contact extends React.Component{
     }
 
 
-    checkCity(e){
+    /*checkCity(e){
         e.preventDefault();
 
         if(cities.search(this.state.form.cidade+'/'+this.state.form.estado)==-1){
@@ -160,13 +164,15 @@ class Contact extends React.Component{
             this.contact();
         }
 
-    }
+    }*/
 
     cancel(){
         location.href = '/';
     }
 
-    contact(){
+    contact(e){
+
+        e.preventDefault();
 
         if(!this.validate()){
             return;
@@ -184,7 +190,7 @@ class Contact extends React.Component{
                 success: function(data) {
                     console.log('reg', data);
 
-                    let msg = 'Já existe cadastro com esse';
+                    /*let msg = 'Já existe cadastro com esse';
 
                     if(data.cpf || data.email){
                         if(data.cpf){
@@ -197,7 +203,7 @@ class Contact extends React.Component{
                         return;
                     }
 
-                    location.href = '/contact-pets';
+                    location.href = '/contact-pets';*/
                     //this.setState({loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -216,8 +222,6 @@ class Contact extends React.Component{
 
         return (
             <div>
-
-                <Header/>
 
                 <div className="container">
                     <div className="title-box">
@@ -260,7 +264,7 @@ class Contact extends React.Component{
                                 <p><i>* campos obrigatórios</i></p>
 
 
-                                <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-style-primary" onClick={this.checkCity}>Cadastrar</button>
+                                <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-style-primary" onClick={this.contact}>Cadastrar</button>
                                 <br/>
                                 <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
@@ -270,26 +274,6 @@ class Contact extends React.Component{
                 </div>
 
                 <br/><br/>
-
-                <Footer/>
-
-                <div id="notice" className="modal fade" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 className="modal-title text-warning"><i className="fa fa-exclamation-circle"/> Aviso</h4>
-                            </div>
-                            <div className="modal-body">
-                                <p>Infelizmente <strong>{this.state.form.cidade+'/'+this.state.form.estado}</strong> não está dentro de nossa rede de credenciados. No momento nossa rede se encontra em <strong>{cities}</strong>.</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.cancel}>Cancelar Cadastro</button>
-                                <button type="button" className="btn btn-warning" data-dismiss="modal" onClick={this.contact}>Cadastrar mesmo assim</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         );
     }

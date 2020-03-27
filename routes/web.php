@@ -58,6 +58,7 @@ Route::get('metodologia', 'PageController@details');*/
 
 Route::get('mapa', 'MapController@details');
 Route::get('contato', 'ContactController@details');
+Route::post('contact', 'ContactController@send');
 
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
