@@ -27,15 +27,18 @@ class PageController extends Controller{
 
         $rota = Route::getCurrentRoute()->uri();
 
-        $detail = $this->lngObj->where('slug', $rota)->first()->pubPage()->first();
+        //$detail = $this->lngObj->where('slug', $rota)->first()->pubPage()->first();
+        $lngPage = $this->lngObj->where('slug', $rota)->first();
+        $page = $lngPage->pubPage()->first();
 
-        return $detail;
+        //return [$lngPage, $page];
 
         //$subMenus = $this->obj->orderBy('id', 'desc')->where('type', $detail->type)->get();
 
-        $subMenus = $this->lngObj->where('type', $detail->type)->orderBy('id', 'desc')->get();
+        //$subMenus = $this->lngObj->where('type', $page->type)->orderBy('id', 'desc')->get();
+        $subMenus = [];
 
-        return view($this->module.'.basic', ['detail' => $detail, 'subMenus' => $subMenus]);
+        return view($this->module.'.basic', ['lngPage' => $lngPage, 'page' => $page, 'subMenus' => $subMenus]);
 
     }
 }

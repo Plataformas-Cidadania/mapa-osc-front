@@ -13,8 +13,8 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{$detail->title}}</h1>
-                        <h5><a href="/">Home</a> / {{$detail->title}}</h5>
+                        <h1>{{$lngPage->title}}</h1>
+                        <h5><a href="/">Home</a> / {{$lngPage->title}}</h5>
                         <br>
                     </header>
                 </div>
@@ -42,7 +42,7 @@
                         <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre criar uma coluna para descrever a imagem" width="100%" class="img-fluid lazyload">
                     </picture>
                     <br><br>
-                    <p  data-message="Esse é do primeiro botão" tabindex="0">{!! $detail->description !!}</p>
+                    <p  data-message="Esse é do primeiro botão" tabindex="0">{!! $lngPage->description !!}</p>
                     @if($rota=="equipe")
                         <div>
                             @include('page.about.team')
