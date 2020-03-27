@@ -133,10 +133,6 @@ class Contact extends React.Component {
         }
     }*/
 
-    cancel() {
-        location.href = '/';
-    }
-
     contact(e) {
 
         //e.preventDefault();
