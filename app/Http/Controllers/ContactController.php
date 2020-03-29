@@ -26,15 +26,15 @@ class ContactController extends Controller{
 
     }
 
-    public function details(){
+    public function email(){
         return view($this->module.'.contact');
     }
 
     public function send(Request $request){
-        $data = $request->all();
-        return $data;
 
-        //$settings = DB::table('settings')->first();
+
+        $request = $request->all();
+        $data =  $request['form'];
 
         Config::set('mail.host', 'in-v3.mailjet.com');
         Config::set('mail.port', '2525');
@@ -47,21 +47,21 @@ class ContactController extends Controller{
         Config::set('mail.encryption', 'tls');
 
         //verifica se o index telefone existe no array. Sen�o existir ir� criar um para evitar um erro.
-        if (!array_key_exists("telefone", $data)) {
-            $data += ['telefone' => ''];
+        if (!array_key_exists("cel", $data)) {
+            $data += ['cel' => ''];
         }
 
         //mensagem para o site///////////////////////////////////////////////////////////////////////
-        Mail::send('emails.contato.mensagem', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.message', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
         {
             /*$message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);
-            $message->to($settings->email, $data['nome']);*/
+            $message->to($settings->email, $data['name']);*/
             $message->from('relison@cd10.com.br', 'Eu');
             $message->sender('relison@cd10.com.br', 'Eu');
-            $message->to('relison@cd10.com.br', $data['nome']);
+            $message->to('relison@cd10.com.br', $data['name']);
             //$message->bcc($address, $name = null);
-            $message->replyTo($data['email'], $data['nome']);
+            $message->replyTo($data['email'], $data['name']);
            //$message->subject('Contato - '.$settings->titulo);
             $message->subject('Contato - '.'Eu');
             //$message->priority($level);
@@ -70,13 +70,13 @@ class ContactController extends Controller{
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         //resposta para o remetente/////////////////////////////////////////////////////////////////
-        Mail::send('emails.contato.resposta', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.response', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
         {
             /*$message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);*/
             $message->from('relison@cd10.com.br', 'Eu');
             $message->sender('relison@cd10.com.br', 'Eu');
-            $message->to($data['email'], $data['nome']);
+            $message->to($data['email'], $data['name']);
             //$message->subject('Contato - '.$settings->titulo);
             $message->subject('Contato - '.'Eu');
         });

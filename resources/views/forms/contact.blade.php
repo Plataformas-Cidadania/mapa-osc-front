@@ -5,8 +5,8 @@
 @section('image', '')
 @section('content')
 
-    <script>
+    {{--<script>
         email = "relison@cd10.com.br";
-    </script>
+    </script>--}}
     <div id="contact"></div>
 @endsection

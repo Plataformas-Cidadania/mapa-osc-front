@@ -4,7 +4,8 @@ class Contact extends React.Component {
         this.state = {
             form: {
                 name: '',
-                email: this.props.email,
+                /*email: 'this.props.email',*/
+                email: '',
                 cel: '',
                 whatsapp: ''
             },
@@ -17,9 +18,7 @@ class Contact extends React.Component {
             },
             showMsg: false,
             msg: ''
-
         };
-
         this.handleInputChange = this.handleInputChange.bind(this);
         this.contact = this.contact.bind(this);
         this.validate = this.validate.bind(this);
@@ -42,20 +41,20 @@ class Contact extends React.Component {
         let form = this.state.form;
         form[name] = value;
 
-        console.log(form);
+        //console.log(form);
 
         this.setState({ form: form });
     }
 
     validate() {
-        //console.log(this.state.form);
+
         let valid = true;
 
         let requireds = this.state.requireds;
         let form = this.state.form;
 
         for (let index in requireds) {
-            if (!form[index] || form[index] == '') {
+            if (!form[index] || form[index] === '') {
                 requireds[index] = false;
                 valid = false;
             } else {
@@ -72,17 +71,10 @@ class Contact extends React.Component {
             requireds.cel = false;
             valid = false;
         }
-
-        /*if(!validateCpf(this.state.form.cpf)){
-            requireds.cpf = false;
-            valid = false;
-        }*/
-
-        //this.contact();
-        console.log(requireds);
+        console.log(valid);
 
         this.setState({ requireds: requireds });
-        //this.contact(); // Chamada Ajax
+        this.contact();
         return valid;
     }
 
@@ -124,48 +116,22 @@ class Contact extends React.Component {
         return true;
     }
 
-    /*checkCity(e){
-        e.preventDefault();
-         if(cities.search(this.state.form.cidade+'/'+this.state.form.estado)==-1){
-            $('#notice').modal();
-        }else{
-            this.contact();
-        }
-    }*/
-
     contact(e) {
-
-        //e.preventDefault();
-
-        /* if(!this.validate()){
-             return;
-         }*/
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
 
             $.ajax({
                 method: 'POST',
                 url: '/contact',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 data: {
                     form: this.state.form
                 },
                 cache: false,
                 success: function (data) {
                     console.log('reg', data);
-
-                    /*let msg = 'Já existe cadastro com esse';
-                     if(data.cpf || data.email){
-                        if(data.cpf){
-                            msg+= ' cpf';
-                        }
-                        if(data.email){
-                            msg+= ' email';
-                        }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true});
-                        return;
-                    }
-                     location.href = '/contact-pets';*/
-                    //this.setState({loading: false})
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -176,9 +142,6 @@ class Contact extends React.Component {
     }
 
     render() {
-
-        //console.log(this.state.requireds.name);
-
         return React.createElement(
             'div',
             null,
@@ -269,7 +232,7 @@ class Contact extends React.Component {
                             ),
                             React.createElement(
                                 'button',
-                                { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-style-primary', onClick: this.contact },
+                                { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.validate },
                                 'Cadastrar'
                             ),
                             React.createElement('br', null),
@@ -294,4 +257,6 @@ class Contact extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Contact, { email: email }), document.getElementById('contact'));
+ReactDOM.render(
+/*<Contact email={email}/>,*/
+React.createElement(Contact, null), document.getElementById('contact'));
