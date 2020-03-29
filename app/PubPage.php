@@ -16,7 +16,4 @@ class PubPage extends Model
         return $this->hasMany('App\LngPubPage', 'publish_id');
     }
 
-    /*public function lngPubPage(){
-        return $this->hasMany('App\LngPubPage', 'publish_id', 'publish_id');
-    }*/
 }

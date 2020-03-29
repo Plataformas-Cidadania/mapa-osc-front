@@ -15,8 +15,4 @@ class LngPubPage extends Model
     public function pubPage(){
         return $this->belongsTo('App\PubPage', 'publish_id');
     }
-
-    /*public function pubPage(){
-        return $this->belongsTo('App\PubPage', 'publish_id', 'publish_id');
-    }*/
 }

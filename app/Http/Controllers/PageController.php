@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 class PageController extends Controller{
 
     private $obj;
+    private $lngObj;
     private $module;
     private $table;
 
@@ -27,27 +28,17 @@ class PageController extends Controller{
 
         $rota = Route::getCurrentRoute()->uri();
 
-        //$detail = $this->lngObj->where('slug', $rota)->first()->pubPage()->first();
         $lngPage = $this->lngObj->where('slug', $rota)->first();
         $page = $lngPage->pubPage()->first();
 
-
-        //$subMenus = $this->lngObj->get();
-
-
-        $lngPageMenus = $this->lngObj->get();
-        $subMenus = $lngPageMenus->pubPage()->where('type', $page->type)->get();
-
-
-
-        //$subMenus = $this->obj->orderBy('id', 'desc')->where('type', $detail->type)->get();
-
-        //$subMenus = $this->obj->where('type', $page->type)->orderBy('id', 'desc')->get();
-        //$subMenus = [];
+        $subMenus = $this->obj
+            ->join('lng_pub_pages', 'pub_pages.id', '=', 'lng_pub_pages.publish_id')
+            ->select('pub_pages.*', 'lng_pub_pages.title', 'lng_pub_pages.description', 'lng_pub_pages.slug')
+            ->where('lng_pub_pages.publish_id', $lngPage->publish_id)
+            ->get();
 
         return view($this->module.'.basic', [
             'lngPage' => $lngPage,
-            'lngPageMenus' => $lngPageMenus,
             'page' => $page,
             'subMenus' => $subMenus
         ]);
