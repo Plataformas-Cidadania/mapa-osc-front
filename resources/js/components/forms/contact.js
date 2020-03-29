@@ -123,6 +123,10 @@ class Contact extends React.Component{
 
     contact(e){
 
+        if(!this.validate()){
+            return;
+        }
+
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             $.ajax({
