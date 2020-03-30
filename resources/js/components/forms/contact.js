@@ -51,11 +51,8 @@ class Contact extends React.Component{
 
         let valid = true;
 
-
         let requireds = this.state.requireds;
         let form = this.state.form;
-
-
 
         for(let index in requireds){
             if(!form[index] || form[index]===''){
@@ -79,7 +76,6 @@ class Contact extends React.Component{
 
 
         this.setState({requireds: requireds});
-        this.contact();
         return valid;
     }
 
@@ -127,6 +123,7 @@ class Contact extends React.Component{
             return;
         }
 
+
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             $.ajax({
@@ -141,6 +138,7 @@ class Contact extends React.Component{
                 cache: false,
                 success: function(data) {
                     console.log('reg', data);
+                    this.setState({loading: false});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -205,7 +203,7 @@ class Contact extends React.Component{
                                 <p><i>* campos obrigatórios</i></p>
 
 
-                                <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.validate}>Cadastrar</button>
+                                <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.contact}>Cadastrar</button>
                                 <br/>
                                 {/*{this.state.form.cel}*/}
 

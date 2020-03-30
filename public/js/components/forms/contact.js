@@ -74,7 +74,6 @@ class Contact extends React.Component {
         console.log(valid);
 
         this.setState({ requireds: requireds });
-        this.contact();
         return valid;
     }
 
@@ -136,6 +135,7 @@ class Contact extends React.Component {
                 cache: false,
                 success: function (data) {
                     console.log('reg', data);
+                    this.setState({ loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -296,7 +296,7 @@ class Contact extends React.Component {
                             ),
                             React.createElement(
                                 'button',
-                                { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.validate },
+                                { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.contact },
                                 'Cadastrar'
                             ),
                             React.createElement('br', null),
