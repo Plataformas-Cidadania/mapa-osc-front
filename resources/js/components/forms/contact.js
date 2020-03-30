@@ -163,6 +163,21 @@ class Contact extends React.Component{
                         <div className="col-md-12">
                             <form >
                                 <div className="div-left">
+                                    <label htmlFor="name">Como podemos ajudar?*</label><br/>
+                                    <select className="form-control" id="assunto">
+                                        <option value="">Selecione o assunto</option>
+                                        <option value="1">Cadastro Município-Estado</option>
+                                        <option value="2">Cadastro Representante</option>
+                                        <option value="3">Dúvidas</option>
+                                        <option value="4">Inserção/Edição de dados</option>
+                                        <option value="5">Pedidos de dados</option>
+                                        <option value="6">Relatar Problemas</option>
+                                        <option value="7">Sugestão</option>
+                                        <option value="8">Outros</option>
+                                    </select><br/>
+                                </div>
+
+                                <div className="div-left">
                                     <label htmlFor="name">Nome*</label><br/>
                                     <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder="Nome"/><br/>
                                 </div>

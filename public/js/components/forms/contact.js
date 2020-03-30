@@ -180,6 +180,66 @@ class Contact extends React.Component {
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'name' },
+                                    'Como podemos ajudar?*'
+                                ),
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'select',
+                                    { className: 'form-control', id: 'assunto' },
+                                    React.createElement(
+                                        'option',
+                                        { value: '' },
+                                        'Selecione o assunto'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '1' },
+                                        'Cadastro Munic\xEDpio-Estado'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '2' },
+                                        'Cadastro Representante'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '3' },
+                                        'D\xFAvidas'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '4' },
+                                        'Inser\xE7\xE3o/Edi\xE7\xE3o de dados'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '5' },
+                                        'Pedidos de dados'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '6' },
+                                        'Relatar Problemas'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '7' },
+                                        'Sugest\xE3o'
+                                    ),
+                                    React.createElement(
+                                        'option',
+                                        { value: '8' },
+                                        'Outros'
+                                    )
+                                ),
+                                React.createElement('br', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'div-left' },
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'name' },
                                     'Nome*'
                                 ),
                                 React.createElement('br', null),

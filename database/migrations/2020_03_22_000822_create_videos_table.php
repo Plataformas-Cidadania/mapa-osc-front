@@ -17,6 +17,7 @@ class CreateVideosTable extends Migration
         Schema::create('dft_videos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('url')->nullable();
             $table->string('hash')->nullable();
             $table->string('archived')->default(0);
             $table->bigInteger('user_id')->unsigned();
@@ -40,6 +41,7 @@ class CreateVideosTable extends Migration
         Schema::create('pub_videos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('url')->nullable();
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
             $table->bigInteger('draft_id')->unsigned();
