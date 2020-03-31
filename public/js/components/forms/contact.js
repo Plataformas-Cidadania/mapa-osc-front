@@ -32,16 +32,14 @@ class Contact extends React.Component {
         const name = target.name;
 
         if (target.name === 'cel') {
-            //value = maskCel(value);
+            value = maskCel(value);
         }
         if (target.name === 'whatsapp') {
-            //value = maskCel(value);
+            value = maskCel(value);
         }
 
         let form = this.state.form;
         form[name] = value;
-
-        //console.log(form);
 
         this.setState({ form: form });
     }
@@ -51,6 +49,7 @@ class Contact extends React.Component {
         let valid = true;
 
         let requireds = this.state.requireds;
+
         let form = this.state.form;
 
         for (let index in requireds) {
@@ -67,20 +66,20 @@ class Contact extends React.Component {
             valid = false;
         }
 
-        if (!this.validateCel(this.state.form.cel)) {
+        if (this.validateCel(this.state.form.cel) === "") {
             requireds.cel = false;
             valid = false;
         }
-        console.log(valid);
 
         this.setState({ requireds: requireds });
+
         return valid;
     }
 
     validateName(name) {
         let array_name = name.split(' ');
-        console.log(array_name);
-        console.log(array_name.length);
+        //console.log(array_name);
+        //console.log(array_name.length);
         if (array_name.length < 2) {
             return false;
         }
@@ -90,13 +89,11 @@ class Contact extends React.Component {
 
     validateCel(cel) {
         cel = cel.replace(/[^0-9]/g, '');
-        console.log(cel);
         let qtd = cel.length;
 
         if (qtd < 10 || qtd > 11) {
             return false;
         }
-
         if (qtd === 11) {
             if (cel.substr(2, 1) != 9) {
                 return false;
@@ -105,18 +102,16 @@ class Contact extends React.Component {
                 return false;
             }
         }
-
         if (qtd === 10) {
             if (cel.substr(2, 1) != 9 && cel.substr(2, 1) != 8 && cel.substr(2, 1) != 7 && cel.substr(2, 1) != 6) {
                 return false;
             }
         }
-
         return true;
     }
 
     contact(e) {
-
+        //console.log(this.validate());
         if (!this.validate()) {
             return;
         }
@@ -176,13 +171,12 @@ class Contact extends React.Component {
                             null,
                             React.createElement(
                                 'div',
-                                { className: 'div-left' },
+                                null,
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'name' },
-                                    'Como podemos ajudar?*'
+                                    'Como podemos ajudar?'
                                 ),
-                                React.createElement('br', null),
                                 React.createElement(
                                     'select',
                                     { className: 'form-control', id: 'assunto' },
@@ -304,7 +298,7 @@ class Contact extends React.Component {
                                     'Whatsapp',
                                     React.createElement(
                                         'span',
-                                        null,
+                                        { className: "label-float-optional" },
                                         ' - Opicional'
                                     )
                                 ),

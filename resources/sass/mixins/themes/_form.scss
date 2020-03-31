@@ -11,6 +11,8 @@ label{
     font-size: 20px;
     margin-right: 10px;
 }
+
+/* --  Personalização checkbox -- */
 input[type=checkbox] {
     display: none;
     cursor: pointer;
@@ -38,9 +40,7 @@ input[type=checkbox] + label::before {
     bottom: 0;
     vertical-align: bottom;
     cursor: pointer;
-
 }
-
 input[type=checkbox]:checked + label::after {
     content: '';
     background-color: #1b4b72;
@@ -53,7 +53,6 @@ input[type=checkbox]:checked + label::after {
     width: 20px;
     height: 20px;
 }
-
 input[type=radio] + label::before {
     content: '';
     position: absolute;
@@ -65,7 +64,6 @@ input[type=radio] + label::before {
     border: solid 2px;
     vertical-align: bottom;
 }
-
 input[type=radio]:checked + label::after {
     content: '';
     background-color: blue;
@@ -75,4 +73,74 @@ input[type=radio]:checked + label::after {
     position: absolute;
     left: 5px;
     bottom: 5px;
+}
+
+/* -- Validação de formulário -- */
+.label-float{
+    position: relative;
+    padding-top: 5px;
+}
+.label-float input{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    outline: none;
+    min-width: 250px;
+    padding: 5px 20px;
+    font-size: 16px;
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -webkit-appearance:none;
+}
+.label-float input:focus{
+    border: 2px solid #1A73E8;
+}
+.label-float input::placeholder{
+    color:transparent;
+}
+.label-float label{
+    pointer-events: none;
+    position: absolute;
+    top: calc(50% - 28px);
+    left: 20px;
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    background-color: white;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #AAAAAA;
+}
+.label-float input:required:invalid {
+    border: 2px solid #D93025;
+}
+.label-float input:required:invalid + label{
+    color: #D93025;
+}
+.label-float input:focus:required:invalid{
+    border: 2px solid #D93025;
+}
+.label-float input:required:invalid + label:before{
+    content: '*';
+}
+.label-float input:focus + label,
+.label-float input:not(:placeholder-shown) + label{
+    font-size: 12px;
+    top: -18px;
+    color: #1A73E8;
+}
+.label-box-info{
+    height: 20px;
+    margin-bottom: 10px;
+}
+.label-float p{
+    color: #D93025;
+    font-size: 12px;
+    margin: 2px;
+    padding: 0;
+}
+.label-float-optional{
+    font-size: 10px;
+    color: #AAAAAA !important;
 }

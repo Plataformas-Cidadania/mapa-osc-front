@@ -33,16 +33,14 @@ class Contact extends React.Component{
         const name = target.name;
 
         if(target.name==='cel'){
-            //value = maskCel(value);
+            value = maskCel(value);
         }
         if(target.name==='whatsapp'){
-            //value = maskCel(value);
+            value = maskCel(value);
         }
 
         let form = this.state.form;
         form[name] = value;
-
-        //console.log(form);
 
         this.setState({form: form});
     }
@@ -52,6 +50,7 @@ class Contact extends React.Component{
         let valid = true;
 
         let requireds = this.state.requireds;
+
         let form = this.state.form;
 
         for(let index in requireds){
@@ -68,21 +67,20 @@ class Contact extends React.Component{
             valid = false;
         }
 
-        if(!this.validateCel(this.state.form.cel)){
+        if(this.validateCel(this.state.form.cel)===""){
             requireds.cel = false;
             valid = false;
         }
-        console.log(valid);
-
 
         this.setState({requireds: requireds});
+
         return valid;
     }
 
     validateName(name){
         let array_name = name.split(' ');
-        console.log(array_name);
-        console.log(array_name.length);
+        //console.log(array_name);
+        //console.log(array_name.length);
         if(array_name.length<2){
             return false;
         }
@@ -92,13 +90,11 @@ class Contact extends React.Component{
 
     validateCel(cel){
         cel = cel.replace(/[^0-9]/g,'');
-        console.log(cel);
         let qtd = cel.length;
 
         if(qtd < 10 || qtd > 11){
             return false;
         }
-
         if(qtd === 11){
             if(cel.substr(2,1)!=9){
                 return false;
@@ -107,22 +103,19 @@ class Contact extends React.Component{
                 return false;
             }
         }
-
         if(qtd === 10){
             if(cel.substr(2,1)!=9 && cel.substr(2,1)!=8 && cel.substr(2,1)!=7 && cel.substr(2,1)!=6){
                 return false;
             }
         }
-
         return true;
     }
 
     contact(e){
-
+        //console.log(this.validate());
         if(!this.validate()){
             return;
         }
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
@@ -148,6 +141,7 @@ class Contact extends React.Component{
         });
     }
 
+
     render(){
         return (
             <div>
@@ -160,10 +154,9 @@ class Contact extends React.Component{
                     <div className="row" style={{maxWidth: '650px', margin: 'auto'}}>
                         <div className="col-md-12">
 
-
                             <form>
-                                <div className="div-left">
-                                    <label htmlFor="name">Como podemos ajudar?*</label><br/>
+                                <div >
+                                    <label htmlFor="name">Como podemos ajudar?</label>
                                     <select className="form-control" id="assunto">
                                         <option value="">Selecione o assunto</option>
                                         <option value="1">Cadastro Município-Estado</option>
@@ -203,7 +196,7 @@ class Contact extends React.Component{
 
                                 <div className="label-float">
                                     <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
-                                    <label htmlFor="name">Whatsapp<span> - Opicional</span></label>
+                                    <label htmlFor="name">Whatsapp<span className={"label-float-optional"}> - Opicional</span></label>
                                     <div className="label-box-info"></div>
                                 </div>
 

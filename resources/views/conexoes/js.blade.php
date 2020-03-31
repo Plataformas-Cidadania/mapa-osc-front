@@ -125,4 +125,5 @@
 
 @if($rota=="contato")
     <script src="/js/components/forms/contact.js"></script>
+    <script src="/js/utils.js"></script>
 @endif
