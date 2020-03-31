@@ -90,7 +90,7 @@ class Contact extends React.Component {
 
     validateCel(cel) {
         cel = cel.replace(/[^0-9]/g, '');
-        //console.log(cel);
+        console.log(cel);
         let qtd = cel.length;
 
         if (qtd < 10 || qtd > 11) {
@@ -236,64 +236,81 @@ class Contact extends React.Component {
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'div-left' },
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g " + (this.state.requireds.name ? '' : 'invalid-field'), type: 'text', name: 'name', onChange: this.handleInputChange, placeholder: ' ', required: this.state.requireds.name ? '' : 'required' }),
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'name' },
-                                    'Nome*'
+                                    'Nome'
                                 ),
-                                React.createElement('br', null),
-                                React.createElement('input', { className: "form-control form-g " + (this.state.requireds.name ? '' : 'invalid-field'), type: 'text', name: 'name', onChange: this.handleInputChange, placeholder: 'Nome' }),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info' },
+                                    React.createElement(
+                                        'p',
+                                        { style: { display: this.state.requireds.name ? 'none' : 'block' } },
+                                        React.createElement('i', { className: 'fas fa-exclamation-circle' }),
+                                        ' Digite o nome e sobre nome'
+                                    )
+                                )
                             ),
-                            React.createElement('div', { className: 'clear-float' }),
                             React.createElement(
                                 'div',
-                                { className: 'div-left' },
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g" + (this.state.requireds.email ? '' : 'invalid-field'), type: 'text', name: 'email', onChange: this.handleInputChange, value: this.state.form.email, placeholder: ' ', required: this.state.requireds.email ? '' : 'required' }),
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'email' },
-                                    'E-mail*'
+                                    'E-mail'
                                 ),
-                                React.createElement('br', null),
-                                React.createElement('input', { className: "form-control form-m " + (this.state.requireds.email ? '' : 'invalid-field'), type: 'text', name: 'email', onChange: this.handleInputChange, value: this.state.form.email, placeholder: 'E-mail' }),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info' },
+                                    React.createElement(
+                                        'p',
+                                        { style: { display: this.state.requireds.email ? 'none' : 'block' } },
+                                        React.createElement('i', { className: 'fas fa-exclamation-circle' }),
+                                        ' Escolha um endere\xE7o de e-mail valido'
+                                    )
+                                )
                             ),
-                            React.createElement('div', { className: 'clear-float' }),
                             React.createElement(
                                 'div',
-                                { className: 'div-left' },
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g", type: 'text', name: 'cel', onChange: this.handleInputChange, value: this.state.form.cel, placeholder: ' ', maxLength: '15', required: this.state.requireds.cel ? '' : 'required' }),
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'cel' },
-                                    'Celular*'
+                                    'Celular'
                                 ),
-                                React.createElement('br', null),
-                                React.createElement('input', { className: "form-control form-m " + (this.state.requireds.cel ? '' : 'invalid-field'), type: 'text', name: 'cel', onChange: this.handleInputChange, value: this.state.form.cel, placeholder: 'Cel', maxLength: '15' }),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info' },
+                                    React.createElement(
+                                        'p',
+                                        { style: { display: this.state.requireds.name ? 'none' : 'block' } },
+                                        React.createElement('i', { className: 'fas fa-exclamation-circle' }),
+                                        ' Digite um n\xFAmero de celular'
+                                    )
+                                )
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'div-left' },
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control", type: 'text', name: 'whatsapp', onChange: this.handleInputChange, value: this.state.form.whatsapp, placeholder: ' ', maxLength: '15' }),
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'name' },
-                                    'Whatsapp'
+                                    'Whatsapp',
+                                    React.createElement(
+                                        'span',
+                                        null,
+                                        ' - Opicional'
+                                    )
                                 ),
-                                React.createElement('br', null),
-                                React.createElement('input', { className: "form-control form-m ", type: 'text', name: 'whatsapp', onChange: this.handleInputChange, value: this.state.form.whatsapp, placeholder: 'Whatsapp', maxLength: '15' }),
-                                React.createElement('br', null)
+                                React.createElement('div', { className: 'label-box-info' })
                             ),
                             React.createElement('div', { className: 'clear-float' }),
-                            React.createElement(
-                                'p',
-                                null,
-                                React.createElement(
-                                    'i',
-                                    null,
-                                    '* campos obrigat\xF3rios'
-                                )
-                            ),
                             React.createElement(
                                 'button',
                                 { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.contact },

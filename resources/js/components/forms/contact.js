@@ -92,7 +92,7 @@ class Contact extends React.Component{
 
     validateCel(cel){
         cel = cel.replace(/[^0-9]/g,'');
-        //console.log(cel);
+        console.log(cel);
         let qtd = cel.length;
 
         if(qtd < 10 || qtd > 11){
@@ -159,7 +159,9 @@ class Contact extends React.Component{
                     </div>
                     <div className="row" style={{maxWidth: '650px', margin: 'auto'}}>
                         <div className="col-md-12">
-                            <form >
+
+
+                            <form>
                                 <div className="div-left">
                                     <label htmlFor="name">Como podemos ajudar?*</label><br/>
                                     <select className="form-control" id="assunto">
@@ -175,32 +177,38 @@ class Contact extends React.Component{
                                     </select><br/>
                                 </div>
 
-                                <div className="div-left">
-                                    <label htmlFor="name">Nome*</label><br/>
-                                    <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder="Nome"/><br/>
+                                <div className="label-float">
+                                    <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder=" " required={this.state.requireds.name ? '' : 'required'}/>
+                                    <label htmlFor="name">Nome</label>
+                                    <div className="label-box-info">
+                                        <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite o nome e sobre nome</p>
+                                    </div>
+                                </div>
+
+                                <div className="label-float">
+                                    <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
+                                    <label htmlFor="email">E-mail</label>
+                                    <div className="label-box-info">
+                                        <p style={{display: this.state.requireds.email ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Escolha um endereço de e-mail valido</p>
+                                    </div>
+                                </div>
+
+                                <div className="label-float">
+                                    <input className={"form-control form-g"} type="text" name="cel" onChange={this.handleInputChange} value={this.state.form.cel} placeholder=" " maxLength="15" required={this.state.requireds.cel ? '' : 'required'} />
+                                    <label htmlFor="cel">Celular</label>
+                                    <div className="label-box-info">
+                                        <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite um número de celular</p>
+                                    </div>
+                                </div>
+
+                                <div className="label-float">
+                                    <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
+                                    <label htmlFor="name">Whatsapp<span> - Opicional</span></label>
+                                    <div className="label-box-info"></div>
                                 </div>
 
                                 <div className="clear-float"></div>
-
-                                <div className="div-left">
-                                    <label htmlFor="email">E-mail*</label><br/>
-                                    <input className={"form-control form-m "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
-                                </div>
-
-                                <div className="clear-float"></div>
-
-                                <div className="div-left">
-                                    <label htmlFor="cel">Celular*</label><br/>
-                                    <input className={"form-control form-m "+(this.state.requireds.cel ? '' : 'invalid-field')} type="text" name="cel" onChange={this.handleInputChange} value={this.state.form.cel} placeholder="Cel" maxLength="15"/><br/>
-                                </div>
-
-                                <div className="div-left">
-                                    <label htmlFor="name">Whatsapp</label><br/>
-                                    <input className={"form-control form-m "} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder="Whatsapp" maxLength="15"/><br/>
-                                </div>
-
-                                <div className="clear-float"></div>
-                                <p><i>* campos obrigatórios</i></p>
+                                {/*<p><i>* campos obrigatórios</i></p>*/}
 
 
                                 <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.contact}>Cadastrar</button>
