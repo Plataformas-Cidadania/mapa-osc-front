@@ -316,17 +316,20 @@ class List extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'col-md-8' },
-                        React.createElement('hr', null),
                         React.createElement(
                             'div',
                             { className: 'row' },
                             React.createElement(
                                 'div',
-                                { className: 'col-md-offset-9 col-md-3' },
-                                'Ordenar por:',
+                                { className: 'col-md-12' },
                                 React.createElement(
                                     'select',
-                                    { className: 'form-control', onChange: this.changeOrder, value: this.state.order + '-' + this.state.directionOrder },
+                                    { className: 'form-control form-control-light float-right', onChange: this.changeOrder, value: this.state.order + '-' + this.state.directionOrder },
+                                    React.createElement(
+                                        'option',
+                                        { value: '0' },
+                                        'Ordena\xE7\xE3o'
+                                    ),
                                     React.createElement(
                                         'option',
                                         { value: 'title-asc' },

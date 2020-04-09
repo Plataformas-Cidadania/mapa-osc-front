@@ -158,7 +158,12 @@ class CategoriesFilter extends React.Component {
             'div',
             null,
             categoriesSelected,
-            React.createElement('input', { type: 'text', name: 'titleCategory', className: 'form-control input-sm', onClick: this.clickSearch, onChange: this.handleSearch }),
+            React.createElement(
+                'div',
+                { className: 'input-icon filter-input-icon' },
+                React.createElement('input', { type: 'text', name: 'titleCategory', className: 'filter-search', onClick: this.clickSearch, onChange: this.handleSearch }),
+                React.createElement('i', { className: 'fas fa-search' })
+            ),
             React.createElement(
                 'ul',
                 { className: 'list-group' },

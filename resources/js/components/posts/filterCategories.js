@@ -152,7 +152,10 @@ class CategoriesFilter extends React.Component{
         return(
             <div>
                 {categoriesSelected}
-                <input type="text" name="titleCategory" className="form-control input-sm" onClick={this.clickSearch} onChange={this.handleSearch}/>
+                <div className="input-icon filter-input-icon">
+                    <input type="text" name="titleCategory" className="filter-search" onClick={this.clickSearch} onChange={this.handleSearch}/>
+                    <i className="fas fa-search"/>
+                </div>
                 <ul className="list-group">
                     {categories}
                 </ul>

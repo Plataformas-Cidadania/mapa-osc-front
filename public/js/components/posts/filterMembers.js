@@ -160,8 +160,12 @@ class MembersFilter extends React.Component {
             'div',
             null,
             membersSelected,
-            React.createElement('input', { type: 'text', name: 'titleMember', className: 'form-control input-sm', onClick: this.clickSearch, onChange: this.handleSearch }),
-            React.createElement('br', null),
+            React.createElement(
+                'div',
+                { className: 'input-icon filter-input-icon' },
+                React.createElement('input', { type: 'text', name: 'titleMember', className: 'filter-search', onClick: this.clickSearch, onChange: this.handleSearch }),
+                React.createElement('i', { className: 'fas fa-search' })
+            ),
             members
         );
     }
