@@ -127,3 +127,13 @@
     <script src="/js/components/forms/contact.js"></script>
     <script src="/js/utils.js"></script>
 @endif
+
+@if($rota=="artigos" || $rota=="artigos/{id_segment}" || $rota=="artigos/{titulo}" || $rota=="artigos/{parameters}")
+    <script src="/js/components/posts/filterOffers.js"></script>
+    <script src="/js/components/posts/filterCategories.js"></script>
+    <script src="/js/components/posts/filterMembers.js"></script>
+    <script src="/js/components/posts/filterDistricts.js"></script>
+    <script src="/js/components/posts/filters.js"></script>
+    <script src="/js/components/posts/list.js"></script>
+    <script src="/js/utils.js"></script>
+@endif

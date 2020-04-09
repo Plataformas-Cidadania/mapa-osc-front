@@ -60,6 +60,10 @@ Route::get('mapa', 'MapController@details');
 Route::get('contato', 'ContactController@email');
 Route::post('contact', 'ContactController@send');
 
+Route::post('/list-posts', 'PostController@getList');
+Route::post('/categories', 'PostController@categories');
+Route::post('/members', 'PostController@members');
+
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
 Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');

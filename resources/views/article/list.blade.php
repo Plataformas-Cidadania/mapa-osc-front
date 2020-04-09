@@ -5,6 +5,14 @@
 @section('image', '')
 @section('content')
 
+    <script>
+        {{--@if($filtros)--}}
+            {{--filtros = "{{$filtros}}";--}}
+        {{--@else--}}
+            filtros = null;
+      {{--  @endif--}}
+    </script>
+
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
@@ -20,7 +28,13 @@
         </div>
     </div>
 
-    <div class="container">
+
+    <div id="listPost"></div>
+
+
+
+
+    {{--<div class="container">
         <div class="row">
             <div class="col-md-8">
 
@@ -35,12 +49,12 @@
                                 <div class="col-md-6 item-calendar">
                                     <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($list->date, 'ext')}}</time>
                                 </div>
-                                {{--<div class="col-md-6 text-right fa-svg">
+                                <div class="col-md-6 text-right fa-svg">
                                     <i class="fab fa-facebook-f"></i>
                                     <i class="fab fa-instagram"></i>
                                     <i class="fab fa-twitter"></i>
                                     <i class="fab fa-whatsapp"></i>
-                                </div>--}}
+                                </div>
                             </div>
                             <h2 data-message="{{$list->title}}" tabindex="0">{{$list->title}}</h2>
                             <p data-message="{{$list->tease}}" tabindex="0">{!! $list->tease !!}</p>
@@ -134,5 +148,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection

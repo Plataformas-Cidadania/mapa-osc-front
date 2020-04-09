@@ -13,51 +13,21 @@ class CreateMembersTable extends Migration
      */
     public function up()
     {
-        //RASCUNHOS
-        Schema::create('dft_members', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('hash')->nullable();
-            $table->string('archived')->default(0);
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->timestamps();
-        });
-
-        //IDIOMAS RASCUNHOS
-        Schema::create('lng_dft_members', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->string('teaser')->nullable();
-            $table->text('description')->nullable();
-            $table->string('lang', 6)->nullable();
-            $table->bigInteger('draft_id')->unsigned();
-            $table->foreign('draft_id')->references('id')->on('dft_members')->onDelete('cascade');
-            $table->timestamps();
-        });
 
         //PUBLICADOS
         Schema::create('pub_members', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('url')->nullable();
+            $table->string('origin')->nullable();
+            $table->bigInteger('origin_id')->default(0);
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
-            $table->bigInteger('draft_id')->unsigned();
-            $table->foreign('draft_id')->references('id')->on('dft_members')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
 
-        //IDIOMAS PUBLICADOS
-        Schema::create('lng_pub_members', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->string('teaser')->nullable();
-            $table->text('description')->nullable();
-            $table->string('lang', 6)->nullable();
-            $table->bigInteger('publish_id')->unsigned();
-            $table->foreign('publish_id')->references('id')->on('pub_members')->onDelete('cascade');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -67,9 +37,6 @@ class CreateMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dft_members');
-        Schema::dropIfExists('lng_dft_members');
         Schema::dropIfExists('pub_members');
-        Schema::dropIfExists('lng_pub_members');
     }
 }
