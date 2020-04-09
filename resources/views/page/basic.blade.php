@@ -6,6 +6,14 @@
 @section('image', '')
 @section('content')
 
+    <style>
+        .mb-0{
+            background-color: #FFFFFF !important;
+            border-bottom: solid 1px #3490dc;
+            font-weight: bold;
+            color: #333333;
+        }
+    </style>
 
     <div class="bg-lgt">
         <div class="container">

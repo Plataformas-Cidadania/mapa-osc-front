@@ -20,9 +20,6 @@ class Filters extends React.Component{
         this.checkDay = this.checkDay.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
-        this.filterDistricts = this.filterDistricts.bind(this);
-        this.filterOffers = this.filterOffers.bind(this);
-
     }
 
     componentDidMount(){
@@ -77,18 +74,6 @@ class Filters extends React.Component{
     }
 
 
-    filterDistricts(districts){
-        this.setState({districts: districts}, function(){
-            //console.log(this.state.districts);
-            this.props.filterDistricts(districts);
-        });
-    }
-
-    filterOffers(offers){
-        this.props.filterOffers(offers);
-    }
-
-
     render(){
 
         let days = this.state.days.map(function(item, index){
@@ -98,9 +83,6 @@ class Filters extends React.Component{
                 </li>
             );
         }.bind(this));
-
-
-
 
         return(
             <div>
@@ -155,12 +137,6 @@ class Filters extends React.Component{
 
                 </div>
 
-
-
-                <br/>
-                <h4>Bairros</h4>
-                <DistrictsFilter filterDistricts={this.filterDistricts} districtsUrl={this.props.districtsUrl}/>
-
                 <br/>
                 <h4>Dias da Semana</h4>
                 <ul className="check-ul">
@@ -168,11 +144,7 @@ class Filters extends React.Component{
                 </ul>
 
                 <br/>
-                <h4>Ofertas</h4>
-                <OffersFilter filterOffers={this.filterOffers} />
 
-                <br/>
-                {/*<h4>Avaliações</h4>*/}
             </div>
         );
     }

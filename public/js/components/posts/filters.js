@@ -12,8 +12,6 @@ class Filters extends React.Component {
         this.checkDay = this.checkDay.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
-        this.filterDistricts = this.filterDistricts.bind(this);
-        this.filterOffers = this.filterOffers.bind(this);
     }
 
     componentDidMount() {
@@ -65,17 +63,6 @@ class Filters extends React.Component {
             console.log(this.state.members);
             this.props.filterMembers(members);
         });
-    }
-
-    filterDistricts(districts) {
-        this.setState({ districts: districts }, function () {
-            //console.log(this.state.districts);
-            this.props.filterDistricts(districts);
-        });
-    }
-
-    filterOffers(offers) {
-        this.props.filterOffers(offers);
     }
 
     render() {
@@ -189,13 +176,6 @@ class Filters extends React.Component {
             React.createElement(
                 "h4",
                 null,
-                "Bairros"
-            ),
-            React.createElement(DistrictsFilter, { filterDistricts: this.filterDistricts, districtsUrl: this.props.districtsUrl }),
-            React.createElement("br", null),
-            React.createElement(
-                "h4",
-                null,
                 "Dias da Semana"
             ),
             React.createElement(
@@ -203,13 +183,6 @@ class Filters extends React.Component {
                 { className: "check-ul" },
                 days
             ),
-            React.createElement("br", null),
-            React.createElement(
-                "h4",
-                null,
-                "Ofertas"
-            ),
-            React.createElement(OffersFilter, { filterOffers: this.filterOffers }),
             React.createElement("br", null)
         );
     }

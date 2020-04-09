@@ -25,7 +25,21 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-12">
+
+                <div class="alert alert-secondary box-floating" style="float: right; right: 0; width: 300px">
+                    <ul class="menu-icons">
+                        <li><i class="fas fa-times float-right"></i></li>
+                        <li><div><i class="far fa-file-alt"></i></div> <p>Dados gerais</p></li>
+                        <li><div><i class="fas fa-share-alt"></i></div> <p>Área de atuação</p></li>
+                        <li><div><i class="fas fa-align-justify"></i></div> <p>Descrição da OSC</p></li>
+                        <li><div><i class="fas fa-certificate"></i></div> <p>Titulações e Certificações</p></li>
+                        <li><div><i class="fas fa-briefcase"></i></div> <p>Trabalho e Governança</p></li>
+                        <li><div><i class="fas fa-users"></i></div> <p>Participação social</p></li>
+                        <li><div><i class="fas fa-project-diagram"></i></div> <p>Projetos</p></li>
+                        <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
+                    </ul>
+                </div>
 
                 <div class="row">
                     <div class="col-md-12">
@@ -37,8 +51,6 @@
                         </div>
                     </div>
                 </div>
-
-                <br><br>
 
                 <div class="row">
                     <div class="col-md-3">
@@ -264,7 +276,7 @@
                 <div class="space"></div>
 
             </div>
-            <div class="col-md-1">
+            {{--<div class="col-md-1">
                 <div class="alert alert-secondary box-floating">
                    <ul class="menu-icons">
                        <li><i class="fas fa-times float-right"></i></li>
@@ -278,7 +290,7 @@
                        <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
                    </ul>
                 </div>
-            </div>
+            </div>--}}
         </div>
 
     </div>

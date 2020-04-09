@@ -27,8 +27,18 @@ class ArticleController extends Controller{
     }
 
     public function details($id){
-        $detail = $this->obj->find($id);
-        $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();
+        $detail = $this->obj
+            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
+            ->find($id);
+
+        $lasts = $this->obj
+            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
+            ->orderBy('id', 'desc')
+            ->take(4)
+            ->get();
         return view($this->module.'.detail', ['detail' => $detail, 'lasts' => $lasts]);
     }
+
 }

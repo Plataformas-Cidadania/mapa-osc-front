@@ -12,13 +12,10 @@ class List extends React.Component {
             daysSelected: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'],
             categoriesSelected: [],
             membersSelected: [],
-            districtsSelected: [],
-            offersSelected: [],
             order: 'title',
             directionOrder: 'asc',
             dictionaryFilters: {
-                categorias: 'categoriesSelected',
-                bairros: 'districtsSelected'
+                categorias: 'categoriesSelected'
             }
         };
 
@@ -27,9 +24,7 @@ class List extends React.Component {
         this.changeOrder = this.changeOrder.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
-        /*this.filterDays = this.filterDays.bind(this);
-        this.filterDistricts = this.filterDistricts.bind(this);
-        this.filterOffers = this.filterOffers.bind(this);*/
+        /*this.filterDays = this.filterDays.bind(this);*/
     }
 
     componentDidMount() {
@@ -70,8 +65,6 @@ class List extends React.Component {
                     days: this.state.daysSelected,
                     categories: this.state.categoriesSelected,
                     members: this.state.membersSelected,
-                    districts: this.state.districtsSelected,
-                    offers: this.state.offersSelected,
                     orderby: this.state.orderby
                 },
                 order: this.state.order,
@@ -135,31 +128,7 @@ class List extends React.Component {
             this.load();
         });
     }
-       filterOffers(offers){
-        let offersSelected = [];
-        offers.find(function(item){
-            if(item.checked){
-                offersSelected.push(item.off);
-            }
-        });
-         if(offersSelected.length==0){
-            offersSelected = [];
-        }
-         this.setState({offersSelected: offersSelected}, function(){
-            console.log('offersSelected', this.state.offersSelected);
-            this.load();
-        });
-    }
-     filterDistricts(districts){
-        let districtsIds = [];
-        districts.find(function(item){
-            districtsIds.push(item.title);
-        });
-        this.setState({districtsSelected: districtsIds}, function(){
-            //console.log(this.state.districtsSelected);
-            this.load();
-        });
-    }*/
+      */
 
     changeOrder(e) {
         //console.log(e.target.value);
@@ -174,7 +143,6 @@ class List extends React.Component {
     render() {
 
         //console.log('categoriesSelected', this.state.categoriesSelected);
-        //console.log('districtsSelected', this.state.districtsSelected);
 
         let totalAds = this.state.ads.total;
 
@@ -368,11 +336,8 @@ class List extends React.Component {
                             filterDays: this.filterDays,
                             filterCategories: this.filterCategories,
                             filterMembers: this.filterMembers,
-                            filterDistricts: this.filterDistricts,
-                            filterOffers: this.filterOffers,
                             categoriesUrl: this.state.categoriesSelected,
-                            membersUrl: this.state.membersSelected,
-                            districtsUrl: this.state.districtsSelected
+                            membersUrl: this.state.membersSelected
                         })
                     )
                 )

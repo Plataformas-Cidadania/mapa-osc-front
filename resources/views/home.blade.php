@@ -29,7 +29,7 @@
 
     <section>
         <div class="row">
-            <div class="col-md-3 items text-center">
+            <div class="col-md-3 col-sm-6 col- items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -41,7 +41,7 @@
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
             </div>
-            <div class="col-md-3  items text-center">
+            <div class="col-md-3 col-sm-6  items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -53,7 +53,7 @@
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
             </div>
-            <div class="col-md-3 items text-center">
+            <div class="col-md-3 col-sm-6 items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
@@ -65,7 +65,7 @@
                     <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
                 </div>
             </div>
-            <div class="col-md-3 items text-center">
+            <div class="col-md-3 col-sm-6 items text-center">
                 <picture>
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
                     <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">

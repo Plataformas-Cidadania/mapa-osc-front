@@ -36,7 +36,7 @@ class MembersFilter extends React.Component{
             success: function(data) {
                 //console.log(data);
 
-                //importar categorias passadas pela url//////////////
+                //importar membros passadas pela url//////////////
                 let membersUrl = this.props.membersUrl;
                 let membersSelected = this.state.membersSelected;
                 for(let i in data){

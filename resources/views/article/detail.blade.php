@@ -6,7 +6,6 @@
 @section('content')
 
 
-
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
@@ -120,7 +119,7 @@
                     <h2><i class="far fa-clock"></i> Recentes</h2>
 
                     @foreach($lasts as $last)
-                        <a href="artigo/{{$last->id}}/{{$last->title}}">
+                        <a href="artigo/{{$last->id}}/{{clean($last->title)}}">
                             <div>
                                 <h3>{{$last->title}}</h3>
                                 <p>{{$last->tease}}</p>
@@ -136,23 +135,32 @@
                     <div class="line-color"></div>
                     <h2><i class="far fa-user"></i> Autores do artigo</h2>
                     <hr>
+
                     <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
-                        <h4>Fernando Lima</h4>
-                        <p>Diretor</p>
-                        <hr>
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
+                             class="rounded-circle float-left" width="40"/>
+                        <h4>Carlos Lima</h4>
+                        <hr/>
                     </div>
                     <div class="list-user">
-                        <h4>Ricardo Costa</h4>
-                        <p>Diretor</p>
-                        <hr>
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
+                             class="rounded-circle float-left" width="40"/>
+                        <h4>Carlos Lima</h4>
+                        <hr/>
                     </div>
                     <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
-                        <h4>Dezembro de 2019</h4>
-                        <p>Diretor</p>
-                        <hr>
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
+                             class="rounded-circle float-left" width="40"/>
+                        <h4>Carlos Lima</h4>
+                        <hr/>
                     </div>
+                    <div class="list-user">
+                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
+                             class="rounded-circle float-left" width="40"/>
+                        <h4>Carlos Lima</h4>
+                        <hr/>
+                    </div>
+
                 </div>
             </div>
         </div>

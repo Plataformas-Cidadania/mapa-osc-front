@@ -19,8 +19,6 @@ class CreateMembersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('url')->nullable();
-            $table->string('origin')->nullable();
-            $table->bigInteger('origin_id')->default(0);
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
             $table->bigInteger('user_id')->unsigned();
