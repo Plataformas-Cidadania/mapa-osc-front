@@ -16,7 +16,9 @@ class List extends React.Component {
             order: 'title',
             directionOrder: 'asc',
             dictionaryFilters: {
-                categorias: 'categoriesSelected'
+                categorias: 'categoriesSelected',
+                members: 'membersSelected',
+                archives: 'archivesSelected'
             }
         };
 
@@ -111,11 +113,11 @@ class List extends React.Component {
     }
 
     filterArchives(archives) {
-        let archiveIds = [];
+        let archivesIds = [];
         archives.find(function (item) {
-            archiveIds.push(item.id);
+            archivesIds.push(item.id);
         });
-        this.setState({ archiveSelected: archiveIds }, function () {
+        this.setState({ archivesSelected: archivesIds }, function () {
             //console.log(this.state.archiveSelected);
             this.load();
         });
@@ -146,95 +148,90 @@ class List extends React.Component {
                 'Nenhum resultado encontrado para esta pesquisa'
             );
         } else {
-
             ads = this.state.ads.data.map(function (item) {
 
-                let categories = item.categories.map(function (category, index) {
-                    let separator = ',';
-                    if (index == item.categories.length - 1) {
-                        separator = null;
-                    }
-                    return React.createElement(
-                        'span',
-                        null,
+                return (
+
+                    /*OPCAO 1 UTILIZAR NA TROCA
+                    <div key={"ads_"+item.id}>
+                        <a href={"/artigo/"+item.id+"/"+cleanReplace(item.title)}>
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <img data-src="holder.js/200x200" className="img-fluid" alt="200x200"
+                                         src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true"
+                                         width="100%"/>
+                                </div>
+                                <div className="col-md-8">
+                                    <h5 className="float-right"><i className="fas fa-comment"></i> 5</h5>
+                                    <div className="item-calendar">
+                                        <time className="item-calendar"><i
+                                            className="far fa-clock"/> {item.date}
+                                        </time>
+                                    </div>
+                                    <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
+                                    <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
+                                    <h4 className="btn-plus">Continue lendo</h4>
+                                   </div>
+                                <div className="col-md-12"><hr/></div>
+                             </div>
+                        </a>
+                    </div>*/
+                    /*OPCAO 2 UTILIZAR NA TROCA*/
+                    React.createElement(
+                        'div',
+                        { key: "ads_" + item.id },
                         React.createElement(
                             'a',
-                            { key: "categ_ad_" + category.id, className: 'text-info', style: { cursor: 'pointer' },
-                                href: "/credenciados/filtros=categorias:" + category.id },
-                            category.title
-                        ),
-                        separator,
-                        '\xA0'
-                    );
-                });
-
-                /*let members = item.members.map(function(category, index){
-                    let separator = ',';
-                    if(index == item.members.length-1){
-                        separator = null;
-                    }
-                    return (
-                        <span>
-                        <a key={"categ_ad_"+category.id} className="text-info" style={{cursor:'pointer'}}
-                           href={"/artigos/filtros=membros:"+category.id}>{category.title}</a>{separator}&nbsp;
-                    </span>
-                    );
-                 });*/
-
-                return React.createElement(
-                    'div',
-                    { key: "ads_" + item.id },
-                    React.createElement(
-                        'a',
-                        { href: "/artigo/" + item.id + "/" + cleanReplace(item.title) },
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement('br', null),
-                            React.createElement(
-                                'h5',
-                                { className: 'float-right' },
-                                React.createElement('i', { className: 'fas fa-comment' }),
-                                ' 5'
-                            ),
-                            React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: '200x200',
-                                src: 'https://www.w3schools.com/html/pic_trulli.jpg', 'data-holder-rendered': 'true',
-                                width: '100%' }),
-                            React.createElement('br', null),
-                            React.createElement('br', null),
+                            { href: "/artigo/" + item.id + "/" + cleanReplace(item.title) },
                             React.createElement(
                                 'div',
-                                { className: 'row' },
+                                null,
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'h5',
+                                    { className: 'float-right' },
+                                    React.createElement('i', { className: 'fas fa-comment' }),
+                                    ' 5'
+                                ),
+                                React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: '200x200',
+                                    src: 'https://www.w3schools.com/html/pic_trulli.jpg', 'data-holder-rendered': 'true',
+                                    width: '100%' }),
+                                React.createElement('br', null),
+                                React.createElement('br', null),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-6 item-calendar' },
+                                    { className: 'row' },
                                     React.createElement(
-                                        'time',
-                                        { className: 'item-calendar' },
-                                        React.createElement('i', {
-                                            className: 'far fa-clock' }),
-                                        ' ',
-                                        item.date
+                                        'div',
+                                        { className: 'col-md-6 item-calendar' },
+                                        React.createElement(
+                                            'time',
+                                            { className: 'item-calendar' },
+                                            React.createElement('i', {
+                                                className: 'far fa-clock' }),
+                                            ' ',
+                                            item.date
+                                        )
                                     )
-                                )
-                            ),
-                            React.createElement(
-                                'h2',
-                                { 'data-message': '{{$list->title}}', tabIndex: '0' },
-                                item.title
-                            ),
-                            React.createElement(
-                                'p',
-                                { 'data-message': '{{$list->tease}}', tabIndex: '0' },
-                                item.teaser
-                            ),
-                            React.createElement(
-                                'h4',
-                                { className: 'btn-plus' },
-                                'Continue lendo'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('hr', null)
+                                ),
+                                React.createElement(
+                                    'h2',
+                                    { 'data-message': '{{$list->title}}', tabIndex: '0' },
+                                    item.title
+                                ),
+                                React.createElement(
+                                    'p',
+                                    { 'data-message': '{{$list->tease}}', tabIndex: '0' },
+                                    item.teaser
+                                ),
+                                React.createElement(
+                                    'h4',
+                                    { className: 'btn-plus' },
+                                    'Continue lendo'
+                                ),
+                                React.createElement('br', null),
+                                React.createElement('hr', null)
+                            )
                         )
                     )
                 );

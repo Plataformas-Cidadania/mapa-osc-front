@@ -123,6 +123,7 @@ class CategoriesFilter extends React.Component {
             let sizeSearch = this.state.search.length;
             let firstPiece = item.title.substr(0, sizeSearch);
             let lastPiece = item.title.substr(sizeSearch);
+            let qtd = item.qtd;
 
             let color = '';
             this.state.categoriesSelected.find(function (cat) {
@@ -139,7 +140,7 @@ class CategoriesFilter extends React.Component {
                 React.createElement(
                     'span',
                     { className: 'badge badge-primary badge-pill' },
-                    '7'
+                    qtd
                 )
             );
         }.bind(this));

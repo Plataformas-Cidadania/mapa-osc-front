@@ -3,8 +3,8 @@ class Filters extends React.Component {
         super(props);
         this.state = {
             categories: [],
-            Members: [],
-            Archive: []
+            members: [],
+            archives: []
 
         };
 

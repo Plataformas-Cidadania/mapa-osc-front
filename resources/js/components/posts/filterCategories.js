@@ -124,6 +124,7 @@ class CategoriesFilter extends React.Component{
             let sizeSearch = this.state.search.length;
             let firstPiece = item.title.substr(0, sizeSearch);
             let lastPiece = item.title.substr(sizeSearch);
+            let qtd = item.qtd;
 
             let color = '';
             this.state.categoriesSelected.find(function(cat){
@@ -136,7 +137,7 @@ class CategoriesFilter extends React.Component{
             return (
                 <li key={'cat_'+item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addCategory(item)}>
                     {/*<div>{firstPiece}</div>*/}{lastPiece}
-                    <span className="badge badge-primary badge-pill">7</span>
+                    <span className="badge badge-primary badge-pill">{qtd}</span>
                 </li>
             )
         }.bind(this));

@@ -121,7 +121,7 @@
                     @foreach($lasts as $last)
                         <a href="artigo/{{$last->id}}/{{clean($last->title)}}">
                             <div>
-                                <h3>{{$last->title}}</h3>
+                                <h4><strong>{{$last->title}}</strong></h4>
                                 <p>{{$last->tease}}</p>
                                 <h4 class="btn-plus">Continue lendo</h4>
                                 <hr>

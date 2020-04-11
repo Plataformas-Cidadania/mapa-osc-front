@@ -34,7 +34,7 @@ class ArchivesFilter extends React.Component {
             success: function (data) {
                 //console.log(data);
 
-                //importar membros passadas pela url//////////////
+                //importar arquivo passadas pela url//////////////
                 let archivesUrl = this.props.archivesUrl;
                 let archivesSelected = this.state.archivesSelected;
                 for (let i in data) {
@@ -117,7 +117,7 @@ class ArchivesFilter extends React.Component {
 
     render() {
 
-        let archives = this.state.archives.map(function (item) {
+        let archives = this.state.archives.map(function (item, index) {
             let sizeSearch = this.state.search.length;
             let firstPiece = item.month.substr(0, sizeSearch);
             let month = item.month.substr(sizeSearch);
@@ -134,10 +134,12 @@ class ArchivesFilter extends React.Component {
 
             return React.createElement(
                 'li',
-                { key: 'arc_' + item.qtd, className: 'list-group-item d-flex justify-content-between align-items-center', style: { cursor: 'pointer', color: color }, onClick: () => this.addArchive(item) },
+                { key: 'arc_' + index, className: 'list-group-item d-flex justify-content-between align-items-center', style: { cursor: 'pointer', color: color }, onClick: () => this.addArchive(item) },
                 month,
                 ' de ',
                 year,
+                ' - ',
+                index,
                 React.createElement(
                     'span',
                     { className: 'badge badge-primary badge-pill' },
@@ -146,14 +148,16 @@ class ArchivesFilter extends React.Component {
             );
         }.bind(this));
 
-        let archivesSelected = this.state.archivesSelected.map(function (item) {
+        let archivesSelected = this.state.archivesSelected.map(function (item, index) {
             return React.createElement(
                 'button',
-                { key: "btn_archive_" + item.id, id: item.id, onClick: this.removeArchive, type: 'button', className: 'btn btn-success btn-xs btn-remove', style: { margin: "0 5px 5px 0" } },
+                { key: "btn_archive_" + index, id: index, onClick: this.removeArchive, type: 'button', className: 'btn btn-success btn-xs btn-remove', style: { margin: "0 5px 5px 0" } },
                 item.month,
                 ' de ',
                 item.year,
-                '  ',
+                ' - ',
+                index,
+                ' ',
                 React.createElement('i', { className: 'fas fa-times' })
             );
         }.bind(this));

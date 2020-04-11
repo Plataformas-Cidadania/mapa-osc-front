@@ -26,9 +26,23 @@ class PostController extends Controller
 
     public function categories(Request $request){
 
-        $categories = \App\PubCategory::select('pub_categories.*', 'lng_pub_categories.title')
+        /*$categories = \App\PubCategory::select('pub_categories.*', 'lng_pub_categories.title')
             ->join('lng_pub_categories', 'pub_categories.id', '=', 'lng_pub_categories.publish_id')
             ->where('lng_pub_categories.title', 'like', $request->search.'%')
+            ->get();*/
+
+        /*$categories = \App\PubCategory::select('pub_categories.id', 'lng_pub_categories.title')*/
+        $categories = \App\PubCategory::select(
+            DB::Raw("
+                pub_categories.id,
+                lng_pub_categories.title,
+                count(pub_categories.id) as qtd
+            "))
+            ->join('lng_pub_categories', 'pub_categories.id', '=', 'lng_pub_categories.publish_id')
+            ->join('pub_articles', 'pub_categories.id', '=', 'pub_articles.category_id')
+            ->where('lng_pub_categories.title', 'like', $request->search.'%')
+            ->groupBy('pub_categories.id', 'lng_pub_categories.title')
+            ->distinct()
             ->get();
 
         return $categories;
@@ -64,21 +78,41 @@ class PostController extends Controller
 
     public function getList(Request $request){
 
+        $categories = [];
+        if (is_array($request->filters) && array_key_exists('parts', $request->filters)) {
+            $categories = $request->filters['categories'];
+        }
 
         $categories = [];
-        if(array_key_exists('categories', $request->filters)){
+        if (is_array($request->filters) && array_key_exists('categories', $request->filters)) {
             $categories = $request->filters['categories'];
         }
 
         $members = [];
-        if(array_key_exists('members', $request->filters)){
+        if (is_array($request->filters) && array_key_exists('members', $request->filters)) {
             $members = $request->filters['members'];
         }
 
         $archives = [];
-        if(array_key_exists('archives', $request->filters)){
+        if (is_array($request->filters) && array_key_exists('archives', $request->filters)) {
             $archives = $request->filters['archives'];
         }
+
+
+        /*$categories = [];
+        if(array_key_exists('categories', $request->filters)){
+            $categories = $request->filters['categories'];
+        }*/
+
+        /*$members = [];
+        if(array_key_exists('members', $request->filters)){
+            $members = $request->filters['members'];
+        }*/
+
+        /*$archives = [];
+        if(array_key_exists('archives', $request->filters)){
+            $archives = $request->filters['archives'];
+        }*/
 
 
         $total = DB::table('pub_articles')

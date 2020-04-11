@@ -17,6 +17,8 @@ class List extends React.Component{
             directionOrder: 'asc',
             dictionaryFilters:{
                 categorias: 'categoriesSelected',
+                members: 'membersSelected',
+                archives: 'archivesSelected',
             },
         };
 
@@ -121,11 +123,11 @@ class List extends React.Component{
     }
 
     filterArchives(archives){
-        let archiveIds = [];
+        let archivesIds = [];
         archives.find(function(item){
-            archiveIds.push(item.id);
+            archivesIds.push(item.id);
         });
-        this.setState({archiveSelected: archiveIds}, function(){
+        this.setState({archivesSelected: archivesIds}, function(){
             //console.log(this.state.archiveSelected);
             this.load();
         });
@@ -156,46 +158,40 @@ class List extends React.Component{
         if(this.state.ads.data.length == 0){
             ads = (<p style={{textAlign:'center', margin:'50px'}}>Nenhum resultado encontrado para esta pesquisa</p>);
         }else{
-
-
-
             ads = this.state.ads.data.map(function(item){
 
-
-
-
-
-                let categories = item.categories.map(function(category, index){
-                    let separator = ',';
-                    if(index == item.categories.length-1){
-                        separator = null;
-                    }
-                    return (
-                        <span>
-                        <a key={"categ_ad_"+category.id} className="text-info" style={{cursor:'pointer'}}
-                           href={"/credenciados/filtros=categorias:"+category.id}>{category.title}</a>{separator}&nbsp;
-                    </span>
-                    );
-
-                });
-
-                /*let members = item.members.map(function(category, index){
-                    let separator = ',';
-                    if(index == item.members.length-1){
-                        separator = null;
-                    }
-                    return (
-                        <span>
-                        <a key={"categ_ad_"+category.id} className="text-info" style={{cursor:'pointer'}}
-                           href={"/artigos/filtros=membros:"+category.id}>{category.title}</a>{separator}&nbsp;
-                    </span>
-                    );
-
-                });*/
-
                 return (
-                    <div key={"ads_"+item.id}>
 
+                    /*OPCAO 1 UTILIZAR NA TROCA
+                    <div key={"ads_"+item.id}>
+                        <a href={"/artigo/"+item.id+"/"+cleanReplace(item.title)}>
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <img data-src="holder.js/200x200" className="img-fluid" alt="200x200"
+                                         src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true"
+                                         width="100%"/>
+                                </div>
+                                <div className="col-md-8">
+                                    <h5 className="float-right"><i className="fas fa-comment"></i> 5</h5>
+                                    <div className="item-calendar">
+                                        <time className="item-calendar"><i
+                                            className="far fa-clock"/> {item.date}
+                                        </time>
+                                    </div>
+                                    <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
+                                    <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
+                                    <h4 className="btn-plus">Continue lendo</h4>
+
+
+
+                                </div>
+                                <div className="col-md-12"><hr/></div>
+
+                            </div>
+                        </a>
+                    </div>*/
+                     /*OPCAO 2 UTILIZAR NA TROCA*/
+                    <div key={"ads_"+item.id}>
                         <a href={"/artigo/"+item.id+"/"+cleanReplace(item.title)}>
                             <div>
                                 <br/>
@@ -218,7 +214,6 @@ class List extends React.Component{
                                 <hr/>
                             </div>
                         </a>
-
                     </div>
 
                 );
