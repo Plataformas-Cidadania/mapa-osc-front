@@ -12022,6 +12022,7 @@ figcaption {
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;
+  font-size: 14px;
 }
 
 label {

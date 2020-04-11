@@ -10,7 +10,6 @@ class List extends React.Component {
             showCategories: [],
             showMembers: [],
             showArchives: [],
-            daysSelected: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'],
             categoriesSelected: [],
             membersSelected: [],
             archivesSelected: [],
@@ -27,12 +26,9 @@ class List extends React.Component {
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
         this.filterArchives = this.filterArchives.bind(this);
-        /*this.filterDays = this.filterDays.bind(this);*/
     }
 
     componentDidMount() {
-
-        //console.log(this.props.filtrosUrl);
 
         if (this.props.filtrosUrl) {
             let filtros = this.props.filtrosUrl.split(';');
@@ -55,8 +51,6 @@ class List extends React.Component {
 
     load() {
 
-        //console.log(this.state.daysSelected);
-
         $.ajax({
             method: 'POST',
             url: '/list-posts',
@@ -65,7 +59,6 @@ class List extends React.Component {
             },
             data: {
                 filters: {
-                    days: this.state.daysSelected,
                     categories: this.state.categoriesSelected,
                     members: this.state.membersSelected,
                     archives: this.state.archivesSelected,
@@ -128,23 +121,6 @@ class List extends React.Component {
         });
     }
 
-    /*filterDays(days){
-        let daysSelected = [];
-        days.find(function(item){
-            if(item.checked){
-                daysSelected.push(item.short);
-            }
-        });
-         if(daysSelected.length==0){
-            daysSelected = ['DOM','SEG','TER','QUA','QUI','SEX','SAB'];
-        }
-         this.setState({daysSelected: daysSelected}, function(){
-            //console.log(this.state.daysSelected);
-            this.load();
-        });
-    }
-      */
-
     changeOrder(e) {
         //console.log(e.target.value);
         let orderArray = e.target.value.split('-');
@@ -172,28 +148,6 @@ class List extends React.Component {
         } else {
 
             ads = this.state.ads.data.map(function (item) {
-                console.log(item);
-                /*let daysArray = [
-                    {day: 'DOM', show:false},
-                    {day: 'SEG', show:false},
-                    {day: 'TER', show:false},
-                    {day: 'QUA', show:false},
-                    {day: 'QUI', show:false},
-                    {day: 'SEX', show:false},
-                    {day: 'SAB', show:false},
-                ];
-                 item.days.find(function(it){
-                    daysArray.find(function(i){
-                        if(i.day === it.day){
-                            i.show = true;
-                        }
-                    });
-                });
-                 let days = daysArray.map(function(i, index){
-                    return (
-                        <li key={"days_ad_"+index} style={{display: i.show ? 'block' : 'none', float:'left'}}>{i.day}</li>
-                    );
-                 });*/
 
                 let categories = item.categories.map(function (category, index) {
                     let separator = ',';
@@ -348,7 +302,6 @@ class List extends React.Component {
                         'div',
                         { className: 'col-md-4' },
                         React.createElement(Filters, {
-                            filterDays: this.filterDays,
                             filterCategories: this.filterCategories,
                             filterMembers: this.filterMembers,
                             filterArchives: this.filterArchives,

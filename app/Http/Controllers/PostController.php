@@ -54,9 +54,6 @@ class PostController extends Controller
                 to_char(pub_articles.date, 'TMMonth') as month,
                 to_char(pub_articles.date, 'YYYY') as year
                 "))
-            /*->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('pub_articles.category_id', $categories);
-            })*/
             ->groupBy('date_menu', 'month', 'year')
             ->orderby('date_menu')
             ->distinct('date_menu')
@@ -67,7 +64,6 @@ class PostController extends Controller
 
     public function getList(Request $request){
 
-        $days = $request->filters['days'];
 
         $categories = [];
         if(array_key_exists('categories', $request->filters)){
@@ -79,6 +75,11 @@ class PostController extends Controller
             $members = $request->filters['members'];
         }
 
+        $archives = [];
+        if(array_key_exists('archives', $request->filters)){
+            $archives = $request->filters['archives'];
+        }
+
 
         $total = DB::table('pub_articles')
             ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
@@ -87,6 +88,12 @@ class PostController extends Controller
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
+            /*->when(count($members) > 0, function($query) use ($members){
+                return $query->whereIn('pub_members.category_id', $members);
+            })
+            ->when(count($archives) > 0, function($query) use ($archives){
+                return $query->whereIn('pub_articles.category_id', $archives);
+            })*/
             ->get();
 
         /*$total = DB::table('accrediteds_ads')
@@ -97,11 +104,9 @@ class PostController extends Controller
             )
             ->distinct()
             ->join('accrediteds', 'accrediteds.id', '=', 'accrediteds_ads.accredited_id')
-            ->join('ads_days', 'ads_days.ad_id', '=', 'accrediteds_ads.id')
             ->join('ads_categories', 'ads_categories.ad_id', '=', 'accrediteds_ads.id')
             ->where('accrediteds.city', $request->filters['city'])
             ->where('accrediteds_ads.status', 1)
-            ->whereIn('ads_days.day', $days)
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('ads_categories.category_id', $categories);
             })
@@ -136,11 +141,9 @@ class PostController extends Controller
             )
             ->distinct()
             ->join('accrediteds', 'accrediteds.id', '=', 'accrediteds_ads.accredited_id')
-            ->join('ads_days', 'ads_days.ad_id', '=', 'accrediteds_ads.id')
             ->join('ads_categories', 'ads_categories.ad_id', '=', 'accrediteds_ads.id')
             ->where('accrediteds.city', $request->filters['city'])
             ->where('accrediteds_ads.status', 1)
-            ->whereIn('ads_days.day', $days)
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('ads_categories.category_id', $categories);
             })
@@ -171,8 +174,6 @@ class PostController extends Controller
                 ->get();
             $ads['data'][$index]->categories = $categories;
 
-            $days = \App\DayAd::where('ad_id', $ad->id)->get();
-            $ads['data'][$index]->days = $days;
 
             $off = \App\OffAd::where('ad_id', $ad->id)->orderBy('off', 'desc')->take(1)->get();
             //Log::info($off);
