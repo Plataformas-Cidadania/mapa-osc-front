@@ -12,7 +12,8 @@ class Filters extends React.Component{
                 {day:"Sábado", short:"SAB", checked:false},
             ],
             categories:[],
-            Members:[]
+            Members:[],
+            Archive:[]
 
         };
 
@@ -20,6 +21,7 @@ class Filters extends React.Component{
         this.checkDay = this.checkDay.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
+        this.filterArchives = this.filterArchives.bind(this);
     }
 
     componentDidMount(){
@@ -73,6 +75,13 @@ class Filters extends React.Component{
         });
     }
 
+    filterArchives(archives){
+        this.setState({archives: archives}, function(){
+            console.log(this.state.archives);
+            this.props.filterArchives(archives);
+        });
+    }
+
 
     render(){
 
@@ -97,7 +106,9 @@ class Filters extends React.Component{
                     <div className="line-color"/>
                     <h2><i className="far fa-calendar"/> Arquivo</h2>
 
-                    <ul className="list-group">
+                    <ArchivesFilter filterArchives={this.filterArchives} archivesUrl={this.props.archivesUrl}/>
+
+                    {/*<ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                             Fevereiro de 2020
                             <span className="badge badge-primary badge-pill">7</span>
@@ -110,7 +121,7 @@ class Filters extends React.Component{
                             Dezembro de 2019
                             <span className="badge badge-primary badge-pill">1</span>
                         </li>
-                    </ul>
+                    </ul>*/}
 
                     <h4 className="btn-plus float-right">Mais 15</h4>
                 </div>

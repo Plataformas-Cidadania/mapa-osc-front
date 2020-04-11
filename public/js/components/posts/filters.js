@@ -4,7 +4,8 @@ class Filters extends React.Component {
         this.state = {
             days: [{ day: "Domingo", short: "DOM", checked: false }, { day: "Segunda-feira", short: "SEG", checked: false }, { day: "Terça-feira", short: "TER", checked: false }, { day: "Quarta-feira", short: "QUA", checked: false }, { day: "Quinta-feira", short: "QUI", checked: false }, { day: "Sexta-feira", short: "SEX", checked: false }, { day: "Sábado", short: "SAB", checked: false }],
             categories: [],
-            Members: []
+            Members: [],
+            Archive: []
 
         };
 
@@ -12,6 +13,7 @@ class Filters extends React.Component {
         this.checkDay = this.checkDay.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
+        this.filterArchives = this.filterArchives.bind(this);
     }
 
     componentDidMount() {
@@ -65,6 +67,13 @@ class Filters extends React.Component {
         });
     }
 
+    filterArchives(archives) {
+        this.setState({ archives: archives }, function () {
+            console.log(this.state.archives);
+            this.props.filterArchives(archives);
+        });
+    }
+
     render() {
 
         let days = this.state.days.map(function (item, index) {
@@ -99,40 +108,7 @@ class Filters extends React.Component {
                     React.createElement("i", { className: "far fa-calendar" }),
                     " Arquivo"
                 ),
-                React.createElement(
-                    "ul",
-                    { className: "list-group" },
-                    React.createElement(
-                        "li",
-                        { className: "list-group-item d-flex justify-content-between align-items-center" },
-                        "Fevereiro de 2020",
-                        React.createElement(
-                            "span",
-                            { className: "badge badge-primary badge-pill" },
-                            "7"
-                        )
-                    ),
-                    React.createElement(
-                        "li",
-                        { className: "list-group-item d-flex justify-content-between align-items-center" },
-                        "Janeiro de 2020",
-                        React.createElement(
-                            "span",
-                            { className: "badge badge-primary badge-pill" },
-                            "x"
-                        )
-                    ),
-                    React.createElement(
-                        "li",
-                        { className: "list-group-item d-flex justify-content-between align-items-center" },
-                        "Dezembro de 2019",
-                        React.createElement(
-                            "span",
-                            { className: "badge badge-primary badge-pill" },
-                            "1"
-                        )
-                    )
-                ),
+                React.createElement(ArchivesFilter, { filterArchives: this.filterArchives, archivesUrl: this.props.archivesUrl }),
                 React.createElement(
                     "h4",
                     { className: "btn-plus float-right" },

@@ -63,6 +63,7 @@ Route::post('contact', 'ContactController@send');
 Route::post('/list-posts', 'PostController@getList');
 Route::post('/categories', 'PostController@categories');
 Route::post('/members', 'PostController@members');
+Route::post('/archives', 'PostController@archives');
 
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');

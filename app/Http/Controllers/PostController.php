@@ -43,6 +43,28 @@ class PostController extends Controller
         return $members;
     }
 
+    public function archives(Request $request){
+
+        $archives = DB::table('pub_articles')
+            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+            ->select(
+                DB::Raw("
+                to_char(pub_articles.date, 'YYYY-MM') as date_menu,
+                count(date) as qtd,
+                to_char(pub_articles.date, 'TMMonth') as month,
+                to_char(pub_articles.date, 'YYYY') as year
+                "))
+            /*->when(count($categories) > 0, function($query) use ($categories){
+                return $query->whereIn('pub_articles.category_id', $categories);
+            })*/
+            ->groupBy('date_menu', 'month', 'year')
+            ->orderby('date_menu')
+            ->distinct('date_menu')
+            ->get();
+
+        return $archives;
+    }
+
     public function getList(Request $request){
 
         $days = $request->filters['days'];
@@ -56,22 +78,6 @@ class PostController extends Controller
         if(array_key_exists('members', $request->filters)){
             $members = $request->filters['members'];
         }
-
-
-        /*$arquivos = DB::table('pub_articles')
-            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
-            ->select('pub_articles.*',
-                'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description'
-            )
-            ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('pub_articles.category_id', $categories);
-            })
-            ->orderby($request->order, $request->directionOrder)
-            ->distinct('pub_articles.data')
-            ->get();
-
-        Log::info([$arquivos]);*/
-
 
 
         $total = DB::table('pub_articles')
@@ -142,6 +148,7 @@ class PostController extends Controller
             ->take($request->qtdItemsLoad)
             ->get();*/
             //->paginate();
+
 
         $ads['total'] = $total;
         $ads['data'] = $result;

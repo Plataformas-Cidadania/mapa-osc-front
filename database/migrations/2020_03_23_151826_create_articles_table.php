@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('hash')->nullable();
             $table->string('archived')->default(0);
             $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('dft_categories')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
@@ -45,7 +45,7 @@ class CreateArticlesTable extends Migration
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
             $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('pub_categories')->onDelete('cascade');
             $table->bigInteger('draft_id')->unsigned();
             $table->foreign('draft_id')->references('id')->on('dft_articles')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();

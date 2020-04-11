@@ -9,9 +9,11 @@ class List extends React.Component{
             qtdItemsLoad: 15,
             showCategories:[],
             showMembers:[],
+            showArchives:[],
             daysSelected:['DOM','SEG','TER','QUA','QUI','SEX','SAB'],
             categoriesSelected:[],
             membersSelected:[],
+            archivesSelected:[],
             order: 'title',
             directionOrder: 'asc',
             dictionaryFilters:{
@@ -24,6 +26,7 @@ class List extends React.Component{
         this.changeOrder = this.changeOrder.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
+        this.filterArchives = this.filterArchives.bind(this);
         /*this.filterDays = this.filterDays.bind(this);*/
 
     }
@@ -70,6 +73,7 @@ class List extends React.Component{
                     days:this.state.daysSelected,
                     categories:this.state.categoriesSelected,
                     members:this.state.membersSelected,
+                    archives:this.state.archivesSelected,
                     orderby: this.state.orderby,
                 },
                 order: this.state.order,
@@ -114,6 +118,17 @@ class List extends React.Component{
         });
         this.setState({membersSelected: membersIds}, function(){
             //console.log(this.state.membersSelected);
+            this.load();
+        });
+    }
+
+    filterArchives(archives){
+        let archiveIds = [];
+        archives.find(function(item){
+            archiveIds.push(item.id);
+        });
+        this.setState({archiveSelected: archiveIds}, function(){
+            //console.log(this.state.archiveSelected);
             this.load();
         });
     }
@@ -285,8 +300,10 @@ class List extends React.Component{
                                 filterDays={this.filterDays}
                                 filterCategories={this.filterCategories}
                                 filterMembers={this.filterMembers}
+                                filterArchives={this.filterArchives}
                                 categoriesUrl={this.state.categoriesSelected}
                                 membersUrl={this.state.membersSelected}
+                                archivesUrl={this.state.archivesSelected}
                             />
                         </div>
                     </div>
