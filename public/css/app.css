@@ -12585,3 +12585,7 @@ a:active {
   background-color: #EEEEEE !important;
 }
 
+/*p, h1, h2, time{
+    outline: none!important;
+}*/
+

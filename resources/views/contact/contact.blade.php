@@ -101,7 +101,6 @@
                     width: 100%;
                     height: 400px;
                 }
-
                 .invalid-field{
                     background-color: red;
                 }

@@ -31,9 +31,7 @@
                     }
                 </style>
                 <br>
-                {{--<div id='map'></div>--}}
-
-                <div id="page"></div>
+                <div id='map'></div>
                 <br>
            </div>
         </div>

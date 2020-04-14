@@ -142,6 +142,8 @@ class ArchivesFilter extends React.Component{
         }.bind(this));
 
         let archivesSelected = this.state.archivesSelected.map(function (item, index){
+            console.log(item);
+            console.log(index);
             return (
                 <button key={"btn_archive_"+index} id={index} onClick={this.removeArchive} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
                     {item.month} de {item.year} - {index} <i className="fas fa-times"/>

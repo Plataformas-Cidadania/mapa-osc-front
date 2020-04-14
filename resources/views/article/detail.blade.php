@@ -62,7 +62,10 @@
                     </div>
 
                     {{--Formulário--}}
-                    <div class="col-md-6">
+                    <div id="comment"></div>
+
+
+                    {{--<div class="col-md-6">
                         <div><input type="text" placeholder="Nome" class="form-control"></div>
                         <br>
                     </div>
@@ -78,7 +81,9 @@
                         <div>
                             <button class="btn btn-primary" >Enviar</button>
                         </div>
-                    </div>
+                    </div>--}}
+
+
                     {{--Formulário--}}
 
                     <div class="col-md-12 space">
