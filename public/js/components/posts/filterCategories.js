@@ -121,7 +121,7 @@ class CategoriesFilter extends React.Component {
     render() {
 
         let qtdItems = this.state.categories.length;
-        let showQtdItems = 2;
+        let showQtdItems = 5;
 
         let firstCategories = this.state.categories.map(function (item, index) {
             if (index < showQtdItems) {
@@ -140,13 +140,21 @@ class CategoriesFilter extends React.Component {
 
                 return React.createElement(
                     'li',
-                    { key: 'cat_' + item.id, className: 'list-group-item d-flex justify-content-between align-items-center', style: { cursor: 'pointer', color: color }, onClick: () => this.addCategory(item) },
+                    { key: 'cat_' + item.id,
+                        className: 'list-group-item d-flex justify-content-between align-items-center',
+                        style: { cursor: 'pointer', color: color },
+                        onClick: () => this.addCategory(item)
+                    },
                     React.createElement(
-                        'u',
+                        'span',
                         null,
-                        firstPiece
+                        React.createElement(
+                            'u',
+                            null,
+                            firstPiece
+                        ),
+                        lastPiece
                     ),
-                    lastPiece,
                     React.createElement(
                         'span',
                         { className: 'badge badge-primary badge-pill' },
@@ -179,11 +187,15 @@ class CategoriesFilter extends React.Component {
                         onClick: () => this.addCategory(item)
                     },
                     React.createElement(
-                        'u',
+                        'span',
                         null,
-                        firstPiece
+                        React.createElement(
+                            'u',
+                            null,
+                            firstPiece
+                        ),
+                        lastPiece
                     ),
-                    lastPiece,
                     React.createElement(
                         'span',
                         { className: 'badge badge-primary badge-pill' },

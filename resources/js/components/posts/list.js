@@ -134,7 +134,7 @@ class List extends React.Component{
     filterArchives(archives){
         let archivesIds = [];
         archives.find(function(item){
-            archivesIds.push(item.id);
+            archivesIds.push(item.date_menu);
         });
         this.setState({archivesSelected: archivesIds}, function(){
             //console.log(this.state.archiveSelected);
@@ -204,7 +204,7 @@ class List extends React.Component{
                         <a href={"/artigo/"+item.id+"/"+cleanReplace(item.title)}>
                             <div>
                                 <br/>
-                                <h5 className="float-right"><i className="fas fa-comment"></i> 5</h5>
+                                <h5 className="float-right"><i className="fas fa-comment"></i> {item.qtd_comments}</h5>
                                 <img data-src="holder.js/200x200" className="img-fluid" alt="200x200"
                                      src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true"
                                      width="100%"/>
@@ -212,7 +212,7 @@ class List extends React.Component{
                                 <div className="row">
                                     <div className="col-md-6 item-calendar">
                                         <time className="item-calendar"><i
-                                            className="far fa-clock"/> {item.date}
+                                            className="far fa-clock"/> {item.date} de {item.month} de {item.year} às {item.hour}
                                         </time>
                                     </div>
                                 </div>

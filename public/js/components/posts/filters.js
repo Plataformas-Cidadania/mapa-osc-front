@@ -41,21 +41,21 @@ class Filters extends React.Component {
 
     filterCategories(categories) {
         this.setState({ categories: categories }, function () {
-            console.log(this.state.categories);
+            //console.log(this.state.categories);
             this.props.filterCategories(categories);
         });
     }
 
     filterMembers(members) {
         this.setState({ members: members }, function () {
-            console.log(this.state.members);
+            //console.log(this.state.members);
             this.props.filterMembers(members);
         });
     }
 
     filterArchives(archives) {
         this.setState({ archives: archives }, function () {
-            console.log(this.state.archives);
+            //console.log(this.state.archives);
             this.props.filterArchives(archives);
         });
     }
@@ -79,13 +79,7 @@ class Filters extends React.Component {
                     React.createElement('i', { className: 'far fa-calendar' }),
                     ' Arquivo'
                 ),
-                React.createElement(ArchivesFilter, { filterArchives: this.filterArchives, archivesUrl: this.props.archivesUrl }),
-                React.createElement(
-                    'h4',
-                    { className: 'btn-plus float-right' },
-                    'Mais 15 ',
-                    React.createElement('i', { className: 'fas fa-angle-down' })
-                )
+                React.createElement(ArchivesFilter, { filterArchives: this.filterArchives, archivesUrl: this.props.archivesUrl })
             ),
             React.createElement(
                 'div',
@@ -113,13 +107,7 @@ class Filters extends React.Component {
                     React.createElement('i', { className: 'far fa-user' }),
                     ' Autores'
                 ),
-                React.createElement(MembersFilter, { filterMembers: this.filterMembers, membersUrl: this.props.membersUrl }),
-                React.createElement(
-                    'h4',
-                    { className: 'btn-plus float-right' },
-                    'Mais 10 ',
-                    React.createElement('i', { className: 'fas fa-angle-down' })
-                )
+                React.createElement(MembersFilter, { filterMembers: this.filterMembers, membersUrl: this.props.membersUrl })
             ),
             React.createElement('br', null)
         );

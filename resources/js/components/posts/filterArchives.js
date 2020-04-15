@@ -6,6 +6,7 @@ class ArchivesFilter extends React.Component{
             search:'',
             showArchives: false,
             archivesSelected: [],
+            showOtherItems: false,
         };
         this.load = this.load.bind(this);
         this.clickSearch = this.clickSearch.bind(this);
@@ -81,7 +82,6 @@ class ArchivesFilter extends React.Component{
     }
 
     addArchive(item){
-        //console.log('addArchive', item);
         let add = true;
         this.state.archivesSelected.find(function(memb){
             if(item.month==memb.month){
@@ -118,32 +118,68 @@ class ArchivesFilter extends React.Component{
 
     render(){
 
-        let archives = this.state.archives.map(function (item, index){
-            let sizeSearch = this.state.search.length;
-            let firstPiece = item.month.substr(0, sizeSearch);
-            let month = item.month.substr(sizeSearch);
-            let year = item.year.substr(sizeSearch);
-            let qtd = item.qtd;
+        let qtdItems = this.state.archives.length;
+        let showQtdItems = 5;
 
-            let color = '';
-            this.state.archivesSelected.find(function(memb){
-                if(item.month==memb.month){
-                    color = '#b7b7b7';
-                    return;
-                }
-            });
+        let firstArchives = this.state.archives.map(function (item, index){
+            if(index < showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.month.substr(0, sizeSearch);
+                let month = item.month.substr(sizeSearch);
+                let year = item.year.substr(sizeSearch);
+                let qtd = item.qtd;
 
-            return (
-                <li key={'arc_'+index} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addArchive(item)}>
-                    {month} de {year}
-                    <span className="badge badge-primary badge-pill">{qtd}</span>
-                </li>
-            )
+                let color = '';
+                this.state.archivesSelected.find(function (memb) {
+                    if (item.month == memb.month) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return (
+                    <li key={'arc_' + index}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                        style={{cursor: 'pointer', color: color}}
+                        onClick={() => this.addArchive(item)}
+                    >
+                        {month} de {year}
+                        <span className="badge badge-primary badge-pill">{qtd}</span>
+                    </li>
+                )
+            }
+        }.bind(this));
+
+        let otherArchives = this.state.archives.map(function (item, index){
+            if(index >= showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.month.substr(0, sizeSearch);
+                let month = item.month.substr(sizeSearch);
+                let year = item.year.substr(sizeSearch);
+                let qtd = item.qtd;
+
+                let color = '';
+                this.state.archivesSelected.find(function (memb) {
+                    if (item.month == memb.month) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return (
+                    <li key={'arc_' + index}
+                        className={"list-group-item " + (this.state.showOtherItems ? "d-flex" : "") + " justify-content-between align-items-center"}
+                        style={{cursor:'pointer', color: color, display: this.state.showOtherItems ? '' : 'none'}}
+                        onClick={() => this.addArchive(item)}
+                    >
+                        {month} de {year}
+                        <span className="badge badge-primary badge-pill">{qtd}</span>
+                    </li>
+                )
+            }
         }.bind(this));
 
         let archivesSelected = this.state.archivesSelected.map(function (item, index){
-            console.log(item);
-            console.log(index);
             return (
                 <button key={"btn_archive_"+index} id={index} onClick={this.removeArchive} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
                     {item.month} de {item.year} <i className="fas fa-times"/>
@@ -154,14 +190,14 @@ class ArchivesFilter extends React.Component{
         return(
             <div>
                 {archivesSelected}
-                {/*<div className="input-icon filter-input-icon">
-                    <input type="text" name="titleArchive" className="filter-search" onClick={this.clickSearch} onChange={this.handleSearch}/>
-                    <i className="fas fa-search"/>
-                </div>*/}
                 <ul className="list-group">
-                    {archives}
+                    {firstArchives}
+                    {otherArchives}
                 </ul>
-
+                <div style={{display: qtdItems - showQtdItems > 0 ? '' : 'none'}}>
+                    <h4 className="btn-plus float-right" style={{display: !this.state.showOtherItems ? '' : 'none', cursor:'pointer'}} onClick={() => this.setState({showOtherItems: true})}>Mais {qtdItems - showQtdItems} <i className="fas fa-angle-down"/></h4>
+                    <h4 className="btn-plus float-right" style={{display: this.state.showOtherItems ? '' : 'none', cursor:'pointer'}} onClick={() => this.setState({showOtherItems: false})}>Menos {qtdItems - showQtdItems} <i className="fas fa-angle-up"/></h4>
+                </div>
             </div>
         );
     }

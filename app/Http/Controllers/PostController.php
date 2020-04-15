@@ -50,8 +50,17 @@ class PostController extends Controller
 
     public function members(Request $request){
 
-        $members = \App\PubMember::select('*')
-            ->where('name', 'ilike', $request->search.'%')
+        $members = \App\PubMember::
+            select(
+            DB::Raw("
+                pub_members.id,
+                pub_members.name,
+                count(jnc_articles_members.member_id) as qtd
+            ")
+        )
+            ->join('jnc_articles_members', 'pub_members.id', '=', 'jnc_articles_members.member_id')
+            ->where('pub_members.name', 'ilike', $request->search.'%')
+            ->groupBy('pub_members.id', 'pub_members.name')
             ->get();
 
         return $members;
@@ -99,20 +108,7 @@ class PostController extends Controller
         }
 
 
-        /*$categories = [];
-        if(array_key_exists('categories', $request->filters)){
-            $categories = $request->filters['categories'];
-        }*/
 
-        /*$members = [];
-        if(array_key_exists('members', $request->filters)){
-            $members = $request->filters['members'];
-        }*/
-
-        /*$archives = [];
-        if(array_key_exists('archives', $request->filters)){
-            $archives = $request->filters['archives'];
-        }*/
 
 
         $total = DB::table('pub_articles')
@@ -126,11 +122,14 @@ class PostController extends Controller
             })
             /*->when(count($members) > 0, function($query) use ($members){
                 return $query->whereIn('pub_members.category_id', $members);
-            })
-            ->when(count($archives) > 0, function($query) use ($archives){
-                return $query->whereIn('pub_articles.category_id', $archives);
+            })*/
+            /*->when(count($archives) > 0, function($query) use ($archives){
+                //return $query->whereIn('pub_articles.date', $archives);
+                return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
             })*/
             ->get();
+
+
 
         /*$total = DB::table('accrediteds_ads')
             ->select(
@@ -155,17 +154,35 @@ class PostController extends Controller
 
         $result = DB::table('pub_articles')
             ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
-            /*->join('pub_categories', 'pub_categories.id', '=', 'pub_articles.category_id')*/
-            ->select('pub_articles.*',
+            ->leftJoin('jnc_articles_members', 'pub_articles.id', '=', 'jnc_articles_members.article_id')
+            ->leftJoin('pub_comments', 'pub_articles.id', '=', 'pub_comments.origin_id')
+            ->select(
+                'pub_articles.*',
+                DB::Raw("
+                to_char(pub_articles.date, 'HH12:MI:SS') as hour,
+                to_char(pub_articles.date, 'DD') as date,
+                to_char(pub_articles.date, 'TMMonth') as month,
+                to_char(pub_articles.date, 'YYYY') as year,
+                count(pub_comments.origin_id) as qtd_comments
+                "),
                 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description'
+
             )
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
+            ->when(count($members) > 0, function($query) use ($members){
+                return $query->whereIn('jnc_articles_members.member_id', $members);
+            })
+            ->when(count($archives) > 0, function($query) use ($archives){
+                return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
+            })
             ->where('lng_pub_articles.title', 'ilike', '%'.$search.'%')
+            ->groupBy('pub_articles.id', 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description', 'pub_comments.origin_id')
             ->orderby($request->order, $request->directionOrder)
             ->get();
 
+        Log::info($result);
 
 
 

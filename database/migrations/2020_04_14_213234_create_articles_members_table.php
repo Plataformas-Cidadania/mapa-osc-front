@@ -13,7 +13,7 @@ class CreateArticlesMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles_members', function (Blueprint $table) {
+        Schema::create('jnc_articles_members', function (Blueprint $table) {
             $table->bigInteger('article_id')->unsigned();
             $table->foreign('article_id')->references('id')->on('pub_articles')->onDelete('cascade');
             $table->bigInteger('member_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateArticlesMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles_members');
+        Schema::dropIfExists('jnc_articles_members');
     }
 }

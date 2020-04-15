@@ -124,7 +124,7 @@ class List extends React.Component {
     filterArchives(archives) {
         let archivesIds = [];
         archives.find(function (item) {
-            archivesIds.push(item.id);
+            archivesIds.push(item.date_menu);
         });
         this.setState({ archivesSelected: archivesIds }, function () {
             //console.log(this.state.archiveSelected);
@@ -200,7 +200,8 @@ class List extends React.Component {
                                     'h5',
                                     { className: 'float-right' },
                                     React.createElement('i', { className: 'fas fa-comment' }),
-                                    ' 5'
+                                    ' ',
+                                    item.qtd_comments
                                 ),
                                 React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: '200x200',
                                     src: 'https://www.w3schools.com/html/pic_trulli.jpg', 'data-holder-rendered': 'true',
@@ -219,7 +220,13 @@ class List extends React.Component {
                                             React.createElement('i', {
                                                 className: 'far fa-clock' }),
                                             ' ',
-                                            item.date
+                                            item.date,
+                                            ' de ',
+                                            item.month,
+                                            ' de ',
+                                            item.year,
+                                            ' \xE0s ',
+                                            item.hour
                                         )
                                     )
                                 ),

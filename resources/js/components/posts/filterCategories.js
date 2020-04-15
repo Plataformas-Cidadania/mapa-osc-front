@@ -122,7 +122,7 @@ class CategoriesFilter extends React.Component{
     render(){
 
         let qtdItems = this.state.categories.length;
-        let showQtdItems = 2;
+        let showQtdItems = 5;
 
         let firstCategories = this.state.categories.map(function (item, index){
             if(index < showQtdItems){
@@ -140,8 +140,12 @@ class CategoriesFilter extends React.Component{
                 });
 
                 return (
-                    <li key={'cat_'+item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addCategory(item)}>
-                        {<u>{firstPiece}</u>}{lastPiece}
+                    <li key={'cat_'+item.id}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                        style={{cursor:'pointer', color: color}}
+                        onClick={() => this.addCategory(item)}
+                    >
+                        {<span><u>{firstPiece}</u>{lastPiece}</span>}
                         <span className="badge badge-primary badge-pill">{qtd}</span>
                     </li>
                 )
@@ -170,7 +174,7 @@ class CategoriesFilter extends React.Component{
                         style={{cursor:'pointer', color: color, display: this.state.showOtherItems ? '' : 'none'}}
                         onClick={() => this.addCategory(item)}
                     >
-                        {<u>{firstPiece}</u>}{lastPiece}
+                        {<span><u>{firstPiece}</u>{lastPiece}</span>}
                         <span className="badge badge-primary badge-pill">{qtd}</span>
                     </li>
                 )

@@ -5,7 +5,8 @@ class MembersFilter extends React.Component {
             members: [],
             search: '',
             showMembers: false,
-            membersSelected: []
+            membersSelected: [],
+            showOtherItems: false
         };
 
         this.load = this.load.bind(this);
@@ -119,36 +120,87 @@ class MembersFilter extends React.Component {
 
     render() {
 
-        let members = this.state.members.map(function (item) {
-            let sizeSearch = this.state.search.length;
-            let firstPiece = item.name.substr(0, sizeSearch);
-            let lastPiece = item.name.substr(sizeSearch);
+        let qtdItems = this.state.members.length;
+        let showQtdItems = 5;
 
-            let color = '';
-            this.state.membersSelected.find(function (memb) {
-                if (item.name == memb.name) {
-                    color = '#b7b7b7';
-                    return;
-                }
-            });
+        let firstMembers = this.state.members.map(function (item, index) {
+            if (index < showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.name.substr(0, sizeSearch);
+                let lastPiece = item.name.substr(sizeSearch);
+                let qtd = item.qtd;
 
-            return React.createElement(
-                'div',
-                { key: 'memb_' + item.id, className: 'list-user', style: { cursor: 'pointer', color: color }, onClick: () => this.addMember(item) },
-                React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
-                    className: 'rounded-circle float-left', width: '40' }),
-                React.createElement(
-                    'h4',
-                    null,
+                let color = '';
+                this.state.membersSelected.find(function (memb) {
+                    if (item.name == memb.name) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return React.createElement(
+                    'div',
+                    { key: 'memb_' + item.id, className: 'list-user', style: { cursor: 'pointer', color: color },
+                        onClick: () => this.addMember(item) },
+                    React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
+                        className: 'rounded-circle float-left', width: '40' }),
                     React.createElement(
-                        'u',
+                        'h4',
                         null,
-                        firstPiece
+                        React.createElement(
+                            'u',
+                            null,
+                            firstPiece
+                        ),
+                        lastPiece,
+                        React.createElement(
+                            'span',
+                            { className: 'badge badge-primary badge-pill float-right', style: { margin: '8px 20px 0 0' } },
+                            qtd
+                        )
                     ),
-                    lastPiece
-                ),
-                React.createElement('hr', null)
-            );
+                    React.createElement('hr', null)
+                );
+            }
+        }.bind(this));
+
+        let otherMembers = this.state.members.map(function (item, index) {
+            if (index >= showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.name.substr(0, sizeSearch);
+                let lastPiece = item.name.substr(sizeSearch);
+                let qtd = item.qtd;
+
+                let color = '';
+                this.state.membersSelected.find(function (memb) {
+                    if (item.name == memb.name) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return React.createElement(
+                    'div',
+                    { key: 'memb_' + item.id, className: 'list-user',
+                        style: { cursor: 'pointer', color: color, display: this.state.showOtherItems ? '' : 'none' },
+                        onClick: () => this.addMember(item) },
+                    React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
+                        className: 'rounded-circle float-left', width: '40' }),
+                    React.createElement(
+                        'h4',
+                        null,
+                        React.createElement(
+                            'u',
+                            null,
+                            firstPiece
+                        ),
+                        lastPiece,
+                        ' - ',
+                        qtd
+                    ),
+                    React.createElement('hr', null)
+                );
+            }
         }.bind(this));
 
         let membersSelected = this.state.membersSelected.map(function (item) {
@@ -171,7 +223,28 @@ class MembersFilter extends React.Component {
                 React.createElement('input', { type: 'text', name: 'titleMember', className: 'filter-search', onClick: this.clickSearch, onChange: this.handleSearch }),
                 React.createElement('i', { className: 'fas fa-search' })
             ),
-            members
+            firstMembers,
+            otherMembers,
+            React.createElement(
+                'div',
+                { style: { display: qtdItems - showQtdItems > 0 ? '' : 'none' } },
+                React.createElement(
+                    'h4',
+                    { className: 'btn-plus float-right', style: { display: !this.state.showOtherItems ? '' : 'none', cursor: 'pointer' }, onClick: () => this.setState({ showOtherItems: true }) },
+                    'Mais ',
+                    qtdItems - showQtdItems,
+                    ' ',
+                    React.createElement('i', { className: 'fas fa-angle-down' })
+                ),
+                React.createElement(
+                    'h4',
+                    { className: 'btn-plus float-right', style: { display: this.state.showOtherItems ? '' : 'none', cursor: 'pointer' }, onClick: () => this.setState({ showOtherItems: false }) },
+                    'Menos ',
+                    qtdItems - showQtdItems,
+                    ' ',
+                    React.createElement('i', { className: 'fas fa-angle-up' })
+                )
+            )
         );
     }
 }
