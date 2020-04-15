@@ -6,6 +6,7 @@ class CategoriesFilter extends React.Component{
             search:'',
             showCategories: false,
             categoriesSelected: [],
+            showOtherItems: false,
         };
 
         this.load = this.load.bind(this);
@@ -120,26 +121,60 @@ class CategoriesFilter extends React.Component{
 
     render(){
 
-        let categories = this.state.categories.map(function (item){
-            let sizeSearch = this.state.search.length;
-            let firstPiece = item.title.substr(0, sizeSearch);
-            let lastPiece = item.title.substr(sizeSearch);
-            let qtd = item.qtd;
+        let qtdItems = this.state.categories.length;
+        let showQtdItems = 2;
 
-            let color = '';
-            this.state.categoriesSelected.find(function(cat){
-                if(item.title==cat.title){
-                    color = '#b7b7b7';
-                    return;
-                }
-            });
+        let firstCategories = this.state.categories.map(function (item, index){
+            if(index < showQtdItems){
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.title.substr(0, sizeSearch);
+                let lastPiece = item.title.substr(sizeSearch);
+                let qtd = item.qtd;
 
-            return (
-                <li key={'cat_'+item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addCategory(item)}>
-                    {/*<div>{firstPiece}</div>*/}{lastPiece}
-                    <span className="badge badge-primary badge-pill">{qtd}</span>
-                </li>
-            )
+                let color = '';
+                this.state.categoriesSelected.find(function(cat){
+                    if(item.title==cat.title){
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return (
+                    <li key={'cat_'+item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addCategory(item)}>
+                        {<u>{firstPiece}</u>}{lastPiece}
+                        <span className="badge badge-primary badge-pill">{qtd}</span>
+                    </li>
+                )
+            }
+
+        }.bind(this));
+
+        let otherCategories = this.state.categories.map(function (item, index){
+            if(index >= showQtdItems){
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.title.substr(0, sizeSearch);
+                let lastPiece = item.title.substr(sizeSearch);
+                let qtd = item.qtd;
+
+                let color = '';
+                this.state.categoriesSelected.find(function(cat){
+                    if(item.title==cat.title){
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return (
+                    <li key={'cat_'+item.id}
+                        className={"list-group-item " + (this.state.showOtherItems ? "d-flex" : "") + " justify-content-between align-items-center"}
+                        style={{cursor:'pointer', color: color, display: this.state.showOtherItems ? '' : 'none'}}
+                        onClick={() => this.addCategory(item)}
+                    >
+                        {<u>{firstPiece}</u>}{lastPiece}
+                        <span className="badge badge-primary badge-pill">{qtd}</span>
+                    </li>
+                )
+            }
         }.bind(this));
 
         let categoriesSelected = this.state.categoriesSelected.map(function (item){
@@ -158,8 +193,13 @@ class CategoriesFilter extends React.Component{
                     <i className="fas fa-search"/>
                 </div>
                 <ul className="list-group">
-                    {categories}
+                    {firstCategories}
+                    {otherCategories}
                 </ul>
+                <div style={{display: qtdItems - showQtdItems > 0 ? '' : 'none'}}>
+                    <h4 className="btn-plus float-right" style={{display: !this.state.showOtherItems ? '' : 'none', cursor:'pointer'}} onClick={() => this.setState({showOtherItems: true})}>Mais {qtdItems - showQtdItems} <i className="fas fa-angle-down"/></h4>
+                    <h4 className="btn-plus float-right" style={{display: this.state.showOtherItems ? '' : 'none', cursor:'pointer'}} onClick={() => this.setState({showOtherItems: false})}>Menos {qtdItems - showQtdItems} <i className="fas fa-angle-up"/></h4>
+                </div>
             </div>
         );
     }

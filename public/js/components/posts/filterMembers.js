@@ -140,6 +140,11 @@ class MembersFilter extends React.Component {
                 React.createElement(
                     'h4',
                     null,
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
                     lastPiece
                 ),
                 React.createElement('hr', null)

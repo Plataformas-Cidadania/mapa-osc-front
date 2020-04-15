@@ -100,6 +100,7 @@
 @endif
 
 @if($rota=="artigos" || $rota=="artigos/{id_segment}" || $rota=="artigos/{titulo}" || $rota=="artigos/{parameters}")
+    <script src="/js/components/posts/search.js"></script>
     <script src="/js/components/posts/filterCategories.js"></script>
     <script src="/js/components/posts/filterMembers.js"></script>
     <script src="/js/components/posts/filterArchives.js"></script>

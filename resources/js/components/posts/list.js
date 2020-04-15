@@ -13,13 +13,14 @@ class List extends React.Component{
             categoriesSelected:[],
             membersSelected:[],
             archivesSelected:[],
-            order: 'title',
-            directionOrder: 'asc',
+            order: 'id',
+            directionOrder: 'desc',
             dictionaryFilters:{
                 categorias: 'categoriesSelected',
                 members: 'membersSelected',
                 archives: 'archivesSelected',
             },
+            search: '',
         };
 
         this.load = this.load.bind(this);
@@ -28,6 +29,7 @@ class List extends React.Component{
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
         this.filterArchives = this.filterArchives.bind(this);
+        this.setSearch = this.setSearch.bind(this);
 
 
     }
@@ -75,6 +77,7 @@ class List extends React.Component{
                     members:this.state.membersSelected,
                     archives:this.state.archivesSelected,
                     orderby: this.state.orderby,
+                    search: this.state.search,
                 },
                 order: this.state.order,
                 directionOrder: this.state.directionOrder,
@@ -96,6 +99,12 @@ class List extends React.Component{
         let qtd = this.state.ads.data.length + this.state.qtdItems;
         //console.log(qtd);
         this.setState({qtdItemsLoad: qtd}, function(){
+            this.load();
+        });
+    }
+
+    setSearch(search){
+        this.setState({search: search}, function(){
             this.load();
         });
     }
@@ -234,7 +243,6 @@ class List extends React.Component{
                                 <div className="row">
                                     <div className="col-md-12">
                                         <select className="form-control form-control-light float-right" onChange={this.changeOrder} value={this.state.order+'-'+this.state.directionOrder}>
-                                            <option value="0">Ordenação</option>
                                             <option value="title-asc">Nome</option>
                                             <option value="id-desc">Mais Recente</option>
                                             <option value="id-asc">Mais Antigo</option>
@@ -256,6 +264,7 @@ class List extends React.Component{
                                 categoriesUrl={this.state.categoriesSelected}
                                 membersUrl={this.state.membersSelected}
                                 archivesUrl={this.state.archivesSelected}
+                                setSearch={this.setSearch}
                             />
                         </div>
                     </div>

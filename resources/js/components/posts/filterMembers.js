@@ -135,10 +135,9 @@ class MembersFilter extends React.Component{
 
             return (
                 <div key={'memb_'+item.id} className="list-user" style={{cursor:'pointer', color: color}} onClick={() => this.addMember(item)}>
-                    {/*<u>{firstPiece}</u>*/}
                     <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
                          className="rounded-circle float-left" width="40"/>
-                    <h4>{lastPiece}</h4>
+                    <h4>{<u>{firstPiece}</u>}{lastPiece}</h4>
                     <hr/>
                 </div>
 

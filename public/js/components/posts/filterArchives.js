@@ -84,7 +84,7 @@ class ArchivesFilter extends React.Component {
         //console.log('addArchive', item);
         let add = true;
         this.state.archivesSelected.find(function (memb) {
-            if (item.name == memb.name) {
+            if (item.month == memb.month) {
                 add = false;
             }
         });
@@ -138,8 +138,6 @@ class ArchivesFilter extends React.Component {
                 month,
                 ' de ',
                 year,
-                ' - ',
-                index,
                 React.createElement(
                     'span',
                     { className: 'badge badge-primary badge-pill' },
@@ -157,8 +155,6 @@ class ArchivesFilter extends React.Component {
                 item.month,
                 ' de ',
                 item.year,
-                ' - ',
-                index,
                 ' ',
                 React.createElement('i', { className: 'fas fa-times' })
             );
@@ -168,12 +164,6 @@ class ArchivesFilter extends React.Component {
             'div',
             null,
             archivesSelected,
-            React.createElement(
-                'div',
-                { className: 'input-icon filter-input-icon' },
-                React.createElement('input', { type: 'text', name: 'titleArchive', className: 'filter-search', onClick: this.clickSearch, onChange: this.handleSearch }),
-                React.createElement('i', { className: 'fas fa-search' })
-            ),
             React.createElement(
                 'ul',
                 { className: 'list-group' },

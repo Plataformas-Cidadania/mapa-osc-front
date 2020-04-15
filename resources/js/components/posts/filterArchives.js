@@ -84,7 +84,7 @@ class ArchivesFilter extends React.Component{
         //console.log('addArchive', item);
         let add = true;
         this.state.archivesSelected.find(function(memb){
-            if(item.name==memb.name){
+            if(item.month==memb.month){
                 add = false;
             }
         });
@@ -135,7 +135,7 @@ class ArchivesFilter extends React.Component{
 
             return (
                 <li key={'arc_'+index} className="list-group-item d-flex justify-content-between align-items-center" style={{cursor:'pointer', color: color}} onClick={() => this.addArchive(item)}>
-                    {month} de {year} - {index}
+                    {month} de {year}
                     <span className="badge badge-primary badge-pill">{qtd}</span>
                 </li>
             )
@@ -146,7 +146,7 @@ class ArchivesFilter extends React.Component{
             console.log(index);
             return (
                 <button key={"btn_archive_"+index} id={index} onClick={this.removeArchive} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
-                    {item.month} de {item.year} - {index} <i className="fas fa-times"/>
+                    {item.month} de {item.year} <i className="fas fa-times"/>
                 </button>
             )
         }.bind(this));
@@ -154,10 +154,10 @@ class ArchivesFilter extends React.Component{
         return(
             <div>
                 {archivesSelected}
-                <div className="input-icon filter-input-icon">
+                {/*<div className="input-icon filter-input-icon">
                     <input type="text" name="titleArchive" className="filter-search" onClick={this.clickSearch} onChange={this.handleSearch}/>
                     <i className="fas fa-search"/>
-                </div>
+                </div>*/}
                 <ul className="list-group">
                     {archives}
                 </ul>

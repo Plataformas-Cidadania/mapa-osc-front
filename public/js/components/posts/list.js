@@ -13,13 +13,14 @@ class List extends React.Component {
             categoriesSelected: [],
             membersSelected: [],
             archivesSelected: [],
-            order: 'title',
-            directionOrder: 'asc',
+            order: 'id',
+            directionOrder: 'desc',
             dictionaryFilters: {
                 categorias: 'categoriesSelected',
                 members: 'membersSelected',
                 archives: 'archivesSelected'
-            }
+            },
+            search: ''
         };
 
         this.load = this.load.bind(this);
@@ -28,6 +29,7 @@ class List extends React.Component {
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
         this.filterArchives = this.filterArchives.bind(this);
+        this.setSearch = this.setSearch.bind(this);
     }
 
     componentDidMount() {
@@ -64,7 +66,8 @@ class List extends React.Component {
                     categories: this.state.categoriesSelected,
                     members: this.state.membersSelected,
                     archives: this.state.archivesSelected,
-                    orderby: this.state.orderby
+                    orderby: this.state.orderby,
+                    search: this.state.search
                 },
                 order: this.state.order,
                 directionOrder: this.state.directionOrder,
@@ -86,6 +89,12 @@ class List extends React.Component {
         let qtd = this.state.ads.data.length + this.state.qtdItems;
         //console.log(qtd);
         this.setState({ qtdItemsLoad: qtd }, function () {
+            this.load();
+        });
+    }
+
+    setSearch(search) {
+        this.setState({ search: search }, function () {
             this.load();
         });
     }
@@ -261,11 +270,6 @@ class List extends React.Component {
                                     { className: 'form-control form-control-light float-right', onChange: this.changeOrder, value: this.state.order + '-' + this.state.directionOrder },
                                     React.createElement(
                                         'option',
-                                        { value: '0' },
-                                        'Ordena\xE7\xE3o'
-                                    ),
-                                    React.createElement(
-                                        'option',
                                         { value: 'title-asc' },
                                         'Nome'
                                     ),
@@ -304,7 +308,8 @@ class List extends React.Component {
                             filterArchives: this.filterArchives,
                             categoriesUrl: this.state.categoriesSelected,
                             membersUrl: this.state.membersSelected,
-                            archivesUrl: this.state.archivesSelected
+                            archivesUrl: this.state.archivesSelected,
+                            setSearch: this.setSearch
                         })
                     )
                 )

@@ -5,7 +5,8 @@ class CategoriesFilter extends React.Component {
             categories: [],
             search: '',
             showCategories: false,
-            categoriesSelected: []
+            categoriesSelected: [],
+            showOtherItems: false
         };
 
         this.load = this.load.bind(this);
@@ -119,30 +120,77 @@ class CategoriesFilter extends React.Component {
 
     render() {
 
-        let categories = this.state.categories.map(function (item) {
-            let sizeSearch = this.state.search.length;
-            let firstPiece = item.title.substr(0, sizeSearch);
-            let lastPiece = item.title.substr(sizeSearch);
-            let qtd = item.qtd;
+        let qtdItems = this.state.categories.length;
+        let showQtdItems = 2;
 
-            let color = '';
-            this.state.categoriesSelected.find(function (cat) {
-                if (item.title == cat.title) {
-                    color = '#b7b7b7';
-                    return;
-                }
-            });
+        let firstCategories = this.state.categories.map(function (item, index) {
+            if (index < showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.title.substr(0, sizeSearch);
+                let lastPiece = item.title.substr(sizeSearch);
+                let qtd = item.qtd;
 
-            return React.createElement(
-                'li',
-                { key: 'cat_' + item.id, className: 'list-group-item d-flex justify-content-between align-items-center', style: { cursor: 'pointer', color: color }, onClick: () => this.addCategory(item) },
-                lastPiece,
-                React.createElement(
-                    'span',
-                    { className: 'badge badge-primary badge-pill' },
-                    qtd
-                )
-            );
+                let color = '';
+                this.state.categoriesSelected.find(function (cat) {
+                    if (item.title == cat.title) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.id, className: 'list-group-item d-flex justify-content-between align-items-center', style: { cursor: 'pointer', color: color }, onClick: () => this.addCategory(item) },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    lastPiece,
+                    React.createElement(
+                        'span',
+                        { className: 'badge badge-primary badge-pill' },
+                        qtd
+                    )
+                );
+            }
+        }.bind(this));
+
+        let otherCategories = this.state.categories.map(function (item, index) {
+            if (index >= showQtdItems) {
+                let sizeSearch = this.state.search.length;
+                let firstPiece = item.title.substr(0, sizeSearch);
+                let lastPiece = item.title.substr(sizeSearch);
+                let qtd = item.qtd;
+
+                let color = '';
+                this.state.categoriesSelected.find(function (cat) {
+                    if (item.title == cat.title) {
+                        color = '#b7b7b7';
+                        return;
+                    }
+                });
+
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.id,
+                        className: "list-group-item " + (this.state.showOtherItems ? "d-flex" : "") + " justify-content-between align-items-center",
+                        style: { cursor: 'pointer', color: color, display: this.state.showOtherItems ? '' : 'none' },
+                        onClick: () => this.addCategory(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    lastPiece,
+                    React.createElement(
+                        'span',
+                        { className: 'badge badge-primary badge-pill' },
+                        qtd
+                    )
+                );
+            }
         }.bind(this));
 
         let categoriesSelected = this.state.categoriesSelected.map(function (item) {
@@ -168,7 +216,28 @@ class CategoriesFilter extends React.Component {
             React.createElement(
                 'ul',
                 { className: 'list-group' },
-                categories
+                firstCategories,
+                otherCategories
+            ),
+            React.createElement(
+                'div',
+                { style: { display: qtdItems - showQtdItems > 0 ? '' : 'none' } },
+                React.createElement(
+                    'h4',
+                    { className: 'btn-plus float-right', style: { display: !this.state.showOtherItems ? '' : 'none', cursor: 'pointer' }, onClick: () => this.setState({ showOtherItems: true }) },
+                    'Mais ',
+                    qtdItems - showQtdItems,
+                    ' ',
+                    React.createElement('i', { className: 'fas fa-angle-down' })
+                ),
+                React.createElement(
+                    'h4',
+                    { className: 'btn-plus float-right', style: { display: this.state.showOtherItems ? '' : 'none', cursor: 'pointer' }, onClick: () => this.setState({ showOtherItems: false }) },
+                    'Menos ',
+                    qtdItems - showQtdItems,
+                    ' ',
+                    React.createElement('i', { className: 'fas fa-angle-up' })
+                )
             )
         );
     }

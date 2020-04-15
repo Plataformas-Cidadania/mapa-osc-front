@@ -40,7 +40,7 @@ class PostController extends Controller
             "))
             ->join('lng_pub_categories', 'pub_categories.id', '=', 'lng_pub_categories.publish_id')
             ->join('pub_articles', 'pub_categories.id', '=', 'pub_articles.category_id')
-            ->where('lng_pub_categories.title', 'like', $request->search.'%')
+            ->where('lng_pub_categories.title', 'ilike', $request->search.'%')
             ->groupBy('pub_categories.id', 'lng_pub_categories.title')
             ->distinct()
             ->get();
@@ -51,7 +51,7 @@ class PostController extends Controller
     public function members(Request $request){
 
         $members = \App\PubMember::select('*')
-            ->where('name', 'like', $request->search.'%')
+            ->where('name', 'ilike', $request->search.'%')
             ->get();
 
         return $members;
@@ -78,9 +78,9 @@ class PostController extends Controller
 
     public function getList(Request $request){
 
-        $categories = [];
-        if (is_array($request->filters) && array_key_exists('parts', $request->filters)) {
-            $categories = $request->filters['categories'];
+        $search = '';
+        if (is_array($request->filters) && array_key_exists('search', $request->filters)) {
+            $search = $request->filters['search'];
         }
 
         $categories = [];
@@ -116,6 +116,8 @@ class PostController extends Controller
 
 
         $total = DB::table('pub_articles')
+            /*->join('articles_members', 'articles_members.member_id', '=', 'pub_members.id')
+            ->join('articles_members', 'articles_members.article_id', '=', 'pub_articles.id')*/
             ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
             ->join('pub_categories', 'pub_categories.id', '=', 'pub_articles.category_id')
             ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
@@ -158,9 +160,9 @@ class PostController extends Controller
                 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description'
             )
             ->when(count($categories) > 0, function($query) use ($categories){
-                Log::info('1111');
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
+            ->where('lng_pub_articles.title', 'ilike', '%'.$search.'%')
             ->orderby($request->order, $request->directionOrder)
             ->get();
 

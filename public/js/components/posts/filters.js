@@ -67,12 +67,7 @@ class Filters extends React.Component {
             null,
             React.createElement('br', null),
             React.createElement('br', null),
-            React.createElement(
-                'div',
-                { className: 'input-icon' },
-                React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um artigo...' }),
-                React.createElement('i', { className: 'fas fa-search' })
-            ),
+            React.createElement(Search, { setSearch: this.props.setSearch }),
             React.createElement('br', null),
             React.createElement(
                 'div',
@@ -104,13 +99,7 @@ class Filters extends React.Component {
                     React.createElement('i', { className: 'far fa-folder-open' }),
                     ' Categorias'
                 ),
-                React.createElement(CategoriesFilter, { filterCategories: this.filterCategories, categoriesUrl: this.props.categoriesUrl }),
-                React.createElement(
-                    'h4',
-                    { className: 'btn-plus float-right' },
-                    'Mais 15 ',
-                    React.createElement('i', { className: 'fas fa-angle-down' })
-                )
+                React.createElement(CategoriesFilter, { filterCategories: this.filterCategories, categoriesUrl: this.props.categoriesUrl })
             ),
             React.createElement(
                 'div',

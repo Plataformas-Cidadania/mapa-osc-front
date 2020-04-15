@@ -67,10 +67,7 @@ class Filters extends React.Component{
             <div>
 
                 <br/><br/>
-                <div className="input-icon">
-                    <input type="text" className="form-control" placeholder="Busque um artigo..."/>
-                        <i className="fas fa-search"/>
-                </div>
+                <Search setSearch={this.props.setSearch} />
                 <br/>
                 <div>
                     <div className="line-color"/>
@@ -87,8 +84,6 @@ class Filters extends React.Component{
                     <h2><i className="far fa-folder-open"/> Categorias</h2>
 
                     <CategoriesFilter filterCategories={this.filterCategories} categoriesUrl={this.props.categoriesUrl}/>
-
-                    <h4 className="btn-plus float-right">Mais 15 <i className="fas fa-angle-down"/></h4>
                 </div>
 
                 <div className="float-none">
