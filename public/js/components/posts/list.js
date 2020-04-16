@@ -5,8 +5,8 @@ class List extends React.Component {
             ads: {
                 data: []
             },
-            qtdItems: 3,
-            qtdItemsLoad: 3,
+            qtdItems: 1,
+            qtdItemsLoad: 1,
             showCategories: [],
             showMembers: [],
             showArchives: [],

@@ -131,18 +131,18 @@ class PostController extends Controller
             ->leftJoin('jnc_articles_members', 'pub_articles.id', '=', 'jnc_articles_members.article_id')
             ->leftJoin('pub_comments', 'pub_articles.id', '=', 'pub_comments.origin_id')
             ->select(
-                'pub_articles.*',
                 DB::Raw("
+                pub_articles.*,
                 to_char(pub_articles.date, 'HH12:MI:SS') as hour,
                 to_char(pub_articles.date, 'DD') as date,
                 to_char(pub_articles.date, 'TMMonth') as month,
                 to_char(pub_articles.date, 'YYYY') as year,
-                count(pub_comments.origin_id) as qtd_comments
-                "),
-                'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description'
-
+                pub_comments.origin_id,
+                lng_pub_articles.title,
+                lng_pub_articles.teaser,
+                lng_pub_articles.description
+                ")
             )
-
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
@@ -152,17 +152,15 @@ class PostController extends Controller
             ->when(count($archives) > 0, function($query) use ($archives){
                 return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
             })
-            /*->where('pub_articles.id', 'pub_comments.origin_id')*/
             ->where('lng_pub_articles.title', 'ilike', '%'.$search.'%')
-            ->groupBy('pub_articles.id', 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description', 'pub_comments.origin_id')
             ->orderby($request->order, $request->directionOrder)
+            ->distinct('pub_articles.id')
+            ->take($request->qtdItemsLoad)
             ->get();
 
-        Log::info($result);
-
-
-
-
+        foreach ($result as $item) {
+            $item->qtd_comments = \App\PubComment::where('origin_id', $item->id)->count();
+        }
 
         $ads['total'] = $total;
         $ads['data'] = $result;
