@@ -56,7 +56,7 @@
                 <div class="space"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 data-message="Deixe seu comentários" tabindex="0"><i class="fas fa-comment"></i> 126 comentários</h2>
+                        <h2 data-message="Deixe seu comentários" tabindex="0"><i class="fas fa-comment"></i> {{$commentsQtd}} comentários</h2>
                         <hr>
                         <br>
                     </div>
@@ -85,24 +85,29 @@
 
 
                     {{--Formulário--}}
+                    <br><br>
+                    @foreach($comments as $comment)
 
-                    <div class="col-md-12 space">
+                    <div class="col-md-12">
+                        <br>
                         <div>
-                            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+                            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="40">
                             <div class="row">
                                 <div class="col-md-6 text-left">
-                                    <h4><strong>Ricardo Pereira</strong></h4>
+                                    <h4><strong>{{$comment->name}}</strong></h4>
                                 </div>
                                 <div class="col-md-6 text-right item-calendar">
                                     <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'abb')}}</time>
                                 </div>
                                 <div class="col-md-12">
-                                    <p><i class="fas fa-quote-left aspa"></i>Nulla sit amet sollicitudin orci. Nullam lacinia iaculis dui, eget lacinia erat accumsan dignissim. Ut ut accumsan sapien, quis sagittis risus. Vivamus metus nunc, aliquam sit amet tempor eu, maximus id nunc. Suspendisse potenti.<i class="fas fa-quote-right aspa aspa-r"></i></p>
+                                    <p><i class="fas fa-quote-left aspa"></i>{{$comment->description}}<i class="fas fa-quote-right aspa aspa-r"></i></p>
                                 </div>
                             </div>
                             <hr>
                         </div>
                     </div>
+                    @endforeach
+
                 </div>
 
 
@@ -140,31 +145,15 @@
                     <div class="line-color"></div>
                     <h2><i class="far fa-user"></i> Autores do artigo</h2>
                     <hr>
+                    @foreach($members as $member)
+                        <div class="list-user">
+                            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
+                                 class="rounded-circle float-left" width="40"/>
+                            <h4>{{$member->name}}</h4>
+                            <hr/>
+                        </div>
+                    @endforeach
 
-                    <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
-                             class="rounded-circle float-left" width="40"/>
-                        <h4>Carlos Lima</h4>
-                        <hr/>
-                    </div>
-                    <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
-                             class="rounded-circle float-left" width="40"/>
-                        <h4>Carlos Lima</h4>
-                        <hr/>
-                    </div>
-                    <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
-                             class="rounded-circle float-left" width="40"/>
-                        <h4>Carlos Lima</h4>
-                        <hr/>
-                    </div>
-                    <div class="list-user">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
-                             class="rounded-circle float-left" width="40"/>
-                        <h4>Carlos Lima</h4>
-                        <hr/>
-                    </div>
 
                 </div>
             </div>

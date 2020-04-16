@@ -26,12 +26,6 @@ class PostController extends Controller
 
     public function categories(Request $request){
 
-        /*$categories = \App\PubCategory::select('pub_categories.*', 'lng_pub_categories.title')
-            ->join('lng_pub_categories', 'pub_categories.id', '=', 'lng_pub_categories.publish_id')
-            ->where('lng_pub_categories.title', 'like', $request->search.'%')
-            ->get();*/
-
-        /*$categories = \App\PubCategory::select('pub_categories.id', 'lng_pub_categories.title')*/
         $categories = \App\PubCategory::select(
             DB::Raw("
                 pub_categories.id,
@@ -109,8 +103,6 @@ class PostController extends Controller
 
 
 
-
-
         $total = DB::table('pub_articles')
             /*->join('articles_members', 'articles_members.member_id', '=', 'pub_members.id')
             ->join('articles_members', 'articles_members.article_id', '=', 'pub_articles.id')*/
@@ -129,24 +121,6 @@ class PostController extends Controller
             })*/
             ->get();
 
-
-
-        /*$total = DB::table('accrediteds_ads')
-            ->select(
-                'accrediteds_ads.id', 'accrediteds_ads.title', 'accrediteds_ads.imagem',
-                'accrediteds.id as accredited_id', 'accrediteds.trade',
-                'accrediteds.address', 'accrediteds.number', 'accrediteds.complemento',
-            )
-            ->distinct()
-            ->join('accrediteds', 'accrediteds.id', '=', 'accrediteds_ads.accredited_id')
-            ->join('ads_categories', 'ads_categories.ad_id', '=', 'accrediteds_ads.id')
-            ->where('accrediteds.city', $request->filters['city'])
-            ->where('accrediteds_ads.status', 1)
-            ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('ads_categories.category_id', $categories);
-            })
-            ->orderby($request->order, $request->directionOrder)
-            ->get();*/
 
         $total = count($total);
 
@@ -168,6 +142,7 @@ class PostController extends Controller
                 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description'
 
             )
+
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
@@ -177,6 +152,7 @@ class PostController extends Controller
             ->when(count($archives) > 0, function($query) use ($archives){
                 return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
             })
+            /*->where('pub_articles.id', 'pub_comments.origin_id')*/
             ->where('lng_pub_articles.title', 'ilike', '%'.$search.'%')
             ->groupBy('pub_articles.id', 'lng_pub_articles.title', 'lng_pub_articles.teaser', 'lng_pub_articles.description', 'pub_comments.origin_id')
             ->orderby($request->order, $request->directionOrder)
@@ -186,24 +162,6 @@ class PostController extends Controller
 
 
 
-       /* $result = DB::table('accrediteds_ads')
-            ->select(
-                'accrediteds_ads.id', 'accrediteds_ads.title', 'accrediteds_ads.imagem',
-                'accrediteds.id as accredited_id', 'accrediteds.trade',
-                'accrediteds.address', 'accrediteds.number', 'accrediteds.complemento',
-            )
-            ->distinct()
-            ->join('accrediteds', 'accrediteds.id', '=', 'accrediteds_ads.accredited_id')
-            ->join('ads_categories', 'ads_categories.ad_id', '=', 'accrediteds_ads.id')
-            ->where('accrediteds.city', $request->filters['city'])
-            ->where('accrediteds_ads.status', 1)
-            ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('ads_categories.category_id', $categories);
-            })
-            ->orderby($request->order, $request->directionOrder)
-            ->take($request->qtdItemsLoad)
-            ->get();*/
-            //->paginate();
 
 
         $ads['total'] = $total;
@@ -218,22 +176,6 @@ class PostController extends Controller
             $ads['data'][$index]->categories = $categories;
         }
 
-
-        /*foreach($ads['data'] as $index => $ad){
-            $categories = DB::table('categories')
-                ->select('categories.*')
-                ->join('ads_categories', 'ads_categories.category_id', '=', 'categories.id')
-                ->where('ads_categories.ad_id', $ad->id)
-                ->get();
-            $ads['data'][$index]->categories = $categories;
-
-
-            $off = \App\OffAd::where('ad_id', $ad->id)->orderBy('off', 'desc')->take(1)->get();
-            //Log::info($off);
-            if(count($off)>0){
-                $ads['data'][$index]->off = $off[0]->off;
-            }
-        }*/
 
         return $ads;
     }

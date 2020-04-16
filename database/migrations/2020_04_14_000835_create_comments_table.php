@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
         Schema::create('pub_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('emil')->nullable();
+            $table->string('email')->nullable();
             $table->text('description')->nullable();
             $table->text('answer')->nullable();
             $table->smallInteger('status')->default(1);

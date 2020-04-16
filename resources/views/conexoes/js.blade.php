@@ -20,14 +20,14 @@
 
 @endif
 <script>
-    // Basic usage of $.animateScroll.
+    /*// Basic usage of $.animateScroll.
     $('#iniciodorodape a', '#acessibilidade a').animateScroll();
 
     // $.animateScroll with options.
     $('.link-to-menu').animateScroll({
         speed: 800,
         offset: 30
-    });
+    });*/
 </script>
 <script>
     $(document).ready(function(){

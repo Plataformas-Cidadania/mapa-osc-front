@@ -5,8 +5,8 @@ class List extends React.Component{
             ads: {
                 data:[]
             },
-            qtdItems: 15,
-            qtdItemsLoad: 15,
+            qtdItems: 3,
+            qtdItemsLoad: 3,
             showCategories:[],
             showMembers:[],
             showArchives:[],
@@ -252,7 +252,7 @@ class List extends React.Component{
                                 <hr/>
                                 {ads}
                             <div className="text-center">
-                                <button className="btn btn-success btn-lg" onClick={this.loadMore} style={{display: this.state.ads.total > this.state.qtdItemsLoad ? '' : 'none'}}>veja mais credenciados</button>
+                                <button className="btn btn-success btn-lg" onClick={this.loadMore} style={{display: this.state.ads.total > this.state.qtdItemsLoad ? '' : 'none'}}>Veja mais</button>
                             </div>
                             <br/>
                         </div>

@@ -5,8 +5,8 @@ class List extends React.Component {
             ads: {
                 data: []
             },
-            qtdItems: 15,
-            qtdItemsLoad: 15,
+            qtdItems: 3,
+            qtdItemsLoad: 3,
             showCategories: [],
             showMembers: [],
             showArchives: [],
@@ -301,7 +301,7 @@ class List extends React.Component {
                             React.createElement(
                                 'button',
                                 { className: 'btn btn-success btn-lg', onClick: this.loadMore, style: { display: this.state.ads.total > this.state.qtdItemsLoad ? '' : 'none' } },
-                                'veja mais credenciados'
+                                'Veja mais'
                             )
                         ),
                         React.createElement('br', null)

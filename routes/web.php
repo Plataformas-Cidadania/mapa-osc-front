@@ -60,7 +60,7 @@ Route::get('mapa', 'MapController@details');
 Route::get('contato', 'ContactController@email');
 
 Route::post('contact', 'ContactController@send');
-Route::post('comment', 'ContactController@send');
+Route::post('comment', 'CommentController@send');
 
 Route::post('/list-posts', 'PostController@getList');
 Route::post('/categories', 'PostController@categories');

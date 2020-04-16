@@ -114,40 +114,50 @@ class Comment extends React.Component{
 
 
                             <form>
-                                <div className="label-float">
-                                    <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder=" " required={this.state.requireds.name ? '' : 'required'}/>
-                                    <label htmlFor="name">Nome</label>
-                                    <div className="label-box-info">
-                                        <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite o nome e sobre nome</p>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder=" " required={this.state.requireds.name ? '' : 'required'}/>
+                                                <label htmlFor="name">Nome</label>
+                                                <div className="label-box-info">
+                                                    <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite o nome e sobre nome</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
+                                                <label htmlFor="email">E-mail</label>
+                                                <div className="label-box-info">
+                                                    <p style={{display: this.state.requireds.email ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Escolha um endereço de e-mail valido</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <div className="label-float">
+                                                <textarea className={"form-control form-g"} type="text" name="description" onChange={this.handleInputChange} value={this.state.form.description} placeholder=" "  required={this.state.requireds.description ? '' : 'required'} />
+                                                <label htmlFor="description">Descrição</label>
+                                                <div className="label-box-info">
+                                                    <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite uma descrição</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.comment}>Cadastrar</button>
+                                            <br/>
+                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
+                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="label-float">
-                                    <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
-                                    <label htmlFor="email">E-mail</label>
-                                    <div className="label-box-info">
-                                        <p style={{display: this.state.requireds.email ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Escolha um endereço de e-mail valido</p>
-                                    </div>
-                                </div>
-
-                                <div className="label-float">
-                                    <textarea className={"form-control form-g"} type="text" name="description" onChange={this.handleInputChange} value={this.state.form.description} placeholder=" "  required={this.state.requireds.description ? '' : 'required'} />
-                                    <label htmlFor="description">Descrição</label>
-                                    <div className="label-box-info">
-                                        <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite uma descrição</p>
-                                    </div>
-                                </div>
-
-                                <div className="clear-float"></div>
 
 
 
-                                <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.comment}>Cadastrar</button>
-                                <br/>
 
 
-                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
-                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+
                             </form>
 
 
