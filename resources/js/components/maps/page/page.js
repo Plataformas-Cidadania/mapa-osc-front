@@ -4,12 +4,12 @@ class Page extends React.Component {
         this.state = {
             data: null,
         };
-        //this.load = this.load.bind(this);
-        this.load();
 
+        this.load = this.load.bind(this);
     }
 
     componentDidMount(){
+        //this.load();
     }
 
     load(){
@@ -38,10 +38,11 @@ class Page extends React.Component {
     render(){
         return (
             <div>
-                <Map
+                <OscMap
                     mapId="mapOsc"
                     data={this.state.data}
                 />
+
             </div>
 
         );
@@ -50,7 +51,7 @@ class Page extends React.Component {
 
 
 ReactDOM.render(
-    <Page/>,
+    <Page />,
     document.getElementById('page')
 );
 

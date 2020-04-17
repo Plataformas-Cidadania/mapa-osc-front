@@ -12,19 +12,19 @@
 <script src="js/charts/mixed.js"></script>
 @endif
 
-@if($rota=='mapa' || $rota=='contato')
+@if($rota=='mapa')
 <script src="js/map.js"></script>
-<script src="js/components/maps/address.js"></script>
-{{--<script src="js/components/maps/oscs.js"></script>
-<script src="js/components/maps/page/oscs.js"></script>--}}
+{{--<script src="js/components/maps/address.js"></script>--}}
+<script src="js/components/maps/oscMap.js"></script>
+<script src="js/components/maps/page/page.js"></script>
 
 @endif
 <script>
-    /*// Basic usage of $.animateScroll.
-    $('#iniciodorodape a', '#acessibilidade a').animateScroll();
+    // Basic usage of $.animateScroll.
+    //$('#iniciodorodape a', '#acessibilidade a').animateScroll();
 
     // $.animateScroll with options.
-    $('.link-to-menu').animateScroll({
+    /*$('.link-to-menu').animateScroll({
         speed: 800,
         offset: 30
     });*/

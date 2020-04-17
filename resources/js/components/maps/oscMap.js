@@ -1,4 +1,4 @@
-class Map extends React.Component{
+class OscMap extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -16,8 +16,8 @@ class Map extends React.Component{
             selectedOscs: ['fixo'],
         };
 
-        this.loadMap = this.loadMap.bind(this);
-        this.refreshMarkersOscs = this.refreshMarkersOscs.bind(this);
+        //this.loadMap = this.loadMap.bind(this);
+        //this.refreshMarkersOscs = this.refreshMarkersOscs.bind(this);
 
     }
 
@@ -29,6 +29,7 @@ class Map extends React.Component{
                     titleCancel:"Exit fullscreen mode"
                 }
             }).setView([-14, -52], 4)}, function(){
+            this.loadMap();
         });
     }
 
@@ -45,10 +46,12 @@ class Map extends React.Component{
 
     }
 
+
     loadMap(){
 
 
         let map = this.state.mymap;
+        console.log(map);
 
         let tileLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -65,6 +68,8 @@ class Map extends React.Component{
         });
 
     }
+
+
 
 
     refreshMarkersOscs(data){
@@ -207,13 +212,14 @@ class Map extends React.Component{
     }
 
 
+
     render(){
 
         let icones = null;
         let tabela = null;
         let rows = null;
 
-        if(this.state.data){
+        /*if(this.state.data){
 
             rows = this.state.data[1].map(function(item, index){
                 return (
@@ -246,14 +252,13 @@ class Map extends React.Component{
                 </table>
             );
 
-        }
+        }*/
 
 
 
 
         return (
             <div>
-
 
                 <div id={this.props.mapId} style={{height: '600px'}}/>
 
@@ -262,30 +267,22 @@ class Map extends React.Component{
                     <br/> <br/> <br/>
                     <div className="row">
                         <div className="col-md-12 text-center">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <br/> <br/> <br/>
+                    <div className="row">
+                        <div className="col-md-12 text-center">
                             <h3>Tipo de oscs</h3><hr/><br/>
                         </div>
-                        <div className="col-md-6 col-sm-12">
-                            <BarChart id='bar-chart1' data={this.state.oscs} colors={this.state.colorsChart}/>
-                        </div>
-                        <div className="col-md-6 col-sm-12 text-center">
-                            <div style={{margin: '50px auto'}}>
-                                <PieChart id='pie-chart1' data={this.state.oscs} />
-                            </div>
-                        </div>
+
                     </div>
                     <br/> <br/> <br/><br/> <br/>
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h3>Dados por velocidade</h3><hr/><br/>
                         </div>
-                        <div className="col-md-6 col-sm-12">
-                            <BarChart id='bar-chart2' data={this.state.oscsGeral} colors={this.state.colorsChart}/>
-                        </div>
-                        <div className="col-md-6 col-sm-12 text-center">
-                            <div style={{margin: '50px auto'}}>
-                                <PieChart id='pie-chart2' data={this.state.oscsGeral} />
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 

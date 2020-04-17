@@ -4,17 +4,19 @@ class Page extends React.Component {
         this.state = {
             data: null
         };
-        //this.load = this.load.bind(this);
-        this.load();
+
+        this.load = this.load.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        //this.load();
+    }
 
     load() {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: 'get-radar',
+            url: 'get-osc',
             data: {},
             cache: false,
             success: function (data) {
@@ -25,6 +27,7 @@ class Page extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({ loading: false });
             }
+
         });
     }
 
@@ -32,8 +35,8 @@ class Page extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement(Map, {
-                mapId: 'mapRadar',
+            React.createElement(OscMap, {
+                mapId: 'mapOsc',
                 data: this.state.data
             })
         );
