@@ -28,7 +28,7 @@ class OscMap extends React.Component {
                     titleCancel: "Exit fullscreen mode"
                 }
             }).setView([-14, -52], 4) }, function () {
-            this.loadMap();
+            //this.loadMap();
         });
     }
 

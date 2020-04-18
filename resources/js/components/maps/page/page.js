@@ -9,7 +9,7 @@ class Page extends React.Component {
     }
 
     componentDidMount(){
-        //this.load();
+        this.load();
     }
 
     load(){

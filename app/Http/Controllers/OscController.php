@@ -32,4 +32,11 @@ class OscController extends Controller{
         $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();
         return view($this->module.'.detail', ['detail' => $detail, 'lasts' => $lasts]);
     }
+
+    public function getOsc(){
+
+        $pagina = "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao";
+
+        return $pagina;
+    }
 }

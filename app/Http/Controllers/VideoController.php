@@ -30,15 +30,17 @@ class VideoController extends Controller{
         $lists = $this->obj
             ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
             ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->where('lng_pub_videos.publish_id', 'pub_videos.publish_id')
+            ->where('lng_pub_videos.publish_id', '=', 'pub_videos.id')
             ->orderBy('pub_videos.id', 'desc')
             ->paginate(16);
+
+
 
         //Vídeos em destaque
         $listsTop = $this->obj
             ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
             ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->where('lng_pub_videos.publish_id', 'pub_videos.publish_id')
+            ->where('lng_pub_videos.publish_id', 'pub_videos.id')
             ->orderBy('pub_videos.id', 'desc')
             ->take(4)
             ->get();
