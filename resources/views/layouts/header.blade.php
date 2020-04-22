@@ -139,7 +139,7 @@
 
 <header id="iniciodoconteudo"  role="banner">
 
-    <div class="container d-none d-xl-block">
+    <div class="container d-none d-xl-block d-sm-block">
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-light bg-light">
