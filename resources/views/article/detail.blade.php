@@ -37,7 +37,7 @@
 
                     <div class="row">
                         <div class="col-md-6 item-calendar">
-                            <time pubdate class="item-calendar" data-message="Imagem sobre {{formatBr($detail->date, 'ext', 'hs')}}" tabindex="0"><i class="fas fa-calendar"></i> {{formatBr($detail->date, 'ext', 'hs')}}</time>
+                            <time pubdate class="item-calendar" data-message="Imagem sobre {{formatBr($detail->date, 'ext', 'hs')}}" tabindex="0"><i class="far fa-clock"></i> {{formatBr($detail->date, 'run')}}{{-- {{formatBr($detail->date, 'ext', 'hs')}}--}}</time>
                         </div>
                         <div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>

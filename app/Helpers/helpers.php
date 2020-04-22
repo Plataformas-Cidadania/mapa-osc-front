@@ -286,10 +286,12 @@ if ( ! function_exists('formatBr') ) {
     function formatBr($string, $type = null, $hour = null)
     {
 
+        $dateOriginal = $string;
+
         $monthEnExt = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         $monthBrExt = array("de janeiro de", "de fevereiro de", "de março de", "de abril de", "de maio de", "de junho de", "de julho de", "de agosto de", "de setembro de", "de outubro de", "de novembro de", "de dezembro de");
 
-        $monthEnAbb = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        $monthEnAbb = array("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez");
         $monthBrAbb = array("de jan de", "de fev de", "de mar de", "de abr de", "de mai de", "de jun de", "de jul de", "de ago de", "de set de", "de out de", "de nov de", "de dez de");
 
         if ($hour == 'hs') {
@@ -306,30 +308,24 @@ if ( ! function_exists('formatBr') ) {
             $string = date_create($string);
             $string = date_format($string, 'd M Y'.$hour);
             $string = str_replace($monthEnAbb, $monthBrAbb, $string);
+        }else if($type == 'run'){
+            $time = strtotime(date('Y-m-d H:i:s')) - strtotime($dateOriginal);
+            $seconds = $time;
+            $minutes = round($time / 60);
+            $hours = round($time / 3600);
+            $days = round($time / 86400);
+            $weeks = round($time / 604800);
+            $months = round($time / 2419200);
+            $years = round($time / 29030400);
+            if ($seconds <= 60) return"1 min atrás";
+            else if ($minutes <= 60) return $minutes==1 ?'1 min atrás':$minutes.' min atrás';
+            else if ($hours <= 24) return $hours==1 ?'1 hora atrás':$hours.' horas atrás';
+            else if ($days <= 7) return $days==1 ?'1 dia atrás':$days.' dias atrás';
+            else if ($weeks <= 4) return $weeks==1 ?'1 semana atrás':$weeks.' semanas atrás';
+            else if ($months <= 12) return $months == 1 ?'1 mês atrás':$months.' meses atrás';
+            else return $years == 1 ? 'um ano atrás':$years.' anos atrás';
         }
 
-
-        /*$now = strtotime(date('m/d/Y H:i:s'));
-        $time = strtotime($time);*/
-        /*$now = strtotime($string);
-        $time = strtotime($hour);
-        $diff = $now - $time;
-
-        $seconds = $diff;
-        $minutes = round($diff / 60);
-        $hours = round($diff / 3600);
-        $days = round($diff / 86400);
-        $weeks = round($diff / 604800);
-        $months = round($diff / 2419200);
-        $years = round($diff / 29030400);
-
-        if ($seconds < 60) return "1 min atrás";
-        else if ($minutes <= 60) return $minutes==1 ?'1 min atrás':$minutes.' min atrás';
-        else if ($hours <= 24) return $hours==1 ?'1 hrs atrás':$hours.' hrs atrás';
-        else if ($days <= 7) return $days==1 ?'1 dia atras':$days.' dias atrás';
-        else if ($weeks <= 4) return $weeks==1 ?'1 semana atrás':$weeks.' semanas atrás';
-        else if ($months <= 12) return $months == 1 ?'1 mês atrás':$months.' meses atrás';
-        else return $years == 1 ? 'um ano atrás':$years.' anos atrás';*/
 
         return $string;
     }
