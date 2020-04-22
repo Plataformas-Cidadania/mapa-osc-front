@@ -20,6 +20,7 @@ class CreateVideosTable extends Migration
             $table->string('url')->nullable();
             $table->string('hash')->nullable();
             $table->string('archived')->default(0);
+            $table->time('time')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
@@ -45,6 +46,7 @@ class CreateVideosTable extends Migration
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
             $table->bigInteger('views')->default(0);
+            $table->time('time')->nullable();
             $table->bigInteger('draft_id')->unsigned();
             $table->foreign('draft_id')->references('id')->on('dft_videos')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();

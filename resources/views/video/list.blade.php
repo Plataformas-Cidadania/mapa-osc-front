@@ -37,7 +37,7 @@
             <div class="col-md-3 box-video">
                 <a href="video/{{$list->id}}/{{clean($list->title)}}">
                     <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
-                    <kbd class="float-right">1:01</kbd>
+                    <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
                     <h2>{{$list->title}} ...</h2>
                     <p>{{--<i class="far fa-eye"></i> --}}{{$list->views}} visualizações</p>
                     <p>{{--<i class="far fa-clock"></i> --}}{{formatBr($list->date, 'ext')}}</p>
@@ -61,7 +61,7 @@
 
             <div class="col-md-3 box-video">
                 <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
-                <kbd class="float-right">1:01</kbd>
+                <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
                 <h2>{{$list->title}} ...</h2>
                 <p><i class="far fa-eye"></i> {{$list->views}} visualizações</p>
                 <p>2 meses atrás</p>

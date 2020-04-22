@@ -30,7 +30,7 @@
                 <br>
                 <div class="box-video">
                     <p class="float-left"><i class="far fa-eye"></i> {{$detail->views}} visualizações</p>
-                    <p class="float-right"><i class="far fa-clock"></i> 2 meses atrás</p>
+                    <p class="float-right"><i class="far fa-clock"></i> {{formatBr($detail->date, 'run')}}</p>
                     <br><br>
                 </div>
                 <h3>{{$detail->teaser}}</h3>
@@ -57,12 +57,12 @@
                             <div class="row box-video">
                                 <div class="col-md-5">
                                     <img src="http://img.youtube.com/vi/{{$list->rest}}/0.jpg" alt="" width="100%">
-                                    <kbd class="float-right">1:01</kbd>
+                                    <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
                                 </div>
                                 <div class="col-md-7">
                                     <h2 class="box-video-right">{{$list->title}} ...</h2>
-                                    <p>180 visualizações</p>
-                                    <p>2 meses atrás</p>
+                                    <p>{{$list->views}} visualizações</p>
+                                    <p>{{formatBr($list->date, 'ext')}}</p>
                                 </div>
                             </div>
                             <hr>
