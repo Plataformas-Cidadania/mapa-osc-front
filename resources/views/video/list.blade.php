@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>Védeos</h1>
+                        <h1>Vídeos</h1>
                         <h5><a href="/">Home</a></h5>
                         <br>
                     </header>

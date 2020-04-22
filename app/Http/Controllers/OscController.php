@@ -37,6 +37,22 @@ class OscController extends Controller{
 
         $pagina = "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao";
 
-        return $pagina;
+        /*https://mapaosc.ipea.gov.br/api/geo/cluster/regiao
+        https://mapaosc.ipea.gov.br/api/geo/cluster/estado
+        https://mapaosc.ipea.gov.br/api/analises/idhgeo
+        https://mapaosc.ipea.gov.br/api/search/all/lista/10/0*/
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data);
+       // $data = \GuzzleHttp\json_decode($data);
+
+        return $data;
+
     }
 }

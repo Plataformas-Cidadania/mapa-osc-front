@@ -35,6 +35,8 @@ class OscMap extends React.Component{
 
     componentWillReceiveProps(props){
 
+        console.log(this.state.data);
+
         if(this.state.data != props.data){
             this.setState({data: props.data}, function(){
 
@@ -51,7 +53,7 @@ class OscMap extends React.Component{
 
 
         let map = this.state.mymap;
-        console.log(map);
+        //console.log(map);
 
         let tileLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -64,7 +66,6 @@ class OscMap extends React.Component{
             if(this.state.data){
                 this.refreshMarkersOscs(this.state.data);
             }
-
         });
 
     }
@@ -82,15 +83,11 @@ class OscMap extends React.Component{
         let markers = L.markerClusterGroup();
 
 
-        let linhas = {};
+       /* let linhas = {};
 
         for(let k in this.state.data[0]){
-            //linhas[k] = L.layerGroup();
             linhas[k] = L.markerClusterGroup();
-
-
-            //console.log(k);
-        }
+        }*/
 
 
         ///////////////ICONE/////////////////
@@ -106,17 +103,10 @@ class OscMap extends React.Component{
         //let matrizOscs = [];
 
         let overlayMaps = {};
-        let oscs = {
-            titles: [],
-            values: []
-        };
 
 
 
-        let matrizOscs = {
-            titles: [],
-            values: []
-        };
+
 
         let tiposOscs = [];
 
@@ -126,58 +116,61 @@ class OscMap extends React.Component{
 
         }
 
-        for(let i in tiposOscs){
-            matrizOscs['titles'].push(tiposOscs[i].tipo);
-            matrizOscs['values'].push(tiposOscs[i].qtd);
-        }
 
 
         for(let k in data[0]){
 
-            var markerTerminais = L.icon({
-                iconUrl: 'imagens/oscs_icones/'+data[0][k]['properties'].icone,
+            var markerOscs = L.icon({
+                //iconUrl: 'imagens/oscs_icones/'+data[0][k]['properties'].icone,
+                iconUrl: 'img/ods/01.png',
+                //iconUrl: '<i class="fas fa-map-marker-alt"/>',
                 iconSize:  [38, 38]
             });
 
-            overlayMaps["<img src='imagens/oscs/"+data[0][k]['properties'].imagem+"' width='40' alt='"+k+"' title='"+k+"'> "] = linhas[k];
+            //overlayMaps["<img src='imagens/oscs/"+data[0][k]['properties'].imagem+"' width='40' alt='"+k+"' title='"+k+"'> "] = linhas[k];
+            overlayMaps["<img src='img/ods/02.png' width='40' alt='"+k+"' title='"+k+"'> "];
+            //overlayMaps["<i class='fas fa-user'/>"];
 
-            L.geoJson(data[0][k], {
-                pointToLayer: function(feature, latlng) {
-                    return L.marker(latlng, {
-                        icon: markerTerminais
+
+            L.geoJson(data, {
+
+
+                pointToLayer: function(data) {
+                    return L.marker([data[0].geo_lat_centroid_regiao, data[0].geo_lng_centroid_regiao], {
+                        icon: markerOscs
                     });
                 }.bind(this),
                 onEachFeature: function (f, l) {
-                    l.bindPopup('<div style="text-align:center; width: 100%; border-bottom: solid 1px #CCCCCC; padding-bottom: 5px; margin-bottom: 5px;"><b>'+JSON.stringify(f.properties.titulo,null,' ').replace(/[\{\}"]/g,'')+'</b></div>'
-                        +'Velocidade: '+f.properties.velocidade+'<br/>'
-                        +'Sentido Duplo: '+f.properties.sentido_duplo+'<br/>'
-                        +'Sentido Todos: '+f.properties.sentido_todos+'<br/>'
-                        +'Direção real: '+f.properties.direcao_real+'<br/>'
-                        +'Sigla Rodovia: '+f.properties.sigla_rodovia+'<br/>'
-                        +'Km Rodovia: '+f.properties.km_rodovia+'<br/>'
-                        +'Status: '+f.properties.status+'<br/>'
-                        +'Longitude: '+f.geometry.coordinates[0]+'<br/>'
-                        +'Latitude: '+f.geometry.coordinates[1]+'<br/><br/>'
+
+                    l.bindPopup('<div style="text-align:center; width: 100%; border-bottom: solid 1px #CCCCCC; padding-bottom: 5px; margin-bottom: 5px;"><b>'+JSON.stringify(f.properties.tx_nome_regiao,null,' ').replace(/[\{\}"]/g,'')+'</b></div>'
+                        +'Velocidade: '+f.properties.tx_nome_regiao+'<br/>'
+                        +'Sentido Duplo: '+f.properties.tx_sigla_regiao+'<br/>'
+                        +'Longitude: '+f.geometry.geo_lat_centroid_regiao+'<br/>'
+                        +'Latitude: '+f.geometry.geo_lng_centroid_regiao+'<br/><br/>'
 
                     );
                 }
-            }).addTo(linhas[k])
+            }).addTo(map)
+            //}).addTo(linhas[k])
 
-            if(this.state.selectedOscs.includes(k)){
+            /*if(this.state.selectedOscs.includes(k)){
                 linhas[k].addTo(map);
             }
-
+*/
             //console.log(data[0][k].properties);
 
-            oscs.titles.push(data[0][k].properties.titulo);
-            oscs.values.push(data[0][k].features.length);
+            /*oscs.titles.push(data[0][k].properties.titulo);
+            oscs.values.push(data[0][k].features.length);*/
+
+            /*oscs.titles.push(data[0].tx_nome_regiao);
+            oscs.values.push(data[0].length);
 
 
 
 
             for(let i in data[0][k]['features']){
                 pontos.push([data[0][k]["features"][i]["geometry"]["coordinates"][1], data[0][k]["features"][i]["geometry"]["coordinates"][0]]);
-            }
+            }*/
 
         }
 
@@ -186,28 +179,29 @@ class OscMap extends React.Component{
             values: []
         };
 
-        for(let k in data[1]) {
+        /*for(let k in data[1]) {
 
             //console.log(data[1][k].velocidade);
 
             oscsGeral.titles.push(data[1][k].velocidade);
             oscsGeral.values.push(data[1][k].qtd);
 
-        }
+        }*/
 
 
-        console.log(oscsGeral);
+        //console.log(oscsGeral);
 
         L.control.layers(null, overlayMaps,{collapsed:false}).addTo(map);
 
         //let bounds = new L.LatLngBounds(pontos);
 
 
-        let bounds = new L.LatLngBounds(pontos);
-        map.fitBounds(bounds);
+        /*let bounds = new L.LatLngBounds(pontos);
+        map.fitBounds(bounds);*/
         //////////////MARKERS///////////////
 
-        this.setState({mymap: map, markers: markers, oscs: oscs, oscsGeral: oscsGeral, matrizOscs: matrizOscs});
+        //this.setState({mymap: map, markers: markers, oscs: oscs, oscsGeral: oscsGeral, matrizOscs: matrizOscs});
+        this.setState({mymap: map, markers: markers});
 
     }
 
