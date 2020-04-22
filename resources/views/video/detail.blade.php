@@ -29,7 +29,7 @@
                 <iframe width="100%" height="450" src="https://www.youtube.com/embed/-wcivHC5ZmQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <br>
                 <div class="box-video">
-                    <p class="float-left"><i class="far fa-eye"></i> 180 visualizações</p>
+                    <p class="float-left"><i class="far fa-eye"></i> {{$detail->views}} visualizações</p>
                     <p class="float-right"><i class="far fa-clock"></i> 2 meses atrás</p>
                     <br><br>
                 </div>

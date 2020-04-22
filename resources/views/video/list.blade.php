@@ -36,11 +36,11 @@
             @foreach($listsTop as $list)
             <div class="col-md-3 box-video">
                 <a href="video/{{$list->id}}/{{clean($list->title)}}">
-                    <img src="http://img.youtube.com/vi/{{$list->rest}}/0.jpg" alt="" width="100%">
+                    <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
                     <kbd class="float-right">1:01</kbd>
                     <h2>{{$list->title}} ...</h2>
-                    <p>180 visualizações</p>
-                    <p>2 meses atrás</p>
+                    <p>{{--<i class="far fa-eye"></i> --}}{{$list->views}} visualizações</p>
+                    <p>{{--<i class="far fa-clock"></i> --}}{{formatBr($list->date, 'ext')}}</p>
                 </a>
                 <br><br>
             </div>
@@ -58,11 +58,12 @@
         </div>
         <div class="row">
             @foreach($lists as $list)
+
             <div class="col-md-3 box-video">
-                <img src="http://img.youtube.com/vi/{{$list->rest}}/0.jpg" alt="" width="100%">
+                <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
                 <kbd class="float-right">1:01</kbd>
                 <h2>{{$list->title}} ...</h2>
-                <p>180 visualizações</p>
+                <p><i class="far fa-eye"></i> {{$list->views}} visualizações</p>
                 <p>2 meses atrás</p>
                 <br>
             </div>

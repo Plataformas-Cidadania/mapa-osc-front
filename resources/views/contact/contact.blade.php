@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-12">
             <style>
-                #map {
+                #mapa {
                     width: 100%;
                     height: 400px;
                 }
@@ -106,7 +106,7 @@
                 }
             </style>
             <br>
-            <div id='map'></div>
+            <div id="mapa"></div>
             <br>
         </div>
     </div>

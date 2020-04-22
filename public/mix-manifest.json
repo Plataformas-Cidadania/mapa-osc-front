@@ -3,7 +3,7 @@
     "/js/app.js": "/js/app.js",
     "/js/home.js": "/js/home.js",
     "/js/chart.js": "/js/chart.js",
-    "/js/map.js": "/js/map.js",
+    "/js/leaflet.js": "/js/leaflet.js",
     "/css/home.css": "/css/home.css",
-    "/css/map.css": "/css/map.css"
+    "/css/leaflet.css": "/css/leaflet.css"
 }

@@ -44,6 +44,7 @@ class CreateVideosTable extends Migration
             $table->string('url')->nullable();
             $table->smallInteger('status')->default(1);
             $table->smallInteger('position')->default(0);
+            $table->bigInteger('views')->default(0);
             $table->bigInteger('draft_id')->unsigned();
             $table->foreign('draft_id')->references('id')->on('dft_videos')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();

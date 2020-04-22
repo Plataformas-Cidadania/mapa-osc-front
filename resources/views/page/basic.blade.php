@@ -8,10 +8,17 @@
 
     <style>
         .mb-0{
-            background-color: #FFFFFF !important;
-            border-bottom: solid 1px #3490dc;
+            background-color: #EEEEEE !important;
+            /*border-bottom: solid 1px #3490dc;*/
             font-weight: bold;
             color: #333333;
+            margin: 0 0 10px 0 !important;
+            border: 0 !important;
+        }
+        .card {
+            border: 0;
+            border-radius: 0;
+            box-shadow: none !important;
         }
     </style>
 

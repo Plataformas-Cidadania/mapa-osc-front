@@ -13,12 +13,12 @@
     </div>
     <div class="col-md-12">
         <div class="list-user">
-            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
             <h4>Fernando Lima</h4>
             <p>Pesquisador da Diretoria de Estudos sobre Estado, Instituições e Democracia</p>
         </div>
         <div class="list-user">
-            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
             <h4>Dezembro de 2019</h4>
             <p>Diretor</p>
         </div>
@@ -33,21 +33,21 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="list-user">
-                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
                     <h4>Fernando Lima</h4>
                     <p>Pesquisador da Diretoria de Estudos </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="list-user">
-                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
                     <h4>Dezembro de 2019</h4>
                     <p>Diretor</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="list-user">
-                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="60">
+                    <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
                     <h4>Dezembro de 2019</h4>
                     <p>Diretor</p>
                 </div>

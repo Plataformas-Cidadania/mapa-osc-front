@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="css/home.css">
 @endif
 @if($rota=='mapa' || $rota=='contato')
-    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="css/leaflet.css">
 @endif
 <style>
     .owl-nav{

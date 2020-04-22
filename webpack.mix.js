@@ -32,7 +32,7 @@ mix.scripts([
 mix.scripts([
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-    ], 'public/js/map.js');
+    ], 'public/js/leaflet.js');
 
 /*CSS*/
 mix.styles([
@@ -44,7 +44,7 @@ mix.styles([
     'node_modules/leaflet/dist/leaflet.css',
     'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
     'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
-], 'public/css/map.css')
+], 'public/css/leaflet.css')
 
     .sass('resources/sass/app.scss', 'public/css');
 

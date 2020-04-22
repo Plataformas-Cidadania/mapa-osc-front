@@ -13,8 +13,7 @@
 @endif
 
 @if($rota=='mapa')
-<script src="js/map.js"></script>
-{{--<script src="js/components/maps/address.js"></script>--}}
+<script src="js/leaflet.js"></script>
 <script src="js/components/maps/oscMap.js"></script>
 <script src="js/components/maps/page/page.js"></script>
 
@@ -93,6 +92,8 @@
 @if($rota=="contato")
     <script src="/js/components/forms/contact.js"></script>
     <script src="/js/utils.js"></script>
+    <script src="/js/leaflet.js"></script>
+    <script src="/js/components/maps/address.js"></script>
 @endif
 @if($rota=="artigo/{id}/{titulo}")
     <script src="/js/components/forms/comment.js"></script>
