@@ -34,6 +34,10 @@
 .space{
     margin: 60px 0 60px 0;
 }
+.fa-aling svg{
+    vertical-align: middle;
+    margin-right: 10px;
+}
 figcaption{
     font-size: 12px;
     padding: 10px 0;
@@ -138,4 +142,8 @@ figcaption{
 }
 .line-fix{
     width: 80px;
+}
+
+.address div{
+    margin: 10px 0 0 20px;
 }
