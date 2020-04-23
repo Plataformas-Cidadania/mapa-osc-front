@@ -69,6 +69,8 @@ Route::post('/archives', 'PostController@archives');
 
 Route::get('/get-osc', 'OscController@getOsc');
 
+Route::get('detalhar/{id}', 'OscController@details');
+
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
 Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');

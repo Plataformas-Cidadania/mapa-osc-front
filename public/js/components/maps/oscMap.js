@@ -34,7 +34,7 @@ class OscMap extends React.Component {
 
     componentWillReceiveProps(props) {
 
-        console.log(this.state.data);
+        //console.log(this.state);
 
         if (this.state.data != props.data) {
             this.setState({ data: props.data }, function () {
@@ -59,8 +59,8 @@ class OscMap extends React.Component {
         map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
 
         this.setState({ mymap: map }, function () {
-            if (this.state.data) {
-                this.refreshMarkersOscs(this.state.data);
+            if (this.state.data.regiao) {
+                this.refreshMarkersOscs(this.state.data.regiao);
             }
         });
     }
@@ -100,7 +100,7 @@ class OscMap extends React.Component {
             let existe = false;
         }
 
-        for (let k in data[0]) {
+        for (let k in data.regiao) {
 
             var markerOscs = L.icon({
                 //iconUrl: 'imagens/oscs_icones/'+data[0][k]['properties'].icone,
@@ -115,14 +115,13 @@ class OscMap extends React.Component {
 
 
             L.geoJson(data, {
-
                 pointToLayer: function (data) {
-                    return L.marker([data[0].geo_lat_centroid_regiao, data[0].geo_lng_centroid_regiao], {
+                    console.log(data);
+                    return L.marker([data.regiao.geo_lat_centroid_regiao, data.regiao.geo_lng_centroid_regiao], {
                         icon: markerOscs
                     });
                 }.bind(this),
                 onEachFeature: function (f, l) {
-
                     l.bindPopup('<div style="text-align:center; width: 100%; border-bottom: solid 1px #CCCCCC; padding-bottom: 5px; margin-bottom: 5px;"><b>' + JSON.stringify(f.properties.tx_nome_regiao, null, ' ').replace(/[\{\}"]/g, '') + '</b></div>' + 'Velocidade: ' + f.properties.tx_nome_regiao + '<br/>' + 'Sentido Duplo: ' + f.properties.tx_sigla_regiao + '<br/>' + 'Longitude: ' + f.geometry.geo_lat_centroid_regiao + '<br/>' + 'Latitude: ' + f.geometry.geo_lng_centroid_regiao + '<br/><br/>');
                 }
             }).addTo(map);

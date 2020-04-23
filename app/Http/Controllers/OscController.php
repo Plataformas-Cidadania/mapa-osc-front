@@ -28,9 +28,9 @@ class OscController extends Controller{
     }
 
     public function details($id){
-        $detail = $this->obj->find($id);
-        $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();
-        return view($this->module.'.detail', ['detail' => $detail, 'lasts' => $lasts]);
+        /*$detail = $this->obj->find($id);
+        $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();*/
+        return view($this->module.'.detail'/*, ['detail' => $detail, 'lasts' => $lasts]*/);
     }
 
     public function getOsc(){
@@ -51,6 +51,10 @@ class OscController extends Controller{
 
         $data = json_decode($data);
        // $data = \GuzzleHttp\json_decode($data);
+
+        $data = [
+            "regiao" => $data
+        ];
 
         return $data;
 
