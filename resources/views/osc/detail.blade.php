@@ -251,13 +251,40 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p class="item-detail"><strong>Como surgiu a OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Missão da OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Visão da OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Finalidades Estatutárias da OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Link para o Estatuto da OSC:</strong><span></span></p>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>Como surgiu a OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>Missão da OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>Visão da OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="item-detail">
+                            <h4>Finalidades Estatutárias da OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="item-detail">
+                            <h4>Link para o Estatuto da OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
                 </div>
+
 
                 <div class="row" id="titulacao">
                     <div class="col-md-12">
