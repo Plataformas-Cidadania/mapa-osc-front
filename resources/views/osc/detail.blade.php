@@ -59,37 +59,145 @@
                         </div>
                     </div>
                     <div class="col-md-9">
+                        <ul class="menu-icons menu-icons-h float-right">
+                            <li><div><i class="far fa-envelope"></i></div> </li>
+                            <li><div><i class="fas fa-globe"></i></div> </li>
+                            <li><div><i class="fab fa-facebook-f"></i></div> </li>
+                        </ul>
+
+
                         <br>
                         <p>
-                            <strong>Área de atuação:</strong> <br>
                             <strong>CNPJ:</strong> <br>
                             <strong>Natureza Jurídica:</strong> <br>
                         </p>
+                        <br>
+
                     </div>
                 </div>
 
                 <br><br>
+                <style>
+                    .item-detail{
+                        border-bottom: solid 1px #CCCCCC;
+                        margin-bottom: 20px;
+                    }
+                    .item-detail h4{
+                        font-weight: bold;
+                        margin: 0;
+                    }
+                    .item-detail p{
+                    }
+                    .item-detail svg{
+                        margin-top: 5px;
+                    }
+                    .menu-icons-h{
+                       width: 200px;
+                    }
+                    .menu-icons-h li{
+                        display: inline!important;
+                    }
+                    .item-obj img{
+                        float: left;
+                        margin-right: 10px;
+                    }
+                    .item-obj h3{
+                        color: #E5243B;
+                    }
+                    .item-obj p{
+                        margin-top: -5px;
+                    }
+                </style>
 
-                <div>
-                    <p class="item-detail"><strong>Sigla OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Endereço da OSC:</strong><span></span></p>
-                    <p class="item-detail"><strong>Situação do Imóvel:</strong><span></span></p>
-                    <p class="item-detail"><strong>Responsável Legal:</strong><span></span></p>
-                    <p class="item-detail"><strong>Ano de inscrição no Cadastro de CNPJ:</strong><span></span></p>
-                    <p class="item-detail"><strong>Ano de Fundação:</strong><span></span></p>
-                    <p class="item-detail"><strong>E-mail:</strong><span></span></p>
-                    <p class="item-detail"><strong>O que a OSC faz:</strong><span></span></p>
-                    <p class="item-detail"><strong>Site</strong><span></span></p>
-                    <p class="item-detail"><strong>Telefone:</strong><span></span></p>
+                <div class="row">
 
-                    <p class="item-detail"><strong>Objetivos do Desenvolvimento Sustentável - ODSSite Externo:</strong><br>
-                        <span>2. Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável</span><br>
-                        <span>2. Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável</span>
-                    </p>
-                    <p class="item-detail"><strong>Metas Relacionadas ao ODS:</strong><br>
-                        <span>2.3 Até 2030, dobrar a produtividade agrícola e a renda dos pequenos produtores de alimentos, particularmente das mulheres, povos indígenas, agricultores familiares, pastores e pescadores, inclusive por meio de acesso seguro e igual à terra, outros recursos produtivos e insumos, conhecimento, serviços financeiros, mercados e oportunidades de agregação de valor e de emprego não agrícola</span><br><br>
-                        <span>2.4 Até 2030, garantir sistemas sustentáveis de produção de alimentos e implementar práticas agrícolas resilientes, que aumentem a produtividade e a produção, que ajudem a manter os ecossistemas, que fortaleçam a capacidade de adaptação às mudanças climáticas, às condições meteorológicas extremas, secas, inundações e outros desastres, e que melhorem progressivamente a qualidade da terra e do solo</span><br><br>
-                    </p>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Nome Fantasia:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Sigla OSC:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="alert alert-secondary">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <i class="fas fa-database float-right tx-pri"></i>
+                                    <strong>Endereço:</strong><br>
+                                    Rua Capitão Silvio Conçalves de Farias, 981, Lote 02<br>
+                                    Bosque Ouro Preto do Oeste, Rondônia - RO<br>
+                                    <strong>CEP.:</strong> 76920-000
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="https://docs.mapbox.com/ios/assets/maps-examples-add-marker-symbol-960-4c2d0dcb2896da516c138d37b09f923e.webp" alt="" width="100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Situação do Imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Responsável Legal:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Ano de Cadastro de CNPJ:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Ano de Fundação:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>O que a OSC faz:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>E-mail:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="item-detail alert alert-secondary">
+                            <h4>Objetivos do Desenvolvimento Sustentável - ODSSite Externo:</h4>
+                            <br>
+                            <div class="item-obj">
+                                <img src="img/ods/01.png" alt="">
+                                <h3><strong>Erradicação da Pobreza</strong></h3>
+                                <p>Acabar com a pobreza em todas as suas formas, em todos os lugares</p>
+                                <br><br>
+                            </div>
+                            <p>2. Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável</p>
+                            <p>3. Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>Metas Relacionadas ao ODS:</h4>
+                            <p>2.3 Até 2030, dobrar a produtividade agrícola e a renda dos pequenos produtores de alimentos, particularmente das mulheres, povos indígenas, agricultores familiares, pastores e pescadores, inclusive por meio de acesso seguro e igual à terra, outros recursos produtivos e insumos, conhecimento, serviços financeiros, mercados e oportunidades de agregação de valor e de emprego não agrícola</p>
+                            <p>2.4 Até 2030, garantir sistemas sustentáveis de produção de alimentos e implementar práticas agrícolas resilientes, que aumentem a produtividade e a produção, que ajudem a manter os ecossistemas, que fortaleçam a capacidade de adaptação às mudanças climáticas, às condições meteorológicas extremas, secas, inundações e outros desastres, e que melhorem progressivamente a qualidade da terra e do solo</p>
+                        </div>
+                    </div>
+
+                    <br><br>
 
                 </div>
 
@@ -104,12 +212,34 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p class="item-detail"><strong>Atividade Econômica (CNAE):</strong><span></span></p>
-                    <p class="item-detail"><strong>Área de Atuação 1:</strong><span></span></p>
-                    <p class="item-detail"><strong>Subárea:</strong><span></span></p>
-                    <p class="item-detail"><strong>Área de Atuação 2:</strong><span></span></p>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>Atividade Econômica (CNAE):</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Área de Atuação 1:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Subárea:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item-detail">
+                            <h4>Subárea:</h4>
+                            <p>Não informado</p>
+                        </div>
+                    </div>
                 </div>
+
 
                 <div class="row" id="descricao">
                     <div class="col-md-12">
