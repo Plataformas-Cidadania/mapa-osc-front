@@ -28,9 +28,20 @@ class OscController extends Controller{
     }
 
     public function details($id){
+
+        //$id = 394905;
+        $id = 555613;
+        //$id = 2;
+
+
+        $detail = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
+        //$detail = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->get();
+
+        //$detail =  json_encode($detail);
+
         /*$detail = $this->obj->find($id);
         $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();*/
-        return view($this->module.'.detail'/*, ['detail' => $detail, 'lasts' => $lasts]*/);
+        return view($this->module.'.detail', ['detail' => $detail/*, 'lasts' => $lasts*/]);
     }
 
     public function getOsc($territory, $territory_id = null){

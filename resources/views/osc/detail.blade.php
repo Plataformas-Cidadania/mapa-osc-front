@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>Organização da Sociedade Civil de Teste do Mapa das OSCs</h1>
+                        <h1>{{$detail->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / </h5>
                         <br>
                     </header>
@@ -68,7 +68,7 @@
 
                         <br>
                         <p>
-                            <strong>CNPJ:</strong> <br>
+                            <strong>CNPJ:</strong> {{$detail->cd_identificador_osc}}<br>
                             <strong>Natureza Jurídica:</strong> <br>
                         </p>
                         <br>
@@ -111,16 +111,16 @@
 
                 <div class="row">
 
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <div class="item-detail">
                             <h4>Nome Fantasia:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->tx_nome_fantasia_osc == null ? "Não informado" : $detail->tx_nome_fantasia_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Sigla OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->tx_sigla_osc == null ? "Não informado" : $detail->tx_sigla_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -129,9 +129,9 @@
                                 <div class="col-md-6">
                                     <i class="fas fa-database float-right tx-pri"></i>
                                     <strong>Endereço:</strong><br>
-                                    Rua Capitão Silvio Conçalves de Farias, 981, Lote 02<br>
-                                    Bosque Ouro Preto do Oeste, Rondônia - RO<br>
-                                    <strong>CEP.:</strong> 76920-000
+                                    {{$detail->tx_endereco == null ? "Não informado" : $detail->tx_endereco}}<br>
+                                    {{$detail->tx_bairro == null ? "" : $detail->tx_bairro}} <br>
+                                    <strong>CEP.:</strong> {{$detail->nr_cep == null ? "Não informado" : $detail->nr_cep}}
                                 </div>
                                 <div class="col-md-6">
                                     <img src="https://docs.mapbox.com/ios/assets/maps-examples-add-marker-symbol-960-4c2d0dcb2896da516c138d37b09f923e.webp" alt="" width="100%">
@@ -142,37 +142,37 @@
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Situação do Imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->tx_nome_situacao_imovel_osc == null ? "Não informado" : $detail->tx_nome_situacao_imovel_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Responsável Legal:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->tx_nome_responsavel_legal == null ? "Não informado" : $detail->tx_nome_responsavel_legal}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Cadastro de CNPJ:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->dt_ano_cadastro_cnpj == null ? "Não informado" : $detail->dt_ano_cadastro_cnpj}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Fundação:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->dt_fundacao_osc == null ? "Não informado" : $detail->dt_fundacao_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>O que a OSC faz:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->ft_resumo_osc == null ? "Não informado" : $detail->ft_resumo_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>E-mail:</h4>
-                            <p>Não informado</p>
+                            <p>{{$detail->tx_email == null ? "Não informado" : $detail->tx_email}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">

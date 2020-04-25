@@ -70,10 +70,16 @@
                     .markerCor5{
                         background: #f44336;
                     }
-                    .control-container{
+                    /*.control-container{
                         border-radius:5px;
                         border: solid 2px rgba(0,0,0,0.2);
                         background-color: #fff;
+                    }*/
+                    .control-data-types{
+                        border-radius:5px;
+                        border: solid 2px rgba(0,0,0,0.2);
+                        background-color: #fff;
+                        padding: 3px!important;
                     }
 
                     .control-data-types{
