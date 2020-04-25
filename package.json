@@ -34,6 +34,7 @@
         "jquery-smoove": "^0.2.11",
         "lazysizes": "^5.2.0",
         "leaflet": "^1.6.0",
+        "leaflet.fullscreen": "^1.6.0",
         "leaflet.markercluster": "^1.4.1",
         "node": "^12.14.1",
         "npm": "^6.13.7",

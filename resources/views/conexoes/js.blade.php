@@ -14,6 +14,7 @@
 
 @if($rota=='mapa')
 <script src="js/leaflet.js"></script>
+<script src="js/components/maps/mapTeste.js"></script>
 <script src="js/components/maps/oscMap.js"></script>
 <script src="js/components/maps/page/page.js"></script>
 

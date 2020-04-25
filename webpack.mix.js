@@ -32,6 +32,7 @@ mix.scripts([
 mix.scripts([
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+        'node_modules/leaflet.fullscreen/Control.FullScreen.js',
     ], 'public/js/leaflet.js');
 
 /*CSS*/
@@ -39,11 +40,11 @@ mix.styles([
     'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
 ], 'public/css/home.css');
 
-/*CSS*/
 mix.styles([
     'node_modules/leaflet/dist/leaflet.css',
     'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
     'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+    'node_modules/leaflet.fullscreen/Control.FullScreen.css',
 ], 'public/css/leaflet.css')
 
     .sass('resources/sass/app.scss', 'public/css');

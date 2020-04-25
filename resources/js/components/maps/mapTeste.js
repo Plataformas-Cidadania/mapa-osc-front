@@ -1,8 +1,9 @@
-class MapTeste extends React.Component {
-    constructor(props) {
+class MapTeste extends React.Component{
+    constructor(props){
         super(props);
         //console.log(props);
         this.state = {
+            mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
             ufs: [],
@@ -12,48 +13,49 @@ class MapTeste extends React.Component {
             //month:props.month,
             //filters: props.filters,
             pais: 'BRA', //utilizado para o mapa de calor
-            /*tipoTerritorioSelecionado: props.tipoTerritorioSelecionado,
+            //tipoTerritorioSelecionado: props.tipoTerritorioSelecionado,
             codigoTerritorioSelecionado: props.codigoTerritorioSelecionado,
-            tipoTerritorioAgrupamento: props.tipoTerritorioAgrupamento,*/
+            //tipoTerritorioAgrupamento: props.tipoTerritorioAgrupamento,
 
             mapElements: {
-                map: null
+                map:null,
             },
-            tileLayerMap: 1, //1 - Básico, 2 - Contraste, 3 - Satélite
+            tileLayerMap:1, //1 - Básico, 2 - Contraste, 3 - Satélite
             tilesLayers: {
                 basic: null,
                 contrast: null,
-                satellite: null
+                satellite: null,
             },
             zoom: {
-                1: 4, //territorio 1 usa o zoom 4
-                2: 5,
-                3: 7,
-                4: 8
+                1:4,//territorio 1 usa o zoom 4
+                2:5,
+                3:7,
+                4:8,
             },
             classMarker: {
-                1: 'marker',
-                2: 'marker',
-                3: 'marker2',
-                4: 'marker2'
+                1:'marker',
+                2:'marker',
+                3:'marker2',
+                4:'marker2',
             },
-            loadData: {
-                1: function () {
+            loadData:{
+                1: function() {
                     //console.log('aaa');
                     this.loadDataTotalPorTerritorio();
                 }.bind(this),
-                2: function () {
+                2: function() {
                     //console.log('bbb');
-                    this.loadDataTotalPorTerritorio();
+                    //this.loadDataTotalPorTerritorio();
+                    this.loadDataUf();
                 }.bind(this),
-                3: function () {
+                3: function() {
                     //console.log('ccc');
                     this.loadDataPontosPorTerritorio();
                 }.bind(this),
-                4: function () {
+                4: function() {
                     //console.log('ddd');
                     this.loadDataPontosPorTerritorio();
-                }.bind(this)
+                }.bind(this),
             }
         };
 
@@ -61,6 +63,7 @@ class MapTeste extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
+        this.loadDataUf = this.loadDataUf.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.populateMapCluster = this.populateMapCluster.bind(this);
         this.heatMap = this.heatMap.bind(this);
@@ -69,15 +72,26 @@ class MapTeste extends React.Component {
         this.changeTileLayer = this.changeTileLayer.bind(this);
         this.removeMarkersGroup = this.removeMarkersGroup.bind(this);
         this.addMarkersGroup = this.addMarkersGroup.bind(this);
+
     }
 
-    componentDidMount() {
+    componentDidMount(){
         this.loadFirstMap();
     }
 
-    componentWillReceiveProps(props) {
-        return;
-        if (props.filter == 1 || this.state.firstTimeLoad === true && props.start != null && props.end != null) {
+    componentWillReceiveProps(props){
+        console.log('will receve props');
+        console.log(props.data);
+        if(props.data != this.state.data){
+            console.log(props.data);
+            this.setState({data: props.data}, function(){
+                this.loadMap();
+                this.populateMap();
+            })
+        }
+
+
+        /*if(props.filter==1 || (this.state.firstTimeLoad===true && props.start!=null && props.end != null)){
             this.setState({
                 firstTimeLoad: false,
                 types: props.types,
@@ -89,28 +103,28 @@ class MapTeste extends React.Component {
                 start: props.start,
                 end: props.end,
                 filters: props.filters
-            }, function () {
+            }, function(){
                 //this.mountPer();
                 //console.log(this.state.start, this.state.end);
                 this.loadMap();
                 this.loadDataTotalPorTerritorio();
             });
-        }
+        }*/
     }
 
-    loadFirstMap() {
-        return;
+
+    loadFirstMap(){
 
         let mapElements = this.state.mapElements;
 
         let basic = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         });
 
         let contrast = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
             maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         });
 
         let satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -122,29 +136,29 @@ class MapTeste extends React.Component {
         tilesLayers.basic = basic;
         tilesLayers.contrast = contrast;
         tilesLayers.satellite = satellite;
-        this.setState({ tilesLayers: tilesLayers });
+        this.setState({tilesLayers: tilesLayers});
 
         var latlng = L.latLng(-13.70, -55.65);
 
         let tile = null;
-        if (this.state.tileLayerMap == 1) {
+        if(this.state.tileLayerMap==1){
             tile = basic;
         }
-        if (this.state.tileLayerMap == 2) {
+        if(this.state.tileLayerMap==2){
             tile = contrast;
         }
-        if (this.state.tileLayerMap == 3) {
+        if(this.state.tileLayerMap==3){
             tile = satellite;
         }
 
-        mapElements.map = L.map('map', {
+        mapElements.map = L.map(this.state.mapId, {
             center: latlng,
             zoom: 4,
             layers: [tile],
             fullscreenControl: true,
             fullscreenControlOptions: { // optional
-                title: "Show me the fullscreen !",
-                titleCancel: "Exit fullscreen mode"
+                title:"Show me the fullscreen !",
+                titleCancel:"Exit fullscreen mode"
             }
         });
 
@@ -155,67 +169,82 @@ class MapTeste extends React.Component {
         let controlsMap = document.getElementById('controls-map');
 
         mapElements.controlContainer = L.Control.extend({
-            options: {
-                position: 'topright'
+            options:{
+                position: 'topright',
             },
-            onAdd: function () {
+            onAdd: function(){
                 return L.DomUtil.get('controls-map');
+            }
+        }).bind(thisReact);
+        mapElements.map.addControl(new mapElements.controlContainer());
+
+        let controlsMap2 = document.getElementById('controls-map2');
+
+        mapElements.controlContainer = L.Control.extend({
+            options:{
+                position: 'bottomleft',
+            },
+            onAdd: function(){
+                return L.DomUtil.get('controls-map2');
             }
         }).bind(thisReact);
         mapElements.map.addControl(new mapElements.controlContainer());
         ///////////////////////////////////////////////////////////////////////////////
 
         mapElements.controlBasicMap = L.Control.extend({
-            options: {
-                position: 'topright'
+            options:{
+                position: 'topright',
             },
-            onAdd: function () {
+            onAdd: function(){
                 let container = L.DomUtil.create('div');
-                container.onclick = function () {
-                    thisReact.setState({ tileLayerMap: 1 });
+                container.onclick = function(){
+                    thisReact.setState({tileLayerMap: 1});
                     thisReact.changeTileLayer(thisReact.state.tilesLayers.basic);
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 };
 
                 container.id = 'controlBasic';
                 container.className = 'control-data-types leaflet-control';
-                if (thisReact.state.tileLayerMap == 1) {
+                if(thisReact.state.tileLayerMap==1){
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 container.innerHTML = '<img src="img/leaflet/controls/basic.png"  title="Mapa Básico">';
 
                 return container;
             }
         }).bind(thisReact);
+
         let controlBasicMapObj = new mapElements.controlBasicMap();
         mapElements.map.addControl(controlBasicMapObj);
         //pega o div do controle
         let divControlBasicMap = controlBasicMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlBasicMap);
+        controlsMap2.appendChild(divControlBasicMap);
 
         mapElements.controlContrastMap = L.Control.extend({
-            options: {
+            options:{
                 position: 'topright',
-                check: false
+                check: false,
             },
-            onAdd: function () {
+            onAdd: function(){
                 let container = L.DomUtil.create('div');
-                container.onclick = function () {
-                    thisReact.setState({ tileLayerMap: 2 });
+                container.onclick = function(){
+                    thisReact.setState({tileLayerMap: 2});
                     thisReact.changeTileLayer(thisReact.state.tilesLayers.contrast);
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 };
 
                 container.id = 'controlContrast';
                 container.className = 'control-data-types leaflet-control';
-                if (thisReact.state.tileLayerMap == 2) {
+                if(thisReact.state.tileLayerMap==2){
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 container.innerHTML = '<img src="img/leaflet/controls/contrast.png"  title="Contraste">';
 
                 return container;
@@ -226,28 +255,29 @@ class MapTeste extends React.Component {
         //pega o div do controle
         let divControlContrastMap = controlContrastMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlContrastMap);
+        controlsMap2.appendChild(divControlContrastMap);
 
         mapElements.controlSatelliteMap = L.Control.extend({
-            options: {
+            options:{
                 position: 'topright',
-                check: false
+                check: false,
             },
-            onAdd: function () {
+            onAdd: function(){
                 let container = L.DomUtil.create('div');
-                container.onclick = function () {
-                    thisReact.setState({ tileLayerMap: 3 });
+                container.onclick = function(){
+                    thisReact.setState({tileLayerMap: 3});
                     thisReact.changeTileLayer(thisReact.state.tilesLayers.satellite);
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 };
 
                 container.id = 'controlSatellite';
                 container.className = 'control-data-types leaflet-control';
-                if (thisReact.state.tileLayerMap == 3) {
+                if(thisReact.state.tileLayerMap==3){
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 /*container.style.borderBottom = 'solid 1px #ccc';*/
                 container.innerHTML = '<img src="img/leaflet/controls/satellite.png" title="Satélite">';
 
@@ -259,16 +289,16 @@ class MapTeste extends React.Component {
         //pega o div do controle
         let divControlSatelliteMap = controlSatelliteMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlSatelliteMap);
+        controlsMap2.appendChild(divControlSatelliteMap);
 
         ///////////////FIM CONTROLERS DOS MAPAS/////////////////////////////////////////
 
         //////////////////////////SEPARADOR/////////////////////////////////////////////
         mapElements.controlSeparator = L.Control.extend({
-            options: {
-                position: 'topright'
+            options:{
+                position: 'topright',
             },
-            onAdd: function () {
+            onAdd: function(){
                 let container = L.DomUtil.create('div');
                 container.style.marginRight = '0';
                 container.style.borderBottom = 'solid 1px #e8e8e8';
@@ -288,21 +318,21 @@ class MapTeste extends React.Component {
         ////////////////CONTROLERS DOS LAYERS////////////////////////////////////////////
         //Clusters/Markers
         mapElements.controlClusterMap = L.Control.extend({
-            options: {
+            options:{
                 position: 'topright',
-                check: true
+                check: true,
             },
-            onAdd: function () {
+            onAdd: function(){
                 let options = this.options;
                 //console.log(options.check);
                 let container = L.DomUtil.create('div');
-                container.onclick = function () {
+                container.onclick = function(){
                     //console.log(options.check);
                     options.check = !options.check;
                     container.className = 'control-data-types leaflet-control';
                     //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-off.png">';
                     thisReact.removeMarkersGroup();
-                    if (options.check) {
+                    if(options.check){
                         thisReact.addMarkersGroup();
                         container.className = 'control-data-types check-control-data-types leaflet-control';
                         //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-on.png">';
@@ -310,7 +340,7 @@ class MapTeste extends React.Component {
                 }.bind(options, thisReact);
 
                 container.className = 'control-data-types leaflet-control';
-                if (options.check) {
+                if(options.check){
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 }
 
@@ -327,38 +357,40 @@ class MapTeste extends React.Component {
         //coloca o div do controle no div externo
         controlsMap.appendChild(divControlClusterMap);
 
+
         //HeatMap
         mapElements.controlHeatMap = L.Control.extend({
-            options: {
+            options:{
                 position: 'topright',
                 check: false,
-                heatmapLoaded: false
+                heatmapLoaded: false,
             },
-            onAdd: function () {
+            onAdd: function(){
 
                 let options = this.options;
                 //console.log(options.check);
                 let container = L.DomUtil.create('div', 'control-data-types');
-                container.onclick = function () {
+                container.onclick = function(){
                     //console.log(options.check);
                     options.check = !options.check;
                     container.className = 'control-data-types leaflet-control';
 
                     //verifica se o mapa já foi carregado antes.
-                    if (options.heatmapLoaded && !options.check) {
+                    if(options.heatmapLoaded && !options.check){
                         thisReact.removeHeatMap();
                     }
 
-                    if (options.heatmapLoaded && options.check) {
+                    if(options.heatmapLoaded && options.check){
                         thisReact.addHeatMap();
                         container.className = 'control-data-types check-control-data-types leaflet-control';
                     }
 
-                    if (!options.heatmapLoaded && options.check) {
+                    if(!options.heatmapLoaded && options.check){
                         thisReact.loadDataPontosPorPais();
                         options.heatmapLoaded = true;
                         container.className = 'control-data-types check-control-data-types leaflet-control';
                     }
+
                 }.bind(options, thisReact);
 
                 container.innerHTML = '<img src="img/leaflet/controls/heatmap.png" title="Mapa de Calor">';
@@ -373,27 +405,28 @@ class MapTeste extends React.Component {
         //coloca o div do controle no div externo
         controlsMap.appendChild(divControlHeatMap);
 
+
         ////////////////FIM CONTROLERS DOS LAYERS////////////////////////////////////////////
 
 
         ///////////////CONTROLE HABILITA/DESABILITA ZOOM/////////////////////////////////////
         //Clusters/Markers
         mapElements.controlZoomMap = L.Control.extend({
-            options: {
+            options:{
                 position: 'topright',
-                check: false
+                check: false,
             },
-            onAdd: function () {
+            onAdd: function(){
                 let options = this.options;
                 //console.log('zoom', options.check);
                 let container = L.DomUtil.create('div');
-                container.onclick = function () {
+                container.onclick = function(){
                     options.check = !options.check;
                     //console.log(options.check);
                     container.className = 'control-data-types leaflet-control';
                     //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-off.png">';
                     thisReact.disableZoomMap();
-                    if (options.check) {
+                    if(options.check){
                         thisReact.enableZoomMap();
                         container.className = 'control-data-types check-control-data-types leaflet-control';
                         //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-on.png">';
@@ -401,7 +434,7 @@ class MapTeste extends React.Component {
                 }.bind(options, thisReact);
 
                 container.className = 'control-data-types leaflet-control';
-                if (options.check) {
+                if(options.check){
                     container.className = 'control-data-types check-control-data-types leaflet-control';
                 }
 
@@ -422,20 +455,20 @@ class MapTeste extends React.Component {
         //DESABILITA O ZOOM PELO SCHROLL DO MOUSE
         mapElements.map.scrollWheelZoom.disable();
 
-        this.setState({ mapElements: mapElements }, function () {
+        this.setState({mapElements: mapElements}, function(){
             //this.loadMap();
         });
     }
 
-    loadMap() {
+    loadMap(){
 
         let mapElements = this.state.mapElements;
 
         mapElements.map.setZoom(4);
 
-        mapElements.map.eachLayer(function (layer) {
+        mapElements.map.eachLayer(function(layer){
             //if not the tile layer
-            if (typeof layer._url === "undefined") {
+            if (typeof layer._url === "undefined"){
                 mapElements.map.removeLayer(layer);
             }
         }.bind(this));
@@ -446,20 +479,47 @@ class MapTeste extends React.Component {
         mapElements.markersGroup = L.layerGroup();
         mapElements.map.addLayer(mapElements.markersGroup);
 
-        this.setState({ mapElements: mapElements });
+
+
+
+
+
+        this.setState({mapElements: mapElements});
+
     }
 
-    loadDataTotalPorTerritorio() {
+    loadDataUf(){
+        let _this = this;
+        $.ajax({
+            method:'GET',
+            url: 'get-osc/2/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                console.log(data);
+                _this.setState({data: data});
+                _this.populateMap();
+            },
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                _this.setState({loading: false});
+            }
+
+        });
+    }
+
+    loadDataTotalPorTerritorio(){
         //console.log('types', this.state.types);
         //console.log('períodos', this.state.start, this.state.end);
-        if (!this.state.start || !this.state.end) {
+        if(!this.state.start || !this.state.end){
             return;
         }
 
         $.ajax({
-            method: 'POST',
+            method:'POST',
             url: "total-transito-territorio",
-            data: {
+            data:{
                 serie_id: this.props.id,
                 start: this.state.start,
                 end: this.state.end,
@@ -472,23 +532,23 @@ class MapTeste extends React.Component {
                 tipoTerritorioAgrupamento: this.state.tipoTerritorioAgrupamento // tipo de territorio em que os dados são agrupados
             },
             cache: false,
-            success: function (data) {
+            success: function(data) {
                 //console.log(data);
-                this.setState({ data: data.valores }, function () {
+                this.setState({data: data.valores}, function(){
                     this.populateMap();
                 });
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.log('erro');
             }.bind(this)
         });
     }
 
-    loadDataPontosPorTerritorio() {
+    loadDataPontosPorTerritorio(){
         $.ajax({
-            method: 'POST',
+            method:'POST',
             url: "pontos-transito-territorio",
-            data: {
+            data:{
                 serie_id: this.props.id,
                 start: this.state.start,
                 end: this.state.end,
@@ -497,60 +557,61 @@ class MapTeste extends React.Component {
                 typesAccident: this.state.typesAccident,
                 genders: this.state.genders,
                 tipoTerritorioSelecionado: this.state.tipoTerritorioSelecionado, // tipo de territorio selecionado
-                codigoTerritorioSelecionado: this.state.codigoTerritorioSelecionado //codigo do territorio, que pode ser codigo do país, regiao, uf, etc...
+                codigoTerritorioSelecionado: this.state.codigoTerritorioSelecionado, //codigo do territorio, que pode ser codigo do país, regiao, uf, etc...
             },
             cache: false,
-            success: function (data) {
+            success: function(data) {
                 //console.log(data);
-                this.setState({ data: data.valores }, function () {
+                this.setState({data: data.valores}, function(){
                     this.populateMapCluster();
                 });
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.log('erro');
             }.bind(this)
         });
     }
 
-    loadDataPontosPorPais() {
+    loadDataPontosPorPais(){
         $.ajax({
-            method: 'POST',
+            method:'POST',
             url: "pontos-transito-pais",
-            data: {
+            data:{
                 serie_id: this.props.id,
                 start: this.state.start,
                 end: this.state.end,
                 pais: this.state.pais,
-                types: this.state.types
+                types: this.state.types,
             },
             cache: false,
-            success: function (data) {
+            success: function(data) {
                 //console.log('pais', data);
-                this.setState({ dataCalor: data.valores }, function () {
+                this.setState({dataCalor: data.valores}, function(){
                     this.heatMap();
                 });
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.log('erro');
             }.bind(this)
         });
     }
 
-    gerarIntervalos(data) {
+    gerarIntervalos(data){
 
-        if (data === undefined) {
+        if(data===undefined){
             return null;
         }
 
-        let valores = data.map(function (item) {
-            return item.total;
+
+        let valores = data.territorio.map(function(item){
+            return item.nr_quantidade_osc_regiao;
         });
 
         //console.log(valores);
         let min = Math.min.apply(null, valores);
-        let minUtil = parseInt(min + min * 10 / 100);
+        let minUtil = parseInt(min + min * 10/100);
         let max = Math.max.apply(null, valores);
-        let maxUtil = parseInt(max - max * 10 / 100);
+        let maxUtil = parseInt(max - max * 10/100);
 
         let qtdIntervalos = 5;
         let intervalo = parseInt(maxUtil / qtdIntervalos);
@@ -561,7 +622,7 @@ class MapTeste extends React.Component {
         let intervalos = [];
         intervalos.push(minUtil);
         let anterior = minUtil;
-        for (let i = 0; i < qtdIntervalos - 1; i++) {
+        for(let i=0;i<qtdIntervalos-1;i++){
             anterior += intervalo;
             intervalos.push(anterior);
         }
@@ -571,23 +632,24 @@ class MapTeste extends React.Component {
         return intervalos;
     }
 
-    defineCor(valor, intervalos) {
+    defineCor(valor, intervalos){
         let cor = null;
-        for (let k in intervalos) {
-            if (valor < intervalos[k]) {
-                cor = parseInt(k) + 1;
+        for(let k in intervalos){
+            if(valor < intervalos[k]){
+                cor = parseInt(k)+1;
                 break;
             }
         }
         //se o valor não é menor que ninguem então define a cor mais quente.
-        if (cor === null) {
+        if(cor===null){
             cor = intervalos.length;
         }
 
         return cor;
     }
 
-    populateMap() {
+
+    populateMap(){
 
         let _this = this;
 
@@ -597,49 +659,65 @@ class MapTeste extends React.Component {
 
         let data = null;
         data = this.state.data;
+        let territorio = this.state.data['territorio'];
 
         let intervalos = this.gerarIntervalos(data);
 
-        for (let i in data) {
+        let pontos = []; //será usado para enquadrar o mapa (fitBounds)
 
-            let cor = this.defineCor(data[i].total, intervalos);
-            let classMarker = _this.state.classMarker[data[i].tipo_territorio];
+        for(let i in territorio){
+
+            let cor = this.defineCor(territorio[i].nr_quantidade_osc_regiao, intervalos);
+            let classMarker = _this.state.classMarker[data.tipo_territorio];
+            //let classMarker = "marker";
             //console.log(classMarker);
 
             let icon = L.divIcon({
-                className: classMarker + ' markerCor' + cor,
-                html: "<p style='color: #333;'>" + data[i].total + "</p>"
+                className: classMarker+' markerCor'+cor,
+                html: "<p style='color: #333;'>"+territorio[i].nr_quantidade_osc_regiao+"</p>"
             });
 
-            let marker = L.marker(L.latLng(data[i].lat, data[i].lng), { icon: icon }).bindPopup('<strong>' + data[i].nome + '</strong>').openPopup();
+            let marker = L.marker(L.latLng(territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao), {icon: icon})
+                .bindPopup('<strong>'+territorio[i].tx_nome_regiao+'</strong>')
+                .openPopup();
 
-            marker.on('mouseover', function (e) {
+            marker.on('mouseover', function(e){
                 this.openPopup();
             });
-            marker.on('mouseout', function (e) {
+            marker.on('mouseout', function(e){
                 this.closePopup();
             });
-            marker.on('click', function (e) {
+            marker.on('click', function(e){
                 let latlng = this.getLatLng();
                 mapElements.map.removeLayer(this);
-                let zoom = _this.state.zoom[parseInt(data[i].tipo_territorio)];
+                let zoom = _this.state.zoom[parseInt(territorio[i].tipo_territorio)];
                 _this.setState({
-                    tipoTerritorioSelecionado: data[i].tipo_territorio, //1 - país, 2 - regiao, 3 - uf, 4 - municipio
-                    codigoTerritorioSelecionado: [data[i].codigo], //203 - Brasil 13 - SE, etc...
-                    tipoTerritorioAgrupamento: parseInt(data[i].tipo_territorio) + 1 //1 - país, 2 - regiao, 3 - uf, 4 - municipio
-                }, function () {
-                    _this.state.loadData[data[i].tipo_territorio]();
+                    //tipoTerritorioSelecionado: territorio[i].tipo_territorio,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
+                    codigoTerritorioSelecionado: [territorio[i].id_regiao], //203 - Brasil 13 - SE, etc...
+                    //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
+                }, function(){
+                    console.log(data.tipo_territorio);
+                    _this.state.loadData[data.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
+
             });
             //mapElements.map.addLayer(marker);
             mapElements.markersGroup.addLayer(marker);
+
+            pontos.push([territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao]);
         }
 
-        this.setState({ mapElements: mapElements });
+        if(data.tipo_territorio > 2){
+            let bounds = new L.LatLngBounds(pontos);
+            mapElements.map.fitBounds(bounds);
+        }
+
+
+        this.setState({mapElements: mapElements});
     }
 
-    populateMapCluster() {
+    populateMapCluster(){
 
         let _this = this;
         let mapElements = this.state.mapElements;
@@ -649,13 +727,13 @@ class MapTeste extends React.Component {
         let data = null;
         data = this.state.data;
 
-        for (let i in data) {
+        for(let i in data){
 
             let icon = L.icon({
                 iconUrl: 'img/leaflet/controls/marker.png',
-                iconSize: [32, 32], // size of the icon
-                iconAnchor: [16, 16], // point of the icon which will correspond to marker's location
-                popupAnchor: [-3, -30] // point from which the popup should open relative to the iconAnchor
+                iconSize:     [32, 32], // size of the icon
+                iconAnchor:   [16, 16], // point of the icon which will correspond to marker's location
+                popupAnchor:  [-3, -30] // point from which the popup should open relative to the iconAnchor
             });
 
             //console.log(data[i]);
@@ -663,31 +741,37 @@ class MapTeste extends React.Component {
 
             let allFilters = this.props.allFilters;
             let filterInfo = "";
-            for (let j in allFilters) {
-                filterInfo += '<strong>' + allFilters[j]['titulo'] + ':</strong> ' + data[i][allFilters[j]['slug']] + '<br>';
+            for(let j in allFilters){
+                filterInfo += '<strong>'+allFilters[j]['titulo']+':</strong> '+data[i][allFilters[j]['slug']]+'<br>'
             }
 
-            let marker = L.marker(L.latLng(data[i].lat, data[i].lng), { icon: icon })
-            //let marker = L.marker(L.latLng(data[i].lat, data[i].lng))
-            .bindPopup('' + '<strong>' + data[i].lat + ', ' + data[i].lng + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Data:</strong> ' + data[i].data + '<br>' + filterInfo).openPopup();
 
-            marker.on('mouseover', function (e) {
+            let marker = L.marker(L.latLng(data[i].lat, data[i].lng), {icon: icon})
+            //let marker = L.marker(L.latLng(data[i].lat, data[i].lng))
+                .bindPopup('' +
+                    '<strong>'+data[i].lat+', '+data[i].lng+'</strong><hr style="margin:5px 0; padding:0;">' +
+                    '<strong>Data:</strong> '+data[i].data+'<br>' +
+                    filterInfo
+                )
+                .openPopup();
+
+            marker.on('mouseover', function(e){
                 //this.openPopup();
             });
-            marker.on('mouseout', function (e) {
+            marker.on('mouseout', function(e){
                 //this.closePopup();
             });
-            marker.on('click', function (e) {
+            marker.on('click', function(e){
                 this.openPopup();
             });
             markers.addLayer(marker);
         }
         //mapElements.map.addLayer(markers);
         mapElements.markersGroup.addLayer(markers);
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    heatMapAntigo() {
+    heatMapAntigo(){
         let cfg = {
             // radius should be small ONLY if scaleRadius is true (or small radius is intended)
             // if scaleRadius is false it will be the constant radius used in pixels
@@ -722,16 +806,18 @@ class MapTeste extends React.Component {
 
         //L.control.layers(null, {'Mapa de Calor': heatmapLayer}, {collapsed: false}).addTo(mapElements.map);
 
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
+
+
     }
 
-    heatMap() {
+    heatMap(){
 
         let intensidades = {
             100: 20,
             500: 10,
             1000: 5,
-            5000: 2
+            5000: 2,
         };
 
         let points = this.state.dataCalor;
@@ -739,8 +825,8 @@ class MapTeste extends React.Component {
         let qtd = points.length;
         let intensidade = 1;
 
-        for (let i in intensidades) {
-            if (qtd <= i) {
+        for(let i in intensidades){
+            if(qtd <= i){
                 intensidade = intensidades[i];
                 break;
             }
@@ -758,47 +844,48 @@ class MapTeste extends React.Component {
 
         //console.log('map', mapElements);
 
-        this.setState({ mapElement: mapElements });
+        this.setState({mapElement: mapElements});
     }
 
-    removeMarkersGroup() {
+
+    removeMarkersGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.markersGroup);
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    addMarkersGroup() {
+    addMarkersGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.markersGroup);
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    removeHeatMap() {
+    removeHeatMap(){
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.heatmapLayer);
-        this.setState({ mapElements: mapElements });
-    }
+        this.setState({mapElements: mapElements});
+    };
 
-    addHeatMap() {
+    addHeatMap(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.heatmapLayer);
-        this.setState({ mapElements: mapElements });
-    }
+        this.setState({mapElements: mapElements});
+    };
 
-    enableZoomMap() {
+    enableZoomMap(){
         //console.log('aaaaaaaaaaaaaaa');
         let mapElements = this.state.mapElements;
         mapElements.map.scrollWheelZoom.enable();
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    disableZoomMap() {
+    disableZoomMap(){
         let mapElements = this.state.mapElements;
         mapElements.map.scrollWheelZoom.disable();
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    changeTileLayer(tile) {
+    changeTileLayer(tile){
         let mapElements = this.state.mapElements;
         document.getElementById('controlBasic').className = "control-data-types leaflet-control";
         document.getElementById('controlContrast').className = "control-data-types leaflet-control";
@@ -807,34 +894,36 @@ class MapTeste extends React.Component {
         mapElements.map.removeLayer(this.state.tilesLayers.contrast);
         mapElements.map.removeLayer(this.state.tilesLayers.satellite);
         mapElements.map.addLayer(tile);
-        this.setState({ mapElements: mapElements });
+        this.setState({mapElements: mapElements});
     }
 
-    loadData() {
+    loadData(){
         $.ajax({
-            method: 'POST',
+            method:'POST',
             url: "valores-transito",
-            data: {},
+            data:{},
             cache: false,
-            success: function (data) {
+            success: function(data) {
                 //console.log(data);
-                this.setState({ regioes: data.regioes, ufs: data.ufs, acidentes: data.valores }, function () {
+                this.setState({regioes: data.regioes, ufs: data.ufs, acidentes: data.valores}, function(){
                     this.loadMap();
                 });
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.log('erro');
             }.bind(this)
         });
     }
 
-    render() {
+    render(){
 
-        return React.createElement(
-            'div',
-            null,
-            React.createElement('div', { id: 'map', className: 'map' }),
-            React.createElement('div', { id: 'controls-map', className: 'control-container' })
+
+        return(
+            <div>
+                <div id={this.state.mapId} className="map" />
+                <div id="controls-map" className="control-container" />
+                <div id="controls-map2" className="control-container" />
+            </div>
         );
     }
 }

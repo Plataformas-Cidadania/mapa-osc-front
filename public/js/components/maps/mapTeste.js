@@ -3,6 +3,7 @@ class MapTeste extends React.Component {
         super(props);
         //console.log(props);
         this.state = {
+            mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
             ufs: [],
@@ -12,9 +13,9 @@ class MapTeste extends React.Component {
             //month:props.month,
             //filters: props.filters,
             pais: 'BRA', //utilizado para o mapa de calor
-            /*tipoTerritorioSelecionado: props.tipoTerritorioSelecionado,
+            //tipoTerritorioSelecionado: props.tipoTerritorioSelecionado,
             codigoTerritorioSelecionado: props.codigoTerritorioSelecionado,
-            tipoTerritorioAgrupamento: props.tipoTerritorioAgrupamento,*/
+            //tipoTerritorioAgrupamento: props.tipoTerritorioAgrupamento,
 
             mapElements: {
                 map: null
@@ -44,7 +45,8 @@ class MapTeste extends React.Component {
                 }.bind(this),
                 2: function () {
                     //console.log('bbb');
-                    this.loadDataTotalPorTerritorio();
+                    //this.loadDataTotalPorTerritorio();
+                    this.loadDataUf();
                 }.bind(this),
                 3: function () {
                     //console.log('ccc');
@@ -61,6 +63,7 @@ class MapTeste extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
+        this.loadDataUf = this.loadDataUf.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.populateMapCluster = this.populateMapCluster.bind(this);
         this.heatMap = this.heatMap.bind(this);
@@ -76,8 +79,17 @@ class MapTeste extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        return;
-        if (props.filter == 1 || this.state.firstTimeLoad === true && props.start != null && props.end != null) {
+        console.log('will receve props');
+        console.log(props.data);
+        if (props.data != this.state.data) {
+            console.log(props.data);
+            this.setState({ data: props.data }, function () {
+                this.loadMap();
+                this.populateMap();
+            });
+        }
+
+        /*if(props.filter==1 || (this.state.firstTimeLoad===true && props.start!=null && props.end != null)){
             this.setState({
                 firstTimeLoad: false,
                 types: props.types,
@@ -89,17 +101,16 @@ class MapTeste extends React.Component {
                 start: props.start,
                 end: props.end,
                 filters: props.filters
-            }, function () {
+            }, function(){
                 //this.mountPer();
                 //console.log(this.state.start, this.state.end);
                 this.loadMap();
                 this.loadDataTotalPorTerritorio();
             });
-        }
+        }*/
     }
 
     loadFirstMap() {
-        return;
 
         let mapElements = this.state.mapElements;
 
@@ -137,7 +148,7 @@ class MapTeste extends React.Component {
             tile = satellite;
         }
 
-        mapElements.map = L.map('map', {
+        mapElements.map = L.map(this.state.mapId, {
             center: latlng,
             zoom: 4,
             layers: [tile],
@@ -163,6 +174,18 @@ class MapTeste extends React.Component {
             }
         }).bind(thisReact);
         mapElements.map.addControl(new mapElements.controlContainer());
+
+        let controlsMap2 = document.getElementById('controls-map2');
+
+        mapElements.controlContainer = L.Control.extend({
+            options: {
+                position: 'bottomleft'
+            },
+            onAdd: function () {
+                return L.DomUtil.get('controls-map2');
+            }
+        }).bind(thisReact);
+        mapElements.map.addControl(new mapElements.controlContainer());
         ///////////////////////////////////////////////////////////////////////////////
 
         mapElements.controlBasicMap = L.Control.extend({
@@ -184,17 +207,19 @@ class MapTeste extends React.Component {
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 container.innerHTML = '<img src="img/leaflet/controls/basic.png"  title="Mapa Básico">';
 
                 return container;
             }
         }).bind(thisReact);
+
         let controlBasicMapObj = new mapElements.controlBasicMap();
         mapElements.map.addControl(controlBasicMapObj);
         //pega o div do controle
         let divControlBasicMap = controlBasicMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlBasicMap);
+        controlsMap2.appendChild(divControlBasicMap);
 
         mapElements.controlContrastMap = L.Control.extend({
             options: {
@@ -216,6 +241,7 @@ class MapTeste extends React.Component {
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 container.innerHTML = '<img src="img/leaflet/controls/contrast.png"  title="Contraste">';
 
                 return container;
@@ -226,7 +252,7 @@ class MapTeste extends React.Component {
         //pega o div do controle
         let divControlContrastMap = controlContrastMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlContrastMap);
+        controlsMap2.appendChild(divControlContrastMap);
 
         mapElements.controlSatelliteMap = L.Control.extend({
             options: {
@@ -248,6 +274,7 @@ class MapTeste extends React.Component {
                 }
 
                 container.style.cursor = 'pointer';
+                container.style.clear = 'none';
                 /*container.style.borderBottom = 'solid 1px #ccc';*/
                 container.innerHTML = '<img src="img/leaflet/controls/satellite.png" title="Satélite">';
 
@@ -259,7 +286,7 @@ class MapTeste extends React.Component {
         //pega o div do controle
         let divControlSatelliteMap = controlSatelliteMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlSatelliteMap);
+        controlsMap2.appendChild(divControlSatelliteMap);
 
         ///////////////FIM CONTROLERS DOS MAPAS/////////////////////////////////////////
 
@@ -449,6 +476,26 @@ class MapTeste extends React.Component {
         this.setState({ mapElements: mapElements });
     }
 
+    loadDataUf() {
+        let _this = this;
+        $.ajax({
+            method: 'GET',
+            url: 'get-osc/2/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
+            data: {},
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                _this.setState({ data: data });
+                _this.populateMap();
+            },
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                _this.setState({ loading: false });
+            }
+
+        });
+    }
+
     loadDataTotalPorTerritorio() {
         //console.log('types', this.state.types);
         //console.log('períodos', this.state.start, this.state.end);
@@ -542,8 +589,8 @@ class MapTeste extends React.Component {
             return null;
         }
 
-        let valores = data.map(function (item) {
-            return item.total;
+        let valores = data.territorio.map(function (item) {
+            return item.nr_quantidade_osc_regiao;
         });
 
         //console.log(valores);
@@ -597,21 +644,25 @@ class MapTeste extends React.Component {
 
         let data = null;
         data = this.state.data;
+        let territorio = this.state.data['territorio'];
 
         let intervalos = this.gerarIntervalos(data);
 
-        for (let i in data) {
+        let pontos = []; //será usado para enquadrar o mapa (fitBounds)
 
-            let cor = this.defineCor(data[i].total, intervalos);
-            let classMarker = _this.state.classMarker[data[i].tipo_territorio];
+        for (let i in territorio) {
+
+            let cor = this.defineCor(territorio[i].nr_quantidade_osc_regiao, intervalos);
+            let classMarker = _this.state.classMarker[data.tipo_territorio];
+            //let classMarker = "marker";
             //console.log(classMarker);
 
             let icon = L.divIcon({
                 className: classMarker + ' markerCor' + cor,
-                html: "<p style='color: #333;'>" + data[i].total + "</p>"
+                html: "<p style='color: #333;'>" + territorio[i].nr_quantidade_osc_regiao + "</p>"
             });
 
-            let marker = L.marker(L.latLng(data[i].lat, data[i].lng), { icon: icon }).bindPopup('<strong>' + data[i].nome + '</strong>').openPopup();
+            let marker = L.marker(L.latLng(territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao), { icon: icon }).bindPopup('<strong>' + territorio[i].tx_nome_regiao + '</strong>').openPopup();
 
             marker.on('mouseover', function (e) {
                 this.openPopup();
@@ -622,18 +673,26 @@ class MapTeste extends React.Component {
             marker.on('click', function (e) {
                 let latlng = this.getLatLng();
                 mapElements.map.removeLayer(this);
-                let zoom = _this.state.zoom[parseInt(data[i].tipo_territorio)];
+                let zoom = _this.state.zoom[parseInt(territorio[i].tipo_territorio)];
                 _this.setState({
-                    tipoTerritorioSelecionado: data[i].tipo_territorio, //1 - país, 2 - regiao, 3 - uf, 4 - municipio
-                    codigoTerritorioSelecionado: [data[i].codigo], //203 - Brasil 13 - SE, etc...
-                    tipoTerritorioAgrupamento: parseInt(data[i].tipo_territorio) + 1 //1 - país, 2 - regiao, 3 - uf, 4 - municipio
+                    //tipoTerritorioSelecionado: territorio[i].tipo_territorio,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
+                    codigoTerritorioSelecionado: [territorio[i].id_regiao] //203 - Brasil 13 - SE, etc...
+                    //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
                 }, function () {
-                    _this.state.loadData[data[i].tipo_territorio]();
+                    console.log(data.tipo_territorio);
+                    _this.state.loadData[data.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
             });
             //mapElements.map.addLayer(marker);
             mapElements.markersGroup.addLayer(marker);
+
+            pontos.push([territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao]);
+        }
+
+        if (data.tipo_territorio > 2) {
+            let bounds = new L.LatLngBounds(pontos);
+            mapElements.map.fitBounds(bounds);
         }
 
         this.setState({ mapElements: mapElements });
@@ -833,8 +892,9 @@ class MapTeste extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement('div', { id: 'map', className: 'map' }),
-            React.createElement('div', { id: 'controls-map', className: 'control-container' })
+            React.createElement('div', { id: this.state.mapId, className: 'map' }),
+            React.createElement('div', { id: 'controls-map', className: 'control-container' }),
+            React.createElement('div', { id: 'controls-map2', className: 'control-container' })
         );
     }
 }

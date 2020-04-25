@@ -2,7 +2,8 @@ class Page extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: null
+            data: null,
+            territory: 1 //país (irá carregar as regiões)
         };
 
         this.load = this.load.bind(this);
@@ -16,7 +17,7 @@ class Page extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: 'get-osc',
+            url: 'get-osc/' + this.state.territory,
             data: {},
             cache: false,
             success: function (data) {
@@ -35,8 +36,8 @@ class Page extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement(OscMap, {
-                mapId: 'mapOsc',
+            React.createElement(MapTeste, {
+                mapId: 'mapTeste',
                 data: this.state.data
             })
         );

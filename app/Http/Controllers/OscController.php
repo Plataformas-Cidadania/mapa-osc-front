@@ -33,14 +33,17 @@ class OscController extends Controller{
         return view($this->module.'.detail'/*, ['detail' => $detail, 'lasts' => $lasts]*/);
     }
 
-    public function getOsc(){
+    public function getOsc($territory, $territory_id = null){
 
-        $pagina = "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao";
+        $urlsApi = [
+            1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
+            2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+        ];
 
-        /*https://mapaosc.ipea.gov.br/api/geo/cluster/regiao
-        https://mapaosc.ipea.gov.br/api/geo/cluster/estado
-        https://mapaosc.ipea.gov.br/api/analises/idhgeo
-        https://mapaosc.ipea.gov.br/api/search/all/lista/10/0*/
+        /*"https://mapaosc.ipea.gov.br/api/search/all/lista/10/0"
+        "https://mapaosc.ipea.gov.br/api/analises/idhgeo"*/
+
+        $pagina = $urlsApi[$territory];
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -52,8 +55,12 @@ class OscController extends Controller{
         $data = json_decode($data);
        // $data = \GuzzleHttp\json_decode($data);
 
+        $idh = [];
+
         $data = [
-            "regiao" => $data
+            "territorio" => $data,
+            "idh" => $idh,
+            "tipo_territorio" => $territory+1
         ];
 
         return $data;
