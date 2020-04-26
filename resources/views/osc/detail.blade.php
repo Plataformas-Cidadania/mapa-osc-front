@@ -606,40 +606,68 @@
                                                         <p>{{$projeto->tx_nome_abrangencia_projeto}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="line-add">
-                                                        <h2>Localização do Projeto</h2>
-                                                        <p>??????</p>
+                                                <?php $projetos_localizacao = DB::connection('map')->table('portal.vw_osc_localizacao_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_beneficiado = DB::connection('map')->table('portal.vw_osc_publico_beneficiado_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_recurso = DB::connection('map')->table('portal.vw_osc_fonte_recursos_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_parceira = DB::connection('map')->table('portal.vw_osc_parceira_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_financiador = DB::connection('map')->table('portal.vw_osc_financiador_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_tipo_parceria = DB::connection('map')->table('portal.vw_osc_tipo_parceria_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+                                                <?php $projetos_objetivo = DB::connection('map')->table('portal.vw_osc_objetivo_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
+
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="line-add">
+                                                                <div>
+                                                                    <h2>Localização do Projeto</h2>
+                                                                    @foreach($projetos_localizacao as $projeto_localizacao)
+                                                                        <p>{{$projeto_localizacao->tx_nome_regiao_localizacao_projeto}}</p>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="line-add">
+                                                                <h2>Público Beneficiado</h2>
+                                                                @foreach($projetos_beneficiado as $projeto_beneficiado)
+                                                                    <p>{{$projeto_beneficiado->tx_nome_publico_beneficiado}}</p>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="line-add">
-                                                        <h2>Público Beneficiado</h2>
-                                                        <p>??????</p>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-md-3">
                                                     <div class="line-add">
                                                         <h2>Tipo da Fontes de Recursos</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_recurso as $projeto_recurso)
+                                                            <p>{{$projeto_recurso->tx_nome_origem_fonte_recursos_projeto}}</p>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="line-add">
                                                         <h2>OSCs Parceiras</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_parceira as $projeto_parceira)
+                                                            <p>{{$projeto_parceira->tx_nome_osc_parceira_projeto}}</p>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="line-add">
                                                         <h2>Financiadores do Projeto</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_financiador as $projeto_financiador)
+                                                            <p>{{$projeto_financiador->tx_nome_financiador}}</p>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="line-add">
                                                         <h2>Tipo de Parceria</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_tipo_parceria as $projeto_tipo_parceria)
+                                                            <p>{{$projeto_tipo_parceria->tx_nome_tipo_parceria}}</p>
+                                                        @endforeach
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -651,13 +679,17 @@
                                                 <div class="col-md-12">
                                                     <div class="line-add">
                                                         <h2>Objetivos do Desenvolvimento Sustentável - ODS</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_objetivo as $projeto_objetivo)
+                                                            <p>{{$projeto_objetivo->tx_nome_objetivo_projeto}}</p>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="line-add">
                                                         <h2>Metas Relacionadas ao ODS</h2>
-                                                        <p>??????</p>
+                                                        @foreach($projetos_objetivo as $projeto_objetivo)
+                                                            <p>{{$projeto_objetivo->tx_nome_meta_projeto}}</p>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>
