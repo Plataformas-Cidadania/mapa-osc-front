@@ -333,32 +333,27 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="bg-lgt box-itens">
-                            <h3><strong>Quadro de Dirigentes</strong></h3>
+                        <div class="bg-lgt box-itens-g">
+                            <h2>Quadro de Dirigentes</h2>
                             <?php $governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id_osc)->get();?>
-                            <div>
-                                @foreach($governancas as $governanca)
-                                    <div>
-                                        <p>{{$governanca->tx_cargo_dirigente}}</p>
-                                        <p><strong>{{$governanca->tx_nome_dirigente}}</strong></p>
-                                    </div>
-                                @endforeach
-                            </div>
+                            @foreach($governancas as $governanca)
+                                <div>
+                                    <p>{{$governanca->tx_cargo_dirigente}}</p>
+                                    <p><strong>{{$governanca->tx_nome_dirigente}}</strong></p>
+                                </div>
+                            @endforeach
                         </div>
                         {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? "Não informado" : $relacoes_trabalho_governanca->governanca}}</p>--}}
                     </div>
                     <div class="col-md-6">
-                        <div class="bg-lgt box-itens">
-                            <h3><strong>Conselho Fiscal</strong></h3>
+                        <div class="bg-lgt box-itens-g">
+                            <h2>Conselho Fiscal</h2>
                             <?php $conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id_osc)->get();?>
-                            <div>
-                                @foreach($conselhos_fiscais as $conselho_fiscal)
-                                    <div>
-                                        <p>{{$conselho_fiscal->tx_nome_conselheiro}}</p>
-                                        <p><strong>{{$conselho_fiscal->tx_apelido_osc}}</strong></p>
-                                    </div>
-                                @endforeach
-                            </div>
+                            @foreach($conselhos_fiscais as $conselho_fiscal)
+                                <div>
+                                    <p>{{$conselho_fiscal->tx_nome_conselheiro}}</p>
+                                </div>
+                            @endforeach
                         </div>
                        {{-- <p>{{$relacoes_trabalho_governanca->conselho_fiscal == null ? "Não informado" : $relacoes_trabalho_governanca->conselho_fiscal}}</p>--}}
                     </div>
@@ -428,23 +423,56 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Áreas e Subáreas de Atuação da OSC</h2>
+                            <h2>Espaços de Participação Social</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
-                    <p class="item-detail"><strong></strong><span></span></p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-itens-g">
+                            <h2>Conselhos de Políticas Públicas</h2>
+                            <?php $participacao_social_conselhos = DB::connection('map')->table('portal.vw_osc_participacao_social_conselho')->where('id_osc', $id_osc)->get();?>
+
+                                @foreach($participacao_social_conselhos as $participacao_social_conselho)
+                                <div class="row bg-lgt">
+                                    <div class="col-md-9">
+                                        <br>
+                                        <p><strong>Nome do Conselho:</strong></p>
+                                        <p>{{$participacao_social_conselho->tx_nome_conselho}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <br class="d-none d-sm-block">
+                                        <p><strong>Titularidade:</strong></p>
+                                        <p>{{$participacao_social_conselho->tx_nome_tipo_participacao}}</p>
+                                    </div>
+
+                                    <?php $participacao_social_conselho_representantes = DB::connection('map')->table('portal.vw_osc_representante_conselho')->where('id_participacao_social_conselho', $participacao_social_conselho->id_conselho)->get();?>
+                                    <div class="col-md-12">
+                                        <p><strong>Nome de representante:</strong></p>
+                                        @foreach($participacao_social_conselho_representantes as $participacao_social_conselho_representante)
+                                            <p>{{$participacao_social_conselho_representante->tx_nome_representante_conselho}}</p>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Periodicidade da Reunião:</strong></p>
+                                        <p>{{$participacao_social_conselho->tx_nome_periodicidade_reuniao_conselho}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Data de início de vigência:</strong></p>
+                                        <p>{{formatBr($participacao_social_conselho->dt_data_inicio_conselho, 'num')}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Data de fim de vigência:</strong></p>
+                                        <p>{{formatBr($participacao_social_conselho->dt_data_fim_conselho, 'num')}}</p>
+                                    </div>
+                                </div>
+                                @endforeach
+
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -474,6 +502,33 @@
             line-height: 14px !important;
             margin-top: 20px;
         }
+
+
+        .box-itens-g{
+            padding: 20px 20px;
+            min-height: 400px;
+        }
+        .box-itens-g div{
+            border-bottom: solid 1px #E6E6E6;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+        .box-itens-g h2{
+            border-bottom: solid 1px #DEA33B;
+            font-size: 18px;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+        .box-itens-g p{
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        .box-itens-g strong{
+            font-size: 12px;
+            margin: 0;
+        }
+
     </style>
 
 
