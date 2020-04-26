@@ -12594,6 +12594,30 @@ a:active {
   background-color: #EEEEEE !important;
 }
 
+/*ACCORDION*/
+
+.card-header {
+  padding: 0;
+  border: 0;
+}
+
+.mb-0 {
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+  background-color: #EEEEEE;
+}
+
+.card-body {
+  border: 0;
+}
+
+.card {
+  border: 0;
+  border-radius: 0;
+  box-shadow: 1px 0 3px #CCCCCC;
+}
+
 /*p, h1, h2, time{
     outline: none!important;
 }*/

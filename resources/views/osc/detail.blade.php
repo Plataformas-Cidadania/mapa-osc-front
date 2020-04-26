@@ -283,7 +283,13 @@
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Link para o Estatuto da OSC:</h4>
-                            <p>{{$descricao->tx_link_estatuto_osc == null ? "Não informado" : $descricao->tx_link_estatuto_osc}}</p>
+                            <p>
+                                <a href="{{$descricao->tx_link_estatuto_osc}}" target="_blank">
+                                    <div class="btn btn-primary">
+                                        {{$descricao->tx_link_estatuto_osc == null ? "Não informado" : 'Clique no link para ir ao Estatuto da OSC'}}
+                                    </div>
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -333,7 +339,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="bg-lgt box-itens-g">
+                        <div class="bg-lgt box-itens-g min-h">
                             <h2>Quadro de Dirigentes</h2>
                             <?php $governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id_osc)->get();?>
                             @foreach($governancas as $governanca)
@@ -346,7 +352,7 @@
                         {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? "Não informado" : $relacoes_trabalho_governanca->governanca}}</p>--}}
                     </div>
                     <div class="col-md-6">
-                        <div class="bg-lgt box-itens-g">
+                        <div class="bg-lgt box-itens-g min-h">
                             <h2>Conselho Fiscal</h2>
                             <?php $conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id_osc)->get();?>
                             @foreach($conselhos_fiscais as $conselho_fiscal)
@@ -355,7 +361,6 @@
                                 </div>
                             @endforeach
                         </div>
-                       {{-- <p>{{$relacoes_trabalho_governanca->conselho_fiscal == null ? "Não informado" : $relacoes_trabalho_governanca->conselho_fiscal}}</p>--}}
                     </div>
                     <div class="col-md-12">
                         <div class="row text-center">
@@ -413,9 +418,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
 
@@ -455,26 +457,137 @@
                                             <p>{{$participacao_social_conselho_representante->tx_nome_representante_conselho}}</p>
                                         @endforeach
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 line-remove">
                                         <p><strong>Periodicidade da Reunião:</strong></p>
                                         <p>{{$participacao_social_conselho->tx_nome_periodicidade_reuniao_conselho}}</p>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 line-remove">
                                         <p><strong>Data de início de vigência:</strong></p>
                                         <p>{{formatBr($participacao_social_conselho->dt_data_inicio_conselho, 'num')}}</p>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 line-remove">
                                         <p><strong>Data de fim de vigência:</strong></p>
                                         <p>{{formatBr($participacao_social_conselho->dt_data_fim_conselho, 'num')}}</p>
                                     </div>
+                                    <div class="col-md-12">
+
+                                    </div>
                                 </div>
                                 @endforeach
-
                         </div>
 
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-itens-g">
+                            <h2>Conferências de Políticas Públicas</h2>
+                            <?php $participacao_social_conferencia = DB::connection('map')->table('portal.vw_osc_participacao_social_conferencia')->where('id_osc', $id_osc)->get();?>
+                            @foreach($participacao_social_conferencia as $participacao_social_conferencia)
+                                <div class="row bg-lgt">
+                                    <div class="col-md-9">
+                                        <br>
+                                        <p><strong>Nome da Conferência:</strong></p>
+                                        <p>{{$participacao_social_conferencia->tx_nome_conferencia}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <br class="d-none d-sm-block">
+                                        <p><strong>Ano de realização da conferência:</strong></p>
+                                        <p>{{$participacao_social_conferencia->dt_ano_realizacao}}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p><strong>Forma de participação na conferência:</strong></p>
+                                        <p>{{$participacao_social_conferencia->tx_nome_forma_participacao_conferencia}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-itens-g">
+                            <h2>Outros espaços de participação social</h2>
+                            <?php $participacao_social_outros = DB::connection('map')->table('portal.vw_osc_participacao_social_outra')->where('id_osc', $id_osc)->get();?>
+                            @foreach($participacao_social_outros as $participacao_social_outros)
+                                <div class="row bg-lgt">
+                                    <div class="col-md-9">
+                                        <br>
+                                        <p><strong>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</strong></p>
+                                        <p>{{$participacao_social_outros->tx_nome_participacao_social_outra}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" id="descricao">
+                    <div class="col-md-12">
+                        <br><br>
+                        <div class="title-style">
+                            <h2>Projetos, atividades e/ou programas</h2>
+                            <div class="line line-fix"></div>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+
+                <div class="row" id="descricao">
+                    <div class="col-md-12">
+                        <br><br>
+                        <div class="title-style">
+                            <h2>Fontes de recursos anuais da OSC</h2>
+                            <div class="line line-fix"></div>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="accordion" id="accordionExample">
+                            @foreach($recursos as $key => $recurso)
+                                <div class="card">
+                                    <div class="card-header" id="heading{{$key}}">
+                                        <div class="mb-0" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">
+                                            {{$recurso->dt_ano_recursos_osc}} <i class="fas fa-angle-down float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div id="collapse{{$key}}" class="collapse @if($key===0) show @endif" aria-labelledby="heading{{$key}}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <?php $recursos_nome = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('tx_nome_origem_fonte_recursos_osc')->where('id_osc', $id_osc)->where('dt_ano_recursos_osc', $recurso->dt_ano_recursos_osc)->orderBy('tx_nome_origem_fonte_recursos_osc', 'desc')->distinct()->get();?>
+                                                @foreach($recursos_nome as $key => $recurso_nome)
+                                                    <?php $recursos_propios = DB::connection('map')->table('portal.vw_osc_recursos_osc')->where('id_osc', $id_osc)->where('dt_ano_recursos_osc', $recurso->dt_ano_recursos_osc)->where('tx_nome_origem_fonte_recursos_osc', $recurso_nome->tx_nome_origem_fonte_recursos_osc)->get();?>
+                                                    <div class="col-md-12">
+                                                        <h2 class="bg-pri text-light title-mp">{{$recurso_nome->tx_nome_origem_fonte_recursos_osc}}</h2>
+                                                    </div>
+                                                        @foreach($recursos_propios as $key => $recurso_propio)
+                                                            <div class="col-md-4">
+                                                                <div class="line-items line-add">
+                                                                    <p>{{$recurso_propio->tx_nome_fonte_recursos_osc}}</p>
+                                                                    <h2>{{"R$ ".number_format($recurso_propio->nr_valor_recursos_osc, 2, ',', '.')}}</h2>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <br>
             </div>
 
         </div>
@@ -506,11 +619,15 @@
 
         .box-itens-g{
             padding: 20px 20px;
-            min-height: 400px;
         }
         .box-itens-g div{
             border-bottom: solid 1px #E6E6E6;
             margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+        .box-itens-g div:last-child{
+            border-bottom: 0;
+            margin-bottom: 0;
             padding-bottom: 10px;
         }
         .box-itens-g h2{
@@ -528,6 +645,32 @@
             font-size: 12px;
             margin: 0;
         }
+
+
+        .title-mp{
+            padding: 0 10px;
+            font-size: 16px;
+        }
+        .min-h {
+            min-height: 400px;
+        }
+        .line-remove{
+            border-bottom: 0!important;
+            margin-bottom: 0!important;
+            padding-bottom: 0!important;
+        }
+        .line-add{
+            border-bottom: solid 1px #E6E6E6;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+        .line-items p{
+            min-height: 40px;
+            font-size: 14px;
+            line-height: 16px;
+            margin: 0;
+        }
+
 
     </style>
 

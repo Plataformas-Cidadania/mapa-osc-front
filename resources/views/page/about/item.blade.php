@@ -1,23 +1,4 @@
-<style>
-    .card-header{
-        padding: 0;
-        border: 0;
-    }
-    .mb-0{
-        padding: 10px;
-        cursor: pointer;
-        display: block;
-        background-color: #EEEEEE;
-    }
-    .card-body{
-        border: 0;
-    }
-    .card {
-        border: 0;
-        border-radius: 0;
-        box-shadow: 1px 0 3px #CCCCCC;
-    }
-</style>
+
 <div class="accordion" id="accordionExample">
     <div class="card">
         <div class="card-header" id="headingOne">
