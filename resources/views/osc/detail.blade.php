@@ -5,7 +5,10 @@
 @section('image', '')
 @section('content')
 
-
+    <?php
+        $txt_alert = "Não constam informações nas bases de dados do Mapa";
+        $txt_alert_abb = "Não informado";
+    ?>
 
     <div class="bg-lgt">
         <div class="container">
@@ -13,7 +16,7 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{$detail->tx_razao_social_osc}}</h1>
+                        <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / </h5>
                         <br>
                     </header>
@@ -27,7 +30,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="alert alert-secondary box-floating" style="float: right; right: 0; width: 300px">
+                {{--<div class="alert alert-secondary box-floating" style="float: right; right: 0; width: 300px">  VOLTAR MENU
                     <ul class="menu-icons">
                         <li><i class="fas fa-times float-right"></i></li>
                         <li><div><i class="far fa-file-alt"></i></div> <p><a href="detalhar/1#dados-gerais">Dados gerais</a></p></li>
@@ -39,7 +42,7 @@
                         <li><div><i class="fas fa-project-diagram"></i></div> <p><a href="detalhar/1#projetos">Projetos</a></p></li>
                         <li><div><i class="fas fa-boxes"></i></div> <p><a href="detalhar/1#fontes">Fontes de recursos</a></p></li>
                     </ul>
-                </div>
+                </div>--}}
 
                 <div class="row" id="dados-gerais">
                     <div class="col-md-12">
@@ -68,7 +71,7 @@
 
                         <br>
                         <p>
-                            <strong>CNPJ:</strong> {{$detail->cd_identificador_osc}}<br>
+                            <strong>CNPJ:</strong> {{$dados_gerais->cd_identificador_osc}}<br>
                             <strong>Natureza Jurídica:</strong> <br>
                         </p>
                         <br>
@@ -114,13 +117,13 @@
                     <div class="col-md-8">
                         <div class="item-detail">
                             <h4>Nome Fantasia:</h4>
-                            <p>{{$detail->tx_nome_fantasia_osc == null ? "Não informado" : $detail->tx_nome_fantasia_osc}}</p>
+                            <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? "Não informado" : $dados_gerais->tx_nome_fantasia_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Sigla OSC:</h4>
-                            <p>{{$detail->tx_sigla_osc == null ? "Não informado" : $detail->tx_sigla_osc}}</p>
+                            <p>{{$dados_gerais->tx_sigla_osc == null ? "Não informado" : $dados_gerais->tx_sigla_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -129,9 +132,9 @@
                                 <div class="col-md-6">
                                     <i class="fas fa-database float-right tx-pri"></i>
                                     <strong>Endereço:</strong><br>
-                                    {{$detail->tx_endereco == null ? "Não informado" : $detail->tx_endereco}}<br>
-                                    {{$detail->tx_bairro == null ? "" : $detail->tx_bairro}} <br>
-                                    <strong>CEP.:</strong> {{$detail->nr_cep == null ? "Não informado" : $detail->nr_cep}}
+                                    {{$dados_gerais->tx_endereco == null ? "Não informado" : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento}}<br>
+                                    {{$dados_gerais->tx_bairro}}, {{$dados_gerais->tx_nome_municipio}} - {{$dados_gerais->tx_sigla_uf}} <br>
+                                    <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? "Não informado" : $dados_gerais->nr_cep}}
                                 </div>
                                 <div class="col-md-6">
                                     <img src="https://docs.mapbox.com/ios/assets/maps-examples-add-marker-symbol-960-4c2d0dcb2896da516c138d37b09f923e.webp" alt="" width="100%">
@@ -142,37 +145,37 @@
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Situação do Imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
-                            <p>{{$detail->tx_nome_situacao_imovel_osc == null ? "Não informado" : $detail->tx_nome_situacao_imovel_osc}}</p>
+                            <p>{{$dados_gerais->tx_nome_situacao_imovel_osc == null ? "Não informado" : $dados_gerais->tx_nome_situacao_imovel_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Responsável Legal:</h4>
-                            <p>{{$detail->tx_nome_responsavel_legal == null ? "Não informado" : $detail->tx_nome_responsavel_legal}}</p>
+                            <p>{{$dados_gerais->tx_nome_responsavel_legal == null ? "Não informado" : $dados_gerais->tx_nome_responsavel_legal}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Cadastro de CNPJ:</h4>
-                            <p>{{$detail->dt_ano_cadastro_cnpj == null ? "Não informado" : $detail->dt_ano_cadastro_cnpj}}</p>
+                            <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? "Não informado" : $dados_gerais->dt_ano_cadastro_cnpj}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Fundação:</h4>
-                            <p>{{$detail->dt_fundacao_osc == null ? "Não informado" : $detail->dt_fundacao_osc}}</p>
+                            <p>{{$dados_gerais->dt_fundacao_osc == null ? "Não informado" : $dados_gerais->dt_fundacao_osc}}</p>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="item-detail">
-                            <h4>O que a OSC faz:</h4>
-                            <p>{{$detail->ft_resumo_osc == null ? "Não informado" : $detail->ft_resumo_osc}}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <div class="item-detail">
                             <h4>E-mail:</h4>
-                            <p>{{$detail->tx_email == null ? "Não informado" : $detail->tx_email}}</p>
+                            <p>{{$dados_gerais->tx_email == null ? "Não informado" : $dados_gerais->tx_email}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="item-detail">
+                            <h4>O que a OSC faz:</h4>
+                            <p>{{$dados_gerais->ft_resumo_osc == null ? "Não informado" : $dados_gerais->ft_resumo_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -217,25 +220,25 @@
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Atividade Econômica (CNAE):</h4>
-                            <p>Não informado</p>
+                            <p>{{$dados_gerais->tx_nome_atividade_economica_osc == null ? "Não informado" : $dados_gerais->tx_nome_atividade_economica_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Área de Atuação 1:</h4>
-                            <p>Não informado</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Subárea:</h4>
-                            <p>Não informado</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Subárea:</h4>
-                            <p>Não informado</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                 </div>
@@ -256,31 +259,31 @@
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Como surgiu a OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$descricao->tx_historico == null ? "Não informado" : $descricao->tx_historico}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Missão da OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$descricao->tx_missao_osc == null ? "Não informado" : $descricao->tx_missao_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Visão da OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$descricao->tx_visao_osc == null ? "Não informado" : $descricao->tx_visao_osc}}</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Finalidades Estatutárias da OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$descricao->tx_finalidades_estatutarias == null ? "Não informado" : $descricao->tx_finalidades_estatutarias}}</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Link para o Estatuto da OSC:</h4>
-                            <p>Não informado</p>
+                            <p>{{$descricao->tx_link_estatuto_osc == null ? "Não informado" : $descricao->tx_link_estatuto_osc}}</p>
                         </div>
                     </div>
                 </div>
@@ -297,10 +300,25 @@
                     </div>
                 </div>
                 <div>
-                    <p class="item-detail"><strong>Utilidade Pública Municipal -</strong><span></span></p>
-                    <p class="item-detail"><strong>Utilidade Pública Estadual -</strong><span></span></p>
-                    <p class="item-detail"><strong>Utilidade Pública Estadual -</strong><span></span></p>
-
+                    <?php $certificacoes = DB::connection('map')->table('portal.vw_osc_certificado')->where('id_osc', $id_osc)->get();?>
+                    <table class="table">
+                        <thead class="bg-pri text-light">
+                        <tr>
+                            <th scope="col">Titulo / Certificado</th>
+                            <th scope="col">Início da validade</th>
+                            <th scope="col">Fim da validade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($certificacoes as $certificado)
+                            <tr>
+                                <td>{{$certificado->tx_nome_certificado}}</td>
+                                <td>{{formatBr($certificado->dt_inicio_certificado, 'num')}}</td>
+                                <td>{{formatBr($certificado->dt_fim_certificado, 'num')}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="row" id="governanca">
@@ -314,18 +332,95 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <strong>Quadro de Dirigentes</strong><br><br>
-                        <p>Presidente: Flávia Hermínia Vieira Lopes</p>
-                        <p>Presidente: Flávia Hermínia Vieira Lopes</p>
-                        <p>Presidente: Flávia Hermínia Vieira Lopes</p>
-                        <p>Presidente: Flávia Hermínia Vieira Lopes</p>
+                    <div class="col-md-6">
+                        <div class="bg-lgt box-itens">
+                            <h3><strong>Quadro de Dirigentes</strong></h3>
+                            <?php $governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id_osc)->get();?>
+                            <div>
+                                @foreach($governancas as $governanca)
+                                    <div>
+                                        <p>{{$governanca->tx_cargo_dirigente}}</p>
+                                        <p><strong>{{$governanca->tx_nome_dirigente}}</strong></p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? "Não informado" : $relacoes_trabalho_governanca->governanca}}</p>--}}
                     </div>
-                    <div class="col-md-4">
-                        <strong>Conselho Fiscal</strong>
+                    <div class="col-md-6">
+                        <div class="bg-lgt box-itens">
+                            <h3><strong>Conselho Fiscal</strong></h3>
+                            <?php $conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id_osc)->get();?>
+                            <div>
+                                @foreach($conselhos_fiscais as $conselho_fiscal)
+                                    <div>
+                                        <p>{{$conselho_fiscal->tx_nome_conselheiro}}</p>
+                                        <p><strong>{{$conselho_fiscal->tx_apelido_osc}}</strong></p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                       {{-- <p>{{$relacoes_trabalho_governanca->conselho_fiscal == null ? "Não informado" : $relacoes_trabalho_governanca->conselho_fiscal}}</p>--}}
                     </div>
-                    <div class="col-md-4">
-                        <strong>Trabalhadores</strong>
+                    <div class="col-md-12">
+                        <div class="row text-center">
+                            <div class="col-md-12">
+                                <br><br>
+                                <strong>Trabalhadores</strong><br><br>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="bg-lgt box-itens">
+                                    <h3>Total de Trabalhadores</h3>
+                                    <div>
+                                        @if($relacoes_trabalho_governanca->nr_trabalhadores != null)
+                                            <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores}}</h2>
+                                        @else
+                                            <p class='not-info'>{{$txt_alert}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="bg-lgt box-itens">
+                                    <h3>Empregados</h3>
+                                    <div>
+                                        @if($relacoes_trabalho_governanca->nr_trabalhadores_vinculo != null)
+                                            <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_vinculo}}</h2>
+                                        @else
+                                            <p class='not-info'>{{$txt_alert}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="bg-lgt box-itens">
+                                    <h3>Trabalhadores com deficiência</h3>
+                                    <div>
+                                        @if($relacoes_trabalho_governanca->nr_trabalhadores_deficiencia != null)
+                                            <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_deficiencia}}</h2>
+                                        @else
+                                            <p class='not-info'>{{$txt_alert}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="bg-lgt box-itens">
+                                    <h3>Trabalhadores voluntários</h3>
+                                    <div>
+                                        @if($relacoes_trabalho_governanca->nr_trabalhadores_voluntarios != null)
+                                            <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_voluntarios}}</h2>
+                                        @else
+                                            <p class='not-info'>{{$txt_alert}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -358,7 +453,28 @@
 
     </div>
 
-
+    <style>
+        .box-itens{
+            padding: 20px 10px;
+        }
+        .box-itens h3{
+            border-bottom: solid 1px #DEA33B;
+            font-size: 14px;
+            padding-bottom: 5px;
+        }
+        .box-itens h3 strong{
+            font-size: 18px;
+        }
+        .box-itens h2{
+            margin-top: 20px;
+        }
+        .box-itens p{
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 14px !important;
+            margin-top: 20px;
+        }
+    </style>
 
 
 @endsection

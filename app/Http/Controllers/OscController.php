@@ -30,18 +30,25 @@ class OscController extends Controller{
     public function details($id){
 
         //$id = 394905;
-        $id = 555613;
+        //$id = 594485;
+        $id = 598897;
+        //$id = 1064708;
         //$id = 2;
 
 
-        $detail = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
-        //$detail = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->get();
+        $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
+        $area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();
+        $descricao = DB::connection('map')->table('portal.vw_osc_descricao')->where('id_osc', $id)->first();
+        $relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
 
-        //$detail =  json_encode($detail);
 
-        /*$detail = $this->obj->find($id);
-        $lasts = $this->obj->orderBy('id', 'desc')->take(4)->get();*/
-        return view($this->module.'.detail', ['detail' => $detail/*, 'lasts' => $lasts*/]);
+        return view($this->module.'.detail', [
+            'id_osc' => $id,
+            'dados_gerais' => $dados_gerais,
+            'area_atuacao' => $area_atuacao,
+            'descricao' => $descricao,
+            'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
+        ]);
     }
 
     public function getOsc($territory, $territory_id = null){
