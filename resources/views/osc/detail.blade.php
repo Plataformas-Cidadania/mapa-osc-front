@@ -117,13 +117,13 @@
                     <div class="col-md-8">
                         <div class="item-detail">
                             <h4>Nome Fantasia:</h4>
-                            <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? "Não informado" : $dados_gerais->tx_nome_fantasia_osc}}</p>
+                            <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_fantasia_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Sigla OSC:</h4>
-                            <p>{{$dados_gerais->tx_sigla_osc == null ? "Não informado" : $dados_gerais->tx_sigla_osc}}</p>
+                            <p>{{$dados_gerais->tx_sigla_osc == null ? $txt_alert_abb : $dados_gerais->tx_sigla_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -132,9 +132,9 @@
                                 <div class="col-md-6">
                                     <i class="fas fa-database float-right tx-pri"></i>
                                     <strong>Endereço:</strong><br>
-                                    {{$dados_gerais->tx_endereco == null ? "Não informado" : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento}}<br>
+                                    {{$dados_gerais->tx_endereco == null ? $txt_alert_abb : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento}}<br>
                                     {{$dados_gerais->tx_bairro}}, {{$dados_gerais->tx_nome_municipio}} - {{$dados_gerais->tx_sigla_uf}} <br>
-                                    <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? "Não informado" : $dados_gerais->nr_cep}}
+                                    <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? $txt_alert_abb : $dados_gerais->nr_cep}}
                                 </div>
                                 <div class="col-md-6">
                                     <img src="https://docs.mapbox.com/ios/assets/maps-examples-add-marker-symbol-960-4c2d0dcb2896da516c138d37b09f923e.webp" alt="" width="100%">
@@ -145,37 +145,37 @@
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Situação do Imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
-                            <p>{{$dados_gerais->tx_nome_situacao_imovel_osc == null ? "Não informado" : $dados_gerais->tx_nome_situacao_imovel_osc}}</p>
+                            <p>{{$dados_gerais->tx_nome_situacao_imovel_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_situacao_imovel_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Responsável Legal:</h4>
-                            <p>{{$dados_gerais->tx_nome_responsavel_legal == null ? "Não informado" : $dados_gerais->tx_nome_responsavel_legal}}</p>
+                            <p>{{$dados_gerais->tx_nome_responsavel_legal == null ? $txt_alert_abb : $dados_gerais->tx_nome_responsavel_legal}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Cadastro de CNPJ:</h4>
-                            <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? "Não informado" : $dados_gerais->dt_ano_cadastro_cnpj}}</p>
+                            <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? $txt_alert_abb : formatBr($dados_gerais->dt_ano_cadastro_cnpj, 'num')}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Ano de Fundação:</h4>
-                            <p>{{$dados_gerais->dt_fundacao_osc == null ? "Não informado" : $dados_gerais->dt_fundacao_osc}}</p>
+                            <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'num')}}</p>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="item-detail">
                             <h4>E-mail:</h4>
-                            <p>{{$dados_gerais->tx_email == null ? "Não informado" : $dados_gerais->tx_email}}</p>
+                            <p>{{$dados_gerais->tx_email == null ? $txt_alert_abb : $dados_gerais->tx_email}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>O que a OSC faz:</h4>
-                            <p>{{$dados_gerais->ft_resumo_osc == null ? "Não informado" : $dados_gerais->ft_resumo_osc}}</p>
+                            <p>{{$dados_gerais->ft_resumo_osc == null ? $txt_alert_abb : $dados_gerais->ft_resumo_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -220,25 +220,25 @@
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Atividade Econômica (CNAE):</h4>
-                            <p>{{$dados_gerais->tx_nome_atividade_economica_osc == null ? "Não informado" : $dados_gerais->tx_nome_atividade_economica_osc}}</p>
+                            <p>{{$dados_gerais->tx_nome_atividade_economica_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_atividade_economica_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Área de Atuação 1:</h4>
-                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? $txt_alert_abb : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Subárea:</h4>
-                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? $txt_alert_abb : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="item-detail">
                             <h4>Subárea:</h4>
-                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? "Não informado" : $area_atuacao->tx_nome_area_atuacao}}</p>
+                            <p>{{$area_atuacao->tx_nome_area_atuacao == null ? $txt_alert_abb : $area_atuacao->tx_nome_area_atuacao}}</p>
                         </div>
                     </div>
                 </div>
@@ -259,25 +259,25 @@
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Como surgiu a OSC:</h4>
-                            <p>{{$descricao->tx_historico == null ? "Não informado" : $descricao->tx_historico}}</p>
+                            <p>{{$descricao->tx_historico == null ? $txt_alert_abb : $descricao->tx_historico}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Missão da OSC:</h4>
-                            <p>{{$descricao->tx_missao_osc == null ? "Não informado" : $descricao->tx_missao_osc}}</p>
+                            <p>{{$descricao->tx_missao_osc == null ? $txt_alert_abb : $descricao->tx_missao_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Visão da OSC:</h4>
-                            <p>{{$descricao->tx_visao_osc == null ? "Não informado" : $descricao->tx_visao_osc}}</p>
+                            <p>{{$descricao->tx_visao_osc == null ? $txt_alert_abb : $descricao->tx_visao_osc}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Finalidades Estatutárias da OSC:</h4>
-                            <p>{{$descricao->tx_finalidades_estatutarias == null ? "Não informado" : $descricao->tx_finalidades_estatutarias}}</p>
+                            <p>{{$descricao->tx_finalidades_estatutarias == null ? $txt_alert_abb : $descricao->tx_finalidades_estatutarias}}</p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -286,7 +286,7 @@
                             <p>
                                 <a href="{{$descricao->tx_link_estatuto_osc}}" target="_blank">
                                     <div class="btn btn-primary">
-                                        {{$descricao->tx_link_estatuto_osc == null ? "Não informado" : 'Clique no link para ir ao Estatuto da OSC'}}
+                                        {{$descricao->tx_link_estatuto_osc == null ? $txt_alert_abb : 'Clique no link para ir ao Estatuto da OSC'}}
                                     </div>
                                 </a>
                             </p>
@@ -349,7 +349,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? "Não informado" : $relacoes_trabalho_governanca->governanca}}</p>--}}
+                        {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? $txt_alert_abb : $relacoes_trabalho_governanca->governanca}}</p>--}}
                     </div>
                     <div class="col-md-6">
                         <div class="bg-lgt box-itens-g min-h">
@@ -494,7 +494,7 @@
                                     <div class="col-md-3">
                                         <br class="d-none d-sm-block">
                                         <p><strong>Ano de realização da conferência:</strong></p>
-                                        <p>{{$participacao_social_conferencia->dt_ano_realizacao}}</p>
+                                        <p>{{formatBr($participacao_social_conferencia->dt_ano_realizacao, 'num')}}</p>
                                     </div>
                                     <div class="col-md-12">
                                         <p><strong>Forma de participação na conferência:</strong></p>
@@ -539,6 +539,15 @@
                     <div class="col-md-12">
                         <div class="accordion" id="accordionProject">
                             @foreach($projetos as $key => $projeto)
+                                <?php
+                                    $projetos_localizacao = DB::connection('map')->table('portal.vw_osc_localizacao_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_beneficiado = DB::connection('map')->table('portal.vw_osc_publico_beneficiado_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_recurso = DB::connection('map')->table('portal.vw_osc_fonte_recursos_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_parceira = DB::connection('map')->table('portal.vw_osc_parceira_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_financiador = DB::connection('map')->table('portal.vw_osc_financiador_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_tipo_parceria = DB::connection('map')->table('portal.vw_osc_tipo_parceria_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                    $projetos_objetivo = DB::connection('map')->table('portal.vw_osc_objetivo_projeto')->where('id_projeto', $projeto->id_projeto)->get();
+                                ?>
                                 <div class="card">
                                     <div class="card-header" id="headingP{{$key}}">
                                         <div class="mb-0" data-toggle="collapse" data-target="#collapseP{{$key}}" aria-expanded="true" aria-controls="collapseP{{$key}}">
@@ -552,72 +561,64 @@
                                                     <h2>Descrição do Projeto, atividade e/ou programa</h2>
                                                     <p>{{$projeto->tx_descricao_projeto}}</p>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Situação do Projeto</h2>
                                                         <p>{{$projeto->ft_status_projeto}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Ano de início</h2>
                                                         <p>{{formatBr($projeto->dt_data_inicio_projeto, 'num')}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Ano de conclusão:</h2>
                                                         <p>{{formatBr($projeto->dt_data_fim_projeto, 'num')}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Link para o projeto</h2>
                                                         <p>{{$projeto->tx_link_projeto}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Total de Beneficiários</h2>
                                                         <p>{{$projeto->nr_total_beneficiarios}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Valor Total</h2>
                                                         <p>{{"R$ ".number_format($projeto->nr_valor_total_projeto, 2, ',', '.')}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Valor Recebido</h2>
                                                         <p>{{"R$ ".number_format($projeto->nr_valor_captado_projeto, 2, ',', '.')}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Zona de Atuação</h2>
                                                         <p>{{$projeto->tx_nome_zona_atuacao}}</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="line-add">
                                                         <h2>Abrangência de atuação</h2>
                                                         <p>{{$projeto->tx_nome_abrangencia_projeto}}</p>
                                                     </div>
                                                 </div>
-                                                <?php $projetos_localizacao = DB::connection('map')->table('portal.vw_osc_localizacao_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_beneficiado = DB::connection('map')->table('portal.vw_osc_publico_beneficiado_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_recurso = DB::connection('map')->table('portal.vw_osc_fonte_recursos_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_parceira = DB::connection('map')->table('portal.vw_osc_parceira_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_financiador = DB::connection('map')->table('portal.vw_osc_financiador_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_tipo_parceria = DB::connection('map')->table('portal.vw_osc_tipo_parceria_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-                                                <?php $projetos_objetivo = DB::connection('map')->table('portal.vw_osc_objetivo_projeto')->where('id_projeto', $projeto->id_projeto)->get();?>
-
                                                 <div class="col-md-12">
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="line-add">
+                                                        <div class="col-md-4">
+                                                            <div class="line-add" >
                                                                 <div>
                                                                     <h2>Localização do Projeto</h2>
                                                                     @foreach($projetos_localizacao as $projeto_localizacao)
@@ -626,7 +627,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <div class="line-add">
                                                                 <h2>Público Beneficiado</h2>
                                                                 @foreach($projetos_beneficiado as $projeto_beneficiado)
@@ -634,18 +635,19 @@
                                                                 @endforeach
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-4">
+                                                            <div class="line-add">
+                                                                <h2>Tipo da Fontes de Recursos</h2>
+                                                                @foreach($projetos_recurso as $projeto_recurso)
+                                                                    <p>{{$projeto_recurso->tx_nome_origem_fonte_recursos_projeto}}</p>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
-                                                    <div class="line-add">
-                                                        <h2>Tipo da Fontes de Recursos</h2>
-                                                        @foreach($projetos_recurso as $projeto_recurso)
-                                                            <p>{{$projeto_recurso->tx_nome_origem_fonte_recursos_projeto}}</p>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
+
+                                                <div class="col-md-6">
                                                     <div class="line-add">
                                                         <h2>OSCs Parceiras</h2>
                                                         @foreach($projetos_parceira as $projeto_parceira)
@@ -841,7 +843,11 @@
             padding: 0;
             margin: 0;
         }
-
+        .box-bg{
+            padding: 10px;
+            margin-bottom: 10px;
+            min-height: 250px;
+        }
 
     </style>
 
