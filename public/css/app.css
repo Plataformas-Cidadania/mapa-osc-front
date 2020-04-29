@@ -11739,7 +11739,18 @@ time {
 
 .box-floating {
   position: fixed;
+  z-index: 9999999999;
+  float: right;
+  right: 0;
+  width: 300px;
+}
+
+.box-floating {
+  position: fixed;
   z-index: 2;
+  float: right;
+  right: 0;
+  width: 300px;
 }
 
 .menu-icons {
@@ -11747,11 +11758,16 @@ time {
   padding: 0;
 }
 
+.menu-icons-close {
+  margin-top: -10px;
+}
+
 .menu-icons li {
   display: inline-block;
   width: 100%;
   padding: 6px 0 0 0;
   border-bottom: solid 1px #CCCCCC;
+  font-size: 16px;
 }
 
 .menu-icons li:first-child {

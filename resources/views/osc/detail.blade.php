@@ -52,21 +52,25 @@
         <div class="row">
             <div class="col-md-12">
 
-                {{--<div class="alert alert-secondary box-floating" style="float: right; right: 0; width: 300px">  VOLTAR MENU
-                    <ul class="menu-icons">
-                        <li><i class="fas fa-times float-right"></i></li>
-                        <li><div><i class="far fa-file-alt"></i></div> <p><a href="detalhar/1#dados-gerais">Dados gerais</a></p></li>
-                        <li><div><i class="fas fa-share-alt"></i></div> <p><a href="detalhar/1#area-atuacao">Área de atuação</a></p></li>
-                        <li><div><i class="fas fa-align-justify"></i></div> <p><a href="detalhar/1#descricao">Descrição da OSC</a></p></li>
-                        <li><div><i class="fas fa-certificate"></i></div> <p><a href="detalhar/1#titulacao">Titulações e Certificações</a></p></li>
-                        <li><div><i class="fas fa-briefcase"></i></div> <p><a href="detalhar/1#governanca">Trabalho e Governança</a></p></li>
-                        <li><div><i class="fas fa-users"></i></div> <p><a href="detalhar/1#participacao">Participação social</a></p></li>
-                        <li><div><i class="fas fa-project-diagram"></i></div> <p><a href="detalhar/1#projetos">Projetos</a></p></li>
-                        <li><div><i class="fas fa-boxes"></i></div> <p><a href="detalhar/1#fontes">Fontes de recursos</a></p></li>
+                <div class="alert alert-secondary box-floating">
+                    <i class="fas fa-chevron-right menu-icons-close btn-menu-txt"></i>
+                    <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" style="display: none;"></i>
+                    <ul class="menu-icons menu-right">
+                        <li id="btn-right"></li>
+                        <li><a href="detalhar/1#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt">Dados gerais</p></a></li>
+                        <li><a href="detalhar/1#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
+                        <li><a href="detalhar/1#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
+                        <li><a href="detalhar/1#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>
+                        <li><a href="detalhar/1#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e Governança</p></a></li>
+                        <li><a href="detalhar/1#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
+                        <li><a href="detalhar/1#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
+                        <li><a href="detalhar/1#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
                     </ul>
-                </div>--}}
+                    <i class="fas fa-times fa-2x float-right btn-right"></i>
+                </div>
+
                 {{--DADOS GERAIS--}}
-                <div class="row mn-accordion" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
+                <div id="dados-gerais" class="row mn-accordion" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
@@ -198,7 +202,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Áreas e Subáreas de Atuação da OSC</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-share-alt"></i></div> Áreas e Subáreas de Atuação da OSC</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -238,7 +242,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Descrição da OSC</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-align-justify"></i></div> Descrição da OSC</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -290,7 +294,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Titulações e Certificações</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-certificate"></i></div> Titulações e Certificações</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -323,7 +327,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Relações de Trabalho e Governança</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-briefcase"></i></div> Relações de Trabalho e Governança</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -420,7 +424,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Espaços de Participação Social</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-users"></i></div> Espaços de Participação Social</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -524,7 +528,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Projetos, atividades e/ou programas</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-project-diagram"></i></div> Projetos, atividades e/ou programas</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>
@@ -710,7 +714,7 @@
                     <div class="col-md-12">
                         <br><br>
                         <div class="title-style">
-                            <h2>Fontes de recursos anuais da OSC</h2>
+                            <h2><div class="mn-accordion-icon"><i class="fas fa-boxes"></i></div> Fontes de recursos anuais da OSC</h2>
                             <div class="line line-fix"></div>
                             <hr/>
                         </div>

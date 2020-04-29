@@ -87,6 +87,32 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('.fa-chevron-left').hide();
+
+        $('.btn-right').click(function() {
+            $('.box-floating').hide();
+        });
+
+        $('.btn-menu-txt').click(function() {
+            $('.menu-icons-txt').hide();
+            $('.fa-chevron-right').hide();
+            $('.fa-chevron-left').show();
+            $('.box-floating').css('width', '80px');
+            $('.menu-icons li').css('border', '0');
+        });
+
+        $('.btn-menu-txt-show').click(function() {
+            $('.menu-icons-txt').show();
+            $('.fa-chevron-right').show();
+            $('.fa-chevron-left').hide();
+            $('.box-floating').css('width', '300px');
+            $('.menu-icons li').css('border-bottom', 'solid 1px #CCCCCC');
+        });
+
+    });
+</script>
 
 
 <!--///////////////////////////////REACT////////////////////////////-->
