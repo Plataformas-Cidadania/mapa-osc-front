@@ -546,23 +546,14 @@ class MapTeste extends React.Component{
 
     loadDataPontosPorTerritorio(){
         $.ajax({
-            method:'POST',
-            url: "pontos-transito-territorio",
+            method:'GET',
+            url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
             data:{
-                serie_id: this.props.id,
-                start: this.state.start,
-                end: this.state.end,
-                filters: this.state.filters,
-                types: this.state.types,
-                typesAccident: this.state.typesAccident,
-                genders: this.state.genders,
-                tipoTerritorioSelecionado: this.state.tipoTerritorioSelecionado, // tipo de territorio selecionado
-                codigoTerritorioSelecionado: this.state.codigoTerritorioSelecionado, //codigo do territorio, que pode ser codigo do país, regiao, uf, etc...
             },
             cache: false,
             success: function(data) {
                 //console.log(data);
-                this.setState({data: data.valores}, function(){
+                this.setState({data: data}, function(){
                     this.populateMapCluster();
                 });
             }.bind(this),
@@ -726,8 +717,10 @@ class MapTeste extends React.Component{
 
         let data = null;
         data = this.state.data;
+        console.log(data['territorio']);
 
-        for(let i in data){
+        data['territorio'].find(function(item){
+            //console.log(item);
 
             let icon = L.icon({
                 iconUrl: 'img/leaflet/controls/marker.png',
@@ -739,19 +732,18 @@ class MapTeste extends React.Component{
             //console.log(data[i]);
             //console.log(this.props.allFilters);
 
-            let allFilters = this.props.allFilters;
+            /*let allFilters = this.props.allFilters;
             let filterInfo = "";
             for(let j in allFilters){
                 filterInfo += '<strong>'+allFilters[j]['titulo']+':</strong> '+data[i][allFilters[j]['slug']]+'<br>'
-            }
+            }*/
 
 
-            let marker = L.marker(L.latLng(data[i].lat, data[i].lng), {icon: icon})
+            let marker = L.marker(L.latLng(item[0], item[1]), {icon: icon})
             //let marker = L.marker(L.latLng(data[i].lat, data[i].lng))
                 .bindPopup('' +
-                    '<strong>'+data[i].lat+', '+data[i].lng+'</strong><hr style="margin:5px 0; padding:0;">' +
-                    '<strong>Data:</strong> '+data[i].data+'<br>' +
-                    filterInfo
+                    '<strong>'+item[0]+', '+item[1]+'</strong><hr style="margin:5px 0; padding:0;">'
+                    //+ filterInfo
                 )
                 .openPopup();
 
@@ -765,10 +757,31 @@ class MapTeste extends React.Component{
                 this.openPopup();
             });
             markers.addLayer(marker);
-        }
+        });
         //mapElements.map.addLayer(markers);
         mapElements.markersGroup.addLayer(markers);
         this.setState({mapElements: mapElements});
+    }
+
+    dataOSC(){
+        let _this = this;
+        $.ajax({
+            method:'GET',
+            url: 'get-osc/2/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                console.log(data);
+                _this.setState({data: data});
+                _this.populateMap();
+            },
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                _this.setState({loading: false});
+            }
+
+        });
     }
 
     heatMapAntigo(){

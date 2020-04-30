@@ -61,9 +61,10 @@ class OscController extends Controller{
         $urlsApi = [
             1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
             2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+            3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
         ];
 
-        /*"https://mapaosc.ipea.gov.br/api/search/all/lista/10/0"
+        /*"https://mapaosc.ipea.gov.br/api/search/all/lista/10/0" paginação listagem
         "https://mapaosc.ipea.gov.br/api/analises/idhgeo"*/
 
         $pagina = $urlsApi[$territory];
@@ -80,6 +81,16 @@ class OscController extends Controller{
 
         $idh = [];
 
+        if($territory == 3){
+            $data2 = [];
+            foreach ($data as $item) {
+                if(count($item) > 0){
+                    array_push($data2, $item);
+                }
+            }
+            $data = $data2;
+        }
+
         $data = [
             "territorio" => $data,
             "idh" => $idh,
@@ -87,6 +98,14 @@ class OscController extends Controller{
         ];
 
         return $data;
+
+    }
+
+    public function getDataOsc($id){
+        //https://mapaosc.ipea.gov.br/api/osc/popup/451282
+
+
+
 
     }
 }
