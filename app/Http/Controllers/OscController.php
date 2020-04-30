@@ -81,11 +81,13 @@ class OscController extends Controller{
 
         $idh = [];
 
+        //cria um array com índices començando de 0
         if($territory == 3){
             $data2 = [];
-            foreach ($data as $item) {
+            foreach ($data as $key => $item) {
                 if(count($item) > 0){
-                    array_push($data2, $item);
+                    //$key é o id da osc
+                    array_push($data2, [$key, $item[0], $item[1]]);
                 }
             }
             $data = $data2;
@@ -102,10 +104,63 @@ class OscController extends Controller{
     }
 
     public function getDataOsc($id){
-        //https://mapaosc.ipea.gov.br/api/osc/popup/451282
+        $pagina = "https://mapaosc.ipea.gov.br/api/osc/popup/".$id;
 
 
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
 
+        //$data = json_decode($data);
 
+        return $data;
+
+    }
+
+    public function getOscAllUfs(){
+        $pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
+        $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pgOsc );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $chIdh = curl_init();
+        curl_setopt( $chIdh, CURLOPT_URL, $pgIdh );
+        curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
+        $dataIdh = curl_exec( $chIdh );
+        curl_close( $chIdh );
+
+        $data = json_decode($data);
+        $dataIdh = json_decode($dataIdh);
+
+        //return $dataIdh;
+
+        $areas = [];
+        $areas['type'] = 'FeatureCollection';
+        $areas['features'] = [];
+        foreach($data as $index => $valor){
+            $areas['features'][$index]['type'] = 'Feature';
+            $areas['features'][$index]['id'] = $index;
+            $areas['features'][$index]['properties']['uf'] = $valor->tx_nome_regiao;
+            $areas['features'][$index]['properties']['nome'] = $valor->tx_sigla_regiao;
+            $areas['features'][$index]['properties']['total'] = $valor->nr_quantidade_osc_regiao;
+            $areas['features'][$index]['properties']['x'] = $valor->geo_lat_centroid_regiao;
+            $areas['features'][$index]['properties']['y'] = $valor->geo_lng_centroid_regiao;
+            foreach ($dataIdh->features as $item) {
+                if($item->properties->cod_uf == $valor->id_regiao){
+                    $areas['features'][$index]['geometry'] = $item->geometry;
+                }
+            }
+        }
+
+        return ['osc' => $areas, 'idh' => $dataIdh];
     }
 }

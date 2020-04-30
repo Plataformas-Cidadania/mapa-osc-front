@@ -8,6 +8,8 @@ class MapTeste extends React.Component {
             regioes: [],
             ufs: [],
             data: [],
+            totalUfs: [],
+            dataOsc: null,
             dataCalor: [],
             //year:props.year,
             //month:props.month,
@@ -64,6 +66,7 @@ class MapTeste extends React.Component {
         this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
+        this.loadAllUfs = this.loadAllUfs.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.populateMapCluster = this.populateMapCluster.bind(this);
         this.heatMap = this.heatMap.bind(this);
@@ -76,6 +79,7 @@ class MapTeste extends React.Component {
 
     componentDidMount() {
         this.loadFirstMap();
+        this.loadAllUfs();
     }
 
     componentWillReceiveProps(props) {
@@ -496,6 +500,26 @@ class MapTeste extends React.Component {
         });
     }
 
+    loadAllUfs() {
+        let _this = this;
+        $.ajax({
+            method: 'GET',
+            url: 'get-osc-all-ufs/',
+            data: {},
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                _this.setState({ totalUfs: data });
+                //_this.populateMap();
+            },
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                _this.setState({ loading: false });
+            }
+
+        });
+    }
+
     loadDataTotalPorTerritorio() {
         //console.log('types', this.state.types);
         //console.log('períodos', this.state.start, this.state.end);
@@ -718,11 +742,9 @@ class MapTeste extends React.Component {
                 filterInfo += '<strong>'+allFilters[j]['titulo']+':</strong> '+data[i][allFilters[j]['slug']]+'<br>'
             }*/
 
-            let marker = L.marker(L.latLng(item[0], item[1]), { icon: icon })
+            let marker = L.marker(L.latLng(item[1], item[2]), { icon: icon })
             //let marker = L.marker(L.latLng(data[i].lat, data[i].lng))
-            .bindPopup('' + '<strong>' + item[0] + ', ' + item[1] + '</strong><hr style="margin:5px 0; padding:0;">'
-            //+ filterInfo
-            ).openPopup();
+            .bindPopup('<div>carregando...</div>').openPopup();
 
             marker.on('mouseover', function (e) {
                 //this.openPopup();
@@ -731,7 +753,8 @@ class MapTeste extends React.Component {
                 //this.closePopup();
             });
             marker.on('click', function (e) {
-                this.openPopup();
+                _this.dataOSC(item[0], marker);
+                //this.openPopup();
             });
             markers.addLayer(marker);
         });
@@ -740,17 +763,21 @@ class MapTeste extends React.Component {
         this.setState({ mapElements: mapElements });
     }
 
-    dataOSC() {
+    dataOSC(id, marker) {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: 'get-osc/2/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
+            url: 'get-data-osc/' + id,
             data: {},
             cache: false,
             success: function (data) {
                 console.log(data);
-                _this.setState({ data: data });
-                _this.populateMap();
+                data = JSON.parse(data);
+                console.log(data);
+                marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">'
+                //+ filterInfo
+                );
+                marker.openPopup();
             },
             error: function (xhr, status, err) {
                 console.error(status, err.toString());

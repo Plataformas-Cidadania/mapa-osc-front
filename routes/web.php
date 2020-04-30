@@ -69,6 +69,8 @@ Route::post('/archives', 'PostController@archives');
 
 Route::get('/get-osc/{territory}', 'OscController@getOsc');
 Route::get('/get-osc/{territory}/{territory_id}', 'OscController@getOsc');
+Route::get('/get-data-osc/{id}', 'OscController@getDataOsc');
+Route::get('/get-osc-all-ufs/', 'OscController@getOscAllUfs');
 
 Route::get('detalhar/{id}', 'OscController@details');
 
