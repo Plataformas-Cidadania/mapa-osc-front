@@ -32,9 +32,10 @@ class OscController extends Controller{
         //$id = 394905;
         //$id = 594485;
         //$id = 784138;
-        $id = 598897;
+        //$id = 598897;
         //$id = 1064708;
         //$id = 2;
+        $id = 789809;
 
 
         $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
@@ -43,6 +44,8 @@ class OscController extends Controller{
         $relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
         $recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
         $projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
+        $objetivos_osc = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
+        $objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
 
 
         return view($this->module.'.detail', [
@@ -53,6 +56,8 @@ class OscController extends Controller{
             'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
             'recursos' => $recursos,
             'projetos' => $projetos,
+            'objetivos_osc' => $objetivos_osc,
+            'objetivo_metas' => $objetivo_metas,
         ]);
     }
 
