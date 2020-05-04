@@ -802,10 +802,9 @@ class MapTeste extends React.Component{
                     '<strong>Endereço: </strong>'+data['tx_endereco']+' - '+ data['tx_bairro']+'<br/>'+
                     '<strong>Atividade Econômica: </strong>'+data['tx_nome_atividade_economica']+'<br/>'+
                     '<strong>Natureza Jurídica: </strong>'+data['tx_nome_natureza_juridica']+'<br/>'+
-                    "<div class='text-center'><a href='/detalhar/'"+id+"><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>"
+                    "<div class='text-center'><a href='/detalhar/"+id+"'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>"
                 )
                 marker.openPopup();
-
             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());

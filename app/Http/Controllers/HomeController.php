@@ -19,7 +19,16 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('home', ['articles' => $articles]);
+
+        $osc_recentes = DB::connection('map')
+            ->table('portal.vw_log_alteracao')
+            ->select('id_osc', 'tx_nome_osc')
+            ->orderBy('dt_alteracao', 'desc')
+            ->take(9)
+            ->get();
+
+
+        return view('home', ['articles' => $articles, 'osc_recentes' => $osc_recentes]);
     }
 }
 

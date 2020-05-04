@@ -73,6 +73,7 @@ Route::get('/get-data-osc/{id}', 'OscController@getDataOsc');
 Route::get('/get-osc-all-ufs/', 'OscController@getOscAllUfs');
 
 Route::get('detalhar/{id}', 'OscController@details');
+Route::get('detalhar/{id}/{title}', 'OscController@details');
 
 
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');

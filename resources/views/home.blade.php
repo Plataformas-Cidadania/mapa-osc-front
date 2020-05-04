@@ -97,50 +97,24 @@
             <br>
             <div class="row">
 
+                @foreach($osc_recentes as $osc_recente)
                 <div class="col-md-4">
-                    <div class="list-user list-lgt">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                        <p>Saúde</p>
-                        <hr>
-                    </div>
+                    <a href="detalhar/{{$osc_recente->id_osc}}/{{clean($osc_recente->tx_nome_osc)}}">
+                        <div class="list-user list-lgt">
+                            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
+                            <h4>{{$osc_recente->tx_nome_osc}} <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                            <p>Saúde</p>
+                            <hr>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-md-4">
-                    <div class="list-user list-lgt">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                        <p>Saúde</p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="list-user list-lgt">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                        <p>Saúde</p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="list-user list-lgt">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                        <p>Saúde</p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="list-user list-lgt">
-                        <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                        <h4>Instituto Batista Lázaro Ferreira Filho <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                        <p>Saúde</p>
-                        <hr>
-                    </div>
-                </div>
+                @endforeach
 
                 <div class="col-md-12 text-center">
                     <br><br>
-                    <button type="button" class="btn btn-outline-light">Visualize todas as OSCs</button>
+                    <a href="mapa/">
+                        <button type="button" class="btn btn-outline-light">Visualize todas as OSCs</button>
+                    </a>
                     <br><br><br>
                 </div>
 

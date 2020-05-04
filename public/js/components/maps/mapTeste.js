@@ -773,7 +773,7 @@ class MapTeste extends React.Component {
             success: function (data) {
                 data = JSON.parse(data);
                 //console.log(data);
-                marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Endereço: </strong>' + data['tx_endereco'] + ' - ' + data['tx_bairro'] + '<br/>' + '<strong>Atividade Econômica: </strong>' + data['tx_nome_atividade_economica'] + '<br/>' + '<strong>Natureza Jurídica: </strong>' + data['tx_nome_natureza_juridica'] + '<br/>' + "<div class='text-center'><a href='/detalhar/'" + id + "><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>");
+                marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Endereço: </strong>' + data['tx_endereco'] + ' - ' + data['tx_bairro'] + '<br/>' + '<strong>Atividade Econômica: </strong>' + data['tx_nome_atividade_economica'] + '<br/>' + '<strong>Natureza Jurídica: </strong>' + data['tx_nome_natureza_juridica'] + '<br/>' + "<div class='text-center'><a href='/detalhar/" + id + "'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>");
                 marker.openPopup();
             },
             error: function (xhr, status, err) {
