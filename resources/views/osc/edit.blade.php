@@ -27,18 +27,21 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="alert alert-secondary box-floating" style="float: right; right: 0; width: 300px">
-                    <ul class="menu-icons">
-                        <li><i class="fas fa-times float-right"></i></li>
-                        <li><div><i class="far fa-file-alt"></i></div> <p>Dados gerais</p></li>
-                        <li><div><i class="fas fa-share-alt"></i></div> <p>Área de atuação</p></li>
-                        <li><div><i class="fas fa-align-justify"></i></div> <p>Descrição da OSC</p></li>
-                        <li><div><i class="fas fa-certificate"></i></div> <p>Titulações e Certificações</p></li>
-                        <li><div><i class="fas fa-briefcase"></i></div> <p>Trabalho e Governança</p></li>
-                        <li><div><i class="fas fa-users"></i></div> <p>Participação social</p></li>
-                        <li><div><i class="fas fa-project-diagram"></i></div> <p>Projetos</p></li>
-                        <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
+                <div class="alert alert-secondary box-floating">
+                    <i class="fas fa-chevron-right menu-icons-close btn-menu-txt"></i>
+                    <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" style="display: none;"></i>
+                    <ul class="menu-icons menu-right">
+                        <li id="btn-right"></li>
+                        <li><a href="detalhar/1#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt">Dados gerais</p></a></li>
+                        <li><a href="detalhar/1#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
+                        <li><a href="detalhar/1#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
+                        <li><a href="detalhar/1#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>
+                        <li><a href="detalhar/1#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e Governança</p></a></li>
+                        <li><a href="detalhar/1#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
+                        <li><a href="detalhar/1#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
+                        <li><a href="detalhar/1#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
                     </ul>
+                    <i class="fas fa-times fa-2x float-right btn-right"></i>
                 </div>
 
                 <div class="row">
@@ -276,46 +279,12 @@
                 <div class="space"></div>
 
             </div>
-            {{--<div class="col-md-1">
-                <div class="alert alert-secondary box-floating">
-                   <ul class="menu-icons">
-                       <li><i class="fas fa-times float-right"></i></li>
-                       <li><div><i class="far fa-file-alt"></i></div> <p>Dados gerais</p></li>
-                       <li><div><i class="fas fa-share-alt"></i></div> <p>Área de atuação</p></li>
-                       <li><div><i class="fas fa-align-justify"></i></div> <p>Descrição da OSC</p></li>
-                       <li><div><i class="fas fa-certificate"></i></div> <p>Titulações e Certificações</p></li>
-                       <li><div><i class="fas fa-briefcase"></i></div> <p>Trabalho e Governança</p></li>
-                       <li><div><i class="fas fa-users"></i></div> <p>Participação social</p></li>
-                       <li><div><i class="fas fa-project-diagram"></i></div> <p>Projetos</p></li>
-                       <li><div><i class="fas fa-boxes"></i></div> <p>Fontes de recursos</p></li>
-                   </ul>
-                </div>
-            </div>--}}
+
         </div>
 
     </div>
 
-    <style>
-        .item-off {
-            -webkit-filter: grayscale(100%);
-            filter: grayscale(100%);
-            -webkit-filter: gray;
-            filter: gray;
-            opacity: 0.5;
-        }
-        .item-off:hover {
-            -webkit-filter: none;
-            filter: none;
-            -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-            opacity: 9;
-        }
-        .item-off, .item-off:hover {
-            -webkit-transition: .3s;
-            transition: .3s;
-        }
 
-    </style>
 
 
 @endsection

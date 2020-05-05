@@ -142,7 +142,7 @@
     <div class="container d-none d-xl-block d-sm-block">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar navbar-light bg-light">
+                <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
                         Logo site
                     </a>
@@ -150,7 +150,7 @@
                         <br>
                         <div class="btn-group">
                             <ul id="menu-desk">
-                                <li role="presentation"><a href="http://localhost/mapa-osc-laravel/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
+                                <li role="presentation"><a href="/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>Sobre</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
                                 <li role="presentation"><a href="artigos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>

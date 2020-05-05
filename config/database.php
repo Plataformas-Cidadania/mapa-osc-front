@@ -81,8 +81,8 @@ return [
         'map' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
+            'host' => env('MP_HOST', '127.0.0.1'),
+            'port' => env('MP_PORT', '5432'),
             'database' => env('MP_DATABASE', 'forge'),
             'username' => env('MP_USERNAME', 'forge'),
             'password' => env('MP_PASSWORD', ''),
