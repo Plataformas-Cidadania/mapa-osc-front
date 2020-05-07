@@ -27,8 +27,28 @@ class HomeController extends Controller
             ->take(9)
             ->get();
 
+        $area_atuacao = [
+            1 => "Habitação",
+            2 => "Saúde",
+            3 => "Cultura e recreação",
+            4 => "Educação e pesquisa",
+            5 => "Assistência social",
+            6 => "Religião",
+            7 => "Associações patronais",
+            8 => "Meio ambiente",
+            9 => "Desenvolvimento",
+            10 => "Outros",
+            11 => "Outras atividades",
+        ];
 
-        return view('home', ['articles' => $articles, 'osc_recentes' => $osc_recentes]);
+        //return $area_atuacao;
+
+
+        return view('home', [
+            'articles' => $articles,
+            'osc_recentes' => $osc_recentes,
+            'areas_atuacao' => $area_atuacao,
+        ]);
     }
 }
 

@@ -151,13 +151,15 @@
             </div>
             <div class="col-md-12 text-center">
                 <ul class="menu-items">
+                    @foreach($areas_atuacao as $area_atuacao)
                     <li>
                         <a href="">
                             <i class="fa fa-user"></i>
-                            <p>Saúde</p>
+                            <p>{{$area_atuacao}}</p>
                         </a>
                     </li>
-                    <li>
+                    @endforeach
+                    {{--<li>
                         <a href="">
                             <i class="fa fa-user"></i>
                             <p>Cultura e recreação</p>
@@ -168,18 +170,21 @@
                             <i class="fa fa-user"></i>
                             <p>Educação e pesquisa</p>
                         </a>
-                    </li>
+                    </li>--}}
                 </ul>
                 <br>
             </div>
             <div class="col-md-8 bg-map">
                 <div class="circle">
-                    <div id="a" class="rotate">
+                    @foreach($osc_recentes as $key => $osc_recente)
+                    <div id="icon{{$key}}" class="rotate">
                         <div class="circle-item">
-                            <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">
+                            {{$osc_recente->id_osc}}
+                            {{--<img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">--}}
                         </div>
                     </div>
-                    <div id="b" class="rotate">
+                    @endforeach
+                    {{--<div id="b" class="rotate">
                         <div class="circle-item">B</div>
                     </div>
                     <div id="c" class="rotate">
@@ -192,12 +197,20 @@
                     </div>
                     <div id="e" class="rotate">
                         <div class="circle-item">E</div>
-                    </div>
+                    </div>--}}
                 </div>
                 <div class="circle2">
-                    <div id="f" class="rotate2">
+                    {{--<div id="f" class="rotate2">
                         <div class="circle-item">F</div>
-                    </div>
+                    </div>--}}
+                    @foreach($osc_recentes as $key => $osc_recente)
+                        <div id="icon{{$key}}" class="rotate2">
+                            <div class="circle-item">
+                                {{$osc_recente->id_osc}}
+                                {{--<img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">--}}
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-md-4">

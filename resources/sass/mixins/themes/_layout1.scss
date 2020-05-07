@@ -116,52 +116,52 @@
     justify-content: center;
     background: #FFFFFF;
 }
-#a, #a div,#b, #b div, #c, #c div, #d, #d div, #e, #e div , #f, #f div {
+#icon0, #icon0 div,#icon1, #icon1 div, #icon2, #icon2 div, #icon3, #icon3 div, #icon4, #icon4 div , #icon5, #icon5 div {
     transition: 1s;
 }
-#a, #b, #c, #d, #e , #f {
+#icon0, #icon1, #icon2, #icon3, #icon4 , #icon5 {
     transform-origin: 50px 0;
 }
-#a {
+#icon0 {
     z-index: 1;
 }
 .circle-item {
     cursor: pointer
 }
-.circle #b {
+.circle #icon1 {
     transform: rotate(0deg);
 }
-.circle #b div {
+.circle #icon1 div {
     transform: rotate(-0deg);
 }
-.circle #c {
+.circle #icon2 {
     transform: rotate(-180deg);/*Rotaciona no eixo*/
 }
-.circle #c div {
+.circle #icon2 div {
     transform: rotate(180deg);/*Coloca virado para cima*/
 }
-.circle #d {
+.circle #icon3 {
     transform: rotate(300deg);
 }
-.circle #d div {
+.circle #icon3 div {
     transform: rotate(60deg);
 }
-.circle #e {
+.circle #icon4 {
     transform: rotate(60deg);
 }
-.circle #e div {
+.circle #icon4 div {
     transform: rotate(-60deg);
 }
-.circle #a {
+.circle #icon0 {
     transform: rotate(30deg);
 }
-.circle #a div {
+.circle #icon0 div {
     transform: rotate(-30deg);
 }
-.circle2 #f {
+.circle2 #icon5 {
     transform: rotate(30deg); /*Rotaciona no eixo*/
 }
-.circle2 #f div {
+.circle2 #icon5 div {
     transform: rotate(-30deg); /*Coloca virado para cima*/
 }
 
