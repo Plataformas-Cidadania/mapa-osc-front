@@ -108,6 +108,7 @@
                     <h3><strong class="objetivo_color{{$objetivo_osc->cd_objetivo_osc}}">{{$objetivo_title[$objetivo_osc->cd_objetivo_osc]}}</strong></h3>
                     <p>{{substr($objetivo_osc->tx_nome_objetivo_osc, 2, -1)}}</p>
 
+                        <br>
                     <div class="col-md-12">
                         <div class="item-detail">
                             <h4>Metas Relacionadas ao ODS:</h4>

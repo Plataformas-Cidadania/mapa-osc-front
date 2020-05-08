@@ -35,7 +35,10 @@ class OscController extends Controller{
         //$id = 598897;
         //$id = 1064708;
         //$id = 2;
-        $id = 789809;
+        //$id = 789809;
+        //$id = 655204;
+        $id = 669177; //Verificar erro
+
 
 
         $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
@@ -57,7 +60,7 @@ class OscController extends Controller{
             $objetivo_osc = new \StdClass;
             $objetivo_osc->cd_objetivo_osc = $objetivo_osc_db->cd_objetivo_osc;
             $objetivo_osc->tx_nome_objetivo_osc = $objetivo_osc_db->tx_nome_objetivo_osc;
-            $objetivo_osc->objetivo_metas = $objetivo_osc_db->objetivo_metas;
+            $objetivo_osc->objetivo_metas = $objetivo_metas;
 
             array_push($objetivos_osc, $objetivo_osc);
         }
