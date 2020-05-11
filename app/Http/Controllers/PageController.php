@@ -33,9 +33,11 @@ class PageController extends Controller{
 
         $subMenus = $this->obj
             ->join('lng_pub_pages', 'pub_pages.id', '=', 'lng_pub_pages.publish_id')
-            ->select('pub_pages.*', 'lng_pub_pages.title', 'lng_pub_pages.description', 'lng_pub_pages.slug')
-            ->where('lng_pub_pages.publish_id', $lngPage->publish_id)
+            ->select('pub_pages.*', 'lng_pub_pages.title', 'lng_pub_pages.description', 'lng_pub_pages.slug', 'lng_pub_pages.publish_id')
+            ->where('pub_pages.type', $page->type)
             ->get();
+
+
 
         return view($this->module.'.basic', [
             'lngPage' => $lngPage,

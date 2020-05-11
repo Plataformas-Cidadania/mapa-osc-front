@@ -31,7 +31,6 @@ class List extends React.Component{
         this.filterArchives = this.filterArchives.bind(this);
         this.setSearch = this.setSearch.bind(this);
 
-
     }
 
 

@@ -5,8 +5,8 @@ class List extends React.Component {
             ads: {
                 data: []
             },
-            qtdItems: 1,
-            qtdItemsLoad: 1,
+            qtdItems: 10,
+            qtdItemsLoad: 10,
             showCategories: [],
             showMembers: [],
             showArchives: [],
@@ -180,9 +180,9 @@ class List extends React.Component {
                                     <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
                                     <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
                                     <h4 className="btn-plus">Continue lendo</h4>
-                                      </div>
+                                   </div>
                                 <div className="col-md-12"><hr/></div>
-                              </div>
+                             </div>
                         </a>
                     </div>*/
                     /*OPCAO 2 UTILIZAR NA TROCA*/
