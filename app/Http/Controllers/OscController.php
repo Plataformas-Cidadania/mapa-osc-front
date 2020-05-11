@@ -35,7 +35,10 @@ class OscController extends Controller{
         //$id = 598897;
         //$id = 1064708;
         //$id = 2;
-        $id = 789809;
+        //$id = 789809;
+        //$id = 655204;
+        $id = 669177; //Verificar erro
+
 
 
         $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
@@ -44,9 +47,23 @@ class OscController extends Controller{
         $relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
         $recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
         $projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
-        $objetivos_osc = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
-        $objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
+        $objetivos_osc_db = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
+        //$objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
+        $objetivos_osc = [];
+        foreach ($objetivos_osc_db as $objetivo_osc_db) {
+            $objetivo_metas = DB::connection('map')
+                ->table('portal.vw_osc_objetivo_osc')
+                ->where('id_osc', $id)
+                ->where('cd_objetivo_osc', $objetivo_osc_db->cd_objetivo_osc)
+                ->get();
 
+            $objetivo_osc = new \StdClass;
+            $objetivo_osc->cd_objetivo_osc = $objetivo_osc_db->cd_objetivo_osc;
+            $objetivo_osc->tx_nome_objetivo_osc = $objetivo_osc_db->tx_nome_objetivo_osc;
+            $objetivo_osc->objetivo_metas = $objetivo_metas;
+
+            array_push($objetivos_osc, $objetivo_osc);
+        }
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
@@ -57,7 +74,7 @@ class OscController extends Controller{
             'recursos' => $recursos,
             'projetos' => $projetos,
             'objetivos_osc' => $objetivos_osc,
-            'objetivo_metas' => $objetivo_metas,
+            /*'objetivo_metas' => $objetivo_metas,*/
         ]);
     }
 
