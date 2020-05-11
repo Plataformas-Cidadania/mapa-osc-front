@@ -56,7 +56,7 @@
                         <a href="video/{{$list->id}}/{{clean($list->title)}}">
                             <div class="row box-video">
                                 <div class="col-md-5">
-                                    <img src="http://img.youtube.com/vi/{{$list->rest}}/0.jpg" alt="" width="100%">
+                                    <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
                                     <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
                                 </div>
                                 <div class="col-md-7">

@@ -39,6 +39,7 @@
     <br>
     <div class="container">
         <div class="row">
+            @if(count($subMenus)>1)
             <div class="col-md-3">
                 <ul class="menu-left">
                     @foreach($subMenus as $menu)
@@ -48,7 +49,8 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="col-md-9">
+            @endif
+            <div @if(count($subMenus)>1) class="col-md-9" @else class="col-md-12" @endif>
                 <article>
                     <picture>
                         <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
