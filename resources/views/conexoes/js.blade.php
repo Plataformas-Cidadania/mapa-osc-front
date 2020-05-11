@@ -11,6 +11,10 @@
 <script src="js/chart.js"></script>
 <script src="js/charts/mixed.js"></script>
 @endif
+@if($rota=='indicadores')
+<script src="js/chart.js"></script>
+<script src="js/charts/mixed.js"></script>
+@endif
 
 @if($rota=='mapa')
 <script src="js/leaflet.js"></script>

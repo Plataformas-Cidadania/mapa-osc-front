@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-9">
 
-                  aaaa
+                <div id="chart"></div>
 
             </div>
         </div>
