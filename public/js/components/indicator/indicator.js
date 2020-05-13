@@ -56,7 +56,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: this.state.series, series: this.state.series, labels: this.state.labels }),
+                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: [1, 2, 3, 4, 5], labels: [1, 2, 3, 4, 5] }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },

@@ -48,8 +48,8 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                {/*<MixedChart id='mix-chart1' yaxis={[1,2,3,4,5]} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>*/}
-                                <MixedChart id='mix-chart1' yaxis={this.state.series} series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>
+                                {/*<MixedChart id='mix-chart1' yaxis={this.state.series} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
                                 </p>

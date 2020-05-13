@@ -80,31 +80,39 @@ class MixedChart extends React.Component {
     componentWillReceiveProps(props) {
 
         if (props.series) {
-            console.log(this.props.id, 'props series', props.series);
+            /*console.log(this.props.id, 'props series', props.series);
             console.log(this.props.id, 'state series', this.state.series);
             console.log(this.props.id, 'props labels', props.labels);
-            console.log(this.props.id, 'state labels', this.state.labels);
+            console.log(this.props.id, 'state labels', this.state.labels);*/
 
             if (props.series != this.state.series || props.labels != this.state.labels) {
-
+                //console.log('1 - props series', props.series);
+                //console.log('props labes', props.labels);
                 let labels = [];
                 for (let i in props.labels) {
                     labels.push(props.labels[i]);
                 }
 
                 let options = this.state.options;
+
                 options.xaxis.categories = props.labels;
                 options.yaxis = props.yaxis;
+
+                //console.log(options.yaxis);
+
                 for (let i in options.yaxis) {
-                    options.yaxis[i]['labels'] = {
+                    //options.yaxis[i]['labels'] = {
+                    options.yaxis[i] = {
                         formatter: function (val, index) {
                             return val.toFixed(options.yaxis[i]['decimais']);
                         }
                     };
                 }
                 this.setState({ series: props.series, options: options, labels: labels }, function () {
-                    //console.log(this.props.id);
-                    //console.log(this.props.id, 'labels', labels);
+                    console.log(this.props.id);
+                    console.log(this.props.id, 'labels', labels);
+                    console.log(this.props.id, 'series', props.series);
+                    console.log(this.props.id, 'options', options);
                     ApexCharts.exec(this.props.id, 'updateSeries', props.series);
                     ApexCharts.exec(this.props.id, 'updateOptions', options);
                 });
