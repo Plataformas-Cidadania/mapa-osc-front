@@ -85,10 +85,10 @@ class MixedChart extends React.Component {
 
 
         if(props.series){
-            /*console.log(this.props.id, 'props series', props.series);
+            console.log(this.props.id, 'props series', props.series);
             console.log(this.props.id, 'state series', this.state.series);
             console.log(this.props.id, 'props labels', props.labels);
-            console.log(this.props.id, 'state labels', this.state.labels);*/
+            console.log(this.props.id, 'state labels', this.state.labels);
 
             if(props.series != this.state.series || props.labels != this.state.labels){
 

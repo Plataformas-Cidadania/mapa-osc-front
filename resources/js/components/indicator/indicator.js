@@ -2,52 +2,41 @@ class Indicator extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            mychart: null,
             data: null,
-            legend: [],
-            indexLegend: 1,
-            lastIndexLegend: 0,
-            carregado: false,
-
-
+            loading: false,
             yaxis: [0,1,2,5,6],
             series: null,
             labels: null,
-
-
-
-
         };
 
-
-
+        this.loadChart = this.loadChart.bind(this);
     }
 
     componentDidMount(){
-
+        //this.loadChart();
     }
 
     componentWillReceiveProps(props){
+        console.log(props)
+        this.setState({
+            data: props.data,
+            labels: props.data.indicator.labels,
+            series: props.data.indicator.series,
+        });
+    }
 
-        if(this.state.data != props.data){
-            this.setState({data: props.data}, function(){
-                if(this.state.data){
-                    //console.log(this.state.data);
-                }
-            });
-        }
+    loadChart(){
 
     }
 
-
     render(){
-
-
         return (
-
             <div>
-               {/* {this.state.data}*/}
+                {/*{this.state.yaxis}<br/>
+                {this.state.series}<br/>
+                {this.state.labels}<br/>*/}
                 <div className="container">
-
                     <div className="row">
                         <div className="col-md-9">
                             {/*Bloco Chart start*/}
@@ -59,8 +48,8 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart1' yaxis={this.state.yaxis} series={this.state.series} labels={this.state.labels}/>
-                                {/*<MixedChart id='mix-chart1' yaxis={this.state.yaxis} series={this.state.series} labels={this.state.labels}/>*/}
+                                {/*<MixedChart id='mix-chart1' yaxis={[1,2,3,4,5]} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>*/}
+                                <MixedChart id='mix-chart1' yaxis={this.state.series} series={this.state.series} labels={this.state.labels}/>
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
                                 </p>

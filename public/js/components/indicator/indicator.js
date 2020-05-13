@@ -2,34 +2,33 @@ class Indicator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            mychart: null,
             data: null,
-            legend: [],
-            indexLegend: 1,
-            lastIndexLegend: 0,
-            carregado: false,
-
+            loading: false,
             yaxis: [0, 1, 2, 5, 6],
             series: null,
             labels: null
-
         };
+
+        this.loadChart = this.loadChart.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        //this.loadChart();
+    }
 
     componentWillReceiveProps(props) {
-
-        if (this.state.data != props.data) {
-            this.setState({ data: props.data }, function () {
-                if (this.state.data) {
-                    //console.log(this.state.data);
-                }
-            });
-        }
+        console.log(props);
+        this.setState({
+            data: props.data,
+            labels: props.data.indicator.labels,
+            series: props.data.indicator.series
+        });
     }
 
-    render() {
+    loadChart() {}
 
+    render() {
         return React.createElement(
             "div",
             null,
@@ -57,7 +56,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: this.state.yaxis, series: this.state.series, labels: this.state.labels }),
+                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: this.state.series, series: this.state.series, labels: this.state.labels }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
