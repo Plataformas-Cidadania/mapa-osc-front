@@ -2,32 +2,18 @@ class Indicator extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            mymap: null,
             data: null,
             legend: [],
             indexLegend: 1,
             lastIndexLegend: 0,
             carregado: false,
-            colors: ['black', 'orange', 'blue', 'green'],
 
-            brtData: null,
 
-            brtDataMonth: null,
-            brtDataHour: null,
-            brtDataTenHours: null,
-
-            brtDataChart: null,
             yaxis: [0,1,2,5,6],
-            brtDataMonthChart: null,
-            brtDataMonthChartY: null,
-            brtDataHourChart: null,
-            brtDataHourChartY: null,
-            brtDataTenHoursChart: null,
+            series: null,
+            labels: null,
 
-            labelsDiaria: null,
-            labelsMonth: null,
-            labelsHour: null,
-            labelsTenHours: [1, 10],
+
 
 
         };
@@ -59,7 +45,7 @@ class Indicator extends React.Component{
         return (
 
             <div>
-
+                {this.state.data}
                 <div className="container">
 
                     <div className="row">
