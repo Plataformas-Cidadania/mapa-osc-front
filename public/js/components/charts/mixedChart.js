@@ -32,7 +32,6 @@ class MixedChart extends React.Component {
                     }
                 },
                 //labels: props.labels,
-
                 //labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'],
                 markers: {
                     size: 0
@@ -46,7 +45,7 @@ class MixedChart extends React.Component {
                     title: {
                         text: 'Website Blog',
                     },
-                  }, {
+                 }, {
                     opposite: true,
                     title: {
                         text: 'Social Media'
@@ -117,11 +116,7 @@ class MixedChart extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement(
-                'div',
-                { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'line', height: '350' })
-            ),
+            React.createElement('div', { id: this.props.id }),
             React.createElement('div', { id: "html-dist-" + this.props.id })
         );
     }

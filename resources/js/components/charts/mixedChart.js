@@ -32,7 +32,6 @@ class MixedChart extends React.Component {
                     }
                 },
                 //labels: props.labels,
-
                 //labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'],
                 markers: {
                     size: 0
@@ -126,7 +125,7 @@ class MixedChart extends React.Component {
         return (
             <div>
                 <div id={this.props.id}>
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="line" height="350" />
+                    {/*<ReactApexChart options={this.state.options} series={this.state.series} type="line" height="350" />*/}
                 </div>
                 <div id={"html-dist-"+this.props.id}>
                 </div>

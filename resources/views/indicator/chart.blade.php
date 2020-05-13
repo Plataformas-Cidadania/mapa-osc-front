@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div id="page"></div>
+    *<div id="page"></div>*
 
     <br>
     <div>

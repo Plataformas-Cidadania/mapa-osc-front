@@ -17,8 +17,8 @@
 <script src="js/charts/pie.js"></script>--}}
 
 <script src="js/components/charts/mixedChart.js"></script>
-<script src="js/components/charts/barChart.js"></script>
-<script src="js/components/charts/pieChart.js"></script>
+{{--<script src="js/components/charts/barChart.js"></script>
+<script src="js/components/charts/pieChart.js"></script>--}}
 <script src="js/components/indicator/indicator.js"></script>
 <script src="js/components/indicator/page/page.js"></script>
 @endif

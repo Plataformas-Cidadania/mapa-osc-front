@@ -24,13 +24,12 @@ class IndicatorController extends Controller{
             ->groupBy('area_atuacao')
             ->get();
 
-
-
         return view('indicator.chart', [
             'areas_atuacao' => $areas_atuacao,
         ]);
 
     }
+
     public function getIndicator(){
 
         $results = DB::connection('map')
@@ -42,6 +41,18 @@ class IndicatorController extends Controller{
             ->groupBy('area_atuacao')
             ->get();
 
+        $data = [
+            'series' => [],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }
+
+        $results = [];
+        $results['indicator'] = $data;
         return $results;
 
     }

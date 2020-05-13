@@ -17,7 +17,7 @@ class Indicator extends React.Component {
             brtDataTenHours: null,
 
             brtDataChart: null,
-            brtDataChartY: null,
+            yaxis: [0, 1, 2, 5, 6],
             brtDataMonthChart: null,
             brtDataMonthChartY: null,
             brtDataHourChart: null,
@@ -30,54 +30,26 @@ class Indicator extends React.Component {
             labelsTenHours: [1, 10]
 
         };
-
-        // this.refreshMarkers = this.refreshMarkers.bind(this);
-
     }
 
-    componentDidMount() {
-        this.setState({ mymap: L.map(this.props.mapId, {
-                fullscreenControl: true,
-                fullscreenControlOptions: { // optional
-                    title: "Show me the fullscreen !",
-                    titleCancel: "Exit fullscreen mode"
-                }
-            }).setView([-14, -52], 4) }, function () {});
-    }
+    componentDidMount() {}
 
     componentWillReceiveProps(props) {
 
         if (this.state.data != props.data) {
             this.setState({ data: props.data }, function () {
-
-                if (this.state.data) {}
+                if (this.state.data) {
+                    //console.log(this.state.data);
+                }
             });
         }
     }
 
     render() {
 
-        let weekCharts = null;
-
-        if (this.state.data) {
-
-            if (this.state.brtDataHourChart) {
-                weekCharts = this.state.brtDataHourChart.map(function (item, index) {
-                    //console.log('brtDataHourChart', index, item);
-
-                    return React.createElement(
-                        'div',
-                        { key: 'mix-chart-week-' + index, style: { display: index == this.state.diaSemanaSelecionado ? '' : 'none' } },
-                        React.createElement(MixedChart, { id: 'mix-chart-week-' + index, yaxis: item['yaxis'], series: item['series'], labels: item['label'] })
-                    );
-                }.bind(this));
-            }
-        }
-
         return React.createElement(
             'div',
             null,
-            React.createElement('div', { id: this.props.mapId, style: { height: '600px' } }),
             React.createElement(
                 'div',
                 { className: 'container' },
@@ -86,97 +58,41 @@ class Indicator extends React.Component {
                     { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'col-md-12' },
-                        React.createElement('br', null),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'h4',
-                            null,
-                            'Quantidade diaria e velocidade'
-                        ),
-                        React.createElement(MixedChart, { id: 'mix-chart1', yaxis: this.state.brtDataChartY, series: this.state.brtDataChart, labels: this.state.labelsDiaria })
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'row' },
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-7' },
-                        React.createElement('br', null),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'h4',
-                            null,
-                            'Quantidade Mensal e velocidade'
-                        ),
-                        React.createElement(MixedChart, { id: 'mix-chart2', yaxis: this.state.brtDataMonthChartY, series: this.state.brtDataMonthChart, labels: this.state.labelsMonth })
-                    )
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'div',
-                    { className: 'text-center' },
-                    React.createElement(
-                        'h2',
-                        null,
-                        'BRTs'
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        'Nessa \xE1rea voc\xEA consegue acompanha em tempo real a situa\xE7\xE3o do BRTs'
-                    ),
-                    React.createElement('hr', null)
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'div',
-                    { className: 'row' },
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-12' },
+                        { className: 'col-md-9' },
                         React.createElement(
                             'div',
-                            { className: 'table-responsive-sm' },
+                            { className: 'box-chart' },
                             React.createElement(
-                                'table',
-                                { className: 'table' },
+                                'div',
+                                { className: 'title-style', style: { perspective: '1000px' } },
                                 React.createElement(
-                                    'thead',
+                                    'h2',
                                     null,
-                                    React.createElement(
-                                        'tr',
-                                        null,
-                                        React.createElement(
-                                            'th',
-                                            null,
-                                            'Linha'
-                                        ),
-                                        React.createElement(
-                                            'th',
-                                            null,
-                                            'C\xF3digo'
-                                        ),
-                                        React.createElement(
-                                            'th',
-                                            null,
-                                            'Trajeto'
-                                        ),
-                                        React.createElement(
-                                            'th',
-                                            null,
-                                            'Sentido'
-                                        ),
-                                        React.createElement(
-                                            'th',
-                                            null,
-                                            'Velocidade'
-                                        )
-                                    )
+                                    '1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018'
                                 ),
-                                React.createElement('tbody', null)
-                            )
+                                React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px',
+                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
+                                React.createElement('hr', null)
+                            ),
+                            React.createElement(MixedChart, { id: 'mix-chart1', yaxis: this.state.yaxis, series: this.state.series, labels: this.state.labels }),
+                            React.createElement(
+                                'p',
+                                { className: 'box-chart-font bg-lgt' },
+                                React.createElement(
+                                    'strong',
+                                    null,
+                                    'Fonte:'
+                                ),
+                                ' CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'btn btn-outline-primary float-right', 'data-toggle': 'modal',
+                                    'data-target': '.bd-example-modal-lg' },
+                                'Visualize os dados em tabela'
+                            ),
+                            React.createElement('br', null),
+                            React.createElement('br', null)
                         )
                     )
                 )
