@@ -45,7 +45,7 @@ class Indicator extends React.Component{
         return (
 
             <div>
-                {this.state.data}
+               {/* {this.state.data}*/}
                 <div className="container">
 
                     <div className="row">

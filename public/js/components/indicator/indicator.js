@@ -33,7 +33,6 @@ class Indicator extends React.Component {
         return React.createElement(
             "div",
             null,
-            this.state.data,
             React.createElement(
                 "div",
                 { className: "container" },
