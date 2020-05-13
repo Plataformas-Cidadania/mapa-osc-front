@@ -27,12 +27,12 @@
     *<div id="page"></div>*
 
     <br>
-    <div>
+    {{--<div>
         @foreach($areas_atuacao as $area_atuacao)
             <p>{{$area_atuacao->series}} - {{$area_atuacao->labels}}</p>
         @endforeach
-    </div>
-    <div class="container">
+    </div>--}}
+    {{--<div class="container">
         <div class="row">
             <div class="col-md-3">
                 <ul class="menu-left menu-left-chart">
@@ -137,7 +137,7 @@
 
             </div>
         </div>
-    </div>
+    </div>--}}
     <style>
         .menu-left-chart li{
             font-size: 13px;

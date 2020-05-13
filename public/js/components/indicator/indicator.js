@@ -40,6 +40,32 @@ class Indicator extends React.Component {
                     { className: "row" },
                     React.createElement(
                         "div",
+                        { className: "col-md-3" },
+                        React.createElement(
+                            "ul",
+                            { className: "menu-left menu-left-chart" },
+                            React.createElement(
+                                "li",
+                                { className: "list-group-item-theme  menu-left-active" },
+                                React.createElement(
+                                    "a",
+                                    { href: "#" },
+                                    "1- Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
+                                )
+                            ),
+                            React.createElement(
+                                "li",
+                                { className: "list-group-item-theme" },
+                                React.createElement(
+                                    "a",
+                                    { href: "#" },
+                                    "2- N\xFAmero de v\xEDnculos formais de trabalho nas OSC, segundo Grandes Regi\xF5es, 2018"
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
                         { className: "col-md-9" },
                         React.createElement(
                             "div",
@@ -57,6 +83,41 @@ class Indicator extends React.Component {
                                 React.createElement("hr", null)
                             ),
                             React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: [1, 2, 3, 4, 5], labels: [1, 2, 3, 4, 5] }),
+                            React.createElement(
+                                "p",
+                                { className: "box-chart-font bg-lgt" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    "Fonte:"
+                                ),
+                                " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
+                                    "data-target": ".bd-example-modal-lg" },
+                                "Visualize os dados em tabela"
+                            ),
+                            React.createElement("br", null),
+                            React.createElement("br", null)
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "box-chart" },
+                            React.createElement(
+                                "div",
+                                { className: "title-style", style: { perspective: '1000px' } },
+                                React.createElement(
+                                    "h2",
+                                    null,
+                                    "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
+                                ),
+                                React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
+                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
+                                React.createElement("hr", null)
+                            ),
+                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: [1, 2, 3, 4, 5], labels: [1, 2, 3, 4, 5] }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },

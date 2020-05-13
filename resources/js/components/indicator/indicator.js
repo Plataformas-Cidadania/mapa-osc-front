@@ -38,6 +38,18 @@ class Indicator extends React.Component{
                 {this.state.labels}<br/>*/}
                 <div className="container">
                     <div className="row">
+                        <div className="col-md-3">
+                            <ul className="menu-left menu-left-chart">
+                                <li className="list-group-item-theme  menu-left-active">
+                                    <a href="#">1- Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
+                                        Regiões, 2018</a>
+                                </li>
+                                <li className="list-group-item-theme">
+                                    <a href="#">2- Número de vínculos formais de trabalho nas OSC, segundo Grandes
+                                        Regiões, 2018</a>
+                                </li>
+                            </ul>
+                        </div>
                         <div className="col-md-9">
                             {/*Bloco Chart start*/}
                             <div className="box-chart">
@@ -49,6 +61,27 @@ class Indicator extends React.Component{
                                     <hr/>
                                 </div>
                                 <MixedChart id='mix-chart1' yaxis={['Teste']} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>
+                                {/*<MixedChart id='mix-chart1' yaxis={this.state.series} series={this.state.series} labels={this.state.labels}/>*/}
+                                <p className="box-chart-font bg-lgt">
+                                    <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
+                                </p>
+                                <div className="btn btn-outline-primary float-right" data-toggle="modal"
+                                     data-target=".bd-example-modal-lg">Visualize os dados em tabela
+                                </div>
+                                <br/><br/>
+                            </div>
+                            {/*Bloco Chart end*/}
+
+                            {/*Bloco Chart start*/}
+                            <div className="box-chart">
+                                <div className="title-style" style={{perspective: '1000px'}}>
+                                    <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
+                                        Regiões, 2018</h2>
+                                    <div className="line line-fix block" data-move-x="980px"
+                                         style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
+                                    <hr/>
+                                </div>
+                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>
                                 {/*<MixedChart id='mix-chart1' yaxis={this.state.series} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
