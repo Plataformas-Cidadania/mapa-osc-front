@@ -157,7 +157,7 @@
                                 <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                 <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a>
                                     <ul id="menu-desk" class="noJS">
-                                        <li role="presentation"><a href="http://localhost/mapa-osc-laravel/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
+                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente" @endif>Indicadores</a></li>
                                         <li role="presentation"><a href="quem" accesskey="q" @if($rota=='quem') class="corrente" @endif>Sobre</a></li>
                                         <li role="presentation"><a href="artigos" accesskey="artigos" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>
                                         <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>

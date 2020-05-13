@@ -22,6 +22,8 @@
         </div>
     </div>
 
+    <div id="page"></div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8">

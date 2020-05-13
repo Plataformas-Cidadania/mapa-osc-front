@@ -161,6 +161,6 @@ var options = {
 };
 
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
+var chart = new ApexCharts(document.querySelector("#chartMix"), options);
 
 chart.render();

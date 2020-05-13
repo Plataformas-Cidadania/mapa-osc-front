@@ -15,15 +15,34 @@ class IndicatorController extends Controller{
 
     public function chart(){
 
-        $rota = Route::getCurrentRoute()->uri();
-
-
+        $areas_atuacao = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_area_atuacao')
+            ->select(DB::Raw("
+                   count(quantidade_oscs) as series,
+                   area_atuacao as labels
+            "))
+            ->groupBy('area_atuacao')
+            ->get();
 
 
 
         return view('indicator.chart', [
-            'rota' => $rota,
+            'areas_atuacao' => $areas_atuacao,
         ]);
+
+    }
+    public function getIndicator(){
+
+        $results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_area_atuacao')
+            ->select(DB::Raw("
+                   count(quantidade_oscs) as series,
+                   area_atuacao as labels
+            "))
+            ->groupBy('area_atuacao')
+            ->get();
+
+        return $results;
 
     }
 }
