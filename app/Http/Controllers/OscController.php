@@ -35,9 +35,9 @@ class OscController extends Controller{
         //$id = 598897;
         //$id = 1064708;
         //$id = 2;
-        //$id = 789809;
+        $id = 789809;
         //$id = 655204;
-        $id = 669177; //Verificar erro
+        //$id = 669177; //Verificar erro
 
 
 
@@ -101,6 +101,8 @@ class OscController extends Controller{
         $data = json_decode($data);
        // $data = \GuzzleHttp\json_decode($data);
 
+        //return $data;
+
         $idh = [];
 
         //cria um array com índices començando de 0
@@ -115,10 +117,35 @@ class OscController extends Controller{
             $data = $data2;
         }
 
+
+        /*List*/
+        $paginaList = "https://mapaosc.ipea.gov.br/api/search/all/lista/10/0";
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $paginaList );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $list = curl_exec( $ch );
+        curl_close( $ch );
+
+        $list = json_decode($list);
+
+
+        $list2 = [];
+        foreach ($list as $key => $item) {
+            if(count($item) > 0){
+                //$key é o id da osc
+                array_push($list2, [$key, $item[0], $item[1], $item[2], $item[3]]);
+            }
+        }
+        $list = $list2;
+
+        /*List*/
+
         $data = [
             "territorio" => $data,
             "idh" => $idh,
-            "tipo_territorio" => $territory+1
+            "tipo_territorio" => $territory+1,
+            "list" => $list,
         ];
 
         return $data;

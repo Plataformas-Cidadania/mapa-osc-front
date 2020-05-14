@@ -101,7 +101,15 @@
                         /*color: #fff;*/
                         opacity: 1;
                     }
-
+                    .img-upload-p img{
+                        width: 60px!important;
+                        height: 60px!important;
+                        float: left;
+                        margin-right: 10px;
+                    }
+                    .capitalize{
+                        text-transform: capitalize;
+                    }
                 </style>
                 <br>
                 {{--<div id='map'></div>--}}

@@ -79,6 +79,9 @@ Route::get('detalhar/{id}', 'OscController@details');
 Route::get('detalhar/{id}/{title}', 'OscController@details');
 
 
+Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');
+
+
 /*Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
 Route::get('artigos/{categoria_id}', ucfirst($rota).'Controller@listar');
 

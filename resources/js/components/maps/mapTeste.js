@@ -960,13 +960,75 @@ class MapTeste extends React.Component{
 
     render(){
 
+        let tableOsc = null;
+
+        function formatCnpjCpf(value)
+        {
+            const cnpjCpf = value.replace(/\D/g, '');
+
+            if (cnpjCpf.length === 11) {
+                return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3-\$4");
+            }
+
+            return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
+        }
+
+
+
+        if(this.state.data.list) {
+
+            console.log('***', this.state.data);
+            tableOsc = this.state.data.list.map(function (item, index) {
+
+                return (
+                    <tr key={'tabela' + index}>
+                        <td className="capitalize">
+                            <div className="img-upload img-upload-p">
+                                <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
+                                      alt="" />
+                            </div>
+                            {item[1].toLowerCase()}</td>
+                        <td>{formatCnpjCpf(item[2])}</td>
+                        <td className="text-center">{item[3]}</td>
+                        <td className="capitalize">{item[4].toLowerCase()}</td>
+                        <td>
+                            <a href="detalhar/1/aaaa"><i className="fas fa-info"/></a>
+                        </td>
+                    </tr>
+                );
+            });
+        }
 
         return(
             <div>
                 <div id={this.state.mapId} className="map" />
                 <div id="controls-map" className="control-container" />
                 <div id="controls-map2" className="control-container" />
+
+                <br/>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="table-responsive-sm">
+                            <table className="table">
+                                <thead class="bg-pri text-light">
+                                <tr>
+                                    <th>Nome da OSC</th>
+                                    <th width="180">CNPJ</th>
+                                    <th width="120">N. Juridica</th>
+                                    <th>Endereço</th>
+                                    <th>Acoes</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {tableOsc}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         );
     }
 }

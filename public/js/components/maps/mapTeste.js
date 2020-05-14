@@ -927,12 +927,126 @@ class MapTeste extends React.Component {
 
     render() {
 
+        let tableOsc = null;
+
+        function formatCnpjCpf(value) {
+            const cnpjCpf = value.replace(/\D/g, '');
+
+            if (cnpjCpf.length === 11) {
+                return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3-\$4");
+            }
+
+            return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
+        }
+
+        if (this.state.data.list) {
+
+            console.log('***', this.state.data);
+            tableOsc = this.state.data.list.map(function (item, index) {
+
+                return React.createElement(
+                    'tr',
+                    { key: 'tabela' + index },
+                    React.createElement(
+                        'td',
+                        { className: 'capitalize' },
+                        React.createElement(
+                            'div',
+                            { className: 'img-upload img-upload-p' },
+                            React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
+                                alt: '' })
+                        ),
+                        item[1].toLowerCase()
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        formatCnpjCpf(item[2])
+                    ),
+                    React.createElement(
+                        'td',
+                        { className: 'text-center' },
+                        item[3]
+                    ),
+                    React.createElement(
+                        'td',
+                        { className: 'capitalize' },
+                        item[4].toLowerCase()
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        React.createElement(
+                            'a',
+                            { href: 'detalhar/1/aaaa' },
+                            React.createElement('i', { className: 'fas fa-info' })
+                        )
+                    )
+                );
+            });
+        }
+
         return React.createElement(
             'div',
             null,
             React.createElement('div', { id: this.state.mapId, className: 'map' }),
             React.createElement('div', { id: 'controls-map', className: 'control-container' }),
-            React.createElement('div', { id: 'controls-map2', className: 'control-container' })
+            React.createElement('div', { id: 'controls-map2', className: 'control-container' }),
+            React.createElement('br', null),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'table-responsive-sm' },
+                        React.createElement(
+                            'table',
+                            { className: 'table' },
+                            React.createElement(
+                                'thead',
+                                { 'class': 'bg-pri text-light' },
+                                React.createElement(
+                                    'tr',
+                                    null,
+                                    React.createElement(
+                                        'th',
+                                        null,
+                                        'Nome da OSC'
+                                    ),
+                                    React.createElement(
+                                        'th',
+                                        { width: '180' },
+                                        'CNPJ'
+                                    ),
+                                    React.createElement(
+                                        'th',
+                                        { width: '120' },
+                                        'N. Juridica'
+                                    ),
+                                    React.createElement(
+                                        'th',
+                                        null,
+                                        'Endere\xE7o'
+                                    ),
+                                    React.createElement(
+                                        'th',
+                                        null,
+                                        'Acoes'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'tbody',
+                                null,
+                                tableOsc
+                            )
+                        )
+                    )
+                )
+            )
         );
     }
 }

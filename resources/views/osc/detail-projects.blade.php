@@ -68,7 +68,7 @@
                                     <div class="col-md-4">
                                         <div class="line-add">
                                             <h2>Valor Total</h2>
-                                            <p>{{"R$ ".number_format($projeto->nr_valor_total_projeto, 2, ',', '.')}}</p>
+                                            <p>@if(!empty($projeto->nr_valor_total_projeto)) {{"R$ ".number_format($projeto->nr_valor_total_projeto, 2, ',', '.')}} @endif</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -92,7 +92,7 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <div class="line-add" >
+                                                <div class="line-add line-add-h" >
                                                     <div>
                                                         <h2>Localização do Projeto</h2>
                                                         @foreach($projetos_localizacao as $projeto_localizacao)
@@ -102,7 +102,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="line-add">
+                                                <div class="line-add line-add-h">
                                                     <h2>Público Beneficiado</h2>
                                                     @foreach($projetos_beneficiado as $projeto_beneficiado)
                                                         <p>{{$projeto_beneficiado->tx_nome_publico_beneficiado}}</p>
@@ -110,7 +110,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="line-add">
+                                                <div class="line-add line-add-h">
                                                     <h2>Tipo da Fontes de Recursos</h2>
                                                     @foreach($projetos_recurso as $projeto_recurso)
                                                         <p>{{$projeto_recurso->tx_nome_origem_fonte_recursos_projeto}}</p>
@@ -122,7 +122,7 @@
 
 
                                     <div class="col-md-6">
-                                        <div class="line-add">
+                                        <div class="line-add line-add-h">
                                             <h2>OSCs Parceiras</h2>
                                             @foreach($projetos_parceira as $projeto_parceira)
                                                 <p>{{$projeto_parceira->tx_nome_osc_parceira_projeto}}</p>
@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="line-add">
+                                        <div class="line-add line-add-h">
                                             <h2>Financiadores do Projeto</h2>
                                             @foreach($projetos_financiador as $projeto_financiador)
                                                 <p>{{$projeto_financiador->tx_nome_financiador}}</p>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="line-add">
+                                        <div class="line-add line-add-h">
                                             <h2>Tipo de Parceria</h2>
                                             @foreach($projetos_tipo_parceria as $projeto_tipo_parceria)
                                                 <p>{{$projeto_tipo_parceria->tx_nome_tipo_parceria}}</p>
@@ -176,9 +176,14 @@
                 <br>
                 <div>
                     <p><strong>Total de recursos com projetos, atividades e/ou programas</strong></p>
-                    <p>{{"R$ ".number_format($projeto->nr_valor_total_projeto, 2, ',', '.')}}</p>
+                    <p>@if(!empty($projeto->nr_valor_total_projeto)) {{"R$ ".number_format($projeto->nr_valor_total_projeto, 2, ',', '.')}} @endif</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<style>
+    .line-add-h{
+        min-height: 180px;
+    }
+</style>

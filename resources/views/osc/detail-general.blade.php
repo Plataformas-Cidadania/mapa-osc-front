@@ -104,20 +104,20 @@
                 <br>
                 <div class="item-obj">
                     @foreach($objetivos_osc as $objetivo_osc)
-                    <img src="img/ods/0{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
-                    <h3><strong class="objetivo_color{{$objetivo_osc->cd_objetivo_osc}}">{{$objetivo_title[$objetivo_osc->cd_objetivo_osc]}}</strong></h3>
-                    <p>{{substr($objetivo_osc->tx_nome_objetivo_osc, 2, -1)}}</p>
-
-                        <br>
-                    <div class="col-md-12">
-                        <div class="item-detail">
-                            <h4>Metas Relacionadas ao ODS:</h4>
-                            @foreach($objetivo_osc->objetivo_metas as $objetivo_meta)
-                                <p>{{$objetivo_meta->tx_nome_meta_osc}}</p>
-                            @endforeach
+                        <div class="col-md-12">
+                            <img src="img/ods/0{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                            <h3><strong class="objetivo_color{{$objetivo_osc->cd_objetivo_osc}}">{{$objetivo_title[$objetivo_osc->cd_objetivo_osc]}}</strong></h3>
+                            <p>{{substr($objetivo_osc->tx_nome_objetivo_osc, 2, -1)}}</p>
                         </div>
-                    </div>
-
+                        <br>
+                        <div class="col-md-12">
+                            <div class="item-detail">
+                                <h4>Metas Relacionadas ao ODS:</h4>
+                                @foreach($objetivo_osc->objetivo_metas as $objetivo_meta)
+                                    <p>{{$objetivo_meta->tx_nome_meta_osc}}</p>
+                                @endforeach
+                            </div>
+                        </div>
                     @endforeach
                     <br><br>
                 </div>
