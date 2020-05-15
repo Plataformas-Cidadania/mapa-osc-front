@@ -111,6 +111,14 @@
                         text-transform: capitalize;
                     }
                 </style>
+                <style>
+                    #qrcode {
+                        width:160px;
+                        height:160px;
+                        margin-top:15px;
+                    }
+                </style>
+
                 <br>
                 {{--<div id='map'></div>--}}
 

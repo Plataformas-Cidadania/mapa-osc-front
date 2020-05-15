@@ -962,8 +962,21 @@ class MapTeste extends React.Component{
 
         let tableOsc = null;
 
-        function formatCnpjCpf(value)
-        {
+        ////////////////////////////////////////////
+        function removeAccent(text){
+            text = text.toLowerCase();
+            text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+            text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+            text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+            text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+            text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+            text = text.replace(new RegExp('[Ç]','gi'), 'c');
+            text = text.replace(new RegExp('[ ]','gi'), '-');
+            text = text.replace(new RegExp('[/]','gi'), '-');
+            return text;
+        }
+
+        function formatCnpjCpf(value){
             const cnpjCpf = value.replace(/\D/g, '');
 
             if (cnpjCpf.length === 11) {
@@ -972,6 +985,7 @@ class MapTeste extends React.Component{
 
             return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
         }
+        ////////////////////////////////////////////
 
 
 
@@ -992,7 +1006,7 @@ class MapTeste extends React.Component{
                         <td className="text-center">{item[3]}</td>
                         <td className="capitalize">{item[4].toLowerCase()}</td>
                         <td>
-                            <a href="detalhar/1/aaaa"><i className="fas fa-info"/></a>
+                            <a href={'detalhar/' + item[0] + '/' + removeAccent(item[1]) }><i className="fas fa-share-square"/></a>
                         </td>
                     </tr>
                 );
@@ -1016,7 +1030,7 @@ class MapTeste extends React.Component{
                                     <th width="180">CNPJ</th>
                                     <th width="120">N. Juridica</th>
                                     <th>Endereço</th>
-                                    <th>Acoes</th>
+                                    <th>Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -1024,9 +1038,32 @@ class MapTeste extends React.Component{
                                 </tbody>
                             </table>
                         </div>
+                        <nav aria-label="...">
+                            <ul className="pagination">
+                                <li className="page-item disabled">
+                                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                                </li>
+                                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                                <li className="page-item active">
+                                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
+                                </li>
+                                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                <li className="page-item">
+                                    <a className="page-link" href="#">Próximo</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div className="col-md-12">
+
                     </div>
                 </div>
+
+
             </div>
+
+
 
 
         );

@@ -929,6 +929,20 @@ class MapTeste extends React.Component {
 
         let tableOsc = null;
 
+        ////////////////////////////////////////////
+        function removeAccent(text) {
+            text = text.toLowerCase();
+            text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+            text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+            text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+            text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+            text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+            text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
+            text = text.replace(new RegExp('[ ]', 'gi'), '-');
+            text = text.replace(new RegExp('[/]', 'gi'), '-');
+            return text;
+        }
+
         function formatCnpjCpf(value) {
             const cnpjCpf = value.replace(/\D/g, '');
 
@@ -938,6 +952,8 @@ class MapTeste extends React.Component {
 
             return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
         }
+        ////////////////////////////////////////////
+
 
         if (this.state.data.list) {
 
@@ -978,8 +994,8 @@ class MapTeste extends React.Component {
                         null,
                         React.createElement(
                             'a',
-                            { href: 'detalhar/1/aaaa' },
-                            React.createElement('i', { className: 'fas fa-info' })
+                            { href: 'detalhar/' + item[0] + '/' + removeAccent(item[1]) },
+                            React.createElement('i', { className: 'fas fa-share-square' })
                         )
                     )
                 );
@@ -1034,7 +1050,7 @@ class MapTeste extends React.Component {
                                     React.createElement(
                                         'th',
                                         null,
-                                        'Acoes'
+                                        'A\xE7\xF5es'
                                     )
                                 )
                             ),
@@ -1044,8 +1060,67 @@ class MapTeste extends React.Component {
                                 tableOsc
                             )
                         )
+                    ),
+                    React.createElement(
+                        'nav',
+                        { 'aria-label': '...' },
+                        React.createElement(
+                            'ul',
+                            { className: 'pagination' },
+                            React.createElement(
+                                'li',
+                                { className: 'page-item disabled' },
+                                React.createElement(
+                                    'a',
+                                    { className: 'page-link', href: '#', tabIndex: '-1' },
+                                    'Anterior'
+                                )
+                            ),
+                            React.createElement(
+                                'li',
+                                { className: 'page-item' },
+                                React.createElement(
+                                    'a',
+                                    { className: 'page-link', href: '#' },
+                                    '1'
+                                )
+                            ),
+                            React.createElement(
+                                'li',
+                                { className: 'page-item active' },
+                                React.createElement(
+                                    'a',
+                                    { className: 'page-link', href: '#' },
+                                    '2 ',
+                                    React.createElement(
+                                        'span',
+                                        { className: 'sr-only' },
+                                        '(atual)'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'li',
+                                { className: 'page-item' },
+                                React.createElement(
+                                    'a',
+                                    { className: 'page-link', href: '#' },
+                                    '3'
+                                )
+                            ),
+                            React.createElement(
+                                'li',
+                                { className: 'page-item' },
+                                React.createElement(
+                                    'a',
+                                    { className: 'page-link', href: '#' },
+                                    'Pr\xF3ximo'
+                                )
+                            )
+                        )
                     )
-                )
+                ),
+                React.createElement('div', { className: 'col-md-12' })
             )
         );
     }
