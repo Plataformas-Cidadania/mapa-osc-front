@@ -89,3 +89,57 @@ Route::get('produtos/{categoria_id}', ucfirst($rota).'Controller@listar');
 Route::get('produtos/{categoria_id}/{subcategoria_id}', ucfirst($rota).'Controller@listar');*/
 
 
+
+//LOGIN E REDEFINIÇÃO DE SENHA/////////////////////////////////////////////////////////////////////
+Route::get('login/{carrinho}', 'UserLoginController@index');//pg de login vindo da seleção do carrinho
+Route::get('login', 'UserLoginController@index');//pg de login rota direta
+Route::post('login', 'UserLoginController@login');//autenticação de login
+Route::post('forget-password', 'UserLoginController@forgetPassword');
+Route::get('reset-password/{token}/{email}', 'UserLoginController@resetPassword');
+Route::post('change-forget-password', 'UserLoginController@changeForgetPassword');
+///////////////////////////////////////////////////////////////////////////////////////
+Route::post('/register', 'RegisterUserController@index');
+Route::get('/register', 'RegisterUserController@index2');
+/// //AREA USER///////////////////////////////////////////////////////////////////////////////////
+
+
+//views
+Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
+Route::get('/area-user', 'UserAreaController@index')->middleware('auth');
+Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
+
+Route::get('/dados-textos', 'UserAreaController@texts')->middleware('auth');
+Route::get('/dados-texto/{id}', 'UserAreaController@text')->middleware('auth');
+
+Route::get('/dados-arquivos', 'UserAreaController@documents')->middleware('auth');
+Route::get('/dados-arquivo/{id}', 'UserAreaController@document')->middleware('auth');
+
+
+Route::get('/videos-privados', 'UserAreaController@videos')->middleware('auth');
+
+Route::get('/logout-user', 'UserLoginController@logout');
+
+
+//ajax
+Route::post('/list-users-documents', 'UserAreaController@listDocuments')->middleware('auth');
+Route::get('/detalhar-users-document/{id}', 'UserAreaController@detailDocument')->middleware('auth');
+
+Route::post('/list-users-texts', 'UserAreaController@listTexts')->middleware('auth');
+Route::get('/detalhar-users-text/{id}', 'UserAreaController@detailText')->middleware('auth');
+
+Route::post('/update-data', 'UserAreaController@updateData')->middleware('auth');
+Route::get('/get-data', 'UserAreaController@getData')->middleware('auth');
+
+Route::get('/list-private-videos', 'PrivateVideoController@listing')->middleware('auth');
+Route::get('/private-video/{id}', 'PrivateVideoController@video')->middleware('auth');
+
+//chamado no iframe dentro do componente video
+Route::get('/streaming-credentials/{type}/{video}/{id}', 'PrivateVideoController@streamingCredentials');
+
+Route::get('/completed-videos/{id}', 'PrivateVideoController@completedVideo');
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+

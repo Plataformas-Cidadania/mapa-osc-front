@@ -172,10 +172,11 @@
                                 <p>Olá, faça seu login ou se cadastre-se</p>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" type="button">Configurar conta</button>
-                                <button class="dropdown-item" type="button"><a href="minhaconta-oscs/1">Minha OSCs</a></button>
-                                <button class="dropdown-item " type="button"><a href="editar-osc">Editar</a></button>
-                                <button class="dropdown-item" type="button">Sair</button>
+                                <a href="/login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
+                                <a href="/register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
+                                <a href="minhaconta-oscs/1"><button class="dropdown-item" type="button">Minha OSCs</button></a>
+                                <a href="editar-osc"><button class="dropdown-item " type="button">Editar</button></a>
+                                <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
                             </div>
                         </div>
                     </div>
@@ -184,7 +185,13 @@
         </div>
     </div>
 
-
+<style>
+    .btn-login-menu{
+        width: 90%;
+        border-radius: 2px;
+        margin: 0 5px 8px 8px;
+    }
+</style>
 
 
 

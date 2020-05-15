@@ -149,4 +149,43 @@
     <script src="/js/utils.js"></script>
 @endif
 
-
+{{--Área Restrita--}}
+@if($rota=="login/{carrinho}" || $rota=="login")
+    <script src="/js/components/login/preRegister.js"></script>
+    <script src="/js/components/login/forgetPassword.js"></script>
+    <script src="/js/components/login/login.js"></script>
+@endif
+@if($rota=="reset-password/{token}/{email}")
+    <script src="/js/components/login/resetPassword.js"></script>
+@endif
+@if($rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-arquivos" || $rota=="dados-textos" || $rota=="dados-texto/{id}" || $rota=="dados-arquivo/{id}" || $rota=="dados-user" || $rota=="videos-privados")
+    <script src="/js/components/user-area/headerUser.js"></script>
+    <script src="/js/components/user-area/menu.js"></script>
+@endif
+@if($rota=="area-user" || $rota=="dashboard-user" )
+    <script src="/js/components/user-area/dashboard.js"></script>
+@endif
+@if($rota=="dados-user")
+    <script src="/js/components/user-area/data.js"></script>
+@endif
+@if($rota=="dados-arquivos")
+    <script src="/js/components/user-area/documents.js"></script>
+@endif
+@if($rota=="dados-arquivo/{id}")
+    <script>
+        id = {{$id}};
+    </script>
+    <script src="/js/components/user-area/document.js"></script>
+@endif
+@if($rota=="dados-textos")
+    <script src="/js/components/user-area/texts.js"></script>
+@endif
+@if($rota=="dados-texto/{id}")
+    <script>
+        id = {{$id}};
+    </script>
+    <script src="/js/components/user-area/text.js"></script>
+@endif
+@if($rota=="register")
+    <script src="/js/components/join/register.js"></script>
+@endif
