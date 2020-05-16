@@ -5,9 +5,7 @@ class Indicator extends React.Component {
             mychart: null,
             data: null,
             loading: false,
-            yaxis: [0, 1, 2, 5, 6],
-            series: null,
-            labels: null
+            yaxis: [0, 1, 2, 5, 6]
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -18,15 +16,17 @@ class Indicator extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
+        console.log("***", props.data);
+        this.setState({ data: props.data, labels: props.data.labels, series: props.data.series });
+        /*console.log(props)
         this.setState({
             data: props.data,
-            labels: props.data.indicator.labels,
-            series: props.data.indicator.series
-        });
+            labels: props.data.labels,
+            series: props.data.series,
+        });*/
     }
 
-    loadChart() {}
+    loadChart(props) {}
 
     /* modal(){
          <!-- Modal -->
@@ -89,6 +89,7 @@ class Indicator extends React.Component {
      }*/
 
     render() {
+        console.log("11", this.state.series);
         return React.createElement(
             "div",
             null,
@@ -142,7 +143,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: [1, 2, 3, 4, 5], labels: [1, 2, 3, 4, 5] }),
+                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: this.state.series, labels: this.state.labels }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
@@ -177,7 +178,6 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: [1, 2, 3, 4, 5], labels: [1, 2, 3, 4, 5] }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },

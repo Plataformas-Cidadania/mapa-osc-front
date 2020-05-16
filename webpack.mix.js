@@ -26,7 +26,8 @@ mix.scripts([
     ], 'public/js/home.js');
 
 mix.scripts([
-        'node_modules/apexcharts/dist/apexcharts.js',
+    'node_modules/react-apexcharts/dist/react-apexcharts.js',
+    'node_modules/react-apexcharts/dist/react-apexcharts.iife.min.js',
     ], 'public/js/chart.js');
 
 mix.scripts([

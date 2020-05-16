@@ -22,8 +22,8 @@ class Page extends React.Component {
             },
             cache: false,
             success: function(data) {
-                //console.log(data);
-                _this.setState({data: data});
+                console.log(data);
+                _this.setState({data: data.chart});
 
             },
             error: function(xhr, status, err) {

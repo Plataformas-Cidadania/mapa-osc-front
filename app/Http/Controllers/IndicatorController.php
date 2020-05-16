@@ -52,7 +52,7 @@ class IndicatorController extends Controller{
         }
 
         $results = [];
-        $results['indicator'] = $data;
+        $results['chart'] = $data;
         return $results;
 
     }
