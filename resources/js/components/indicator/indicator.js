@@ -3,9 +3,11 @@ class Indicator extends React.Component{
         super(props);
         this.state = {
             mychart: null,
-            data: null,
+            data: [],
             loading: false,
-            yaxis: [0,1,2,5,6],
+            yaxis: [],
+            labels: [],
+            series: [],
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -16,8 +18,10 @@ class Indicator extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log("***", props.data)
+
         this.setState({data: props.data, labels: props.data.labels, series: props.data.series});
+
+
         /*console.log(props)
         this.setState({
             data: props.data,
@@ -143,7 +147,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                {/*<MixedChart id='mix-chart2' yaxis={['Teste']} series={[1,2,3,4,5]} labels={[1,2,3,4,5]}/>*/}
+                                <MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>
                                 {/*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.series} labels={this.state.data.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
