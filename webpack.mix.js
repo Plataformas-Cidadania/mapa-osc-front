@@ -26,6 +26,7 @@ mix.scripts([
     ], 'public/js/home.js');
 
 mix.scripts([
+    'node_modules/prop-types/prop-types.js',
     'node_modules/react-apexcharts/dist/react-apexcharts.js',
     'node_modules/react-apexcharts/dist/react-apexcharts.iife.min.js',
     ], 'public/js/chart.js');
