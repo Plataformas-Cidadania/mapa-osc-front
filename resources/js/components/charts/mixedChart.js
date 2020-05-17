@@ -118,13 +118,20 @@ class MixedChart extends React.Component {
                         }
                     }
                 }
-                this.setState({series: props.series, options: options, labels: labels}, function(){
+                let series = [
+                    {
+                        name: 'teste',
+                        type: 'column',
+                        data: props.series,
+                    }
+                ]
+                this.setState({series: series, options: options, labels: labels}, function(){
                     //console.log(this.props.id);
                     //console.log(this.props.id, 'labels', labels);
                     console.log(this.props.id, 'series', props.series);
                     //console.log(this.props.id, 'options', options);
 
-                    ApexCharts.exec(this.props.id, 'updateSeries', props.series);
+                    ApexCharts.exec(this.props.id, 'updateSeries', series);
                     ApexCharts.exec(this.props.id, 'updateOptions', options);
                    // }
 
@@ -137,6 +144,13 @@ class MixedChart extends React.Component {
     }
 
     render() {
+
+        console.log(this.state.series);
+
+        if(!this.state.series){
+            return;
+        }
+
         return (
             <div>
                 <div id={this.props.id}>
