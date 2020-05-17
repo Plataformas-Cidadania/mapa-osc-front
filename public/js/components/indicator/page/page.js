@@ -4,11 +4,13 @@ class Page extends React.Component {
         this.state = {
             data: null
         };
-        //this.load = this.load.bind(this);
-        this.load();
+        this.load = this.load.bind(this);
+        //this.load();
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.load();
+    }
 
     load() {
         let _this = this;
