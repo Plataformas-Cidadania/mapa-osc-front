@@ -102,7 +102,7 @@
                     <a href="detalhar/{{$osc_recente->id_osc}}/{{clean($osc_recente->tx_nome_osc)}}">
                         <div class="list-user list-lgt">
                             <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                            <h4>{{$osc_recente->tx_nome_osc}} <i class="fas fa-angle-right float-right list-icon"></i></h4>
+                            <h4 class="capitalize">{{captz($osc_recente->tx_nome_osc)}} <i class="fas fa-angle-right float-right list-icon"></i></h4>
                             <p>Saúde</p>
                             <hr>
                         </div>
@@ -121,7 +121,6 @@
             </div>
         </div>
     </div>
-
 
 
      <style>

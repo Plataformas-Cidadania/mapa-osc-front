@@ -307,3 +307,19 @@ if ( ! function_exists('formatBr') ) {
         return $string;
     }
 }
+
+
+if ( ! function_exists('captz') ) {
+    function captz($string) {
+
+        //$string = strtoupper($string);
+        $string = strtolower($string);
+        $string = ucwords($string);
+
+        $string = str_replace("Da", "da", $string);
+        $string = str_replace("De", "de", $string);
+        $string = str_replace("Do", "do", $string);
+
+        return $string;
+    }
+}
