@@ -50,7 +50,7 @@ class IndicatorController extends Controller{
         ];
 
         foreach ($results as $item) {
-            array_push( $data['series'], $item->series);
+            array_push( $data['series'][0]['data'], $item->series);
             array_push( $data['labels'], $item->labels);
         }
         //////////////////////////////////////////
