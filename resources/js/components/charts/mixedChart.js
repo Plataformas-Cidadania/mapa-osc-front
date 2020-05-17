@@ -2,7 +2,7 @@ class MixedChart extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {
             labels: [],
             options: {
@@ -121,7 +121,7 @@ class MixedChart extends React.Component {
                 this.setState({series: props.series, options: options, labels: labels}, function(){
                     //console.log(this.props.id);
                     //console.log(this.props.id, 'labels', labels);
-                    //console.log(this.props.id, 'series', props.series);
+                    console.log(this.props.id, 'series', props.series);
                     //console.log(this.props.id, 'options', options);
 
                     ApexCharts.exec(this.props.id, 'updateSeries', props.series);

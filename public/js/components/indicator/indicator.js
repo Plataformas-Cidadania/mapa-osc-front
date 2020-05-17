@@ -181,7 +181,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste2'], series: this.state.series, labels: this.state.labels }),
+                            React.createElement(PieChart, { id: "pie-chart", series: this.state.series, labels: this.state.labels }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
