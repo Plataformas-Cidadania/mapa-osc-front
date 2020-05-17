@@ -7,7 +7,10 @@ class Indicator extends React.Component {
             loading: false,
             yaxis: [],
             labels: [],
-            series: []
+            labels2: [],
+            series: [],
+            series2: [],
+            chart2: []
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -18,8 +21,15 @@ class Indicator extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        //console.log(props);
 
-        this.setState({ data: props.data, labels: props.data.labels, series: props.data.series });
+        this.setState({
+            data: props.data,
+            labels: props.data.chart.labels,
+            series: props.data.chart.series,
+            labels2: props.data.chart2.labels,
+            series2: props.data.chart2.series
+        });
 
         /*console.log(props)
         this.setState({
@@ -31,68 +41,179 @@ class Indicator extends React.Component {
 
     loadChart(props) {}
 
-    /* modal(){
-         <!-- Modal -->
-         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-             <div class="modal-dialog modal-lg">
-                 <div class="modal-content">
-                     <!-- Modal content -->
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                             <span aria-hidden="true">&times;</span>
-                         </button>
-                     </div>
-                     <div class="modal-body">
-                         <!-- Modal table -->
-                         <table class="table">
-                             <thead class="thead-light">
-                             <tr>
-                                 <th scope="col">#</th>
-                                 <th scope="col">Primeiro</th>
-                                 <th scope="col">Último</th>
-                                 <th scope="col">Nickname</th>
-                             </tr>
-                             </thead>
-                             <tbody>
-                             <tr>
-                                 <th scope="row">1</th>
-                                 <td>Mark</td>
-                                 <td>Otto</td>
-                                 <td>@mdo</td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">2</th>
-                                 <td>Jacob</td>
-                                 <td>Thornton</td>
-                                 <td>@fat</td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">3</th>
-                                 <td>Larry</td>
-                                 <td>the Bird</td>
-                                 <td>@twitter</td>
-                             </tr>
-                             </tbody>
-                         </table>
-                         <!-- Modal table -->
-                         <div class="bd-callout bd-callout-warning">
-                             <h5 id="incompatibilidade-jquery">Fonte:</h5>
-                             <p class="box-chart-model-font">Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019</p>
-                         </div>
-                     </div>
-                     <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                     </div>
-                     <!-- Modal grande -->
-                 </div>
-             </div>
-         </div>
-         <!-- Modal -->
-     }*/
+    modal() {
+        return React.createElement(
+            "div",
+            { className: "modal fade bd-example-modal-lg", tabIndex: "-1", role: "dialog", "aria-labelledby": "myLargeModalLabel", "aria-hidden": "true" },
+            React.createElement(
+                "div",
+                { className: "modal-dialog modal-lg" },
+                React.createElement(
+                    "div",
+                    { className: "modal-content" },
+                    React.createElement(
+                        "div",
+                        { className: "modal-header" },
+                        React.createElement(
+                            "h5",
+                            { className: "modal-title", id: "exampleModalLabel" },
+                            "T\xEDtulo do modal"
+                        ),
+                        React.createElement(
+                            "button",
+                            { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Fechar" },
+                            React.createElement(
+                                "span",
+                                { "aria-hidden": "true" },
+                                "\xD7"
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "modal-body" },
+                        React.createElement(
+                            "table",
+                            { className: "table" },
+                            React.createElement(
+                                "thead",
+                                { className: "thead-light" },
+                                React.createElement(
+                                    "tr",
+                                    null,
+                                    React.createElement(
+                                        "th",
+                                        { scope: "col" },
+                                        "#"
+                                    ),
+                                    React.createElement(
+                                        "th",
+                                        { scope: "col" },
+                                        "Primeiro"
+                                    ),
+                                    React.createElement(
+                                        "th",
+                                        { scope: "col" },
+                                        "\xDAltimo"
+                                    ),
+                                    React.createElement(
+                                        "th",
+                                        { scope: "col" },
+                                        "Nickname"
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "tbody",
+                                null,
+                                React.createElement(
+                                    "tr",
+                                    null,
+                                    React.createElement(
+                                        "th",
+                                        { scope: "row" },
+                                        "1"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "Mark"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "Otto"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "@mdo"
+                                    )
+                                ),
+                                React.createElement(
+                                    "tr",
+                                    null,
+                                    React.createElement(
+                                        "th",
+                                        { scope: "row" },
+                                        "2"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "Jacob"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "Thornton"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "@fat"
+                                    )
+                                ),
+                                React.createElement(
+                                    "tr",
+                                    null,
+                                    React.createElement(
+                                        "th",
+                                        { scope: "row" },
+                                        "3"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "Larry"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "the Bird"
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        "@twitter"
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "bd-callout bd-callout-warning" },
+                            React.createElement(
+                                "h5",
+                                { id: "incompatibilidade-jquery" },
+                                "Fonte:"
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: "box-chart-model-font" },
+                                "Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019"
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "modal-footer" },
+                        React.createElement(
+                            "button",
+                            { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
+                            "Fechar"
+                        )
+                    )
+                )
+            )
+        );
+    }
 
     render() {
-        console.log("11", this.state.series);
+
+        //console.log("11", this.state.data.chart2.series);
+
+
         return React.createElement(
             "div",
             null,
@@ -181,7 +302,42 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(PieChart, { id: "pie-chart", series: this.state.series, labels: this.state.labels }),
+                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: this.state.series, labels: this.state.labels }),
+                            React.createElement(
+                                "p",
+                                { className: "box-chart-font bg-lgt" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    "Fonte:"
+                                ),
+                                " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
+                                    "data-target": ".bd-example-modal-lg" },
+                                "Visualize os dados em tabela"
+                            ),
+                            React.createElement("br", null),
+                            React.createElement("br", null)
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "box-chart" },
+                            React.createElement(
+                                "div",
+                                { className: "title-style", style: { perspective: '1000px' } },
+                                React.createElement(
+                                    "h2",
+                                    null,
+                                    "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
+                                ),
+                                React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
+                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
+                                React.createElement("hr", null)
+                            ),
+                            React.createElement(PieChart, { id: "pie-chart", series: this.state.series2, labels: this.state.labels2 }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },

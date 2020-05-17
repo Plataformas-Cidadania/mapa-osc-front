@@ -32,6 +32,7 @@ class IndicatorController extends Controller{
 
     public function getIndicator(){
 
+        //Distribuição por área de atuação/////////
         $results = DB::connection('map')
             ->table('analysis.vw_perfil_localidade_area_atuacao')
             ->select(DB::Raw("
@@ -42,7 +43,9 @@ class IndicatorController extends Controller{
             ->get();
 
         $data = [
-            'series' => [],
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'column', 'data' => []],//type: column, line, area
+            ],
             'labels' => []
         ];
 
@@ -50,9 +53,31 @@ class IndicatorController extends Controller{
             array_push( $data['series'], $item->series);
             array_push( $data['labels'], $item->labels);
         }
+        //////////////////////////////////////////
+        //Distribuição de OSCs por área de atuação
+        $results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_area_atuacao')
+            ->select(DB::Raw("
+                   count(quantidade_oscs) as series,
+                   area_atuacao as labels
+            "))
+            ->groupBy('area_atuacao')
+            ->get();
+
+        $data2 = [
+            'series' => [],
+            'labels' => []
+        ];
+
+        foreach ($results2 as $item) {
+            array_push( $data2['series'], $item->series);
+            array_push( $data2['labels'], $item->labels);
+        }
+        //////////////////////////////////////////
 
         $results = [];
         $results['chart'] = $data;
+        $results['chart2'] = $data2;
         return $results;
 
     }

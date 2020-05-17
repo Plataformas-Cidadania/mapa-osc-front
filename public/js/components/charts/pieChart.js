@@ -2,12 +2,12 @@ class PieChart extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {
             options: {
                 //labels: ['Team A', 'Team B'],
 
-                labels: props.data ? props.data.titles : [],
+                labels: props.data ? props.labels : [],
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -22,40 +22,40 @@ class PieChart extends React.Component {
             },
             //series: [44, 55, 13, 43, 22],
 
-            series: props.data ? props.data.values : []
+            series: props.data ? props.series : []
         };
     }
 
     componentWillReceiveProps(props) {
-        //console.log(props);
-        if (props.data) {
-            if (props.data.titles != this.state.options.labels || props.data.values != this.state.series) {
+
+        if (props) {
+
+            if (props.labels != this.state.options.labels || props.series != this.state.series) {
+
                 let options = this.state.options;
-                options.labels = props.data.titles;
+                options.labels = props.labels;
 
                 let series = this.state.series;
-                series = props.data.values;
+                series = props.series;
+
                 this.setState({ options: options, series: series });
 
-                console.log(props.data);
-                console.log(options);
-
-                /*ApexCharts.exec(this.props.id, 'updateSeries', series);
-                ApexCharts.exec(this.props.id, 'updateOptions', options);*/
+                console.log('*******', options);
+                console.log('*******', series);
             }
         }
     }
 
     render() {
         return React.createElement(
-            "div",
+            'div',
             null,
             React.createElement(
-                "div",
+                'div',
                 { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: "pie", width: "380" })
+                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'pie', width: '380' })
             ),
-            React.createElement("div", { id: "html-dist-" + this.props.id })
+            React.createElement('div', { id: "html-dist-" + this.props.id })
         );
     }
 }

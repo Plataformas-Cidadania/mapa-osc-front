@@ -2,17 +2,49 @@ class MixedChart extends React.Component {
 
     constructor(props) {
         super(props);
-        //console.log(props);
+        console.log(props);
         this.state = {
             labels: [],
             options: {
                 chart: {
                     stacked: false,
-                    id: props.id
+                    id: props.id,
+                    toolbar: {
+                        tools: {
+                            download: '<i class="fas fa-image chart-custom-icon"/>',
+                            reset: '<i class="fas fa-undo-alt chart-custom-icon-reset"/>',
+                            customIcons: [{
+                                icon: '<i class="fas fa-chart-line"/>',
+                                index: 0,
+                                title: '',
+                                class: 'chart-custom-icon',
+                                click: () => {
+                                    console.log('chart line');
+                                }
+                            }, {
+                                icon: '<i class="fas fa-chart-bar"/>',
+                                index: 0,
+                                title: '',
+                                class: 'chart-custom-icon',
+                                click: () => {
+                                    console.log('chart bar');
+                                }
+                            }, {
+                                icon: '<i class="fas fa-chart-area"/>',
+                                index: 0,
+                                title: '',
+                                class: 'chart-custom-icon',
+                                click: () => {
+                                    console.log('chart area');
+                                    this.state.typeChart = 'area';
+                                }
+                            }]
+                        }
+                    }
                 },
                 stroke: {
-                    width: [0, 2, 5],
-                    curve: 'smooth'
+                    width: [2, 2, 5]
+                    /*curve: 'smooth',*/
                 },
                 plotOptions: {
                     bar: {
@@ -86,20 +118,15 @@ class MixedChart extends React.Component {
             console.log(this.props.id, 'state labels', this.state.labels);*/
 
             if (props.series != this.state.series || props.labels != this.state.labels) {
-                //console.log('1 - props series', props.series);
-                //console.log('props labes', props.labels);
+
                 let labels = [];
                 for (let i in props.labels) {
                     labels.push(props.labels[i]);
                 }
 
                 let options = this.state.options;
-
                 options.xaxis.categories = props.labels;
                 options.yaxis = props.yaxis;
-
-                //console.log(options.yaxis);
-
                 for (let i in options.yaxis) {
                     //options.yaxis[i]['labels'] = {
                     options.yaxis[i] = {
@@ -108,15 +135,18 @@ class MixedChart extends React.Component {
                         }
                     };
                 }
-                let series = [{
-                    name: 'teste',
-                    type: 'column',
-                    data: props.series
-                }];
+
+                let series = [
+                    /*{
+                        name: 'teste',
+                        type: 'column',
+                        data: props.series,
+                    }*/
+                ];
                 this.setState({ series: series, options: options, labels: labels }, function () {
                     //console.log(this.props.id);
                     //console.log(this.props.id, 'labels', labels);
-                    console.log(this.props.id, 'series', props.series);
+                    //console.log(this.props.id, 'series', props.series);
                     //console.log(this.props.id, 'options', options);
 
                     ApexCharts.exec(this.props.id, 'updateSeries', series);
@@ -130,7 +160,7 @@ class MixedChart extends React.Component {
 
     render() {
 
-        console.log(this.state.series);
+        //console.log(this.state.series);
 
         if (!this.state.series) {
             return;

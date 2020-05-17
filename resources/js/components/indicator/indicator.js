@@ -7,7 +7,10 @@ class Indicator extends React.Component{
             loading: false,
             yaxis: [],
             labels: [],
+            labels2: [],
             series: [],
+            series2: [],
+            chart2: [],
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -18,8 +21,15 @@ class Indicator extends React.Component{
     }
 
     componentWillReceiveProps(props){
+        //console.log(props);
 
-        this.setState({data: props.data, labels: props.data.labels, series: props.data.series});
+        this.setState({
+            data: props.data,
+            labels: props.data.chart.labels,
+            series: props.data.chart.series,
+            labels2: props.data.chart2.labels,
+            series2: props.data.chart2.series
+        });
 
 
         /*console.log(props)
@@ -35,22 +45,22 @@ class Indicator extends React.Component{
 
     }
 
-   /* modal(){
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal content -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+    modal(){
+        return (
+        <div className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Título do modal</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <!-- Modal table -->
-                        <table class="table">
-                            <thead class="thead-light">
+                    <div className="modal-body">
+
+                        <table className="table">
+                            <thead className="thead-light">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Primeiro</th>
@@ -79,24 +89,27 @@ class Indicator extends React.Component{
                             </tr>
                             </tbody>
                         </table>
-                        <!-- Modal table -->
-                        <div class="bd-callout bd-callout-warning">
+
+                        <div className="bd-callout bd-callout-warning">
                             <h5 id="incompatibilidade-jquery">Fonte:</h5>
-                            <p class="box-chart-model-font">Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019</p>
+                            <p className="box-chart-model-font">Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019</p>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
-                    <!-- Modal grande -->
+
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-    }*/
+        )
+    }
 
     render(){
-        console.log("11", this.state.series)
+
+            //console.log("11", this.state.data.chart2.series);
+
+
         return (
             <div>
                 {/*{this.state.yaxis}<br/>
@@ -147,9 +160,30 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <PieChart id='pie-chart' series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>
+                                {/*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
-                                {/*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.series} labels={this.state.data.labels}/>*/}
+                                <p className="box-chart-font bg-lgt">
+                                    <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
+                                </p>
+                                <div className="btn btn-outline-primary float-right" data-toggle="modal"
+                                     data-target=".bd-example-modal-lg">Visualize os dados em tabela
+                                </div>
+                                <br/><br/>
+                            </div>
+                            {/*Bloco Chart end*/}
+
+                            {/*Bloco Chart start*/}
+                            <div className="box-chart">
+                                <div className="title-style" style={{perspective: '1000px'}}>
+                                    <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
+                                        Regiões, 2018</h2>
+                                    <div className="line line-fix block" data-move-x="980px"
+                                         style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
+                                    <hr/>
+                                </div>
+                                <PieChart id='pie-chart' series={this.state.series2} labels={this.state.labels2}/>
+                                {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
                                 </p>
