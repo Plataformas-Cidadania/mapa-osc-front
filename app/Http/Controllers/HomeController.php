@@ -50,6 +50,62 @@ class HomeController extends Controller
             'areas_atuacao' => $area_atuacao,
         ]);
     }
+
+    public function getChartHome(){
+
+        //Distribuição por área de atuação/////////
+        /*$results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_area_atuacao')
+            ->select(DB::Raw("
+                   count(quantidade_oscs) as series,
+                   area_atuacao as labels
+            "))
+            ->groupBy('area_atuacao')
+            ->get();
+
+        $data = [
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
+            ],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'][0]['data'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }*/
+        //////////////////////////////////////////
+        //Distribuição por área de atuação/////////
+        $results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_evolucao_anual')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   ano_fundacao as labels
+            "))
+            ->groupBy('quantidade_oscs', 'ano_fundacao')
+            ->where('localidade', 11)
+            ->where('ano_fundacao', '>', '2009')
+            ->orderBy('ano_fundacao')
+            ->get();
+
+        $data = [
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
+            ],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'][0]['data'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }
+        //////////////////////////////////////////
+
+        $results = [];
+        $results['chart'] = $data;
+        return $results;
+
+    }
 }
 
 

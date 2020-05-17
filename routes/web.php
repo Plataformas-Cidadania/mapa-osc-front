@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('get-home-chart/', 'HomeController@getChartHome');
 
 
 $routes = [
@@ -58,6 +59,7 @@ Route::get('metodologia', 'PageController@details');*/
 
 Route::get('indicadores', 'IndicatorController@chart');
 Route::get('get-indicador/', 'IndicatorController@getIndicator');
+
 
 Route::get('mapa', 'MapController@details');
 Route::get('contato', 'ContactController@email');
