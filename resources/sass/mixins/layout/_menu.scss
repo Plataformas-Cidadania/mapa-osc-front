@@ -50,14 +50,16 @@
     padding: 0px;
 }
 #menu-desk ul li a {
-    color:#FFFFFF;
+    color:#333333;
     display: block;
-    background-color: $color-pri;
-    margin-bottom: 1px;
+    /*background-color: $color-pri;*/
+    background-color: #FFFFFF;
+    margin-bottom: 0;
     width: 200px;
 }
 #menu-desk ul li:hover a{
-    background-color: $color-pri;
+    color: $color-pri;
+    background-color: #f5f5f5;
     -webkit-transition: All 1.02s ease;
     -moz-transition: All 1.02s ease;
     -o-transition: All 1.02s ease;
@@ -65,6 +67,24 @@
 #menu-desk li:hover ul.noJS {
     display: block;
 }
+
+.menu-desk-sub{
+    padding: 10px 0!important;
+    background-color: #FFFFFF;
+    box-shadow: 1px 0 5px 0 #555555;
+}
+.menu-desk-sub > li > a {
+    color:#333333;
+    border-bottom: 0!important;
+    border-left: solid 3px #FFFFFF;
+    min-width: 100%!important;
+    width: 100%!important;
+}
+.menu-desk-sub > li:hover > a{
+    border-bottom: 0!important;
+    border-left: solid 3px $color-pri;
+}
+
 @media  only screen and (max-width : 1201px) {
     #menu-desk li a {
         font-size: 14px;

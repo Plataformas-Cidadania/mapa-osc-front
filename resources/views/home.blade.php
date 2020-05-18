@@ -31,10 +31,10 @@
         <div class="row">
             <div class="col-md-3 col-sm-6 col- items text-center">
                 <picture>
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" class="img-responsive">
-                    <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                    <source srcset="img/icons/01.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/01.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/01.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/01.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
                 </picture>
                 <div class="items-text">
                     <h2>Mapa das OSCs</h2>
@@ -43,10 +43,10 @@
             </div>
             <div class="col-md-3 col-sm-6  items text-center">
                 <picture>
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" class="img-responsive">
-                    <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                    <source srcset="img/icons/02.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/02.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/02.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/02.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
                 </picture>
                 <div class="items-text">
                     <h2>Mapa das OSCs</h2>
@@ -55,10 +55,10 @@
             </div>
             <div class="col-md-3 col-sm-6 items text-center">
                 <picture>
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" class="img-responsive">
-                    <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                    <source srcset="img/icons/03.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/03.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/03.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/03.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
                 </picture>
                 <div class="items-text">
                     <h2>Mapa das OSCs</h2>
@@ -67,10 +67,58 @@
             </div>
             <div class="col-md-3 col-sm-6 items text-center">
                 <picture>
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 468px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" media="(max-width: 768px)">
-                    <source srcset="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" class="img-responsive">
-                    <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/04.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                </picture>
+                <div class="items-text">
+                    <h2>Mapa das OSCs</h2>
+                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 items text-center">
+                <picture>
+                    <source srcset="img/icons/05.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/05.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/05.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/05.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                </picture>
+                <div class="items-text">
+                    <h2>Mapa das OSCs</h2>
+                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 items text-center">
+                <picture>
+                    <source srcset="img/icons/06.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/06.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/06.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/06.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                </picture>
+                <div class="items-text">
+                    <h2>Mapa das OSCs</h2>
+                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 items text-center">
+                <picture>
+                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/04.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                </picture>
+                <div class="items-text">
+                    <h2>Mapa das OSCs</h2>
+                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 items text-center">
+                <picture>
+                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
+                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
+                    <source srcset="img/icons/04.png" class="img-responsive">
+                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
                 </picture>
                 <div class="items-text">
                     <h2>Mapa das OSCs</h2>
