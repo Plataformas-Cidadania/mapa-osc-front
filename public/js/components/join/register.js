@@ -115,7 +115,7 @@ class Register extends React.Component {
         for (let index in requireds) {
             if (!form[index] || form[index] == '') {
                 requireds[index] = false;
-                if ((index === "cnpj" || index === "razao_social" || index === "inscricao_estadual") && !this.state.juridica) {
+                if (index === "cnpj" /* || index==="razao_social" || index==="inscricao_estadual"*/ && !this.state.juridica) {
                     requireds[index] = true;
                 } else {
                     valid = false;

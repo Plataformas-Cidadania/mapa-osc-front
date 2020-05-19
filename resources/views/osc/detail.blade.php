@@ -41,6 +41,7 @@
                         <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / </h5>
                         <a onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>
+                        <a href="declaracao"><i class="fas fa-certificate fa-2x float-right"></i></a>
                         <a class=" float-right" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8"><i class="fas fa-sort-amount-down fa-2x"></i>&nbsp;</a>
                         <br>
                     </header>

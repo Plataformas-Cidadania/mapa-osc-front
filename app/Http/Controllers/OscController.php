@@ -212,4 +212,12 @@ class OscController extends Controller{
 
         return ['osc' => $areas, 'idh' => $dataIdh];
     }
+
+    public function declaration(){
+
+
+        return view($this->module.'.declaration');
+    }
+
+
 }

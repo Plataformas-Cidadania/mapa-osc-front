@@ -127,18 +127,28 @@ function maskCep(cep) {
 }
 function maskCpf(cpf) {
     cpf = cpf.replace(/\D/g,"");
-    cpf = cpf.replace(/(\d{3})(\d)/,"$1.$2")
-    cpf = cpf.replace(/(\d{3})(\d)/,"$1.$2")
-    cpf = cpf.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
+    cpf = cpf.replace(/(\d{3})(\d)/,"$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d)/,"$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
 
     return cpf;
 }
 function maskCel(cel) {
 
     cel = cel.replace(/\D/g,"")
-    cel = cel.replace(/(\d\d)(\d)/,"($1) $2")
-    cel = cel.replace(/(\d)(\d{8})/,"$1-$2")
-    cel = cel.replace(/(\d{4})(\d)/,"$1-$2")
+    cel = cel.replace(/(\d\d)(\d)/,"($1) $2");
+    cel = cel.replace(/(\d)(\d{8})/,"$1-$2");
+    cel = cel.replace(/(\d{4})(\d)/,"$1-$2");
 
     return cel;
+}
+function maskCnpj(cnpj) {
+
+    cnpj = cnpj.replace(/\D/g,"");
+    cnpj = cnpj.replace(/(\d{2})(\d)/,"$1.$2");
+    cnpj = cnpj.replace(/(\d{3})(\d)/,"$1.$2");
+    cnpj = cnpj.replace(/(\d{3})(\d)/,"$1/$2");
+    cnpj = cnpj.replace(/(\d{4})(\d{1,2})$/,"$1-$2");
+
+    return cnpj;
 }
