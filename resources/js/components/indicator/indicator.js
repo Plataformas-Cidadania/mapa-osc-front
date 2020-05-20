@@ -3,7 +3,10 @@ class Indicator extends React.Component{
         super(props);
         this.state = {
             mychart: null,
-            data: [],
+            data: {
+                chart: {},
+                chart2: {}
+            },
             loading: false,
             yaxis: [],
             labels: [],
@@ -11,6 +14,7 @@ class Indicator extends React.Component{
             series: [],
             series2: [],
             chart2: [],
+            table: ['teste'],
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -23,12 +27,15 @@ class Indicator extends React.Component{
     componentWillReceiveProps(props){
         //console.log(props);
 
-        this.setState({
+        /*this.setState({
             data: props.data,
             labels: props.data.chart.labels,
             series: props.data.chart.series,
             labels2: props.data.chart2.labels,
             series2: props.data.chart2.series
+        });*/
+        this.setState({
+            data: props.data,
         });
 
 
@@ -46,6 +53,34 @@ class Indicator extends React.Component{
     }
 
     modal(){
+
+        let tbody = [];
+
+        if(this.state.table){
+            tbody = (
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            );
+        }
+
         return (
         <div className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
@@ -68,26 +103,7 @@ class Indicator extends React.Component{
                                 <th scope="col">Nickname</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                            </tbody>
+                            {tbody}
                         </table>
 
                         <div className="bd-callout bd-callout-warning">
@@ -109,6 +125,7 @@ class Indicator extends React.Component{
 
             //console.log("11", this.state.data.chart2.series);
 
+        let modal = this.modal();
 
         return (
             <div>
@@ -139,7 +156,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
                                 {/*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
@@ -160,7 +177,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.series}/>
                                 {/*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
@@ -182,7 +199,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <PieChart id='pie-chart' series={this.state.series2} labels={this.state.labels2}/>
+                                <PieChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
@@ -203,6 +220,8 @@ class Indicator extends React.Component{
                             <MixedChart  id='mix-chart2' yaxis={this.state.brtDataMonthChartY} series={this.state.brtDataMonthChart} labels={this.state.labelsMonth}/>
                         </div>
                     </div>*/}
+
+                    {modal}
 
                 </div>
             </div>

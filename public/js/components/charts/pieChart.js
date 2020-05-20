@@ -22,7 +22,7 @@ class PieChart extends React.Component {
             },
             //series: [44, 55, 13, 43, 22],
 
-            series: props.data ? props.series : []
+            series: props.data ? props.series : null
         };
     }
 
@@ -35,10 +35,11 @@ class PieChart extends React.Component {
                 let options = this.state.options;
                 options.labels = props.labels;
 
-                let series = this.state.series;
-                series = props.series;
+                let series = props.series;
 
-                this.setState({ options: options, series: series });
+                this.setState({ options: options, series: series }, function () {
+                    //ApexCharts.exec(this.props.id, 'updateOptions', options);
+                });
 
                 console.log('*******', options);
                 console.log('*******', series);
@@ -47,13 +48,22 @@ class PieChart extends React.Component {
     }
 
     render() {
+
+        console.log(this.state.options);
+
+        let chart = null;
+
+        if (this.state.series) {
+            chart = React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'pie', width: '380' });
+        }
+
         return React.createElement(
             'div',
             null,
             React.createElement(
                 'div',
                 { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'pie', width: '380' })
+                chart
             ),
             React.createElement('div', { id: "html-dist-" + this.props.id })
         );

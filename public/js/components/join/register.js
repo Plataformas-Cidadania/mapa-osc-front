@@ -239,6 +239,10 @@ class Register extends React.Component {
         });
     }
 
+    showHidePassword() {
+        $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+    }
+
     render() {
 
         console.log(this.state.requireds.name);
@@ -360,8 +364,12 @@ class Register extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'input-icon' },
-                                        React.createElement('input', { className: "form-control form-m " + (this.state.requireds.password ? '' : 'invalid-field'), type: 'password', name: 'password', onChange: this.handleInputChange, placeholder: 'Senha' }),
-                                        React.createElement('i', { className: 'far fa-eye-slash' })
+                                        React.createElement('input', { id: 'password', className: "form-control form-m " + (this.state.requireds.password ? '' : 'invalid-field'), type: 'password', name: 'password', onChange: this.handleInputChange, placeholder: 'Senha' }),
+                                        React.createElement(
+                                            'a',
+                                            { onClick: () => this.showHidePassword() },
+                                            React.createElement('i', { className: 'far fa-eye-slash', style: { cursor: 'pointer' } })
+                                        )
                                     ),
                                     React.createElement('br', null)
                                 ),

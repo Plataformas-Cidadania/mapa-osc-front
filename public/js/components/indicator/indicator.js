@@ -3,14 +3,18 @@ class Indicator extends React.Component {
         super(props);
         this.state = {
             mychart: null,
-            data: [],
+            data: {
+                chart: {},
+                chart2: {}
+            },
             loading: false,
             yaxis: [],
             labels: [],
             labels2: [],
             series: [],
             series2: [],
-            chart2: []
+            chart2: [],
+            table: ['teste']
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -23,12 +27,15 @@ class Indicator extends React.Component {
     componentWillReceiveProps(props) {
         //console.log(props);
 
-        this.setState({
+        /*this.setState({
             data: props.data,
             labels: props.data.chart.labels,
             series: props.data.chart.series,
             labels2: props.data.chart2.labels,
             series2: props.data.chart2.series
+        });*/
+        this.setState({
+            data: props.data
         });
 
         /*console.log(props)
@@ -42,6 +49,88 @@ class Indicator extends React.Component {
     loadChart(props) {}
 
     modal() {
+
+        let tbody = [];
+
+        if (this.state.table) {
+            tbody = React.createElement(
+                "tbody",
+                null,
+                React.createElement(
+                    "tr",
+                    null,
+                    React.createElement(
+                        "th",
+                        { scope: "row" },
+                        "1"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "Mark"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "Otto"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "@mdo"
+                    )
+                ),
+                React.createElement(
+                    "tr",
+                    null,
+                    React.createElement(
+                        "th",
+                        { scope: "row" },
+                        "2"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "Jacob"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "Thornton"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "@fat"
+                    )
+                ),
+                React.createElement(
+                    "tr",
+                    null,
+                    React.createElement(
+                        "th",
+                        { scope: "row" },
+                        "3"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "Larry"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "the Bird"
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        "@twitter"
+                    )
+                )
+            );
+        }
+
         return React.createElement(
             "div",
             { className: "modal fade bd-example-modal-lg", tabIndex: "-1", role: "dialog", "aria-labelledby": "myLargeModalLabel", "aria-hidden": "true" },
@@ -103,82 +192,7 @@ class Indicator extends React.Component {
                                     )
                                 )
                             ),
-                            React.createElement(
-                                "tbody",
-                                null,
-                                React.createElement(
-                                    "tr",
-                                    null,
-                                    React.createElement(
-                                        "th",
-                                        { scope: "row" },
-                                        "1"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "Mark"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "Otto"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "@mdo"
-                                    )
-                                ),
-                                React.createElement(
-                                    "tr",
-                                    null,
-                                    React.createElement(
-                                        "th",
-                                        { scope: "row" },
-                                        "2"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "Jacob"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "Thornton"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "@fat"
-                                    )
-                                ),
-                                React.createElement(
-                                    "tr",
-                                    null,
-                                    React.createElement(
-                                        "th",
-                                        { scope: "row" },
-                                        "3"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "Larry"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "the Bird"
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        "@twitter"
-                                    )
-                                )
-                            )
+                            tbody
                         ),
                         React.createElement(
                             "div",
@@ -213,6 +227,7 @@ class Indicator extends React.Component {
 
         //console.log("11", this.state.data.chart2.series);
 
+        let modal = this.modal();
 
         return React.createElement(
             "div",
@@ -267,7 +282,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: this.state.series, labels: this.state.labels }),
+                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: this.state.data.chart.series, labels: this.state.data.chart.labels }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
@@ -302,7 +317,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: this.state.series, labels: this.state.labels }),
+                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: this.state.data.chart.series, labels: this.state.data.chart.series }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
@@ -337,7 +352,7 @@ class Indicator extends React.Component {
                                     style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
                                 React.createElement("hr", null)
                             ),
-                            React.createElement(PieChart, { id: "pie-chart", series: this.state.series2, labels: this.state.labels2 }),
+                            React.createElement(PieChart, { id: "pie-chart", series: this.state.data.chart2.series, labels: this.state.data.chart2.labels }),
                             React.createElement(
                                 "p",
                                 { className: "box-chart-font bg-lgt" },
@@ -358,7 +373,8 @@ class Indicator extends React.Component {
                             React.createElement("br", null)
                         )
                     )
-                )
+                ),
+                modal
             )
         );
     }

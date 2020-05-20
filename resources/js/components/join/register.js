@@ -242,6 +242,10 @@ class Register extends React.Component{
 
     }
 
+    showHidePassword(){
+        $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+    }
+
 
     render(){
 
@@ -296,8 +300,8 @@ class Register extends React.Component{
                                     <div className="col-md-5">
                                         <label htmlFor="password">Senha*</label><br/>
                                         <div className="input-icon">
-                                            <input className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
-                                            <i className="far fa-eye-slash"/>
+                                            <input id="password" className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
+                                            <a onClick={() => this.showHidePassword()}><i className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                         </div>
                                         <br/>
                                     </div>
