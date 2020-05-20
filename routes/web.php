@@ -113,12 +113,12 @@ Route::post('change-forget-password', 'UserLoginController@changeForgetPassword'
 ///////////////////////////////////////////////////////////////////////////////////////
 Route::post('/register', 'RegisterUserController@index');
 Route::get('/register', 'RegisterUserController@index2');
+Route::get('/register-login', 'RegisterUserController@register');
+
 /// //AREA USER///////////////////////////////////////////////////////////////////////////////////
-
-
 //views
-Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/area-user', 'UserAreaController@index')->middleware('auth');
+Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
 
 Route::get('/dados-textos', 'UserAreaController@texts')->middleware('auth');

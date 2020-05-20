@@ -3,6 +3,14 @@
 <script src="js/app.js"></script>
 <script src="js/utils.js"></script>
 
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
 <script src="/js/react/react.development.js" crossorigin></script>
 <script src="/js/react/react-dom.development.js" crossorigin></script>
 
