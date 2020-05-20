@@ -100,9 +100,42 @@ class HomeController extends Controller
             array_push( $data['labels'], $item->labels);
         }
         //////////////////////////////////////////
+        //Distribuição natureza juridica/////////
+        /*$results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_natureza_juridica')
+            ->select('natureza_juridica')
+            ->where('localidade', 11)
+            ->get();*/
+
+        $results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_natureza_juridica')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   natureza_juridica as title,
+                   localidade as labels
+            "))
+            ->groupBy('quantidade_oscs', 'natureza_juridica', 'localidade')
+            ->where('localidade', 11)
+            ->get();
+
+
+            $data2 = [
+                'series' => [
+                    ['name' => [], 'type' => 'column', 'data' => []],//type: column, line, area
+                ],
+                'labels' => []
+            ];
+
+            foreach ($results2 as $key => $item) {
+                array_push( $data2['series'][0]['data'], $item->series);
+                array_push( $data2['series'][0]['name'], $item->title);
+                array_push( $data2['labels'], $item->labels);
+            }
+        //////////////////////////////////////////
 
         $results = [];
         $results['chart'] = $data;
+        $results['chart2'] = $data2;
         return $results;
 
     }

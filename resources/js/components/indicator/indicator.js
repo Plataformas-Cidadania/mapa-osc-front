@@ -10,10 +10,8 @@ class Indicator extends React.Component{
             loading: false,
             yaxis: [],
             labels: [],
-            labels2: [],
             series: [],
-            series2: [],
-            chart2: [],
+
             table: ['teste'],
         };
 
@@ -25,27 +23,9 @@ class Indicator extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        //console.log(props);
-
-        /*this.setState({
-            data: props.data,
-            labels: props.data.chart.labels,
-            series: props.data.chart.series,
-            labels2: props.data.chart2.labels,
-            series2: props.data.chart2.series
-        });*/
         this.setState({
             data: props.data,
         });
-
-
-        /*console.log(props)
-        this.setState({
-            data: props.data,
-            labels: props.data.labels,
-            series: props.data.series,
-        });*/
-
     }
 
     loadChart(props){
@@ -121,20 +101,39 @@ class Indicator extends React.Component{
         )
     }
 
+    showHideColumn(){
+        document.getElementById('line').setAttribute("class", "col-md-9");
+        document.getElementById('column').setAttribute("class", "col-md-3");
+        document.getElementById('column').style.display = "block";
+        document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top icons-top-active cursor");
+        document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top cursor");
+    }
+    showHideLine(){
+        document.getElementById('line').setAttribute("class", "col-md-12");
+        document.getElementById('column').style.display = "none";
+        document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top icons-top-active cursor");
+        document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top cursor");
+    }
+
+
     render(){
 
-            //console.log("11", this.state.data.chart2.series);
+
 
         let modal = this.modal();
 
         return (
             <div>
-                {/*{this.state.yaxis}<br/>
-                {this.state.series}<br/>
-                {this.state.labels}<br/>*/}
+
+
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-12" style={{margin: '-20px 0 0 0'}}>
+                            <a onClick={() => this.showHideLine()}><i id="iconLine" className="fas fa-bars fa-2x float-right icons-top curso-poite cursor"/></a>
+                            <a onClick={() => this.showHideColumn()}><i id="iconColumn" className="fas fa-columns fa-2x float-right icons-top icons-top-active cursor"/></a>
+                            <br/><br/>
+                        </div>
+                        <div id="column" className="col-md-3">
                             <ul className="menu-left menu-left-chart">
                                 <li className="list-group-item-theme  menu-left-active">
                                     <a href="#">1- Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
@@ -146,7 +145,7 @@ class Indicator extends React.Component{
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-md-9">
+                        <div id="line" className="col-md-9">
                             {/*Bloco Chart start*/}
                             <div className="box-chart">
                                 <div className="title-style" style={{perspective: '1000px'}}>
@@ -177,7 +176,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.series}/>
+                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
                                 {/*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">

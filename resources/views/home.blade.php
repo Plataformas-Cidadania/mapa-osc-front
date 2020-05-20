@@ -198,6 +198,8 @@
             </div>
             <div class="col-md-12 text-center">
                 <ul class="menu-items">
+
+
                     @foreach($areas_atuacao as $area_atuacao)
                     <li>
                         <a href="">
@@ -206,6 +208,8 @@
                         </a>
                     </li>
                     @endforeach
+
+
                     {{--<li>
                         <a href="">
                             <i class="fa fa-user"></i>
