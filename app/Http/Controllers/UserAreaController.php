@@ -48,8 +48,6 @@ class UserAreaController extends Controller
 
 
 
-
-
     public function updateData(Request $request){
         $data = $request->form;
 
@@ -76,11 +74,72 @@ class UserAreaController extends Controller
         return ['user' => $user];
     }
 
+    public function updateOsc(Request $request){
+        $data = $request->form;
+
+        $data['id'] = auth()->user()->id;
+
+        $id = 394905;
+
+        /*$registroCpf = \App\SiteUser::select('cpf')->where([
+            ['cpf', $data['cpf']],
+            ['id', '!=', $data['id']]
+        ])->first();
+
+        $registroEmail = \App\SiteUser::select('email')->where([
+            ['email', $data['email']],
+            ['id', '!=', $data['id']]
+        ])->first();
+
+        if($registroCpf || $registroEmail){
+            return ['cpf' => $registroCpf, 'email' => $registroEmail];
+        }*/
+        $osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select('id_osc', 'tx_razao_social_osc')
+            ->where('id_osc', $id)
+            ->update($data);
+
+        //$osc = \App\SiteUser::find($data['id']);
+
+        //$osc->update($data);
+
+        return ['user' => $osc];
+    }
+
     public function getData(){
         return \App\SiteUser::find(auth()->user()->id);
     }
 
+    public function getOsc(){
 
+       /* $osc = DB::connection('map')
+            ->table('osc.vw_busca_osc')
+            ->select('id_osc', 'tx_nome_osc')
+            ->where('id_osc', 789809)
+            ->get();
+        */
+       $id = 789809;
+        $osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select('id_osc', 'tx_razao_social_osc')
+            ->where('id_osc', 394905)
+            //->get();
+            ->first();
+
+        return ['osc' => $osc];
+    }
+
+
+    public function listOscs(){
+        //$oscs = \App\Osc::all();
+        $oscs = DB::connection('map')
+            ->table('osc.vw_busca_osc')
+            ->select('id_osc', 'tx_nome_osc')
+            ->where('id_osc', 789809)
+            ->get();
+        return $oscs;
+    }
 
     public function listDocuments(){
         $documents = \App\Document::all();
@@ -96,34 +155,6 @@ class UserAreaController extends Controller
         $document->next_id = $next_id;
         return $document;
     }
-    public function listOscs(){
-        //$oscs = \App\Osc::all();
-        $oscs = DB::connection('map')
-            ->table('osc.vw_busca_osc')
-            ->select('id_osc', 'tx_nome_osc')
-            ->where('id_osc', 789809)
-            ->get();
-        return $oscs;
-    }
-    public function detailOsc($id){
-
-        $id = 789809;
-        /*$osc = \App\Osc::select('id', 'title', 'description', 'imagem', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
-            ->groupBy('id', 'title', 'description', 'imagem')
-            ->find($id);
-        $previous_id = \App\Osc::where('id', '<', $id)->max('id');
-        $next_id = \App\Osc::where('id', '>', $id)->min('id');
-        $osc->previous_id = $previous_id;
-        $osc->next_id = $next_id;*/
-
-        $osc = DB::connection('map')
-            ->table('osc.vw_busca_osc')
-            ->whereColumn('id_osc', 789809)
-            ->find($id);
-
-        return $osc;
-    }
-
 
     public  function dashboardStatus(){
 

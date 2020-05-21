@@ -120,41 +120,34 @@ Route::get('/register-login', 'RegisterUserController@register');
 Route::get('/area-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
-
 Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
 
+Route::get('/logout-user', 'UserLoginController@logout');
+
+
 Route::get('/dados-arquivos', 'UserAreaController@documents')->middleware('auth');
 Route::get('/dados-arquivo/{id}', 'UserAreaController@document')->middleware('auth');
-
-
 Route::get('/videos-privados', 'UserAreaController@videos')->middleware('auth');
 
-Route::get('/logout-user', 'UserLoginController@logout');
 
 
 //ajax
 Route::post('/update-data', 'UserAreaController@updateData')->middleware('auth');
 Route::get('/get-data', 'UserAreaController@getData')->middleware('auth');
-
+Route::get('/get-osc', 'UserAreaController@getOsc')->middleware('auth');
 Route::post('/list-users-oscs', 'UserAreaController@listOscs')->middleware('auth');
-Route::get('/detalhar-users-osc/{id}', 'UserAreaController@detailOsc')->middleware('auth');
+
+Route::post('/update-osc', 'UserAreaController@updateOsc')->middleware('auth');
+//Route::get('/get-osc', 'UserAreaController@getOsc')->middleware('auth');
+
+/*
+Route::get('/detail-user-osc/{id}', 'UserAreaController@detailOsc')->middleware('auth');*/
 
 Route::post('/list-users-documents', 'UserAreaController@listDocuments')->middleware('auth');
 Route::get('/detalhar-users-document/{id}', 'UserAreaController@detailDocument')->middleware('auth');
-
-
-
-
-
 Route::get('/list-private-videos', 'PrivateVideoController@listing')->middleware('auth');
 Route::get('/private-video/{id}', 'PrivateVideoController@video')->middleware('auth');
-
-//chamado no iframe dentro do componente video
-Route::get('/streaming-credentials/{type}/{video}/{id}', 'PrivateVideoController@streamingCredentials');
-
-Route::get('/completed-videos/{id}', 'PrivateVideoController@completedVideo');
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

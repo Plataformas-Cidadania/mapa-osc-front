@@ -44,31 +44,40 @@ class Oscs extends React.Component {
             }
 
             return React.createElement(
-                'div',
-                { className: 'col-md-12', key: "osc_" + item.id_osc },
+                'tr',
+                { key: "osc_" + item.id_osc },
                 React.createElement(
-                    'a',
-                    { href: "/osc-user/" + item.id_osc },
+                    'th',
+                    { scope: 'row' },
+                    index + 1
+                ),
+                React.createElement(
+                    'td',
+                    null,
+                    item.tx_nome_osc
+                ),
+                React.createElement(
+                    'td',
+                    { width: '230' },
                     React.createElement(
                         'div',
-                        { className: 'box-item box-item-theme' },
-                        React.createElement('br', null),
+                        { className: 'btn btn-primary' },
                         React.createElement(
-                            'div',
-                            { className: 'box-item-theme-img' },
-                            React.createElement('img', { src: "/imagens/oscs/md-" + item.imagem, className: 'box-item-theme-img', alt: '', width: '100%' })
-                        ),
-                        React.createElement('br', null),
+                            'a',
+                            { href: "/detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
+                            React.createElement('i', { className: 'fas fa-binoculars' }),
+                            ' Detalhes'
+                        )
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-success' },
                         React.createElement(
-                            'h4',
-                            { className: 'box-item-theme-p' },
-                            item.tx_nome_osc
-                        ),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'p',
-                            { className: 'box-item-theme-p box-item-theme-p-det ' },
-                            item.teaser
+                            'a',
+                            { href: "/osc-user/" + item.id_osc },
+                            React.createElement('i', { className: 'far fa-edit' }),
+                            ' Editar'
                         )
                     )
                 )
@@ -81,7 +90,42 @@ class Oscs extends React.Component {
             React.createElement(
                 'div',
                 { className: 'row' },
-                oscs
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'table',
+                        { className: 'table' },
+                        React.createElement(
+                            'thead',
+                            { className: 'thead-light' },
+                            React.createElement(
+                                'tr',
+                                null,
+                                React.createElement(
+                                    'th',
+                                    { scope: 'col' },
+                                    'Id'
+                                ),
+                                React.createElement(
+                                    'th',
+                                    { scope: 'col' },
+                                    'Nome da OSC'
+                                ),
+                                React.createElement(
+                                    'th',
+                                    { scope: 'col', className: 'text-center' },
+                                    'A\xE7\xF5es'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'tbody',
+                            null,
+                            oscs
+                        )
+                    )
+                )
             )
         );
     }

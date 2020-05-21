@@ -45,26 +45,42 @@ class Oscs extends React.Component{
             }
 
             return (
-                <div className="col-md-12" key={"osc_"+item.id_osc}>
-                    <a href={"/osc-user/"+item.id_osc}>
-                        <div className="box-item box-item-theme">
-                            <br/>
-                            <div className="box-item-theme-img">
-                                <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />
+                    <tr key={"osc_"+item.id_osc}>
+                        <th scope="row">{index+1}</th>
+                        <td>
+                           {/* <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />*/}
+                            {item.tx_nome_osc}
+                        </td>
+                        <td width="230">
+                            <div className="btn btn-primary">
+                                <a href={"/detalhar/"+item.id_osc+"/"+item.tx_nome_osc}><i className="fas fa-binoculars"></i> Detalhes</a>
                             </div>
-                            <br/>
-                            <h4 className="box-item-theme-p">{item.tx_nome_osc}</h4><br/>
-                            <p className="box-item-theme-p box-item-theme-p-det ">{item.teaser}</p>
-                        </div>
-                    </a>
-                </div>
+                            &nbsp;
+                            <div className="btn btn-success">
+                                <a href={"/osc-user/"+item.id_osc}><i className="far fa-edit"></i> Editar</a>
+                            </div>
+                        </td>
+                    </tr>
             );
         }.bind(this));
 
         return(
             <div>
                 <div className="row">
-                    {oscs}
+                    <div className="col-md-12">
+                        <table className="table">
+                            <thead className="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nome da OSC</th>
+                                <th scope="col" className="text-center">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {oscs}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         );

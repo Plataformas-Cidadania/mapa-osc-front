@@ -65,7 +65,6 @@ class Data extends React.Component {
             url: '/get-data',
             cache: false,
             success: function (data) {
-
                 this.setState({ loading: false, form: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
