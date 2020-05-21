@@ -33,7 +33,11 @@ class RegisterUserController extends Controller
     public function register(Request $request){
         $data = $request->form;
 
+        Log::info($request);
+        Log::info("#####");
         Log::info($data);
+        Log::info("#####");
+
 
         $registroCpf = \App\SiteUser::select('cpf')->where('cpf', $data['cpf'])->first();
         $registroEmail = \App\SiteUser::select('email')->where('email', $data['email'])->first();
