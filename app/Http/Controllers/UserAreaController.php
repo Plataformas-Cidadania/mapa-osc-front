@@ -18,6 +18,17 @@ class UserAreaController extends Controller
     public function index(){
         return view('user-area', ['pgUserArea' => 'dashboard']);
     }
+    public function oscs(){
+        return view('user-area', ['pgUserArea' => 'oscs']);
+    }
+    public function osc($id){
+        return view('user-area', ['pgUserArea' => 'osc', 'id' => $id]);
+    }
+    public function data(){
+        return view('user-area', ['pgUserArea' => 'data']);
+    }
+
+
 
     public function documents(){
         return view('user-area', ['pgUserArea' => 'documents']);
@@ -25,12 +36,7 @@ class UserAreaController extends Controller
     public function document($id){
         return view('user-area', ['pgUserArea' => 'document', 'id' => $id]);
     }
-    public function texts(){
-        return view('user-area', ['pgUserArea' => 'texts']);
-    }
-    public function text($id){
-        return view('user-area', ['pgUserArea' => 'text', 'id' => $id]);
-    }
+
 
     public function videos(){
         return view('user-area', ['pgUserArea' => 'videos']);
@@ -40,9 +46,7 @@ class UserAreaController extends Controller
         return view('user-area', ['pgUserArea' => 'video']);
     }*/
 
-    public function data(){
-        return view('user-area', ['pgUserArea' => 'data']);
-    }
+
 
 
 
@@ -51,12 +55,12 @@ class UserAreaController extends Controller
 
         $data['id'] = auth()->user()->id;
 
-        $registroCpf = \App\User::select('cpf')->where([
+        $registroCpf = \App\SiteUser::select('cpf')->where([
             ['cpf', $data['cpf']],
             ['id', '!=', $data['id']]
         ])->first();
 
-        $registroEmail = \App\User::select('email')->where([
+        $registroEmail = \App\SiteUser::select('email')->where([
             ['email', $data['email']],
             ['id', '!=', $data['id']]
         ])->first();
@@ -65,9 +69,7 @@ class UserAreaController extends Controller
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }
 
-
-
-        $user = \App\User::find($data['id']);
+        $user = \App\SiteUser::find($data['id']);
 
         $user->update($data);
 
@@ -75,7 +77,7 @@ class UserAreaController extends Controller
     }
 
     public function getData(){
-        return \App\User::find(auth()->user()->id);
+        return \App\SiteUser::find(auth()->user()->id);
     }
 
 
@@ -94,19 +96,32 @@ class UserAreaController extends Controller
         $document->next_id = $next_id;
         return $document;
     }
-    public function listTexts(){
-        $texts = \App\Text::all();
-        return $texts;
+    public function listOscs(){
+        //$oscs = \App\Osc::all();
+        $oscs = DB::connection('map')
+            ->table('osc.vw_busca_osc')
+            ->select('id_osc', 'tx_nome_osc')
+            ->where('id_osc', 789809)
+            ->get();
+        return $oscs;
     }
-    public function detailText($id){
-        $text = \App\Text::select('id', 'title', 'description', 'imagem', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
+    public function detailOsc($id){
+
+        $id = 789809;
+        /*$osc = \App\Osc::select('id', 'title', 'description', 'imagem', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
             ->groupBy('id', 'title', 'description', 'imagem')
             ->find($id);
-        $previous_id = \App\Text::where('id', '<', $id)->max('id');
-        $next_id = \App\Text::where('id', '>', $id)->min('id');
-        $text->previous_id = $previous_id;
-        $text->next_id = $next_id;
-        return $text;
+        $previous_id = \App\Osc::where('id', '<', $id)->max('id');
+        $next_id = \App\Osc::where('id', '>', $id)->min('id');
+        $osc->previous_id = $previous_id;
+        $osc->next_id = $next_id;*/
+
+        $osc = DB::connection('map')
+            ->table('osc.vw_busca_osc')
+            ->whereColumn('id_osc', 789809)
+            ->find($id);
+
+        return $osc;
     }
 
 

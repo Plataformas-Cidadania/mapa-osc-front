@@ -11882,7 +11882,7 @@ time {
 .menu-small li {
   display: inline-block;
   padding: 5px 10px 3px 10px;
-  border-bottom: solid 2px #CCCCCC;
+  border-bottom: solid 2px #EEEEEE;
 }
 
 .menu-small li:hover {
@@ -11893,6 +11893,27 @@ time {
   .cel-footer {
     margin-bottom: 50px;
   }
+}
+
+.menu-area {
+  margin: 0;
+  padding: 12px;
+}
+
+.menu-area li {
+  margin: 0;
+  list-style: none;
+}
+
+.menu-area li a {
+  display: block;
+  padding: 5px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+.menu-area li a:hover {
+  color: #FFFFFF;
+  background-color: #3A559B;
 }
 
 body {

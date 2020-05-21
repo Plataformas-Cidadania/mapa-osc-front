@@ -11,12 +11,27 @@ class RegisterUserController extends Controller
 {
     public function index(Request $request){
 
+        $data = $request->form;
+
+        $registroCpf = \App\SiteUser::select('cpf')->where('cpf', $data['cpf'])->first();
+        $registroEmail = \App\SiteUser::select('email')->where('email', $data['email'])->first();
+
+        if($registroCpf || $registroEmail){
+            return ['cpf' => $registroCpf, 'email' => $registroEmail];
+        }
+
+        $data['password'] = bcrypt($data['password']);
+        $user = \App\SiteUser::create($data);
+        $user_id = $user->id;
+        Auth::loginUsingId($user->id);
+
+        return ['user' => $user];
+
 
         $email = $request->email;
+        $name = $request->name;
 
-
-
-        return view('join.register', ['email' => $email]);
+        return view('join.register', ['email' => $email, 'name' => $name]);
     }
     public function index2(){
         return view('join.register');
@@ -30,33 +45,6 @@ class RegisterUserController extends Controller
         return ['address' => json_decode($address)];
     }
 
-    public function register(Request $request){
-        $data = $request->form;
-
-        Log::info($request);
-        Log::info("#####");
-        Log::info($data);
-        Log::info("#####");
-
-
-        $registroCpf = \App\SiteUser::select('cpf')->where('cpf', $data['cpf'])->first();
-        $registroEmail = \App\SiteUser::select('email')->where('email', $data['email'])->first();
-
-        if($registroCpf || $registroEmail){
-            return ['cpf' => $registroCpf, 'email' => $registroEmail];
-        }
-
-        $data['password'] = bcrypt($data['password']);
-
-        $user = \App\SiteUser::create($data);
-
-        $user_id = $user->id;
-
-
-        Auth::loginUsingId($user->id);
-
-        return ['user' => $user];
-    }
 
     public function registerAccount($carrinho){
 
@@ -67,17 +55,7 @@ class RegisterUserController extends Controller
         return redirect('/minha-area');
     }
 
-    public function addresses(){
 
-        /*$plan = DB::table('users_accounts')
-            ->select('users_plans.*')
-            ->join('users_plans', 'users_plans.id', '=', 'users_accounts.carrinho')
-            ->where('user_id', auth()->user()->id)
-            ->orderBy('users_accounts.id', 'desc')
-            ->first();*/
-
-        return view('join.register-addresses'/*, ['plan', $plan]*/);
-    }
 
     public function listAddresses(){
         $user_id = auth()->user()->id;

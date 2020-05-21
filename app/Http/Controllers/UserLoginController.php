@@ -16,11 +16,13 @@ class UserLoginController extends Controller
 
     public function login(Request $request){
 
+        Log::info($request);
+
         $email = $request->form['email'];
         $password = $request->form['password'];
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            DB::table('sessions')->where('user_id', Auth::user()->id)->delete();
+            //DB::table('sessions')->where('user_id', Auth::user()->id)->delete();
         }
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {

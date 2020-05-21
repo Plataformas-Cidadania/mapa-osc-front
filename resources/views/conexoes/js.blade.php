@@ -179,7 +179,7 @@
 @if($rota=="reset-password/{token}/{email}")
     <script src="/js/components/login/resetPassword.js"></script>
 @endif
-@if($rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-arquivos" || $rota=="dados-textos" || $rota=="dados-texto/{id}" || $rota=="dados-arquivo/{id}" || $rota=="dados-user" || $rota=="videos-privados")
+@if($rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-arquivos" || $rota=="oscs-user" || $rota=="osc-user/{id}" || $rota=="dados-arquivo/{id}" || $rota=="dados-user" || $rota=="videos-privados")
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
 @endif
@@ -198,14 +198,14 @@
     </script>
     <script src="/js/components/user-area/document.js"></script>
 @endif
-@if($rota=="dados-textos")
-    <script src="/js/components/user-area/texts.js"></script>
+@if($rota=="oscs-user")
+    <script src="/js/components/user-area/oscs.js"></script>
 @endif
-@if($rota=="dados-texto/{id}")
+@if($rota=="osc-user/{id}")
     <script>
         id = {{$id}};
     </script>
-    <script src="/js/components/user-area/text.js"></script>
+    <script src="/js/components/user-area/osc.js"></script>
 @endif
 @if($rota=="register")
     <script src="/js/components/join/register.js"></script>

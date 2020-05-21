@@ -1,10 +1,10 @@
-class Texts extends React.Component{
+class Oscs extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             loadingList:false,
             loading:false,
-            texts:[],
+            oscs:[],
             editId: 0,
         };
 
@@ -21,12 +21,12 @@ class Texts extends React.Component{
 
         $.ajax({
             method: 'POST',
-            url: '/list-users-texts',
+            url: '/list-users-oscs',
             data: {
             },
             cache: false,
             success: function(data){
-                this.setState({texts: data, loadingList: false});
+                this.setState({oscs: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -37,23 +37,23 @@ class Texts extends React.Component{
 
     render(){
 
-        let texts = this.state.texts.map(function(item, index){
+        let oscs = this.state.oscs.map(function(item, index){
 
             let hr = null;
-            if(index < this.state.texts.length-1){
+            if(index < this.state.oscs.length-1){
                 hr = <hr/>;
             }
 
             return (
-                <div className="col-md-12" key={"text_"+item.id}>
-                    <a href={"/dados-texto/"+item.id}>
+                <div className="col-md-12" key={"osc_"+item.id_osc}>
+                    <a href={"/osc-user/"+item.id_osc}>
                         <div className="box-item box-item-theme">
                             <br/>
                             <div className="box-item-theme-img">
-                                <img src={"/imagens/texts/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />
+                                <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />
                             </div>
                             <br/>
-                            <h4 className="box-item-theme-p">{item.title}</h4><br/>
+                            <h4 className="box-item-theme-p">{item.tx_nome_osc}</h4><br/>
                             <p className="box-item-theme-p box-item-theme-p-det ">{item.teaser}</p>
                         </div>
                     </a>
@@ -64,7 +64,7 @@ class Texts extends React.Component{
         return(
             <div>
                 <div className="row">
-                    {texts}
+                    {oscs}
                 </div>
             </div>
         );
@@ -73,6 +73,6 @@ class Texts extends React.Component{
 
 
 ReactDOM.render(
-    <Texts/>,
-    document.getElementById('texts')
+    <Oscs/>,
+    document.getElementById('oscs')
 );

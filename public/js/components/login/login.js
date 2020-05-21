@@ -19,15 +19,9 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        if (carrinho > 0) {
-            //this.setState({target: '/register-account/'+carrinho});
-            this.setState({ target: '/register-addresses' });
-            return;
-        }
         if (!this.props.target) {
             this.setState({ target: '/area-user' });
         }
-        console.log(carrinho);
     }
 
     handleInputChange(event) {

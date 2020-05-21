@@ -1,10 +1,10 @@
-class Text extends React.Component{
+class Osc extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             loadingList:false,
             loading:false,
-            text:[],
+            osc:[],
             editId: 0,
         };
 
@@ -21,11 +21,11 @@ class Text extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: '/detalhar-users-text/'+this.props.id,
+            url: '/detalhar-users-osc/'+this.props.id,
             cache: false,
             success: function(data){
                 console.log(data);
-                this.setState({text: data, loadingList: false});
+                this.setState({osc: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -36,25 +36,25 @@ class Text extends React.Component{
 
     render(){
 
-        console.log(this.state.text.id, this.state.text.max_id);
+        console.log(this.state.osc.id, this.state.osc.max_id);
 
         let previous = null;
-        if(this.state.text.previous_id){
-            previous = (<li className={"previous"}><a href={"/dados-texto/"+(this.state.text.previous_id)}><span aria-hidden="true">&larr;</span> Anterior</a></li>);
+        if(this.state.osc.previous_id){
+            previous = (<li className={"previous"}><a href={"/dados-osco/"+(this.state.osc.previous_id)}><span aria-hidden="true">&larr;</span> Anterior</a></li>);
         }
 
         let next = null;
-        if(this.state.text.next_id){
-            next = (<li className={"next"}><a href={"/dados-texto/"+(this.state.text.next_id)}>Próximo <span aria-hidden="true">&rarr;</span></a></li>);
+        if(this.state.osc.next_id){
+            next = (<li className={"next"}><a href={"/dados-osco/"+(this.state.osc.next_id)}>Próximo <span aria-hidden="true">&rarr;</span></a></li>);
         }
 
         return(
             <div>
                 <div className="row">
                     <div className="col-md-12">
-                        <img src={"/imagens/texts/lg-"+this.state.text.imagem}  alt="" width="100%" />
-                        <h2 className="box-item-theme-p">{this.state.text.title}</h2>
-                        <div className="box-item-theme-p box-item-theme-p-det " dangerouslySetInnerHTML={{__html: this.state.text.description}} />
+                        <img src={"/imagens/oscs/lg-"+this.state.osc.imagem}  alt="" width="100%" />
+                        <h2 className="box-item-theme-p">{this.state.osc.tx_nome_osc}</h2>
+                        <div className="box-item-theme-p box-item-theme-p-det " dangerouslySetInnerHTML={{__html: this.state.osc.description}} />
                         <br/><br/>
                     </div>
                 </div>
@@ -72,6 +72,6 @@ class Text extends React.Component{
 
 
 ReactDOM.render(
-    <Text id={id}/>,
-    document.getElementById('text')
+    <Osc id={id}/>,
+    document.getElementById('osc')
 );

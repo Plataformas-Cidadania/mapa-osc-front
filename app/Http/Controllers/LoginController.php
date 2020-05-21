@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
@@ -37,6 +38,7 @@ class LoginController extends Controller
         }
 
         $dadosUsuario = ['email' => $request->get('email'), 'password' => $request->get('password')];
+
 
         if(auth()->attempt($dadosUsuario)){
             return redirect("/$destino");

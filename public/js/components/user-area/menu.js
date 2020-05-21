@@ -5,7 +5,6 @@ class Menu extends React.Component {
     }
 
     render() {
-
         return React.createElement(
             "ul",
             { className: "menu-area" },
@@ -24,39 +23,19 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
+                    { href: "/oscs-user" },
+                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    " Minhas OSCs"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
                     { href: "/dados-user" },
                     React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                     " Meus Dados"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
-                React.createElement(
-                    "a",
-                    { href: "/dados-textos" },
-                    React.createElement("i", { className: "fa fa-book", "aria-hidden": "true" }),
-                    " Textos"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
-                React.createElement(
-                    "a",
-                    { href: "/dados-arquivos" },
-                    React.createElement("i", { className: "fa fa-file", "aria-hidden": "true" }),
-                    " Arquivos"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
-                React.createElement(
-                    "a",
-                    { href: "/videos-privados" },
-                    React.createElement("i", { className: "fa fa-video", "aria-hidden": "true" }),
-                    " V\xEDdeos"
                 )
             ),
             React.createElement(

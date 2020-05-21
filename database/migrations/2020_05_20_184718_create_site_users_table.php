@@ -20,6 +20,7 @@ class CreateSiteUsersTable extends Migration
             $table->string('password');
             $table->smallInteger('type')->default(0);
             $table->string('cpf');
+            $table->string('cnpj');
             $table->smallInteger('status')->default(1);
             $table->smallInteger('newsletter')->default(1);
             $table->rememberToken();

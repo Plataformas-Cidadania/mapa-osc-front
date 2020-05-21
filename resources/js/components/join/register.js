@@ -21,8 +21,6 @@ class Register extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-
-
     }
 
     componentDidMount() {
@@ -103,8 +101,6 @@ class Register extends React.Component{
             return false;
         }
         let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
         if(array_name.length<2){
             return false;
         }
@@ -116,9 +112,6 @@ class Register extends React.Component{
     register(e){
         e.preventDefault();
 
-
-
-
         ////Voltar o validar
         if(!this.validate()){
             return;
@@ -127,8 +120,6 @@ class Register extends React.Component{
         console.log("222");
 
         let form = this.state.form;
-        form.tipo = 1;
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: '', form: form}, function(){
             $.ajax({
@@ -154,7 +145,7 @@ class Register extends React.Component{
                         return;
                     }
 
-                    location.href = '/register-login';
+                    location.href = '/login';
                     //this.setState({loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -273,6 +264,6 @@ class Register extends React.Component{
 }
 
 ReactDOM.render(
-    <Register  email={email} cep={cep}/>,
+    <Register  email={email}/>,
     document.getElementById('register')
 );

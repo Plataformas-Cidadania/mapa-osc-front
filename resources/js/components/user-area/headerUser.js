@@ -8,13 +8,21 @@ class HeaderUser extends React.Component{
 
     render(){
         return(
-            <div className="container">
-                <div className="title-box">
-                    <br/>
-                    <h2 className="text-center">Área do Associado</h2>
-                    <hr/>
+            <div>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <br/>
+                            <h1>Minha conta</h1>
+                            <h5><a href="/">Home</a></h5>
+                            <div className="line line-fix "/>
+                            <hr style={{marginTop: '-2px',}}/>
+                            <br/>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         );
     }
 }
