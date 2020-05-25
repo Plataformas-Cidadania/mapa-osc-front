@@ -95,11 +95,22 @@ class UserAreaController extends Controller
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }*/
 
+
+
         $osc = DB::connection('map')
             ->table('osc.tb_dados_gerais')
-            ->select('id_osc', 'tx_razao_social_osc')
+            ->select(DB::raw('id_osc', 'tx_razao_social_osc'))
             ->where('id_osc', $id)
+            ->orderBy('id_osc')
             ->update($data);
+
+
+        /*$osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select(DB::raw('id_osc', 'tx_razao_social_osc'))
+            ->where('id_osc', $id)
+            ->orderBy('id_osc')
+            ->update($data);*/
 
 
         //$osc = \App\SiteUser::find($data['id']);
