@@ -74,12 +74,41 @@ class UserAreaController extends Controller
         return ['user' => $user];
     }
 
+    public function getOsc(){
+
+        /*$osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal'
+            )
+            ->where('id_osc', $id)
+            ->first();*/
+
+        $id = 508303;
+        $osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select('id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal')
+            ->where('id_osc', $id)
+            ->first();
+
+        $localizacao = DB::connection('map')
+            ->table('osc.tb_localizacao')
+            ->select('tx_endereco', 'nr_localizacao', 'tx_bairro', 'cd_municipio', 'nr_cep', 'cd_municipio')
+            ->where('id_osc', $id)
+            ->first();
+
+        return [
+            'osc' => $osc,
+            'localizacao' => $localizacao
+        ];
+    }
+
     public function updateOsc(Request $request){
         $data = $request->form;
 
         //$data['id'] = auth()->user()->id;
 
-        $id = 394905;
+        $id = 508303;
 
         /*$registroCpf = \App\SiteUser::select('cpf')->where([
             ['cpf', $data['cpf']],
@@ -96,26 +125,15 @@ class UserAreaController extends Controller
         }*/
 
 
-
         $osc = DB::connection('map')
             ->table('osc.tb_dados_gerais')
-            ->select(DB::raw('id_osc', 'tx_razao_social_osc'))
+            ->select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal'
+           )
             ->where('id_osc', $id)
             ->orderBy('id_osc')
             ->update($data);
 
-
-        /*$osc = DB::connection('map')
-            ->table('osc.tb_dados_gerais')
-            ->select(DB::raw('id_osc', 'tx_razao_social_osc'))
-            ->where('id_osc', $id)
-            ->orderBy('id_osc')
-            ->update($data);*/
-
-
-        //$osc = \App\SiteUser::find($data['id']);
-
-        //$osc->update($data);
 
         return ['user' => $osc];
     }
@@ -124,24 +142,7 @@ class UserAreaController extends Controller
         return \App\SiteUser::find(auth()->user()->id);
     }
 
-    public function getOsc(){
 
-       /* $osc = DB::connection('map')
-            ->table('osc.vw_busca_osc')
-            ->select('id_osc', 'tx_nome_osc')
-            ->where('id_osc', 789809)
-            ->get();
-        */
-       $id = 789809;
-        $osc = DB::connection('map')
-            ->table('osc.tb_dados_gerais')
-            ->select('id_osc', 'tx_razao_social_osc')
-            ->where('id_osc', 394905)
-            //->get();
-            ->first();
-
-        return ['osc' => $osc];
-    }
 
 
     public function listOscs(){

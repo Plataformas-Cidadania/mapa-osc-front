@@ -5,7 +5,8 @@ class Osc extends React.Component {
             form: {
                 email: '',
                 name: '',
-                endereco: ''
+                endereco: '',
+                tx_endereco: ''
             },
             button: true,
             loading: false,
@@ -13,6 +14,10 @@ class Osc extends React.Component {
                 name: true,
                 email: true,
                 tx_razao_social_osc: true,
+                tx_sigla_osc: true,
+                tx_nome_situacao_imovel_osc: true,
+                tx_nome_responsavel_legal: true,
+
                 cnpj: true
             },
             showMsg: false,
@@ -164,84 +169,9 @@ class Osc extends React.Component {
 
     render() {
 
-        console.log("***", this.state.form);
-
         return React.createElement(
             'div',
             null,
-            React.createElement(
-                'div',
-                { className: 'title-user-area' },
-                React.createElement(
-                    'h3',
-                    null,
-                    React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-                    ' Organiza\xE7\xE3o da Sociedade Civil de Teste do Mapa das OSCs'
-                ),
-                React.createElement(
-                    'p',
-                    null,
-                    'Mantenha sempre seus dados atualizados, fica mais f\xE1cil para n\xF3s conversarmos!'
-                ),
-                React.createElement('hr', null),
-                React.createElement('br', null)
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement(
-                        'form',
-                        null,
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'tx_razao_social_osc' },
-                                'tx_razao_social_osc*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control form-g " + (this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc, placeholder: 'Tx_razao_social_osc' }),
-                            React.createElement('br', null)
-                        ),
-                        React.createElement('div', { className: 'clear-float' }),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement(
-                                'p',
-                                null,
-                                React.createElement(
-                                    'i',
-                                    null,
-                                    '* campos obrigat\xF3rios'
-                                )
-                            ),
-                            React.createElement(
-                                'button',
-                                { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
-                                'Salvar'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement(
-                                'div',
-                                { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
-                                this.state.msg
-                            ),
-                            React.createElement(
-                                'div',
-                                { style: { display: this.state.loading ? 'block' : 'none' } },
-                                React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                'Processando'
-                            )
-                        )
-                    )
-                )
-            ),
-            '--------------------------------------------------',
             React.createElement(
                 'div',
                 { className: 'container' },
@@ -251,163 +181,6 @@ class Osc extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'col-md-12' },
-                        React.createElement(
-                            'div',
-                            { className: 'alert alert-secondary box-floating' },
-                            React.createElement('i', { className: 'fas fa-chevron-right menu-icons-close btn-menu-txt' }),
-                            React.createElement('i', { className: 'fas fa-chevron-left menu-icons-close btn-menu-txt-show',
-                                style: { display: "none" } }),
-                            React.createElement(
-                                'ul',
-                                { className: 'menu-icons menu-right' },
-                                React.createElement('li', { id: 'btn-right' }),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#dados-gerais' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'far fa-file-alt' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Dados gerais'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#area-atuacao' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-share-alt' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            '\xC1rea de atua\xE7\xE3o'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#descricao' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-align-justify' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Descri\xE7\xE3o da OSC'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#titulacao' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-certificate' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Titula\xE7\xF5es e Certifica\xE7\xF5es'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#governanca' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-briefcase' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Trabalho e Governan\xE7a'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#participacao' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-users' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Participa\xE7\xE3o social'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#projetos' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-project-diagram' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Projetos'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    React.createElement(
-                                        'a',
-                                        { href: 'detalhar/1#fontes' },
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement('i', { className: 'fas fa-boxes' })
-                                        ),
-                                        React.createElement(
-                                            'p',
-                                            { className: 'menu-icons-txt' },
-                                            'Fontes de recursos'
-                                        )
-                                    )
-                                )
-                            ),
-                            React.createElement('i', { className: 'fas fa-times fa-2x float-right btn-right' })
-                        ),
                         React.createElement(
                             'div',
                             { className: 'row' },
@@ -495,8 +268,8 @@ class Osc extends React.Component {
                                         { htmlFor: 'inputEmail4' },
                                         'Sigla da OSC'
                                     ),
-                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'inputEmail4',
-                                        placeholder: 'Email' })
+                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_sigla_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_sigla_osc', onChange: this.handleInputChange, value: this.state.form.tx_sigla_osc, placeholder: 'Sigla da OSC' }),
+                                    React.createElement('br', null)
                                 ),
                                 React.createElement(
                                     'div',
@@ -506,8 +279,8 @@ class Osc extends React.Component {
                                         { htmlFor: 'inputPassword4' },
                                         'Nome Fantasia'
                                     ),
-                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'inputPassword4',
-                                        placeholder: 'Senha' })
+                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc, placeholder: 'Nome Fantasia' }),
+                                    React.createElement('br', null)
                                 )
                             ),
                             React.createElement(
@@ -520,16 +293,23 @@ class Osc extends React.Component {
                                     'Endere\xE7o:'
                                 ),
                                 React.createElement('br', null),
-                                'Rua Capit\xE3o Silvio Con\xE7alves de Farias, 981, Lote 02',
+                                this.state.form.tx_endereco,
+                                ', ',
+                                this.state.form.nr_localizacao,
+                                ', ***',
                                 React.createElement('br', null),
-                                'Bosque Ouro Preto do Oeste, Rond\xF4nia - RO',
+                                this.state.form.tx_bairro,
+                                ', ',
+                                this.state.form.cd_municipio,
+                                ' - ***',
                                 React.createElement('br', null),
                                 React.createElement(
                                     'strong',
                                     null,
                                     'CEP.:'
                                 ),
-                                ' 76920000'
+                                ' ',
+                                this.state.form.nr_cep
                             ),
                             React.createElement(
                                 'div',
@@ -587,8 +367,8 @@ class Osc extends React.Component {
                                     { htmlFor: 'inputAddress' },
                                     'Respons\xE1vel Legal'
                                 ),
-                                React.createElement('input', { type: 'text', className: 'form-control', id: 'inputAddress',
-                                    placeholder: 'Rua dos Bobos, n\xBA 0' })
+                                React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_nome_responsavel_legal ? '' : 'invalid-field'), type: 'text', name: 'tx_nome_responsavel_legal', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal, placeholder: 'Respons\xE1vel Legal' }),
+                                React.createElement('br', null)
                             ),
                             React.createElement(
                                 'div',
@@ -955,9 +735,34 @@ class Osc extends React.Component {
                                 )
                             ),
                             React.createElement(
-                                'button',
-                                { type: 'submit', className: 'btn btn-primary' },
-                                'Entrar'
+                                'div',
+                                { className: 'col-md-12' },
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    React.createElement(
+                                        'i',
+                                        null,
+                                        '* campos obrigat\xF3rios'
+                                    )
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
+                                    'Salvar'
+                                ),
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
+                                    this.state.msg
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.loading ? 'block' : 'none' } },
+                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                    'Processando'
+                                )
                             )
                         ),
                         React.createElement('div', { className: 'space' })

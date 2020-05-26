@@ -6,6 +6,7 @@ class Osc extends React.Component{
                 email: '',
                 name: '',
                 endereco: '',
+                tx_endereco: '',
             },
             button: true,
             loading: false,
@@ -13,6 +14,11 @@ class Osc extends React.Component{
                 name: true,
                 email: true,
                 tx_razao_social_osc: true,
+                tx_sigla_osc: true,
+                tx_nome_situacao_imovel_osc: true,
+                tx_nome_responsavel_legal: true,
+
+
                 cnpj: true,
             },
             showMsg: false,
@@ -169,20 +175,15 @@ class Osc extends React.Component{
 
     render(){
 
-        console.log("***", this.state.form);
+
 
         return (
             <div>
-                <div className="title-user-area">
-                    <h3><i className="fa fa-user" aria-hidden="true"/> Organização da Sociedade Civil de Teste do Mapa das OSCs</h3>
-                    <p>Mantenha sempre seus dados atualizados, fica mais fácil para nós conversarmos!</p>
-                    <hr/>
-                    <br/>
-                </div>
-                <div className="row">
+
+                {/*<div className="row">
                     <div className="col-md-12">
                         <form>
-                            {/*<div>
+                            <div>
                                 <div className="col-md-5">
                                     <label htmlFor="cnpj">CNPJ*</label><br/>
                                     <input className={"form-control form-g "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} value={this.state.form.cnpj} placeholder="CNPJ"/><br/>
@@ -197,7 +198,7 @@ class Osc extends React.Component{
                             <div className="col-md-8">
                                 <label htmlFor="email">E-mail*</label><br/>
                                 <input className={"form-control form-g "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
-                            </div>*/}
+                            </div>
 
                             <div className="col-md-12">
                                 <label htmlFor="tx_razao_social_osc">tx_razao_social_osc*</label><br/>
@@ -208,26 +209,18 @@ class Osc extends React.Component{
 
 
                             <div className="clear-float"/>
-                            <div className="col-md-12">
-                                <p><i>* campos obrigatórios</i></p>
 
-
-                                <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                <br/>
-                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                            </div>
                         </form>
                     </div>
                 </div>
 
-                --------------------------------------------------
+                --------------------------------------------------*/}
 
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
 
-                            <div className="alert alert-secondary box-floating">
+                            {/*<div className="alert alert-secondary box-floating">
                                 <i className="fas fa-chevron-right menu-icons-close btn-menu-txt"/>
                                 <i className="fas fa-chevron-left menu-icons-close btn-menu-txt-show"
                                    style={{display: "none"}}/>
@@ -259,7 +252,7 @@ class Osc extends React.Component{
                                         <p className="menu-icons-txt">Fontes de recursos</p></a></li>
                                 </ul>
                                 <i className="fas fa-times fa-2x float-right btn-right"/>
-                            </div>
+                            </div>*/}
 
                             <div className="row">
                                 <div className="col-md-12">
@@ -297,24 +290,21 @@ class Osc extends React.Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-2">
                                             <label htmlFor="inputEmail4">Sigla da OSC</label>
-                                            <input type="text" className="form-control" id="inputEmail4"
-                                                   placeholder="Email"/>
+                                            <input className={"form-control  "+(this.state.requireds.tx_sigla_osc ? '' : 'invalid-field')} type="text" name="tx_sigla_osc" onChange={this.handleInputChange} value={this.state.form.tx_sigla_osc} placeholder="Sigla da OSC"/><br/>
                                         </div>
                                         <div className="form-group col-md-10">
                                             <label htmlFor="inputPassword4">Nome Fantasia</label>
-                                            <input type="text" className="form-control" id="inputPassword4"
-                                                   placeholder="Senha"/>
+                                            <input className={"form-control  "+(this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field')} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc} placeholder="Nome Fantasia"/><br/>
                                         </div>
                                     </div>
 
                                     <div className="alert alert-secondary">
                                         <i className="fas fa-database float-right tx-pri"/>
                                         <strong>Endereço:</strong><br/>
-                                        Rua Capitão Silvio Conçalves de Farias, 981, Lote 02<br/>
-                                        Bosque Ouro Preto do Oeste, Rondônia - RO<br/>
-                                        <strong>CEP.:</strong> 76920000
+                                        {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}, ***<br/>
+                                        {this.state.form.tx_bairro}, {this.state.form.cd_municipio} - ***<br/>
+                                        <strong>CEP.:</strong> {this.state.form.nr_cep}
                                     </div>
-
 
                                     <div className="form-row">
                                         <div className="form-group col-md-4">
@@ -323,6 +313,7 @@ class Osc extends React.Component{
                                                 <option selected>Escolher...</option>
                                                 <option>...</option>
                                             </select>
+                                            {/*tx_nome_situacao_imovel_osc*/}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
@@ -337,8 +328,8 @@ class Osc extends React.Component{
 
                                     <div className="form-group">
                                         <label htmlFor="inputAddress">Responsável Legal</label>
-                                        <input type="text" className="form-control" id="inputAddress"
-                                               placeholder="Rua dos Bobos, nº 0"/>
+                                        <input className={"form-control  "+(this.state.requireds.tx_nome_responsavel_legal ? '' : 'invalid-field')} type="text" name="tx_nome_responsavel_legal" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal} placeholder="Responsável Legal"/><br/>
+
                                     </div>
 
                                     <div className="form-row">
@@ -531,7 +522,15 @@ class Osc extends React.Component{
                                         </div>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary">Entrar</button>
+                                    <div className="col-md-12">
+                                        <p><i>* campos obrigatórios</i></p>
+                                        <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
+                                        <br/>
+                                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
+                                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                    </div>
+
+
                                 </form>
 
                                 <div className="space"/>
