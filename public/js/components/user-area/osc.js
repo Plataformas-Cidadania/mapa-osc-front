@@ -187,8 +187,6 @@ class Osc extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'col-md-12' },
-                                React.createElement('br', null),
-                                React.createElement('br', null),
                                 React.createElement(
                                     'div',
                                     { className: 'title-style' },
@@ -285,31 +283,39 @@ class Osc extends React.Component {
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'alert alert-secondary' },
-                                React.createElement('i', { className: 'fas fa-database float-right tx-pri' }),
+                                { className: 'form-row' },
                                 React.createElement(
-                                    'strong',
-                                    null,
-                                    'Endere\xE7o:'
-                                ),
-                                React.createElement('br', null),
-                                this.state.form.tx_endereco,
-                                ', ',
-                                this.state.form.nr_localizacao,
-                                ', ***',
-                                React.createElement('br', null),
-                                this.state.form.tx_bairro,
-                                ', ',
-                                this.state.form.cd_municipio,
-                                ' - ***',
-                                React.createElement('br', null),
-                                React.createElement(
-                                    'strong',
-                                    null,
-                                    'CEP.:'
-                                ),
-                                ' ',
-                                this.state.form.nr_cep
+                                    'div',
+                                    { className: 'form-group col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'alert alert-secondary' },
+                                        React.createElement('i', { className: 'fas fa-database float-right tx-pri' }),
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Endere\xE7o:'
+                                        ),
+                                        React.createElement('br', null),
+                                        this.state.form.tx_endereco,
+                                        ', ',
+                                        this.state.form.nr_localizacao,
+                                        ', ***',
+                                        React.createElement('br', null),
+                                        this.state.form.tx_bairro,
+                                        ', ',
+                                        this.state.form.cd_municipio,
+                                        ' - ***',
+                                        React.createElement('br', null),
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'CEP.:'
+                                        ),
+                                        ' ',
+                                        this.state.form.nr_cep
+                                    )
+                                )
                             ),
                             React.createElement(
                                 'div',
@@ -430,8 +436,7 @@ class Osc extends React.Component {
                                     { htmlFor: 'exampleFormControlTextarea1' },
                                     'O que a OSC faz'
                                 ),
-                                React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1',
-                                    rows: '3' })
+                                React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
                             ),
                             React.createElement(
                                 'h4',
@@ -447,87 +452,87 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/01.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/01.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/02.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/02.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/03.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/03.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/04.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/04.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/05.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/05.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/06.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/06.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/07.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/07.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/08.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/08.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/09.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/09.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/10.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/10.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/11.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/11.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/12.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/12.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/13.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/13.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/14.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/14.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/15.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/15.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/16.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/16.png', alt: '', className: 'item-off', width: '95' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/17.png', alt: '', className: 'item-off' })
+                                        React.createElement('img', { src: 'img/ods/17.png', alt: '', className: 'item-off', width: '95' })
                                     )
                                 ),
                                 React.createElement(
@@ -730,8 +735,638 @@ class Osc extends React.Component {
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Hist\xF3rico'
                                     ),
-                                    React.createElement('br', null)
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Miss\xE3o'
+                                    ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Vis\xE3o'
+                                    ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Finalidades Estatut\xE1rias da OSC'
+                                    ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'inputEmail4' },
+                                        'Link para o Estatutu da OSC'
+                                    ),
+                                    React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4', placeholder: 'Email' })
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'T\xEDtulos e Certificados'
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'table',
+                                        { className: 'table' },
+                                        React.createElement(
+                                            'thead',
+                                            { className: 'bg-pri text-light' },
+                                            React.createElement(
+                                                'tr',
+                                                null,
+                                                React.createElement(
+                                                    'th',
+                                                    { scope: 'col' },
+                                                    'Titulo / Certificado'
+                                                ),
+                                                React.createElement(
+                                                    'th',
+                                                    { scope: 'col' },
+                                                    'In\xEDcio da validade'
+                                                ),
+                                                React.createElement(
+                                                    'th',
+                                                    { scope: 'col' },
+                                                    'Fim da validade'
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'tbody',
+                                            null,
+                                            React.createElement(
+                                                'tr',
+                                                null,
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'a'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'b'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'c'
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Rela\xE7\xF5es de Trabalho e Governan\xE7a '
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-lgt box-itens-g min-h' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Quadro de Dirigentes'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                'aa'
+                                            ),
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                React.createElement(
+                                                    'strong',
+                                                    null,
+                                                    'aa'
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-lgt box-itens-g min-h' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Conselho Fiscal'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '11'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row text-center' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-12' },
+                                            React.createElement('br', null),
+                                            React.createElement('br', null),
+                                            React.createElement(
+                                                'strong',
+                                                null,
+                                                'Trabalhadores'
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-3' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'bg-lgt box-itens' },
+                                                React.createElement(
+                                                    'h3',
+                                                    null,
+                                                    'Total de Trabalhadores'
+                                                ),
+                                                React.createElement(
+                                                    'div',
+                                                    null,
+                                                    React.createElement(
+                                                        'h2',
+                                                        null,
+                                                        'a'
+                                                    ),
+                                                    React.createElement(
+                                                        'p',
+                                                        { className: 'not-info' },
+                                                        'a'
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-3' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'bg-lgt box-itens' },
+                                                React.createElement(
+                                                    'h3',
+                                                    null,
+                                                    'Empregados'
+                                                ),
+                                                React.createElement(
+                                                    'div',
+                                                    null,
+                                                    React.createElement(
+                                                        'h2',
+                                                        null,
+                                                        'aa'
+                                                    ),
+                                                    React.createElement(
+                                                        'p',
+                                                        { className: 'not-info' },
+                                                        'aa'
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-3' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'bg-lgt box-itens' },
+                                                React.createElement(
+                                                    'h3',
+                                                    null,
+                                                    'Trabalhadores com defici\xEAncia'
+                                                ),
+                                                React.createElement(
+                                                    'div',
+                                                    null,
+                                                    React.createElement(
+                                                        'h2',
+                                                        null,
+                                                        'aa'
+                                                    ),
+                                                    React.createElement(
+                                                        'p',
+                                                        { className: 'not-info' },
+                                                        'aa'
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-3' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'bg-lgt box-itens' },
+                                                React.createElement(
+                                                    'h3',
+                                                    null,
+                                                    'Trabalhadores volunt\xE1rios'
+                                                ),
+                                                React.createElement(
+                                                    'div',
+                                                    null,
+                                                    React.createElement(
+                                                        'h2',
+                                                        null,
+                                                        'aa'
+                                                    ),
+                                                    React.createElement(
+                                                        'p',
+                                                        { className: 'not-info' },
+                                                        'ss'
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Espa\xE7os de Participa\xE7\xE3o Social'
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'box-itens-g' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Conselhos de Pol\xEDticas P\xFAblicas'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row bg-lgt' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-9' },
+                                                React.createElement('br', null),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Nome do Conselho:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-3' },
+                                                React.createElement('br', { className: 'd-none d-sm-block' }),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Titularidade:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-12' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Nome de representante:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4 line-remove' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Periodicidade da Reuni\xE3o:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4 line-remove' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Data de in\xEDcio de vig\xEAncia:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4 line-remove' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Data de fim de vig\xEAncia:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement('div', { className: 'col-md-12' })
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'box-itens-g' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Confer\xEAncias de Pol\xEDticas P\xFAblicas'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row bg-lgt' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-9' },
+                                                React.createElement('br', null),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Nome da Confer\xEAncia:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '1'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-3' },
+                                                React.createElement('br', { className: 'd-none d-sm-block' }),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '11'
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-12' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Forma de participa\xE7\xE3o na confer\xEAncia:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '11'
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'box-itens-g' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Outros espa\xE7os de participa\xE7\xE3o social'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row bg-lgt' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-9' },
+                                                React.createElement('br', null),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    React.createElement(
+                                                        'strong',
+                                                        null,
+                                                        'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '11'
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Fontes de recursos anuais da OSC'
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    )
                                 )
                             ),
                             React.createElement(

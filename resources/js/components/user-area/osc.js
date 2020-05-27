@@ -256,7 +256,7 @@ class Osc extends React.Component{
 
                             <div className="row">
                                 <div className="col-md-12">
-                                    <br/><br/>
+
                                         <div className="title-style">
                                             <h2>Dados Gerais</h2>
                                             <div className="line line-fix"/>
@@ -298,12 +298,16 @@ class Osc extends React.Component{
                                         </div>
                                     </div>
 
-                                    <div className="alert alert-secondary">
-                                        <i className="fas fa-database float-right tx-pri"/>
-                                        <strong>Endereço:</strong><br/>
-                                        {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}, ***<br/>
-                                        {this.state.form.tx_bairro}, {this.state.form.cd_municipio} - ***<br/>
-                                        <strong>CEP.:</strong> {this.state.form.nr_cep}
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <div className="alert alert-secondary">
+                                                <i className="fas fa-database float-right tx-pri"/>
+                                                <strong>Endereço:</strong><br/>
+                                                {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}, ***<br/>
+                                                {this.state.form.tx_bairro}, {this.state.form.cd_municipio} - ***<br/>
+                                                <strong>CEP.:</strong> {this.state.form.nr_cep}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="form-row">
@@ -360,31 +364,30 @@ class Osc extends React.Component{
 
                                     <div className="form-group">
                                         <label htmlFor="exampleFormControlTextarea1">O que a OSC faz</label>
-                                        <textarea className="form-control" id="exampleFormControlTextarea1"
-                                                  rows="3"/>
+                                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
                                     </div>
 
                                     <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
 
                                     <div>
                                         <ul className="menu-txt-icon">
-                                            <li><img src="img/ods/01.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/02.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/03.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/04.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/05.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/06.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/07.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/08.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/09.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/10.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/11.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/12.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/13.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/14.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/15.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/16.png" alt="" className="item-off"/></li>
-                                            <li><img src="img/ods/17.png" alt="" className="item-off"/></li>
+                                            <li><img src="img/ods/01.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/02.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/03.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/04.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/05.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/06.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/07.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/08.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/09.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/10.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/11.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/12.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/13.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/14.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/15.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/16.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/17.png" alt="" className="item-off" width="95"/></li>
                                         </ul>
                                         <div>
                                             <div>
@@ -513,12 +516,274 @@ class Osc extends React.Component{
                                     <div className="row">
                                         <div className="col-md-12">
                                             <br/><br/>
-                                                <div className="title-style">
-                                                    <h2>Descrição da OSC</h2>
-                                                    <div className="line line-fix"/>
-                                                    <hr/>
+                                            <div className="title-style">
+                                                <h2>Descrição da OSC</h2>
+                                                <div className="line line-fix"></div>
+                                                <hr/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Histórico</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Missão</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Visão</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Finalidades Estatutárias da OSC</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="inputEmail4">Link para o Estatutu da OSC</label>
+                                            <input type="emil" className="form-control" id="inputEmail4" placeholder="Email"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Títulos e Certificados</h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <table className="table">
+                                                <thead className="bg-pri text-light">
+                                                <tr>
+                                                    <th scope="col">Titulo / Certificado</th>
+                                                    <th scope="col">Início da validade</th>
+                                                    <th scope="col">Fim da validade</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr>
+                                                    <td>a</td>
+                                                    <td>b</td>
+                                                    <td>c</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Relações de Trabalho e Governança </h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="bg-lgt box-itens-g min-h">
+                                                <h2>Quadro de Dirigentes</h2>
+
+                                                <div>
+                                                    <p>aa</p>
+                                                    <p><strong>aa</strong></p>
                                                 </div>
-                                                <br/>
+
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="bg-lgt box-itens-g min-h">
+                                                <h2>Conselho Fiscal</h2>
+                                                <div>
+                                                    <p>11</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <div className="row text-center">
+                                                <div className="col-md-12">
+                                                    <br/><br/>
+                                                        <strong>Trabalhadores</strong><br/><br/>
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <div className="bg-lgt box-itens">
+                                                        <h3>Total de Trabalhadores</h3>
+                                                        <div>
+
+                                                            <h2>a</h2>
+
+                                                            <p className='not-info'>a</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <div className="bg-lgt box-itens">
+                                                        <h3>Empregados</h3>
+                                                        <div>
+
+                                                            <h2>aa</h2>
+
+                                                            <p className='not-info'>aa</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <div className="bg-lgt box-itens">
+                                                        <h3>Trabalhadores com deficiência</h3>
+                                                        <div>
+
+                                                            <h2>aa</h2>
+
+                                                            <p className='not-info'>aa</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <div className="bg-lgt box-itens">
+                                                        <h3>Trabalhadores voluntários</h3>
+                                                        <div>
+
+                                                            <h2>aa</h2>
+
+                                                            <p className='not-info'>ss</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Espaços de Participação Social</h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="box-itens-g">
+                                                <h2>Conselhos de Políticas Públicas</h2>
+                                                <div className="row bg-lgt">
+                                                    <div className="col-md-9">
+                                                        <br/>
+                                                            <p><strong>Nome do Conselho:</strong></p>
+                                                            <p>1</p>
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <br className="d-none d-sm-block"/>
+                                                            <p><strong>Titularidade:</strong></p>
+                                                            <p>1</p>
+                                                    </div>
+
+                                                    <div className="col-md-12">
+                                                        <p><strong>Nome de representante:</strong></p>
+
+                                                        <p>1</p>
+
+                                                    </div>
+                                                    <div className="col-md-4 line-remove">
+                                                        <p><strong>Periodicidade da Reunião:</strong></p>
+                                                        <p>1</p>
+                                                    </div>
+                                                    <div className="col-md-4 line-remove">
+                                                        <p><strong>Data de início de vigência:</strong></p>
+                                                        <p>1</p>
+                                                    </div>
+                                                    <div className="col-md-4 line-remove">
+                                                        <p><strong>Data de fim de vigência:</strong></p>
+                                                        <p>1</p>
+                                                    </div>
+                                                    <div className="col-md-12">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="box-itens-g">
+                                                <h2>Conferências de Políticas Públicas</h2>
+                                                <div className="row bg-lgt">
+                                                    <div className="col-md-9">
+                                                        <br/>
+                                                            <p><strong>Nome da Conferência:</strong></p>
+                                                            <p>1</p>
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <br className="d-none d-sm-block"/>
+                                                            <p><strong>Ano de realização da conferência:</strong></p>
+                                                            <p>11</p>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <p><strong>Forma de participação na conferência:</strong></p>
+                                                        <p>11</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="box-itens-g">
+                                                <h2>Outros espaços de participação social</h2>
+
+                                                <div className="row bg-lgt">
+                                                    <div className="col-md-9">
+                                                        <br/>
+                                                            <p><strong>Atuação em Fóruns, Articulações, Coletivos e
+                                                                Redes de OSCs:</strong></p>
+                                                            <p>11</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/*//////////////////*/}
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Fontes de recursos anuais da OSC</h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+
                                         </div>
                                     </div>
 
