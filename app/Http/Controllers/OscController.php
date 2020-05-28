@@ -177,7 +177,7 @@ class OscController extends Controller{
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $data = curl_exec( $ch );
+        $dataOsc = curl_exec( $ch );
         curl_close( $ch );
 
         $chIdh = curl_init();
@@ -187,15 +187,16 @@ class OscController extends Controller{
         $dataIdh = curl_exec( $chIdh );
         curl_close( $chIdh );
 
-        $data = json_decode($data);
+        $dataOsc = json_decode($dataOsc);
         $dataIdh = json_decode($dataIdh);
+        $dataIdh->type = 'FeatureColleciton';
 
         //return $dataIdh;
 
         $areas = [];
         $areas['type'] = 'FeatureCollection';
         $areas['features'] = [];
-        foreach($data as $index => $valor){
+        foreach($dataOsc as $index => $valor){
             $areas['features'][$index]['type'] = 'Feature';
             $areas['features'][$index]['id'] = $index;
             $areas['features'][$index]['properties']['uf'] = $valor->tx_nome_regiao;
@@ -217,6 +218,38 @@ class OscController extends Controller{
 
 
         return view($this->module.'.declaration');
+    }
+
+    public function getAllOscs(){
+
+        $ufs = [11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,31,32,33,35,41,42,43,50,51,52,53];
+        //$ufs = [11,12,13,14,15,16,17,21,22,23,24,25,26];
+
+        $data2 = [];
+
+        foreach ($ufs as $uf) {
+            $pagina = "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$uf;
+
+            $ch = curl_init();
+            curl_setopt( $ch, CURLOPT_URL, $pagina );
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $data = curl_exec( $ch );
+            curl_close( $ch );
+
+            $data = json_decode($data);
+
+            foreach ($data as $key => $item) {
+                if($key > 0){
+                    //$item[0] = floatval($item[0]);
+                    //$item[1] = floatval($item[1]);
+                    array_push($data2, $item);
+                }
+            }
+        }
+
+        return $data2;
+
     }
 
 

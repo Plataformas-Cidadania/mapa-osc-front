@@ -77,7 +77,7 @@ class MixedChart extends React.Component {
                     title: {
                         text: 'Website Blog',
                     },
-                  }, {
+                 }, {
                     opposite: true,
                     title: {
                         text: 'Social Media'

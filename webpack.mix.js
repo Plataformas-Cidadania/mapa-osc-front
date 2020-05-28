@@ -19,6 +19,7 @@ mix.scripts([
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/lazysizes/lazysizes.js',
     'node_modules/pace-js/pace.min.js',
+    'resorces/js/utils.js',
     ], 'public/js/app.js');
 
 mix.scripts([
@@ -35,6 +36,7 @@ mix.scripts([
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
         'node_modules/leaflet.fullscreen/Control.FullScreen.js',
+        'node_modules/leaflet.heat/dist/leaflet-heat.js',
     ], 'public/js/leaflet.js');
 
 /*CSS*/
