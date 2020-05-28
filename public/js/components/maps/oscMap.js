@@ -665,7 +665,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-         });
+          });
     }*/
 
     loadDataTotalPorTerritorio() {

@@ -312,7 +312,9 @@
             <div class="col-md-12 text-center">
                 <br>
                 <br>
-                <button type="button" class="btn btn-outline-primary">Visualize todas as OSCs</button>
+                <a href="artigos">
+                    <button type="button" class="btn btn-outline-primary">Visualize todas as OSCs</button>
+                </a>
             </div>
         </div>
     </div>

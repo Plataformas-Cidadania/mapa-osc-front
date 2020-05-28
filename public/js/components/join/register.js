@@ -148,6 +148,12 @@ class Register extends React.Component {
 
     showHidePassword() {
         $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+
+        if ($('#faView').get(0).classList[1] === "fa-eye") {
+            $('#faView').attr("class", "fa-eye-slash");
+        } else {
+            $('#faView').attr("class", "fa-eye");
+        }
     }
 
     render() {
@@ -210,23 +216,44 @@ class Register extends React.Component {
                                 null,
                                 'Sendo um representante da organiza\xE7\xE3o, voc\xEA poder\xE1'
                             ),
+                            React.createElement('br', null),
                             React.createElement(
-                                'ul',
-                                null,
+                                'div',
+                                { className: 'row' },
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Informar dados da organiza\xE7\xE3o.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-info-circle fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Informar dados da organiza\xE7\xE3o',
+                                        React.createElement('br', null),
+                                        '\xA0'
+                                    )
                                 ),
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Compartilhar informa\xE7\xF5es com seus amigos.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-hands-helping fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Compartilhar informa\xE7\xF5es com seus amigos'
+                                    )
                                 ),
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Definir suas prefer\xEAncias no mapa.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-puzzle-piece fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Definir suas prefer\xEAncias no mapa'
+                                    )
                                 )
                             ),
                             React.createElement('br', null),
@@ -236,6 +263,7 @@ class Register extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-6' },
+                                    React.createElement('br', null),
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'cnpj' },
@@ -273,7 +301,7 @@ class Register extends React.Component {
                                         React.createElement(
                                             'a',
                                             { onClick: () => this.showHidePassword() },
-                                            React.createElement('i', { className: 'far fa-eye-slash', style: { cursor: 'pointer' } })
+                                            React.createElement('i', { id: 'faView', className: 'far fa-eye-slash', style: { cursor: 'pointer' } })
                                         )
                                     ),
                                     React.createElement('br', null)

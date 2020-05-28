@@ -160,6 +160,12 @@ class Register extends React.Component{
 
     showHidePassword(){
         $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+
+        if($('#faView').get(0).classList[1]==="fa-eye"){
+            $('#faView').attr("class", "fa-eye-slash");
+        }else{
+            $('#faView').attr("class", "fa-eye");
+        }
     }
 
 
@@ -193,15 +199,36 @@ class Register extends React.Component{
 
                                 <br/><br/>
                                 <h3>Sendo um representante da organização, você poderá</h3>
-                                <ul>
+                                <br/>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-info-circle fa-3x text-primary"/><br/>
+                                            Informar dados da organização<br/>&nbsp;
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-hands-helping fa-3x text-primary"/><br/>
+                                            Compartilhar informações com seus amigos
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-puzzle-piece fa-3x text-primary"/><br/>
+                                            Definir suas preferências no mapa
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*<ul>
                                     <li>Informar dados da organização.</li>
                                     <li>Compartilhar informações com seus amigos.</li>
                                     <li>Definir suas preferências no mapa.</li>
-                                </ul>
+                                </ul>*/}
                                 <br/>
                                 <div className="row">
-
                                     <div className="col-md-6">
+                                        <br/>
                                         <label htmlFor="cnpj">CNPJ*</label><br/>
                                         <input className={"form-control form-m "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} placeholder="CNPJ" value={this.state.form.cnpj}  maxLength="18"/><br/>
                                     </div>
@@ -215,7 +242,7 @@ class Register extends React.Component{
                                         <label htmlFor="password">Senha*</label><br/>
                                         <div className="input-icon">
                                             <input id="password" className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
-                                            <a onClick={() => this.showHidePassword()}><i className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
+                                            <a onClick={() => this.showHidePassword()}><i id="faView" className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                         </div>
                                         <br/>
                                     </div>

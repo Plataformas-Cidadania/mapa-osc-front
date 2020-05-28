@@ -151,18 +151,23 @@
                         <div class="btn-group">
                             <ul id="menu-desk">
                                 <li role="presentation"><a href="/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
-                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>Sobre</a></li>
+                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
-                                <li role="presentation"><a href="artigos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>
-                                <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
-                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a>
+                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
-                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Indicadores</a></li>
-                                        <li role="presentation"><a href="quem" accesskey="q" @if($rota=='quem') class="corrente" @endif>Sobre</a></li>
-                                        <li role="presentation"><a href="artigos" accesskey="artigos" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>
-                                        <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
+                                        <li role="presentation"><a href="quem" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
+                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados eIndicadores</a></li>
                                     </ul>
                                 </li>
+                                <li role="presentation"><a href="artigos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
+                                    <ul class="noJS menu-desk-sub">
+                                        <li role="presentation"><a href="artigos" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
+                                        <li role="presentation"><a href="artigos" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
+                                        <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
+                                    </ul>
+                                </li>
+
+                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
                             </ul>
 
                             <div class="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -174,6 +179,7 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="/login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
                                 <a href="/register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
+                                <a href="/register"><button class="dropdown-item" type="button">Estado e Município</button></a>
                                 <a href="minhaconta-oscs/1"><button class="dropdown-item" type="button">Minha OSCs</button></a>
                                 <a href="editar-osc"><button class="dropdown-item " type="button">Editar</button></a>
                                 <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
