@@ -144,7 +144,7 @@
             <div class="col-md-12">
                 <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
-                        Logo site
+                        <img src="https://mapaosc.ipea.gov.br/img/logo.png" alt="" width="300">
                     </a>
                     <div>
                         <br>
