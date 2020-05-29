@@ -842,7 +842,13 @@ class Osc extends React.Component {
                                                     'th',
                                                     { scope: 'col' },
                                                     'Fim da validade'
-                                                )
+                                                ),
+                                                React.createElement(
+                                                    'th',
+                                                    { scope: 'col' },
+                                                    'Localidade'
+                                                ),
+                                                React.createElement('th', { scope: 'col' })
                                             )
                                         ),
                                         React.createElement(
@@ -854,20 +860,64 @@ class Osc extends React.Component {
                                                 React.createElement(
                                                     'td',
                                                     null,
-                                                    'a'
+                                                    'Unidade p\xFAblica Estadual'
                                                 ),
                                                 React.createElement(
                                                     'td',
                                                     null,
-                                                    'b'
+                                                    '01/08/2019'
                                                 ),
                                                 React.createElement(
                                                     'td',
                                                     null,
-                                                    'c'
+                                                    '01/08/2019'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'Rio de Janeiro'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    React.createElement('i', { className: 'far fa-trash-alt text-danger' })
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'tr',
+                                                null,
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'Unidade p\xFAblica Estadual'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    '01/08/2019'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    '01/08/2019'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    'Rio de Janeiro'
+                                                ),
+                                                React.createElement(
+                                                    'td',
+                                                    null,
+                                                    React.createElement('i', { className: 'far fa-trash-alt text-danger' })
                                                 )
                                             )
                                         )
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-warning' },
+                                        '+ Adicionar novo t\xEDtulo'
                                     )
                                 )
                             ),
@@ -908,21 +958,26 @@ class Osc extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            null,
+                                            { className: 'box-insert' },
+                                            React.createElement('input', { placeholder: 'Insira o nome do dirigente' }),
+                                            React.createElement('input', { placeholder: 'Insira o cargo dirigente' }),
+                                            React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'box-insert-list' },
+                                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
                                             React.createElement(
                                                 'p',
                                                 null,
-                                                'aa'
+                                                React.createElement('input', { value: 'Gabriel Lima' })
                                             ),
                                             React.createElement(
                                                 'p',
                                                 null,
-                                                React.createElement(
-                                                    'strong',
-                                                    null,
-                                                    'aa'
-                                                )
-                                            )
+                                                React.createElement('input', { value: 'Diretor' })
+                                            ),
+                                            React.createElement('hr', null)
                                         )
                                     )
                                 ),
@@ -939,12 +994,26 @@ class Osc extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            null,
+                                            { className: 'box-insert' },
+                                            React.createElement('input', { placeholder: 'Insira o nome do dirigente' }),
+                                            React.createElement('input', { placeholder: 'Insira o cargo dirigente' }),
+                                            React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'box-insert-list' },
+                                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right ' }),
                                             React.createElement(
                                                 'p',
                                                 null,
-                                                '11'
-                                            )
+                                                React.createElement('input', { value: '1111' })
+                                            ),
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                React.createElement('input', { value: '2222' })
+                                            ),
+                                            React.createElement('hr', null)
                                         )
                                     )
                                 ),
@@ -984,7 +1053,7 @@ class Osc extends React.Component {
                                                     React.createElement(
                                                         'h2',
                                                         null,
-                                                        'a'
+                                                        '11'
                                                     ),
                                                     React.createElement(
                                                         'p',
@@ -1030,7 +1099,7 @@ class Osc extends React.Component {
                                                 React.createElement(
                                                     'h3',
                                                     null,
-                                                    'Trabalhadores com defici\xEAncia'
+                                                    'Defici\xEAncia'
                                                 ),
                                                 React.createElement(
                                                     'div',
@@ -1057,20 +1126,16 @@ class Osc extends React.Component {
                                                 React.createElement(
                                                     'h3',
                                                     null,
-                                                    'Trabalhadores volunt\xE1rios'
+                                                    'Volunt\xE1rios'
                                                 ),
                                                 React.createElement(
                                                     'div',
                                                     null,
-                                                    React.createElement(
-                                                        'h2',
-                                                        null,
-                                                        'aa'
-                                                    ),
+                                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
                                                     React.createElement(
                                                         'p',
                                                         { className: 'not-info' },
-                                                        'ss'
+                                                        '\xA0'
                                                     )
                                                 )
                                             )
@@ -1114,119 +1179,139 @@ class Osc extends React.Component {
                                             'Conselhos de Pol\xEDticas P\xFAblicas'
                                         ),
                                         React.createElement(
+                                            'p',
+                                            { className: 'form-check' },
+                                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
+                                                id: 'gridCheck' }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                                'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                            )
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement(
                                             'div',
-                                            { className: 'row bg-lgt' },
+                                            { className: 'row' },
                                             React.createElement(
                                                 'div',
-                                                { className: 'col-md-9' },
-                                                React.createElement('br', null),
+                                                { className: 'col-md-6', style: { border: '0' } },
                                                 React.createElement(
-                                                    'p',
-                                                    null,
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-g' },
                                                     React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Nome do Conselho:'
+                                                        'div',
+                                                        { className: 'box-insert-item box-insert-list' },
+                                                        React.createElement('br', null),
+                                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Nome do Conselho:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Conselho Estadual Antidrogas/Conselho ' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Titularidade:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Suplente' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Nome de representante:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Fernando Lima de Souza ' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Periodicidade da Reuni\xE3o:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Mensal' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Data de in\xEDcio de vig\xEAncia:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: '01/12/2019' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Data de fim de vig\xEAncia:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: '01/12/2019' })
+                                                            )
+                                                        )
                                                     )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
                                                 )
                                             ),
                                             React.createElement(
                                                 'div',
-                                                { className: 'col-md-3' },
-                                                React.createElement('br', { className: 'd-none d-sm-block' }),
+                                                { className: 'col-md-6' },
                                                 React.createElement(
-                                                    'p',
-                                                    null,
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-g' },
                                                     React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Titularidade:'
+                                                        'div',
+                                                        { className: 'box-insert-btn' },
+                                                        React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'p',
+                                                            null,
+                                                            'Novo Conselhos de Pol\xEDticas P\xFAblicas'
+                                                        )
                                                     )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
                                                 )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'col-md-12' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Nome de representante:'
-                                                    )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'col-md-4 line-remove' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Periodicidade da Reuni\xE3o:'
-                                                    )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'col-md-4 line-remove' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Data de in\xEDcio de vig\xEAncia:'
-                                                    )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'col-md-4 line-remove' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Data de fim de vig\xEAncia:'
-                                                    )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
-                                                )
-                                            ),
-                                            React.createElement('div', { className: 'col-md-12' })
+                                            )
                                         )
                                     )
                                 )
@@ -1246,62 +1331,95 @@ class Osc extends React.Component {
                                             'Confer\xEAncias de Pol\xEDticas P\xFAblicas'
                                         ),
                                         React.createElement(
+                                            'p',
+                                            { className: 'form-check' },
+                                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
+                                                id: 'gridCheck' }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                                'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                            )
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement(
                                             'div',
-                                            { className: 'row bg-lgt' },
+                                            { className: 'row' },
                                             React.createElement(
                                                 'div',
-                                                { className: 'col-md-9' },
-                                                React.createElement('br', null),
+                                                { className: 'col-md-6', style: { border: '0' } },
                                                 React.createElement(
-                                                    'p',
-                                                    null,
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-m' },
                                                     React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Nome da Confer\xEAncia:'
+                                                        'div',
+                                                        { className: 'box-insert-item box-insert-list' },
+                                                        React.createElement('br', null),
+                                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Nome da Confer\xEAncia:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Confer\xEAncia Brasileira de Arranjos Produtivos Locais' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: '1900' })
+                                                            )
+                                                        ),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Forma de participa\xE7\xE3o na confer\xEAncia:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Membro de comiss\xE3o organizadora nacional' })
+                                                            )
+                                                        )
                                                     )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '1'
                                                 )
                                             ),
                                             React.createElement(
                                                 'div',
-                                                { className: 'col-md-3' },
-                                                React.createElement('br', { className: 'd-none d-sm-block' }),
+                                                { className: 'col-md-6' },
                                                 React.createElement(
-                                                    'p',
-                                                    null,
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-m' },
                                                     React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                                                        'div',
+                                                        { className: 'box-insert-btn' },
+                                                        React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'p',
+                                                            null,
+                                                            'Novo Conselhos de Pol\xEDticas P\xFAblicas'
+                                                        )
                                                     )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '11'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'col-md-12' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    React.createElement(
-                                                        'strong',
-                                                        null,
-                                                        'Forma de participa\xE7\xE3o na confer\xEAncia:'
-                                                    )
-                                                ),
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    '11'
                                                 )
                                             )
                                         )
@@ -1323,26 +1441,154 @@ class Osc extends React.Component {
                                             'Outros espa\xE7os de participa\xE7\xE3o social'
                                         ),
                                         React.createElement(
+                                            'p',
+                                            { className: 'form-check' },
+                                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
+                                                id: 'gridCheck' }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                                'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                            )
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement(
                                             'div',
-                                            { className: 'row bg-lgt' },
+                                            { className: 'row' },
                                             React.createElement(
                                                 'div',
-                                                { className: 'col-md-9' },
-                                                React.createElement('br', null),
+                                                { className: 'col-md-6', style: { border: '0' } },
                                                 React.createElement(
-                                                    'p',
-                                                    null,
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-p' },
                                                     React.createElement(
-                                                        'strong',
+                                                        'div',
+                                                        { className: 'box-insert-item box-insert-list' },
+                                                        React.createElement('br', null),
+                                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'div',
+                                                            null,
+                                                            React.createElement(
+                                                                'h3',
+                                                                null,
+                                                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                                                            ),
+                                                            React.createElement(
+                                                                'p',
+                                                                null,
+                                                                React.createElement('input', { value: 'Confer\xEAncia Brasileira de Arranjos Produtivos Locais' })
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'bg-lgt box-insert-p' },
+                                                    React.createElement(
+                                                        'div',
+                                                        { className: 'box-insert-btn-p' },
+                                                        React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
+                                                        React.createElement('br', null),
+                                                        React.createElement(
+                                                            'p',
+                                                            null,
+                                                            'Novo Outros espa\xE7os de participa\xE7\xE3o social'
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Projetos, atividades e programas - PAP'
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-12' },
+                                            React.createElement(
+                                                'table',
+                                                { className: 'table' },
+                                                React.createElement(
+                                                    'thead',
+                                                    { className: 'bg-pri text-light' },
+                                                    React.createElement(
+                                                        'tr',
                                                         null,
-                                                        'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                                                        React.createElement(
+                                                            'th',
+                                                            { scope: 'col' },
+                                                            'Projeto'
+                                                        ),
+                                                        React.createElement('th', { scope: 'col' })
                                                     )
                                                 ),
                                                 React.createElement(
-                                                    'p',
+                                                    'tbody',
                                                     null,
-                                                    '11'
+                                                    React.createElement(
+                                                        'tr',
+                                                        null,
+                                                        React.createElement(
+                                                            'td',
+                                                            null,
+                                                            'Rio de Janeiro'
+                                                        ),
+                                                        React.createElement(
+                                                            'td',
+                                                            null,
+                                                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                                                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '10px' } })
+                                                        )
+                                                    ),
+                                                    React.createElement(
+                                                        'tr',
+                                                        null,
+                                                        React.createElement(
+                                                            'td',
+                                                            null,
+                                                            'Rio de Janeiro'
+                                                        ),
+                                                        React.createElement(
+                                                            'td',
+                                                            null,
+                                                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                                                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '10px' } })
+                                                        )
+                                                    )
                                                 )
+                                            ),
+                                            React.createElement(
+                                                'button',
+                                                { className: 'btn btn-warning' },
+                                                '+ Adicionar projeto'
                                             )
                                         )
                                     )
@@ -1371,32 +1617,48 @@ class Osc extends React.Component {
                             ),
                             React.createElement(
                                 'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'title-style' },
+                                        React.createElement(
+                                            'h2',
+                                            null,
+                                            'Fontes de recursos anuais da OSC'
+                                        ),
+                                        React.createElement('div', { className: 'line line-fix' }),
+                                        React.createElement('hr', null)
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
                                 { className: 'col-md-12' },
                                 React.createElement(
-                                    'p',
-                                    null,
+                                    'div',
+                                    { style: { position: 'fixed', top: '600px', left: '5%' } },
                                     React.createElement(
-                                        'i',
-                                        null,
-                                        '* campos obrigat\xF3rios'
+                                        'button',
+                                        { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
+                                        'Salvar'
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
+                                        this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loading ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        'Processando'
                                     )
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
-                                    'Salvar'
-                                ),
-                                React.createElement('br', null),
-                                React.createElement(
-                                    'div',
-                                    { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
-                                    this.state.msg
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { style: { display: this.state.loading ? 'block' : 'none' } },
-                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                    'Processando'
                                 )
                             )
                         ),

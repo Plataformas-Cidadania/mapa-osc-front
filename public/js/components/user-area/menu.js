@@ -43,9 +43,9 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/dados-user" },
+                    { href: "/declaracao" },
                     React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
-                    " Certificado"
+                    " Declara\xE7\xE3o"
                 )
             ),
             React.createElement(

@@ -180,8 +180,8 @@
                                 <a href="/login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
                                 <a href="/register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
                                 <a href="/register"><button class="dropdown-item" type="button">Estado e Município</button></a>
-                                <a href="minhaconta-oscs/1"><button class="dropdown-item" type="button">Minha OSCs</button></a>
-                                <a href="editar-osc"><button class="dropdown-item " type="button">Editar</button></a>
+                                <a href="/oscs-user"><button class="dropdown-item" type="button">Minha OSCs</button></a>
+                                <a href="/oscs-user"><button class="dropdown-item " type="button">Editar</button></a>
                                 <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
         </div>--}}
     @if($rota=='/')
         <div class="owl-carousel owl-theme">
-            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=1" data-src-retina="https://placehold.it/1180x250&text=1-retina" alt="">
+            {{--<img class="owl-lazy" data-src="https://placehold.it/1180x250&text=1" data-src-retina="https://placehold.it/1180x250&text=1-retina" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=2" data-src-retina="https://placehold.it/1180x250&text=2-retina" alt="">
             <picture>
                 <source class="owl-lazy" media="(min-width: 650px)" data-srcset="https://placehold.it/1180x250&text=3-large">
@@ -229,7 +229,12 @@
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=8" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=9" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=10" alt="">
-            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">
+            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">--}}
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/8923-mapa-osc.jpg" alt="">
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/5013-colabore.jpg" alt="">
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/9958-indicadores.jpg" alt="">
+
+
         </div>
     @endif
 

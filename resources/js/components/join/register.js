@@ -160,12 +160,13 @@ class Register extends React.Component{
 
     showHidePassword(){
         $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+        $('#faView').attr("class", ($('#faView').get(0).classList[1]==="fa-eye" ? "fa-eye-slash" : "fa-eye"));
 
-        if($('#faView').get(0).classList[1]==="fa-eye"){
+        /*if($('#faView').get(0).classList[1]==="fa-eye"){
             $('#faView').attr("class", "fa-eye-slash");
         }else{
             $('#faView').attr("class", "fa-eye");
-        }
+        }*/
     }
 
 

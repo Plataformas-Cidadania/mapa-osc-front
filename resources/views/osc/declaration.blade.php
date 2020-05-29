@@ -1,4 +1,4 @@
-<div id="printDivCertificate" class="conteudoCertificate container-fluid" style="padding-left: 0;">
+<div id="printDivCertificate" class="conteudoCertificate" style="padding-left: 0;">
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="tx-print">
@@ -70,3 +70,6 @@
         }
     }
 </style>
+<script>
+    window.print();
+</script>

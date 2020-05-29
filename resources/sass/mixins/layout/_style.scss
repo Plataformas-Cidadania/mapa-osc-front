@@ -207,3 +207,75 @@ figcaption{
 .objetivo_color17{
     color: #1C4969;
 }
+
+//User Area
+.box-insert{
+    border: solid 1px #CBCBCB;
+    border-radius: 5px;
+    padding: 10px;
+}
+.box-insert input{
+    border: 0;
+    border-bottom: solid 1px #CBCBCB;
+    width: 80%;
+    background-color: #EEEEEE;
+}
+.box-insert svg{
+    float: right;
+    margin-top: -25px;
+}
+.box-insert-list input{
+    border: 0;
+    width: 100%;
+    background-color: #EEEEEE;
+}
+.box-insert-list input:focus{
+    border-bottom: solid 1px #CBCBCB;
+}
+.box-insert-list svg{
+    float: right;
+    position: relative;
+    margin-bottom: -50px;
+}
+.input-lg{
+    font-size: 40px;
+    border: 0;
+    background-color: #EEEEEE;
+    width: 100px;
+    margin: auto;
+    border-bottom: solid 1px #CBCBCB;
+
+}
+.box-insert-item{
+    padding: 0 20px !important;
+    border: 0 !important;
+}
+.box-insert-item h3{
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px!important;
+}
+.box-insert-list h4{
+    font-weight: bold;
+}
+.box-insert-btn{
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    padding: 20% 0;
+}
+.box-insert-btn-p{
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    padding: 50px 0;
+}
+.box-insert-g{
+    min-height: 500px;
+}
+.box-insert-m{
+    min-height: 280px;
+}
+.box-insert-p{
+    min-height: 200px;
+}

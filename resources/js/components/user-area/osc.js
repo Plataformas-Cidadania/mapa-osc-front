@@ -572,18 +572,30 @@ class Osc extends React.Component{
                                                     <th scope="col">Titulo / Certificado</th>
                                                     <th scope="col">Início da validade</th>
                                                     <th scope="col">Fim da validade</th>
+                                                    <th scope="col">Localidade</th>
+                                                    <th scope="col"/>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
                                                 <tr>
-                                                    <td>a</td>
-                                                    <td>b</td>
-                                                    <td>c</td>
+                                                    <td>Unidade pública Estadual</td>
+                                                    <td>01/08/2019</td>
+                                                    <td>01/08/2019</td>
+                                                    <td>Rio de Janeiro</td>
+                                                    <td><i className="far fa-trash-alt text-danger"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unidade pública Estadual</td>
+                                                    <td>01/08/2019</td>
+                                                    <td>01/08/2019</td>
+                                                    <td>Rio de Janeiro</td>
+                                                    <td><i className="far fa-trash-alt text-danger"/></td>
                                                 </tr>
 
                                                 </tbody>
                                             </table>
+                                            <button className="btn btn-warning">+ Adicionar novo título</button>
                                         </div>
                                     </div>
 
@@ -603,19 +615,37 @@ class Osc extends React.Component{
                                             <div className="bg-lgt box-itens-g min-h">
                                                 <h2>Quadro de Dirigentes</h2>
 
-                                                <div>
-                                                    <p>aa</p>
-                                                    <p><strong>aa</strong></p>
+                                                <div className="box-insert">
+                                                    <input placeholder="Insira o nome do dirigente"/>
+                                                    <input placeholder="Insira o cargo dirigente"/>
+                                                    <i className="fas fa-plus-circle fa-3x tx-pri"/>
                                                 </div>
-
+                                                <div className="box-insert-list">
+                                                    <i className="far fa-trash-alt text-danger float-right"/>
+                                                    <p><input  value="Gabriel Lima"/></p>
+                                                    <p><input  value="Diretor"/></p>
+                                                    <hr/>
+                                                </div>
+                                                {/*<button className="btn btn-success btn-sm float-right">Salvar</button>*/}
                                             </div>
+
                                         </div>
                                         <div className="col-md-6">
                                             <div className="bg-lgt box-itens-g min-h">
                                                 <h2>Conselho Fiscal</h2>
-                                                <div>
-                                                    <p>11</p>
+
+                                                <div className="box-insert">
+                                                    <input placeholder="Insira o nome do dirigente"/>
+                                                    <input placeholder="Insira o cargo dirigente"/>
+                                                    <i className="fas fa-plus-circle fa-3x tx-pri"/>
                                                 </div>
+                                                <div className="box-insert-list">
+                                                    <i className="far fa-trash-alt text-danger float-right "/>
+                                                    <p><input value="1111"/></p>
+                                                    <p><input value="2222"/></p>
+                                                    <hr/>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div className="col-md-12">
@@ -630,7 +660,7 @@ class Osc extends React.Component{
                                                         <h3>Total de Trabalhadores</h3>
                                                         <div>
 
-                                                            <h2>a</h2>
+                                                            <h2>11</h2>
 
                                                             <p className='not-info'>a</p>
 
@@ -651,7 +681,7 @@ class Osc extends React.Component{
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div className="bg-lgt box-itens">
-                                                        <h3>Trabalhadores com deficiência</h3>
+                                                        <h3>Deficiência</h3>
                                                         <div>
 
                                                             <h2>aa</h2>
@@ -663,13 +693,11 @@ class Osc extends React.Component{
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div className="bg-lgt box-itens">
-                                                        <h3>Trabalhadores voluntários</h3>
+                                                        <h3>Voluntários</h3>
                                                         <div>
 
-                                                            <h2>aa</h2>
-
-                                                            <p className='not-info'>ss</p>
-
+                                                            <input type="number" value="10" className="input-lg" min="1"/>
+                                                            <p className='not-info'>&nbsp;</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -692,66 +720,103 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <div className="box-itens-g">
                                                 <h2>Conselhos de Políticas Públicas</h2>
-                                                <div className="row bg-lgt">
-                                                    <div className="col-md-9">
-                                                        <br/>
-                                                            <p><strong>Nome do Conselho:</strong></p>
-                                                            <p>1</p>
+                                                <p className="form-check">
+                                                    <input className="form-check-input" type="checkbox"
+                                                           id="gridCheck"/>
+                                                    <label className="form-check-label" htmlFor="gridCheck">
+                                                        Não possui conselhos de políticas públicas
+                                                    </label>
+                                                </p><br/>
+                                                <div className="row">
+                                                    <div className="col-md-6" style={{border: '0'}}>
+                                                        <div className="bg-lgt box-insert-g">
+                                                            <div className="box-insert-item box-insert-list">
+                                                                <br/>
+                                                                    <i className="far fa-trash-alt text-danger float-right" />
+                                                                    <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                                                                    <br/>
+                                                                <div>
+                                                                    <h3>Nome do Conselho:</h3>
+                                                                    <p><input  value="Conselho Estadual Antidrogas/Conselho "/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Titularidade:</h3>
+                                                                    <p><input  value="Suplente"/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Nome de representante:</h3>
+                                                                    <p><input  value="Fernando Lima de Souza "/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Periodicidade da Reunião:</h3>
+                                                                    <p><input  value="Mensal"/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Data de início de vigência:</h3>
+                                                                    <p><input  value="01/12/2019"/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Data de fim de vigência:</h3>
+                                                                    <p><input  value="01/12/2019"/></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="col-md-3">
-                                                        <br className="d-none d-sm-block"/>
-                                                            <p><strong>Titularidade:</strong></p>
-                                                            <p>1</p>
-                                                    </div>
-
-                                                    <div className="col-md-12">
-                                                        <p><strong>Nome de representante:</strong></p>
-
-                                                        <p>1</p>
-
-                                                    </div>
-                                                    <div className="col-md-4 line-remove">
-                                                        <p><strong>Periodicidade da Reunião:</strong></p>
-                                                        <p>1</p>
-                                                    </div>
-                                                    <div className="col-md-4 line-remove">
-                                                        <p><strong>Data de início de vigência:</strong></p>
-                                                        <p>1</p>
-                                                    </div>
-                                                    <div className="col-md-4 line-remove">
-                                                        <p><strong>Data de fim de vigência:</strong></p>
-                                                        <p>1</p>
-                                                    </div>
-                                                    <div className="col-md-12">
-
+                                                    <div className="col-md-6">
+                                                        <div className="bg-lgt box-insert-g">
+                                                            <div className="box-insert-btn">
+                                                                <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
+                                                                <p>Novo Conselhos de Políticas Públicas</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="box-itens-g">
                                                 <h2>Conferências de Políticas Públicas</h2>
-                                                <div className="row bg-lgt">
-                                                    <div className="col-md-9">
-                                                        <br/>
-                                                            <p><strong>Nome da Conferência:</strong></p>
-                                                            <p>1</p>
+                                                <p className="form-check">
+                                                    <input className="form-check-input" type="checkbox"
+                                                           id="gridCheck"/>
+                                                    <label className="form-check-label" htmlFor="gridCheck">
+                                                        Não possui conferências de políticas públicas
+                                                    </label>
+                                                </p><br/>
+                                                <div className="row">
+                                                    <div className="col-md-6" style={{border: '0'}}>
+                                                        <div className="bg-lgt box-insert-m">
+                                                            <div className="box-insert-item box-insert-list">
+                                                                <br/>
+                                                                <i className="far fa-trash-alt text-danger float-right" />
+                                                                <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                                                                <br/>
+                                                                <div>
+                                                                    <h3>Nome da Conferência:</h3>
+                                                                    <p><input  value="Conferência Brasileira de Arranjos Produtivos Locais"/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Ano de realização da conferência:</h3>
+                                                                    <p><input  value="1900"/></p>
+                                                                </div>
+                                                                <div>
+                                                                    <h3>Forma de participação na conferência:</h3>
+                                                                    <p><input  value="Membro de comissão organizadora nacional"/></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="col-md-3">
-                                                        <br className="d-none d-sm-block"/>
-                                                            <p><strong>Ano de realização da conferência:</strong></p>
-                                                            <p>11</p>
-                                                    </div>
-                                                    <div className="col-md-12">
-                                                        <p><strong>Forma de participação na conferência:</strong></p>
-                                                        <p>11</p>
+                                                    <div className="col-md-6">
+                                                        <div className="bg-lgt box-insert-m">
+                                                            <div className="box-insert-btn">
+                                                                <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
+                                                                <p>Novo Conselhos de Políticas Públicas</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -759,21 +824,99 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <div className="box-itens-g">
                                                 <h2>Outros espaços de participação social</h2>
-
-                                                <div className="row bg-lgt">
-                                                    <div className="col-md-9">
-                                                        <br/>
-                                                            <p><strong>Atuação em Fóruns, Articulações, Coletivos e
-                                                                Redes de OSCs:</strong></p>
-                                                            <p>11</p>
+                                                <p className="form-check">
+                                                    <input className="form-check-input" type="checkbox"
+                                                           id="gridCheck"/>
+                                                    <label className="form-check-label" htmlFor="gridCheck">
+                                                        Não possui outros espaços de participação social
+                                                    </label>
+                                                </p><br/>
+                                                <div className="row">
+                                                    <div className="col-md-6" style={{border: '0'}}>
+                                                        <div className="bg-lgt box-insert-p">
+                                                            <div className="box-insert-item box-insert-list">
+                                                                <br/>
+                                                                <i className="far fa-trash-alt text-danger float-right" />
+                                                                <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                                                                <br/>
+                                                                <div>
+                                                                    <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
+                                                                    <p><input  value="Conferência Brasileira de Arranjos Produtivos Locais"/></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="bg-lgt box-insert-p">
+                                                            <div className="box-insert-btn-p">
+                                                                <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
+                                                                <p>Novo Outros espaços de participação social</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                     {/*//////////////////*/}
 
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Projetos, atividades e programas - PAP</h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <table className="table">
+                                                        <thead className="bg-pri text-light">
+                                                        <tr>
+                                                            <th scope="col">Projeto</th>
+                                                            <th scope="col"/>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <tr>
+                                                            <td>Rio de Janeiro</td>
+                                                            <td>
+                                                                <i className="far fa-trash-alt text-danger float-right"/>
+                                                                <i className="far fa-edit text-primary float-right" style={{marginRight: '10px'}}/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rio de Janeiro</td>
+                                                            <td>
+                                                                <i className="far fa-trash-alt text-danger float-right"/>
+                                                                <i className="far fa-edit text-primary float-right" style={{marginRight: '10px'}}/>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <button className="btn btn-warning">+ Adicionar projeto</button>
+                                                    {/*CHAMAR MODAL*/}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/><br/>
+                                            <div className="title-style">
+                                                <h2>Fontes de recursos anuais da OSC</h2>
+                                                <div className="line line-fix"/>
+                                                <hr/>
+                                            </div>
+
+                                        </div>
+                                    </div>
 
                                     <div className="row">
                                         <div className="col-md-12">
@@ -788,11 +931,13 @@ class Osc extends React.Component{
                                     </div>
 
                                     <div className="col-md-12">
-                                        <p><i>* campos obrigatórios</i></p>
-                                        <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                        <br/>
-                                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                        <div style={{position: 'fixed', top: '600px', left: '5%'}}>
+                                            <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
+                                            <br/>
+                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
+                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                        </div>
+
                                     </div>
 
 
