@@ -1,0 +1,152 @@
+/*Edit*/
+.item-off {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-filter: gray;
+    filter: gray;
+    opacity: 0.5;
+}
+.item-off:hover {
+    -webkit-filter: none;
+    filter: none;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    opacity: 9;
+}
+.item-off, .item-off:hover {
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+/*Detail*/
+.item-detail{
+    border-bottom: solid 1px #CCCCCC;
+    margin-bottom: 20px;
+}
+.item-detail h4{
+    font-weight: bold;
+    margin: 0;
+}
+.item-detail p{
+}
+.item-detail svg{
+    margin-top: 5px;
+}
+.menu-icons-h li{
+    display: inline!important;
+}
+.menu-icons-h svg{
+    width: 30px!important;
+    height: 30px!important;
+}
+.item-obj img{
+    float: left;
+    margin-right: 10px;
+}
+.item-obj p{
+    margin-top: -5px;
+}
+
+.box-itens{
+    padding: 20px 10px;
+}
+.box-itens h3{
+    border-bottom: solid 1px #DEA33B;
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+.box-itens h3 strong{
+    font-size: 18px;
+}
+.box-itens h2{
+    margin-top: 20px;
+}
+.box-itens p{
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 14px !important;
+    margin-top: 20px;
+}
+.box-itens-g{
+    padding: 20px 20px;
+}
+.box-itens-g div{
+    border-bottom: solid 1px #E6E6E6;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+.box-itens-g div:last-child{
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+.box-itens-g h2{
+    border-bottom: solid 1px #DEA33B;
+    font-size: 18px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.box-itens-g p{
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.box-itens-g strong{
+    font-size: 12px;
+    margin: 0;
+}
+.title-mp{
+    padding: 0 10px;
+    font-size: 16px;
+}
+.min-h {
+    min-height: 400px;
+}
+.line-remove{
+    border-bottom: 0!important;
+    margin-bottom: 0!important;
+    padding-bottom: 0!important;
+}
+.line-add{
+    border-bottom: solid 1px #E6E6E6;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+.line-items p{
+    min-height: 40px;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0;
+}
+.box-itens-m h2{
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+.box-bg{
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 250px;
+}
+#mapPointOsc {
+    width: 100%;
+    height: 195px;
+}
+.mn-accordion{
+    cursor: pointer;
+}
+.mn-accordion-icon {
+    border: solid 4px #1b4b72;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    float: left;
+    text-align: center;
+    line-height: 38px;
+    margin: -6px 10px 0 0;
+    color: #DEA33B;
+}
+.mn-accordion .mn-accordion-arrow{
+    margin-top: -20px
+}

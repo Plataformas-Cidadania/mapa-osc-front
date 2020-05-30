@@ -11,7 +11,133 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public function index(){
-        return view('home');
+
+        $articles = \App\PubArticle::
+            join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
+            ->orderBy('id', 'desc')
+            ->take(3)
+            ->get();
+
+
+        $osc_recentes = DB::connection('map')
+            ->table('portal.vw_log_alteracao')
+            ->select('id_osc', 'tx_nome_osc')
+            ->orderBy('dt_alteracao', 'desc')
+            ->take(9)
+            ->get();
+
+        $area_atuacao = [
+            1 => "Habitação",
+            2 => "Saúde",
+            3 => "Cultura e recreação",
+            4 => "Educação e pesquisa",
+            5 => "Assistência social",
+            6 => "Religião",
+            7 => "Associações patronais",
+            8 => "Meio ambiente",
+            9 => "Desenvolvimento",
+            10 => "Outros",
+            11 => "Outras atividades",
+        ];
+
+        //return $area_atuacao;
+
+
+        return view('home', [
+            'articles' => $articles,
+            'osc_recentes' => $osc_recentes,
+            'areas_atuacao' => $area_atuacao,
+        ]);
+    }
+
+    public function getChartHome(){
+
+        //Distribuição por área de atuação/////////
+        /*$results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_area_atuacao')
+            ->select(DB::Raw("
+                   count(quantidade_oscs) as series,
+                   area_atuacao as labels
+            "))
+            ->groupBy('area_atuacao')
+            ->get();
+
+        $data = [
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
+            ],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'][0]['data'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }*/
+        //////////////////////////////////////////
+        //Distribuição por área de atuação/////////
+        $results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_evolucao_anual')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   ano_fundacao as labels
+            "))
+            ->groupBy('quantidade_oscs', 'ano_fundacao')
+            ->where('localidade', 11)
+            ->where('ano_fundacao', '>', '2009')
+            ->orderBy('ano_fundacao')
+            ->get();
+
+        $data = [
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
+            ],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'][0]['data'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }
+        //////////////////////////////////////////
+        //Distribuição natureza juridica/////////
+        /*$results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_natureza_juridica')
+            ->select('natureza_juridica')
+            ->where('localidade', 11)
+            ->get();*/
+
+        $results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_natureza_juridica')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   natureza_juridica as title,
+                   localidade as labels
+            "))
+            ->groupBy('quantidade_oscs', 'natureza_juridica', 'localidade')
+            ->where('localidade', 11)
+            ->get();
+
+
+            $data2 = [
+                'series' => [
+                    ['name' => [], 'type' => 'column', 'data' => []],//type: column, line, area
+                ],
+                'labels' => []
+            ];
+
+            foreach ($results2 as $key => $item) {
+                array_push( $data2['series'][0]['data'], $item->series);
+                array_push( $data2['series'][0]['name'], $item->title);
+                array_push( $data2['labels'], $item->labels);
+            }
+        //////////////////////////////////////////
+
+        $results = [];
+        $results['chart'] = $data;
+        $results['chart2'] = $data2;
+        return $results;
+
     }
 }
 

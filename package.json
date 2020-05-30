@@ -10,10 +10,13 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.9.4",
         "axios": "^0.19",
+        "babel-cli": "^6.26.0",
+        "babel-preset-react": "^6.24.1",
         "bootstrap": "^4.4.1",
         "cross-env": "^5.1",
-        "jquery": "^3.2",
+        "jquery": "^3.4.1",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
         "popper.js": "^1.12",
@@ -25,7 +28,20 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.12.0",
+        "apexcharts": "^3.19.0",
+        "babel-install": "^2.1.0",
+        "jquery-animate-scroll": "^1.0.0",
+        "jquery-smoove": "^0.2.11",
+        "lazysizes": "^5.2.0",
+        "leaflet": "^1.6.0",
+        "leaflet.fullscreen": "^1.6.0",
+        "leaflet.heat": "^0.2.0",
+        "leaflet.markercluster": "^1.4.1",
         "node": "^12.14.1",
-        "npm": "^6.13.7"
+        "npm": "^6.13.7",
+        "owl.carousel": "^2.3.4",
+        "pace-js": "^1.0.2",
+        "prop-types": "^15.7.2",
+        "react-apexcharts": "^1.3.7"
     }
 }

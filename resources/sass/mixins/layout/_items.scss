@@ -1,0 +1,29 @@
+.img-box{
+}
+.img-rede{
+    display: none;
+}
+.img-hover{
+    transition: .4s;
+}
+.img-hover:hover{
+    filter: brightness(50%);
+    transition: .4s;
+}
+.img-box:hover .img-rede {
+    display: block;
+    position: absolute;
+    top: 20%;
+    text-align: center;
+    left: 43%;
+    margin: 0 -15px;
+}
+.img-rede svg{
+    margin: 0 5px;
+    font-size: 25px;
+    left: 200px;
+    color: #FFFFFF;
+}
+.img-rede svg:hover{
+    color: $color-pri;
+}

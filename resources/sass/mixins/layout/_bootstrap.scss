@@ -1,0 +1,62 @@
+a:link {
+    text-decoration: none!important;
+    color: inherit;
+}
+a:visited {
+    text-decoration: none!important;
+    color: inherit;
+}
+a:hover {
+    text-decoration: none!important;
+    color: inherit;
+}
+a:active {
+    text-decoration: none!important;
+    color: inherit;
+}
+.active{
+    background-color: $color-pri!important;
+    border-radius: 0;
+}
+.list-group-item{
+    background-color: inherit;
+    border-radius: 0;
+    border-top: solid 0;
+    border-right: solid 0;
+    border-left: solid 0;
+}
+.list-group-item:hover{
+    background-color: $color-pri!important;
+    color: #FFFFFF;
+    border-radius: 0;
+}
+.list-group-item a{
+    display: block;
+}
+.alert-secondary{
+    background-color: $color-lgt!important;
+}
+
+/*ACCORDION*/
+.card-header{
+    padding: 0;
+    border: 0;
+}
+.mb-0{
+    padding: 10px;
+    cursor: pointer;
+    display: block;
+    background-color: #EEEEEE;
+}
+.card-body{
+    border: 0;
+}
+.card {
+    border: 0;
+    border-radius: 0;
+    box-shadow: 1px 0 3px #CCCCCC;
+}
+
+/*p, h1, h2, time{
+    outline: none!important;
+}*/

@@ -1,0 +1,27 @@
+.fa-svg svg{
+    font-size: 25px;
+    margin: 0 4px 15px 0;
+    color: #777777;
+    background-color: $color-lgt;
+    border-radius: 50%;
+    border: solid 1px inherit;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    padding: 5px;
+}
+.fa-svg svg:hover{
+    color: #FFFFFF;
+    border: double 5px #FFFFFF;
+    background-color: $color-pri;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 1s;
+    -moz-transition:  1s;
+    -ms-transition:  1s;
+    -o-transition:  1s;
+    transition:  1s;
+}

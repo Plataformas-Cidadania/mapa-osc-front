@@ -74,7 +74,22 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => 'public',
+            'schema' => env('DB_PGSQL_SCHEMA', 'public'),
+            'sslmode' => 'prefer',
+        ],
+
+        'map' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('MP_HOST', '127.0.0.1'),
+            'port' => env('MP_PORT', '5432'),
+            'database' => env('MP_DATABASE', 'forge'),
+            'username' => env('MP_USERNAME', 'forge'),
+            'password' => env('MP_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => env('DB_PGSQL_SCHEMA', 'portal'),
             'sslmode' => 'prefer',
         ],
 

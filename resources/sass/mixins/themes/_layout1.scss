@@ -1,0 +1,187 @@
+.list-user img{
+    margin-right: 10px;
+}
+.list-user h4{}
+.list-user p{
+    font-size: 12px;
+    margin-top: -10px;
+}
+.list-lgt{
+    color: #FFFFFF;
+}
+.list-lgt h4{
+    padding: 15px 40px 0px 40px;
+    line-height: 25px;
+}
+.list-lgt img{
+    margin: 25px 15px 20px 0;
+}
+.list-icon{
+    margin-right: -20px;
+}
+.list-lgt hr{
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+.item-calendar svg{
+    color: $color-pri;
+}
+.line-color{
+    background-color: $color-pri;
+    height: 4px;
+    margin: 0 0 20px 0;
+}
+.aspa{
+    font-size: 15px;
+    color: $color-pri;
+    margin-right: 5px;
+}
+.aspa-r{
+    margin-left: 5px;
+}
+.login{
+    max-width: 175px;
+    font-size: 12px;
+    line-height: 13px;
+    cursor: pointer;
+}
+.login-icon{
+    width: 40px;
+    height: 40px;
+    background-color: $color-pri;
+    float: left;
+    margin: 0 10px 0 10px;
+}
+.login svg{
+    font-size: 20px;
+    color: #FFFFFF;
+    margin: 9px 0 0 10px;
+}
+.login p{
+    margin-top: 8px;
+}
+
+.circle {
+    height: 410px;
+    width: 410px;
+    border-radius: 100%;
+    border: solid 1px #CCCCCC;
+    margin:  auto;
+    position: relative;
+}
+.circle2 {
+    height: 260px;
+    width: 260px;
+    border-radius: 100%;
+    border: solid 1px #CCCCCC;
+    margin: -340px  auto 280px auto;
+    position: relative;
+}
+.rotate {
+    height: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10vh;
+    margin-left: -50px;
+    display: flex;
+    align-items: flex-end;
+}
+.rotate2 {
+    height: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10vh;
+    margin-left: -50px;
+    display: flex;
+    align-items: flex-end;
+}
+.rotate div {
+    border-radius: 100%;
+    border: solid 3px #CCCCCC;
+    height: 65px;
+    width: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+}
+.rotate2 div {
+    border-radius: 100%;
+    border: solid 3px #CCCCCC;
+    height: 65px;
+    width: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+}
+#icon0, #icon0 div,#icon1, #icon1 div, #icon2, #icon2 div, #icon3, #icon3 div, #icon4, #icon4 div , #icon5, #icon5 div {
+    transition: 1s;
+}
+#icon0, #icon1, #icon2, #icon3, #icon4 , #icon5 {
+    transform-origin: 50px 0;
+}
+#icon0 {
+    z-index: 1;
+}
+.circle-item {
+    cursor: pointer
+}
+.circle #icon1 {
+    transform: rotate(0deg);
+}
+.circle #icon1 div {
+    transform: rotate(-0deg);
+}
+.circle #icon2 {
+    transform: rotate(-180deg);/*Rotaciona no eixo*/
+}
+.circle #icon2 div {
+    transform: rotate(180deg);/*Coloca virado para cima*/
+}
+.circle #icon3 {
+    transform: rotate(300deg);
+}
+.circle #icon3 div {
+    transform: rotate(60deg);
+}
+.circle #icon4 {
+    transform: rotate(60deg);
+}
+.circle #icon4 div {
+    transform: rotate(-60deg);
+}
+.circle #icon0 {
+    transform: rotate(30deg);
+}
+.circle #icon0 div {
+    transform: rotate(-30deg);
+}
+.circle2 #icon5 {
+    transform: rotate(30deg); /*Rotaciona no eixo*/
+}
+.circle2 #icon5 div {
+    transform: rotate(-30deg); /*Coloca virado para cima*/
+}
+
+.img-upload img{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    border: solid 4px #CCCCCC;
+}
+.img-upload-i{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: solid 1px #CCCCCC;
+    position: absolute;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    background-color: #FFFFFF;
+    margin-top: -50px;
+    margin-left: 110px;
+}
+

@@ -21,16 +21,15 @@ if ( ! function_exists('dataEn2Br') ){
         if($tipo=='mes_abreviado'){
             return $meses_abreviados[$valor];
         }
-        
-        
+
+
         return false;
     }
 }
 
 if ( ! function_exists('nomeMes') ){
     function nomeMes($valor, $tipo){
-        
-        //\Illuminate\Support\Facades\Log::info($valor);
+
 
         $meses_extenso = [
             1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
@@ -63,10 +62,10 @@ if ( ! function_exists('nomeMes') ){
 }
 
 if ( ! function_exists('clean') ) {
-    function clean($string) {
+    function clean($string, $permitir = null) {
 
         $string = str_replace(' ', '-', $string); // troca espaços por hífens.
-        
+
         $string = strtolower($string);
 
         $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
@@ -75,10 +74,12 @@ if ( ! function_exists('clean') ) {
         $string = preg_replace("/[óòôõö]/u", "o", $string);
         $string = preg_replace("/[úùü]/u", "u", $string);
         $string = preg_replace("/[ç]/u", "c", $string);
-        
-        $string = preg_replace('/[^A-Za-z0-9\-.]/', '', $string); // remove caracteres especiais.
 
-        return preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+        $string = preg_replace("/[^A-Za-z0-9\-.$permitir]/", '', $string); // remove caracteres especiais.
+
+        $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
+
+        return $string;
     }
 }
 
@@ -98,7 +99,6 @@ if ( ! function_exists('clean_keywords') ) {
         $string = strip_tags($string);
         $string = str_replace('/', " ", $string);
         $string = strtolower($string);
-
 
         $string = preg_replace("/[áàâãä]/u", "a", $string);
         $string = preg_replace("/[éèê]/u", "e", $string);
@@ -254,6 +254,71 @@ if ( ! function_exists('to') ) {
 if ( ! function_exists('onlyNumbers') ) {
     function onlyNumbers($string) {
         $string = preg_replace("/[^0-9]/", "", $string);
+
+        return $string;
+    }
+}
+
+
+if ( ! function_exists('formatBr') ) {
+    function formatBr($string, $type = null, $hour = null)
+    {
+
+        $dateOriginal = $string;
+
+        $monthEnExt = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        $monthBrExt = array("de janeiro de", "de fevereiro de", "de março de", "de abril de", "de maio de", "de junho de", "de julho de", "de agosto de", "de setembro de", "de outubro de", "de novembro de", "de dezembro de");
+
+        $monthEnAbb = array("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez");
+        $monthBrAbb = array("de jan de", "de fev de", "de mar de", "de abr de", "de mai de", "de jun de", "de jul de", "de ago de", "de set de", "de out de", "de nov de", "de dez de");
+
+        if ($hour == 'hs') {
+            $hour = " - H:i:s";
+        }
+        if ($type == 'num'){
+            $string = date_create($string);
+            $string = date_format($string, 'd/m/Y'.$hour);
+        }else if($type == 'ext'){
+            $string = date_create($string);
+            $string = date_format($string, 'd F Y'.$hour);
+            $string = str_replace($monthEnExt, $monthBrExt, $string);
+        }else if($type == 'abb'){
+            $string = date_create($string);
+            $string = date_format($string, 'd M Y'.$hour);
+            $string = str_replace($monthEnAbb, $monthBrAbb, $string);
+        }else if($type == 'run'){
+            $time = strtotime(date('Y-m-d H:i:s')) - strtotime($dateOriginal);
+            $seconds = $time;
+            $minutes = round($time / 60);
+            $hours = round($time / 3600);
+            $days = round($time / 86400);
+            $weeks = round($time / 604800);
+            $months = round($time / 2419200);
+            $years = round($time / 29030400);
+            if ($seconds <= 60) return"1 min atrás";
+            else if ($minutes <= 60) return $minutes==1 ?'1 min atrás':$minutes.' min atrás';
+            else if ($hours <= 24) return $hours==1 ?'1 hora atrás':$hours.' horas atrás';
+            else if ($days <= 7) return $days==1 ?'1 dia atrás':$days.' dias atrás';
+            else if ($weeks <= 4) return $weeks==1 ?'1 semana atrás':$weeks.' semanas atrás';
+            else if ($months <= 12) return $months == 1 ?'1 mês atrás':$months.' meses atrás';
+            else return $years == 1 ? 'um ano atrás':$years.' anos atrás';
+        }
+
+        return $string;
+    }
+}
+
+
+if ( ! function_exists('captz') ) {
+    function captz($string) {
+
+        //$string = strtoupper($string);
+        $string = strtolower($string);
+        $string = ucwords($string);
+
+        $string = str_replace("Da", "da", $string);
+        $string = str_replace("De", "de", $string);
+        $string = str_replace("Do", "do", $string);
 
         return $string;
     }
