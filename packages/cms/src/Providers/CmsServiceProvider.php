@@ -27,7 +27,7 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__."/../../public" => public_path()
         ]);
 
-        $router->middleware('authcms', '\Cms\Middleware\Authenticate');
+        $router->aliasMiddleware('authcms', '\Cms\Middleware\Authenticate');
     }
 
 
