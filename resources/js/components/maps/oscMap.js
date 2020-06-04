@@ -3,6 +3,11 @@ class OscMap extends React.Component{
         super(props);
         //console.log(props);
         this.state = {
+            processingOsc: false,
+            processingOscIdhUfs: false,
+            processingOscUfs: false,
+            processingOscPontos: false,
+            processingHeatMap: false,
             mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
@@ -63,7 +68,7 @@ class OscMap extends React.Component{
         };
 
         this.loadMap = this.loadMap.bind(this);
-        this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
+        //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
@@ -89,9 +94,20 @@ class OscMap extends React.Component{
     componentWillReceiveProps(props){
         //console.log('will receve props');
         //console.log(props.data);
-        if(props.data != this.state.data || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf){
+        if(props.data != this.state.data ||
+            props.dataOscUf != this.state.dataOscUf ||
+            props.dataIdhUf != this.state.dataIdhUf ||
+            props.processingOsc != this.state.processingOsc ||
+            props.processingOscIdhUfs != this.state.processingOscIdhUfs
+        ){
             //console.log(props.data);
-            this.setState({data: props.data, dataOscUf: props.dataOscUf, dataIdhUf: props.dataIdhUf}, function(){
+            this.setState({
+                data: props.data,
+                dataOscUf: props.dataOscUf,
+                dataIdhUf: props.dataIdhUf,
+                processingOsc: props.processingOsc,
+                processingOscIdhUfs: props.processingOscIdhUfs
+            }, function(){
                 if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
                     this.populateMap();
                     //this.areaOscMap();
@@ -619,43 +635,48 @@ class OscMap extends React.Component{
 
     loadDataUf(){
         let _this = this;
-        $.ajax({
-            method:'GET',
-            url: 'get-osc/2/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
-            data:{
-            },
-            cache: false,
-            success: function(data) {
-                console.log(data);
-                _this.setState({data: data});
-                _this.populateMap();
-            },
-            error: function(xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({loading: false});
-            }
+        this.setState({processingOscUfs: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: 'get-osc/2/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    _this.setState({data: data, processingOscUfs: false});
+                    _this.populateMap();
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
 
+            });
         });
+
     }
 
     loadDataHeatMap(){
         let _this = this;
-        $.ajax({
-            method:'GET',
-            url: 'get-all-oscs',
-            data:{
-            },
-            cache: false,
-            success: function(data) {
-                console.log(data);
-                _this.setState({dataCalor: data});
-                _this.heatMap();
-            },
-            error: function(xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({loading: false});
-            }
+        this.setState({processingHeatMap: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: 'get-all-oscs',
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    _this.setState({dataCalor: data, processingHeatMap: false});
+                    _this.heatMap();
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
 
+            });
         });
     }
 
@@ -680,7 +701,7 @@ class OscMap extends React.Component{
         });
     }*/
 
-    loadDataTotalPorTerritorio(){
+    /*loadDataTotalPorTerritorio(){
         //console.log('types', this.state.types);
         //console.log('períodos', this.state.start, this.state.end);
         if(!this.state.start || !this.state.end){
@@ -713,24 +734,26 @@ class OscMap extends React.Component{
                 console.log('erro');
             }.bind(this)
         });
-    }
+    }*/
 
     loadDataPontosPorTerritorio(){
-        $.ajax({
-            method:'GET',
-            url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
-            data:{
-            },
-            cache: false,
-            success: function(data) {
-                //console.log(data);
-                this.setState({data: data}, function(){
-                    this.populateMapCluster();
-                });
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.log('erro');
-            }.bind(this)
+        this.setState({processingOscPontos: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    //console.log(data);
+                    this.setState({data: data, processingOscPontos: false}, function(){
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
         });
     }
 
@@ -1170,78 +1193,100 @@ class OscMap extends React.Component{
 
 
 
-        if(this.state.data.list) {
+        if(this.state.data) {
+            if(this.state.data.list) {
 
-            //console.log('***', this.state.data);
-            tableOsc = this.state.data.list.map(function (item, index) {
+                //console.log('***', this.state.data);
+                tableOsc = this.state.data.list.map(function (item, index) {
 
-                return (
-                    <tr key={'tabela' + index}>
-                        <td className="capitalize">
-                            <div className="img-upload img-upload-p">
-                                <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
-                                      alt="" />
-                            </div>
-                            {item[1].toLowerCase()}</td>
-                        <td>{formatCnpjCpf(item[2])}</td>
-                        <td className="text-center">{item[3]}</td>
-                        <td className="capitalize">{item[4].toLowerCase()}</td>
-                        <td>
-                            <a href={'detalhar/' + item[0] + '/' + removeAccent(item[1]) }><i className="fas fa-share-square"/></a>
-                        </td>
-                    </tr>
-                );
-            });
+                    return (
+                        <tr key={'tabela' + index}>
+                            <td className="capitalize">
+                                <div className="img-upload img-upload-p">
+                                    <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
+                                         alt=""/>
+                                </div>
+                                {item[1].toLowerCase()}</td>
+                            <td>{formatCnpjCpf(item[2])}</td>
+                            <td className="text-center">{item[3]}</td>
+                            <td className="capitalize">{item[4].toLowerCase()}</td>
+                            <td>
+                                <a href={'detalhar/' + item[0] + '/' + removeAccent(item[1])}><i
+                                    className="fas fa-share-square"/></a>
+                            </td>
+                        </tr>
+                    );
+                });
+            }
         }
+
+        let processingOsc =  this.state.processingOsc;
+        let processingOscIdhUfs =  this.state.processingOscIdhUfs;
+        let processingOscUfs =  this.state.processingOscUfs;
+        let processingOscPontos =  this.state.processingOscPontos;
+        let processingHeatMap =  this.state.processingHeatMap;
 
         return(
             <div>
-                <div id={this.state.mapId} className="map" />
-                <div id="controls-map" className="control-container" />
-                <div id="controls-map2" className="control-container" />
+                <div style={{
+                    display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none'),
+                    position:"absolute",
+                    zIndex:"5",
+                    backgroundColor:"rgba(0,0,0,0.2)",
+                    width:"100%",
+                    height:"600px",
+                    marginRight: "-15px",
+                    marginLeft: "-15px",
+                    textAlign: "center",
+                    paddingTop: "250px"
+                }}
+                ><i className="fa fa-spinner fa-spin fa-5x"/></div>
+                <div style={{position:"relative", zIndex:"0"}}>
+                    <div id={this.state.mapId} className="map" />
+                    <div id="controls-map" className="control-container" />
+                    <div id="controls-map2" className="control-container" />
 
-                <br/>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="table-responsive-sm">
-                            <table className="table">
-                                <thead className="bg-pri text-light">
-                                <tr>
-                                    <th>Nome da OSC</th>
-                                    <th width="180">CNPJ</th>
-                                    <th width="120">N. Juridica</th>
-                                    <th>Endereço</th>
-                                    <th>Ações</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {tableOsc}
-                                </tbody>
-                            </table>
+                    <br/>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="table-responsive-sm">
+                                <table className="table">
+                                    <thead className="bg-pri text-light">
+                                    <tr>
+                                        <th>Nome da OSC</th>
+                                        <th width="180">CNPJ</th>
+                                        <th width="120">N. Juridica</th>
+                                        <th>Endereço</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {tableOsc}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="...">
+                                <ul className="pagination">
+                                    <li className="page-item disabled">
+                                        <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                                    </li>
+                                    <li className="page-item"><a className="page-link" href="#">1</a></li>
+                                    <li className="page-item active">
+                                        <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
+                                    </li>
+                                    <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                    <li className="page-item">
+                                        <a className="page-link" href="#">Próximo</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
-                        <nav aria-label="...">
-                            <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                <li className="page-item active">
-                                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">Próximo</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
 
-                    <div className="col-md-12">
+                        <div className="col-md-12">
 
+                        </div>
                     </div>
                 </div>
-
-
             </div>
 
 

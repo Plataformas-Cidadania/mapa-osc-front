@@ -3,6 +3,11 @@ class OscMap extends React.Component {
         super(props);
         //console.log(props);
         this.state = {
+            processingOsc: false,
+            processingOscIdhUfs: false,
+            processingOscUfs: false,
+            processingOscPontos: false,
+            processingHeatMap: false,
             mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
@@ -63,7 +68,7 @@ class OscMap extends React.Component {
         };
 
         this.loadMap = this.loadMap.bind(this);
-        this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
+        //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
@@ -88,9 +93,15 @@ class OscMap extends React.Component {
     componentWillReceiveProps(props) {
         //console.log('will receve props');
         //console.log(props.data);
-        if (props.data != this.state.data || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf) {
+        if (props.data != this.state.data || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf || props.processingOsc != this.state.processingOsc || props.processingOscIdhUfs != this.state.processingOscIdhUfs) {
             //console.log(props.data);
-            this.setState({ data: props.data, dataOscUf: props.dataOscUf, dataIdhUf: props.dataIdhUf }, function () {
+            this.setState({
+                data: props.data,
+                dataOscUf: props.dataOscUf,
+                dataIdhUf: props.dataIdhUf,
+                processingOsc: props.processingOsc,
+                processingOscIdhUfs: props.processingOscIdhUfs
+            }, function () {
                 if (this.state.data && this.state.dataOscUf && this.state.dataIdhUf) {
                     this.populateMap();
                     //this.areaOscMap();
@@ -610,41 +621,45 @@ class OscMap extends React.Component {
 
     loadDataUf() {
         let _this = this;
-        $.ajax({
-            method: 'GET',
-            url: 'get-osc/2/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
-            data: {},
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                _this.setState({ data: data });
-                _this.populateMap();
-            },
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({ loading: false });
-            }
+        this.setState({ processingOscUfs: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'get-osc/2/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    _this.setState({ data: data, processingOscUfs: false });
+                    _this.populateMap();
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
 
+            });
         });
     }
 
     loadDataHeatMap() {
         let _this = this;
-        $.ajax({
-            method: 'GET',
-            url: 'get-all-oscs',
-            data: {},
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                _this.setState({ dataCalor: data });
-                _this.heatMap();
-            },
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({ loading: false });
-            }
+        this.setState({ processingHeatMap: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'get-all-oscs',
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    _this.setState({ dataCalor: data, processingHeatMap: false });
+                    _this.heatMap();
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
 
+            });
         });
     }
 
@@ -665,20 +680,19 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
-    loadDataTotalPorTerritorio() {
+    /*loadDataTotalPorTerritorio(){
         //console.log('types', this.state.types);
         //console.log('períodos', this.state.start, this.state.end);
-        if (!this.state.start || !this.state.end) {
+        if(!this.state.start || !this.state.end){
             return;
         }
-
-        $.ajax({
-            method: 'POST',
+         $.ajax({
+            method:'POST',
             url: "total-transito-territorio",
-            data: {
+            data:{
                 serie_id: this.props.id,
                 start: this.state.start,
                 end: this.state.end,
@@ -691,33 +705,35 @@ class OscMap extends React.Component {
                 tipoTerritorioAgrupamento: this.state.tipoTerritorioAgrupamento // tipo de territorio em que os dados são agrupados
             },
             cache: false,
-            success: function (data) {
+            success: function(data) {
                 //console.log(data);
-                this.setState({ data: data.valores }, function () {
+                this.setState({data: data.valores}, function(){
                     this.populateMap();
                 });
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.log('erro');
             }.bind(this)
         });
-    }
+    }*/
 
     loadDataPontosPorTerritorio() {
-        $.ajax({
-            method: 'GET',
-            url: 'get-osc/3/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
-            data: {},
-            cache: false,
-            success: function (data) {
-                //console.log(data);
-                this.setState({ data: data }, function () {
-                    this.populateMapCluster();
-                });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log('erro');
-            }.bind(this)
+        this.setState({ processingOscPontos: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'get-osc/3/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
+                data: {},
+                cache: false,
+                success: function (data) {
+                    //console.log(data);
+                    this.setState({ data: data, processingOscPontos: false }, function () {
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
         });
     }
 
@@ -1127,172 +1143,202 @@ class OscMap extends React.Component {
         ////////////////////////////////////////////
 
 
-        if (this.state.data.list) {
+        if (this.state.data) {
+            if (this.state.data.list) {
 
-            //console.log('***', this.state.data);
-            tableOsc = this.state.data.list.map(function (item, index) {
+                //console.log('***', this.state.data);
+                tableOsc = this.state.data.list.map(function (item, index) {
 
-                return React.createElement(
-                    'tr',
-                    { key: 'tabela' + index },
-                    React.createElement(
-                        'td',
-                        { className: 'capitalize' },
+                    return React.createElement(
+                        'tr',
+                        { key: 'tabela' + index },
                         React.createElement(
-                            'div',
-                            { className: 'img-upload img-upload-p' },
-                            React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
-                                alt: '' })
+                            'td',
+                            { className: 'capitalize' },
+                            React.createElement(
+                                'div',
+                                { className: 'img-upload img-upload-p' },
+                                React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
+                                    alt: '' })
+                            ),
+                            item[1].toLowerCase()
                         ),
-                        item[1].toLowerCase()
-                    ),
-                    React.createElement(
-                        'td',
-                        null,
-                        formatCnpjCpf(item[2])
-                    ),
-                    React.createElement(
-                        'td',
-                        { className: 'text-center' },
-                        item[3]
-                    ),
-                    React.createElement(
-                        'td',
-                        { className: 'capitalize' },
-                        item[4].toLowerCase()
-                    ),
-                    React.createElement(
-                        'td',
-                        null,
                         React.createElement(
-                            'a',
-                            { href: 'detalhar/' + item[0] + '/' + removeAccent(item[1]) },
-                            React.createElement('i', { className: 'fas fa-share-square' })
+                            'td',
+                            null,
+                            formatCnpjCpf(item[2])
+                        ),
+                        React.createElement(
+                            'td',
+                            { className: 'text-center' },
+                            item[3]
+                        ),
+                        React.createElement(
+                            'td',
+                            { className: 'capitalize' },
+                            item[4].toLowerCase()
+                        ),
+                        React.createElement(
+                            'td',
+                            null,
+                            React.createElement(
+                                'a',
+                                { href: 'detalhar/' + item[0] + '/' + removeAccent(item[1]) },
+                                React.createElement('i', {
+                                    className: 'fas fa-share-square' })
+                            )
                         )
-                    )
-                );
-            });
+                    );
+                });
+            }
         }
+
+        let processingOsc = this.state.processingOsc;
+        let processingOscIdhUfs = this.state.processingOscIdhUfs;
+        let processingOscUfs = this.state.processingOscUfs;
+        let processingOscPontos = this.state.processingOscPontos;
+        let processingHeatMap = this.state.processingHeatMap;
 
         return React.createElement(
             'div',
             null,
-            React.createElement('div', { id: this.state.mapId, className: 'map' }),
-            React.createElement('div', { id: 'controls-map', className: 'control-container' }),
-            React.createElement('div', { id: 'controls-map2', className: 'control-container' }),
-            React.createElement('br', null),
             React.createElement(
                 'div',
-                { className: 'row' },
+                { style: {
+                        display: processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none',
+                        position: "absolute",
+                        zIndex: "5",
+                        backgroundColor: "rgba(0,0,0,0.2)",
+                        width: "100%",
+                        height: "600px",
+                        marginRight: "-15px",
+                        marginLeft: "-15px",
+                        textAlign: "center",
+                        paddingTop: "250px"
+                    }
+                },
+                React.createElement('i', { className: 'fa fa-spinner fa-spin fa-5x' })
+            ),
+            React.createElement(
+                'div',
+                { style: { position: "relative", zIndex: "0" } },
+                React.createElement('div', { id: this.state.mapId, className: 'map' }),
+                React.createElement('div', { id: 'controls-map', className: 'control-container' }),
+                React.createElement('div', { id: 'controls-map2', className: 'control-container' }),
+                React.createElement('br', null),
                 React.createElement(
                     'div',
-                    { className: 'col-md-12' },
+                    { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'table-responsive-sm' },
+                        { className: 'col-md-12' },
                         React.createElement(
-                            'table',
-                            { className: 'table' },
+                            'div',
+                            { className: 'table-responsive-sm' },
                             React.createElement(
-                                'thead',
-                                { className: 'bg-pri text-light' },
+                                'table',
+                                { className: 'table' },
                                 React.createElement(
-                                    'tr',
+                                    'thead',
+                                    { className: 'bg-pri text-light' },
+                                    React.createElement(
+                                        'tr',
+                                        null,
+                                        React.createElement(
+                                            'th',
+                                            null,
+                                            'Nome da OSC'
+                                        ),
+                                        React.createElement(
+                                            'th',
+                                            { width: '180' },
+                                            'CNPJ'
+                                        ),
+                                        React.createElement(
+                                            'th',
+                                            { width: '120' },
+                                            'N. Juridica'
+                                        ),
+                                        React.createElement(
+                                            'th',
+                                            null,
+                                            'Endere\xE7o'
+                                        ),
+                                        React.createElement(
+                                            'th',
+                                            null,
+                                            'A\xE7\xF5es'
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'tbody',
                                     null,
+                                    tableOsc
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'nav',
+                            { 'aria-label': '...' },
+                            React.createElement(
+                                'ul',
+                                { className: 'pagination' },
+                                React.createElement(
+                                    'li',
+                                    { className: 'page-item disabled' },
                                     React.createElement(
-                                        'th',
-                                        null,
-                                        'Nome da OSC'
-                                    ),
+                                        'a',
+                                        { className: 'page-link', href: '#', tabIndex: '-1' },
+                                        'Anterior'
+                                    )
+                                ),
+                                React.createElement(
+                                    'li',
+                                    { className: 'page-item' },
                                     React.createElement(
-                                        'th',
-                                        { width: '180' },
-                                        'CNPJ'
-                                    ),
+                                        'a',
+                                        { className: 'page-link', href: '#' },
+                                        '1'
+                                    )
+                                ),
+                                React.createElement(
+                                    'li',
+                                    { className: 'page-item active' },
                                     React.createElement(
-                                        'th',
-                                        { width: '120' },
-                                        'N. Juridica'
-                                    ),
+                                        'a',
+                                        { className: 'page-link', href: '#' },
+                                        '2 ',
+                                        React.createElement(
+                                            'span',
+                                            { className: 'sr-only' },
+                                            '(atual)'
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'li',
+                                    { className: 'page-item' },
                                     React.createElement(
-                                        'th',
-                                        null,
-                                        'Endere\xE7o'
-                                    ),
+                                        'a',
+                                        { className: 'page-link', href: '#' },
+                                        '3'
+                                    )
+                                ),
+                                React.createElement(
+                                    'li',
+                                    { className: 'page-item' },
                                     React.createElement(
-                                        'th',
-                                        null,
-                                        'A\xE7\xF5es'
+                                        'a',
+                                        { className: 'page-link', href: '#' },
+                                        'Pr\xF3ximo'
                                     )
                                 )
-                            ),
-                            React.createElement(
-                                'tbody',
-                                null,
-                                tableOsc
                             )
                         )
                     ),
-                    React.createElement(
-                        'nav',
-                        { 'aria-label': '...' },
-                        React.createElement(
-                            'ul',
-                            { className: 'pagination' },
-                            React.createElement(
-                                'li',
-                                { className: 'page-item disabled' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#', tabIndex: '-1' },
-                                    'Anterior'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '1'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item active' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '2 ',
-                                    React.createElement(
-                                        'span',
-                                        { className: 'sr-only' },
-                                        '(atual)'
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '3'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    'Pr\xF3ximo'
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement('div', { className: 'col-md-12' })
+                    React.createElement('div', { className: 'col-md-12' })
+                )
             )
         );
     }
