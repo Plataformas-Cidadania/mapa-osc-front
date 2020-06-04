@@ -46,6 +46,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'cms' => [
+            'driver' => 'session',
+            'provider' => 'cms',
+        ],
     ],
 
     /*
@@ -70,6 +74,10 @@ return [
             'driver' => 'eloquent',
             //'model' => App\User::class,
             'model' => App\SiteUser::class,
+        ],
+        'cms' => [
+            'driver' => 'eloquent',
+            'model' => Cms\Models\CmsUser::class,
         ],
 
         // 'users' => [
