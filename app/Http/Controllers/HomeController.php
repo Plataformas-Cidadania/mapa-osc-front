@@ -12,13 +12,8 @@ class HomeController extends Controller
 {
     public function index(){
 
-        $articles = \App\PubArticle::
-            join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
-            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
-            ->orderBy('id', 'desc')
-            ->take(3)
-            ->get();
-
+        $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
+        $articles = \App\Publication::orderBy('id', 'desc')->take(3)->get();
 
         $osc_recentes = DB::connection('map')
             ->table('portal.vw_log_alteracao')
@@ -45,6 +40,7 @@ class HomeController extends Controller
 
 
         return view('home', [
+            'webdoors' => $webdoors,
             'articles' => $articles,
             'osc_recentes' => $osc_recentes,
             'areas_atuacao' => $area_atuacao,
@@ -53,28 +49,7 @@ class HomeController extends Controller
 
     public function getChartHome(){
 
-        //Distribuição por área de atuação/////////
-        /*$results = DB::connection('map')
-            ->table('analysis.vw_perfil_localidade_area_atuacao')
-            ->select(DB::Raw("
-                   count(quantidade_oscs) as series,
-                   area_atuacao as labels
-            "))
-            ->groupBy('area_atuacao')
-            ->get();
 
-        $data = [
-            'series' => [
-                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
-            ],
-            'labels' => []
-        ];
-
-        foreach ($results as $item) {
-            array_push( $data['series'][0]['data'], $item->series);
-            array_push( $data['labels'], $item->labels);
-        }*/
-        //////////////////////////////////////////
         //Distribuição por área de atuação/////////
         $results = DB::connection('map')
             ->table('analysis.vw_perfil_localidade_evolucao_anual')
@@ -100,12 +75,7 @@ class HomeController extends Controller
             array_push( $data['labels'], $item->labels);
         }
         //////////////////////////////////////////
-        //Distribuição natureza juridica/////////
-        /*$results2 = DB::connection('map')
-            ->table('analysis.vw_perfil_localidade_natureza_juridica')
-            ->select('natureza_juridica')
-            ->where('localidade', 11)
-            ->get();*/
+
 
         $results2 = DB::connection('map')
             ->table('analysis.vw_perfil_localidade_natureza_juridica')

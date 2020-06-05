@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model{
-
+class Video extends Model
+{
     protected $fillable = [
-        'title',  'tease', 'description', 'date', 'rast',
+        'imagem', 'titulo', 'data', 'resumida', 'descricao', 'link_video', 'cmsuser_id',
     ];
 }

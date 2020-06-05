@@ -13,7 +13,7 @@ class CmsUsersTableSeeders extends Seeder
     {
         DB::table('cms_users')->insert([
             'name' => 'Admin',
-            'email' => 'atendimento@cd10.com.br',
+            'email' => 'admin@cms',
             'password' => bcrypt('123456'),
         ]);
     }

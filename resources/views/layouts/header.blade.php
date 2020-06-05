@@ -230,10 +230,17 @@
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=9" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=10" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">--}}
-            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/8923-mapa-osc.jpg" alt="">
+            {{--<img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/8923-mapa-osc.jpg" alt="">
             <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/5013-colabore.jpg" alt="">
-            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/9958-indicadores.jpg" alt="">
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/9958-indicadores.jpg" alt="">--}}
 
+            @foreach($webdoors as $webdoor)
+                <picture>
+                    <source class="owl-lazy" media="(min-width: 350px)" data-srcset="imagens/webdoors/lg-{{$webdoor->imagem}}">
+                    <source class="owl-lazy" media="(min-width: 650px)" data-srcset="imagens/webdoors/md-{{$webdoor->imagem}}">
+                    <img class="owl-lazy" data-src="imagens/webdoors/lg-{{$webdoor->imagem}}" alt="">
+                </picture>
+            @endforeach
 
         </div>
     @endif

@@ -287,7 +287,7 @@
             </div>
             @foreach($articles as $item)
                 <div class="col-md-4">
-                    <a href="artigo/{{$item->id}}/{{clean($item->title)}}">
+                    <a href="artigo/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
                             <picture>
                                 <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
@@ -302,9 +302,9 @@
                             </div>
                         </div>
                         <br>
-                        <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->date, 'ext')}} </time>
-                        <h2>{{$item->title}}</h2>
-                        <p>{{$item->tease}}</p>
+                        <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->data, 'ext')}} </time>
+                        <h2>{{$item->titulo}}</h2>
+                        <p>{{$item->resumida}}</p>
                         <h4 class="btn-plus">Continue lendo</h4>
                     </a>
                 </div>
