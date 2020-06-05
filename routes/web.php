@@ -39,15 +39,15 @@ foreach ($routesSearch as $route) {
 ///////////////////////////////////////////////////////////////////////
 //Route::get('sobre', 'PageController@details');
 
-/*if(env('DYNAMIC_ROUTES')=='true'){
-    $pages = \Illuminate\Support\Facades\DB::table('lng_pub_pages')->select('slug')->get();
+if(env('DYNAMIC_ROUTES')=='true'){
+    $modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
 
-    foreach ($pages as $page) {
-        if(!empty($page->slug)){
-            Route::get($page->slug.'/', 'PageController@details');
+    foreach ($modulos as $modulo) {
+        if(!empty($modulo->slug)){
+            Route::get($modulo->slug.'/', 'ModuloController@details');
         }
     }
-}*/
+}
 
 Route::get('editar-osc', 'OscController@edit');
 

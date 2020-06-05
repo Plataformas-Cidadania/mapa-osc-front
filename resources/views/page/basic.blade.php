@@ -1,10 +1,16 @@
-<?php $rota = Route::getCurrentRoute()->uri();?>
+<?php
+    $show = 0; //COLOCAR VARIAVEL NO BANCO
+    $rota = Route::getCurrentRoute()->uri();
+    $items = \App\Item::where('modulo_id', $page->id)->where('status', 1)->orderBy('posicao')->get();
+?>
 @extends('layout')
 @section('title', '')
 @section('keywords', '')
 @section('description', '')
 @section('image', '')
 @section('content')
+
+
 
     <style>
         .mb-0{
@@ -28,8 +34,8 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{$lngPage->title}}</h1>
-                        <h5><a href="/">Home</a> / {{$lngPage->title}}</h5>
+                        <h1>{{$page->titulo}}</h1>
+                        <h5><a href="/">Home</a> / {{$page->titulo}}</h5>
                         <br>
                     </header>
                 </div>
@@ -44,7 +50,7 @@
                 <ul class="menu-left">
                     @foreach($subMenus as $menu)
                         <li class="list-group-item-theme @if($menu->slug==$rota) menu-left-active @endif" >
-                            <a href="{{$menu->slug}}">{{$menu->title}}</a>
+                            <a href="{{$menu->slug}}">{{$menu->titulo}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -52,22 +58,30 @@
             @endif
             <div @if(count($subMenus)>1) class="col-md-9" @else class="col-md-12" @endif>
                 <article>
+                    @if($page->imagem!="")
                     <picture>
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre criar uma coluna para descrever a imagem" width="100%" class="img-fluid lazyload">
+                        <source srcset="/imagens/modulos/sm-{{$page->imagem}}" media="(max-width: 468px)">
+                        <source srcset="/imagens/modulos/md-{{$page->imagem}}" media="(max-width: 768px)">
+                        <source srcset="/imagens/modulos/lg-{{$page->imagem}}" class="img-responsive">
+                        <img src="img/loading.gif" data-src="/imagens/modulos/lg-{{$page->imagem}}" alt="Imagem sobre {{$page->titulo}}" title="Imagem sobre {{$page->titulo}}" width="100%" class="img-fluid lazyload">
                     </picture>
                     <br><br>
-                    <p  data-message="Esse é do primeiro botão" tabindex="0">{!! $lngPage->description !!}</p>
+                    @endif
+
+                    <p  data-message="Esse é do primeiro botão" tabindex="0">{!! $page->descricao !!}</p>
+
+                    @if($items)
+                        @include('page.about.accordion')
+                    @endif
+
+
+
                     @if($rota=="equipe")
                         <div>
                             @include('page.about.team')
                         </div>
                     @endif
-                    <div>
-                        @include('page.about.item')
-                    </div>
+
                     <br>
                 </article>
             </div>
