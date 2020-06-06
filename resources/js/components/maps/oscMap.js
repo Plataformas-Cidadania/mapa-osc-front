@@ -1228,65 +1228,63 @@ class OscMap extends React.Component{
 
         return(
             <div>
-                <div style={{
-                    display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none'),
-                    position:"absolute",
-                    zIndex:"5",
-                    backgroundColor:"rgba(0,0,0,0.2)",
-                    width:"100%",
-                    height:"600px",
-                    marginRight: "-15px",
-                    marginLeft: "-15px",
-                    textAlign: "center",
-                    paddingTop: "250px"
-                }}
-                ><i className="fa fa-spinner fa-spin fa-5x"/></div>
-                <div style={{position:"relative", zIndex:"0"}}>
-                    <div id={this.state.mapId} className="map" />
-                    <div id="controls-map" className="control-container" />
-                    <div id="controls-map2" className="control-container" />
-
-                    <br/>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="table-responsive-sm">
-                                <table className="table">
-                                    <thead className="bg-pri text-light">
-                                    <tr>
-                                        <th>Nome da OSC</th>
-                                        <th width="180">CNPJ</th>
-                                        <th width="120">N. Juridica</th>
-                                        <th>Endereço</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {tableOsc}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <nav aria-label="...">
-                                <ul className="pagination">
-                                    <li className="page-item disabled">
-                                        <a className="page-link" href="#" tabIndex="-1">Anterior</a>
-                                    </li>
-                                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                    <li className="page-item active">
-                                        <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
-                                    </li>
-                                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">Próximo</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                <div className="col-md-12">
+                <div  style={{margin: '0 15px 0 0'}}>
+                    <div style={{margin: '0 -15px 0 -15px'}}>
+                        <div>
+                            <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
+                            >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
                         </div>
-
-                        <div className="col-md-12">
-
+                        <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
+                            <div id={this.state.mapId} className="map" />
+                            <div id="controls-map" className="control-container" />
+                            <div id="controls-map2" className="control-container" />
                         </div>
                     </div>
                 </div>
+                </div>
+
+                <br/>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="table-responsive-sm">
+                            <table className="table">
+                                <thead className="bg-pri text-light">
+                                <tr>
+                                    <th>Nome da OSC</th>
+                                    <th width="180">CNPJ</th>
+                                    <th width="120">N. Juridica</th>
+                                    <th>Endereço</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {tableOsc}
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="...">
+                            <ul className="pagination">
+                                <li className="page-item disabled">
+                                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                                </li>
+                                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                                <li className="page-item active">
+                                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
+                                </li>
+                                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                <li className="page-item">
+                                    <a className="page-link" href="#">Próximo</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div className="col-md-12">
+
+                    </div>
+                </div>
+
             </div>
 
 
