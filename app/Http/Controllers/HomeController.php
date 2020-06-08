@@ -13,7 +13,8 @@ class HomeController extends Controller
     public function index(){
 
         $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
-        $articles = \App\Publication::orderBy('id', 'desc')->take(3)->get();
+        $teasers = \App\Teaser::orderBy('teaser')->get();
+        $publicacoes = \App\Publication::orderBy('id', 'desc')->take(3)->get();
 
         $osc_recentes = DB::connection('map')
             ->table('portal.vw_log_alteracao')
@@ -41,7 +42,8 @@ class HomeController extends Controller
 
         return view('home', [
             'webdoors' => $webdoors,
-            'articles' => $articles,
+            'teasers' => $teasers,
+            'publicacoes' => $publicacoes,
             'osc_recentes' => $osc_recentes,
             'areas_atuacao' => $area_atuacao,
         ]);

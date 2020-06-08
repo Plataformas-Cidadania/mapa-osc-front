@@ -103,6 +103,10 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarTipoGraficoCtrl
 mix.scripts('packages/cms/resources/assets/js/controllers/noticiaCtrl.js', 'public/assets-cms/js/controllers/noticiaCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarNoticiaCtrl.js', 'public/assets-cms/js/controllers/alterarNoticiaCtrl.js');
 
+//Categorias
+mix.scripts('packages/cms/resources/assets/js/controllers/categoriaCtrl.js', 'public/assets-cms/js/controllers/categoriaCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarCategoriaCtrl.js', 'public/assets-cms/js/controllers/alterarCategoriaCtrl.js');
+
 //Publications
 mix.scripts('packages/cms/resources/assets/js/controllers/publicationCtrl.js', 'public/assets-cms/js/controllers/publicationCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarPublicationCtrl.js', 'public/assets-cms/js/controllers/alterarPublicationCtrl.js');
@@ -156,5 +160,8 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarItemVersaoCtrl.
 mix.scripts('packages/cms/resources/assets/js/controllers/cmsUserCtrl.js', 'public/assets-cms/js/controllers/cmsUserCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarCmsUserCtrl.js', 'public/assets-cms/js/controllers/alterarCmsUserCtrl.js');
 
+//Teaser
+mix.scripts('packages/cms/resources/assets/js/controllers/teaserCtrl.js', 'public/assets-cms/js/controllers/teaserCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarTeaserCtrl.js', 'public/assets-cms/js/controllers/alterarTeaserCtrl.js');
 
 //FIM CMS///////////////////////////////////////////////////////////////////

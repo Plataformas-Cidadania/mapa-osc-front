@@ -156,13 +156,13 @@
                                 <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="quem" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
-                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados eIndicadores</a></li>
+                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
                                     </ul>
                                 </li>
                                 <li role="presentation"><a href="artigos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
                                     <ul class="noJS menu-desk-sub">
-                                        <li role="presentation"><a href="artigos" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
-                                        <li role="presentation"><a href="artigos" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
+                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
+                                        <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
                                         <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>

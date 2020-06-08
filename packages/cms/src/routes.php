@@ -3,14 +3,14 @@
 
 
 Route::group(['middleware' => 'cms'], function () {
-    
+
     Route::get('/cms/login', 'Cms\Controllers\HomeController@telaLogin');
     Route::get('/cms/logout', 'Cms\Controllers\HomeController@logout');
     Route::post('/cms/login', 'Cms\Controllers\HomeController@login');
 
     Route::group(['middleware' => 'authcms:cms'], function () {
-        
-        Route::get('/cms', 'Cms\Controllers\HomeController@index');        
+
+        Route::get('/cms', 'Cms\Controllers\HomeController@index');
 
         //WEBDOORS
         Route::get('/cms/webdoors', 'Cms\Controllers\WebdoorController@index');
@@ -64,7 +64,7 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-modulo/{id}', 'Cms\Controllers\ModuloController@alterar');
         Route::get('/cms/excluir-modulo/{id}', 'Cms\Controllers\ModuloController@excluir');
         Route::get('/cms/status-modulo/{id}', 'Cms\Controllers\ModuloController@status');
-        
+
         //TIPOS
         Route::get('/cms/tipos', 'Cms\Controllers\TipoController@index');
         Route::get('/cms/listar-tipos', 'Cms\Controllers\TipoController@listar');
@@ -91,6 +91,15 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-noticia/{id}', 'Cms\Controllers\NoticiaController@alterar');
         Route::get('/cms/excluir-noticia/{id}', 'Cms\Controllers\NoticiaController@excluir');
         Route::get('/cms/status-noticia/{id}', 'Cms\Controllers\NoticiaController@status');
+
+
+        //CATEGORIAS
+        Route::get('/cms/categorias', 'Cms\Controllers\CategoriaController@index');
+        Route::get('/cms/listar-categorias', 'Cms\Controllers\CategoriaController@listar');
+        Route::post('/cms/inserir-categoria', 'Cms\Controllers\CategoriaController@inserir');
+        Route::get('/cms/categoria/{id}', 'Cms\Controllers\CategoriaController@detalhar');
+        Route::post('/cms/alterar-categoria/{id}', 'Cms\Controllers\CategoriaController@alterar');
+        Route::get('/cms/excluir-categoria/{id}', 'Cms\Controllers\CategoriaController@excluir');
 
         //PUBLICATIONS
         Route::get('/cms/publications', 'Cms\Controllers\PublicationController@index');
@@ -122,15 +131,15 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/status-apoio/{id}', 'Cms\Controllers\ApoioController@status');
         Route::get('/cms/positionUp-apoio/{id}', 'Cms\Controllers\ApoioController@positionUp');
         Route::get('/cms/positionDown-apoio/{id}', 'Cms\Controllers\ApoioController@positionDown');
-        
+
         //EQUIPES
         Route::get('/cms/equipes', 'Cms\Controllers\EquipeController@index');
         Route::get('/cms/listar-equipes', 'Cms\Controllers\EquipeController@listar');
         Route::post('/cms/inserir-equipe', 'Cms\Controllers\EquipeController@inserir');
         Route::get('/cms/equipe/{id}', 'Cms\Controllers\EquipeController@detalhar');
         Route::post('/cms/alterar-equipe/{id}', 'Cms\Controllers\EquipeController@alterar');
-        Route::get('/cms/excluir-equipe/{id}', 'Cms\Controllers\EquipeController@excluir');  
-        
+        Route::get('/cms/excluir-equipe/{id}', 'Cms\Controllers\EquipeController@excluir');
+
         //INTEGRANTES
         Route::get('/cms/integrantes', 'Cms\Controllers\IntegranteController@index');
         Route::get('/cms/listar-integrantes', 'Cms\Controllers\IntegranteController@listar');
@@ -146,7 +155,7 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/edital/{id}', 'Cms\Controllers\EditalController@detalhar');
         Route::post('/cms/alterar-edital/{id}', 'Cms\Controllers\EditalController@alterar');
         Route::get('/cms/excluir-edital/{id}', 'Cms\Controllers\EditalController@excluir');
-        
+
         //GRAFICOS
         Route::get('/cms/graficos', 'Cms\Controllers\GraficoController@index');
         Route::get('/cms/listar-graficos', 'Cms\Controllers\GraficoController@listar');
@@ -195,18 +204,28 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-video/{id}', 'Cms\Controllers\VideoController@alterar');
         Route::get('/cms/excluir-video/{id}', 'Cms\Controllers\VideoController@excluir');
         Route::get('/cms/status-video/{id}', 'Cms\Controllers\VideoController@status');
-        
+
 
         //User
         Route::get('/cms/usuarios', 'Cms\Controllers\CmsUserController@index');
         Route::get('/cms/listar-cmsusers', 'Cms\Controllers\CmsUserController@listar');
         Route::post('/cms/inserir-cmsuser', 'Cms\Controllers\CmsUserController@inserir');
-        Route::get('/cms/usuario/{id}', 'Cms\Controllers\CmsUserController@detalhar');        
+        Route::get('/cms/usuario/{id}', 'Cms\Controllers\CmsUserController@detalhar');
         Route::post('/cms/alterar-cmsuser/{id}', 'Cms\Controllers\CmsUserController@alterar');
         Route::get('/cms/perfil', 'Cms\Controllers\CmsUserController@perfil');
         Route::post('/cms/alterar-perfil', 'Cms\Controllers\CmsUserController@alterarPerfil');
         Route::get('/cms/excluir-cmsuser/{id}', 'Cms\Controllers\CmsUserController@excluir');
-        
+
+        //TEASERS
+        Route::get('/cms/teasers', 'Cms\Controllers\TeaserController@index');
+        Route::get('/cms/listar-teasers', 'Cms\Controllers\TeaserController@listar');
+        Route::post('/cms/inserir-teaser', 'Cms\Controllers\TeaserController@inserir');
+        Route::get('/cms/teaser/{id}', 'Cms\Controllers\TeaserController@detalhar');
+        Route::post('/cms/alterar-teaser/{id}', 'Cms\Controllers\TeaserController@alterar');
+        Route::get('/cms/excluir-teaser/{id}', 'Cms\Controllers\TeaserController@excluir');
+        Route::get('/cms/positionUp-teaser/{id}', 'Cms\Controllers\TeaserController@positionUp');
+        Route::get('/cms/positionDown-teaser/{id}', 'Cms\Controllers\TeaserController@positionDown');
+
     });
 
 });

@@ -29,102 +29,20 @@
 
     <section>
         <div class="row">
+            @foreach($teasers as $teaser)
             <div class="col-md-3 col-sm-6 col- items text-center">
                 <picture>
-                    <source srcset="img/icons/01.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/01.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/01.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/01.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
+                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 468px)">
+                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 768px)">
+                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" class="img-responsive">
+                    <img src="img/loading.gif" data-src="imagens/teasers/lg-{{$teaser->imagem}}" alt="Imagem sobre {{$teaser->titulo}}" title="Imagem sobre {{$teaser->titulo}}"  class=" rounded-circle lazyload items-hover">
                 </picture>
                 <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
+                    <h2>{{$teaser->titulo}}</h2>
+                    <p>{{$teaser->teaser}}</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6  items text-center">
-                <picture>
-                    <source srcset="img/icons/02.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/02.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/02.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/02.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/03.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/03.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/03.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/03.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/04.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/05.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/05.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/05.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/05.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/06.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/06.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/06.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/06.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/04.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 items text-center">
-                <picture>
-                    <source srcset="img/icons/04.png" media="(max-width: 468px)">
-                    <source srcset="img/icons/04.png" media="(max-width: 768px)">
-                    <source srcset="img/icons/04.png" class="img-responsive">
-                    <img src="img/loading.gif" data-src="img/icons/04.png" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>Mapa das OSCs</h2>
-                    <p>Encontre as OSCs no Mapa, listagens e mauito mais</p>
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </section>
@@ -235,25 +153,8 @@
                         </div>
                     </div>
                     @endforeach
-                    {{--<div id="b" class="rotate">
-                        <div class="circle-item">B</div>
-                    </div>
-                    <div id="c" class="rotate">
-                        <div class="circle-item">C</div>
-                    </div>
-                    <div id="d" class="rotate">
-                        <div class="circle-item">
-                            <img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">
-                        </div>
-                    </div>
-                    <div id="e" class="rotate">
-                        <div class="circle-item">E</div>
-                    </div>--}}
                 </div>
                 <div class="circle2">
-                    {{--<div id="f" class="rotate2">
-                        <div class="circle-item">F</div>
-                    </div>--}}
                     @foreach($osc_recentes as $key => $osc_recente)
                         <div id="icon{{$key}}" class="rotate2">
                             <div class="circle-item">
@@ -280,21 +181,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title-style">
-                    <h2>Artigos</h2>
+                    <h2>Publicações</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
             </div>
-            @foreach($articles as $item)
+            @foreach($publicacoes as $item)
                 <div class="col-md-4">
                     <a href="artigo/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
+                            @if($item->imagem!="")
                             <picture>
-                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
-                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
-                                <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                                <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
+                                <source srcset="imagens/publicacoes/sm-{{$item->imagem}}" media="(max-width: 468px)">
+                                <source srcset="imagens/publicacoes/sm-{{$item->imagem}}" media="(max-width: 768px)">
+                                <source srcset="imagens/publicacoes/md-{{$item->imagem}}" class="img-responsive">
+                                <img src="img/loading.gif" data-src="imagens/publicacoes/md-{{$item->imagem}}" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid img-hover lazyload">
                             </picture>
+                            @endif
                             <div class="img-rede">
                                 <i class="fab fa-facebook-f"></i>
                                 <i class="fab fa-instagram"></i>
@@ -313,7 +216,7 @@
                 <br>
                 <br>
                 <a href="artigos">
-                    <button type="button" class="btn btn-outline-primary">Visualize todas as OSCs</button>
+                    <button type="button" class="btn btn-outline-primary">Visualize todas as Publicações</button>
                 </a>
             </div>
         </div>

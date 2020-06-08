@@ -159,7 +159,8 @@
     <script src="/js/utils.js"></script>
 @endif
 
-@if($rota=="artigos" || $rota=="artigos/{id_segment}" || $rota=="artigos/{titulo}" || $rota=="artigos/{parameters}")
+{{--@if($rota=="artigos" || $rota=="artigos/{id_segment}" || $rota=="artigos/{titulo}" || $rota=="artigos/{parameters}")--}}
+@if($rota=="posts" || $rota=="posts/{type}")
     <script src="/js/components/posts/search.js"></script>
     <script src="/js/components/posts/filterCategories.js"></script>
     <script src="/js/components/posts/filterMembers.js"></script>

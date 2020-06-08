@@ -57,6 +57,9 @@ Route::get('metodologia', 'PageController@details');*/
 
 //ROTAS AVULSAS
 
+
+
+
 Route::get('indicadores', 'IndicatorController@chart');
 Route::get('get-indicador/', 'IndicatorController@getIndicator');
 
@@ -66,6 +69,8 @@ Route::get('contato', 'ContactController@email');
 
 Route::post('contact', 'ContactController@send');
 Route::post('comment', 'CommentController@send');
+
+Route::get('posts/{type}', 'PostController@post');
 
 Route::post('/list-posts', 'PostController@getList');
 Route::post('/categories', 'PostController@categories');

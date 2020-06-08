@@ -106,6 +106,9 @@
                     <a href="cms/apoios"><i class="fa fa-fw fa-anchor"></i> Apoio</a>
                 </li>
                 <li>
+                    <a href="cms/teasers"><i class="fa fa-fw fa-anchor"></i> Teaser</a>
+                </li>
+                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>
 

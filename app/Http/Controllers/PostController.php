@@ -10,6 +10,10 @@ use Mockery\Exception;
 class PostController extends Controller
 {
 
+    public function post($type){
+        return view('post.list', ['type' => $type]);
+    }
+
     public function details($id, $titulo = null){
         return view('ad.details', ['id' => $id]);
     }
@@ -101,30 +105,15 @@ class PostController extends Controller
             $archives = $request->filters['archives'];
         }
 
-
-
-        $total = DB::table('pub_articles')
-            /*->join('articles_members', 'articles_members.member_id', '=', 'pub_members.id')
-            ->join('articles_members', 'articles_members.article_id', '=', 'pub_articles.id')*/
-            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+        $total = DB::table('publications')
             ->join('pub_categories', 'pub_categories.id', '=', 'pub_articles.category_id')
             ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('pub_articles.category_id', $categories);
             })
-            /*->when(count($members) > 0, function($query) use ($members){
-                return $query->whereIn('pub_members.category_id', $members);
-            })*/
-            /*->when(count($archives) > 0, function($query) use ($archives){
-                //return $query->whereIn('pub_articles.date', $archives);
-                return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
-            })*/
             ->get();
 
-
         $total = count($total);
-
-
 
         $result = DB::table('pub_articles')
             ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
