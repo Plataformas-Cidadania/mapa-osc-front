@@ -14,6 +14,7 @@ class HomeController extends Controller
 
         $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
         $teasers = \App\Teaser::orderBy('teaser')->get();
+        $text = \App\Text::where('slug', 'osc-proximas')->first();
         $publicacoes = \App\Publication::orderBy('id', 'desc')->take(3)->get();
 
         $osc_recentes = DB::connection('map')
@@ -45,6 +46,7 @@ class HomeController extends Controller
             'publicacoes' => $publicacoes,
             'osc_recentes' => $osc_recentes,
             'areas_atuacao' => $area_atuacao,
+            'text' => $text,
         ]);
     }
 

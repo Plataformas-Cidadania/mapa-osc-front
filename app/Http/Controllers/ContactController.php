@@ -27,7 +27,9 @@ class ContactController extends Controller{
     }
 
     public function email(){
-        return view($this->module.'.contact');
+        $text = \App\Text::where('slug', 'contato')->first();
+        $expediente = \App\Text::where('slug', 'contato-expediente')->first();
+        return view($this->module.'.contact', ['text' => $text, 'expediente' => $expediente]);
     }
 
     public function send(Request $request){

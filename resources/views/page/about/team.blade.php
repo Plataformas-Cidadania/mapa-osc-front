@@ -4,7 +4,7 @@
     <?php
 
     $coordinators = \App\ItemVersao::
-        select('integrantes.imagem', 'integrantes.titulo', 'integrantes.url')
+        select('integrantes.imagem', 'integrantes.titulo', 'integrantes.url', 'items_versoes.funcao', 'items_versoes.instituicao')
         ->join('integrantes', 'integrantes.id', '=', 'items_versoes.integrante_id')
         ->where('status', 1)
         ->where('versao_id', $tag->id)
@@ -13,7 +13,7 @@
         ->get();
 
     $teams = \App\ItemVersao::
-        select('integrantes.imagem', 'integrantes.titulo', 'integrantes.url')
+        select('integrantes.imagem', 'integrantes.titulo', 'integrantes.url', 'items_versoes.funcao', 'items_versoes.instituicao')
         ->join('integrantes', 'integrantes.id', '=', 'items_versoes.integrante_id')
         ->where('status', 1)
         ->where('versao_id', $tag->id)
@@ -57,7 +57,7 @@
                         <div class="list-user">
                             <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
                             <h4>{{$team->titulo}}</h4>
-                            <p>{{$team->descricao}}aa</p>
+                            <p>{{$team->funcao}}&nbsp; @if($team->instituicao!="") - <strong>&nbsp;{{$team->instituicao}}</strong> @endif</p>
                         </div>
                     </div>
                     @endforeach

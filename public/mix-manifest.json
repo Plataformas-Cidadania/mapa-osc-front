@@ -56,5 +56,13 @@
     "/assets-cms/js/controllers/cmsUserCtrl.js": "/assets-cms/js/controllers/cmsUserCtrl.js",
     "/assets-cms/js/controllers/alterarCmsUserCtrl.js": "/assets-cms/js/controllers/alterarCmsUserCtrl.js",
     "/assets-cms/js/controllers/teaserCtrl.js": "/assets-cms/js/controllers/teaserCtrl.js",
-    "/assets-cms/js/controllers/alterarTeaserCtrl.js": "/assets-cms/js/controllers/alterarTeaserCtrl.js"
+    "/assets-cms/js/controllers/alterarTeaserCtrl.js": "/assets-cms/js/controllers/alterarTeaserCtrl.js",
+    "/assets-cms/js/controllers/textCtrl.js": "/assets-cms/js/controllers/textCtrl.js",
+    "/assets-cms/js/controllers/alterarTextCtrl.js": "/assets-cms/js/controllers/alterarTextCtrl.js",
+    "/assets-cms/js/controllers/artworkCtrl.js": "/assets-cms/js/controllers/artworkCtrl.js",
+    "/assets-cms/js/controllers/alterarArtworkCtrl.js": "/assets-cms/js/controllers/alterarArtworkCtrl.js",
+    "/assets-cms/js/controllers/directiveCtrl.js": "/assets-cms/js/controllers/directiveCtrl.js",
+    "/assets-cms/js/controllers/alterarDirectiveCtrl.js": "/assets-cms/js/controllers/alterarDirectiveCtrl.js",
+    "/assets-cms/js/controllers/printingCtrl.js": "/assets-cms/js/controllers/printingCtrl.js",
+    "/assets-cms/js/controllers/alterarPrintingCtrl.js": "/assets-cms/js/controllers/alterarPrintingCtrl.js"
 }

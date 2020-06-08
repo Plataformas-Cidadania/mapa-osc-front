@@ -13,14 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class ItemVersaoController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
         $this->item = new \App\ItemVersao();
         $this->campos = [
-            'imagem', 'arquivo', 'tipo_id', 'integrante_id', 'versao_id', 'cmsuser_id',
+            'imagem', 'arquivo', 'tipo_id', 'integrante_id', 'funcao', 'instituicao', 'versao_id', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/items-versao';
         $this->sizesImagem = [
@@ -250,7 +250,7 @@ class ItemVersaoController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($item->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();

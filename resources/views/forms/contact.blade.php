@@ -66,14 +66,12 @@
                     </div>
                     <div>
                         <div class=" fa-aling">
-                            <strong ><i class="fas fa-clock fa-2x"></i> Expediente</strong>
+                            <strong ><i class="fas fa-clock fa-2x"></i> {{$expediente->titulo}}</strong>
                             <br><br>
                         </div>
                         <div class="address">
                             <div>
-                                Segunda à Sexta: 08:00 - 18:00<br>
-                                Sábado: 08:00 - 16:00<br>
-                                Domingo: Fechar
+                                {!!$expediente->descricao!!}
                             </div>
                         </div>
                     </div>
@@ -84,14 +82,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <strong>{{$resp}} Prezado usuário,</strong><br>
-                        <p>Disponibilizamos as seguintes opções para ajudar na solução de dúvidas e questões que possam surgir durante a utilização do Mapa das OSCs:</p>
-                        <ul>
-                            <li>Tutoriais que ensinam a atualizar e alterar informações da OSC no Mapa.</li>
-                            <li>Seção de Perguntas Frequentes.</li>
-                        </ul>
-                        <p>Informamos que os pedidos de dados são atendidos no prazo legal de até <strong>20 dias úteis</strong> e que, por força da Lei 12.527, <strong>não disponibilizamos</strong> extrações de dados com informações referentes a CNPJ, logradouro, bairro, CEP, telefone ou e-mail das organizações.</p>
-
-                        <p>Caso as opções descritas não solucionem seu questionamento, por favor, utilize o formulário abaixo ou envie um email para mapaosc@ipea.gov.br para entrar em contato com a nossa equipe.</p>
+                        <p>{!!$text->descricao!!}</p>
                     </div>
                     <div class="col-md-12">
                         <br>

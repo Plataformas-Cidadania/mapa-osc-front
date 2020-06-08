@@ -10,16 +10,17 @@
 @section('image', '')
 @section('content')
 
-
-
     <style>
         .mb-0{
-            background-color: #EEEEEE !important;
+            background-color: #FFFFFF !important;
             /*border-bottom: solid 1px #3490dc;*/
             font-weight: bold;
             color: #333333;
-            margin: 0 0 10px 0 !important;
+            margin: 0 0 5px 0 !important;
             border: 0 !important;
+        }
+        .mb-0:hover{
+            background-color: #EEEEEE !important;
         }
         .card {
             border: 0;
@@ -74,11 +75,15 @@
                         @include('page.about.accordion')
                     @endif
 
-
-
                     @if($rota=="equipe")
                         <div>
                             @include('page.about.team')
+                        </div>
+                    @endif
+
+                    @if($rota=="marca")
+                        <div>
+                            @include('page.about.brand')
                         </div>
                     @endif
 

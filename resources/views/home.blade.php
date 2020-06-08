@@ -1,7 +1,5 @@
 @extends('layout')
 @section('title', 'Seja Bem Vindo')
-
-
 @section('content')
 
 
@@ -91,7 +89,6 @@
 
      <style>
          .bg-map{
-             background-image: url("img/bg-map.png");
              background-size: 100%;
              background-position: center -50px;
              background-repeat: no-repeat;
@@ -118,10 +115,10 @@
                 <ul class="menu-items">
 
 
-                    @foreach($areas_atuacao as $area_atuacao)
+                    @foreach($areas_atuacao as $key => $area_atuacao)
                     <li>
                         <a href="">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-user theme-{{$key}}"></i>
                             <p>{{$area_atuacao}}</p>
                         </a>
                     </li>
@@ -143,7 +140,7 @@
                 </ul>
                 <br>
             </div>
-            <div class="col-md-8 bg-map">
+            <div class="col-md-8 bg-map" style="background-image: url('imagens/texts/{{$text->imagem}}');">
                 <div class="circle">
                     @foreach($osc_recentes as $key => $osc_recente)
                     <div id="icon{{$key}}" class="rotate">
@@ -166,8 +163,8 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h2>5 OSCs mais próximas de você, por área de atuação</h2>
-                <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.</p>
+                <h2>{{$text->titulo}}</h2>
+                <p>{!!$text->descricao!!}</p>
             </div>
         </div>
     </div>

@@ -12906,6 +12906,50 @@ input[type=radio]:checked + label::after {
   margin-top: -20px;
 }
 
+.theme-1 {
+  background-color: #3A559B !important;
+}
+
+.theme-2 {
+  background-color: #819DCA !important;
+}
+
+.theme-3 {
+  background-color: #99C5E8 !important;
+}
+
+.theme-4 {
+  background-color: #D7EDF9 !important;
+}
+
+.theme-5 {
+  background-color: #F3660B !important;
+}
+
+.theme-6 {
+  background-color: #E07C3C !important;
+}
+
+.theme-7 {
+  background-color: #DEA33B !important;
+}
+
+.theme-8 {
+  background-color: #F3D764 !important;
+}
+
+.theme-9 {
+  background-color: #AF0C13 !important;
+}
+
+.theme-10 {
+  background-color: #E1373E !important;
+}
+
+.theme-11 {
+  background-color: #E55E63 !important;
+}
+
 #chart {
   max-width: 100%;
   margin: 35px auto;
@@ -12966,10 +13010,10 @@ a:active {
   color: inherit;
 }
 
-.active {
-  background-color: #3A559B !important;
-  border-radius: 0;
-}
+/*.active{
+    background-color: $color-pri!important;
+    border-radius: 0;
+}*/
 
 .list-group-item {
   background-color: inherit;

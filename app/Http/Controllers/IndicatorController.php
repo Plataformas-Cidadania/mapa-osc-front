@@ -15,6 +15,7 @@ class IndicatorController extends Controller{
 
     public function chart(){
 
+        $text = \App\Text::where('slug', 'dados-indicadores')->first();
         $areas_atuacao = DB::connection('map')
             ->table('analysis.vw_perfil_localidade_area_atuacao')
             ->select(DB::Raw("
@@ -25,6 +26,7 @@ class IndicatorController extends Controller{
             ->get();
 
         return view('indicator.chart', [
+            'text' => $text,
             'areas_atuacao' => $areas_atuacao,
         ]);
 

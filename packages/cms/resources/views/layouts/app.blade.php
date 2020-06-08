@@ -109,6 +109,9 @@
                     <a href="cms/teasers"><i class="fa fa-fw fa-anchor"></i> Teaser</a>
                 </li>
                 <li>
+                    <a href="cms/texts"><i class="fa fa-fw fa-anchor"></i> Textos</a>
+                </li>
+                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>
 
@@ -131,9 +134,9 @@
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-user"></i> Equipe <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo1" class="collapse">
-                        <li>
+                        {{--<li>
                             <a href="cms/equipe/1">Descrição</a>
-                        </li>
+                        </li>--}}
                         <li>
                             <a href="cms/integrantes">Integrantes</a>
                         </li>
@@ -142,9 +145,31 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo-marca"><i
+                            class="fa fa-fw fa-arrows-v"></i> Marca <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo-marca" class="collapse">
+                        {{--<li>
+                            <a href="cms/quemsomos/8/marca">Descrição</a>
+                        </li>--}}
+                        <li>
+                            <a href="cms/directives">Diretivas</a>
+                        </li>
+                        <li>
+                            <a href="cms/artworks">Artes</a>
+                        </li>
+                        <li>
+                            <a href="cms/printings">Impressões</a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="cms/usuarios"><i class="fa fa-fw fa-users"></i> Usuários</a>
                 </li>
+
+
             </ul>
         </div>
 

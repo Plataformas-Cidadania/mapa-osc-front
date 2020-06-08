@@ -164,4 +164,20 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarCmsUserCtrl.js'
 mix.scripts('packages/cms/resources/assets/js/controllers/teaserCtrl.js', 'public/assets-cms/js/controllers/teaserCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarTeaserCtrl.js', 'public/assets-cms/js/controllers/alterarTeaserCtrl.js');
 
+//Text
+mix.scripts('packages/cms/resources/assets/js/controllers/textCtrl.js', 'public/assets-cms/js/controllers/textCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarTextCtrl.js', 'public/assets-cms/js/controllers/alterarTextCtrl.js');
+
+//Artworks
+mix.scripts('packages/cms/resources/assets/js/controllers/artworkCtrl.js', 'public/assets-cms/js/controllers/artworkCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarArtworkCtrl.js', 'public/assets-cms/js/controllers/alterarArtworkCtrl.js');
+
+//Directives
+mix.scripts('packages/cms/resources/assets/js/controllers/directiveCtrl.js', 'public/assets-cms/js/controllers/directiveCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarDirectiveCtrl.js', 'public/assets-cms/js/controllers/alterarDirectiveCtrl.js');
+
+//Printings
+mix.scripts('packages/cms/resources/assets/js/controllers/printingCtrl.js', 'public/assets-cms/js/controllers/printingCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarPrintingCtrl.js', 'public/assets-cms/js/controllers/alterarPrintingCtrl.js');
+
 //FIM CMS///////////////////////////////////////////////////////////////////
