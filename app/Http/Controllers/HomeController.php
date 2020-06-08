@@ -39,7 +39,6 @@ class HomeController extends Controller
 
         //return $area_atuacao;
 
-
         return view('home', [
             'webdoors' => $webdoors,
             'teasers' => $teasers,
