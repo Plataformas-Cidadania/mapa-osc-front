@@ -87,6 +87,12 @@
                         </div>
                     @endif
 
+                    @if($rota=="apoio")
+                        <div>
+                            @include('page.about.partner')
+                        </div>
+                    @endif
+
                     <br>
                 </article>
             </div>

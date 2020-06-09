@@ -5,8 +5,6 @@
 @section('image', '')
 @section('content')
 
-
-
     <div class="bg-lgt">
         <div class="container">
             <div class="row">

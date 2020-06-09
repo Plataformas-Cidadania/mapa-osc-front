@@ -15,7 +15,10 @@ class HomeController extends Controller
         $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
         $teasers = \App\Teaser::orderBy('teaser')->get();
         $text = \App\Text::where('slug', 'osc-proximas')->first();
-        $publicacoes = \App\Publication::orderBy('id', 'desc')->take(3)->get();
+
+        $midiaSelect = ['noticia', 'noticias', 'Notícias', 'as notícias'];
+        $midias = \App\Noticia::orderBy('id', 'desc')->take(3)->get();
+
 
         $osc_recentes = DB::connection('map')
             ->table('portal.vw_log_alteracao')
@@ -43,10 +46,11 @@ class HomeController extends Controller
         return view('home', [
             'webdoors' => $webdoors,
             'teasers' => $teasers,
-            'publicacoes' => $publicacoes,
             'osc_recentes' => $osc_recentes,
             'areas_atuacao' => $area_atuacao,
             'text' => $text,
+            'midias' => $midias,
+            'midiaSelect' => $midiaSelect,
         ]);
     }
 

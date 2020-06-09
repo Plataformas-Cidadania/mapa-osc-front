@@ -13,14 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class VideoController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
         $this->video = new \App\Video;
         $this->campos = [
-            'imagem', 'titulo', 'data', 'resumida', 'descricao', 'link_video', 'cmsuser_id',
+            'imagem', 'titulo', 'data', 'resumida', 'descricao', 'link_video', 'time', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/videos';
         $this->sizesImagem = [
@@ -77,7 +77,7 @@ class VideoController extends Controller
             }
         }
 
-	
+
 
         $file = $request->file('file');
 
@@ -85,7 +85,7 @@ class VideoController extends Controller
             $filename = rand(1000,9999)."-".clean($file->getClientOriginalName());
             $imagemCms = new ImagemCms();
             $success = $imagemCms->inserir($file, $this->pathImagem, $filename, $this->sizesImagem, $this->widthOriginal);
-            
+
             if($success){
                 $data['video']['imagem'] = $filename;
 		Log::info($data);
@@ -165,13 +165,13 @@ class VideoController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($video->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();
             $imagemCms->excluir($this->pathImagem, $this->sizesImagem, $video);
         }
-                
+
 
         $video->delete();
 
