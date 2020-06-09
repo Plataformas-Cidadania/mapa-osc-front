@@ -1,5 +1,5 @@
 <?php
-    $partners = DB::table('apoios')->orderBy('id', 'desc')->paginate(23);
+    $partners = DB::table('apoios')->where('status', 1)->orderBy('id', 'desc')->paginate(23);
     $modulo = ['apoio', 'apoios', 'Apoio', 'Apoios'];
 ?>
 
@@ -38,8 +38,12 @@
                                         </picture>
                                     </div>
                                     {!!$partner->descricao!!}
+
                                 </div>
                                 <div class="modal-footer">
+                                    <a href="{!!$partner->url!!}" target="_blank">
+                                        <button class="btn btn-primary">Acesse o site</button>
+                                    </a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
@@ -62,9 +66,9 @@
 
         transition: .3s;
 
-        -webkit-filter: grayscale(100%);
+        /*-webkit-filter: grayscale(100%);
         filter: grayscale(100%);
-        filter: gray; /* IE */
+        filter: gray; !* IE *!*/
     }
     .items-img img{
         margin: auto;

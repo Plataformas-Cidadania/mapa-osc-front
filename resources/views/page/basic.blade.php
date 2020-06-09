@@ -93,6 +93,12 @@
                         </div>
                     @endif
 
+                    @if($rota=="links")
+                        <div>
+                            @include('page.about.link')
+                        </div>
+                    @endif
+
                     <br>
                 </article>
             </div>
