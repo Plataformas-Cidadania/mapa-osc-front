@@ -1,5 +1,5 @@
 <?php
-    $show = 0; //COLOCAR VARIAVEL NO BANCO
+    $show = $page->show;
     $rota = Route::getCurrentRoute()->uri();
     $items = \App\Item::where('modulo_id', $page->id)->where('status', 1)->orderBy('posicao')->get();
 ?>

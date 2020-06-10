@@ -163,6 +163,7 @@
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
                                         <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
+                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>
                                         <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>

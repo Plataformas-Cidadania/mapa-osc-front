@@ -17,4 +17,7 @@ null, ['class'=>"form-control width-medio <% validar(item.idioma_id) %>", 'ng-mo
 {!! Form::label('posicao', 'Posição ') !!}<br>
 {!! Form::text('posicao', null, ['class'=>"form-control width-grande <% validar(item.posicao) %>", 'ng-required'=>'true', 'ng-model'=>'item.posicao',  'init-model'=>'item.posicao', 'placeholder' => '']) !!}<br>
 
+{!! Form::label('video', 'Video') !!}<br>
+{!! Form::text('video', null, ['class'=>"form-control width-grande <% validar(item.video) %>", 'ng-model'=>'item.video', 'init-model'=>'item.video', 'placeholder' => '']) !!}<br>
+
 

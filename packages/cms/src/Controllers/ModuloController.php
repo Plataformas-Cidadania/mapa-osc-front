@@ -13,14 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class ModuloController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
         $this->modulo = new \App\Modulo;
         $this->campos = [
-            'imagem', 'titulo', 'descricao', 'arquivo', 'slug', 'tipo_id', 'cmsuser_id',
+            'imagem', 'titulo', 'descricao', 'arquivo', 'slug', 'tipo_id', 'show', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/modulos';
         $this->sizesImagem = [
@@ -256,7 +256,7 @@ class ModuloController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($modulo->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();
