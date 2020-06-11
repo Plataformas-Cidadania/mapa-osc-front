@@ -12,7 +12,7 @@ class SiteUser extends Authenticatable
      * @var array
      */
 
-    protected $table = 'site_users';
+    protected $table = 'users';
 
     protected $fillable = [
         'name',

@@ -91,6 +91,9 @@ Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');
 Route::get('declaracao', 'OscController@declaration');
 
 
+Route::get('selo-osc/{hostname}/{osc_id}', 'ToolController@seal');
+
+
 /*Route::get('qr-code-g', function () {
     \QrCode::size(500)
         ->format('png')

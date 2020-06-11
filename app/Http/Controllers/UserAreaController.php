@@ -53,12 +53,12 @@ class UserAreaController extends Controller
 
         $data['id'] = auth()->user()->id;
 
-        $registroCpf = \App\SiteUser::select('cpf')->where([
+        $registroCpf = \App\User::select('cpf')->where([
             ['cpf', $data['cpf']],
             ['id', '!=', $data['id']]
         ])->first();
 
-        $registroEmail = \App\SiteUser::select('email')->where([
+        $registroEmail = \App\User::select('email')->where([
             ['email', $data['email']],
             ['id', '!=', $data['id']]
         ])->first();
@@ -67,7 +67,7 @@ class UserAreaController extends Controller
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }
 
-        $user = \App\SiteUser::find($data['id']);
+        $user = \App\User::find($data['id']);
 
         $user->update($data);
 
@@ -124,15 +124,22 @@ class UserAreaController extends Controller
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }*/
 
+        $osc = \App\OscDadoGeral::
+            select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc'
+            )
+            ->where('id_osc', $id)
+            ->orderBy('id_osc')
+            ->update($data);
 
-        $osc = DB::connection('map')
+        /*$osc = DB::connection('map')
             ->table('osc.tb_dados_gerais')
             ->select(
                 'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal'
            )
             ->where('id_osc', $id)
             ->orderBy('id_osc')
-            ->update($data);
+            ->update($data);*/
 
 
         return ['user' => $osc];
