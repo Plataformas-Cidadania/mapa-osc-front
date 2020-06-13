@@ -132,6 +132,9 @@ Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
 Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
 
+Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
+Route::get('/governancas-user', 'UserAreaController@governancas')->middleware('auth');
+
 Route::get('/logout-user', 'UserLoginController@logout');
 
 
@@ -150,6 +153,13 @@ Route::post('/list-users-oscs', 'UserAreaController@listOscs')->middleware('auth
 Route::post('/update-osc', 'UserAreaController@updateOsc')->middleware('auth');
 //Route::get('/get-osc', 'UserAreaController@getOsc')->middleware('auth');
 
+Route::post('/list-users-certificates', 'UserAreaController@listCertificates')->middleware('auth');
+Route::get('/remove-user-certificate/{id}', 'UserAreaController@removeCertificate')->middleware('auth');
+Route::get('/edit-user-certificate/{id}', 'UserAreaController@editCertificate')->middleware('auth');
+
+Route::post('/list-users-governancas', 'UserAreaController@listGovernancas')->middleware('auth');
+Route::get('/remove-user-governanca/{id}', 'UserAreaController@removeGovernanca')->middleware('auth');
+Route::get('/edit-user-governanca/{id}', 'UserAreaController@editGovernanca')->middleware('auth');
 /*
 Route::get('/detail-user-osc/{id}', 'UserAreaController@detailOsc')->middleware('auth');*/
 

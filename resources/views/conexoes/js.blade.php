@@ -179,10 +179,30 @@
 @if($rota=="reset-password/{token}/{email}")
     <script src="/js/components/login/resetPassword.js"></script>
 @endif
-@if($rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-arquivos" || $rota=="oscs-user" || $rota=="osc-user/{id}" || $rota=="dados-arquivo/{id}" || $rota=="dados-user" || $rota=="videos-privados")
+@if(
+    $rota=="area-user" ||
+    $rota=="dashboard-user" ||
+    $rota=="dados-arquivos" ||
+    $rota=="oscs-user" ||
+    $rota=="osc-user/{id}" ||
+    $rota=="dados-arquivo/{id}" ||
+    $rota=="dados-user" ||
+    $rota=="videos-privados" ||
+    $rota=="certificates-user" ||
+    $rota=="governancas-user"
+    )
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
 @endif
+@if($rota=="certificates-user")
+    <script src="/js/components/user-area/formCertificate.js"></script>
+    <script src="/js/components/user-area/certificates.js"></script>
+@endif
+@if($rota=="governancas-user")
+    <script src="/js/components/user-area/formGovernanca.js"></script>
+    <script src="/js/components/user-area/governancas.js"></script>
+@endif
+
 @if($rota=="area-user" || $rota=="dashboard-user" )
     <script src="/js/components/user-area/dashboard.js"></script>
 @endif

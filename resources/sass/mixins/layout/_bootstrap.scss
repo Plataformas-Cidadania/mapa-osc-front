@@ -56,7 +56,31 @@ a:active {
     border-radius: 0;
     box-shadow: 1px 0 3px #CCCCCC;
 }
-
+.text-warning{
+    color: #FBBC05!important;
+}
+.text-warning:hover{
+    color: #DDA704!important;
+}
+.btn-warning{
+    background-color: #FBBC05!important;
+}
+.btn-warning:hover{
+    background-color: #DDA704!important;
+}
+.btn-primary{
+    background-color: $color-pri!important;
+    color: #FFFFFF!important;;
+}
+.btn-primary:hover{
+    background-color: #324885!important;
+}
+.text-primary{
+     color: $color-pri!important;
+ }
+.text-primary:hover{
+    color: #324885!important;
+}
 /*p, h1, h2, time{
     outline: none!important;
 }*/

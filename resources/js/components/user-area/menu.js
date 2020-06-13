@@ -13,6 +13,8 @@ class Menu extends React.Component{
                 <li><a href="/oscs-user"><i className="fa fa-user" aria-hidden="true"></i> Minhas OSCs</a></li>
                 <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"></i> Meus Dados</a></li>
                 <li><a href="/declaracao"><i className="fa fa-user" aria-hidden="true"></i> Declaração</a></li>
+                <li><a href="/certificates-user"><i className="fas fa-certificate" aria-hidden="true"></i> Títulos e Certificados</a></li>
+                <li><a href="/governancas-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Trabalho e Governança</a></li>
                 <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"></i> Selo Site</a></li>
                 <li><a href="/logout-user"><i className="fa fa-power-off" aria-hidden="true"></i> Sair</a></li>
             </ul>

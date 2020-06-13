@@ -28,6 +28,13 @@ class UserAreaController extends Controller
         return view('user-area', ['pgUserArea' => 'data']);
     }
 
+    public function certificates(){
+        return view('user-area', ['pgUserArea' => 'certificates']);
+    }
+    public function governancas(){
+        return view('user-area', ['pgUserArea' => 'governancas']);
+    }
+
 
 
     public function documents(){
@@ -166,6 +173,54 @@ class UserAreaController extends Controller
         $documents = \App\Document::all();
         return $documents;
     }
+
+    /////////////////////////////////////
+    public function listCertificates(){
+        $id = 455128;
+        $certificates = \App\UserCertificate::where('id_osc', $id)->get();
+        //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
+        return $certificates;
+    }
+    public function editCertificate($id){
+        $id = 455128;
+        $certificate = \App\UserCertificate::where([
+            'id_osc', $id
+            /*['user_id', auth()->user()->id],
+            ['id', $id],*/
+        ])->first();
+        return $certificate;
+    }
+    public function updateCertificate(Request $request){
+        $certificate = \App\UserCertificate::find($request->id);
+        $certificate->update($request->form);
+        return $certificate;
+    }
+    //////////////////////////////////////
+    /////////////////////////////////////
+    public function listGovernancas(){
+        $id = 455128;
+        $certificates = \App\UserGovernanca::where('id_osc', $id)->get();
+        //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
+        return $certificates;
+    }
+    public function editGovernancas($id){
+        $id = 455128;
+        $certificate = \App\UserGovernanca::where([
+            'id_osc', $id
+            /*['user_id', auth()->user()->id],
+            ['id', $id],*/
+        ])->first();
+        return $certificate;
+    }
+    public function updateGovernancas(Request $request){
+        $certificate = \App\UserGovernanca::find($request->id);
+        $certificate->update($request->form);
+        return $certificate;
+    }
+    ///////////////////////////////////
+
+
+
     public function detailDocument($id){
         $document = \App\Document::select('id', 'title', 'arquivo', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
             ->groupBy('id', 'title', 'arquivo')

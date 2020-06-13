@@ -53,6 +53,26 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
+                    { href: "/certificates-user" },
+                    React.createElement("i", { className: "fas fa-certificate", "aria-hidden": "true" }),
+                    " T\xEDtulos e Certificados"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/governancas-user" },
+                    React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                    " Trabalho e Governan\xE7a"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
                     { href: "/dados-user" },
                     React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                     " Selo Site"
