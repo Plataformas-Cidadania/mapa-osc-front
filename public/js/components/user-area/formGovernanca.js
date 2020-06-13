@@ -244,25 +244,37 @@ class FormGovernanca extends React.Component {
                     ),
                     React.createElement('br', null),
                     React.createElement(
-                        'label',
-                        { htmlFor: 'nome' },
-                        'Nome*'
+                        'div',
+                        { className: 'row' },
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'nome' },
+                                'Nome*'
+                            ),
+                            React.createElement('br', null),
+                            React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
+                                type: 'text', name: 'nome', onChange: this.handleInputChange,
+                                value: this.state.form.nome, placeholder: '' }),
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'cep' },
+                                'Cargo do dirigente*'
+                            ),
+                            React.createElement('br', null),
+                            React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
+                                type: 'text', name: 'cep', onChange: this.handleInputChange,
+                                value: this.state.form.cep, placeholder: '' }),
+                            React.createElement('br', null)
+                        )
                     ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
-                        type: 'text', name: 'nome', onChange: this.handleInputChange,
-                        value: this.state.form.nome, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'cep' },
-                        'CEP*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
-                        type: 'text', name: 'cep', onChange: this.handleInputChange,
-                        value: this.state.form.cep, placeholder: '' }),
-                    React.createElement('br', null),
                     React.createElement(
                         'p',
                         null,

@@ -203,11 +203,6 @@ class UserAreaController extends Controller
         //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
         return $governancas;
     }
-    public function listConselhos(){
-        $id = 455128;
-        $conselhos = \App\UserConselho::where('id_osc', $id)->get();
-        return $conselhos;
-    }
     public function editGovernancas($id){
         $id = 455128;
         $governanca = \App\UserGovernanca::where([
@@ -221,6 +216,19 @@ class UserAreaController extends Controller
         $governanca = \App\UserGovernanca::find($request->id);
         $governanca->update($request->form);
         return $governanca;
+    }
+    public function removeGovernanca($id){
+        $governanca = \App\UserGovernanca::where([
+            /*['user_id', auth()->user()->id],*/
+            ['id_dirigente', $id],
+        ])->first();
+
+        $governanca->delete();
+    }
+    public function listConselhos(){
+        $id = 455128;
+        $conselhos = \App\UserConselho::where('id_osc', $id)->get();
+        return $conselhos;
     }
     ///////////////////////////////////
 

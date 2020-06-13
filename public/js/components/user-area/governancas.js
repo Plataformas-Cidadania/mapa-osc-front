@@ -5,6 +5,7 @@ class Governancas extends React.Component {
             loadingList: false,
             loading: false,
             governancas: [],
+            conselhos: [],
             tipo: {
                 1: 'Residencial',
                 2: 'Comercial'
@@ -18,7 +19,7 @@ class Governancas extends React.Component {
             remove: [],
             loadingRemove: [],
             governanca: {},
-            conselhos: {},
+            conselho: {},
             editId: 0
         };
 
@@ -142,7 +143,7 @@ class Governancas extends React.Component {
             cache: false,
             success: function (data) {
                 console.log(data);
-                this.setState({ concelhos: data, loadingList: false });
+                this.setState({ conselhos: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -282,7 +283,7 @@ class Governancas extends React.Component {
                 React.createElement(
                     'p',
                     null,
-                    item.tx_nome_dirigente
+                    item.tx_nome_conselheiro
                 )
             );
         }.bind(this));

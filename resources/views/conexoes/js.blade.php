@@ -230,3 +230,4 @@
 @if($rota=="register")
     <script src="/js/components/join/register.js"></script>
 @endif
+

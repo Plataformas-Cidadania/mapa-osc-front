@@ -227,16 +227,20 @@ class FormGovernanca extends React.Component{
                             <option value="2">Conselho Fiscal</option>
                         </select><br/>
 
-                        <label htmlFor="nome">Nome*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.nome ? '' : 'invalid-field')}
-                               type="text" name="nome" onChange={this.handleInputChange}
-                               value={this.state.form.nome} placeholder=""/><br/>
-
-                        <label htmlFor="cep">CEP*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.cep ? '' : 'invalid-field')}
-                               type="text" name="cep" onChange={this.handleInputChange}
-                               value={this.state.form.cep} placeholder=""/><br/>
-
+                        <div className="row">
+                            <div className="col-md-6">
+                                <label htmlFor="nome">Nome*</label><br/>
+                                <input className={"form-control "+(this.state.requireds.nome ? '' : 'invalid-field')}
+                                       type="text" name="nome" onChange={this.handleInputChange}
+                                       value={this.state.form.nome} placeholder=""/><br/>
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="cep">Cargo do dirigente*</label><br/>
+                                <input className={"form-control "+(this.state.requireds.cep ? '' : 'invalid-field')}
+                                       type="text" name="cep" onChange={this.handleInputChange}
+                                       value={this.state.form.cep} placeholder=""/><br/>
+                            </div>
+                        </div>
 
 
                         <p><i>* campos obrigatórios</i></p>

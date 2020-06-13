@@ -5,6 +5,7 @@ class Governancas extends React.Component{
             loadingList:false,
             loading:false,
             governancas:[],
+            conselhos:[],
             tipo:{
                 1: 'Residencial',
                 2: 'Comercial',
@@ -18,7 +19,7 @@ class Governancas extends React.Component{
             remove: [],
             loadingRemove: [],
             governanca: {},
-            conselhos: {},
+            conselho: {},
             editId: 0,
         };
 
@@ -151,7 +152,7 @@ class Governancas extends React.Component{
             cache: false,
             success: function(data){
                 console.log(data);
-                this.setState({concelhos: data, loadingList: false});
+                this.setState({conselhos: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -233,6 +234,7 @@ class Governancas extends React.Component{
             );
         }.bind(this));
 
+
         let conselhos = this.state.conselhos.map(function(item, index){
 
             let hr = null;
@@ -252,7 +254,7 @@ class Governancas extends React.Component{
                         </a>
                         <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
                     </div>
-                    <p>{item.tx_nome_dirigente}</p>
+                    <p>{item.tx_nome_conselheiro}</p>
                 </div>
             );
         }.bind(this));
@@ -305,11 +307,8 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Total de Trabalhadores</h3>
                                     <div>
-
                                         <h2>11</h2>
-
                                         <p className='not-info'>a</p>
-
                                     </div>
                                 </div>
                             </div>
