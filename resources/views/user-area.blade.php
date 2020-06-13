@@ -5,6 +5,7 @@
         maxAddresses = 10;
         maxCertificates = 200;
         maxGovernancas = 200;
+        maxConselhos = 200;
     </script>
 
     <div id="header"></div>

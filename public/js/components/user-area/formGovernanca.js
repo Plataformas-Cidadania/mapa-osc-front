@@ -218,6 +218,33 @@ class FormGovernanca extends React.Component {
                     null,
                     React.createElement(
                         'label',
+                        { htmlFor: 'tipo' },
+                        'Tipo*'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement(
+                        'select',
+                        { className: "form-control form-m " + (this.state.requireds.tipo ? '' : 'invalid-field'),
+                            name: 'tipo', onChange: this.handleInputChange, value: this.state.form.tipo },
+                        React.createElement(
+                            'option',
+                            { value: '0' },
+                            'Selecione'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: '1' },
+                            'Quadro de Dirigentes'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: '2' },
+                            'Conselho Fiscal'
+                        )
+                    ),
+                    React.createElement('br', null),
+                    React.createElement(
+                        'label',
                         { htmlFor: 'nome' },
                         'Nome*'
                     ),
@@ -235,129 +262,6 @@ class FormGovernanca extends React.Component {
                     React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
                         type: 'text', name: 'cep', onChange: this.handleInputChange,
                         value: this.state.form.cep, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'endereco' },
-                        'Endere\xE7o*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.endereco ? '' : 'invalid-field'),
-                        type: 'text', name: 'endereco', onChange: this.handleInputChange,
-                        value: this.state.form.endereco, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'numero' },
-                        'N\xFAmero*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.numero ? '' : 'invalid-field'),
-                        type: 'text', name: 'numero', onChange: this.handleInputChange,
-                        value: this.state.form.numero, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'complemento' },
-                        'Complemento*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control ",
-                        type: 'text', name: 'complemento', onChange: this.handleInputChange,
-                        value: this.state.form.complemento, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'bairro' },
-                        'Bairro*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.bairro ? '' : 'invalid-field'),
-                        type: 'text', name: 'bairro', onChange: this.handleInputChange,
-                        value: this.state.form.bairro, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'cidade' },
-                        'Cidade*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.cidade ? '' : 'invalid-field'),
-                        type: 'text', name: 'cidade', onChange: this.handleInputChange,
-                        value: this.state.form.cidade, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'estado' },
-                        'Estado*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.estado ? '' : 'invalid-field'),
-                        type: 'text', name: 'estado', onChange: this.handleInputChange,
-                        value: this.state.form.estado, placeholder: '' }),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'tipo' },
-                        'Tipo*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'select',
-                        { className: "form-control form-m " + (this.state.requireds.tipo ? '' : 'invalid-field'),
-                            name: 'tipo', onChange: this.handleInputChange, value: this.state.form.tipo },
-                        React.createElement(
-                            'option',
-                            { value: '0' },
-                            'Selecione'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '1' },
-                            'Residencial'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '2' },
-                            'Comercial'
-                        )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'principal' },
-                        'Endereco Principal*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'select',
-                        { className: "form-control form-m " + (this.state.requireds.principal ? '' : 'invalid-field'),
-                            name: 'principal', onChange: this.handleInputChange, value: this.state.form.principal },
-                        React.createElement(
-                            'option',
-                            { value: '0' },
-                            'Selecione'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '1' },
-                            'Sim'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '2' },
-                            'N\xE3o'
-                        )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'name' },
-                        'OBS'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('textarea', { className: "form-control ",
-                        name: 'obs', onChange: this.handleInputChange, rows: '5', cols: '50', value: this.state.form.obs }),
                     React.createElement('br', null),
                     React.createElement(
                         'p',

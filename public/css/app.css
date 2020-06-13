@@ -12840,6 +12840,18 @@ input[type=radio]:checked + label::after {
   margin: 0;
 }
 
+.box-itens-btn-edit {
+  margin-right: 10px;
+  position: absolute;
+}
+
+.box-itens-btn-del {
+  display: block;
+  position: absolute;
+  margin-top: -23px;
+  margin-left: 30px;
+}
+
 .title-mp {
   padding: 0 10px;
   font-size: 16px;

@@ -160,6 +160,8 @@ Route::get('/edit-user-certificate/{id}', 'UserAreaController@editCertificate')-
 Route::post('/list-users-governancas', 'UserAreaController@listGovernancas')->middleware('auth');
 Route::get('/remove-user-governanca/{id}', 'UserAreaController@removeGovernanca')->middleware('auth');
 Route::get('/edit-user-governanca/{id}', 'UserAreaController@editGovernanca')->middleware('auth');
+
+Route::post('/list-users-conselhos', 'UserAreaController@listConselhos')->middleware('auth');
 /*
 Route::get('/detail-user-osc/{id}', 'UserAreaController@detailOsc')->middleware('auth');*/
 

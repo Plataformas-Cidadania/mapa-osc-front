@@ -18,10 +18,12 @@ class Governancas extends React.Component{
             remove: [],
             loadingRemove: [],
             governanca: {},
+            conselhos: {},
             editId: 0,
         };
 
         this.list = this.list.bind(this);
+        this.list2 = this.list2.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
@@ -29,6 +31,7 @@ class Governancas extends React.Component{
 
     componentDidMount(){
         this.list();
+        this.list2();
     }
 
     getAge(dateString){
@@ -135,6 +138,28 @@ class Governancas extends React.Component{
         });
     }
 
+    list2(){
+
+        this.setState({loadingList: true});
+
+        $.ajax({
+            method: 'POST',
+            url: '/list-users-conselhos',
+            data: {
+
+            },
+            cache: false,
+            success: function(data){
+                console.log(data);
+                this.setState({concelhos: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
     render(){
 
         //console.log(this.state.showForm);
@@ -158,9 +183,9 @@ class Governancas extends React.Component{
 
                 <div className="box-insert-list" key={"governanca_"+index}>
                     {/*<i className="far fa-trash-alt text-danger float-right"/>*/}
-                    <div className="float-right">
-                        <a onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
+                    <div className="float-right" style={{marginRight: '40px'}}>
+                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
+                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
                             <i className={"fa "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                         </a>
                         <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
@@ -208,6 +233,30 @@ class Governancas extends React.Component{
             );
         }.bind(this));
 
+        let conselhos = this.state.conselhos.map(function(item, index){
+
+            let hr = null;
+            if(index < this.state.conselhos.length-1){
+                hr = <hr/>;
+            }
+
+            return (
+                <div className="box-insert-list" key={"conselho_"+index}>
+                    <div className="float-right" style={{width: '50px'}}>
+                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
+                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
+                            <i className={"fa "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
+                        </a>
+                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
+                            <i className={"fa fa-undo"}/>
+                        </a>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
+                    </div>
+                    <p>{item.tx_nome_dirigente}</p>
+                </div>
+            );
+        }.bind(this));
+
         return(
             <div>
                 <div className="title-user-area">
@@ -216,7 +265,7 @@ class Governancas extends React.Component{
                     <p>Você tem {this.state.governancas.length} Trabalhos ou Governanças cadastrados</p>
                     <hr/>
 
-                    <div style={{float: 'right', display: this.state.governancas.length < maxGovernancas ? 'block' : 'none' }}>
+                    <div style={{float: 'right', display: this.state.governancas.length < maxConselhos ? 'block' : 'none' }}>
                         <a onClick={this.showHideForm}><i className="fa fa-plus" style={{display: this.state.showForm ? "none" : "block"}}/></a>
                         <a onClick={this.showHideForm}><i className="fa fa-times" style={{display: this.state.showForm ? "block" : "none"}}/></a>
                     </div>
@@ -230,12 +279,74 @@ class Governancas extends React.Component{
 
                 <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                     <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
-                </div>
+                </div><br/>
                 <div className="row">
                     <div className="col-md-6">
                         <div className="bg-lgt box-itens-g min-h">
                             <h2>Quadro de Dirigentes</h2>
                             {governancas}
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="bg-lgt box-itens-g min-h">
+                            <h2>Conselho Fiscal</h2>
+                            {conselhos}
+                        </div>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div className="row text-center">
+                            <div className="col-md-12">
+                                <br/><br/>
+                                <strong>Trabalhadores</strong><br/><br/>
+                            </div>
+
+                            <div className="col-md-3">
+                                <div className="bg-lgt box-itens">
+                                    <h3>Total de Trabalhadores</h3>
+                                    <div>
+
+                                        <h2>11</h2>
+
+                                        <p className='not-info'>a</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="bg-lgt box-itens">
+                                    <h3>Empregados</h3>
+                                    <div>
+
+                                        <h2>aa</h2>
+
+                                        <p className='not-info'>aa</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="bg-lgt box-itens">
+                                    <h3>Deficiência</h3>
+                                    <div>
+
+                                        <h2>aa</h2>
+
+                                        <p className='not-info'>aa</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="bg-lgt box-itens">
+                                    <h3>Voluntários</h3>
+                                    <div>
+
+                                        <input type="number" value="10" className="input-lg" min="1"/>
+                                        <p className='not-info'>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

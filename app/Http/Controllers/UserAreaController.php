@@ -199,23 +199,28 @@ class UserAreaController extends Controller
     /////////////////////////////////////
     public function listGovernancas(){
         $id = 455128;
-        $certificates = \App\UserGovernanca::where('id_osc', $id)->get();
+        $governancas = \App\UserGovernanca::where('id_osc', $id)->get();
         //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
-        return $certificates;
+        return $governancas;
+    }
+    public function listConselhos(){
+        $id = 455128;
+        $conselhos = \App\UserConselho::where('id_osc', $id)->get();
+        return $conselhos;
     }
     public function editGovernancas($id){
         $id = 455128;
-        $certificate = \App\UserGovernanca::where([
+        $governanca = \App\UserGovernanca::where([
             'id_osc', $id
             /*['user_id', auth()->user()->id],
             ['id', $id],*/
         ])->first();
-        return $certificate;
+        return $governanca;
     }
     public function updateGovernancas(Request $request){
-        $certificate = \App\UserGovernanca::find($request->id);
-        $certificate->update($request->form);
-        return $certificate;
+        $governanca = \App\UserGovernanca::find($request->id);
+        $governanca->update($request->form);
+        return $governanca;
     }
     ///////////////////////////////////
 

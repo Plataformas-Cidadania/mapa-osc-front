@@ -18,10 +18,12 @@ class Governancas extends React.Component {
             remove: [],
             loadingRemove: [],
             governanca: {},
+            conselhos: {},
             editId: 0
         };
 
         this.list = this.list.bind(this);
+        this.list2 = this.list2.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
@@ -29,6 +31,7 @@ class Governancas extends React.Component {
 
     componentDidMount() {
         this.list();
+        this.list2();
     }
 
     getAge(dateString) {
@@ -128,6 +131,26 @@ class Governancas extends React.Component {
         });
     }
 
+    list2() {
+
+        this.setState({ loadingList: true });
+
+        $.ajax({
+            method: 'POST',
+            url: '/list-users-conselhos',
+            data: {},
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                this.setState({ concelhos: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     render() {
 
         //console.log(this.state.showForm);
@@ -154,16 +177,16 @@ class Governancas extends React.Component {
                     { className: 'box-insert-list', key: "governanca_" + index },
                     React.createElement(
                         'div',
-                        { className: 'float-right' },
+                        { className: 'float-right', style: { marginRight: '40px' } },
                         React.createElement(
                             'a',
-                            { onClick: () => this.edit(item.id) },
+                            { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
                             React.createElement('i', { className: 'fa fa-edit' })
                         ),
                         '\xA0',
                         React.createElement(
                             'a',
-                            { onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
+                            { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
                             React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
                         ),
                         React.createElement(
@@ -225,6 +248,45 @@ class Governancas extends React.Component {
             );
         }.bind(this));
 
+        let conselhos = this.state.conselhos.map(function (item, index) {
+
+            let hr = null;
+            if (index < this.state.conselhos.length - 1) {
+                hr = React.createElement('hr', null);
+            }
+
+            return React.createElement(
+                'div',
+                { className: 'box-insert-list', key: "conselho_" + index },
+                React.createElement(
+                    'div',
+                    { className: 'float-right', style: { width: '50px' } },
+                    React.createElement(
+                        'a',
+                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
+                        React.createElement('i', { className: 'fa fa-edit' })
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'a',
+                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
+                        React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                    ),
+                    React.createElement(
+                        'a',
+                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
+                        React.createElement('i', { className: "fa fa-undo" })
+                    ),
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    item.tx_nome_dirigente
+                )
+            );
+        }.bind(this));
+
         return React.createElement(
             'div',
             null,
@@ -253,7 +315,7 @@ class Governancas extends React.Component {
                 React.createElement('hr', null),
                 React.createElement(
                     'div',
-                    { style: { float: 'right', display: this.state.governancas.length < maxGovernancas ? 'block' : 'none' } },
+                    { style: { float: 'right', display: this.state.governancas.length < maxConselhos ? 'block' : 'none' } },
                     React.createElement(
                         'a',
                         { onClick: this.showHideForm },
@@ -277,6 +339,7 @@ class Governancas extends React.Component {
                 { style: { display: this.state.loadingList ? 'true' : 'none' } },
                 React.createElement('img', { style: { marginTop: '80px' }, src: '/img/loading.gif', width: '150px', alt: 'carregando', title: 'carregando' })
             ),
+            React.createElement('br', null),
             React.createElement(
                 'div',
                 { className: 'row' },
@@ -292,6 +355,145 @@ class Governancas extends React.Component {
                             'Quadro de Dirigentes'
                         ),
                         governancas
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement(
+                        'div',
+                        { className: 'bg-lgt box-itens-g min-h' },
+                        React.createElement(
+                            'h2',
+                            null,
+                            'Conselho Fiscal'
+                        ),
+                        conselhos
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'row text-center' },
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement('br', null),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Trabalhadores'
+                            ),
+                            React.createElement('br', null),
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt box-itens' },
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Total de Trabalhadores'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        'h2',
+                                        null,
+                                        '11'
+                                    ),
+                                    React.createElement(
+                                        'p',
+                                        { className: 'not-info' },
+                                        'a'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt box-itens' },
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Empregados'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        'h2',
+                                        null,
+                                        'aa'
+                                    ),
+                                    React.createElement(
+                                        'p',
+                                        { className: 'not-info' },
+                                        'aa'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt box-itens' },
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Defici\xEAncia'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        'h2',
+                                        null,
+                                        'aa'
+                                    ),
+                                    React.createElement(
+                                        'p',
+                                        { className: 'not-info' },
+                                        'aa'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt box-itens' },
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Volunt\xE1rios'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
+                                    React.createElement(
+                                        'p',
+                                        { className: 'not-info' },
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        )
                     )
                 )
             )

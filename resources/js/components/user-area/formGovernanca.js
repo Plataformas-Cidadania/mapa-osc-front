@@ -219,6 +219,14 @@ class FormGovernanca extends React.Component{
             <div className="row">
                 <div className="col-md-12">
                     <form>
+                        <label htmlFor="tipo">Tipo*</label><br/>
+                        <select className={"form-control form-m "+(this.state.requireds.tipo ? '' : 'invalid-field')}
+                                name="tipo" onChange={this.handleInputChange} value={this.state.form.tipo}>
+                            <option value="0">Selecione</option>
+                            <option value="1">Quadro de Dirigentes</option>
+                            <option value="2">Conselho Fiscal</option>
+                        </select><br/>
+
                         <label htmlFor="nome">Nome*</label><br/>
                         <input className={"form-control "+(this.state.requireds.nome ? '' : 'invalid-field')}
                                type="text" name="nome" onChange={this.handleInputChange}
@@ -229,57 +237,7 @@ class FormGovernanca extends React.Component{
                                type="text" name="cep" onChange={this.handleInputChange}
                                value={this.state.form.cep} placeholder=""/><br/>
 
-                        <label htmlFor="endereco">Endereço*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.endereco ? '' : 'invalid-field')}
-                               type="text" name="endereco" onChange={this.handleInputChange}
-                               value={this.state.form.endereco} placeholder=""/><br/>
 
-                        <label htmlFor="numero">Número*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.numero ? '' : 'invalid-field')}
-                               type="text" name="numero" onChange={this.handleInputChange}
-                               value={this.state.form.numero} placeholder=""/><br/>
-
-                        <label htmlFor="complemento">Complemento*</label><br/>
-                        <input className={"form-control "}
-                               type="text" name="complemento" onChange={this.handleInputChange}
-                               value={this.state.form.complemento} placeholder=""/><br/>
-
-                        <label htmlFor="bairro">Bairro*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.bairro ? '' : 'invalid-field')}
-                               type="text" name="bairro" onChange={this.handleInputChange}
-                               value={this.state.form.bairro} placeholder=""/><br/>
-
-                        <label htmlFor="cidade">Cidade*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.cidade ? '' : 'invalid-field')}
-                               type="text" name="cidade" onChange={this.handleInputChange}
-                               value={this.state.form.cidade} placeholder=""/><br/>
-
-                        <label htmlFor="estado">Estado*</label><br/>
-                        <input className={"form-control "+(this.state.requireds.estado ? '' : 'invalid-field')}
-                               type="text" name="estado" onChange={this.handleInputChange}
-                               value={this.state.form.estado} placeholder=""/><br/>
-
-                        <label htmlFor="tipo">Tipo*</label><br/>
-                        <select className={"form-control form-m "+(this.state.requireds.tipo ? '' : 'invalid-field')}
-                                name="tipo" onChange={this.handleInputChange} value={this.state.form.tipo}>
-                            <option value="0">Selecione</option>
-                            <option value="1">Residencial</option>
-                            <option value="2">Comercial</option>
-                        </select><br/>
-
-                        <label htmlFor="principal">Endereco Principal*</label><br/>
-                        <select className={"form-control form-m "+(this.state.requireds.principal ? '' : 'invalid-field')}
-                                name="principal" onChange={this.handleInputChange} value={this.state.form.principal}>
-                            <option value="0">Selecione</option>
-                            <option value="1">Sim</option>
-                            <option value="2">Não</option>
-                        </select><br/>
-
-
-                        <label htmlFor="name">OBS</label><br/>
-                        <textarea className={"form-control "}
-                                  name="obs"  onChange={this.handleInputChange} rows="5" cols="50" value={this.state.form.obs}/>
-                        <br/>
 
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">
