@@ -6,6 +6,10 @@
         maxCertificates = 200;
         maxGovernancas = 200;
         maxConselhos = 200;
+        maxAtuacoes = 200;
+        maxParticipacoes = 200;
+        maxRecursos = 200;
+        maxProjetos = 200;
     </script>
 
     <div id="header"></div>
@@ -31,4 +35,10 @@
     </div>
     <br><br>
     <div id="footer"></div>
+
+    <style>
+        .label-float label {
+            top: calc(48% - 28px);
+        }
+    </style>
 @endsection

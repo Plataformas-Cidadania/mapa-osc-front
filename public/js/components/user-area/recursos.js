@@ -1,4 +1,4 @@
-class Descricao extends React.Component {
+class Recursos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,9 +13,9 @@ class Descricao extends React.Component {
             requireds: {
                 name: true,
                 email: true,
-                tx_razao_social_descricao: true,
-                tx_sigla_descricao: true,
-                tx_nome_situacao_imovel_descricao: true,
+                tx_razao_social_recursos: true,
+                tx_sigla_recursos: true,
+                tx_nome_situacao_imovel_recursos: true,
                 tx_nome_responsavel_legal: true,
 
                 cnpj: true
@@ -29,21 +29,21 @@ class Descricao extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getDescricao = this.getDescricao.bind(this);
+        this.getRecursos = this.getRecursos.bind(this);
     }
 
     componentDidMount() {
-        this.getDescricao();
+        this.getRecursos();
     }
 
-    getDescricao() {
+    getRecursos() {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: '/get-descricao',
+            url: '/get-recursos',
             cache: false,
             success: function (data) {
-                this.setState({ loading: false, form: data.descricao, button: true });
+                this.setState({ loading: false, form: data.recursos, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -82,7 +82,7 @@ class Descricao extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: '/update-descricao',
+                url: '/update-recursos',
                 data: {
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -93,9 +93,9 @@ class Descricao extends React.Component {
 
                     let msg = 'Já existe outro cadastro com esse';
 
-                    if (data.tx_razao_social_descricao || data.email) {
-                        if (data.tx_razao_social_descricao) {
-                            msg += ' tx_razao_social_descricao';
+                    if (data.tx_razao_social_recursos || data.email) {
+                        if (data.tx_razao_social_recursos) {
+                            msg += ' tx_razao_social_recursos';
                         }
                         if (data.email) {
                             msg += ' email';
@@ -144,7 +144,7 @@ class Descricao extends React.Component {
                                         React.createElement(
                                             'h2',
                                             null,
-                                            'Descri\xE7\xE3o da OSC'
+                                            'Descri\xE7\xE3o da RECURSOS'
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
@@ -158,81 +158,51 @@ class Descricao extends React.Component {
                                     'div',
                                     { className: 'form-group col-md-12' },
                                     React.createElement(
-                                        'div',
-                                        { className: 'label-float-tx' },
-                                        React.createElement('textarea', { className: 'form-control form-g', id: 'tx_historico', rows: '3', placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_historico' },
-                                            'Hist\xF3rico'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-tx' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Hist\xF3rico'
                                     ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
                                     React.createElement(
-                                        'div',
-                                        { className: 'label-float-tx' },
-                                        React.createElement('textarea', { className: 'form-control form-g', id: 'tx_missao_osc', rows: '3', placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_missao_osc' },
-                                            'Miss\xE3o'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-tx' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Miss\xE3o'
                                     ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
                                     React.createElement(
-                                        'div',
-                                        { className: 'label-float-tx' },
-                                        React.createElement('textarea', { className: 'form-control form-g', id: 'tx_historico', rows: '3', placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_historico' },
-                                            'Vis\xE3o'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-tx' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Vis\xE3o'
                                     ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
                                     React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', id: 'tx_link_estatuto_osc', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Link para o Estatutu da OSC'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
+                                        'label',
+                                        { htmlFor: 'exampleFormControlTextarea1' },
+                                        'Finalidades Estatut\xE1rias da RECURSOS'
+                                    ),
+                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-12' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'inputEmail4' },
+                                        'Link para o Estatutu da RECURSOS'
+                                    ),
+                                    React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4', placeholder: 'Email' })
                                 )
                             ),
                             React.createElement(
@@ -269,4 +239,4 @@ class Descricao extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Descricao, null), document.getElementById('descricao'));
+ReactDOM.render(React.createElement(Recursos, null), document.getElementById('recursos'));

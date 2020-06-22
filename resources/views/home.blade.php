@@ -140,7 +140,11 @@
                 </ul>
                 <br>
             </div>
-            <div class="col-md-8 bg-map" style="background-image: url('imagens/texts/{{$text->imagem}}');">
+            <div class="col-md-8 bg-map"
+                 @if(!empty($text->imagem))
+                 style="background-image: url('imagens/texts/{{$text->imagem}}');"
+                 @endif
+            >
                 <div class="circle">
                     @foreach($osc_recentes as $key => $osc_recente)
                     <div id="icon{{$key}}" class="rotate">
@@ -162,10 +166,12 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-4">
-                <h2>{{$text->titulo}}</h2>
-                <p>{!!$text->descricao!!}</p>
-            </div>
+            @if(!empty($text->titulo))
+                <div class="col-md-4">
+                    <h2>{{$text->titulo}}</h2>
+                    <p>{!!$text->descricao!!}</p>
+                </div>
+            @endif
         </div>
     </div>
 

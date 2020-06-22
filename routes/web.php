@@ -133,8 +133,12 @@ Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
 
 Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
+Route::get('/projetos-user', 'UserAreaController@projetos')->middleware('auth');
 Route::get('/governancas-user', 'UserAreaController@governancas')->middleware('auth');
+Route::get('/areas-atuacao-user', 'UserAreaController@atuacoes')->middleware('auth');
 Route::get('/descricao-user', 'UserAreaController@descricao')->middleware('auth');
+Route::get('/participacoes-user', 'UserAreaController@participacoes')->middleware('auth');
+Route::get('/recursos-user', 'UserAreaController@recursos')->middleware('auth');
 
 Route::get('/logout-user', 'UserLoginController@logout');
 

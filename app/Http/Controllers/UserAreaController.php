@@ -34,8 +34,20 @@ class UserAreaController extends Controller
     public function certificates(){
         return view('user-area', ['pgUserArea' => 'certificates']);
     }
+    public function projetos(){
+        return view('user-area', ['pgUserArea' => 'projetos']);
+    }
     public function governancas(){
         return view('user-area', ['pgUserArea' => 'governancas']);
+    }
+    public function atuacoes(){
+        return view('user-area', ['pgUserArea' => 'atuacoes']);
+    }
+    public function participacoes(){
+        return view('user-area', ['pgUserArea' => 'participacoes']);
+    }
+    public function recursos(){
+        return view('user-area', ['pgUserArea' => 'recursos']);
     }
 
 

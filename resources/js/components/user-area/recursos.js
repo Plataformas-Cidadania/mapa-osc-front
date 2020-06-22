@@ -1,4 +1,4 @@
-class Descricao extends React.Component{
+class Recursos extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -13,9 +13,9 @@ class Descricao extends React.Component{
             requireds: {
                 name: true,
                 email: true,
-                tx_razao_social_descricao: true,
-                tx_sigla_descricao: true,
-                tx_nome_situacao_imovel_descricao: true,
+                tx_razao_social_recursos: true,
+                tx_sigla_recursos: true,
+                tx_nome_situacao_imovel_recursos: true,
                 tx_nome_responsavel_legal: true,
 
 
@@ -30,21 +30,21 @@ class Descricao extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getDescricao = this.getDescricao.bind(this);
+        this.getRecursos = this.getRecursos.bind(this);
     }
 
     componentDidMount(){
-        this.getDescricao();
+        this.getRecursos();
     }
 
-    getDescricao(){
+    getRecursos(){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: '/get-descricao',
+            url: '/get-recursos',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.descricao, button:true})
+                this.setState({loading: false, form: data.recursos, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -84,7 +84,7 @@ class Descricao extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
-                url: '/update-descricao',
+                url: '/update-recursos',
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -95,9 +95,9 @@ class Descricao extends React.Component{
 
                     let msg = 'Já existe outro cadastro com esse';
 
-                    if(data.tx_razao_social_descricao || data.email){
-                        if(data.tx_razao_social_descricao){
-                            msg+= ' tx_razao_social_descricao';
+                    if(data.tx_razao_social_recursos || data.email){
+                        if(data.tx_razao_social_recursos){
+                            msg+= ' tx_razao_social_recursos';
                         }
                         if(data.email){
                             msg+= ' email';
@@ -130,7 +130,7 @@ class Descricao extends React.Component{
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="title-style">
-                                                <h2>Descrição da OSC</h2>
+                                                <h2>Descrição da RECURSOS</h2>
                                                 <div className="line line-fix"></div>
                                                 <hr/>
                                             </div>
@@ -138,44 +138,30 @@ class Descricao extends React.Component{
                                     </div>
 
                                     <div className="row">
-
-
                                         <div className="form-group col-md-12">
-
-                                            <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_historico" rows="3" placeholder=" "/>
-                                                <label htmlFor="tx_historico">Histórico</label>
-                                                <div className="label-box-info-tx">
-                                                    <p>&nbsp;</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_missao_osc" rows="3" placeholder=" "/>
-                                                <label htmlFor="tx_missao_osc">Missão</label>
-                                                <div className="label-box-info-tx">
-                                                    <p>&nbsp;</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_historico" rows="3" placeholder=" "/>
-                                                <label htmlFor="tx_historico">Visão</label>
-                                                <div className="label-box-info-tx">
-                                                    <p>&nbsp;</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" id="tx_link_estatuto_osc" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="tx_link_estatuto_osc">Link para o Estatutu da OSC</label>
-                                                <div className="label-box-info">
-                                                    <p>&nbsp;</p>
-                                                </div>
-                                            </div>
-
+                                            <label htmlFor="exampleFormControlTextarea1">Histórico</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
                                         </div>
 
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Missão</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Visão</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="exampleFormControlTextarea1">Finalidades Estatutárias da RECURSOS</label>
+                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                        </div>
+
+                                        <div className="form-group col-md-12">
+                                            <label htmlFor="inputEmail4">Link para o Estatutu da RECURSOS</label>
+                                            <input type="emil" className="form-control" id="inputEmail4" placeholder="Email"/>
+                                        </div>
                                     </div>
 
 
@@ -187,6 +173,7 @@ class Descricao extends React.Component{
                                             <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
                                             <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                                         </div>
+
                                     </div>
 
 
@@ -206,6 +193,6 @@ class Descricao extends React.Component{
 }
 
 ReactDOM.render(
-    <Descricao/>,
-    document.getElementById('descricao')
+    <Recursos/>,
+    document.getElementById('recursos')
 );

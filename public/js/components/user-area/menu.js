@@ -83,7 +83,7 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/oscs-user" },
+                    { href: "/osc-user/789809" },
                     React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                     " Dados gerais"
                 )
@@ -93,7 +93,7 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/atuacao-user" },
+                    { href: "/areas-atuacao-user" },
                     React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                     " \xC1reas de atua\xE7\xE3o"
                 )
@@ -133,7 +133,7 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/participacao-user" },
+                    { href: "/participacoes-user" },
                     React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
                     " Participa\xE7\xE3o Social"
                 )

@@ -188,9 +188,13 @@
     $rota=="dados-arquivo/{id}" ||
     $rota=="dados-user" ||
     $rota=="videos-privados" ||
+    $rota=="areas-atuacao-user" ||
+    $rota=="descricao-user" ||
     $rota=="certificates-user" ||
+    $rota=="projetos-user" ||
     $rota=="governancas-user" ||
-    $rota=="descricao-user"
+    $rota=="participacoes-user" ||
+    $rota=="recursos-user"
     )
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
@@ -199,9 +203,25 @@
     <script src="/js/components/user-area/formCertificate.js"></script>
     <script src="/js/components/user-area/certificates.js"></script>
 @endif
+@if($rota=="projetos-user")
+    <script src="/js/components/user-area/formProjeto.js"></script>
+    <script src="/js/components/user-area/projetos.js"></script>
+@endif
 @if($rota=="governancas-user")
     <script src="/js/components/user-area/formGovernanca.js"></script>
     <script src="/js/components/user-area/governancas.js"></script>
+@endif
+@if($rota=="participacoes-user")
+    <script src="/js/components/user-area/formParticipacao.js"></script>
+    <script src="/js/components/user-area/participacoes.js"></script>
+@endif
+@if($rota=="recursos-user")
+    <script src="/js/components/user-area/formRecurso.js"></script>
+    <script src="/js/components/user-area/recursos.js"></script>
+@endif
+@if($rota=="areas-atuacao-user")
+    <script src="/js/components/user-area/formAtuacao.js"></script>
+    <script src="/js/components/user-area/atuacoes.js"></script>
 @endif
 
 @if($rota=="area-user" || $rota=="dashboard-user" )
@@ -210,8 +230,11 @@
 @if($rota=="dados-user")
     <script src="/js/components/user-area/data.js"></script>
 @endif
-@if($rota=="dados-user")
+@if($rota=="descricao-user")
     <script src="/js/components/user-area/descricao.js"></script>
+@endif
+@if($rota=="recursos-user")
+    <script src="/js/components/user-area/recursos.js"></script>
 @endif
 @if($rota=="dados-arquivos")
     <script src="/js/components/user-area/documents.js"></script>
