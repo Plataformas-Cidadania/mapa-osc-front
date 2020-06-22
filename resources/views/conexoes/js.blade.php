@@ -189,7 +189,8 @@
     $rota=="dados-user" ||
     $rota=="videos-privados" ||
     $rota=="certificates-user" ||
-    $rota=="governancas-user"
+    $rota=="governancas-user" ||
+    $rota=="descricao-user"
     )
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
@@ -208,6 +209,9 @@
 @endif
 @if($rota=="dados-user")
     <script src="/js/components/user-area/data.js"></script>
+@endif
+@if($rota=="dados-user")
+    <script src="/js/components/user-area/descricao.js"></script>
 @endif
 @if($rota=="dados-arquivos")
     <script src="/js/components/user-area/documents.js"></script>

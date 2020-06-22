@@ -53,6 +53,66 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
+                    { href: "/dados-user" },
+                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    " Selo Site"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/logout-user" },
+                    React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
+                    " Sair"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement("br", null)
+            ),
+            React.createElement(
+                "li",
+                { className: "bg-pri text-light", style: { padding: '5px 10px' } },
+                "OSC Apac"
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/oscs-user" },
+                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    " Dados gerais"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/atuacao-user" },
+                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    " \xC1reas de atua\xE7\xE3o"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/descricao-user" },
+                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    " Descri\xE7\xE3o"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
                     { href: "/certificates-user" },
                     React.createElement("i", { className: "fas fa-certificate", "aria-hidden": "true" }),
                     " T\xEDtulos e Certificados"
@@ -73,9 +133,9 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/dados-user" },
-                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
-                    " Selo Site"
+                    { href: "/participacao-user" },
+                    React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                    " Participa\xE7\xE3o Social"
                 )
             ),
             React.createElement(
@@ -83,9 +143,19 @@ class Menu extends React.Component {
                 null,
                 React.createElement(
                     "a",
-                    { href: "/logout-user" },
-                    React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
-                    " Sair"
+                    { href: "/projetos-user" },
+                    React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                    " Projetos"
+                )
+            ),
+            React.createElement(
+                "li",
+                null,
+                React.createElement(
+                    "a",
+                    { href: "/recursos-user" },
+                    React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                    " Fontes de recursos"
                 )
             )
         );

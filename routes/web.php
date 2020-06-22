@@ -134,6 +134,7 @@ Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
 
 Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
 Route::get('/governancas-user', 'UserAreaController@governancas')->middleware('auth');
+Route::get('/descricao-user', 'UserAreaController@descricao')->middleware('auth');
 
 Route::get('/logout-user', 'UserLoginController@logout');
 
@@ -146,6 +147,7 @@ Route::get('/videos-privados', 'UserAreaController@videos')->middleware('auth');
 
 //ajax
 Route::post('/update-data', 'UserAreaController@updateData')->middleware('auth');
+Route::post('/update-descricao', 'UserAreaController@updateDescricao')->middleware('auth');
 Route::get('/get-data', 'UserAreaController@getData')->middleware('auth');
 Route::get('/get-osc', 'UserAreaController@getOsc')->middleware('auth');
 Route::post('/list-users-oscs', 'UserAreaController@listOscs')->middleware('auth');

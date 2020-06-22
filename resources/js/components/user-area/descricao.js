@@ -1,4 +1,4 @@
-class Osc extends React.Component{
+class Descricao extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -13,9 +13,9 @@ class Osc extends React.Component{
             requireds: {
                 name: true,
                 email: true,
-                tx_razao_social_osc: true,
-                tx_sigla_osc: true,
-                tx_nome_situacao_imovel_osc: true,
+                tx_razao_social_descricao: true,
+                tx_sigla_descricao: true,
+                tx_nome_situacao_imovel_descricao: true,
                 tx_nome_responsavel_legal: true,
 
 
@@ -30,48 +30,21 @@ class Osc extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
-        this.getOsc = this.getOsc.bind(this);
+        this.getDescricao = this.getDescricao.bind(this);
     }
 
     componentDidMount(){
-        this.getOsc();
+        this.getDescricao();
     }
 
-
-    getAddress(){
-        this.setState({loadingCep: true});
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/'+this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({loadingCep: false, form: form})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
-
-    getOsc(){
+    getDescricao(){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: '/get-osc',
+            url: '/get-descricao',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.osc, button:true})
+                this.setState({loading: false, form: data.descricao, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -136,7 +109,7 @@ class Osc extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
-                url: '/update-osc',
+                url: '/update-descricao',
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -147,9 +120,9 @@ class Osc extends React.Component{
 
                     let msg = 'Já existe outro cadastro com esse';
 
-                    if(data.tx_razao_social_osc || data.email){
-                        if(data.tx_razao_social_osc){
-                            msg+= ' tx_razao_social_osc';
+                    if(data.tx_razao_social_descricao || data.email){
+                        if(data.tx_razao_social_descricao){
+                            msg+= ' tx_razao_social_descricao';
                         }
                         if(data.email){
                             msg+= ' email';
@@ -179,79 +152,12 @@ class Osc extends React.Component{
         return (
             <div>
 
-                {/*<div className="row">
-                    <div className="col-md-12">
-                        <form>
-                            <div>
-                                <div className="col-md-5">
-                                    <label htmlFor="cnpj">CNPJ*</label><br/>
-                                    <input className={"form-control form-g "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} value={this.state.form.cnpj} placeholder="CNPJ"/><br/>
-                                </div>
-                            </div>
-
-                            <div className="col-md-8">
-                                <label htmlFor="name">Seu nome e sobrenome*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} value={this.state.form.name} placeholder="Nome"/><br/>
-                            </div>
-
-                            <div className="col-md-8">
-                                <label htmlFor="email">E-mail*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
-                            </div>
-
-                            <div className="col-md-12">
-                                <label htmlFor="tx_razao_social_osc">tx_razao_social_osc*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field')} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc} placeholder="Tx_razao_social_osc"/><br/>
-                            </div>
-
-
-
-
-                            <div className="clear-float"/>
-
-                        </form>
-                    </div>
-                </div>
-
-                --------------------------------------------------*/}
 
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
 
-                            {/*<div className="alert alert-secondary box-floating">
-                                <i className="fas fa-chevron-right menu-icons-close btn-menu-txt"/>
-                                <i className="fas fa-chevron-left menu-icons-close btn-menu-txt-show"
-                                   style={{display: "none"}}/>
-                                <ul className="menu-icons menu-right">
-                                    <li id="btn-right"/>
-                                    <li><a href="detalhar/1#dados-gerais">
-                                        <div><i className="far fa-file-alt"/></div>
-                                        <p className="menu-icons-txt">Dados gerais</p></a></li>
-                                    <li><a href="detalhar/1#area-atuacao">
-                                        <div><i className="fas fa-share-alt"/></div>
-                                        <p className="menu-icons-txt">Área de atuação</p></a></li>
-                                    <li><a href="detalhar/1#descricao">
-                                        <div><i className="fas fa-align-justify"/></div>
-                                        <p className="menu-icons-txt">Descrição da OSC</p></a></li>
-                                    <li><a href="detalhar/1#titulacao">
-                                        <div><i className="fas fa-certificate"/></div>
-                                        <p className="menu-icons-txt">Titulações e Certificações</p></a></li>
-                                    <li><a href="detalhar/1#governanca">
-                                        <div><i className="fas fa-briefcase"/></div>
-                                        <p className="menu-icons-txt">Trabalho e Governança</p></a></li>
-                                    <li><a href="detalhar/1#participacao">
-                                        <div><i className="fas fa-users"/></div>
-                                        <p className="menu-icons-txt">Participação social</p></a></li>
-                                    <li><a href="detalhar/1#projetos">
-                                        <div><i className="fas fa-project-diagram"/></div>
-                                        <p className="menu-icons-txt">Projetos</p></a></li>
-                                    <li><a href="detalhar/1#fontes">
-                                        <div><i className="fas fa-boxes"/></div>
-                                        <p className="menu-icons-txt">Fontes de recursos</p></a></li>
-                                </ul>
-                                <i className="fas fa-times fa-2x float-right btn-right"/>
-                            </div>*/}
+
 
                             <div className="row">
                                 <div className="col-md-12">
@@ -288,12 +194,12 @@ class Osc extends React.Component{
                                 <form>
                                     <div className="form-row">
                                         <div className="form-group col-md-2">
-                                            <label htmlFor="inputEmail4">Sigla da OSC</label>
-                                            <input className={"form-control  "+(this.state.requireds.tx_sigla_osc ? '' : 'invalid-field')} type="text" name="tx_sigla_osc" onChange={this.handleInputChange} value={this.state.form.tx_sigla_osc} placeholder="Sigla da OSC"/><br/>
+                                            <label htmlFor="inputEmail4">Sigla da DESCRICAO</label>
+                                            <input className={"form-control  "+(this.state.requireds.tx_sigla_descricao ? '' : 'invalid-field')} type="text" name="tx_sigla_descricao" onChange={this.handleInputChange} value={this.state.form.tx_sigla_descricao} placeholder="Sigla da DESCRICAO"/><br/>
                                         </div>
                                         <div className="form-group col-md-10">
                                             <label htmlFor="inputPassword4">Nome Fantasia</label>
-                                            <input className={"form-control  "+(this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field')} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc} placeholder="Nome Fantasia"/><br/>
+                                            <input className={"form-control  "+(this.state.requireds.tx_razao_social_descricao ? '' : 'invalid-field')} type="text" name="tx_razao_social_descricao" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_descricao} placeholder="Nome Fantasia"/><br/>
                                         </div>
                                     </div>
 
@@ -316,7 +222,7 @@ class Osc extends React.Component{
                                                 <option selected>Escolher...</option>
                                                 <option>...</option>
                                             </select>
-                                            {/*tx_nome_situacao_imovel_osc*/}
+                                            {/*tx_nome_situacao_imovel_descricao*/}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
@@ -337,7 +243,7 @@ class Osc extends React.Component{
 
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
-                                            <label htmlFor="inputEmail4">E-mail oficial da OSC</label>
+                                            <label htmlFor="inputEmail4">E-mail oficial da DESCRICAO</label>
                                             <input type="emil" className="form-control" id="inputEmail4"
                                                    placeholder="Email"/>
                                         </div>
@@ -362,7 +268,7 @@ class Osc extends React.Component{
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="exampleFormControlTextarea1">O que a OSC faz</label>
+                                        <label htmlFor="exampleFormControlTextarea1">O que a DESCRICAO faz</label>
                                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
                                     </div>
 
@@ -459,7 +365,7 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <br/><br/>
                                                 <div className="title-style">
-                                                    <h2>Áreas e Subáreas de atuação da OSC</h2>
+                                                    <h2>Áreas e Subáreas de atuação da DESCRICAO</h2>
                                                     <div className="line line-fix"></div>
                                                     <hr/>
                                                 </div>
@@ -516,7 +422,7 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <br/><br/>
                                             <div className="title-style">
-                                                <h2>Descrição da OSC</h2>
+                                                <h2>Descrição da DESCRICAO</h2>
                                                 <div className="line line-fix"></div>
                                                 <hr/>
                                             </div>
@@ -541,12 +447,12 @@ class Osc extends React.Component{
                                         </div>
 
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="exampleFormControlTextarea1">Finalidades Estatutárias da OSC</label>
+                                            <label htmlFor="exampleFormControlTextarea1">Finalidades Estatutárias da DESCRICAO</label>
                                             <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
                                         </div>
 
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="inputEmail4">Link para o Estatutu da OSC</label>
+                                            <label htmlFor="inputEmail4">Link para o Estatutu da DESCRICAO</label>
                                             <input type="emil" className="form-control" id="inputEmail4" placeholder="Email"/>
                                         </div>
                                     </div>
@@ -839,7 +745,7 @@ class Osc extends React.Component{
                                                                 <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
                                                                 <br/>
                                                                 <div>
-                                                                    <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
+                                                                    <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de DESCRICAOs:</h3>
                                                                     <p><input  value="Conferência Brasileira de Arranjos Produtivos Locais"/></p>
                                                                 </div>
                                                             </div>
@@ -909,7 +815,7 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <br/><br/>
                                             <div className="title-style">
-                                                <h2>Fontes de recursos anuais da OSC</h2>
+                                                <h2>Fontes de recursos anuais da DESCRICAO</h2>
                                                 <div className="line line-fix"/>
                                                 <hr/>
                                             </div>
@@ -921,7 +827,7 @@ class Osc extends React.Component{
                                         <div className="col-md-12">
                                             <br/><br/>
                                             <div className="title-style">
-                                                <h2>Fontes de recursos anuais da OSC</h2>
+                                                <h2>Fontes de recursos anuais da DESCRICAO</h2>
                                                 <div className="line line-fix"/>
                                                 <hr/>
                                             </div>
@@ -956,6 +862,6 @@ class Osc extends React.Component{
 }
 
 ReactDOM.render(
-    <Osc/>,
-    document.getElementById('osc')
+    <Descricao/>,
+    document.getElementById('descricao')
 );

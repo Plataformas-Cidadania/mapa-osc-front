@@ -12436,51 +12436,48 @@ input[type=radio]:checked + label::after {
 
 /*number*/
 
-input[type=number] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
+/*input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
 }
+input[type="number"]{
+    outline:none;
+    height: 20px;
+    padding:1%;
 
-input[type=number] {
-  outline: none;
-  height: 20px;
-  padding: 1%;
 }
+label, input, .btn-number {
+    font-size: inherit;
+    padding: 0.2em;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.btn-number{
+    height:20px;
+    padding:1%;
+    background-color: white;
+    border-left: 0px solid black;
+    padding-left:2%;
+    padding-right:2%;
+    outline:none;
+    cursor: pointer;
 
-label,
-input,
-.btn-number {
-  font-size: inherit;
-  padding: 0.2em;
-  box-sizing: content-box;
-}
 
-.btn-number {
-  height: 20px;
-  padding: 1%;
-  background-color: white;
-  border-left: 0px solid black;
-  padding-left: 2%;
-  padding-right: 2%;
-  outline: none;
-  cursor: pointer;
 }
-
-.btn-number.formMin {
-  background-color: #CCCCCC;
-  color: #000000;
+.btn-number.formMin{
+    background-color: #CCCCCC;
+    color: #000000;
 }
-
-.btn-number.formMax {
-  background-color: #CCCCCC;
-  color: #000000;
-}
+.btn-number.formMax{
+    background-color: #CCCCCC;
+    color: #000000;
+}*/
 
 .fa-svg svg {
   font-size: 25px;

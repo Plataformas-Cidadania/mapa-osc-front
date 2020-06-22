@@ -28,6 +28,9 @@ class UserAreaController extends Controller
         return view('user-area', ['pgUserArea' => 'data']);
     }
 
+    public function descricao(){
+        return view('user-area', ['pgUserArea' => 'descricao']);
+    }
     public function certificates(){
         return view('user-area', ['pgUserArea' => 'certificates']);
     }
@@ -73,6 +76,17 @@ class UserAreaController extends Controller
         if($registroCpf || $registroEmail){
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }
+
+        $user = \App\User::find($data['id']);
+
+        $user->update($data);
+
+        return ['user' => $user];
+    }
+    public function updateDescricao(Request $request){
+        $data = $request->form;
+
+        $data['id'] = auth()->user()->id;
 
         $user = \App\User::find($data['id']);
 

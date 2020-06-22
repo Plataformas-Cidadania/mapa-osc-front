@@ -1,4 +1,4 @@
-class Osc extends React.Component {
+class Descricao extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,9 +13,9 @@ class Osc extends React.Component {
             requireds: {
                 name: true,
                 email: true,
-                tx_razao_social_osc: true,
-                tx_sigla_osc: true,
-                tx_nome_situacao_imovel_osc: true,
+                tx_razao_social_descricao: true,
+                tx_sigla_descricao: true,
+                tx_nome_situacao_imovel_descricao: true,
                 tx_nome_responsavel_legal: true,
 
                 cnpj: true
@@ -29,47 +29,21 @@ class Osc extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
-        this.getOsc = this.getOsc.bind(this);
+        this.getDescricao = this.getDescricao.bind(this);
     }
 
     componentDidMount() {
-        this.getOsc();
+        this.getDescricao();
     }
 
-    getAddress() {
-        this.setState({ loadingCep: true });
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/' + this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({ loadingCep: false, form: form });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
-
-    getOsc() {
+    getDescricao() {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: '/get-osc',
+            url: '/get-descricao',
             cache: false,
             success: function (data) {
-                this.setState({ loading: false, form: data.osc, button: true });
+                this.setState({ loading: false, form: data.descricao, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -133,7 +107,7 @@ class Osc extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: '/update-osc',
+                url: '/update-descricao',
                 data: {
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -144,9 +118,9 @@ class Osc extends React.Component {
 
                     let msg = 'Já existe outro cadastro com esse';
 
-                    if (data.tx_razao_social_osc || data.email) {
-                        if (data.tx_razao_social_osc) {
-                            msg += ' tx_razao_social_osc';
+                    if (data.tx_razao_social_descricao || data.email) {
+                        if (data.tx_razao_social_descricao) {
+                            msg += ' tx_razao_social_descricao';
                         }
                         if (data.email) {
                             msg += ' email';
@@ -263,9 +237,9 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'inputEmail4' },
-                                        'Sigla da OSC'
+                                        'Sigla da DESCRICAO'
                                     ),
-                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_sigla_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_sigla_osc', onChange: this.handleInputChange, value: this.state.form.tx_sigla_osc, placeholder: 'Sigla da OSC' }),
+                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_sigla_descricao ? '' : 'invalid-field'), type: 'text', name: 'tx_sigla_descricao', onChange: this.handleInputChange, value: this.state.form.tx_sigla_descricao, placeholder: 'Sigla da DESCRICAO' }),
                                     React.createElement('br', null)
                                 ),
                                 React.createElement(
@@ -276,7 +250,7 @@ class Osc extends React.Component {
                                         { htmlFor: 'inputPassword4' },
                                         'Nome Fantasia'
                                     ),
-                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc, placeholder: 'Nome Fantasia' }),
+                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_razao_social_descricao ? '' : 'invalid-field'), type: 'text', name: 'tx_razao_social_descricao', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_descricao, placeholder: 'Nome Fantasia' }),
                                     React.createElement('br', null)
                                 )
                             ),
@@ -384,7 +358,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'inputEmail4' },
-                                        'E-mail oficial da OSC'
+                                        'E-mail oficial da DESCRICAO'
                                     ),
                                     React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4',
                                         placeholder: 'Email' })
@@ -433,7 +407,7 @@ class Osc extends React.Component {
                                 React.createElement(
                                     'label',
                                     { htmlFor: 'exampleFormControlTextarea1' },
-                                    'O que a OSC faz'
+                                    'O que a DESCRICAO faz'
                                 ),
                                 React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
                             ),
@@ -626,7 +600,7 @@ class Osc extends React.Component {
                                         React.createElement(
                                             'h2',
                                             null,
-                                            '\xC1reas e Sub\xE1reas de atua\xE7\xE3o da OSC'
+                                            '\xC1reas e Sub\xE1reas de atua\xE7\xE3o da DESCRICAO'
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
@@ -730,7 +704,7 @@ class Osc extends React.Component {
                                         React.createElement(
                                             'h2',
                                             null,
-                                            'Descri\xE7\xE3o da OSC'
+                                            'Descri\xE7\xE3o da DESCRICAO'
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
@@ -776,7 +750,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'exampleFormControlTextarea1' },
-                                        'Finalidades Estatut\xE1rias da OSC'
+                                        'Finalidades Estatut\xE1rias da DESCRICAO'
                                     ),
                                     React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
                                 ),
@@ -786,7 +760,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'inputEmail4' },
-                                        'Link para o Estatutu da OSC'
+                                        'Link para o Estatutu da DESCRICAO'
                                     ),
                                     React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4', placeholder: 'Email' })
                                 )
@@ -1473,7 +1447,7 @@ class Osc extends React.Component {
                                                             React.createElement(
                                                                 'h3',
                                                                 null,
-                                                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                                                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de DESCRICAOs:'
                                                             ),
                                                             React.createElement(
                                                                 'p',
@@ -1607,7 +1581,7 @@ class Osc extends React.Component {
                                         React.createElement(
                                             'h2',
                                             null,
-                                            'Fontes de recursos anuais da OSC'
+                                            'Fontes de recursos anuais da DESCRICAO'
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
@@ -1628,7 +1602,7 @@ class Osc extends React.Component {
                                         React.createElement(
                                             'h2',
                                             null,
-                                            'Fontes de recursos anuais da OSC'
+                                            'Fontes de recursos anuais da DESCRICAO'
                                         ),
                                         React.createElement('div', { className: 'line line-fix' }),
                                         React.createElement('hr', null)
@@ -1669,4 +1643,4 @@ class Osc extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Osc, null), document.getElementById('osc'));
+ReactDOM.render(React.createElement(Descricao, null), document.getElementById('descricao'));
