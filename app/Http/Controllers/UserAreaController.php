@@ -95,6 +95,8 @@ class UserAreaController extends Controller
 
         return ['user' => $user];
     }
+
+
     public function updateDescricao(Request $request){
         $data = $request->form;
 
@@ -181,6 +183,8 @@ class UserAreaController extends Controller
     public function getData(){
         return \App\SiteUser::find(auth()->user()->id);
     }
+
+
 
 
 
@@ -291,6 +295,33 @@ class UserAreaController extends Controller
         return $totaisStatus;
 
     }
+
+
+
+
+    ///////////////////////////////////
+    ///
+    /// ///////////////////////////////
+    ///
+    public function getDescricao (){
+        $id = 455128;
+        //return \App\SiteUser::find(auth()->user()->id);
+        $pagina = "http://mapa-osc-api.local/api/osc/descricao/".$id;
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data);
+
+        return $data;
+    }
+
+
+
 
 }
 

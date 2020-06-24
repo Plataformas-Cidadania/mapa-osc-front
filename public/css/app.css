@@ -12244,6 +12244,10 @@ figcaption {
   min-height: 200px;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;
@@ -12363,20 +12367,9 @@ input[type=radio]:checked + label::after {
   color: transparent;
 }
 
-.label-float input::-moz-placeholder {
-  color: transparent;
-}
-
-.label-float input:-ms-input-placeholder {
-  color: transparent;
-}
-
-.label-float input::-ms-input-placeholder {
-  color: transparent;
-}
-
-.label-float input::placeholder {
-  color: transparent;
+.label-float input:focus::-webkit-input-placeholder {
+  color: #CCCCCC;
+  font-size: 14px;
 }
 
 .label-float label {
@@ -12464,20 +12457,9 @@ input[type=radio]:checked + label::after {
   color: transparent;
 }
 
-.label-float-tx textarea::-moz-placeholder {
-  color: transparent;
-}
-
-.label-float-tx textarea:-ms-input-placeholder {
-  color: transparent;
-}
-
-.label-float-tx textarea::-ms-input-placeholder {
-  color: transparent;
-}
-
-.label-float-tx textarea::placeholder {
-  color: transparent;
+.label-float-tx textarea:focus::-webkit-input-placeholder {
+  color: #CCCCCC;
+  font-size: 14px;
 }
 
 .label-float-tx label {
@@ -12520,7 +12502,7 @@ input[type=radio]:checked + label::after {
 
 .label-box-info-tx {
   height: 20px;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 .label-float-tx p {
@@ -12581,6 +12563,12 @@ label, input, .btn-number {
     background-color: #CCCCCC;
     color: #000000;
 }*/
+
+.alert svg {
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-top: -1px;
+}
 
 .fa-svg svg {
   font-size: 25px;

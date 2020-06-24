@@ -3,27 +3,25 @@ class Descricao extends React.Component{
         super(props);
         this.state = {
             form: {
-                email: '',
-                name: '',
-                endereco: '',
-                tx_endereco: '',
+                tx_historico: '',
+                tx_missao_osc: '',
+                tx_visao_osc: '',
+                tx_finalidades_estatutarias: '',
+                tx_link_estatuto_osc: '',
+
             },
             button: true,
             loading: false,
             requireds: {
-                name: true,
-                email: true,
-                tx_razao_social_descricao: true,
-                tx_sigla_descricao: true,
-                tx_nome_situacao_imovel_descricao: true,
-                tx_nome_responsavel_legal: true,
+                tx_historico: true,
+                tx_missao_osc: true,
+                tx_visao_osc: true,
+                tx_finalidades_estatutarias: true,
+                tx_link_estatuto_osc: true,
 
-
-                cnpj: true,
             },
             showMsg: false,
             msg: '',
-            juridica: false
 
         };
 
@@ -44,7 +42,10 @@ class Descricao extends React.Component{
             url: '/get-descricao',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.descricao, button:true})
+                data = data[0].dados_gerais;
+                console.log(data);
+                /*this.setState({loading: false, form: data.descricao, button:true})*/
+                this.setState({loading: false, form: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -81,7 +82,7 @@ class Descricao extends React.Component{
         }
 
 
-        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+        this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false}, function(){
             $.ajax({
                 method:'POST',
                 url: '/update-descricao',
@@ -91,27 +92,13 @@ class Descricao extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
-                    let msg = 'Já existe outro cadastro com esse';
-
-                    if(data.tx_razao_social_descricao || data.email){
-                        if(data.tx_razao_social_descricao){
-                            msg+= ' tx_razao_social_descricao';
-                        }
-                        if(data.email){
-                            msg+= ' email';
-                        }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true});
-                        return;
-                    }
-
-                    msg = 'Dados alterados com sucesso!';
-                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
+                    //console.log('reg', data);
+                    let msg = "Dados alterados com sucesso!";
+                    this.setState({msg: msg, showIcon: true, showMsg: true, loading: false, button: true, color: 'success'});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, showIconErro: true, button: true, color: 'danger'});
                 }.bind(this)
             });
         });
@@ -127,14 +114,11 @@ class Descricao extends React.Component{
                     <div className="row">
                         <div className="col-md-12">
                                 <form>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="title-style">
-                                                <h2>Descrição da OSC</h2>
-                                                <div className="line line-fix"></div>
-                                                <hr/>
-                                            </div>
-                                        </div>
+
+                                    <div className="title-user-area">
+                                        <div className="mn-accordion-icon"><i className="fas fa-align-justify" aria-hidden="true"/></div>
+                                        <h3>Descrição da OSC</h3>
+                                        <hr/><br/>
                                     </div>
 
                                     <div className="row">
@@ -143,7 +127,8 @@ class Descricao extends React.Component{
                                         <div className="form-group col-md-12">
 
                                             <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_historico" rows="3" placeholder=" "/>
+                                                <textarea className="form-control form-g" name="tx_historico" onChange={this.handleInputChange} value={this.state.form.tx_historico}
+                                                          rows="3" placeholder="De modo resumido e objetivo, diga como surgiu a OSC, quando, onde, por que e por quem foi fundada" />
                                                 <label htmlFor="tx_historico">Histórico</label>
                                                 <div className="label-box-info-tx">
                                                     <p>&nbsp;</p>
@@ -151,7 +136,8 @@ class Descricao extends React.Component{
                                             </div>
 
                                             <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_missao_osc" rows="3" placeholder=" "/>
+                                                <textarea className="form-control form-g" name="tx_missao_osc" onChange={this.handleInputChange} value={this.state.form.tx_missao_osc}
+                                                          rows="3" placeholder="Se houver, apresente qual a missão da OSC"/>
                                                 <label htmlFor="tx_missao_osc">Missão</label>
                                                 <div className="label-box-info-tx">
                                                     <p>&nbsp;</p>
@@ -159,15 +145,26 @@ class Descricao extends React.Component{
                                             </div>
 
                                             <div className="label-float-tx">
-                                                <textarea className="form-control form-g" id="tx_historico" rows="3" placeholder=" "/>
-                                                <label htmlFor="tx_historico">Visão</label>
+                                                <textarea className="form-control form-g" name="tx_visao_osc" onChange={this.handleInputChange} value={this.state.form.tx_visao_osc}
+                                                          rows="3" placeholder="Se houver, apresente a visão da OSC"/>
+                                                <label htmlFor="tx_visao_osc">Visão</label>
+                                                <div className="label-box-info-tx">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="label-float-tx">
+                                                <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
+                                                          rows="3" placeholder="Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC"/>
+                                                <label htmlFor="tx_finalidades_estatutarias">Finalidades Estatutárias da OSC</label>
                                                 <div className="label-box-info-tx">
                                                     <p>&nbsp;</p>
                                                 </div>
                                             </div>
 
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" id="tx_link_estatuto_osc" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf" />
                                                 <label htmlFor="tx_link_estatuto_osc">Link para o Estatutu da OSC</label>
                                                 <div className="label-box-info">
                                                     <p>&nbsp;</p>
@@ -178,16 +175,23 @@ class Descricao extends React.Component{
 
                                     </div>
 
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div style={{marginTop: '-10px'}}>
+                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+this.state.color}>
+                                                    <i className="far fa-check-circle fa-2x" style={{display: this.state.showIcon ? 'none' : ''}}/>
+                                                    {/*<i className="fas fa-exclamation-triangle fa-2x" style={{display: this.state.showIconErro ? 'none' : ''}}/>*/}
+                                                    {this.state.msg}
+                                                </div>
+                                                <button  className="btn btn-success" onClick={this.register}>Salvar descrição</button>
+                                                <br/>
 
-
-                                    <div className="col-md-12">
-                                        <div>
-                                            <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                            <br/>
-                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                            </div>
                                         </div>
                                     </div>
+
+
 
 
                                 </form>

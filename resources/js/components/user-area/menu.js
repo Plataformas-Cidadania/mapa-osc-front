@@ -19,7 +19,7 @@ class Menu extends React.Component{
                 <li className="bg-pri text-light" style={{padding: '5px 10px'}}>OSC Apac</li>
                 <li><a href="/osc-user/789809"><i className="fa fa-user" aria-hidden="true"></i> Dados gerais</a></li>
                 <li><a href="/areas-atuacao-user"><i className="fa fa-user" aria-hidden="true"></i> Áreas de atuação</a></li>
-                <li><a href="/descricao-user"><i className="fa fa-user" aria-hidden="true"></i> Descrição</a></li>
+                <li><a href="/descricao-user"><i className="fas fa-align-justify" aria-hidden="true"></i> Descrição</a></li>
                 <li><a href="/certificates-user"><i className="fas fa-certificate" aria-hidden="true"></i> Títulos e Certificados</a></li>
                 <li><a href="/governancas-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Trabalho e Governança</a></li>
                 <li><a href="/participacoes-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Participação Social</a></li>

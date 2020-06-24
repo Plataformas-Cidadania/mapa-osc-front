@@ -178,5 +178,6 @@ Route::get('/private-video/{id}', 'PrivateVideoController@video')->middleware('a
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+Route::get('/get-descricao', 'UserAreaController@getDescricao')->middleware('auth');
 
 

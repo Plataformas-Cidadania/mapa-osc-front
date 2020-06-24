@@ -104,7 +104,7 @@ class Menu extends React.Component {
                 React.createElement(
                     "a",
                     { href: "/descricao-user" },
-                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                    React.createElement("i", { className: "fas fa-align-justify", "aria-hidden": "true" }),
                     " Descri\xE7\xE3o"
                 )
             ),
