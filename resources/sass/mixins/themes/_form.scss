@@ -139,6 +139,10 @@ input[type=radio]:checked + label::after {
     height: 20px;
     margin-bottom: 10px;
 }
+.label-box-info-off{
+    height: 20px;
+    margin-bottom: 0px;
+}
 .label-float p{
     color: #D93025;
     font-size: 12px;
@@ -278,4 +282,5 @@ label, input, .btn-number {
     vertical-align: middle;
     margin-right: 10px;
     margin-top: -1px;
+    font-size: 20px;
 }

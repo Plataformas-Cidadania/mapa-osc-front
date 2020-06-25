@@ -79,7 +79,7 @@ class Recursos extends React.Component {
             return;
         }
 
-        this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
+        this.setState({ loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false }, function () {
             $.ajax({
                 method: 'POST',
                 url: '/update-recursos',
@@ -100,7 +100,7 @@ class Recursos extends React.Component {
                         if (data.email) {
                             msg += ' email';
                         }
-                        this.setState({ msg: msg, showMsg: true, loading: false, button: true });
+                        this.setState({ msg: msg, showIcon: true, showMsg: true, showIconErro: true, loading: false, button: true });
                         return;
                     }
 
@@ -134,20 +134,111 @@ class Recursos extends React.Component {
                             null,
                             React.createElement(
                                 'div',
-                                { className: 'row' },
+                                { className: 'title-user-area' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-12' },
+                                    { className: 'mn-accordion-icon' },
+                                    React.createElement('i', { className: 'fas fa-boxes', 'aria-hidden': 'true' })
+                                ),
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Fontes de recursos anuais da OSC'
+                                ),
+                                React.createElement('hr', null),
+                                React.createElement('br', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                { style: { fontSize: "13px" } },
+                                'Anos: '
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'btn-group', role: 'group', 'aria-label': 'Exemplo b\xE1sico' },
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-primary' },
+                                    '2020'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2019'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2018'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2017'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2016'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2015'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2014'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2013'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2012'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2011'
+                                ),
+                                React.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-outline-secondary' },
+                                    '2010'
+                                )
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'p',
+                                { className: 'form-check' },
+                                React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                    'N\xE3o possui recursos para este ano.'
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'box-itens-g' },
+                                React.createElement(
+                                    'h2',
+                                    null,
+                                    'Recursos pro\u0301prios'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    { className: 'form-check' },
+                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
                                     React.createElement(
-                                        'div',
-                                        { className: 'title-style' },
-                                        React.createElement(
-                                            'h2',
-                                            null,
-                                            'Descri\xE7\xE3o da RECURSOS'
-                                        ),
-                                        React.createElement('div', { className: 'line line-fix' }),
-                                        React.createElement('hr', null)
+                                        'label',
+                                        { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                        'N\xE3o possui recursos pro\u0301prios para este ano.'
                                     )
                                 )
                             ),
@@ -156,77 +247,207 @@ class Recursos extends React.Component {
                                 { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-12' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'exampleFormControlTextarea1' },
-                                        'Hist\xF3rico'
-                                    ),
-                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Rendimentos de fundos patrimoniais'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-12' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'exampleFormControlTextarea1' },
-                                        'Miss\xE3o'
-                                    ),
-                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Rendimentos financeiros de reservas ou c/c pr\xF3prias'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-12' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'exampleFormControlTextarea1' },
-                                        'Vis\xE3o'
-                                    ),
-                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Mensalidades ou contribui\xE7\xF5es de associados'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-12' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'exampleFormControlTextarea1' },
-                                        'Finalidades Estatut\xE1rias da RECURSOS'
-                                    ),
-                                    React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Pr\xEAmios recebidos'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-12' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputEmail4' },
-                                        'Link para o Estatutu da RECURSOS'
-                                    ),
-                                    React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4', placeholder: 'Email' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Venda de produtos'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Presta\xE7\xE3o de servi\xE7os'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                                            placeholder: 'Informe o valor' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            'Venda de bens e direitos'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 )
                             ),
+                            React.createElement('br', null),
                             React.createElement(
                                 'div',
-                                { className: 'col-md-12' },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    null,
-                                    React.createElement(
-                                        'button',
-                                        { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
-                                        'Salvar'
-                                    ),
-                                    React.createElement('br', null),
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
-                                        this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.loading ? 'block' : 'none' } },
-                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                        'Processando'
+                                        { style: { marginTop: '-10px' } },
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.loading ? 'block' : 'none' } },
+                                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                            ' Processando ',
+                                            React.createElement('br', null),
+                                            ' ',
+                                            React.createElement('br', null)
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + this.state.color },
+                                            React.createElement('i', { className: 'far fa-check-circle', style: { display: this.state.showIcon ? '' : 'none' } }),
+                                            React.createElement('i', { className: 'far fa-times-circle', style: { display: this.state.showIconErro ? 'none' : '' } }),
+                                            this.state.msg
+                                        ),
+                                        React.createElement(
+                                            'button',
+                                            { className: 'btn btn-success', onClick: this.register },
+                                            React.createElement('i', {
+                                                className: 'fas fa-cloud-download-alt' }),
+                                            ' Salvar fontes de recursos'
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 )
                             )

@@ -97,17 +97,6 @@ class UserAreaController extends Controller
     }
 
 
-    public function updateDescricao(Request $request){
-        $data = $request->form;
-
-        $data['id'] = auth()->user()->id;
-
-        $user = \App\User::find($data['id']);
-
-        $user->update($data);
-
-        return ['user' => $user];
-    }
 
     public function getOsc(){
 
@@ -299,13 +288,12 @@ class UserAreaController extends Controller
 
 
 
-    ///////////////////////////////////
-    ///
-    /// ///////////////////////////////
-    ///
+    ///////////////////////////////////////
+    ////////////DETALHAR//OSC//////////////
+    //////////////////////////////////////
+
     public function getDescricao (){
         $id = 455128;
-        //return \App\SiteUser::find(auth()->user()->id);
         $pagina = "http://mapa-osc-api.local/api/osc/descricao/".$id;
 
         $ch = curl_init();
@@ -317,10 +305,46 @@ class UserAreaController extends Controller
 
         $data = json_decode($data);
 
-        return $data;
+        return ['descricao' => $data];
+        //return $data;
     }
 
 
+
+    ///////////////////////////////////////
+    /////////////UPDATE//OSC///////////////
+    //////////////////////////////////////
+
+    public function updateDescricao(Request $request){
+
+        $id = 455128;
+        $pagina = "http://mapa-osc-api.local/api/osc/descricao/".$id;
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        /*curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));*/
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data);
+
+        return ['descricao' => $data];
+    }
+    /*public function updateDescricao(Request $request){
+
+        $data = $request->form;
+
+        $data['id'] = auth()->user()->id;
+
+        $user = \App\User::find($data['id']);
+
+        $user->update($data);
+
+        return ['user' => $user];
+    }*/
 
 
 }

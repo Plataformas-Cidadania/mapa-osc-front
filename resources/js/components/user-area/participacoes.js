@@ -299,8 +299,7 @@ class Participacoes extends React.Component{
                         <div className="box-itens-g">
                             <h2>Conselhos de Políticas Públicas</h2>
                             <p className="form-check">
-                                <input className="form-check-input" type="checkbox"
-                                       id="gridCheck"/>
+                                <input className="form-check-input" type="checkbox" id="gridCheck"/>
                                 <label className="form-check-label" htmlFor="gridCheck">
                                     Não possui conselhos de políticas públicas
                                 </label>

@@ -10,8 +10,6 @@ class Descricao extends React.Component {
                 tx_link_estatuto_osc: ''
 
             },
-            button: true,
-            loading: false,
             requireds: {
                 tx_historico: true,
                 tx_missao_osc: true,
@@ -20,7 +18,11 @@ class Descricao extends React.Component {
                 tx_link_estatuto_osc: true
 
             },
+            loading: false,
+            button: true,
             showMsg: false,
+            showIcon: false,
+            showIconErro: false,
             msg: ''
 
         };
@@ -42,10 +44,7 @@ class Descricao extends React.Component {
             url: '/get-descricao',
             cache: false,
             success: function (data) {
-                data = data[0].dados_gerais;
-                console.log(data);
-                /*this.setState({loading: false, form: data.descricao, button:true})*/
-                this.setState({ loading: false, form: data, button: true });
+                this.setState({ loading: false, form: data.descricao, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -83,7 +82,7 @@ class Descricao extends React.Component {
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false }, function () {
             $.ajax({
-                method: 'POST',
+                method: 'PUT',
                 url: '/update-descricao',
                 data: {
                     form: this.state.form,
@@ -91,13 +90,13 @@ class Descricao extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    //console.log('reg', data);
                     let msg = "Dados alterados com sucesso!";
                     this.setState({ msg: msg, showIcon: true, showMsg: true, loading: false, button: true, color: 'success' });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, showIconErro: true, button: true, color: 'danger' });
+                    let msg = "Ocorreu um erro!";
+                    this.setState({ loading: false, msg: msg, showMsg: true, showIconErro: true, button: true, color: 'danger' });
                 }.bind(this)
             });
         });
@@ -265,13 +264,16 @@ class Descricao extends React.Component {
                                         React.createElement(
                                             'div',
                                             { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + this.state.color },
-                                            React.createElement('i', { className: 'far fa-check-circle fa-2x', style: { display: this.state.showIcon ? 'none' : '' } }),
+                                            React.createElement('i', { className: 'far fa-check-circle', style: { display: this.state.showIcon ? 'none' : '' } }),
+                                            React.createElement('i', { className: 'far fa-times-circle', style: { display: this.state.showIconErro ? 'none' : '' } }),
                                             this.state.msg
                                         ),
                                         React.createElement(
                                             'button',
                                             { className: 'btn btn-success', onClick: this.register },
-                                            'Salvar descri\xE7\xE3o'
+                                            React.createElement('i', {
+                                                className: 'fas fa-cloud-download-alt' }),
+                                            ' Salvar descri\xE7\xE3o'
                                         ),
                                         React.createElement('br', null)
                                     )

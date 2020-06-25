@@ -380,8 +380,7 @@ class Participacoes extends React.Component {
                         React.createElement(
                             'p',
                             { className: 'form-check' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                id: 'gridCheck' }),
+                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
                             React.createElement(
                                 'label',
                                 { className: 'form-check-label', htmlFor: 'gridCheck' },

@@ -81,7 +81,7 @@ class Recursos extends React.Component{
         }
 
 
-        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+        this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false}, function(){
             $.ajax({
                 method:'POST',
                 url: '/update-recursos',
@@ -102,7 +102,7 @@ class Recursos extends React.Component{
                         if(data.email){
                             msg+= ' email';
                         }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true});
+                        this.setState({msg: msg, showIcon: true, showMsg: true, showIconErro: true, loading: false, button: true});
                         return;
                     }
 
@@ -127,54 +127,162 @@ class Recursos extends React.Component{
                     <div className="row">
                         <div className="col-md-12">
                                 <form>
+
+                                    <div className="title-user-area">
+                                        <div className="mn-accordion-icon"><i className="fas fa-boxes" aria-hidden="true"/></div>
+                                        <h3>Fontes de recursos anuais da OSC</h3>
+                                        <hr/><br/>
+                                    </div>
+
+                                    {/*<div className="row">
+                                        <div className="form-group col-md-4">
+                                            <label htmlFor="inputEstado">Situação do Imóvel</label>
+                                            <select id="inputEstado" className="form-control">
+                                                <option selected>Escolher...</option>
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                    </div>*/}
+                                    <div style={{fontSize: "13px"}}>Anos: </div>
+                                    <div className="btn-group" role="group" aria-label="Exemplo básico">
+                                        <button type="button" className="btn btn-primary">2020</button>
+                                        <button type="button" className="btn btn-outline-secondary">2019</button>
+                                        <button type="button" className="btn btn-outline-secondary">2018</button>
+                                        <button type="button" className="btn btn-outline-secondary">2017</button>
+                                        <button type="button" className="btn btn-outline-secondary">2016</button>
+                                        <button type="button" className="btn btn-outline-secondary">2015</button>
+                                        <button type="button" className="btn btn-outline-secondary">2014</button>
+                                        <button type="button" className="btn btn-outline-secondary">2013</button>
+                                        <button type="button" className="btn btn-outline-secondary">2012</button>
+                                        <button type="button" className="btn btn-outline-secondary">2011</button>
+                                        <button type="button" className="btn btn-outline-secondary">2010</button>
+                                    </div>
+                                    <br/>
+                                    <p className="form-check">
+                                        <input className="form-check-input" type="checkbox" id="gridCheck"/>
+                                        <label className="form-check-label" htmlFor="gridCheck">
+                                            Não possui recursos para este ano.
+                                        </label>
+                                    </p>
+
+
+                                    <div className="box-itens-g">
+                                        <h2>Recursos próprios</h2>
+                                        <p className="form-check">
+                                            <input className="form-check-input" type="checkbox" id="gridCheck"/>
+                                            <label className="form-check-label" htmlFor="gridCheck">
+                                                Não possui recursos próprios para este ano.
+                                            </label>
+                                        </p>
+                                    </div>
+
+                                    <div className="row">
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Rendimentos de fundos patrimoniais</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Rendimentos financeiros de reservas ou c/c próprias</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Mensalidades ou contribuições de associados</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Prêmios recebidos</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Venda de produtos</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Prestação de serviços</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Venda de bens e direitos</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <br/>
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div className="title-style">
-                                                <h2>Descrição da RECURSOS</h2>
-                                                <div className="line line-fix"></div>
-                                                <hr/>
+                                            <div style={{marginTop: '-10px'}}>
+                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+this.state.color}>
+                                                    <i className="far fa-check-circle" style={{display: this.state.showIcon ? '' : 'none'}}/>
+                                                    <i className="far fa-times-circle" style={{display: this.state.showIconErro ? 'none' : ''}}/>
+                                                    {this.state.msg}
+                                                </div>
+                                                <button className="btn btn-success" onClick={this.register}><i
+                                                    className="fas fa-cloud-download-alt"/> Salvar fontes de recursos</button>
+                                                <br/>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="row">
-                                        <div className="form-group col-md-12">
-                                            <label htmlFor="exampleFormControlTextarea1">Histórico</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-                                        </div>
 
-                                        <div className="form-group col-md-12">
-                                            <label htmlFor="exampleFormControlTextarea1">Missão</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-                                        </div>
-
-                                        <div className="form-group col-md-12">
-                                            <label htmlFor="exampleFormControlTextarea1">Visão</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-                                        </div>
-
-                                        <div className="form-group col-md-12">
-                                            <label htmlFor="exampleFormControlTextarea1">Finalidades Estatutárias da RECURSOS</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-                                        </div>
-
-                                        <div className="form-group col-md-12">
-                                            <label htmlFor="inputEmail4">Link para o Estatutu da RECURSOS</label>
-                                            <input type="emil" className="form-control" id="inputEmail4" placeholder="Email"/>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div className="col-md-12">
+                                    {/*<div className="col-md-12">
                                         <div>
                                             <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
                                             <br/>
                                             <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
                                             <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                                         </div>
-
-                                    </div>
+                                    </div>*/}
 
 
                                 </form>

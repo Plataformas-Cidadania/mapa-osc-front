@@ -366,6 +366,26 @@ class Osc extends React.Component{
                                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
                                     </div>
 
+
+                                    {/*<div className="label-float-tx">
+                                            <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
+                                                      rows="3" placeholder="Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC"/>
+                                        <label htmlFor="tx_finalidades_estatutarias">Finalidades Estatutárias da OSC</label>
+                                        <div className="label-box-info-tx">
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                               placeholder="Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf" />
+                                        <label htmlFor="tx_link_estatuto_osc">Link para o Estatutu da OSC</label>
+                                        <div className="label-box-info">
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>*/}
+
+
                                     <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
 
                                     <div>
