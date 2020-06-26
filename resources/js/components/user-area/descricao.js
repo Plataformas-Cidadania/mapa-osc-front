@@ -28,7 +28,7 @@ class Descricao extends React.Component{
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.register = this.register.bind(this);
+        this.updateDescricao = this.updateDescricao.bind(this);
         this.validate = this.validate.bind(this);
         this.getDescricao = this.getDescricao.bind(this);
     }
@@ -42,6 +42,7 @@ class Descricao extends React.Component{
         $.ajax({
             method: 'GET',
             url: '/get-descricao',
+            //url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data.descricao, button:true})
@@ -73,7 +74,7 @@ class Descricao extends React.Component{
         return valid;
     }
 
-    register(e){
+    updateDescricao(e){
         e.preventDefault();
 
         if(!this.validate()){
