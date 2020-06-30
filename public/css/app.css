@@ -12181,7 +12181,6 @@ figcaption {
 .box-insert-list input {
   border: 0;
   width: 100%;
-  background-color: #EEEEEE;
 }
 
 .box-insert-list input:focus {
@@ -12222,7 +12221,7 @@ figcaption {
   width: 200px;
   margin: auto;
   text-align: center;
-  padding: 20% 0;
+  padding: 20px 0;
 }
 
 .box-insert-btn-p {
@@ -12234,6 +12233,8 @@ figcaption {
 
 .box-insert-g {
   min-height: 500px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px;
 }
 
 .box-insert-m {
@@ -12950,7 +12951,7 @@ label, input, .btn-number {
 
 .box-itens-g {
   padding: 20px 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .box-itens-g div {

@@ -219,40 +219,55 @@ class FormParticipacao extends React.Component{
             <div className="row">
                 <div className="col-md-12">
                     <form>
-                        <label htmlFor="tipo">Tipo*</label><br/>
-                        <select className={"form-control form-m "+(this.state.requireds.tipo ? '' : 'invalid-field')}
-                                name="tipo" onChange={this.handleInputChange} value={this.state.form.tipo}>
-                            <option value="0">Selecione</option>
-                            <option value="1">Quadro de Dirigentes</option>
-                            <option value="2">Conselho Fiscal</option>
-                        </select><br/>
 
-                        <div className="row">
-                            <div className="col-md-6">
-                                <label htmlFor="nome">Nome*</label><br/>
-                                <input className={"form-control "+(this.state.requireds.nome ? '' : 'invalid-field')}
-                                       type="text" name="nome" onChange={this.handleInputChange}
-                                       value={this.state.form.nome} placeholder=""/><br/>
+
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                   placeholder="Se houver, insira o link que" />
+                            <label htmlFor="tx_link_estatuto_osc">Nome do Conselho</label>
+                            <div className="label-box-info">
+                                <p>&nbsp;</p>
                             </div>
-                            <div className="col-md-6">
-                                <label htmlFor="cep">Cargo do dirigente*</label><br/>
-                                <input className={"form-control "+(this.state.requireds.cep ? '' : 'invalid-field')}
-                                       type="text" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.cep} placeholder=""/><br/>
+                        </div>
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                   placeholder="Se houver, insira o link que" />
+                            <label htmlFor="tx_link_estatuto_osc">Nome do Conselho</label>
+                            <div className="label-box-info">
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                   placeholder="Se houver, insira o link que" />
+                            <label htmlFor="tx_link_estatuto_osc">Nome do Conselho</label>
+                            <div className="label-box-info">
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                   placeholder="Se houver, insira o link que" />
+                            <label htmlFor="tx_link_estatuto_osc">Nome do Conselho</label>
+                            <div className="label-box-info">
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                   placeholder="Se houver, insira o link que" />
+                            <label htmlFor="tx_link_estatuto_osc">Nome do Conselho</label>
+                            <div className="label-box-info">
+                                <p>&nbsp;</p>
                             </div>
                         </div>
 
 
-                        <p><i>* campos obrigatórios</i></p>
-                        <div className="row">
-                            <div className="col-md-6">
-                                {/* se a ação é editar então mostra o botão, mas se a ação for novo então verifica se não já ultrapassou o limite de participacoes para mostrar o botão*/}
-                                <button style={{display: this.state.action==='edit' ? 'block' : (this.state.participacoes.length < maxParticipacoes ?  'block' : 'none')}}
-                                        className="btn btn-style-primary" onClick={this.register}>
-                                    Cadastrar
-                                </button>
-                            </div>
-                        </div>
+
+                        <button className="btn btn-primary" onClick={this.register}>
+                            Cadastrar
+                        </button>
+
                         <br/>
 
 

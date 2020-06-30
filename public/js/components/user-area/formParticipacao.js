@@ -217,86 +217,109 @@ class FormParticipacao extends React.Component {
                     'form',
                     null,
                     React.createElement(
-                        'label',
-                        { htmlFor: 'tipo' },
-                        'Tipo*'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'select',
-                        { className: "form-control form-m " + (this.state.requireds.tipo ? '' : 'invalid-field'),
-                            name: 'tipo', onChange: this.handleInputChange, value: this.state.form.tipo },
-                        React.createElement(
-                            'option',
-                            { value: '0' },
-                            'Selecione'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '1' },
-                            'Quadro de Dirigentes'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '2' },
-                            'Conselho Fiscal'
-                        )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
                         'div',
-                        { className: 'row' },
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
                         React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'nome' },
-                                'Nome*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
-                                type: 'text', name: 'nome', onChange: this.handleInputChange,
-                                value: this.state.form.nome, placeholder: '' }),
-                            React.createElement('br', null)
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Nome do Conselho'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6' },
+                            { className: 'label-box-info' },
                             React.createElement(
-                                'label',
-                                { htmlFor: 'cep' },
-                                'Cargo do dirigente*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
-                                type: 'text', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.cep, placeholder: '' }),
-                            React.createElement('br', null)
-                        )
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        React.createElement(
-                            'i',
-                            null,
-                            '* campos obrigat\xF3rios'
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'button',
-                                { style: { display: this.state.action === 'edit' ? 'block' : this.state.participacoes.length < maxParticipacoes ? 'block' : 'none' },
-                                    className: 'btn btn-style-primary', onClick: this.register },
-                                'Cadastrar'
+                                'p',
+                                null,
+                                '\xA0'
                             )
                         )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Nome do Conselho'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Nome do Conselho'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Nome do Conselho'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Nome do Conselho'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: this.register },
+                        'Cadastrar'
                     ),
                     React.createElement('br', null),
                     React.createElement(

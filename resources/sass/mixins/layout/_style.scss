@@ -227,7 +227,6 @@ figcaption{
 .box-insert-list input{
     border: 0;
     width: 100%;
-    background-color: #EEEEEE;
 }
 .box-insert-list input:focus{
     border-bottom: solid 1px #CBCBCB;
@@ -262,7 +261,7 @@ figcaption{
     width: 200px;
     margin: auto;
     text-align: center;
-    padding: 20% 0;
+    padding: 20px 0;
 }
 .box-insert-btn-p{
     width: 200px;
@@ -272,6 +271,8 @@ figcaption{
 }
 .box-insert-g{
     min-height: 500px;
+    border:solid 1px #CCCCCC;
+    border-radius: 5px;
 }
 .box-insert-m{
     min-height: 280px;

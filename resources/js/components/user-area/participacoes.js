@@ -101,14 +101,10 @@ class Participacoes extends React.Component{
     showHideForm(action){
         let showForm = !this.state.showForm;
 
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-
-        this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
+
+        console.log(showForm);
 
         this.setState({showForm: showForm, actionForm: actionForm});
     }
@@ -267,23 +263,10 @@ class Participacoes extends React.Component{
                     <p>Você tem {this.state.participacoes.length} Trabalhos ou Governanças cadastrados</p>
                     <hr/>
 
-                    <div style={{float: 'right', display: this.state.participacoes.length < maxConselhos ? 'block' : 'none' }}>
-                        <a onClick={this.showHideForm}><i className="fa fa-plus" style={{display: this.state.showForm ? "none" : "block"}}/></a>
-                        <a onClick={this.showHideForm}><i className="fa fa-times" style={{display: this.state.showForm ? "block" : "none"}}/></a>
-                    </div>
-                    <div style={{clear: 'both'}}/>
-
                 </div>
 
-                <div style={{display: this.state.showForm ? 'block' : 'none'}}>
-                    <FormParticipacao action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                </div>
 
-                <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
-                    <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
-                </div><br/>
 
-/////////////
                 <div className="row">
                     <div className="col-md-12">
                         <br/><br/>
@@ -296,7 +279,7 @@ class Participacoes extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="box-itens-g">
+                        <div>
                             <h2>Conselhos de Políticas Públicas</h2>
                             <p className="form-check">
                                 <input className="form-check-input" type="checkbox" id="gridCheck"/>
@@ -306,7 +289,7 @@ class Participacoes extends React.Component{
                             </p><br/>
                             <div className="row">
                                 <div className="col-md-6" style={{border: '0'}}>
-                                    <div className="bg-lgt box-insert-g">
+                                    <div className="box-insert-g text-left">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
                                             <i className="far fa-trash-alt text-danger float-right" />
@@ -315,22 +298,27 @@ class Participacoes extends React.Component{
                                             <div>
                                                 <h3>Nome do Conselho:</h3>
                                                 <p><input  value="Conselho Estadual Antidrogas/Conselho "/></p>
+                                                <hr/>
                                             </div>
                                             <div>
                                                 <h3>Titularidade:</h3>
                                                 <p><input  value="Suplente"/></p>
+                                                <hr/>
                                             </div>
                                             <div>
                                                 <h3>Nome de representante:</h3>
                                                 <p><input  value="Fernando Lima de Souza "/></p>
+                                                <hr/>
                                             </div>
                                             <div>
                                                 <h3>Periodicidade da Reunião:</h3>
                                                 <p><input  value="Mensal"/></p>
+                                                <hr/>
                                             </div>
                                             <div>
                                                 <h3>Data de início de vigência:</h3>
                                                 <p><input  value="01/12/2019"/></p>
+                                                <hr/>
                                             </div>
                                             <div>
                                                 <h3>Data de fim de vigência:</h3>
@@ -340,10 +328,21 @@ class Participacoes extends React.Component{
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="bg-lgt box-insert-g">
-                                        <div className="box-insert-btn">
-                                            <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
-                                            <p>Novo Conselhos de Políticas Públicas</p>
+                                    <div className=" box-insert-g">
+                                        <div className="box-insert-btn text-center">
+                                            <a className="cursor" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}}>
+                                                <i className="fas fa-plus-circle fa-3x tx-pri" /><br/>
+                                                <p>Novo Conselhos de Políticas Públicas</p>
+                                            </a>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <div style={{display: this.state.showForm ? 'block' : 'none'}}>
+                                                <a onClick={this.showHideForm}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
+                                                <FormParticipacao action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                                            </div>
+                                            <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
+                                                <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -387,7 +386,7 @@ class Participacoes extends React.Component{
                                 </div>
                                 <div className="col-md-6">
                                     <div className="bg-lgt box-insert-m">
-                                        <div className="box-insert-btn">
+                                        <div className="box-insert-btn text-center">
                                             <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
                                             <p>Novo Conselhos de Políticas Públicas</p>
                                         </div>
@@ -425,7 +424,7 @@ class Participacoes extends React.Component{
                                 </div>
                                 <div className="col-md-6">
                                     <div className="bg-lgt box-insert-p">
-                                        <div className="box-insert-btn-p">
+                                        <div className="box-insert-btn-p text-center">
                                             <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
                                             <p>Novo Outros espaços de participação social</p>
                                         </div>
@@ -435,75 +434,7 @@ class Participacoes extends React.Component{
                         </div>
                     </div>
                 </div>
-     /////////////
 
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="bg-lgt box-itens-g min-h">
-                            <h2>Quadro de Dirigentes</h2>
-                            {participacoes}
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="bg-lgt box-itens-g min-h">
-                            <h2>Conselho Fiscal</h2>
-                            {conselhos}
-                        </div>
-                    </div>
-
-                    <div className="col-md-12">
-                        <div className="row text-center">
-                            <div className="col-md-12">
-                                <br/><br/>
-                                <strong>Trabalhadores</strong><br/><br/>
-                            </div>
-
-                            <div className="col-md-3">
-                                <div className="bg-lgt box-itens">
-                                    <h3>Total de Trabalhadores</h3>
-                                    <div>
-                                        <h2>11</h2>
-                                        <p className='not-info'>a</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className="bg-lgt box-itens">
-                                    <h3>Empregados</h3>
-                                    <div>
-
-                                        <h2>aa</h2>
-
-                                        <p className='not-info'>aa</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className="bg-lgt box-itens">
-                                    <h3>Deficiência</h3>
-                                    <div>
-
-                                        <h2>aa</h2>
-
-                                        <p className='not-info'>aa</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className="bg-lgt box-itens">
-                                    <h3>Voluntários</h3>
-                                    <div>
-
-                                        <input type="number" value="10" className="input-lg" min="1"/>
-                                        <p className='not-info'>&nbsp;</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         );
     }

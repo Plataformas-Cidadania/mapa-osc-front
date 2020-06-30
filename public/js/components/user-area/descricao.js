@@ -41,8 +41,8 @@ class Descricao extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: '/get-descricao',
-            //url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
+            //url: '/get-descricao',
+            url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, form: data.descricao, button: true });

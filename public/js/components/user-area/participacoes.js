@@ -97,13 +97,9 @@ class Participacoes extends React.Component {
     showHideForm(action) {
         let showForm = !this.state.showForm;
 
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
+
+        console.log(showForm);
 
         this.setState({ showForm: showForm, actionForm: actionForm });
     }
@@ -313,35 +309,8 @@ class Participacoes extends React.Component {
                     this.state.participacoes.length,
                     ' Trabalhos ou Governan\xE7as cadastrados'
                 ),
-                React.createElement('hr', null),
-                React.createElement(
-                    'div',
-                    { style: { float: 'right', display: this.state.participacoes.length < maxConselhos ? 'block' : 'none' } },
-                    React.createElement(
-                        'a',
-                        { onClick: this.showHideForm },
-                        React.createElement('i', { className: 'fa fa-plus', style: { display: this.state.showForm ? "none" : "block" } })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: this.showHideForm },
-                        React.createElement('i', { className: 'fa fa-times', style: { display: this.state.showForm ? "block" : "none" } })
-                    )
-                ),
-                React.createElement('div', { style: { clear: 'both' } })
+                React.createElement('hr', null)
             ),
-            React.createElement(
-                'div',
-                { style: { display: this.state.showForm ? 'block' : 'none' } },
-                React.createElement(FormParticipacao, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
-            ),
-            React.createElement(
-                'div',
-                { style: { display: this.state.loadingList ? 'true' : 'none' } },
-                React.createElement('img', { style: { marginTop: '80px' }, src: '/img/loading.gif', width: '150px', alt: 'carregando', title: 'carregando' })
-            ),
-            React.createElement('br', null),
-            '/////////////',
             React.createElement(
                 'div',
                 { className: 'row' },
@@ -371,7 +340,7 @@ class Participacoes extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        { className: 'box-itens-g' },
+                        null,
                         React.createElement(
                             'h2',
                             null,
@@ -396,7 +365,7 @@ class Participacoes extends React.Component {
                                 { className: 'col-md-6', style: { border: '0' } },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-g' },
+                                    { className: 'box-insert-g text-left' },
                                     React.createElement(
                                         'div',
                                         { className: 'box-insert-item box-insert-list' },
@@ -416,7 +385,8 @@ class Participacoes extends React.Component {
                                                 'p',
                                                 null,
                                                 React.createElement('input', { value: 'Conselho Estadual Antidrogas/Conselho ' })
-                                            )
+                                            ),
+                                            React.createElement('hr', null)
                                         ),
                                         React.createElement(
                                             'div',
@@ -430,7 +400,8 @@ class Participacoes extends React.Component {
                                                 'p',
                                                 null,
                                                 React.createElement('input', { value: 'Suplente' })
-                                            )
+                                            ),
+                                            React.createElement('hr', null)
                                         ),
                                         React.createElement(
                                             'div',
@@ -444,7 +415,8 @@ class Participacoes extends React.Component {
                                                 'p',
                                                 null,
                                                 React.createElement('input', { value: 'Fernando Lima de Souza ' })
-                                            )
+                                            ),
+                                            React.createElement('hr', null)
                                         ),
                                         React.createElement(
                                             'div',
@@ -458,7 +430,8 @@ class Participacoes extends React.Component {
                                                 'p',
                                                 null,
                                                 React.createElement('input', { value: 'Mensal' })
-                                            )
+                                            ),
+                                            React.createElement('hr', null)
                                         ),
                                         React.createElement(
                                             'div',
@@ -472,7 +445,8 @@ class Participacoes extends React.Component {
                                                 'p',
                                                 null,
                                                 React.createElement('input', { value: '01/12/2019' })
-                                            )
+                                            ),
+                                            React.createElement('hr', null)
                                         ),
                                         React.createElement(
                                             'div',
@@ -496,16 +470,39 @@ class Participacoes extends React.Component {
                                 { className: 'col-md-6' },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-g' },
+                                    { className: ' box-insert-g' },
                                     React.createElement(
                                         'div',
-                                        { className: 'box-insert-btn' },
-                                        React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
-                                        React.createElement('br', null),
+                                        { className: 'box-insert-btn text-center' },
                                         React.createElement(
-                                            'p',
-                                            null,
-                                            'Novo Conselhos de Pol\xEDticas P\xFAblicas'
+                                            'a',
+                                            { className: 'cursor', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block" } },
+                                            React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
+                                            React.createElement('br', null),
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                'Novo Conselhos de Pol\xEDticas P\xFAblicas'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.showForm ? 'block' : 'none' } },
+                                            React.createElement(
+                                                'a',
+                                                { onClick: this.showHideForm },
+                                                React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
+                                            ),
+                                            React.createElement(FormParticipacao, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.loadingList ? 'true' : 'none' } },
+                                            React.createElement('img', { style: { marginTop: '80px' }, src: '/img/loading.gif', width: '150px', alt: 'carregando', title: 'carregando' })
                                         )
                                     )
                                 )
@@ -609,7 +606,7 @@ class Participacoes extends React.Component {
                                     { className: 'bg-lgt box-insert-m' },
                                     React.createElement(
                                         'div',
-                                        { className: 'box-insert-btn' },
+                                        { className: 'box-insert-btn text-center' },
                                         React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
                                         React.createElement('br', null),
                                         React.createElement(
@@ -691,7 +688,7 @@ class Participacoes extends React.Component {
                                     { className: 'bg-lgt box-insert-p' },
                                     React.createElement(
                                         'div',
-                                        { className: 'box-insert-btn-p' },
+                                        { className: 'box-insert-btn-p text-center' },
                                         React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
                                         React.createElement('br', null),
                                         React.createElement(
@@ -699,164 +696,6 @@ class Participacoes extends React.Component {
                                             null,
                                             'Novo Outros espa\xE7os de participa\xE7\xE3o social'
                                         )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            ),
-            '/////////////',
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'bg-lgt box-itens-g min-h' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            'Quadro de Dirigentes'
-                        ),
-                        participacoes
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'bg-lgt box-itens-g min-h' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            'Conselho Fiscal'
-                        ),
-                        conselhos
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement(
-                        'div',
-                        { className: 'row text-center' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement('br', null),
-                            React.createElement('br', null),
-                            React.createElement(
-                                'strong',
-                                null,
-                                'Trabalhadores'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('br', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-3' },
-                            React.createElement(
-                                'div',
-                                { className: 'bg-lgt box-itens' },
-                                React.createElement(
-                                    'h3',
-                                    null,
-                                    'Total de Trabalhadores'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    null,
-                                    React.createElement(
-                                        'h2',
-                                        null,
-                                        '11'
-                                    ),
-                                    React.createElement(
-                                        'p',
-                                        { className: 'not-info' },
-                                        'a'
-                                    )
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-3' },
-                            React.createElement(
-                                'div',
-                                { className: 'bg-lgt box-itens' },
-                                React.createElement(
-                                    'h3',
-                                    null,
-                                    'Empregados'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    null,
-                                    React.createElement(
-                                        'h2',
-                                        null,
-                                        'aa'
-                                    ),
-                                    React.createElement(
-                                        'p',
-                                        { className: 'not-info' },
-                                        'aa'
-                                    )
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-3' },
-                            React.createElement(
-                                'div',
-                                { className: 'bg-lgt box-itens' },
-                                React.createElement(
-                                    'h3',
-                                    null,
-                                    'Defici\xEAncia'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    null,
-                                    React.createElement(
-                                        'h2',
-                                        null,
-                                        'aa'
-                                    ),
-                                    React.createElement(
-                                        'p',
-                                        { className: 'not-info' },
-                                        'aa'
-                                    )
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-3' },
-                            React.createElement(
-                                'div',
-                                { className: 'bg-lgt box-itens' },
-                                React.createElement(
-                                    'h3',
-                                    null,
-                                    'Volunt\xE1rios'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    null,
-                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
-                                    React.createElement(
-                                        'p',
-                                        { className: 'not-info' },
-                                        '\xA0'
                                     )
                                 )
                             )
