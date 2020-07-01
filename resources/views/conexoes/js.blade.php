@@ -213,6 +213,8 @@
 @endif
 @if($rota=="participacoes-user")
     <script src="/js/components/user-area/formParticipacao.js"></script>
+    <script src="/js/components/user-area/formParticipacaoConferencia.js"></script>
+    <script src="/js/components/user-area/formParticipacaoOutro.js"></script>
     <script src="/js/components/user-area/participacoes.js"></script>
 @endif
 @if($rota=="recursos-user")
