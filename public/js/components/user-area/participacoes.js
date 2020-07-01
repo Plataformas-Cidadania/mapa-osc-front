@@ -28,6 +28,10 @@ class Participacoes extends React.Component {
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+
+        this.showHideConselho = this.showHideConselho.bind(this);
+        this.showHideConferencia = this.showHideConferencia.bind(this);
+        this.showHideOutro = this.showHideOutro.bind(this);
     }
 
     componentDidMount() {
@@ -96,12 +100,27 @@ class Participacoes extends React.Component {
 
     showHideForm(action) {
         let showForm = !this.state.showForm;
-
         let actionForm = action;
-
         console.log(showForm);
-
         this.setState({ showForm: showForm, actionForm: actionForm });
+    }
+
+    showHideConselho(action) {
+        let showConselho = !this.state.showConselho;
+        let actionConselho = action;
+        this.setState({ showConselho: showConselho, actionConselho: actionConselho });
+    }
+
+    showHideConferencia(action) {
+        let showConferencia = !this.state.showConferencia;
+        let actionConferencia = action;
+        this.setState({ showConferencia: showConferencia, actionConferencia: actionConferencia });
+    }
+
+    showHideOutro(action) {
+        let showOutro = !this.state.showOutro;
+        let actionOutro = action;
+        this.setState({ showOutro: showOutro, actionOutro: actionOutro });
     }
 
     closeForm() {
@@ -295,42 +314,13 @@ class Participacoes extends React.Component {
                     { className: 'mn-accordion-icon' },
                     React.createElement('i', { className: 'fas fa-briefcase', 'aria-hidden': 'true' })
                 ),
-                ' ',
                 React.createElement(
                     'h3',
                     null,
-                    'Rela\xE7\xF5es de Trabalho e Governan\xE7a'
+                    'Espa\xE7os de Participa\xE7\xE3o Social'
                 ),
-                React.createElement('br', null),
-                React.createElement(
-                    'p',
-                    null,
-                    'Voc\xEA tem ',
-                    this.state.participacoes.length,
-                    ' Trabalhos ou Governan\xE7as cadastrados'
-                ),
-                React.createElement('hr', null)
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement('br', null),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { className: 'title-style' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            'Espa\xE7os de Participa\xE7\xE3o Social'
-                        ),
-                        React.createElement('div', { className: 'line line-fix' }),
-                        React.createElement('hr', null)
-                    )
-                )
+                React.createElement('hr', null),
+                React.createElement('br', null)
             ),
             React.createElement(
                 'div',
@@ -340,7 +330,7 @@ class Participacoes extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        null,
+                        { className: 'box-groups' },
                         React.createElement(
                             'h2',
                             null,
@@ -348,18 +338,18 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'p',
-                            { className: 'form-check' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
+                            { className: 'form-check text-center' },
+                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConselho', onClick: this.showHideConselho }),
                             React.createElement(
                                 'label',
-                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConselho' },
                                 'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row' },
+                            { className: 'row', style: { display: this.state.showConselho ? "none" : "" } },
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6', style: { border: '0' } },
@@ -476,7 +466,7 @@ class Participacoes extends React.Component {
                                         { className: 'box-insert-btn text-center' },
                                         React.createElement(
                                             'a',
-                                            { className: 'cursor', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block" } },
+                                            { className: 'cursor', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block", marginTop: "50%" } },
                                             React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
                                             React.createElement('br', null),
                                             React.createElement(
@@ -519,7 +509,9 @@ class Participacoes extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        { className: 'box-itens-g' },
+                        { className: 'box-groups' },
+                        React.createElement('br', null),
+                        React.createElement('br', null),
                         React.createElement(
                             'h2',
                             null,
@@ -527,25 +519,24 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'p',
-                            { className: 'form-check' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                id: 'gridCheck' }),
+                            { className: 'form-check text-center' },
+                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConferencia', onClick: this.showHideConferencia }),
                             React.createElement(
                                 'label',
-                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConferencia' },
                                 'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row' },
+                            { className: 'row', style: { display: this.state.showConferencia ? "none" : "" } },
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6', style: { border: '0' } },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-m' },
+                                    { className: 'box-insert-m' },
                                     React.createElement(
                                         'div',
                                         { className: 'box-insert-item box-insert-list' },
@@ -567,6 +558,7 @@ class Participacoes extends React.Component {
                                                 React.createElement('input', { value: 'Confer\xEAncia Brasileira de Arranjos Produtivos Locais' })
                                             )
                                         ),
+                                        React.createElement('hr', null),
                                         React.createElement(
                                             'div',
                                             null,
@@ -581,6 +573,7 @@ class Participacoes extends React.Component {
                                                 React.createElement('input', { value: '1900' })
                                             )
                                         ),
+                                        React.createElement('hr', null),
                                         React.createElement(
                                             'div',
                                             null,
@@ -603,7 +596,7 @@ class Participacoes extends React.Component {
                                 { className: 'col-md-6' },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-m' },
+                                    { className: 'box-insert-m' },
                                     React.createElement(
                                         'div',
                                         { className: 'box-insert-btn text-center' },
@@ -629,7 +622,9 @@ class Participacoes extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        { className: 'box-itens-g' },
+                        { className: 'box-groups' },
+                        React.createElement('br', null),
+                        React.createElement('br', null),
                         React.createElement(
                             'h2',
                             null,
@@ -637,25 +632,24 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'p',
-                            { className: 'form-check' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                id: 'gridCheck' }),
+                            { className: 'form-check text-center' },
+                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkOutro', onClick: this.showHideOutro }),
                             React.createElement(
                                 'label',
-                                { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                { className: 'form-check-label box-groups-info', htmlFor: 'checkOutro' },
                                 'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row' },
+                            { className: 'row', style: { display: this.state.showOutro ? "none" : "" } },
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6', style: { border: '0' } },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-p' },
+                                    { className: 'box-insert-p' },
                                     React.createElement(
                                         'div',
                                         { className: 'box-insert-item box-insert-list' },
@@ -685,7 +679,7 @@ class Participacoes extends React.Component {
                                 { className: 'col-md-6' },
                                 React.createElement(
                                     'div',
-                                    { className: 'bg-lgt box-insert-p' },
+                                    { className: 'box-insert-p' },
                                     React.createElement(
                                         'div',
                                         { className: 'box-insert-btn-p text-center' },

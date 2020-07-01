@@ -228,7 +228,7 @@ class FormParticipacao extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'label-box-info' },
+                            { className: 'label-box-info-off' },
                             React.createElement(
                                 'p',
                                 null,
@@ -244,11 +244,11 @@ class FormParticipacao extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome do Conselho'
+                            'Titularidade'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'label-box-info' },
+                            { className: 'label-box-info-off' },
                             React.createElement(
                                 'p',
                                 null,
@@ -264,11 +264,11 @@ class FormParticipacao extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome do Conselho'
+                            'Nome de representante'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'label-box-info' },
+                            { className: 'label-box-info-off' },
                             React.createElement(
                                 'p',
                                 null,
@@ -284,11 +284,11 @@ class FormParticipacao extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome do Conselho'
+                            'Periodicidade da Reuni\xE3o'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'label-box-info' },
+                            { className: 'label-box-info-off' },
                             React.createElement(
                                 'p',
                                 null,
@@ -304,11 +304,31 @@ class FormParticipacao extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome do Conselho'
+                            'Data de in\xEDcio de vig\xEAncia'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'label-box-info' },
+                            { className: 'label-box-info-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Data de fim de vig\xEAncia'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-off' },
                             React.createElement(
                                 'p',
                                 null,
@@ -321,7 +341,6 @@ class FormParticipacao extends React.Component {
                         { className: 'btn btn-primary', onClick: this.register },
                         'Cadastrar'
                     ),
-                    React.createElement('br', null),
                     React.createElement(
                         'div',
                         { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },

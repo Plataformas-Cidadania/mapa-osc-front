@@ -276,9 +276,13 @@ figcaption{
 }
 .box-insert-m{
     min-height: 280px;
+    border:solid 1px #CCCCCC;
+    border-radius: 5px;
 }
 .box-insert-p{
     min-height: 200px;
+    border:solid 1px #CCCCCC;
+    border-radius: 5px;
 }
 .cursor{
     cursor: pointer;

@@ -28,6 +28,10 @@ class Participacoes extends React.Component{
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+
+        this.showHideConselho = this.showHideConselho.bind(this);
+        this.showHideConferencia = this.showHideConferencia.bind(this);
+        this.showHideOutro = this.showHideOutro.bind(this);
     }
 
     componentDidMount(){
@@ -100,13 +104,27 @@ class Participacoes extends React.Component{
 
     showHideForm(action){
         let showForm = !this.state.showForm;
-
-
         let actionForm = action;
-
         console.log(showForm);
-
         this.setState({showForm: showForm, actionForm: actionForm});
+    }
+
+    showHideConselho(action){
+        let showConselho = !this.state.showConselho;
+        let actionConselho = action;
+        this.setState({showConselho: showConselho, actionConselho: actionConselho});
+    }
+
+    showHideConferencia(action){
+        let showConferencia = !this.state.showConferencia;
+        let actionConferencia = action;
+        this.setState({showConferencia: showConferencia, actionConferencia: actionConferencia});
+    }
+
+    showHideOutro(action){
+        let showOutro = !this.state.showOutro;
+        let actionOutro = action;
+        this.setState({showOutro: showOutro, actionOutro: actionOutro});
     }
 
     closeForm(){
@@ -258,16 +276,12 @@ class Participacoes extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-
-                    <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div> <h3>Relações de Trabalho e Governança</h3><br/>
-                    <p>Você tem {this.state.participacoes.length} Trabalhos ou Governanças cadastrados</p>
-                    <hr/>
-
+                    <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div>
+                    <h3>Espaços de Participação Social</h3>
+                    <hr/><br/>
                 </div>
 
-
-
-                <div className="row">
+                {/*<div className="row">
                     <div className="col-md-12">
                         <br/><br/>
                         <div className="title-style">
@@ -276,18 +290,18 @@ class Participacoes extends React.Component{
                             <hr/>
                         </div>
                     </div>
-                </div>
+                </div>*/}
                 <div className="row">
                     <div className="col-md-12">
-                        <div>
+                        <div className="box-groups">
                             <h2>Conselhos de Políticas Públicas</h2>
-                            <p className="form-check">
-                                <input className="form-check-input" type="checkbox" id="gridCheck"/>
-                                <label className="form-check-label" htmlFor="gridCheck">
+                            <p className="form-check text-center">
+                                <input className="form-check-input" type="checkbox" id="checkConselho" onClick={this.showHideConselho}/>
+                                <label className="form-check-label box-groups-info" htmlFor="checkConselho">
                                     Não possui conselhos de políticas públicas
                                 </label>
                             </p><br/>
-                            <div className="row">
+                            <div className="row" style={{display: this.state.showConselho ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-g text-left">
                                         <div className="box-insert-item box-insert-list">
@@ -330,7 +344,7 @@ class Participacoes extends React.Component{
                                 <div className="col-md-6">
                                     <div className=" box-insert-g">
                                         <div className="box-insert-btn text-center">
-                                            <a className="cursor" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}}>
+                                            <a className="cursor" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block", marginTop: "50%"}}>
                                                 <i className="fas fa-plus-circle fa-3x tx-pri" /><br/>
                                                 <p>Novo Conselhos de Políticas Públicas</p>
                                             </a>
@@ -352,18 +366,18 @@ class Participacoes extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="box-itens-g">
+                        <div className="box-groups">
+                            <br/><br/>
                             <h2>Conferências de Políticas Públicas</h2>
-                            <p className="form-check">
-                                <input className="form-check-input" type="checkbox"
-                                       id="gridCheck"/>
-                                <label className="form-check-label" htmlFor="gridCheck">
+                            <p className="form-check text-center">
+                                <input className="form-check-input" type="checkbox" id="checkConferencia" onClick={this.showHideConferencia}/>
+                                <label className="form-check-label box-groups-info" htmlFor="checkConferencia">
                                     Não possui conferências de políticas públicas
                                 </label>
                             </p><br/>
-                            <div className="row">
+                            <div className="row" style={{display: this.state.showConferencia ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
-                                    <div className="bg-lgt box-insert-m">
+                                    <div className="box-insert-m">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
                                             <i className="far fa-trash-alt text-danger float-right" />
@@ -373,10 +387,12 @@ class Participacoes extends React.Component{
                                                 <h3>Nome da Conferência:</h3>
                                                 <p><input  value="Conferência Brasileira de Arranjos Produtivos Locais"/></p>
                                             </div>
+                                            <hr/>
                                             <div>
                                                 <h3>Ano de realização da conferência:</h3>
                                                 <p><input  value="1900"/></p>
                                             </div>
+                                            <hr/>
                                             <div>
                                                 <h3>Forma de participação na conferência:</h3>
                                                 <p><input  value="Membro de comissão organizadora nacional"/></p>
@@ -385,7 +401,7 @@ class Participacoes extends React.Component{
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="bg-lgt box-insert-m">
+                                    <div className="box-insert-m">
                                         <div className="box-insert-btn text-center">
                                             <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
                                             <p>Novo Conselhos de Políticas Públicas</p>
@@ -398,18 +414,18 @@ class Participacoes extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="box-itens-g">
+                        <div className="box-groups">
+                            <br/><br/>
                             <h2>Outros espaços de participação social</h2>
-                            <p className="form-check">
-                                <input className="form-check-input" type="checkbox"
-                                       id="gridCheck"/>
-                                <label className="form-check-label" htmlFor="gridCheck">
+                            <p className="form-check text-center">
+                                <input className="form-check-input" type="checkbox" id="checkOutro" onClick={this.showHideOutro}/>
+                                <label className="form-check-label box-groups-info" htmlFor="checkOutro">
                                     Não possui outros espaços de participação social
                                 </label>
                             </p><br/>
-                            <div className="row">
+                            <div className="row" style={{display: this.state.showOutro ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
-                                    <div className="bg-lgt box-insert-p">
+                                    <div className="box-insert-p">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
                                             <i className="far fa-trash-alt text-danger float-right" />
@@ -423,7 +439,7 @@ class Participacoes extends React.Component{
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="bg-lgt box-insert-p">
+                                    <div className="box-insert-p">
                                         <div className="box-insert-btn-p text-center">
                                             <i className="fas fa-plus-circle fa-3x tx-pri"/><br/>
                                             <p>Novo Outros espaços de participação social</p>

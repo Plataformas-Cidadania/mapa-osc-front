@@ -11358,7 +11358,7 @@ a.text-dark:focus {
 
 body {
   font-family: Arial, verdana, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
   letter-spacing: 0.3px;
   color: #333333;
@@ -12239,10 +12239,14 @@ figcaption {
 
 .box-insert-m {
   min-height: 280px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px;
 }
 
 .box-insert-p {
   min-height: 200px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px;
 }
 
 .cursor {
@@ -13103,6 +13107,17 @@ label, input, .btn-number {
 
 .theme-11 {
   background-color: #E55E63 !important;
+}
+
+.box-groups h2 {
+  border-bottom: solid 1px #DEA33B;
+  font-size: 18px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+.box-groups-info {
+  font-size: 13px;
 }
 
 #chart {

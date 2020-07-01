@@ -63,9 +63,9 @@
 </script>
 <script>
     $(document).ready(function(){
-        var fonte = 16;
+        var fonte = 15;
 
-        if(fonte==16){
+        if(fonte==15){
             $('#contrast').css({'font-size' : localStorage.getItem('fonte')+'px'});
         }
         $('#aumenta_fonte').click(function(){
@@ -76,7 +76,7 @@
             }
         });
         $('#reset_fonte').click(function(){
-            fonte = 16;
+            fonte = 15;
             localStorage.setItem('fonte', fonte);
             $('#contrast').css({'font-size': '16px'});
         });
