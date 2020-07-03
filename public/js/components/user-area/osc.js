@@ -22,14 +22,13 @@ class Osc extends React.Component {
             },
             showMsg: false,
             msg: '',
-            juridica: false
+            showIcon: false
 
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
         this.getOsc = this.getOsc.bind(this);
     }
 
@@ -37,39 +36,17 @@ class Osc extends React.Component {
         this.getOsc();
     }
 
-    getAddress() {
-        this.setState({ loadingCep: true });
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/' + this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({ loadingCep: false, form: form });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
-
     getOsc() {
         this.setState({ button: false });
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             method: 'GET',
-            url: '/get-osc',
+            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
             cache: false,
             success: function (data) {
-                this.setState({ loading: false, form: data.osc, button: true });
+                this.setState({ loading: false, form: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -95,30 +72,6 @@ class Osc extends React.Component {
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                valid = false;
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                if((index==="cnpj" ) && !this.state.juridica){
-                    requireds[index] = true;
-                }else{
-                    valid = false;
-                }
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -130,37 +83,34 @@ class Osc extends React.Component {
             return;
         }
 
-        this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
+        this.setState({ loading: true, button: false, showMsg: false, msg: '', showIcon: false }, function () {
             $.ajax({
-                method: 'POST',
-                url: '/update-osc',
+                method: 'PUT',
+                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
                 data: {
-                    form: this.state.form,
-                    plan_id: this.props.plan_id
+                    form: this.state.form
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
 
-                    let msg = 'Já existe outro cadastro com esse';
-
-                    if (data.tx_razao_social_osc || data.email) {
-                        if (data.tx_razao_social_osc) {
-                            msg += ' tx_razao_social_osc';
+                    /*let msg = 'Já existe outro cadastro com esse';
+                     if(data.tx_razao_social_osc || data.email){
+                        if(data.tx_razao_social_osc){
+                            msg+= ' tx_razao_social_osc';
                         }
-                        if (data.email) {
-                            msg += ' email';
+                        if(data.email){
+                            msg+= ' email';
                         }
-                        this.setState({ msg: msg, showMsg: true, loading: false, button: true });
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, showIcon: true});
                         return;
-                    }
+                    }*/
 
-                    msg = 'Dados alterados com sucesso!';
-                    this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                    let msg = 'Dados alterados com sucesso!';
+                    this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success', showIcon: true });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                    this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger', showIcon: false });
                 }.bind(this)
             });
         });
@@ -256,28 +206,54 @@ class Osc extends React.Component {
                             null,
                             React.createElement(
                                 'div',
-                                { className: 'form-row' },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-2' },
+                                    { className: 'col-md-3' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputEmail4' },
-                                        'Sigla da OSC'
-                                    ),
-                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_sigla_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_sigla_osc', onChange: this.handleInputChange, value: this.state.form.tx_sigla_osc, placeholder: 'Sigla da OSC' }),
-                                    React.createElement('br', null)
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_sigla_osc', onChange: this.handleInputChange, value: this.state.form.tx_sigla_osc,
+                                            placeholder: 'Insira a Sigla' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_sigla_osc' },
+                                            'Sigla'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-10' },
+                                    { className: 'col-md-9' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputPassword4' },
-                                        'Nome Fantasia'
-                                    ),
-                                    React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field'), type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc, placeholder: 'Nome Fantasia' }),
-                                    React.createElement('br', null)
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc,
+                                            placeholder: 'Insira o Nome Fantasia' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_razao_social_osc' },
+                                            'Nome Fantasia'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 )
                             ),
                             React.createElement(
@@ -366,77 +342,154 @@ class Osc extends React.Component {
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'form-group' },
-                                React.createElement(
-                                    'label',
-                                    { htmlFor: 'inputAddress' },
-                                    'Respons\xE1vel Legal'
-                                ),
-                                React.createElement('input', { className: "form-control  " + (this.state.requireds.tx_nome_responsavel_legal ? '' : 'invalid-field'), type: 'text', name: 'tx_nome_responsavel_legal', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal, placeholder: 'Respons\xE1vel Legal' }),
-                                React.createElement('br', null)
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'form-row' },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-6' },
+                                    { className: 'col-md-12' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputEmail4' },
-                                        'E-mail oficial da OSC'
-                                    ),
-                                    React.createElement('input', { type: 'emil', className: 'form-control', id: 'inputEmail4',
-                                        placeholder: 'Email' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_email', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal,
+                                            placeholder: 'Insira o Respons\xE1vel Legal' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_email' },
+                                            'Respons\xE1vel Legal'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-6' },
+                                    { className: 'col-md-6' },
                                     React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputPassword4' },
-                                        'Site'
-                                    ),
-                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'inputPassword4',
-                                        placeholder: 'Senha' })
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_email', onChange: this.handleInputChange, value: this.state.form.tx_email,
+                                            placeholder: 'Insira o endere\xE7o de email da OSC' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_email' },
+                                            'E-mail oficial da OSC'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_site', onChange: this.handleInputChange, value: this.state.form.tx_site,
+                                            placeholder: 'Se houver, insira o endere\xE7o da p\xE1gina da OSC na internet. Ex.: http://www.seudominio.com.br' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_site' },
+                                            'Web site'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_telefone', onChange: this.handleInputChange, value: this.state.form.tx_telefone,
+                                            placeholder: 'Se houver, insira o telefone' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_telefone' },
+                                            'Telefone'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_telefone', onChange: this.handleInputChange, value: this.state.form.tx_telefone,
+                                            placeholder: 'Se houver, insira o celular' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_telefone' },
+                                            'Celular'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float-tx' },
+                                        React.createElement('textarea', { className: 'form-control form-g', name: 'tx_finalidades_estatutarias', onChange: this.handleInputChange, value: this.state.form.tx_finalidades_estatutarias,
+                                            rows: '3', placeholder: 'O que a OSC faz' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_finalidades_estatutarias' },
+                                            'O que a OSC faz'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-tx' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    )
                                 )
                             ),
-                            React.createElement(
-                                'div',
-                                { className: 'form-row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-group col-md-4' },
-                                    React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputEmail4' },
-                                        'Telefone'
-                                    ),
-                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'inputEmail4',
-                                        placeholder: 'Email' })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-group col-md-4' },
-                                    React.createElement(
-                                        'label',
-                                        { htmlFor: 'inputPassword4' },
-                                        'Celular'
-                                    ),
-                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'inputPassword4',
-                                        placeholder: 'Senha' })
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'form-group' },
-                                React.createElement(
-                                    'label',
-                                    { htmlFor: 'exampleFormControlTextarea1' },
-                                    'O que a OSC faz'
-                                ),
-                                React.createElement('textarea', { className: 'form-control', id: 'exampleFormControlTextarea1', rows: '3' })
-                            ),
+                            React.createElement('br', null),
+                            React.createElement('br', null),
                             React.createElement(
                                 'h4',
                                 null,
@@ -451,87 +504,87 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/01.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/01.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/02.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/02.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/03.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/03.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/04.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/04.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/05.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/05.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/06.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/06.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/07.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/07.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/08.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/08.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/09.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/09.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/10.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/10.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/11.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/11.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/12.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/12.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/13.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/13.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/14.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/14.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/15.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/15.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/16.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/16.png', alt: '', className: 'item-off', width: '87' })
                                     ),
                                     React.createElement(
                                         'li',
                                         null,
-                                        React.createElement('img', { src: 'img/ods/17.png', alt: '', className: 'item-off', width: '95' })
+                                        React.createElement('img', { src: 'img/ods/17.png', alt: '', className: 'item-off', width: '87' })
                                     )
                                 ),
                                 React.createElement(
@@ -541,11 +594,17 @@ class Osc extends React.Component {
                                         'div',
                                         null,
                                         React.createElement('br', null),
+                                        React.createElement('br', null),
                                         React.createElement(
-                                            'h3',
+                                            'h4',
                                             null,
-                                            '1 - Acabar com a pobreza em todas as suas formas, em todos os lugares'
-                                        )
+                                            React.createElement(
+                                                'strong',
+                                                null,
+                                                '1 - Acabar com a pobreza em todas as suas formas, em todos os lugares'
+                                            )
+                                        ),
+                                        React.createElement('br', null)
                                     ),
                                     React.createElement(
                                         'div',
@@ -612,28 +671,44 @@ class Osc extends React.Component {
                                     )
                                 )
                             ),
+                            this.state.showMsg,
+                            'f',
+                            React.createElement('i', { className: 'far fa-check-circle', style: { display: this.state.showMsg ? 'block' : 'none' } }),
+                            React.createElement('br', null),
+                            React.createElement('br', null),
                             React.createElement(
                                 'div',
-                                { className: 'col-md-12' },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    null,
-                                    React.createElement(
-                                        'button',
-                                        { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
-                                        'Salvar'
-                                    ),
-                                    React.createElement('br', null),
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-' + this.state.color },
-                                        this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.loading ? 'block' : 'none' } },
-                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                        'Processando'
+                                        { style: { marginTop: '-10px' } },
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.loading ? 'block' : 'none' } },
+                                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                            ' Processando ',
+                                            React.createElement('br', null),
+                                            ' ',
+                                            React.createElement('br', null)
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + this.state.color },
+                                            React.createElement('i', { className: 'far fa-check-circle', style: { display: this.state.showIcon ? 'none' : '' } }),
+                                            React.createElement('i', { className: 'far fa-times-circle', style: { display: this.state.showIconErro ? 'none' : '' } }),
+                                            this.state.msg
+                                        ),
+                                        React.createElement(
+                                            'button',
+                                            { className: 'btn btn-success', onClick: this.register },
+                                            React.createElement('i', {
+                                                className: 'fas fa-cloud-download-alt' }),
+                                            ' Salvar descri\xE7\xE3o'
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 )
                             )

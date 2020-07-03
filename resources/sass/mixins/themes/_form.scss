@@ -23,7 +23,7 @@ input + label {
     padding-left: 25px;
     margin-left: -15px;
     margin-top: 6px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 20px;
     padding-bottom: 10px;
 }
@@ -84,9 +84,7 @@ input[type=radio]:checked + label::after {
     border: 1px solid lightgrey;
     border-radius: 5px;
     outline: none;
-    min-width: 250px;
     padding: 5px 20px;
-    font-size: 16px;
     transition: all .1s linear;
     -webkit-transition: all .1s linear;
     -moz-transition: all .1s linear;
@@ -167,7 +165,7 @@ input[type=radio]:checked + label::after {
     outline: none;
     min-width: 250px;
     padding: 5px 20px;
-    font-size: 16px;
+    font-size: 15px;
     transition: all .1s linear;
     -webkit-transition: all .1s linear;
     -moz-transition: all .1s linear;

@@ -23,14 +23,13 @@ class Osc extends React.Component{
             },
             showMsg: false,
             msg: '',
-            juridica: false
+            showIcon: false
 
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
         this.getOsc = this.getOsc.bind(this);
     }
 
@@ -39,39 +38,17 @@ class Osc extends React.Component{
     }
 
 
-    getAddress(){
-        this.setState({loadingCep: true});
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/'+this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({loadingCep: false, form: form})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
-
     getOsc(){
         this.setState({button:false});
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             method: 'GET',
-            url: '/get-osc',
+            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.osc, button:true})
+                this.setState({loading: false, form: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -97,29 +74,6 @@ class Osc extends React.Component{
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                valid = false;
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                if((index==="cnpj" ) && !this.state.juridica){
-                    requireds[index] = true;
-                }else{
-                    valid = false;
-                }
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        //console.log(requireds);
 
         this.setState({requireds: requireds});
         return valid;
@@ -132,20 +86,18 @@ class Osc extends React.Component{
             return;
         }
 
-
-        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+        this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false}, function(){
             $.ajax({
-                method:'POST',
-                url: '/update-osc',
+                method:'PUT',
+                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
                 data:{
                     form: this.state.form,
-                    plan_id: this.props.plan_id
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
 
-                    let msg = 'Já existe outro cadastro com esse';
+
+                    /*let msg = 'Já existe outro cadastro com esse';
 
                     if(data.tx_razao_social_osc || data.email){
                         if(data.tx_razao_social_osc){
@@ -154,23 +106,20 @@ class Osc extends React.Component{
                         if(data.email){
                             msg+= ' email';
                         }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true});
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, showIcon: true});
                         return;
-                    }
+                    }*/
 
-                    msg = 'Dados alterados com sucesso!';
-                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
+                    let msg = 'Dados alterados com sucesso!';
+                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', showIcon: true});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger', showIcon: false});
                 }.bind(this)
             });
         });
-
-
     }
-
 
     render(){
 
@@ -179,88 +128,17 @@ class Osc extends React.Component{
         return (
             <div>
 
-                {/*<div className="row">
-                    <div className="col-md-12">
-                        <form>
-                            <div>
-                                <div className="col-md-5">
-                                    <label htmlFor="cnpj">CNPJ*</label><br/>
-                                    <input className={"form-control form-g "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} value={this.state.form.cnpj} placeholder="CNPJ"/><br/>
-                                </div>
-                            </div>
-
-                            <div className="col-md-8">
-                                <label htmlFor="name">Seu nome e sobrenome*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} value={this.state.form.name} placeholder="Nome"/><br/>
-                            </div>
-
-                            <div className="col-md-8">
-                                <label htmlFor="email">E-mail*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
-                            </div>
-
-                            <div className="col-md-12">
-                                <label htmlFor="tx_razao_social_osc">tx_razao_social_osc*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field')} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc} placeholder="Tx_razao_social_osc"/><br/>
-                            </div>
-
-
-
-
-                            <div className="clear-float"/>
-
-                        </form>
-                    </div>
-                </div>
-
-                --------------------------------------------------*/}
-
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
 
-                            {/*<div className="alert alert-secondary box-floating">
-                                <i className="fas fa-chevron-right menu-icons-close btn-menu-txt"/>
-                                <i className="fas fa-chevron-left menu-icons-close btn-menu-txt-show"
-                                   style={{display: "none"}}/>
-                                <ul className="menu-icons menu-right">
-                                    <li id="btn-right"/>
-                                    <li><a href="detalhar/1#dados-gerais">
-                                        <div><i className="far fa-file-alt"/></div>
-                                        <p className="menu-icons-txt">Dados gerais</p></a></li>
-                                    <li><a href="detalhar/1#area-atuacao">
-                                        <div><i className="fas fa-share-alt"/></div>
-                                        <p className="menu-icons-txt">Área de atuação</p></a></li>
-                                    <li><a href="detalhar/1#descricao">
-                                        <div><i className="fas fa-align-justify"/></div>
-                                        <p className="menu-icons-txt">Descrição da OSC</p></a></li>
-                                    <li><a href="detalhar/1#titulacao">
-                                        <div><i className="fas fa-certificate"/></div>
-                                        <p className="menu-icons-txt">Titulações e Certificações</p></a></li>
-                                    <li><a href="detalhar/1#governanca">
-                                        <div><i className="fas fa-briefcase"/></div>
-                                        <p className="menu-icons-txt">Trabalho e Governança</p></a></li>
-                                    <li><a href="detalhar/1#participacao">
-                                        <div><i className="fas fa-users"/></div>
-                                        <p className="menu-icons-txt">Participação social</p></a></li>
-                                    <li><a href="detalhar/1#projetos">
-                                        <div><i className="fas fa-project-diagram"/></div>
-                                        <p className="menu-icons-txt">Projetos</p></a></li>
-                                    <li><a href="detalhar/1#fontes">
-                                        <div><i className="fas fa-boxes"/></div>
-                                        <p className="menu-icons-txt">Fontes de recursos</p></a></li>
-                                </ul>
-                                <i className="fas fa-times fa-2x float-right btn-right"/>
-                            </div>*/}
-
                             <div className="row">
                                 <div className="col-md-12">
-
-                                        <div className="title-style">
-                                            <h2>Dados Gerais</h2>
-                                            <div className="line line-fix"/>
-                                            <hr/>
-                                        </div>
+                                    <div className="title-style">
+                                        <h2>Dados Gerais</h2>
+                                        <div className="line line-fix"/>
+                                        <hr/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -286,16 +164,30 @@ class Osc extends React.Component{
                             <br/><br/>
 
                                 <form>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-2">
-                                            <label htmlFor="inputEmail4">Sigla da OSC</label>
-                                            <input className={"form-control  "+(this.state.requireds.tx_sigla_osc ? '' : 'invalid-field')} type="text" name="tx_sigla_osc" onChange={this.handleInputChange} value={this.state.form.tx_sigla_osc} placeholder="Sigla da OSC"/><br/>
+
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g"} type="text" name="tx_sigla_osc" onChange={this.handleInputChange} value={this.state.form.tx_sigla_osc}
+                                                       placeholder="Insira a Sigla" />
+                                                <label htmlFor="tx_sigla_osc">Sigla</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="form-group col-md-10">
-                                            <label htmlFor="inputPassword4">Nome Fantasia</label>
-                                            <input className={"form-control  "+(this.state.requireds.tx_razao_social_osc ? '' : 'invalid-field')} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc} placeholder="Nome Fantasia"/><br/>
+                                        <div className="col-md-9">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g"} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc}
+                                                       placeholder="Insira o Nome Fantasia" />
+                                                <label htmlFor="tx_razao_social_osc">Nome Fantasia</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
 
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
@@ -316,7 +208,6 @@ class Osc extends React.Component{
                                                 <option selected>Escolher...</option>
                                                 <option>...</option>
                                             </select>
-                                            {/*tx_nome_situacao_imovel_osc*/}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
@@ -329,90 +220,104 @@ class Osc extends React.Component{
                                         </div>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="inputAddress">Responsável Legal</label>
-                                        <input className={"form-control  "+(this.state.requireds.tx_nome_responsavel_legal ? '' : 'invalid-field')} type="text" name="tx_nome_responsavel_legal" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal} placeholder="Responsável Legal"/><br/>
 
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <label htmlFor="inputEmail4">E-mail oficial da OSC</label>
-                                            <input type="emil" className="form-control" id="inputEmail4"
-                                                   placeholder="Email"/>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_email" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal}
+                                                       placeholder="Insira o Responsável Legal" />
+                                                <label htmlFor="tx_email">Responsável Legal</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="form-group col-md-6">
-                                            <label htmlFor="inputPassword4">Site</label>
-                                            <input type="text" className="form-control" id="inputPassword4"
-                                                   placeholder="Senha"/>
+
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_email" onChange={this.handleInputChange} value={this.state.form.tx_email}
+                                                       placeholder="Insira o endereço de email da OSC" />
+                                                <label htmlFor="tx_email">E-mail oficial da OSC</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group col-md-4">
-                                            <label htmlFor="inputEmail4">Telefone</label>
-                                            <input type="text" className="form-control" id="inputEmail4"
-                                                   placeholder="Email"/>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_site" onChange={this.handleInputChange} value={this.state.form.tx_site}
+                                                       placeholder="Se houver, insira o endereço da página da OSC na internet. Ex.: http://www.seudominio.com.br" />
+                                                <label htmlFor="tx_site">Web site</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="form-group col-md-4">
-                                            <label htmlFor="inputPassword4">Celular</label>
-                                            <input type="text" className="form-control" id="inputPassword4"
-                                                   placeholder="Senha"/>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_telefone" onChange={this.handleInputChange} value={this.state.form.tx_telefone}
+                                                       placeholder="Se houver, insira o telefone" />
+                                                <label htmlFor="tx_telefone">Telefone</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_telefone" onChange={this.handleInputChange} value={this.state.form.tx_telefone}
+                                                       placeholder="Se houver, insira o celular" />
+                                                <label htmlFor="tx_telefone">Celular</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="exampleFormControlTextarea1">O que a OSC faz</label>
-                                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-                                    </div>
-
-
-                                    {/*<div className="label-float-tx">
+                                        <div className="col-md-12">
+                                            <div className="label-float-tx">
                                             <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
-                                                      rows="3" placeholder="Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC"/>
-                                        <label htmlFor="tx_finalidades_estatutarias">Finalidades Estatutárias da OSC</label>
-                                        <div className="label-box-info-tx">
-                                            <p>&nbsp;</p>
+                                                      rows="3" placeholder="O que a OSC faz"/>
+                                                <label htmlFor="tx_finalidades_estatutarias">O que a OSC faz</label>
+                                                <div className="label-box-info-tx">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
 
-                                    <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
-                                               placeholder="Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf" />
-                                        <label htmlFor="tx_link_estatuto_osc">Link para o Estatutu da OSC</label>
-                                        <div className="label-box-info">
-                                            <p>&nbsp;</p>
-                                        </div>
-                                    </div>*/}
-
+                                    <br/><br/>
 
                                     <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
 
                                     <div>
                                         <ul className="menu-txt-icon">
-                                            <li><img src="img/ods/01.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/02.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/03.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/04.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/05.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/06.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/07.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/08.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/09.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/10.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/11.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/12.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/13.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/14.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/15.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/16.png" alt="" className="item-off" width="95"/></li>
-                                            <li><img src="img/ods/17.png" alt="" className="item-off" width="95"/></li>
+                                            <li><img src="img/ods/01.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/02.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/03.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/04.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/05.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/06.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/07.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/08.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/09.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/10.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/11.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/12.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/13.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/14.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/15.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/16.png" alt="" className="item-off" width="87"/></li>
+                                            <li><img src="img/ods/17.png" alt="" className="item-off" width="87"/></li>
                                         </ul>
                                         <div>
                                             <div>
+                                                <br/><br/>
+                                                <h4><strong>1 - Acabar com a pobreza em todas as suas formas, em todos os lugares</strong></h4>
                                                 <br/>
-                                                    <h3>1 - Acabar com a pobreza em todas as suas formas, em todos os
-                                                        lugares</h3>
                                             </div>
                                             <div>
                                                 <div className="form-group">
@@ -477,14 +382,32 @@ class Osc extends React.Component{
 
 
 
-                                    <div className="col-md-12">
+                                    {/*<div className="col-md-12">
                                         <div>
                                             <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
                                             <br/>
                                             <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
                                             <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                                         </div>
+                                    </div>*/}
 
+                                    {this.state.showMsg}f
+                                    <i className="far fa-check-circle" style={{display: this.state.showMsg ? 'block' : 'none'}}/>
+                                    <br/><br/>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div style={{marginTop: '-10px'}}>
+                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+this.state.color}>
+                                                    <i className="far fa-check-circle" style={{display: this.state.showIcon ? 'none' : ''}}/>
+                                                    <i className="far fa-times-circle" style={{display: this.state.showIconErro ? 'none' : ''}}/>
+                                                    {this.state.msg}
+                                                </div>
+                                                <button  className="btn btn-success" onClick={this.register}><i
+                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
+                                                <br/>
+                                            </div>
+                                        </div>
                                     </div>
 
 

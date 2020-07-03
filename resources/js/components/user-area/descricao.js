@@ -41,11 +41,10 @@ class Descricao extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            //url: '/get-descricao',
-            url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
+            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/formatado/455128',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.descricao, button:true})
+                this.setState({loading: false, form: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -84,7 +83,7 @@ class Descricao extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false}, function(){
             $.ajax({
                 method:'PUT',
-                url: '/update-descricao',
+                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/formatado/455128',
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -181,11 +180,6 @@ class Descricao extends React.Component{
                                             </div>
                                             <button  className="btn btn-success" onClick={this.register}><i
                                                 className="fas fa-cloud-download-alt"/> Salvar descrição</button>
-                                            {/*{this.state.color}2
-                                            <br/>
-                                            {this.state.showIcon}2
-                                            <br/>
-                                            {this.state.showIconErro}2*/}
                                             <br/>
                                         </div>
                                     </div>
