@@ -17,6 +17,14 @@ class Descricao extends React.Component {
                 tx_finalidades_estatutarias: true,
                 tx_link_estatuto_osc: true
             },
+            placeholder: {
+                tx_historico: 'De modo resumido e objetivo, diga como surgiu a OSC, quando, onde, por que e por quem foi fundada',
+                tx_missao_osc: 'Se houver, apresente qual a missão da OSC',
+                tx_visao_osc: 'Se houver, apresente a visão da OSC',
+                tx_finalidades_estatutarias: 'Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC',
+                tx_link_estatuto_osc: 'Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf'
+
+            },
             loading: false,
             button: true,
             showMsg: false,
@@ -39,7 +47,8 @@ class Descricao extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: 'http://172.24.0.5/api/osc/dados_gerais/formatado/455128',
+            //url: 'http://172.24.0.5/api/osc/dados_gerais/formatado/455128',
+            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/formatado/455128',
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, form: data, button: true });
@@ -56,9 +65,10 @@ class Descricao extends React.Component {
         const name = target.name;
 
         let form = this.state.form;
+        let placeholder = this.state.placeholder;
         form[name] = value;
 
-        this.setState({ form: form });
+        this.setState({ form: form, placeholder: placeholder });
     }
 
     validate() {
@@ -81,7 +91,8 @@ class Descricao extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'PUT',
-                url: 'http://172.24.0.5/api/osc/dados_gerais/455128',
+                //url: 'http://172.24.0.5/api/osc/dados_gerais/455128',
+                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
                 data: this.state.form,
                 cache: false,
                 success: function (data) {
@@ -140,7 +151,7 @@ class Descricao extends React.Component {
                                         'div',
                                         { className: 'label-float-tx' },
                                         React.createElement('textarea', { className: 'form-control form-g', name: 'tx_historico', onChange: this.handleInputChange, value: this.state.form.tx_historico,
-                                            rows: '3', placeholder: 'De modo resumido e objetivo, diga como surgiu a OSC, quando, onde, por que e por quem foi fundada' }),
+                                            rows: '3', placeholder: this.state.placeholder.tx_historico }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_historico' },
@@ -148,7 +159,7 @@ class Descricao extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info-tx' },
+                                            { className: 'label-box-info-tx-off' },
                                             React.createElement(
                                                 'p',
                                                 null,
@@ -160,7 +171,7 @@ class Descricao extends React.Component {
                                         'div',
                                         { className: 'label-float-tx' },
                                         React.createElement('textarea', { className: 'form-control form-g', name: 'tx_missao_osc', onChange: this.handleInputChange, value: this.state.form.tx_missao_osc,
-                                            rows: '3', placeholder: 'Se houver, apresente qual a miss\xE3o da OSC' }),
+                                            rows: '3', placeholder: this.state.placeholder.tx_missao_osc }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_missao_osc' },
@@ -168,7 +179,7 @@ class Descricao extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info-tx' },
+                                            { className: 'label-box-info-tx-off' },
                                             React.createElement(
                                                 'p',
                                                 null,
@@ -180,7 +191,7 @@ class Descricao extends React.Component {
                                         'div',
                                         { className: 'label-float-tx' },
                                         React.createElement('textarea', { className: 'form-control form-g', name: 'tx_visao_osc', onChange: this.handleInputChange, value: this.state.form.tx_visao_osc,
-                                            rows: '3', placeholder: 'Se houver, apresente a vis\xE3o da OSC' }),
+                                            rows: '3', placeholder: this.state.placeholder.tx_visao_osc }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_visao_osc' },
@@ -188,7 +199,7 @@ class Descricao extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info-tx' },
+                                            { className: 'label-box-info-tx-off' },
                                             React.createElement(
                                                 'p',
                                                 null,
@@ -200,7 +211,7 @@ class Descricao extends React.Component {
                                         'div',
                                         { className: 'label-float-tx' },
                                         React.createElement('textarea', { className: 'form-control form-g', name: 'tx_finalidades_estatutarias', onChange: this.handleInputChange, value: this.state.form.tx_finalidades_estatutarias,
-                                            rows: '3', placeholder: 'Apresente as finalidades estatut\xE1rias da OSC. Se preferir, copie do estatuto da OSC' }),
+                                            rows: '3', placeholder: this.state.placeholder.tx_finalidades_estatutarias }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_finalidades_estatutarias' },
@@ -208,7 +219,7 @@ class Descricao extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info-tx' },
+                                            { className: 'label-box-info-tx-off' },
                                             React.createElement(
                                                 'p',
                                                 null,
@@ -220,7 +231,7 @@ class Descricao extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
-                                            placeholder: 'Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf' }),
+                                            placeholder: this.state.placeholder.tx_link_estatuto_osc }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_link_estatuto_osc' },
@@ -228,7 +239,7 @@ class Descricao extends React.Component {
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info' },
+                                            { className: 'label-box-info-off' },
                                             React.createElement(
                                                 'p',
                                                 null,

@@ -8,6 +8,12 @@ class Osc extends React.Component{
                 endereco: '',
                 tx_endereco: '',
             },
+            txt: {
+                email: '',
+                name: '',
+                endereco: '',
+                tx_endereco: '',
+            },
             button: true,
             loading: false,
             requireds: {
@@ -17,8 +23,6 @@ class Osc extends React.Component{
                 tx_sigla_osc: true,
                 tx_nome_situacao_imovel_osc: true,
                 tx_nome_responsavel_legal: true,
-
-
                 cnpj: true,
             },
             showMsg: false,
@@ -28,22 +32,35 @@ class Osc extends React.Component{
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.register = this.register.bind(this);
+        this.updateOsc = this.updateOsc.bind(this);
         this.validate = this.validate.bind(this);
         this.getOsc = this.getOsc.bind(this);
+        this.getCabecalho = this.getCabecalho.bind(this);
     }
 
     componentDidMount(){
         this.getOsc();
+        this.getCabecalho();
     }
 
+    getCabecalho(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            url: 'http://mapa-osc-api.local/api/osc/cabecalho/455128',
+            cache: false,
+            success: function (data) {
+                this.setState({loading: false, txt: data, button:true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
 
     getOsc(){
         this.setState({button:false});
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             method: 'GET',
             url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
             cache: false,
@@ -62,9 +79,10 @@ class Osc extends React.Component{
         const name = target.name;
 
         let form = this.state.form;
+        let txt = this.state.txt;
         form[name] = value;
 
-        this.setState({form: form});
+        this.setState({form: form, txt: txt});
     }
 
     validate(){
@@ -73,29 +91,27 @@ class Osc extends React.Component{
 
         let requireds = this.state.requireds;
         let form = this.state.form;
+        let txt = this.state.txt;
 
 
         this.setState({requireds: requireds});
         return valid;
     }
 
-    register(e){
+    updateOsc(e){
         e.preventDefault();
 
         if(!this.validate()){
             return;
         }
 
-        this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false}, function(){
+        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
                 url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
-                data:{
-                    form: this.state.form,
-                },
+                data: this.state.form,
                 cache: false,
                 success: function(data) {
-
 
                     /*let msg = 'Já existe outro cadastro com esse';
 
@@ -111,19 +127,20 @@ class Osc extends React.Component{
                     }*/
 
                     let msg = 'Dados alterados com sucesso!';
-                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', showIcon: true});
+                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger', showIcon: false});
+                    let msg = "Ocorreu um erro!";
+                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true});
                 }.bind(this)
             });
         });
     }
 
+
+
     render(){
-
-
 
         return (
             <div>
@@ -154,9 +171,9 @@ class Osc extends React.Component{
                                 <div className="col-md-9">
                                     <br/>
                                         <p>
-                                            <strong>Área de atuação:</strong> <br/>
-                                            <strong>CNPJ:</strong> <br/>
-                                            <strong>Natureza Jurídica:</strong> <br/>
+                                            <strong>Nome:</strong> {this.state.txt.tx_razao_social_osc}<br/>
+                                            <strong>CNPJ:</strong> {this.state.txt.cd_identificador_osc}<br/>
+                                            <strong>Natureza Jurídica:</strong> {this.state.txt.tx_nome_natureza_juridica_osc}<br/>
                                         </p>
                                 </div>
                             </div>
@@ -391,10 +408,8 @@ class Osc extends React.Component{
                                         </div>
                                     </div>*/}
 
-                                    {this.state.showMsg}f
-                                    <i className="far fa-check-circle" style={{display: this.state.showMsg ? 'block' : 'none'}}/>
-                                    <br/><br/>
-                                    <div className="row">
+
+                                    {/*<div className="row">
                                         <div className="col-md-12">
                                             <div style={{marginTop: '-10px'}}>
                                                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
@@ -408,8 +423,21 @@ class Osc extends React.Component{
                                                 <br/>
                                             </div>
                                         </div>
+                                    </div>*/}
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div style={{marginTop: '-10px'}}>
+                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                                    <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                                    {this.state.msg}
+                                                </div>
+                                                <button type="button" className="btn btn-success" onClick={this.updateOsc}><i
+                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
+                                                <br/>
+                                            </div>
+                                        </div>
                                     </div>
-
 
                                 </form>
 
