@@ -146,13 +146,16 @@
     });
 </script>
 
-
 <!--///////////////////////////////REACT////////////////////////////-->
 @if($rota=="contato")
     <script src="/js/components/forms/contact.js"></script>
     <script src="/js/utils.js"></script>
     <script src="/js/leaflet.js"></script>
     <script src="/js/components/maps/address.js"></script>
+@endif
+@if($rota=="filtro")
+    <script src="/js/components/forms/filter.js"></script>
+    <script src="/js/utils.js"></script>
 @endif
 @if($rota=="artigo/{id}/{titulo}")
     <script src="/js/components/forms/comment.js"></script>
