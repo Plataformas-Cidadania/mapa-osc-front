@@ -84,3 +84,10 @@ a:active {
 /*p, h1, h2, time{
     outline: none!important;
 }*/
+.custom-control{
+    display: inline-block;
+}
+.custom-control-label{
+    margin-left: 5px;
+    margin-right: 20px;
+}

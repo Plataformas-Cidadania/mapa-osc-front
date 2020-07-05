@@ -19,11 +19,10 @@
             </div>
         </div>
     </div>
-    <br><br>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <br>
                 <div id="filter"></div>
             </div>
         </div>

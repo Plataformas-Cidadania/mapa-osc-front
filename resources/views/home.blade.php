@@ -19,7 +19,7 @@
                 <li>Município</li>
                 <li>Estado </li>
                 <li>Região</li>
-                <li class="float-right"><i class="fas fa-filter"></i> Filtro</li>
+                <li class="float-right"><a href="filtro"><i class="fas fa-filter"></i> Filtro</a></li>
             </ul>
             <br><br><br>
         </div>

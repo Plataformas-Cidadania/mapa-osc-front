@@ -159,6 +159,12 @@
     margin: -6px 10px 0 0;
     color: #DEA33B;
 }
+.mn-accordion-icon-p {
+    width: 35px;
+    height: 35px;
+    line-height: 28px;
+    border: solid 3px #1b4b72;
+}
 .mn-accordion .mn-accordion-arrow{
     margin-top: -20px
 }
@@ -195,8 +201,6 @@
 .theme-11{
     background-color: $theme-11 !important;
 }
-
-
 .box-groups h2{
     border-bottom: solid 1px #DEA33B;
     font-size: 18px;

@@ -166,9 +166,6 @@ class Filter extends React.Component{
     render(){
         return (
 
-
-
-
             <form>
 
                 <div className="accordion" id="accordionExample">
@@ -176,42 +173,125 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-1">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
                                  aria-controls="collapse1">
-                                Dados Gerais <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Dados Gerais
+                                 <i className="fas fa-angle-down float-right"></i>
                             </div>
                         </div>
                         <div id="collapse1" className="collapse show " aria-labelledby="heading1"
                              data-parent="#accordionExample">
                             <div className="card-body">
                                 <div className="row">
-                                    <div className="col-md-8">
+                                    <div className="col-md-9">
                                         <div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
                                             <label htmlFor="name">Nome da OSC</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="name" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Nome</label>
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Região</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
-                                    <div className="col-md-8">
+                                    <div className="col-md-9">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="name">Nome da OSC</label>
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="name">Nome Fantasia</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="name" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Nome</label>
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Estado</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
+
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">CNPJ</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        {/*<div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Situação do Imóvel</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>*/}
+
+                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected>Open this select menu</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Ano de Fundação</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'left'}}/>
+                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'right'}}/>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_municipio" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Município</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <br/>
+                                        <strong>Natureza Jurídica:</strong><br/>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <br/><br/>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected>Metas Relacionadas ao ODS</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+
                                 </div>
+
+
+
+
 
                             </div>
                         </div>
@@ -227,7 +307,48 @@ class Filter extends React.Component{
                         <div id="collapse2" className="collapse" aria-labelledby="heading2"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                222
+
+                                <div className="row">
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_atividade_economica" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="name">Atividade Econômica (CNAE)</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <strong>Área de Atuação</strong><br/>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Habitação</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                        <br/>
+                                        <strong>Subárea de Atuação</strong><br/>
+
+                                        <div className="bg-lgt p-2">
+                                            <strong>Habitação</strong><br/>
+                                            <div className="custom-control custom-checkbox">
+                                                <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                                <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                                <div className="invalid-feedback">Example invalid feedback text</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -242,7 +363,15 @@ class Filter extends React.Component{
                         <div id="collapse3" className="collapse" aria-labelledby="heading3"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                333
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,7 +386,29 @@ class Filter extends React.Component{
                         <div id="collapse4" className="collapse" aria-labelledby="heading4"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                444
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="name">Nome do Dirigente</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_cargo_dirigente" onChange={this.handleInputChange} placeholder=" "/>
+                                            <label htmlFor="name">Cargo do Dirigente</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_conselheiro" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="name">Nome do Membro do Conselho Fiscal</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

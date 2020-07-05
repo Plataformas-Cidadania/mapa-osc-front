@@ -12277,15 +12277,15 @@ label {
 
 /* --  Personalização checkbox -- */
 
-input[type=checkbox] {
-  display: none;
-  cursor: pointer;
-}
+/*input[type=checkbox] {
+    display: none;
+    cursor: pointer;
+}*/
 
 input + label {
   position: relative;
   cursor: pointer;
-  padding-left: 25px;
+  /*padding-left: 25px;*/
   margin-left: -15px;
   margin-top: 6px;
   font-size: 15px;
@@ -12293,56 +12293,54 @@ input + label {
   padding-bottom: 10px;
 }
 
-input[type=checkbox] + label::before {
-  content: "";
-  background-color: #EEEEEE;
-  border: solid 1px #CCCCCC;
-  border-radius: 4px;
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 1px;
-  left: 0;
-  bottom: 0;
-  vertical-align: bottom;
-  cursor: pointer;
+/*input[type=checkbox] + label::before {
+    content: '';
+    background-color: #EEEEEE;
+    border: solid 1px #CCCCCC;
+    border-radius: 4px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 1px;
+    left: 0;
+    bottom: 0;
+    vertical-align: bottom;
+    cursor: pointer;
 }
-
 input[type=checkbox]:checked + label::after {
-  content: "";
-  background-color: #1b4b72;
-  border: double 4px #CCCCCC;
-  border-radius: 4px;
-  position: absolute;
-  top: 1px;
-  left: 0;
-  bottom: 0;
-  width: 20px;
-  height: 20px;
-}
+    content: '';
+    background-color: #1b4b72;
+    border: double 4px #CCCCCC;
+    border-radius: 4px;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+}*/
 
-input[type=radio] + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: solid 2px;
-  vertical-align: bottom;
+/*input[type=radio] + label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 2px;
+    vertical-align: bottom;
 }
-
 input[type=radio]:checked + label::after {
-  content: "";
-  background-color: blue;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
-}
+    content: '';
+    background-color: blue;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}*/
 
 /* -- Validação de formulário -- */
 
@@ -12577,6 +12575,17 @@ label, input, .btn-number {
   margin-right: 10px;
   margin-top: -1px;
   font-size: 20px;
+}
+
+.custom-range {
+  margin-top: -32px;
+  position: relative;
+  z-index: 9999;
+  width: 100px;
+}
+
+.custom-range-r {
+  float: right;
 }
 
 .fa-svg svg {
@@ -13060,6 +13069,13 @@ label, input, .btn-number {
   color: #DEA33B;
 }
 
+.mn-accordion-icon-p {
+  width: 35px;
+  height: 35px;
+  line-height: 28px;
+  border: solid 3px #1b4b72;
+}
+
 .mn-accordion .mn-accordion-arrow {
   margin-top: -20px;
 }
@@ -13266,4 +13282,13 @@ a:active {
 /*p, h1, h2, time{
     outline: none!important;
 }*/
+
+.custom-control {
+  display: inline-block;
+}
+
+.custom-control-label {
+  margin-left: 5px;
+  margin-right: 20px;
+}
 

@@ -179,7 +179,12 @@ class Filter extends React.Component {
                             'div',
                             { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse1', 'aria-expanded': 'true',
                                 'aria-controls': 'collapse1' },
-                            'Dados Gerais ',
+                            React.createElement(
+                                'div',
+                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                React.createElement('i', { className: 'far fa-file-alt' })
+                            ),
+                            'Dados Gerais',
                             React.createElement('i', { className: 'fas fa-angle-down float-right' })
                         )
                     ),
@@ -195,7 +200,7 @@ class Filter extends React.Component {
                                 { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-8' },
+                                    { className: 'col-md-9' },
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
@@ -210,47 +215,236 @@ class Filter extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-4' },
+                                    { className: 'col-md-3' },
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'name', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_regiao', onChange: this.handleInputChange, placeholder: ' ' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'name' },
-                                            'Nome'
+                                            'Regi\xE3o'
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-8' },
+                                    { className: 'col-md-9' },
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange, placeholder: ' ' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'name' },
-                                            'Nome da OSC'
+                                            'Nome Fantasia'
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-4' },
+                                    { className: 'col-md-3' },
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'name', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', onChange: this.handleInputChange, placeholder: ' ' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'name' },
-                                            'Nome'
+                                            'Estado'
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_identificador_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'CNPJ'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Open this select menu'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '1' },
+                                            'One'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '2' },
+                                            'Two'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '3' },
+                                            'Three'
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Ano de Funda\xE7\xE3o'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    ),
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '5', id: 'customRange2', style: { float: 'left' } }),
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '5', id: 'customRange2', style: { float: 'right' } })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_municipio', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Munic\xEDpio'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'strong',
+                                        null,
+                                        'Natureza Jur\xEDdica:'
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox ' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '1' },
+                                            'One'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '2' },
+                                            'Two'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '3' },
+                                            'Three'
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Metas Relacionadas ao ODS'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '1' },
+                                            'One'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '2' },
+                                            'Two'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '3' },
+                                            'Three'
+                                        )
                                     )
                                 )
                             )
@@ -278,7 +472,112 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '222'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_atividade_economica', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Atividade Econ\xF4mica (CNAE)'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'strong',
+                                        null,
+                                        '\xC1rea de Atua\xE7\xE3o'
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox ' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Habita\xE7\xE3o'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'strong',
+                                        null,
+                                        'Sub\xE1rea de Atua\xE7\xE3o'
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-lgt p-2' },
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Habita\xE7\xE3o'
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                                'Associa\xE7\xE3o Privada'
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'invalid-feedback' },
+                                                'Example invalid feedback text'
+                                            )
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 ),
@@ -303,7 +602,29 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '333'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'custom-control custom-checkbox' },
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                        React.createElement(
+                                            'label',
+                                            { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                            'Associa\xE7\xE3o Privada'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'invalid-feedback' },
+                                            'Example invalid feedback text'
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 ),
@@ -328,7 +649,55 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '444'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Nome do Dirigente'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_cargo_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Cargo do Dirigente'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_conselheiro', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Nome do Membro do Conselho Fiscal'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                )
+                            )
                         )
                     )
                 ),
