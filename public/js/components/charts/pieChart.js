@@ -4,10 +4,13 @@ class PieChart extends React.Component {
         super(props);
         //console.log(props);
         this.state = {
+            chartOptions: {
+                labels: props.data ? props.labels : []
+            },
             options: {
                 //labels: ['Team A', 'Team B'],
 
-                labels: props.data ? props.labels : [],
+                //labels: props.data ? props.labels : [],
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -32,15 +35,20 @@ class PieChart extends React.Component {
 
             if (props.labels != this.state.options.labels || props.series != this.state.series) {
 
-                let options = this.state.options;
-                options.labels = props.labels;
+                //let options = this.state.options;
+                //options.labels = props.labels;
+                let chartOptions = this.state.chartOptions;
+                chartOptions.labels = props.labels;
 
                 let series = this.state.series;
                 series = props.series;
 
-                this.setState({ options: options, series: series });
+                this.setState({ options: chartOptions, series: series }, function () {
+                    //ApexCharts.exec(this.props.id, 'updateSeries', props.series);
+                    //ApexCharts.exec(this.props.id, 'updateOptions', options);
+                });
 
-                console.log('*******', options);
+                console.log('*******', chartOptions);
                 console.log('*******', series);
             }
         }
@@ -53,7 +61,7 @@ class PieChart extends React.Component {
             React.createElement(
                 'div',
                 { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'pie', width: '380' })
+                React.createElement(ReactApexChart, { options: this.state.options, chartOptions: this.state.chartOptions, series: this.state.series, type: 'pie', width: '380' })
             ),
             React.createElement('div', { id: "html-dist-" + this.props.id })
         );
