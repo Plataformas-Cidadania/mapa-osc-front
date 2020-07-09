@@ -145,8 +145,8 @@ class Contact extends React.Component{
     render(){
         return (
 
-            <div className="row">
-                <div className="col-md-12">
+
+
 
                     <form>
                         <div >
@@ -180,19 +180,27 @@ class Contact extends React.Component{
                             </div>
                         </div>
 
-                        <div className="label-float">
-                            <input className={"form-control form-g"} type="text" name="cel" onChange={this.handleInputChange} value={this.state.form.cel} placeholder=" " maxLength="15" required={this.state.requireds.cel ? '' : 'required'} />
-                            <label htmlFor="cel">Celular</label>
-                            <div className="label-box-info">
-                                <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite um número de celular</p>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="label-float">
+                                    <input className={"form-control form-g"} type="text" name="cel" onChange={this.handleInputChange} value={this.state.form.cel} placeholder=" " maxLength="15" required={this.state.requireds.cel ? '' : 'required'} />
+                                    <label htmlFor="cel">Celular</label>
+                                    <div className="label-box-info">
+                                        <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite um número de celular</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="label-float">
+                                    <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
+                                    <label htmlFor="name">Whatsapp<span className={"label-float-optional"}> - Opicional</span></label>
+                                    <div className="label-box-info"></div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="label-float">
-                            <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
-                            <label htmlFor="name">Whatsapp<span className={"label-float-optional"}> - Opicional</span></label>
-                            <div className="label-box-info"></div>
-                        </div>
+
 
                         <div className="clear-float"></div>
                         {/*<p><i>* campos obrigatórios</i></p>*/}
@@ -205,8 +213,8 @@ class Contact extends React.Component{
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                     </form>
-                </div>
-            </div>
+
+
 
         );
     }

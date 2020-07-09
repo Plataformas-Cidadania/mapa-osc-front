@@ -19,15 +19,9 @@ class Login extends React.Component{
     }
 
     componentDidMount(){
-        if(carrinho > 0){
-            //this.setState({target: '/register-account/'+carrinho});
-            this.setState({target: '/register-addresses'});
-            return;
-        }
         if(!this.props.target){
             this.setState({target: '/area-user'});
         }
-        console.log(carrinho);
     }
 
 
@@ -99,10 +93,7 @@ class Login extends React.Component{
 
     render(){
 
-        let plan = null;
-        if(carrinho > 0){
-            plan = (<input type="hidden" name="carrinho" className="form-control" value={carrinho}/>);
-        }
+
 
 
         let titleLogin = "Já tenho cadastro";
@@ -136,7 +127,6 @@ class Login extends React.Component{
                                     <h4>{titleLogin}</h4>
                                     <br/>
                                     <form>
-                                        {plan}
                                         <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')}/>
                                         <input type="email" name="email" className={"form-control "+(this.state.requireds.email ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="E-mail"/><br/>
                                         <div style={{fontSize: '12px'}}><ForgetPassword/></div>

@@ -12,33 +12,21 @@ use Illuminate\Support\Facades\Log;
 class VideoController extends Controller{
 
     private $obj;
-    private $lngObj;
     private $module;
     private $table;
 
     public function __construct(){
-        $this->obj = new \App\PubVideo();
-        $this->lngObj = new \App\LngPubVideo();
+        $this->obj = new \App\Video();
         $this->module = 'video';
         $this->table = 'videos';
     }
 
     public function listing(){
         //Vídeos em destaque
-        $listsTop = $this->obj
-            ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
-            ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->orderBy('pub_videos.views', 'desc')
-            ->take(4)
-            ->get();
+        $listsTop = $this->obj->orderBy('views', 'desc')->take(4)->get();
 
         //Vídeos mais recentes
-        $lists = $this->obj
-            ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
-            ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->orderBy('pub_videos.id', 'desc')
-            ->skip(4)
-            ->paginate(16);
+        $lists = $this->obj->orderBy('id', 'desc')->skip(4)->paginate(16);
 
         //return $lists;
 
@@ -49,25 +37,22 @@ class VideoController extends Controller{
 
     public function details($id){
 
-        $detail = $this->obj
-            ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
-            ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->where('pub_videos.id', $id)
-            ->first();
+        $detail = $this->obj->where('id', $id)->first();
 
-        $lists = $this->obj
-            ->join('lng_pub_videos', 'pub_videos.id', '=', 'lng_pub_videos.publish_id')
-            ->select('pub_videos.*', 'lng_pub_videos.title', 'lng_pub_videos.description')
-            ->orderBy('pub_videos.id', 'desc')
-            ->take(10)
-            ->get();
+        $lists = $this->obj->orderBy('id', 'desc')->take(10)->get();
+
+        $prev = $this->obj->select('id', 'titulo')->where('id','<', $id)->orderBy('id', 'desc')->first();
+        $next = $this->obj->select('id', 'titulo')->where('id','>', $id)->orderBy('id')->first();
 
         $addViews = $detail->views+1;
 
-        $views = $this->obj
-            ->where('pub_videos.id', $id)
-            ->update(['views' => $addViews]);
+        $views = $this->obj->where('id', $id)->update(['views' => $addViews]);
 
-        return view($this->module.'.detail', ['detail' => $detail, 'lists' => $lists]);
+        return view($this->module.'.detail', [
+            'detail' => $detail,
+            'lists' => $lists,
+            'prev' => $prev,
+            'next' => $next
+        ]);
     }
 }

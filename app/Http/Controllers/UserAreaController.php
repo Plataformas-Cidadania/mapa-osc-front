@@ -18,6 +18,39 @@ class UserAreaController extends Controller
     public function index(){
         return view('user-area', ['pgUserArea' => 'dashboard']);
     }
+    public function oscs(){
+        return view('user-area', ['pgUserArea' => 'oscs']);
+    }
+    public function osc($id){
+        return view('user-area', ['pgUserArea' => 'osc', 'id' => $id]);
+    }
+    public function data(){
+        return view('user-area', ['pgUserArea' => 'data']);
+    }
+
+    public function descricao(){
+        return view('user-area', ['pgUserArea' => 'descricao']);
+    }
+    public function certificates(){
+        return view('user-area', ['pgUserArea' => 'certificates']);
+    }
+    public function projetos(){
+        return view('user-area', ['pgUserArea' => 'projetos']);
+    }
+    public function governancas(){
+        return view('user-area', ['pgUserArea' => 'governancas']);
+    }
+    public function atuacoes(){
+        return view('user-area', ['pgUserArea' => 'atuacoes']);
+    }
+    public function participacoes(){
+        return view('user-area', ['pgUserArea' => 'participacoes']);
+    }
+    public function recursos(){
+        return view('user-area', ['pgUserArea' => 'recursos']);
+    }
+
+
 
     public function documents(){
         return view('user-area', ['pgUserArea' => 'documents']);
@@ -25,12 +58,7 @@ class UserAreaController extends Controller
     public function document($id){
         return view('user-area', ['pgUserArea' => 'document', 'id' => $id]);
     }
-    public function texts(){
-        return view('user-area', ['pgUserArea' => 'texts']);
-    }
-    public function text($id){
-        return view('user-area', ['pgUserArea' => 'text', 'id' => $id]);
-    }
+
 
     public function videos(){
         return view('user-area', ['pgUserArea' => 'videos']);
@@ -39,10 +67,6 @@ class UserAreaController extends Controller
     /*public function video(){
         return view('user-area', ['pgUserArea' => 'video']);
     }*/
-
-    public function data(){
-        return view('user-area', ['pgUserArea' => 'data']);
-    }
 
 
 
@@ -65,8 +89,6 @@ class UserAreaController extends Controller
             return ['cpf' => $registroCpf, 'email' => $registroEmail];
         }
 
-
-
         $user = \App\User::find($data['id']);
 
         $user->update($data);
@@ -74,16 +96,163 @@ class UserAreaController extends Controller
         return ['user' => $user];
     }
 
+
+
+    public function getOsc(){
+
+        /*$osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal'
+            )
+            ->where('id_osc', $id)
+            ->first();*/
+
+        $id = 508303;
+        $osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select('id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal')
+            ->where('id_osc', $id)
+            ->first();
+
+        $localizacao = DB::connection('map')
+            ->table('osc.tb_localizacao')
+            ->select('tx_endereco', 'nr_localizacao', 'tx_bairro', 'cd_municipio', 'nr_cep', 'cd_municipio')
+            ->where('id_osc', $id)
+            ->first();
+
+        return [
+            'osc' => $osc,
+            'localizacao' => $localizacao
+        ];
+    }
+
+    public function updateOsc(Request $request){
+        $data = $request->form;
+
+        //$data['id'] = auth()->user()->id;
+
+        $id = 508303;
+
+        /*$registroCpf = \App\SiteUser::select('cpf')->where([
+            ['cpf', $data['cpf']],
+            ['id', '!=', $data['id']]
+        ])->first();
+
+        $registroEmail = \App\SiteUser::select('email')->where([
+            ['email', $data['email']],
+            ['id', '!=', $data['id']]
+        ])->first();
+
+        if($registroCpf || $registroEmail){
+            return ['cpf' => $registroCpf, 'email' => $registroEmail];
+        }*/
+
+        $osc = \App\OscDadoGeral::
+            select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc'
+            )
+            ->where('id_osc', $id)
+            ->orderBy('id_osc')
+            ->update($data);
+
+        /*$osc = DB::connection('map')
+            ->table('osc.tb_dados_gerais')
+            ->select(
+                'id_osc', 'tx_razao_social_osc', 'tx_sigla_osc', 'cd_situacao_imovel_osc', 'tx_nome_responsavel_legal'
+           )
+            ->where('id_osc', $id)
+            ->orderBy('id_osc')
+            ->update($data);*/
+
+
+        return ['user' => $osc];
+    }
+
     public function getData(){
-        return \App\User::find(auth()->user()->id);
+        return \App\SiteUser::find(auth()->user()->id);
     }
 
 
+
+
+
+
+    public function listOscs(){
+        //$oscs = \App\Osc::all();
+        $oscs = DB::connection('map')
+            ->table('osc.vw_busca_osc')
+            ->select('id_osc', 'tx_nome_osc')
+            ->where('id_osc', 789809)
+            ->get();
+        return $oscs;
+    }
 
     public function listDocuments(){
         $documents = \App\Document::all();
         return $documents;
     }
+
+    /////////////////////////////////////
+    public function listCertificates(){
+        $id = 455128;
+        $certificates = \App\UserCertificate::where('id_osc', $id)->get();
+        //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
+        return $certificates;
+    }
+    public function editCertificate($id){
+        $id = 455128;
+        $certificate = \App\UserCertificate::where([
+            'id_osc', $id
+            /*['user_id', auth()->user()->id],
+            ['id', $id],*/
+        ])->first();
+        return $certificate;
+    }
+    public function updateCertificate(Request $request){
+        $certificate = \App\UserCertificate::find($request->id);
+        $certificate->update($request->form);
+        return $certificate;
+    }
+    //////////////////////////////////////
+    /////////////////////////////////////
+    public function listGovernancas(){
+        $id = 455128;
+        $governancas = \App\UserGovernanca::where('id_osc', $id)->get();
+        //$certificates = \App\UserCertificate::where('id_osc', auth()->user()->id)->get();
+        return $governancas;
+    }
+    public function editGovernancas($id){
+        $id = 455128;
+        $governanca = \App\UserGovernanca::where([
+            'id_osc', $id
+            /*['user_id', auth()->user()->id],
+            ['id', $id],*/
+        ])->first();
+        return $governanca;
+    }
+    public function updateGovernancas(Request $request){
+        $governanca = \App\UserGovernanca::find($request->id);
+        $governanca->update($request->form);
+        return $governanca;
+    }
+    public function removeGovernanca($id){
+        $governanca = \App\UserGovernanca::where([
+            /*['user_id', auth()->user()->id],*/
+            ['id_dirigente', $id],
+        ])->first();
+
+        $governanca->delete();
+    }
+    public function listConselhos(){
+        $id = 455128;
+        $conselhos = \App\UserConselho::where('id_osc', $id)->get();
+        return $conselhos;
+    }
+    ///////////////////////////////////
+
+
+
     public function detailDocument($id){
         $document = \App\Document::select('id', 'title', 'arquivo', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
             ->groupBy('id', 'title', 'arquivo')
@@ -94,21 +263,6 @@ class UserAreaController extends Controller
         $document->next_id = $next_id;
         return $document;
     }
-    public function listTexts(){
-        $texts = \App\Text::all();
-        return $texts;
-    }
-    public function detailText($id){
-        $text = \App\Text::select('id', 'title', 'description', 'imagem', DB::Raw('min(id) as min_id', 'max(id) as max_id'))
-            ->groupBy('id', 'title', 'description', 'imagem')
-            ->find($id);
-        $previous_id = \App\Text::where('id', '<', $id)->max('id');
-        $next_id = \App\Text::where('id', '>', $id)->min('id');
-        $text->previous_id = $previous_id;
-        $text->next_id = $next_id;
-        return $text;
-    }
-
 
     public  function dashboardStatus(){
 
@@ -130,6 +284,68 @@ class UserAreaController extends Controller
         return $totaisStatus;
 
     }
+
+
+
+
+    ///////////////////////////////////////
+    ////////////DETALHAR//OSC//////////////
+    //////////////////////////////////////
+
+    public function getDescricao (){
+        $id = 455128;
+        $pagina = "http://mapa-osc-api.local/api/osc/descricao/".$id;
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data);
+
+        return ['descricao' => $data];
+        //return $data;
+    }
+
+
+
+    ///////////////////////////////////////
+    /////////////UPDATE//OSC///////////////
+    //////////////////////////////////////
+
+    public function updateDescricao(Request $request){
+
+        $id = 455128;
+        $pagina = "http://mapa-osc-api.local/api/osc/descricao/".$id;
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        /*curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));*/
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data);
+
+        return ['descricao' => $data];
+    }
+    /*public function updateDescricao(Request $request){
+
+        $data = $request->form;
+
+        $data['id'] = auth()->user()->id;
+
+        $user = \App\User::find($data['id']);
+
+        $user->update($data);
+
+        return ['user' => $user];
+    }*/
+
 
 }
 

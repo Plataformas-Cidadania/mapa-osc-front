@@ -15,10 +15,10 @@
             </div>
             <div class="col-md-6 text-lg-right text-md-right">
                 <ul id="botoes" >
-                    <li class="bg-pri box-font-size rounded-circle"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}} href="#">A+</a></li>
-                    <li class="bg-sec box-font-size rounded-circle"><a id="reset_fonte" href="#">A&nbsp;</a></li>
-                    <li class="bg-ter box-font-size rounded-circle"><a id="reduz_fonte" href="#">A-</a></li>
-                    <li><a href="#" class="btn-constrat"><i class="fas fa-adjust fa-2x" style="vertical-align: middle;"></i> Alto contraste</a></li>
+                    <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
+                    <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
+                    <li class="bg-ter box-font-size rounded-circle cursor"><a id="reduz_fonte">A-</a></li>
+                    <li><a class="btn-constrat cursor"><i class="fas fa-adjust fa-2x" style="vertical-align: middle;"></i> Alto contraste</a></li>
                     <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x" style="vertical-align: middle;"></i> Acessibilidade</a></li>
                 </ul>
             </div>
@@ -144,25 +144,31 @@
             <div class="col-md-12">
                 <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
-                        Logo site
+                        <img src="https://mapaosc.ipea.gov.br/img/logo.png" alt="" width="300">
                     </a>
                     <div>
                         <br>
                         <div class="btn-group">
                             <ul id="menu-desk">
                                 <li role="presentation"><a href="/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
-                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>Sobre</a></li>
+                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
-                                <li role="presentation"><a href="artigos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>
-                                <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
-                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a>
-                                    <ul id="menu-desk" class="noJS">
-                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente" @endif>Indicadores</a></li>
-                                        <li role="presentation"><a href="quem" accesskey="q" @if($rota=='quem') class="corrente" @endif>Sobre</a></li>
-                                        <li role="presentation"><a href="artigos" accesskey="artigos" @if($rota=='quem') class="corrente" @endif>Artigos</a></li>
-                                        <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
+                                <li role="presentation"><a href="" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
+                                    <ul class="noJS menu-desk-sub">
+                                        <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
+                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
                                     </ul>
                                 </li>
+                                <li role="presentation"><a href="" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
+                                    <ul class="noJS menu-desk-sub">
+                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
+                                        <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
+                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>
+                                        <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
+                                    </ul>
+                                </li>
+
+                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
                             </ul>
 
                             <div class="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -174,8 +180,9 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="/login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
                                 <a href="/register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
-                                <a href="minhaconta-oscs/1"><button class="dropdown-item" type="button">Minha OSCs</button></a>
-                                <a href="editar-osc"><button class="dropdown-item " type="button">Editar</button></a>
+                                <a href="/register"><button class="dropdown-item" type="button">Estado e Município</button></a>
+                                <a href="/oscs-user"><button class="dropdown-item" type="button">Minha OSCs</button></a>
+                                <a href="/oscs-user"><button class="dropdown-item " type="button">Editar</button></a>
                                 <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
                             </div>
                         </div>
@@ -209,7 +216,7 @@
         </div>--}}
     @if($rota=='/')
         <div class="owl-carousel owl-theme">
-            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=1" data-src-retina="https://placehold.it/1180x250&text=1-retina" alt="">
+            {{--<img class="owl-lazy" data-src="https://placehold.it/1180x250&text=1" data-src-retina="https://placehold.it/1180x250&text=1-retina" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=2" data-src-retina="https://placehold.it/1180x250&text=2-retina" alt="">
             <picture>
                 <source class="owl-lazy" media="(min-width: 650px)" data-srcset="https://placehold.it/1180x250&text=3-large">
@@ -223,7 +230,19 @@
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=8" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=9" alt="">
             <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=10" alt="">
-            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">
+            <img class="owl-lazy" data-src="https://placehold.it/1180x250&text=11" alt="">--}}
+            {{--<img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/8923-mapa-osc.jpg" alt="">
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/5013-colabore.jpg" alt="">
+            <img class="owl-lazy" data-src="https://mapaosc.ipea.gov.br/cms/imagens/webdoors/9958-indicadores.jpg" alt="">--}}
+
+            @foreach($webdoors as $webdoor)
+                <picture>
+                    <source class="owl-lazy" media="(min-width: 350px)" data-srcset="imagens/webdoors/lg-{{$webdoor->imagem}}">
+                    <source class="owl-lazy" media="(min-width: 650px)" data-srcset="imagens/webdoors/md-{{$webdoor->imagem}}">
+                    <img class="owl-lazy" data-src="imagens/webdoors/lg-{{$webdoor->imagem}}" alt="">
+                </picture>
+            @endforeach
+
         </div>
     @endif
 

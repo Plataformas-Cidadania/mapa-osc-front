@@ -3,14 +3,16 @@ class Indicator extends React.Component{
         super(props);
         this.state = {
             mychart: null,
-            data: [],
+            data: {
+                chart: {},
+                chart2: {}
+            },
             loading: false,
             yaxis: [],
             labels: [],
-            labels2: [],
             series: [],
-            series2: [],
-            chart2: [],
+
+            table: ['teste'],
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -21,24 +23,9 @@ class Indicator extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        //console.log(props);
-
         this.setState({
             data: props.data,
-            labels: props.data.chart.labels,
-            series: props.data.chart.series,
-            labels2: props.data.chart2.labels,
-            series2: props.data.chart2.series
         });
-
-
-        /*console.log(props)
-        this.setState({
-            data: props.data,
-            labels: props.data.labels,
-            series: props.data.series,
-        });*/
-
     }
 
     loadChart(props){
@@ -46,6 +33,34 @@ class Indicator extends React.Component{
     }
 
     modal(){
+
+        let tbody = [];
+
+        if(this.state.table){
+            tbody = (
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            );
+        }
+
         return (
         <div className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
@@ -68,26 +83,7 @@ class Indicator extends React.Component{
                                 <th scope="col">Nickname</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                            </tbody>
+                            {tbody}
                         </table>
 
                         <div className="bd-callout bd-callout-warning">
@@ -105,19 +101,39 @@ class Indicator extends React.Component{
         )
     }
 
+    showHideColumn(){
+        document.getElementById('line').setAttribute("class", "col-md-9");
+        document.getElementById('column').setAttribute("class", "col-md-3");
+        document.getElementById('column').style.display = "block";
+        document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top icons-top-active cursor");
+        document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top cursor");
+    }
+    showHideLine(){
+        document.getElementById('line').setAttribute("class", "col-md-12");
+        document.getElementById('column').style.display = "none";
+        document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top icons-top-active cursor");
+        document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top cursor");
+    }
+
+
     render(){
 
-            //console.log("11", this.state.data.chart2.series);
 
+
+        let modal = this.modal();
 
         return (
             <div>
-                {/*{this.state.yaxis}<br/>
-                {this.state.series}<br/>
-                {this.state.labels}<br/>*/}
+
+
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-12" style={{margin: '-20px 0 0 0'}}>
+                            <a onClick={() => this.showHideLine()}><i id="iconLine" className="fas fa-bars fa-2x float-right icons-top curso-poite cursor"/></a>
+                            <a onClick={() => this.showHideColumn()}><i id="iconColumn" className="fas fa-columns fa-2x float-right icons-top icons-top-active cursor"/></a>
+                            <br/><br/>
+                        </div>
+                        <div id="column" className="col-md-3">
                             <ul className="menu-left menu-left-chart">
                                 <li className="list-group-item-theme  menu-left-active">
                                     <a href="#">1- Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
@@ -129,7 +145,7 @@ class Indicator extends React.Component{
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-md-9">
+                        <div id="line" className="col-md-9">
                             {/*Bloco Chart start*/}
                             <div className="box-chart">
                                 <div className="title-style" style={{perspective: '1000px'}}>
@@ -139,7 +155,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
                                 {/*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
@@ -160,7 +176,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>
+                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
                                 {/*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
@@ -182,7 +198,7 @@ class Indicator extends React.Component{
                                          style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                                     <hr/>
                                 </div>
-                                <PieChart id='pie-chart' series={this.state.series2} labels={this.state.labels2}/>
+                                <PieChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>
                                 {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
                                 <p className="box-chart-font bg-lgt">
                                     <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
@@ -203,6 +219,8 @@ class Indicator extends React.Component{
                             <MixedChart  id='mix-chart2' yaxis={this.state.brtDataMonthChartY} series={this.state.brtDataMonthChart} labels={this.state.labelsMonth}/>
                         </div>
                     </div>*/}
+
+                    {modal}
 
                 </div>
             </div>

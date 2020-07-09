@@ -4,12 +4,6 @@ class Register extends React.Component{
         this.state = {
             form: {
                 email: this.props.email,
-                cep: this.props.cep,
-                endereco: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                complemento: '',
             },
             button: true,
             loading: false,
@@ -18,65 +12,22 @@ class Register extends React.Component{
                 email: true,
                 password: true,
                 cpf: true,
-                nascimento: true,
-                sexo: true,
-                cel: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
                 cnpj: true,
-                razao_social: true,
-                inscricao_estadual: true,
             },
             showMsg: false,
             msg: '',
-            juridica: false
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
-        this.diplayJuridica = this.diplayJuridica.bind(this);
     }
 
     componentDidMount() {
-        if (this.state.form.cep!=""){
-            this.getAddress();
-        }
+
     }
 
-    diplayJuridica(value){
-        this.setState({juridica: value})
-    }
 
-    getAddress(){
-        this.setState({loadingCep: true});
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/'+this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({loadingCep: false, form: form})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
 
     handleInputChange(event) {
         const target = event.target;
@@ -99,6 +50,7 @@ class Register extends React.Component{
             value = maskCel(value);
         }
 
+
         let form = this.state.form;
         form[name] = value;
 
@@ -112,10 +64,10 @@ class Register extends React.Component{
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        for(let index in requireds){
+        /*for(let index in requireds){
             if(!form[index] || form[index]==''){
                 requireds[index] = false;
-                if((index==="cnpj" || index==="razao_social" || index==="inscricao_estadual") && !this.state.juridica){
+                if((index==="cnpj"/!* || index==="razao_social" || index==="inscricao_estadual"*!/)){
                     requireds[index] = true;
                 }else{
                     valid = false;
@@ -123,27 +75,25 @@ class Register extends React.Component{
             }else{
                 requireds[index] = true;
             }
-        }
+        }*/
+
 
         if(!this.validateName(this.state.form.name)){
             requireds.name = false;
             valid = false;
         }
 
-        if(!this.validateCel(this.state.form.cel)){
-            requireds.cel = false;
-            valid = false;
-        }
 
         if(!validateCpf(this.state.form.cpf)){
             requireds.cpf = false;
             valid = false;
         }
 
-        //console.log(requireds);
-
+        console.log(valid);
         this.setState({requireds: requireds});
         return valid;
+
+
     }
 
     validateName(name){
@@ -151,8 +101,6 @@ class Register extends React.Component{
             return false;
         }
         let array_name = name.split(' ');
-        console.log(array_name);
-        console.log(array_name.length);
         if(array_name.length<2){
             return false;
         }
@@ -160,56 +108,25 @@ class Register extends React.Component{
         return true;
     }
 
-    validateCel(cel){
-        if(!cel){
-            return false;
-        }
-        cel = cel.replace(/[^0-9]/g,'');
-        console.log(cel);
-        let qtd = cel.length;
-
-        if(qtd < 10 || qtd > 11){
-            return false;
-        }
-
-        if(qtd === 11){
-            if(cel.substr(2,1)!=9){
-                return false;
-            }
-            if(cel.substr(3,1)!=9 && cel.substr(3,1)!=8 && cel.substr(3,1)!=7 && cel.substr(3,1)!=6){
-                return false;
-            }
-        }
-
-        if(qtd === 10){
-            if(cel.substr(2,1)!=9 && cel.substr(2,1)!=8 && cel.substr(2,1)!=7 && cel.substr(2,1)!=6){
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     register(e){
         e.preventDefault();
 
+        ////Voltar o validar
         if(!this.validate()){
             return;
         }
 
+        console.log("222");
+
         let form = this.state.form;
-        form.tipo = 1;
-        if(this.state.juridica){
-            form.tipo = 2;
-        }
 
         this.setState({loading: true, button: false, showMsg: false, msg: '', form: form}, function(){
             $.ajax({
                 method:'POST',
                 url: '/register',
                 data:{
-                    form: this.state.form,
-                    carrinho: this.props.carrinho
+                    form: this.state.form
                 },
                 cache: false,
                 success: function(data) {
@@ -228,7 +145,7 @@ class Register extends React.Component{
                         return;
                     }
 
-                    location.href = '/register-addresses';
+                    location.href = '/login';
                     //this.setState({loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -241,10 +158,19 @@ class Register extends React.Component{
 
     }
 
+    showHidePassword(){
+        $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+        $('#faView').attr("class", ($('#faView').get(0).classList[1]==="fa-eye" ? "fa-eye-slash" : "fa-eye"));
+
+        /*if($('#faView').get(0).classList[1]==="fa-eye"){
+            $('#faView').attr("class", "fa-eye-slash");
+        }else{
+            $('#faView').attr("class", "fa-eye");
+        }*/
+    }
+
 
     render(){
-
-        console.log(this.state.requireds.name);
 
         return (
             <div>
@@ -274,15 +200,36 @@ class Register extends React.Component{
 
                                 <br/><br/>
                                 <h3>Sendo um representante da organização, você poderá</h3>
-                                <ul>
+                                <br/>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-info-circle fa-3x text-primary"/><br/>
+                                            Informar dados da organização<br/>&nbsp;
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-hands-helping fa-3x text-primary"/><br/>
+                                            Compartilhar informações com seus amigos
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="bg-light text-center p-3">
+                                            <i className="fas fa-puzzle-piece fa-3x text-primary"/><br/>
+                                            Definir suas preferências no mapa
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*<ul>
                                     <li>Informar dados da organização.</li>
                                     <li>Compartilhar informações com seus amigos.</li>
                                     <li>Definir suas preferências no mapa.</li>
-                                </ul>
+                                </ul>*/}
                                 <br/>
                                 <div className="row">
-
                                     <div className="col-md-6">
+                                        <br/>
                                         <label htmlFor="cnpj">CNPJ*</label><br/>
                                         <input className={"form-control form-m "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} placeholder="CNPJ" value={this.state.form.cnpj}  maxLength="18"/><br/>
                                     </div>
@@ -295,16 +242,15 @@ class Register extends React.Component{
                                     <div className="col-md-5">
                                         <label htmlFor="password">Senha*</label><br/>
                                         <div className="input-icon">
-                                            <input className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
-                                            <i className="far fa-eye-slash"/>
+                                            <input id="password" className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
+                                            <a onClick={() => this.showHidePassword()}><i id="faView" className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                         </div>
                                         <br/>
                                     </div>
 
                                     <div className="col-md-12">
                                         <label htmlFor="name">
-                                            <div style={{display: this.state.juridica ? 'none' : 'block'}}>Seu nome e sobrenome*</div>
-                                            <div style={{display: this.state.juridica ? 'block' : 'none'}}>Responsável*</div>
+                                            <div>Seu nome e sobrenome*</div>
                                         </label><br/>
                                         <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder="Nome"/><br/>
                                     </div>
@@ -346,6 +292,6 @@ class Register extends React.Component{
 }
 
 ReactDOM.render(
-    <Register  email={email} cep={cep}/>,
+    <Register  email={email}/>,
     document.getElementById('register')
 );

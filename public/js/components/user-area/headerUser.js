@@ -7,17 +7,36 @@ class HeaderUser extends React.Component {
     render() {
         return React.createElement(
             "div",
-            { className: "container" },
+            null,
             React.createElement(
                 "div",
-                { className: "title-box" },
-                React.createElement("br", null),
+                { className: "container-fluid" },
                 React.createElement(
-                    "h2",
-                    { className: "text-center" },
-                    "\xC1rea do Associado"
-                ),
-                React.createElement("hr", null)
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-md-12" },
+                        React.createElement("br", null),
+                        React.createElement(
+                            "h1",
+                            null,
+                            "Minha conta"
+                        ),
+                        React.createElement(
+                            "h5",
+                            null,
+                            React.createElement(
+                                "a",
+                                { href: "/" },
+                                "Home"
+                            )
+                        ),
+                        React.createElement("div", { className: "line line-fix " }),
+                        React.createElement("hr", { style: { marginTop: '-2px' } }),
+                        React.createElement("br", null)
+                    )
+                )
             )
         );
     }

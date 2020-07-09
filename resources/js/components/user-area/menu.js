@@ -7,23 +7,30 @@ class Menu extends React.Component{
     }
 
     render(){
-
         return(
-            <ul className="menu-area">
-                <li><a href="/dashboard-user"><i className="fa fa-home" aria-hidden="true"></i> Minha área</a></li>
-                <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"></i> Meus Dados</a></li>
-                <li><a href="/dados-textos"><i className="fa fa-book" aria-hidden="true"></i> Textos</a></li>
-                <li><a href="/dados-arquivos"><i className="fa fa-file" aria-hidden="true"></i> Arquivos</a></li>
-                <li><a href="/videos-privados"><i className="fa fa-video" aria-hidden="true"></i> Vídeos</a></li>
-                {/*<li><a href="/orders-user"><i className="fa fa-truck" aria-hidden="true"></i> Meus pedidos</a></li>*/}
-                {/*<li><a href="/addresses-user"><i className="fa fa-map-marker" aria-hidden="true"></i> Meus endereços</a></li>*/}
-                {/*<li><a href="/lista-desejo"><i className="fa fa-heart" aria-hidden="true"></i> Lista de desejos</a></li>*/}
-                {/*<li><a href="/avaliacoes"><i className="fa fa-star" aria-hidden="true"></i> Gerir avaliações</a></li>*/}
-                {/*<li><a href="/meus-cupons"><i className="fa fa-ticket" aria-hidden="true"></i> Meus cupons</a></li>*/}
-                {/*<li><a href="/cartao-user"><i className="fa fa-address-card" aria-hidden="true"></i> Cartão</a></li>*/}
-                {/*<li><a href="/troca"><i className="fa fa-exchange" aria-hidden="true"></i> Troca</a></li>*/}
-                <li><a href="/logout-user"><i className="fa fa-power-off" aria-hidden="true"></i> Sair</a></li>
-            </ul>
+            <div>
+                <ul className="menu-area">
+                    <li><a href="/dashboard-user"><i className="fa fa-home" aria-hidden="true"></i> Minha área</a></li>
+                    <li><a href="/oscs-user"><i className="fa fa-user" aria-hidden="true"></i> Minhas OSCs</a></li>
+                    <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"></i> Meus Dados</a></li>
+                    <li><a href="/declaracao"><i className="fa fa-user" aria-hidden="true"></i> Declaração</a></li>
+                    <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"></i> Selo Site</a></li>
+                    <li><a href="/logout-user"><i className="fa fa-power-off" aria-hidden="true"></i> Sair</a></li>
+                </ul>
+                <br/>
+                <ul className="menu-area">
+                    <li className="">OSC Apac</li>
+                    <div className="line line-fix "></div><br/>
+                    <li><a href="/osc-user/789809"><i className="fa fa-user" aria-hidden="true"></i> Dados gerais</a></li>
+                    <li><a href="/areas-atuacao-user"><i className="fa fa-user" aria-hidden="true"></i> Áreas de atuação</a></li>
+                    <li><a href="/descricao-user"><i className="fas fa-align-justify" aria-hidden="true"></i> Descrição</a></li>
+                    <li><a href="/certificates-user"><i className="fas fa-certificate" aria-hidden="true"></i> Títulos e Certificados</a></li>
+                    <li><a href="/governancas-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Trabalho e Governança</a></li>
+                    <li><a href="/participacoes-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Participação Social</a></li>
+                    <li><a href="/projetos-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Projetos</a></li>
+                    <li><a href="/recursos-user"><i className="fas fa-briefcase" aria-hidden="true"></i> Fontes de recursos</a></li>
+                </ul>
+            </div>
         );
     }
 }

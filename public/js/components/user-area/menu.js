@@ -5,68 +5,163 @@ class Menu extends React.Component {
     }
 
     render() {
-
         return React.createElement(
-            "ul",
-            { className: "menu-area" },
+            "div",
+            null,
             React.createElement(
-                "li",
-                null,
+                "ul",
+                { className: "menu-area" },
                 React.createElement(
-                    "a",
-                    { href: "/dashboard-user" },
-                    React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
-                    " Minha \xE1rea"
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/dashboard-user" },
+                        React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
+                        " Minha \xE1rea"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/oscs-user" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " Minhas OSCs"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/dados-user" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " Meus Dados"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/declaracao" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " Declara\xE7\xE3o"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/dados-user" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " Selo Site"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/logout-user" },
+                        React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
+                        " Sair"
+                    )
                 )
             ),
+            React.createElement("br", null),
             React.createElement(
-                "li",
-                null,
+                "ul",
+                { className: "menu-area" },
                 React.createElement(
-                    "a",
-                    { href: "/dados-user" },
-                    React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
-                    " Meus Dados"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
+                    "li",
+                    { className: "" },
+                    "OSC Apac"
+                ),
+                React.createElement("div", { className: "line line-fix " }),
+                React.createElement("br", null),
                 React.createElement(
-                    "a",
-                    { href: "/dados-textos" },
-                    React.createElement("i", { className: "fa fa-book", "aria-hidden": "true" }),
-                    " Textos"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/osc-user/789809" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " Dados gerais"
+                    )
+                ),
                 React.createElement(
-                    "a",
-                    { href: "/dados-arquivos" },
-                    React.createElement("i", { className: "fa fa-file", "aria-hidden": "true" }),
-                    " Arquivos"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/areas-atuacao-user" },
+                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        " \xC1reas de atua\xE7\xE3o"
+                    )
+                ),
                 React.createElement(
-                    "a",
-                    { href: "/videos-privados" },
-                    React.createElement("i", { className: "fa fa-video", "aria-hidden": "true" }),
-                    " V\xEDdeos"
-                )
-            ),
-            React.createElement(
-                "li",
-                null,
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/descricao-user" },
+                        React.createElement("i", { className: "fas fa-align-justify", "aria-hidden": "true" }),
+                        " Descri\xE7\xE3o"
+                    )
+                ),
                 React.createElement(
-                    "a",
-                    { href: "/logout-user" },
-                    React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
-                    " Sair"
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/certificates-user" },
+                        React.createElement("i", { className: "fas fa-certificate", "aria-hidden": "true" }),
+                        " T\xEDtulos e Certificados"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/governancas-user" },
+                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        " Trabalho e Governan\xE7a"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/participacoes-user" },
+                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        " Participa\xE7\xE3o Social"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/projetos-user" },
+                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        " Projetos"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "/recursos-user" },
+                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        " Fontes de recursos"
+                    )
                 )
             )
         );

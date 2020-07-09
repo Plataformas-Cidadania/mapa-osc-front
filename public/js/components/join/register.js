@@ -3,13 +3,7 @@ class Register extends React.Component {
         super(props);
         this.state = {
             form: {
-                email: this.props.email,
-                cep: this.props.cep,
-                endereco: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                complemento: ''
+                email: this.props.email
             },
             button: true,
             loading: false,
@@ -18,65 +12,18 @@ class Register extends React.Component {
                 email: true,
                 password: true,
                 cpf: true,
-                nascimento: true,
-                sexo: true,
-                cel: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
-                cnpj: true,
-                razao_social: true,
-                inscricao_estadual: true
+                cnpj: true
             },
             showMsg: false,
-            msg: '',
-            juridica: false
+            msg: ''
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
-        this.diplayJuridica = this.diplayJuridica.bind(this);
     }
 
-    componentDidMount() {
-        if (this.state.form.cep != "") {
-            this.getAddress();
-        }
-    }
-
-    diplayJuridica(value) {
-        this.setState({ juridica: value });
-    }
-
-    getAddress() {
-        this.setState({ loadingCep: true });
-        $.ajax({
-            method: 'GET',
-            url: '/get-address/' + this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({ loadingCep: false, form: form });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
+    componentDidMount() {}
 
     handleInputChange(event) {
         const target = event.target;
@@ -112,26 +59,21 @@ class Register extends React.Component {
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        for (let index in requireds) {
-            if (!form[index] || form[index] == '') {
+        /*for(let index in requireds){
+            if(!form[index] || form[index]==''){
                 requireds[index] = false;
-                if ((index === "cnpj" || index === "razao_social" || index === "inscricao_estadual") && !this.state.juridica) {
+                if((index==="cnpj"/!* || index==="razao_social" || index==="inscricao_estadual"*!/)){
                     requireds[index] = true;
-                } else {
+                }else{
                     valid = false;
                 }
-            } else {
+            }else{
                 requireds[index] = true;
             }
-        }
+        }*/
 
         if (!this.validateName(this.state.form.name)) {
             requireds.name = false;
-            valid = false;
-        }
-
-        if (!this.validateCel(this.state.form.cel)) {
-            requireds.cel = false;
             valid = false;
         }
 
@@ -140,8 +82,7 @@ class Register extends React.Component {
             valid = false;
         }
 
-        //console.log(requireds);
-
+        console.log(valid);
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -151,40 +92,8 @@ class Register extends React.Component {
             return false;
         }
         let array_name = name.split(' ');
-        console.log(array_name);
-        console.log(array_name.length);
         if (array_name.length < 2) {
             return false;
-        }
-
-        return true;
-    }
-
-    validateCel(cel) {
-        if (!cel) {
-            return false;
-        }
-        cel = cel.replace(/[^0-9]/g, '');
-        console.log(cel);
-        let qtd = cel.length;
-
-        if (qtd < 10 || qtd > 11) {
-            return false;
-        }
-
-        if (qtd === 11) {
-            if (cel.substr(2, 1) != 9) {
-                return false;
-            }
-            if (cel.substr(3, 1) != 9 && cel.substr(3, 1) != 8 && cel.substr(3, 1) != 7 && cel.substr(3, 1) != 6) {
-                return false;
-            }
-        }
-
-        if (qtd === 10) {
-            if (cel.substr(2, 1) != 9 && cel.substr(2, 1) != 8 && cel.substr(2, 1) != 7 && cel.substr(2, 1) != 6) {
-                return false;
-            }
         }
 
         return true;
@@ -193,23 +102,21 @@ class Register extends React.Component {
     register(e) {
         e.preventDefault();
 
+        ////Voltar o validar
         if (!this.validate()) {
             return;
         }
 
+        console.log("222");
+
         let form = this.state.form;
-        form.tipo = 1;
-        if (this.state.juridica) {
-            form.tipo = 2;
-        }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '', form: form }, function () {
             $.ajax({
                 method: 'POST',
                 url: '/register',
                 data: {
-                    form: this.state.form,
-                    carrinho: this.props.carrinho
+                    form: this.state.form
                 },
                 cache: false,
                 success: function (data) {
@@ -228,7 +135,7 @@ class Register extends React.Component {
                         return;
                     }
 
-                    location.href = '/register-addresses';
+                    location.href = '/login';
                     //this.setState({loading: false})
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -239,9 +146,18 @@ class Register extends React.Component {
         });
     }
 
-    render() {
+    showHidePassword() {
+        $('#password').get(0).type = $('#password').get(0).type === 'text' ? 'password' : 'text';
+        $('#faView').attr("class", $('#faView').get(0).classList[1] === "fa-eye" ? "fa-eye-slash" : "fa-eye");
 
-        console.log(this.state.requireds.name);
+        /*if($('#faView').get(0).classList[1]==="fa-eye"){
+            $('#faView').attr("class", "fa-eye-slash");
+        }else{
+            $('#faView').attr("class", "fa-eye");
+        }*/
+    }
+
+    render() {
 
         return React.createElement(
             'div',
@@ -301,23 +217,44 @@ class Register extends React.Component {
                                 null,
                                 'Sendo um representante da organiza\xE7\xE3o, voc\xEA poder\xE1'
                             ),
+                            React.createElement('br', null),
                             React.createElement(
-                                'ul',
-                                null,
+                                'div',
+                                { className: 'row' },
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Informar dados da organiza\xE7\xE3o.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-info-circle fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Informar dados da organiza\xE7\xE3o',
+                                        React.createElement('br', null),
+                                        '\xA0'
+                                    )
                                 ),
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Compartilhar informa\xE7\xF5es com seus amigos.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-hands-helping fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Compartilhar informa\xE7\xF5es com seus amigos'
+                                    )
                                 ),
                                 React.createElement(
-                                    'li',
-                                    null,
-                                    'Definir suas prefer\xEAncias no mapa.'
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'bg-light text-center p-3' },
+                                        React.createElement('i', { className: 'fas fa-puzzle-piece fa-3x text-primary' }),
+                                        React.createElement('br', null),
+                                        'Definir suas prefer\xEAncias no mapa'
+                                    )
                                 )
                             ),
                             React.createElement('br', null),
@@ -327,6 +264,7 @@ class Register extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-6' },
+                                    React.createElement('br', null),
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'cnpj' },
@@ -360,8 +298,12 @@ class Register extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'input-icon' },
-                                        React.createElement('input', { className: "form-control form-m " + (this.state.requireds.password ? '' : 'invalid-field'), type: 'password', name: 'password', onChange: this.handleInputChange, placeholder: 'Senha' }),
-                                        React.createElement('i', { className: 'far fa-eye-slash' })
+                                        React.createElement('input', { id: 'password', className: "form-control form-m " + (this.state.requireds.password ? '' : 'invalid-field'), type: 'password', name: 'password', onChange: this.handleInputChange, placeholder: 'Senha' }),
+                                        React.createElement(
+                                            'a',
+                                            { onClick: () => this.showHidePassword() },
+                                            React.createElement('i', { id: 'faView', className: 'far fa-eye-slash', style: { cursor: 'pointer' } })
+                                        )
                                     ),
                                     React.createElement('br', null)
                                 ),
@@ -373,13 +315,8 @@ class Register extends React.Component {
                                         { htmlFor: 'name' },
                                         React.createElement(
                                             'div',
-                                            { style: { display: this.state.juridica ? 'none' : 'block' } },
+                                            null,
                                             'Seu nome e sobrenome*'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.juridica ? 'block' : 'none' } },
-                                            'Respons\xE1vel*'
                                         )
                                     ),
                                     React.createElement('br', null),
@@ -441,4 +378,4 @@ class Register extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Register, { email: email, cep: cep }), document.getElementById('register'));
+ReactDOM.render(React.createElement(Register, { email: email }), document.getElementById('register'));

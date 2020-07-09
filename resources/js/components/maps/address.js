@@ -18,7 +18,7 @@ var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoom
 var map = L.map('mapa', {
     center: [39.73, -104.99],
     zoom: 10,
-    layers: [grayscale, group, group2]
+    layers: [streets, group, group2]
 });
 
 var baseLayers = {

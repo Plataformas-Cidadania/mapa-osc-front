@@ -19,15 +19,9 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        if (carrinho > 0) {
-            //this.setState({target: '/register-account/'+carrinho});
-            this.setState({ target: '/register-addresses' });
-            return;
-        }
         if (!this.props.target) {
             this.setState({ target: '/area-user' });
         }
-        console.log(carrinho);
     }
 
     handleInputChange(event) {
@@ -98,11 +92,6 @@ class Login extends React.Component {
 
     render() {
 
-        let plan = null;
-        if (carrinho > 0) {
-            plan = React.createElement('input', { type: 'hidden', name: 'carrinho', className: 'form-control', value: carrinho });
-        }
-
         let titleLogin = "Já tenho cadastro";
 
         return React.createElement(
@@ -171,7 +160,6 @@ class Login extends React.Component {
                                 React.createElement(
                                     'form',
                                     null,
-                                    plan,
                                     React.createElement('input', { type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content') }),
                                     React.createElement('input', { type: 'email', name: 'email', className: "form-control " + (this.state.requireds.email ? '' : 'invalid-field'), onChange: this.handleInputChange, placeholder: 'E-mail' }),
                                     React.createElement('br', null),

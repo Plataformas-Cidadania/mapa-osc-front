@@ -35,12 +35,12 @@
         <div class="row">
             @foreach($listsTop as $list)
             <div class="col-md-3 box-video">
-                <a href="video/{{$list->id}}/{{clean($list->title)}}">
-                    <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
+                <a href="video/{{$list->id}}/{{clean($list->titulo)}}">
+                    <img src="http://img.youtube.com/vi/{{substr($list->link_video, 32, 11)}}/0.jpg" alt="" width="100%">
                     <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
-                    <h2>{{$list->title}} ...</h2>
-                    <p>{{--<i class="far fa-eye"></i> --}}{{$list->views}} visualizações</p>
-                    <p>{{--<i class="far fa-clock"></i> --}}{{formatBr($list->date, 'ext')}}</p>
+                    <h2>{{$list->titulo}} ...</h2>
+                    <p>{{$list->views}} visualizações</p>
+                    <p>{{formatBr($list->data, 'ext')}}</p>
                 </a>
                 <br><br>
             </div>
@@ -59,14 +59,18 @@
         <div class="row">
             @foreach($lists as $list)
 
-            <div class="col-md-3 box-video">
-                <img src="http://img.youtube.com/vi/{{substr($list->url, 32, 11)}}/0.jpg" alt="" width="100%">
-                <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
-                <h2>{{$list->title}} ...</h2>
-                <p><i class="far fa-eye"></i> {{$list->views}} visualizações</p>
-                <p>2 meses atrás</p>
-                <br>
-            </div>
+                    <div class="col-md-3 box-video">
+                        <a href="video/{{$list->id}}/{{clean($list->titulo)}}">
+                            <img src="http://img.youtube.com/vi/{{substr($list->link_video, 32, 11)}}/0.jpg" alt="" width="100%">
+                            <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
+                            <h2>{{$list->titulo}} ...</h2>
+                            <p>{{$list->views}} visualizações</p>
+                            <p>{{formatBr($list->data, 'ext')}}</p>
+                            <br>
+                            <br>
+                        </a>
+                    </div>
+
             @endforeach
         </div>
         <br><br>

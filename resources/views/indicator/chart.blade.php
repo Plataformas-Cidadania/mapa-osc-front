@@ -5,21 +5,28 @@
 @section('image', '')
 @section('content')
 
-
-
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>Dados Indicadores</h1>
+                        <h1>{{$text->titulo}}</h1>
                         <h5><a href="/">Home</a> / </h5>
-                         <i class="fas fa-columns fa-2x float-right icons-top"></i>
-                         <i class="fas fa-bars fa-2x float-right icons-top icons-top-active"></i>
                         <br>
                     </header>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                {!!$text->descricao!!}
+                <br>
+                <br>
             </div>
         </div>
     </div>
@@ -177,6 +184,9 @@
         }
         .icons-top-active{
             color: #3A559B;
+        }
+        .cursor{
+            cursor: pointer;
         }
     </style>
 @endsection

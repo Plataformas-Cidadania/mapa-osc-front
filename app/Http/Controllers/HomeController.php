@@ -12,12 +12,12 @@ class HomeController extends Controller
 {
     public function index(){
 
-        $articles = \App\PubArticle::
-            join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
-            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
-            ->orderBy('id', 'desc')
-            ->take(3)
-            ->get();
+        $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
+        $teasers = \App\Teaser::orderBy('teaser')->get();
+        $text = \App\Text::where('slug', 'osc-proximas')->first();
+
+        $midiaSelect = ['noticia', 'noticias', 'Notícias', 'as notícias'];
+        $midias = \App\Noticia::orderBy('id', 'desc')->take(3)->get();
 
 
         $osc_recentes = DB::connection('map')
@@ -43,12 +43,78 @@ class HomeController extends Controller
 
         //return $area_atuacao;
 
-
         return view('home', [
-            'articles' => $articles,
+            'webdoors' => $webdoors,
+            'teasers' => $teasers,
             'osc_recentes' => $osc_recentes,
             'areas_atuacao' => $area_atuacao,
+            'text' => $text,
+            'midias' => $midias,
+            'midiaSelect' => $midiaSelect,
         ]);
+    }
+
+    public function getChartHome(){
+
+
+        //Distribuição por área de atuação/////////
+        $results = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_evolucao_anual')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   ano_fundacao as labels
+            "))
+            ->groupBy('quantidade_oscs', 'ano_fundacao')
+            ->where('localidade', 11)
+            ->where('ano_fundacao', '>', '2009')
+            ->orderBy('ano_fundacao')
+            ->get();
+
+        $data = [
+            'series' => [
+                ['name' => 'Nome Serie', 'type' => 'line', 'data' => []],//type: column, line, area
+            ],
+            'labels' => []
+        ];
+
+        foreach ($results as $item) {
+            array_push( $data['series'][0]['data'], $item->series);
+            array_push( $data['labels'], $item->labels);
+        }
+        //////////////////////////////////////////
+
+
+        $results2 = DB::connection('map')
+            ->table('analysis.vw_perfil_localidade_natureza_juridica')
+            ->select(DB::Raw("
+                   sum(quantidade_oscs) as series,
+                   natureza_juridica as title,
+                   localidade as labels
+            "))
+            ->groupBy('quantidade_oscs', 'natureza_juridica', 'localidade')
+            ->where('localidade', 11)
+            ->get();
+
+
+            $data2 = [
+                'series' => [
+                    ['name' => [], 'type' => 'column', 'data' => []],//type: column, line, area
+                ],
+                'labels' => []
+            ];
+
+            foreach ($results2 as $key => $item) {
+                array_push( $data2['series'][0]['data'], $item->series);
+                array_push( $data2['series'][0]['name'], $item->title);
+                array_push( $data2['labels'], $item->labels);
+            }
+        //////////////////////////////////////////
+
+        $results = [];
+        $results['chart'] = $data;
+        $results['chart2'] = $data2;
+        return $results;
+
     }
 }
 

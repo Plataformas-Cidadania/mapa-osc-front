@@ -13,7 +13,7 @@
                     <header>
                         <br>
                         <h1>Mapa</h1>
-                        <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> </h5>
+                        <h5><a href="/">Home</a> / <a href="artigos">Mapa das OSCs</a> </h5>
                         <br>
                     </header>
                 </div>
@@ -25,6 +25,17 @@
         <div class="row">
             <div class="col-md-12">
                 <style>
+                    .map-load{
+                        position:absolute;
+                        z-index:5;
+                        background-color:rgba(255,255,255,0.5);
+                        width:100%;
+                        height:600px;
+                        margin-right: -15px;
+                        margin-left: 0;
+                        text-align: center;
+                        padding-top: 200px;
+                    }
                     .map {
                         width: 100%;
                         height: 600px;

@@ -2,8 +2,13 @@ class Page extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            processingOsc: false,
+            processingOscIdhUfs: false,
             data: null,
-            territory: 1 //país (irá carregar as regiões)
+            territory: 1, //país (irá carregar as regiões),
+            dataOscUf: null,
+            dataIdhUf: null
+
         };
 
         this.load = this.load.bind(this);
@@ -11,24 +16,48 @@ class Page extends React.Component {
 
     componentDidMount() {
         this.load();
+        this.loadOscUf();
     }
 
     load() {
         let _this = this;
-        $.ajax({
-            method: 'GET',
-            url: 'get-osc/' + this.state.territory,
-            data: {},
-            cache: false,
-            success: function (data) {
-                //console.log(data);
-                _this.setState({ data: data });
-            },
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({ loading: false });
-            }
+        this.setState({ processingOsc: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'get-osc/' + this.state.territory,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    //console.log(data);
+                    _this.setState({ data: data, processingOsc: false });
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
 
+            });
+        });
+    }
+
+    loadOscUf() {
+        let _this = this;
+        this.setState({ processingOscIdhUfs: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'get-osc-all-ufs/',
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    _this.setState({ dataOscUf: data['osc'], dataIdhUf: data['idh'], processingOscIdhUfs: false });
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
+
+            });
         });
     }
 
@@ -36,9 +65,13 @@ class Page extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement(MapTeste, {
+            React.createElement(OscMap, {
                 mapId: 'mapTeste',
-                data: this.state.data
+                data: this.state.data,
+                dataOscUf: this.state.dataOscUf,
+                dataIdhUf: this.state.dataIdhUf,
+                processingOsc: this.state.processingOsc,
+                processingOscIdhUfs: this.state.processingOscIdhUfs
             })
         );
     }
