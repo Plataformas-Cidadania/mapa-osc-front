@@ -146,12 +146,7 @@ class Filter extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-
-            /*headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },*/
-            //headers: {'Access-Control-Allow-Origin': '*'},
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            url: 'http://127.0.0.1:8000/api/menu/osc/area_atuacao',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -238,8 +233,8 @@ class Filter extends React.Component{
                                             <label htmlFor="name">Ano de Fundação</label>
                                             <div className="label-box-info-off"/>
                                         </div>
-                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'left'}}/>
-                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'right'}}/>
+                                        <input type="range" className="custom-range" min="0" max="5"  id="customRange2" style={{float:'left'}}/>
+                                        <input type="range" className="custom-range" min="0" max="5"  id="customRange2" style={{float:'right'}}/>
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">

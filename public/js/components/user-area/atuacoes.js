@@ -17,14 +17,14 @@ class Atuacoes extends React.Component {
             editId: 0
         };
 
-        this.list = this.list.bind(this);
+        this.listArea = this.listArea.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
     }
 
     componentDidMount() {
-        this.list();
+        this.listArea();
     }
 
     getAge(dateString) {
@@ -72,7 +72,7 @@ class Atuacoes extends React.Component {
             cache: false,
             success: function (data) {
                 //console.log(data);
-                this.list();
+                this.listArea();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
                 this.setState({ loadingRemove: loadingRemove });
@@ -89,12 +89,6 @@ class Atuacoes extends React.Component {
     showHideForm(action) {
         let showForm = !this.state.showForm;
 
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
 
         this.setState({ showForm: showForm, actionForm: actionForm });
@@ -104,14 +98,13 @@ class Atuacoes extends React.Component {
         this.setState({ showForm: false });
     }
 
-    list() {
+    listArea() {
 
         this.setState({ loadingList: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-atuacoes',
-            data: {},
+            method: 'GET',
+            url: 'http://mapa-osc-api.local/api/osc/areas_atuacao/455128',
             cache: false,
             success: function (data) {
                 console.log(data);
@@ -240,30 +233,32 @@ class Atuacoes extends React.Component {
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
-                                { className: 'form-group' },
+                                { className: 'custom-control custom-checkbox ' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
                                 React.createElement(
-                                    'div',
-                                    { className: 'form-check' },
-                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                        id: 'gridCheck' }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'form-check-label',
-                                            htmlFor: 'gridCheck' },
-                                        'Educa\xE7\xE3o infantil'
-                                    )
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                    'Associa\xE7\xE3o Privada'
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'form-check' },
-                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                        id: 'gridCheck2' }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'form-check-label',
-                                            htmlFor: 'gridCheck2' },
-                                        'Ensino m\xE9dio'
-                                    )
+                                    { className: 'invalid-feedback' },
+                                    'Example invalid feedback text'
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox ' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                    'Associa\xE7\xE3o Privada'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'invalid-feedback' },
+                                    'Example invalid feedback text'
                                 )
                             )
                         )

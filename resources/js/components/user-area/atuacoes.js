@@ -17,14 +17,14 @@ class Atuacoes extends React.Component{
             editId: 0,
         };
 
-        this.list = this.list.bind(this);
+        this.listArea = this.listArea.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
     }
 
     componentDidMount(){
-        this.list();
+        this.listArea();
     }
 
     getAge(dateString){
@@ -75,7 +75,7 @@ class Atuacoes extends React.Component{
             cache: false,
             success: function(data){
                 //console.log(data);
-                this.list();
+                this.listArea();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
                 this.setState({loadingRemove: loadingRemove});
@@ -93,12 +93,6 @@ class Atuacoes extends React.Component{
     showHideForm(action){
         let showForm = !this.state.showForm;
 
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-
-        this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -109,16 +103,13 @@ class Atuacoes extends React.Component{
         this.setState({showForm: false});
     }
 
-    list(){
+    listArea(){
 
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-atuacoes',
-            data: {
-
-            },
+            method: 'GET',
+            url: 'http://mapa-osc-api.local/api/osc/areas_atuacao/455128',
             cache: false,
             success: function(data){
                 console.log(data);
@@ -189,24 +180,21 @@ class Atuacoes extends React.Component{
                             </div>
                             <div>
                                 <br/>
-                                <div className="form-group">
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox"
-                                               id="gridCheck"/>
-                                        <label className="form-check-label"
-                                               htmlFor="gridCheck">
-                                            Educação infantil
-                                        </label>
+
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                        <div className="invalid-feedback">Example invalid feedback text</div>
                                     </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox"
-                                               id="gridCheck2"/>
-                                        <label className="form-check-label"
-                                               htmlFor="gridCheck2">
-                                            Ensino médio
-                                        </label>
+
+
+
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                        <div className="invalid-feedback">Example invalid feedback text</div>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -34,13 +34,13 @@ class Osc extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updateOsc = this.updateOsc.bind(this);
         this.validate = this.validate.bind(this);
-        this.getOsc = this.getOsc.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
+        this.getOsc = this.getOsc.bind(this);
     }
 
     componentDidMount(){
-        this.getOsc();
         this.getCabecalho();
+        this.getOsc();
     }
 
     getCabecalho(){
@@ -195,7 +195,7 @@ class Osc extends React.Component{
                                         </div>
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g"} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc}
+                                                <input className={"form-control form-g"} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} value={this.state.form.tx_nome_fantasia_osc}
                                                        placeholder="Insira o Nome Fantasia" />
                                                 <label htmlFor="tx_razao_social_osc">Nome Fantasia</label>
                                                 <div className="label-box-info-off">
@@ -211,8 +211,8 @@ class Osc extends React.Component{
                                             <div className="alert alert-secondary">
                                                 <i className="fas fa-database float-right tx-pri"/>
                                                 <strong>Endereço:</strong><br/>
-                                                {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}, ***<br/>
-                                                {this.state.form.tx_bairro}, {this.state.form.cd_municipio} - ***<br/>
+                                                {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}<br/>
+                                                {this.state.form.tx_bairro}, {this.state.form.tx_nome_municipio} - {this.state.form.tx_nome_uf}<br/>
                                                 <strong>CEP.:</strong> {this.state.form.nr_cep}
                                             </div>
                                         </div>
@@ -221,19 +221,21 @@ class Osc extends React.Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputEstado">Situação do Imóvel</label>
-                                            <select id="inputEstado" className="form-control">
-                                                <option selected>Escolher...</option>
-                                                <option>...</option>
+                                            <select name="tx_nome_situacao_imovel_osc" className={"form-control"} value={this.state.form.tx_nome_situacao_imovel_osc} onChange={this.handleInputChange}>
+                                                <option value="-1">Selecione</option>
+                                                <option value="Próprio">Próprio</option>
+                                                <option value="Alugado">Alugado</option>
+                                                <option value="Cedido">Cedido</option>
+                                                <option value="Comodato">Comodato</option>
                                             </select>
                                         </div>
                                         <div className="form-group col-md-4">
-                                            <label htmlFor="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
-                                            <input type="date" className="form-control" id="inputAddress2"
-                                                   placeholder="Apartamento, hotel, casa, etc."/>
+                                            <label htmlFor="inputAddress2">Ano de inscrição do CNPJ</label>
+                                            <input className={"form-control form-g "} type="date" name="dt_ano_cadastro_cnpj" onChange={this.handleInputChange} value={this.state.form.dt_ano_cadastro_cnpj}/>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputCity">Ano de Fundação</label>
-                                            <input type="date" className="form-control" id="inputCity"/>
+                                            <input className={"form-control form-g "} type="date" name="dt_fundacao_osc" onChange={this.handleInputChange} value={this.state.form.dt_fundacao_osc}/>
                                         </div>
                                     </div>
 
@@ -241,7 +243,7 @@ class Osc extends React.Component{
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_email" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal}
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_responsavel_legal" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal}
                                                        placeholder="Insira o Responsável Legal" />
                                                 <label htmlFor="tx_email">Responsável Legal</label>
                                                 <div className="label-box-info-off">
@@ -295,9 +297,9 @@ class Osc extends React.Component{
 
                                         <div className="col-md-12">
                                             <div className="label-float-tx">
-                                            <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
+                                            <textarea className="form-control form-g" name="tx_resumo_osc" onChange={this.handleInputChange} value={this.state.form.tx_resumo_osc}
                                                       rows="3" placeholder="O que a OSC faz"/>
-                                                <label htmlFor="tx_finalidades_estatutarias">O que a OSC faz</label>
+                                                <label htmlFor="tx_resumo_osc">O que a OSC faz</label>
                                                 <div className="label-box-info-tx">
                                                     <p>&nbsp;</p>
                                                 </div>
@@ -338,58 +340,16 @@ class Osc extends React.Component{
                                             </div>
                                             <div>
                                                 <div className="form-group">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck">
-                                                                1.1 Até 2030, erradicar a pobreza extrema para todas as
-                                                                pessoas em todos os lugares, atualmente medida como
-                                                                pessoas vivendo com menos de US$ 1,25 por dia
-                                                            </label>
+                                                    <div className="custom-control custom-checkbox ">
+                                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                                        <div className="invalid-feedback">Example invalid feedback text</div>
                                                     </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck2"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck2">
-                                                                1.2 Até 2030, reduzir pelo menos à metade a proporção de
-                                                                homens, mulheres e crianças, de todas as idades, que
-                                                                vivem na pobreza, em todas as suas dimensões, de acordo
-                                                                com as definições nacionais
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck3"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck3">
-                                                                1.3 Implementar, em nível nacional, medidas e sistemas
-                                                                de proteção social adequados, para todos, incluindo
-                                                                pisos, e até 2030 atingir a cobertura substancial dos
-                                                                pobres e vulneráveis
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck4"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck4">
-                                                                1.4 Até 2030, garantir que todos os homens e mulheres,
-                                                                particularmente os pobres e vulneráveis, tenham direitos
-                                                                iguais aos recursos econômicos, bem como o acesso a
-                                                                serviços básicos, propriedade e controle sobre a terra e
-                                                                outras formas de propriedade, herança, recursos
-                                                                naturais, novas tecnologias apropriadas e serviços
-                                                                financeiros, incluindo microfinanças
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck5"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck5">
-                                                                1.5 Até 2030, construir a resiliência dos pobres e
-                                                                daqueles em situação de vulnerabilidade, e reduzir a
-                                                                exposição e vulnerabilidade destes a eventos extremos
-                                                                relacionados com o clima e outros choques e desastres
-                                                                econômicos, sociais e ambientais
-                                                            </label>
+                                                    <br/>
+                                                    <div className="custom-control custom-checkbox ">
+                                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
+                                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
+                                                        <div className="invalid-feedback">Example invalid feedback text</div>
                                                     </div>
                                                 </div>
                                             </div>

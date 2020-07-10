@@ -16,7 +16,7 @@ class Page extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: 'get-home-chart',
+            url: 'get-localidade-chart',
             data: {},
             cache: false,
             success: function (data) {
@@ -35,7 +35,7 @@ class Page extends React.Component {
             'div',
             null,
             React.createElement(LocalidadeChart, {
-                homeId: 'home',
+                localidadeId: 'localidade',
                 data: this.state.data
             })
         );
