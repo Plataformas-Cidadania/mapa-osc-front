@@ -151,7 +151,7 @@ class Filter extends React.Component {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },*/
             //headers: {'Access-Control-Allow-Origin': '*'},
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            url: 'http://localhost:8000/api/menu/osc/area_atuacao/',
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, form: data, button: true });

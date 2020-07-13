@@ -113,7 +113,7 @@ class Osc extends React.Component {
                 success: function (data) {
 
                     /*let msg = 'Já existe outro cadastro com esse';
-                     if(data.tx_razao_social_osc || data.email){
+                      if(data.tx_razao_social_osc || data.email){
                         if(data.tx_razao_social_osc){
                             msg+= ' tx_razao_social_osc';
                         }

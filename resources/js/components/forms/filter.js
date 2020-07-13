@@ -151,7 +151,7 @@ class Filter extends React.Component{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },*/
             //headers: {'Access-Control-Allow-Origin': '*'},
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            url: 'http://localhost:8000/api/menu/osc/area_atuacao/',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -175,7 +175,7 @@ class Filter extends React.Component{
                                  aria-controls="collapse1">
                                 <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Dados Gerais
-                                 <i className="fas fa-angle-down float-right"></i>
+                                 <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse1" className="collapse show " aria-labelledby="heading1"
