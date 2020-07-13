@@ -146,8 +146,7 @@ class Filter extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/menu/osc/area_atuacao',
-            cache: false,
+            url: ' http://localhost:8000/api/menu/osc/area_atuacao',
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
             }.bind(this),

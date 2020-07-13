@@ -76,24 +76,7 @@ class MixedChart extends React.Component {
                     type: 'number',
                     categories: props.labels,
                 },
-                yaxis: [props.yaxis]
-                /*yaxis: [{
-                    title: {
-                        text: 'Website Blog',
-                    },
-
-                }, {
-                    opposite: true,
-                    title: {
-                        text: 'Social Media'
-                    }
-                }]*/
-                /*yaxis: {
-                    title: {
-                        text: 'Valores baseado primeira série',
-                    },
-                    min: 0
-                }*/,
+                yaxis: [props.yaxis],
                 tooltip: {
                     shared: true,
                     intersect: false,
@@ -110,26 +93,14 @@ class MixedChart extends React.Component {
             },
             series: [],
         };
-        //console.log(props.labels);
-        //console.log(series);
 
     }
-
-
-
-
-
-
 
     componentWillReceiveProps(props){
 
 
 
         if(props.series){
-            /*console.log(this.props.id, 'props series', props.series);
-            console.log(this.props.id, 'state series', this.state.series);
-            console.log(this.props.id, 'props labels', props.labels);
-            console.log(this.props.id, 'state labels', this.state.labels);*/
 
             if(props.series != this.state.series || props.labels != this.state.labels){
 
@@ -149,14 +120,6 @@ class MixedChart extends React.Component {
                         }
                     }
                 }
-
-                /*let series = [
-                    {
-                        name: 'teste',
-                        type: 'column',
-                        data: props.series,
-                    }
-                ];*/
                 this.setState({series: props.series, options: options, labels: labels}, function(){
                     //console.log(this.props.id);
                     //console.log(this.props.id, 'labels', labels);

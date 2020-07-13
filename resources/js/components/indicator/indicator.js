@@ -23,8 +23,41 @@ class Indicator extends React.Component{
     }
 
     componentWillReceiveProps(props){
+
+
+        let chart1 = props.data.series_1;
+
+        let labels = [];
+        let series = [];
+        let name = "Nome Serie";
+        let type = "Coluna";
+
+        for (var i = 0; i < chart1.length; i++) {
+            labels += chart1[i].label + ",";
+            series += chart1[i].value + ",";
+        }
+
+        labels = labels.split(',');
+
+        let data = series.split(',');
+
+        let chart = {
+            chart: {
+                labels,
+                series:{
+                    data,
+                    name,
+                    type,
+                },
+            }
+        }
+
+        console.log("Chart 1", chart);
+
+
         this.setState({
-            data: props.data,
+            data: chart,
+            //data: props.data,
         });
     }
 
