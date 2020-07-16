@@ -55,8 +55,8 @@ class Page extends React.Component {
         $.ajax({
             method:'GET',
             //url: 'get-indicador',
-            url: 'http://172.22.0.3/api/analises?id='+indicators[i],
-            //url: 'http://localhost:8000/api/analises?id='+indicators[i],
+            //url: 'http://172.22.0.3/api/analises?id='+indicators[i],
+            url: 'http://localhost:8000/api/analises?id='+indicators[i],
             data:{
 
             },
