@@ -89,15 +89,6 @@ class Atuacoes extends React.Component {
     showHideForm(action) {
         let showForm = !this.state.showForm;
 
-<<<<<<< HEAD
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-          this.setState({showForm: showForm, actionForm: action});*/
-
-=======
->>>>>>> 47d1157e720727e1fab6cde368c4a9c50beadedc
         let actionForm = action;
 
         this.setState({ showForm: showForm, actionForm: actionForm });

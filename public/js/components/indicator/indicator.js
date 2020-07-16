@@ -39,7 +39,8 @@ class Indicator extends React.Component {
             let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];
 
-            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
+            //let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico || "DonutChart" ? "line" : data[chart].tipo_grafico;
 
             for (let j in dataChart) {
 

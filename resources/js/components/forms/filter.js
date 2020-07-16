@@ -146,17 +146,8 @@ class Filter extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-<<<<<<< HEAD
-
-            /*headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },*/
-            //headers: {'Access-Control-Allow-Origin': '*'},
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao/',
             cache: false,
-=======
             url: ' http://localhost:8000/api/menu/osc/area_atuacao',
->>>>>>> 47d1157e720727e1fab6cde368c4a9c50beadedc
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
             }.bind(this),

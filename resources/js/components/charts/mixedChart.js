@@ -3,9 +3,6 @@ class MixedChart extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            count: 0
-        };
         console.log(props);
 
         this.state = {
@@ -79,7 +76,7 @@ class MixedChart extends React.Component {
                 },
                 xaxis: {
                     type: 'number',
-                    //categories: props.labels,
+                    categories: props.labels,
                     //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
                 },
                 yaxis: [props.yaxis],
@@ -97,7 +94,11 @@ class MixedChart extends React.Component {
                     }
                 }
             },
-            series: [/*{
+            series: [
+
+            ],
+            //series: [props.series],
+            /*series: [props.series/!*{
                 name: 'Website Blog',
                 type: 'column',
                 data: [440, 505, 414, 671, 227, 413]
@@ -105,7 +106,7 @@ class MixedChart extends React.Component {
                 name: 'Social Media',
                 type: 'column',
                 data: [23, 42, 35, 27, 43, 22]
-            }*/],
+            }*!/],*/
         };
 
     }
@@ -113,25 +114,18 @@ class MixedChart extends React.Component {
 
     //componentWillReceiveProps(props){
 
-    componentDidUpdate(prevProps) {
-        console.log("111");
-        if (this.props.chartColor !== prevProps.chartColor) {
-            this.chart.updateOptions({
-                colors: ["#00FF00"],
-                xaxis: {
-                    labels: {
-                        show: false
-                    }
-                },
-            })
-        }
-    }
+    /*static getDerivedStateFromProps(props) {
+        console.log(props);
 
-    componentDidUpdate2(props){
+    }*/
+    /*static getDerivedStateFromProps(props){*/
+    // componentDidUpdate (props){
 
-
-        if(props.series){
-
+    static componentDidUpdate(props){
+    //componentDidUpdate(prevProps, prevState, snapshot){
+        console.log('11');
+        if(props){
+            console.log('22');
             if(props.series != this.state.series || props.labels != this.state.labels){
 
                 let labels = [];
