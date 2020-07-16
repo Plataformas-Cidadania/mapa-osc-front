@@ -11,6 +11,7 @@ class Indicator extends React.Component{
             yaxis: [],
             labels: [],
             series: [],
+            charts: [],
 
             table: ['teste'],
         };
@@ -24,40 +25,82 @@ class Indicator extends React.Component{
 
     componentWillReceiveProps(props){
 
+        let data = props.data;
 
-        let chart1 = props.data.series_1;
+        let charts = [];
 
-        let labels = [];
-        let series = [];
-        let name = "Nome Serie";
-        let type = "Coluna";
+        for(let chart in data){
+            //console.log("######"+i+"######");
+            let dataChart = data[chart].series_1;
 
-        for (var i = 0; i < chart1.length; i++) {
-            labels += chart1[i].label + ",";
-            series += chart1[i].value + ",";
-        }
+            let labels = [];
+            let series = [];
+            let name = data[chart].titulo;
+            let tituloX = data[chart].titulo_colunas[0];
+            let tituloY = data[chart].titulo_colunas[1];
 
-        labels = labels.split(',');
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
 
-        let data = series.split(',');
 
-        let chart = {
-            chart: {
-                labels,
-                series:{
-                    data,
-                    name,
-                    type,
-                },
+
+            for(let j in dataChart){
+
+                //Quando tiver o key///////////////////////////////
+                if(dataChart[j].hasOwnProperty('key')){
+
+                    labels.push(dataChart[j].key);
+                    let values = dataChart[j].values;
+
+                    for(let k in values){
+
+                        if(!series[k]){
+                            series[k] = {};
+                        }
+
+                        series[k].name = values[k].label;
+                        series[k].type = tipoGrafico;
+                        if(!series[k].hasOwnProperty('data')){
+                            series[k].data = [];
+                        }
+                        series[k].data[j] = values[k].value;
+                    }
+
+                    //console.log(labels);
+                    //console.log(series);
+                    //charts.push({labels: labels, series:series});
+
+                    continue;
+                }
+                ///////////////////////////////////////////////////
+
+                //Não é executado se tiver o key//////////////
+                if(!series[j]){
+                    series[j] = {
+                        type: '',
+                        values: []
+                    };
+                }
+                labels.push(dataChart[j].label)
+                series[j].type = tipoGrafico;
+                series[j].values.push(dataChart[j].value);
+
+                ///////////////////////////////////////////////
+
+
             }
+
+            //console.log("CHART" + chart);
+            //console.log(series);
+
+            charts.push({chart: chart, labels: labels, series: series});
+
         }
 
-        console.log("Chart 1", chart);
-
+        //console.log(charts);
 
         this.setState({
-            data: chart,
-            //data: props.data,
+            charts: charts,
+            data: props.data,
         });
     }
 
@@ -151,6 +194,32 @@ class Indicator extends React.Component{
 
     render(){
 
+        let charts = null;
+
+        if(this.state.charts){
+            charts = this.state.charts.map(function(item){
+                return (
+                    <div className="box-chart" key={"divChart"+item.chart}>
+                        <div className="title-style" style={{perspective: '1000px'}}>
+                            <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
+                                Regiões, 2018</h2>
+                            <div className="line line-fix block" data-move-x="980px"
+                                 style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
+                            <hr/>
+                        </div>
+                        <MixedChart id={'mix-chart'+item.chart} yaxis={['Teste']} series={item.series} labels={item.labels}/>
+                        <p className="box-chart-font bg-lgt">
+                            <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
+                        </p>
+                        <div className="btn btn-outline-primary float-right" data-toggle="modal"
+                             data-target=".bd-example-modal-lg">Visualize os dados em tabela
+                        </div>
+                        <br/><br/>
+                    </div>
+
+                );
+            });
+        }
 
 
         let modal = this.modal();
@@ -179,79 +248,72 @@ class Indicator extends React.Component{
                             </ul>
                         </div>
                         <div id="line" className="col-md-9">
-                            {/*Bloco Chart start*/}
-                            <div className="box-chart">
-                                <div className="title-style" style={{perspective: '1000px'}}>
-                                    <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                        Regiões, 2018</h2>
-                                    <div className="line line-fix block" data-move-x="980px"
-                                         style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
-                                    <hr/>
-                                </div>
-                                <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
-                                {/*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*/}
-                                <p className="box-chart-font bg-lgt">
-                                    <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
-                                </p>
-                                <div className="btn btn-outline-primary float-right" data-toggle="modal"
-                                     data-target=".bd-example-modal-lg">Visualize os dados em tabela
-                                </div>
-                                <br/><br/>
-                            </div>
-                            {/*Bloco Chart end*/}
+                            {charts}
+                            {/*/!*Bloco Chart start*!/*/}
+                            {/*<div className="box-chart">*/}
+                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
+                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
+                            {/*            Regiões, 2018</h2>*/}
+                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
+                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
+                            {/*        <hr/>*/}
+                            {/*    </div>*/}
+                            {/*    <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>*/}
+                            {/*    /!*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*!/*/}
+                            {/*    <p className="box-chart-font bg-lgt">*/}
+                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
+                            {/*    </p>*/}
+                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
+                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
+                            {/*    </div>*/}
+                            {/*    <br/><br/>*/}
+                            {/*</div>*/}
+                            {/*/!*Bloco Chart end*!/*/}
 
-                            {/*Bloco Chart start*/}
-                            <div className="box-chart">
-                                <div className="title-style" style={{perspective: '1000px'}}>
-                                    <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                        Regiões, 2018</h2>
-                                    <div className="line line-fix block" data-move-x="980px"
-                                         style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
-                                    <hr/>
-                                </div>
-                                <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
-                                {/*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
-                                {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
-                                <p className="box-chart-font bg-lgt">
-                                    <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
-                                </p>
-                                <div className="btn btn-outline-primary float-right" data-toggle="modal"
-                                     data-target=".bd-example-modal-lg">Visualize os dados em tabela
-                                </div>
-                                <br/><br/>
-                            </div>
-                            {/*Bloco Chart end*/}
+                            {/*/!*Bloco Chart start*!/*/}
+                            {/*<div className="box-chart">*/}
+                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
+                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
+                            {/*            Regiões, 2018</h2>*/}
+                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
+                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
+                            {/*        <hr/>*/}
+                            {/*    </div>*/}
+                            {/*    <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>*/}
+                            {/*    /!*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*!/*/}
+                            {/*    /!*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*!/*/}
+                            {/*    <p className="box-chart-font bg-lgt">*/}
+                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
+                            {/*    </p>*/}
+                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
+                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
+                            {/*    </div>*/}
+                            {/*    <br/><br/>*/}
+                            {/*</div>*/}
+                            {/*/!*Bloco Chart end*!/*/}
 
-                            {/*Bloco Chart start*/}
-                            <div className="box-chart">
-                                <div className="title-style" style={{perspective: '1000px'}}>
-                                    <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                        Regiões, 2018</h2>
-                                    <div className="line line-fix block" data-move-x="980px"
-                                         style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
-                                    <hr/>
-                                </div>
-                                <PieChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>
-                                {/*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*/}
-                                <p className="box-chart-font bg-lgt">
-                                    <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
-                                </p>
-                                <div className="btn btn-outline-primary float-right" data-toggle="modal"
-                                     data-target=".bd-example-modal-lg">Visualize os dados em tabela
-                                </div>
-                                <br/><br/>
-                            </div>
-                            {/*Bloco Chart end*/}
+                            {/*/!*Bloco Chart start*!/*/}
+                            {/*<div className="box-chart">*/}
+                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
+                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
+                            {/*            Regiões, 2018</h2>*/}
+                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
+                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
+                            {/*        <hr/>*/}
+                            {/*    </div>*/}
+                            {/*    <PieChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
+                            {/*    /!*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*!/*/}
+                            {/*    <p className="box-chart-font bg-lgt">*/}
+                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
+                            {/*    </p>*/}
+                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
+                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
+                            {/*    </div>*/}
+                            {/*    <br/><br/>*/}
+                            {/*</div>*/}
+                            {/*/!*Bloco Chart end*!/*/}
                         </div>
                     </div>
-
-                   {/* <div className="row">
-                        <div className="col-md-7">
-                            <br/><br/>
-                            <h4>Quantidade Mensal e velocidade</h4>
-                            <MixedChart  id='mix-chart2' yaxis={this.state.brtDataMonthChartY} series={this.state.brtDataMonthChart} labels={this.state.labelsMonth}/>
-                        </div>
-                    </div>*/}
 
                     {modal}
 

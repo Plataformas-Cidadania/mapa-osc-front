@@ -114,10 +114,10 @@ class Certificates extends React.Component{
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-certificates',
+            method: 'GET',
+            //url: '/list-users-certificates',
+            url: 'http://localhost:8000/api/osc/certificados/455128',
             data: {
-
             },
             cache: false,
             success: function(data){

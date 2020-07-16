@@ -113,10 +113,10 @@ class Atuacoes extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/areas_atuacao/455128',
+            url: 'http://mapa-osc-api.local/api/areas_atuacao',
             cache: false,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 this.setState({ atuacoes: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -130,6 +130,7 @@ class Atuacoes extends React.Component {
 
         //console.log(this.state.showForm);
         //console.log('state.remove', this.state.remove);
+        console.log(this.state.atuacoes);
 
         let atuacoes = this.state.atuacoes.map(function (item, index) {
 

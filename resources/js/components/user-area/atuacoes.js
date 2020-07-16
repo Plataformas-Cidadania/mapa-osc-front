@@ -109,10 +109,10 @@ class Atuacoes extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/areas_atuacao/455128',
+            url: 'http://mapa-osc-api.local/api/areas_atuacao',
             cache: false,
             success: function(data){
-                console.log(data);
+                //console.log(data);
                 this.setState({atuacoes: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -126,8 +126,11 @@ class Atuacoes extends React.Component{
 
         //console.log(this.state.showForm);
         //console.log('state.remove', this.state.remove);
+        console.log(this.state.atuacoes);
 
         let atuacoes = this.state.atuacoes.map(function(item, index){
+
+
 
             let hr = null;
             if(index < this.state.atuacoes.length-1){
@@ -155,7 +158,10 @@ class Atuacoes extends React.Component{
         }.bind(this));
 
         return(
+
+
             <div>
+                {/*{this.state.atuacoes}*/}
                 <div className="row">
                     <div className="col-md-12">
                         <br/><br/>
@@ -180,6 +186,14 @@ class Atuacoes extends React.Component{
                             </div>
                             <div>
                                 <br/>
+
+                                {/*<select name="tx_nome_situacao_imovel_osc" className={"form-control"} value={this.state.form[0].tx_nome_area_atuacao} onChange={this.handleInputChange}>
+                                    <option value="-1">Selecione</option>
+                                    <option value="Próprio">Próprio</option>
+                                    <option value="Alugado">Alugado</option>
+                                    <option value="Cedido">Cedido</option>
+                                    <option value="Comodato">Comodato</option>
+                                </select>*/}
 
                                     <div className="custom-control custom-checkbox ">
                                         <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>

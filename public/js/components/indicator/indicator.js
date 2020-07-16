@@ -11,6 +11,7 @@ class Indicator extends React.Component {
             yaxis: [],
             labels: [],
             series: [],
+            charts: [],
 
             table: ['teste']
         };
@@ -24,38 +25,78 @@ class Indicator extends React.Component {
 
     componentWillReceiveProps(props) {
 
-        let chart1 = props.data.series_1;
+        let data = props.data;
 
-        let labels = [];
-        let series = [];
-        let name = "Nome Serie";
-        let type = "Coluna";
+        let charts = [];
 
-        for (var i = 0; i < chart1.length; i++) {
-            labels += chart1[i].label + ",";
-            series += chart1[i].value + ",";
+        for (let chart in data) {
+            //console.log("######"+i+"######");
+            let dataChart = data[chart].series_1;
+
+            let labels = [];
+            let series = [];
+            let name = data[chart].titulo;
+            let tituloX = data[chart].titulo_colunas[0];
+            let tituloY = data[chart].titulo_colunas[1];
+
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
+
+            for (let j in dataChart) {
+
+                //Quando tiver o key///////////////////////////////
+                if (dataChart[j].hasOwnProperty('key')) {
+
+                    labels.push(dataChart[j].key);
+                    let values = dataChart[j].values;
+
+                    for (let k in values) {
+
+                        if (!series[k]) {
+                            series[k] = {};
+                        }
+
+                        series[k].name = values[k].label;
+                        series[k].type = tipoGrafico;
+                        if (!series[k].hasOwnProperty('data')) {
+                            series[k].data = [];
+                        }
+                        series[k].data[j] = values[k].value;
+                    }
+
+                    //console.log(labels);
+                    //console.log(series);
+                    //charts.push({labels: labels, series:series});
+
+                    continue;
+                }
+                ///////////////////////////////////////////////////
+
+                //Não é executado se tiver o key//////////////
+                if (!series[j]) {
+                    series[j] = {
+                        type: '',
+                        values: []
+                    };
+                }
+                labels.push(dataChart[j].label);
+                series[j].type = tipoGrafico;
+                series[j].values.push(dataChart[j].value);
+
+                ///////////////////////////////////////////////
+
+            }
+
+            //console.log("CHART" + chart);
+            //console.log(series);
+
+            charts.push({ chart: chart, labels: labels, series: series });
         }
 
-        labels = labels.split(',');
-
-        let data = series.split(',');
-
-        let chart = {
-            chart: {
-                labels,
-                series: {
-                    data,
-                    name,
-                    type
-                }
-            }
-        };
-
-        console.log("Chart 1", chart);
+        //console.log(charts);
 
         this.setState({
-            data: chart
-            //data: props.data,
+            charts: charts,
+            data: props.data
         });
     }
 
@@ -252,6 +293,48 @@ class Indicator extends React.Component {
 
     render() {
 
+        let charts = null;
+
+        if (this.state.charts) {
+            charts = this.state.charts.map(function (item) {
+                return React.createElement(
+                    "div",
+                    { className: "box-chart", key: "divChart" + item.chart },
+                    React.createElement(
+                        "div",
+                        { className: "title-style", style: { perspective: '1000px' } },
+                        React.createElement(
+                            "h2",
+                            null,
+                            "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
+                        ),
+                        React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
+                            style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
+                        React.createElement("hr", null)
+                    ),
+                    React.createElement(MixedChart, { id: 'mix-chart' + item.chart, yaxis: ['Teste'], series: item.series, labels: item.labels }),
+                    React.createElement(
+                        "p",
+                        { className: "box-chart-font bg-lgt" },
+                        React.createElement(
+                            "strong",
+                            null,
+                            "Fonte:"
+                        ),
+                        " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
+                            "data-target": ".bd-example-modal-lg" },
+                        "Visualize os dados em tabela"
+                    ),
+                    React.createElement("br", null),
+                    React.createElement("br", null)
+                );
+            });
+        }
+
         let modal = this.modal();
 
         return React.createElement(
@@ -308,111 +391,7 @@ class Indicator extends React.Component {
                     React.createElement(
                         "div",
                         { id: "line", className: "col-md-9" },
-                        React.createElement(
-                            "div",
-                            { className: "box-chart" },
-                            React.createElement(
-                                "div",
-                                { className: "title-style", style: { perspective: '1000px' } },
-                                React.createElement(
-                                    "h2",
-                                    null,
-                                    "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
-                                ),
-                                React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
-                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
-                                React.createElement("hr", null)
-                            ),
-                            React.createElement(MixedChart, { id: "mix-chart1", yaxis: ['Teste'], series: this.state.data.chart.series, labels: this.state.data.chart.labels }),
-                            React.createElement(
-                                "p",
-                                { className: "box-chart-font bg-lgt" },
-                                React.createElement(
-                                    "strong",
-                                    null,
-                                    "Fonte:"
-                                ),
-                                " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
-                                    "data-target": ".bd-example-modal-lg" },
-                                "Visualize os dados em tabela"
-                            ),
-                            React.createElement("br", null),
-                            React.createElement("br", null)
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "box-chart" },
-                            React.createElement(
-                                "div",
-                                { className: "title-style", style: { perspective: '1000px' } },
-                                React.createElement(
-                                    "h2",
-                                    null,
-                                    "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
-                                ),
-                                React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
-                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
-                                React.createElement("hr", null)
-                            ),
-                            React.createElement(MixedChart, { id: "mix-chart2", yaxis: ['Teste'], series: this.state.data.chart.series, labels: this.state.data.chart.labels }),
-                            React.createElement(
-                                "p",
-                                { className: "box-chart-font bg-lgt" },
-                                React.createElement(
-                                    "strong",
-                                    null,
-                                    "Fonte:"
-                                ),
-                                " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
-                                    "data-target": ".bd-example-modal-lg" },
-                                "Visualize os dados em tabela"
-                            ),
-                            React.createElement("br", null),
-                            React.createElement("br", null)
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "box-chart" },
-                            React.createElement(
-                                "div",
-                                { className: "title-style", style: { perspective: '1000px' } },
-                                React.createElement(
-                                    "h2",
-                                    null,
-                                    "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
-                                ),
-                                React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
-                                    style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
-                                React.createElement("hr", null)
-                            ),
-                            React.createElement(PieChart, { id: "pie-chart", series: this.state.data.chart2.series, labels: this.state.data.chart2.labels }),
-                            React.createElement(
-                                "p",
-                                { className: "box-chart-font bg-lgt" },
-                                React.createElement(
-                                    "strong",
-                                    null,
-                                    "Fonte:"
-                                ),
-                                " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
-                                    "data-target": ".bd-example-modal-lg" },
-                                "Visualize os dados em tabela"
-                            ),
-                            React.createElement("br", null),
-                            React.createElement("br", null)
-                        )
+                        charts
                     )
                 ),
                 modal
