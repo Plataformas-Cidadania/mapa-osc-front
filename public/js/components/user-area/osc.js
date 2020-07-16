@@ -34,13 +34,13 @@ class Osc extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updateOsc = this.updateOsc.bind(this);
         this.validate = this.validate.bind(this);
-        this.getOsc = this.getOsc.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
+        this.getOsc = this.getOsc.bind(this);
     }
 
     componentDidMount() {
-        this.getOsc();
         this.getCabecalho();
+        this.getOsc();
     }
 
     getCabecalho() {
@@ -260,7 +260,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, value: this.state.form.tx_razao_social_osc,
+                                        React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange, value: this.state.form.tx_nome_fantasia_osc,
                                             placeholder: 'Insira o Nome Fantasia' }),
                                         React.createElement(
                                             'label',
@@ -298,12 +298,12 @@ class Osc extends React.Component {
                                         this.state.form.tx_endereco,
                                         ', ',
                                         this.state.form.nr_localizacao,
-                                        ', ***',
                                         React.createElement('br', null),
                                         this.state.form.tx_bairro,
                                         ', ',
-                                        this.state.form.cd_municipio,
-                                        ' - ***',
+                                        this.state.form.tx_nome_municipio,
+                                        ' - ',
+                                        this.state.form.tx_nome_uf,
                                         React.createElement('br', null),
                                         React.createElement(
                                             'strong',
@@ -328,16 +328,31 @@ class Osc extends React.Component {
                                     ),
                                     React.createElement(
                                         'select',
-                                        { id: 'inputEstado', className: 'form-control' },
+                                        { name: 'tx_nome_situacao_imovel_osc', className: "form-control", value: this.state.form.tx_nome_situacao_imovel_osc, onChange: this.handleInputChange },
                                         React.createElement(
                                             'option',
-                                            { selected: true },
-                                            'Escolher...'
+                                            { value: '-1' },
+                                            'Selecione'
                                         ),
                                         React.createElement(
                                             'option',
-                                            null,
-                                            '...'
+                                            { value: 'Pr\xF3prio' },
+                                            'Pr\xF3prio'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: 'Alugado' },
+                                            'Alugado'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: 'Cedido' },
+                                            'Cedido'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: 'Comodato' },
+                                            'Comodato'
                                         )
                                     )
                                 ),
@@ -347,10 +362,9 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'inputAddress2' },
-                                        'Ano de inscri\xE7\xE3o no Cadastro de CNPJ'
+                                        'Ano de inscri\xE7\xE3o do CNPJ'
                                     ),
-                                    React.createElement('input', { type: 'date', className: 'form-control', id: 'inputAddress2',
-                                        placeholder: 'Apartamento, hotel, casa, etc.' })
+                                    React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_ano_cadastro_cnpj', onChange: this.handleInputChange, value: this.state.form.dt_ano_cadastro_cnpj })
                                 ),
                                 React.createElement(
                                     'div',
@@ -360,7 +374,7 @@ class Osc extends React.Component {
                                         { htmlFor: 'inputCity' },
                                         'Ano de Funda\xE7\xE3o'
                                     ),
-                                    React.createElement('input', { type: 'date', className: 'form-control', id: 'inputCity' })
+                                    React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_fundacao_osc', onChange: this.handleInputChange, value: this.state.form.dt_fundacao_osc })
                                 )
                             ),
                             React.createElement(
@@ -372,7 +386,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_email', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_responsavel_legal', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal,
                                             placeholder: 'Insira o Respons\xE1vel Legal' }),
                                         React.createElement(
                                             'label',
@@ -492,11 +506,11 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float-tx' },
-                                        React.createElement('textarea', { className: 'form-control form-g', name: 'tx_finalidades_estatutarias', onChange: this.handleInputChange, value: this.state.form.tx_finalidades_estatutarias,
+                                        React.createElement('textarea', { className: 'form-control form-g', name: 'tx_resumo_osc', onChange: this.handleInputChange, value: this.state.form.tx_resumo_osc,
                                             rows: '3', placeholder: 'O que a OSC faz' }),
                                         React.createElement(
                                             'label',
-                                            { htmlFor: 'tx_finalidades_estatutarias' },
+                                            { htmlFor: 'tx_resumo_osc' },
                                             'O que a OSC faz'
                                         ),
                                         React.createElement(
@@ -637,57 +651,33 @@ class Osc extends React.Component {
                                             { className: 'form-group' },
                                             React.createElement(
                                                 'div',
-                                                { className: 'form-check' },
-                                                React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                                    id: 'gridCheck' }),
+                                                { className: 'custom-control custom-checkbox ' },
+                                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
                                                 React.createElement(
                                                     'label',
-                                                    { className: 'form-check-label', htmlFor: 'gridCheck' },
-                                                    '1.1 At\xE9 2030, erradicar a pobreza extrema para todas as pessoas em todos os lugares, atualmente medida como pessoas vivendo com menos de US$ 1,25 por dia'
+                                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                                    'Associa\xE7\xE3o Privada'
+                                                ),
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'invalid-feedback' },
+                                                    'Example invalid feedback text'
                                                 )
                                             ),
+                                            React.createElement('br', null),
                                             React.createElement(
                                                 'div',
-                                                { className: 'form-check' },
-                                                React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                                    id: 'gridCheck2' }),
+                                                { className: 'custom-control custom-checkbox ' },
+                                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
                                                 React.createElement(
                                                     'label',
-                                                    { className: 'form-check-label', htmlFor: 'gridCheck2' },
-                                                    '1.2 At\xE9 2030, reduzir pelo menos \xE0 metade a propor\xE7\xE3o de homens, mulheres e crian\xE7as, de todas as idades, que vivem na pobreza, em todas as suas dimens\xF5es, de acordo com as defini\xE7\xF5es nacionais'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'form-check' },
-                                                React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                                    id: 'gridCheck3' }),
+                                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
+                                                    'Associa\xE7\xE3o Privada'
+                                                ),
                                                 React.createElement(
-                                                    'label',
-                                                    { className: 'form-check-label', htmlFor: 'gridCheck3' },
-                                                    '1.3 Implementar, em n\xEDvel nacional, medidas e sistemas de prote\xE7\xE3o social adequados, para todos, incluindo pisos, e at\xE9 2030 atingir a cobertura substancial dos pobres e vulner\xE1veis'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'form-check' },
-                                                React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                                    id: 'gridCheck4' }),
-                                                React.createElement(
-                                                    'label',
-                                                    { className: 'form-check-label', htmlFor: 'gridCheck4' },
-                                                    '1.4 At\xE9 2030, garantir que todos os homens e mulheres, particularmente os pobres e vulner\xE1veis, tenham direitos iguais aos recursos econ\xF4micos, bem como o acesso a servi\xE7os b\xE1sicos, propriedade e controle sobre a terra e outras formas de propriedade, heran\xE7a, recursos naturais, novas tecnologias apropriadas e servi\xE7os financeiros, incluindo microfinan\xE7as'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'form-check' },
-                                                React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                                    id: 'gridCheck5' }),
-                                                React.createElement(
-                                                    'label',
-                                                    { className: 'form-check-label', htmlFor: 'gridCheck5' },
-                                                    '1.5 At\xE9 2030, construir a resili\xEAncia dos pobres e daqueles em situa\xE7\xE3o de vulnerabilidade, e reduzir a exposi\xE7\xE3o e vulnerabilidade destes a eventos extremos relacionados com o clima e outros choques e desastres econ\xF4micos, sociais e ambientais'
+                                                    'div',
+                                                    { className: 'invalid-feedback' },
+                                                    'Example invalid feedback text'
                                                 )
                                             )
                                         )

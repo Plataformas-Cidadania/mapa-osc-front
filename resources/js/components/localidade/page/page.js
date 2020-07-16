@@ -17,15 +17,15 @@ class Page extends React.Component {
     load(){
         let _this = this;
         $.ajax({
-            type:'GET',
-            //url: 'get-home-chart',
-            url: 'http://localhost:8000/api/analises?id=9',
+            method:'GET',
+            url: 'get-localidade-chart',
             data:{
             },
             cache: false,
             success: function(data) {
                 //console.log(data);
                 _this.setState({data: data});
+
             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
@@ -37,8 +37,8 @@ class Page extends React.Component {
     render(){
         return (
             <div>
-                <HomeChart
-                    homeId="home"
+                <LocalidadeChart
+                    localidadeId="localidade"
                     data={this.state.data}
                 />
             </div>

@@ -5,7 +5,6 @@ class Page extends React.Component {
             data: null
         };
         this.load = this.load.bind(this);
-        //this.load();
     }
 
     componentDidMount() {
@@ -16,7 +15,8 @@ class Page extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: 'get-indicador',
+            //url: 'get-indicador',
+            url: 'http://localhost:8000/api/analises?id=2',
             data: {},
             cache: false,
             success: function (data) {

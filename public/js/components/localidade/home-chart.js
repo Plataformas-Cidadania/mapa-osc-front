@@ -21,7 +21,7 @@ class HomeChart extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
+        //console.log(props);
 
         this.setState({
             data: props.data,

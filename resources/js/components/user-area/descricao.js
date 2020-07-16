@@ -48,7 +48,7 @@ class Descricao extends React.Component{
         $.ajax({
             method: 'GET',
             //url: 'http://172.24.0.5/api/osc/dados_gerais/formatado/455128',
-            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/formatado/455128',
+            url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -92,7 +92,7 @@ class Descricao extends React.Component{
             $.ajax({
                 method:'PUT',
                 //url: 'http://172.24.0.5/api/osc/dados_gerais/455128',
-                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+                url: 'http://mapa-osc-api.local/api/osc/descricao/455128',
                 data: this.state.form,
                 cache: false,
                 success: function(data) {

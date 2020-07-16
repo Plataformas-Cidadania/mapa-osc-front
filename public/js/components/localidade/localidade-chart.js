@@ -1,4 +1,4 @@
-class HomeChart extends React.Component {
+class LocalidadeChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ class HomeChart extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
+        //console.log(props);
 
         this.setState({
             data: props.data,
