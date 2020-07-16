@@ -45,6 +45,12 @@ class Page extends React.Component {
     }
 
     loadCharts(indicators, i, data){
+        console.log("=============================================")
+        for(let k in data){
+            console.log('data'+k, data[k]);
+        }
+        console.log("=============================================")
+
         let _this = this;
         $.ajax({
             method:'GET',
@@ -63,7 +69,7 @@ class Page extends React.Component {
                 if(i < indicators.length){
                     data = _this.loadCharts(indicators, i, data);
                 }
-                return data;
+
 
             },
             error: function(xhr, status, err) {
@@ -72,7 +78,7 @@ class Page extends React.Component {
             }
         });
 
-
+        return data;
     }
 
     render(){

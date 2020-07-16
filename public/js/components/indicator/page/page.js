@@ -20,12 +20,12 @@ class Page extends React.Component {
             //url: 'http://localhost:8000/api/analises?id=2',
             //url: 'http://172.22.0.3/api/indicadores',
             data:{
-              },
+             },
             cache: false,
             success: function(data) {
                 console.log(data);
                 _this.setState({data: data});
-              },
+             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
@@ -41,6 +41,12 @@ class Page extends React.Component {
     }
 
     loadCharts(indicators, i, data) {
+        console.log("=============================================");
+        for (let k in data) {
+            console.log('data' + k, data[k]);
+        }
+        console.log("=============================================");
+
         let _this = this;
         $.ajax({
             method: 'GET',
@@ -57,21 +63,22 @@ class Page extends React.Component {
                 if (i < indicators.length) {
                     data = _this.loadCharts(indicators, i, data);
                 }
-                return data;
             },
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({ loading: false });
             }
         });
+
+        return data;
     }
 
     render() {
         return React.createElement(
-            'div',
+            "div",
             null,
             React.createElement(Indicator, {
-                indicatorId: 'indicator',
+                indicatorId: "indicator",
                 data: this.state.data
             })
         );

@@ -29,23 +29,25 @@ class Indicator extends React.Component {
 
         let charts = [];
 
-        for (let i in data) {
+        for (let chart in data) {
             //console.log("######"+i+"######");
-            let chart = data[i].series_1;
+            let dataChart = data[chart].series_1;
 
             let labels = [];
             let series = [];
-            let name = data[i].titulo;
-            let tituloX = data[i].titulo_colunas[0];
-            let tituloY = data[i].titulo_colunas[1];
-            let tipoGrafico = data[i].tipo_grafico;
+            let name = data[chart].titulo;
+            let tituloX = data[chart].titulo_colunas[0];
+            let tituloY = data[chart].titulo_colunas[1];
 
-            for (let j in chart) {
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
 
-                if (chart[j].hasOwnProperty('key')) {
+            for (let j in dataChart) {
 
-                    labels.push(chart[j].key);
-                    let values = chart[j].values;
+                //Quando tiver o key///////////////////////////////
+                if (dataChart[j].hasOwnProperty('key')) {
+
+                    labels.push(dataChart[j].key);
+                    let values = dataChart[j].values;
 
                     for (let k in values) {
 
@@ -63,25 +65,31 @@ class Indicator extends React.Component {
 
                     //console.log(labels);
                     //console.log(series);
-                    charts.push({ labels: labels, series: series });
+                    //charts.push({labels: labels, series:series});
 
                     continue;
                 }
+                ///////////////////////////////////////////////////
 
+                //Não é executado se tiver o key//////////////
                 if (!series[j]) {
                     series[j] = {
                         type: '',
                         values: []
                     };
                 }
-                labels.push(chart[j].label);
+                labels.push(dataChart[j].label);
                 series[j].type = tipoGrafico;
-                series[j].values.push(chart[j.value]);
+                series[j].values.push(dataChart[j].value);
 
-                //console.log(labels);
-                //console.log(series);
-                charts.push({ labels: labels, series: series });
+                ///////////////////////////////////////////////
+
             }
+
+            console.log("CHART" + chart);
+            console.log(series);
+
+            charts.push({ chart: chart, labels: labels, series: series });
         }
 
         console.log(charts);
@@ -100,168 +108,168 @@ class Indicator extends React.Component {
 
         if (this.state.table) {
             tbody = React.createElement(
-                'tbody',
+                "tbody",
                 null,
                 React.createElement(
-                    'tr',
+                    "tr",
                     null,
                     React.createElement(
-                        'th',
-                        { scope: 'row' },
-                        '1'
+                        "th",
+                        { scope: "row" },
+                        "1"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'Mark'
+                        "Mark"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'Otto'
+                        "Otto"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        '@mdo'
+                        "@mdo"
                     )
                 ),
                 React.createElement(
-                    'tr',
+                    "tr",
                     null,
                     React.createElement(
-                        'th',
-                        { scope: 'row' },
-                        '2'
+                        "th",
+                        { scope: "row" },
+                        "2"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'Jacob'
+                        "Jacob"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'Thornton'
+                        "Thornton"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        '@fat'
+                        "@fat"
                     )
                 ),
                 React.createElement(
-                    'tr',
+                    "tr",
                     null,
                     React.createElement(
-                        'th',
-                        { scope: 'row' },
-                        '3'
+                        "th",
+                        { scope: "row" },
+                        "3"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'Larry'
+                        "Larry"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        'the Bird'
+                        "the Bird"
                     ),
                     React.createElement(
-                        'td',
+                        "td",
                         null,
-                        '@twitter'
+                        "@twitter"
                     )
                 )
             );
         }
 
         return React.createElement(
-            'div',
-            { className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            "div",
+            { className: "modal fade bd-example-modal-lg", tabIndex: "-1", role: "dialog", "aria-labelledby": "myLargeModalLabel", "aria-hidden": "true" },
             React.createElement(
-                'div',
-                { className: 'modal-dialog modal-lg' },
+                "div",
+                { className: "modal-dialog modal-lg" },
                 React.createElement(
-                    'div',
-                    { className: 'modal-content' },
+                    "div",
+                    { className: "modal-content" },
                     React.createElement(
-                        'div',
-                        { className: 'modal-header' },
+                        "div",
+                        { className: "modal-header" },
                         React.createElement(
-                            'h5',
-                            { className: 'modal-title', id: 'exampleModalLabel' },
-                            'T\xEDtulo do modal'
+                            "h5",
+                            { className: "modal-title", id: "exampleModalLabel" },
+                            "T\xEDtulo do modal"
                         ),
                         React.createElement(
-                            'button',
-                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            "button",
+                            { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Fechar" },
                             React.createElement(
-                                'span',
-                                { 'aria-hidden': 'true' },
-                                '\xD7'
+                                "span",
+                                { "aria-hidden": "true" },
+                                "\xD7"
                             )
                         )
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'modal-body' },
+                        "div",
+                        { className: "modal-body" },
                         React.createElement(
-                            'table',
-                            { className: 'table' },
+                            "table",
+                            { className: "table" },
                             React.createElement(
-                                'thead',
-                                { className: 'thead-light' },
+                                "thead",
+                                { className: "thead-light" },
                                 React.createElement(
-                                    'tr',
+                                    "tr",
                                     null,
                                     React.createElement(
-                                        'th',
-                                        { scope: 'col' },
-                                        '#'
+                                        "th",
+                                        { scope: "col" },
+                                        "#"
                                     ),
                                     React.createElement(
-                                        'th',
-                                        { scope: 'col' },
-                                        'Primeiro'
+                                        "th",
+                                        { scope: "col" },
+                                        "Primeiro"
                                     ),
                                     React.createElement(
-                                        'th',
-                                        { scope: 'col' },
-                                        '\xDAltimo'
+                                        "th",
+                                        { scope: "col" },
+                                        "\xDAltimo"
                                     ),
                                     React.createElement(
-                                        'th',
-                                        { scope: 'col' },
-                                        'Nickname'
+                                        "th",
+                                        { scope: "col" },
+                                        "Nickname"
                                     )
                                 )
                             ),
                             tbody
                         ),
                         React.createElement(
-                            'div',
-                            { className: 'bd-callout bd-callout-warning' },
+                            "div",
+                            { className: "bd-callout bd-callout-warning" },
                             React.createElement(
-                                'h5',
-                                { id: 'incompatibilidade-jquery' },
-                                'Fonte:'
+                                "h5",
+                                { id: "incompatibilidade-jquery" },
+                                "Fonte:"
                             ),
                             React.createElement(
-                                'p',
-                                { className: 'box-chart-model-font' },
-                                'Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019'
+                                "p",
+                                { className: "box-chart-model-font" },
+                                "Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019"
                             )
                         )
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'modal-footer' },
+                        "div",
+                        { className: "modal-footer" },
                         React.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-                            'Fechar'
+                            "button",
+                            { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
+                            "Fechar"
                         )
                     )
                 )
@@ -287,85 +295,104 @@ class Indicator extends React.Component {
 
         let charts = null;
 
-        /*if(this.state.charts){
-            charts = this.state.charts.map(function(item){
-                return (
-                    <div className="box-chart">
-                        <div className="title-style" style={{perspective: '1000px'}}>
-                            <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                Regiões, 2018</h2>
-                            <div className="line line-fix block" data-move-x="980px"
-                                 style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
-                            <hr/>
-                        </div>
-                        <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>
-                        {/!*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*!/}
-                        <p className="box-chart-font bg-lgt">
-                            <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
-                        </p>
-                        <div className="btn btn-outline-primary float-right" data-toggle="modal"
-                             data-target=".bd-example-modal-lg">Visualize os dados em tabela
-                        </div>
-                        <br/><br/>
-                    </div>
+        if (this.state.charts) {
+            charts = this.state.charts.map(function (item) {
+                return React.createElement(
+                    "div",
+                    { className: "box-chart", key: "divChart" + item.chart },
+                    React.createElement(
+                        "div",
+                        { className: "title-style", style: { perspective: '1000px' } },
+                        React.createElement(
+                            "h2",
+                            null,
+                            "1 - Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
+                        ),
+                        React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
+                            style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
+                        React.createElement("hr", null)
+                    ),
+                    React.createElement(MixedChart, { id: 'mix-chart' + item.chart, yaxis: ['Teste'], series: item.series, labels: item.labels }),
+                    React.createElement(
+                        "p",
+                        { className: "box-chart-font bg-lgt" },
+                        React.createElement(
+                            "strong",
+                            null,
+                            "Fonte:"
+                        ),
+                        " CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "btn btn-outline-primary float-right", "data-toggle": "modal",
+                            "data-target": ".bd-example-modal-lg" },
+                        "Visualize os dados em tabela"
+                    ),
+                    React.createElement("br", null),
+                    React.createElement("br", null)
                 );
             });
-        }*/
+        }
 
         let modal = this.modal();
 
         return React.createElement(
-            'div',
+            "div",
             null,
             React.createElement(
-                'div',
-                { className: 'container' },
+                "div",
+                { className: "container" },
                 React.createElement(
-                    'div',
-                    { className: 'row' },
+                    "div",
+                    { className: "row" },
                     React.createElement(
-                        'div',
-                        { className: 'col-md-12', style: { margin: '-20px 0 0 0' } },
+                        "div",
+                        { className: "col-md-12", style: { margin: '-20px 0 0 0' } },
                         React.createElement(
-                            'a',
+                            "a",
                             { onClick: () => this.showHideLine() },
-                            React.createElement('i', { id: 'iconLine', className: 'fas fa-bars fa-2x float-right icons-top curso-poite cursor' })
+                            React.createElement("i", { id: "iconLine", className: "fas fa-bars fa-2x float-right icons-top curso-poite cursor" })
                         ),
                         React.createElement(
-                            'a',
+                            "a",
                             { onClick: () => this.showHideColumn() },
-                            React.createElement('i', { id: 'iconColumn', className: 'fas fa-columns fa-2x float-right icons-top icons-top-active cursor' })
+                            React.createElement("i", { id: "iconColumn", className: "fas fa-columns fa-2x float-right icons-top icons-top-active cursor" })
                         ),
-                        React.createElement('br', null),
-                        React.createElement('br', null)
+                        React.createElement("br", null),
+                        React.createElement("br", null)
                     ),
                     React.createElement(
-                        'div',
-                        { id: 'column', className: 'col-md-3' },
+                        "div",
+                        { id: "column", className: "col-md-3" },
                         React.createElement(
-                            'ul',
-                            { className: 'menu-left menu-left-chart' },
+                            "ul",
+                            { className: "menu-left menu-left-chart" },
                             React.createElement(
-                                'li',
-                                { className: 'list-group-item-theme  menu-left-active' },
+                                "li",
+                                { className: "list-group-item-theme  menu-left-active" },
                                 React.createElement(
-                                    'a',
-                                    { href: '#' },
-                                    '1- Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018'
+                                    "a",
+                                    { href: "#" },
+                                    "1- Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
                                 )
                             ),
                             React.createElement(
-                                'li',
-                                { className: 'list-group-item-theme' },
+                                "li",
+                                { className: "list-group-item-theme" },
                                 React.createElement(
-                                    'a',
-                                    { href: '#' },
-                                    '2- N\xFAmero de v\xEDnculos formais de trabalho nas OSC, segundo Grandes Regi\xF5es, 2018'
+                                    "a",
+                                    { href: "#" },
+                                    "2- N\xFAmero de v\xEDnculos formais de trabalho nas OSC, segundo Grandes Regi\xF5es, 2018"
                                 )
                             )
                         )
                     ),
-                    React.createElement('div', { id: 'line', className: 'col-md-9' })
+                    React.createElement(
+                        "div",
+                        { id: "line", className: "col-md-9" },
+                        charts
+                    )
                 ),
                 modal
             )

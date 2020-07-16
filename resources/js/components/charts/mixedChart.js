@@ -96,9 +96,15 @@ class MixedChart extends React.Component {
 
     }
 
-    componentWillReceiveProps(props){
+    //componentWillReceiveProps(props){
+    componentDidUpdate(props){
 
-
+        console.log("============================================================");
+        console.log("============================================================");
+        console.log("============================================================");
+        console.log("============================================================");
+        console.log("============================================================");
+        console.log("============================================================");
 
         if(props.series){
 
@@ -121,10 +127,10 @@ class MixedChart extends React.Component {
                     }
                 }
                 this.setState({series: props.series, options: options, labels: labels}, function(){
-                    //console.log(this.props.id);
-                    //console.log(this.props.id, 'labels', labels);
-                    //console.log(this.props.id, 'series', props.series);
-                    //console.log(this.props.id, 'options', options);
+                    console.log(this.props.id);
+                    console.log(this.props.id, 'labels', labels);
+                    console.log(this.props.id, 'series', props.series);
+                    console.log(this.props.id, 'options', options);
 
                     ApexCharts.exec(this.props.id, 'updateSeries', props.series);
                     ApexCharts.exec(this.props.id, 'updateOptions', options);
