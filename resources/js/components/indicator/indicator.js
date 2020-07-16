@@ -89,14 +89,14 @@ class Indicator extends React.Component{
 
             }
 
-            console.log("CHART" + chart);
-            console.log(series);
+            //console.log("CHART" + chart);
+            //console.log(series);
 
             charts.push({chart: chart, labels: labels, series: series});
 
         }
 
-        console.log(charts);
+        //console.log(charts);
 
         this.setState({
             charts: charts,
@@ -216,6 +216,7 @@ class Indicator extends React.Component{
                         </div>
                         <br/><br/>
                     </div>
+
                 );
             });
         }
@@ -313,14 +314,6 @@ class Indicator extends React.Component{
                             {/*/!*Bloco Chart end*!/*/}
                         </div>
                     </div>
-
-                   {/* <div className="row">
-                        <div className="col-md-7">
-                            <br/><br/>
-                            <h4>Quantidade Mensal e velocidade</h4>
-                            <MixedChart  id='mix-chart2' yaxis={this.state.brtDataMonthChartY} series={this.state.brtDataMonthChart} labels={this.state.labelsMonth}/>
-                        </div>
-                    </div>*/}
 
                     {modal}
 

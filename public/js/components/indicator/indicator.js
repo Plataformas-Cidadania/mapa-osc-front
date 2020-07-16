@@ -86,13 +86,13 @@ class Indicator extends React.Component {
 
             }
 
-            console.log("CHART" + chart);
-            console.log(series);
+            //console.log("CHART" + chart);
+            //console.log(series);
 
             charts.push({ chart: chart, labels: labels, series: series });
         }
 
-        console.log(charts);
+        //console.log(charts);
 
         this.setState({
             charts: charts,

@@ -36,22 +36,23 @@ class Page extends React.Component {
 
         let data = _this.state.data;
         data = this.loadCharts(indicators, 0, data);
-        console.log(data);
+        //console.log(data);
         this.setState({ data: data });
     }
 
     loadCharts(indicators, i, data) {
-        console.log("=============================================");
-        for (let k in data) {
-            console.log('data' + k, data[k]);
-        }
-        console.log("=============================================");
+        //console.log("=============================================")
+        /*for(let k in data){
+            console.log('data'+k, data[k]);
+        }*/
+        //console.log("=============================================")
 
         let _this = this;
         $.ajax({
             method: 'GET',
             //url: 'get-indicador',
             url: 'http://172.22.0.3/api/analises?id=' + indicators[i],
+            //url: 'http://localhost:8000/api/analises?id='+indicators[i],
             data: {},
             cache: false,
             async: false,
@@ -75,10 +76,10 @@ class Page extends React.Component {
 
     render() {
         return React.createElement(
-            "div",
+            'div',
             null,
             React.createElement(Indicator, {
-                indicatorId: "indicator",
+                indicatorId: 'indicator',
                 data: this.state.data
             })
         );
