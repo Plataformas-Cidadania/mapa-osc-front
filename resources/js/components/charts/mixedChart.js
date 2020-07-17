@@ -6,7 +6,7 @@ class MixedChart extends React.Component {
         console.log(props);
 
         this.state = {
-            labels: [],
+            //labels: [],
             options: {
                 chart: {
                     stacked: false,
@@ -94,10 +94,10 @@ class MixedChart extends React.Component {
                     }
                 }
             },
-            series: [
+            /*series: [
 
-            ],
-            //series: [props.series],
+            ],*/
+            series: props.series,
             /*series: [props.series/!*{
                 name: 'Website Blog',
                 type: 'column',
@@ -111,6 +111,10 @@ class MixedChart extends React.Component {
 
     }
 
+    componentDidMount(){
+        console.log('aaaa');
+    }
+
 
     //componentWillReceiveProps(props){
 
@@ -121,8 +125,8 @@ class MixedChart extends React.Component {
     /*static getDerivedStateFromProps(props){*/
     // componentDidUpdate (props){
 
-    static componentDidUpdate(props){
-    //componentDidUpdate(prevProps, prevState, snapshot){
+    //static componentDidUpdate(props){
+    /*componentDidUpdate(prevProps, prevState, snapshot){
         console.log('11');
         if(props){
             console.log('22');
@@ -160,7 +164,7 @@ class MixedChart extends React.Component {
             }
         }
 
-    }
+    }*/
 
     render() {
 

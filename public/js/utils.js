@@ -152,3 +152,7 @@ function maskCnpj(cnpj) {
 
     return cnpj;
 }
+
+function replaceAll(string, search, replace) {
+    return string.split(search).join(replace);
+}

@@ -13,3 +13,7 @@ function getColor(d, intervalos) {
 
 }
 
+function replaceAll(string, search, replace) {
+    return string.split(search).join(replace);
+}
+

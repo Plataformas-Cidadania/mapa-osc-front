@@ -13,10 +13,18 @@ class Indicator extends React.Component{
             series: [],
             charts: [],
 
-            table: ['teste'],
+            table: [],
+            modal: {
+                name: null,
+                fontes: null,
+                head: [],
+                rows: []
+            }
+
         };
 
         this.loadChart = this.loadChart.bind(this);
+        this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount(){
@@ -36,15 +44,25 @@ class Indicator extends React.Component{
             let labels = [];
             let series = [];
             let name = data[chart].titulo;
+            let fontes = data[chart].fontes.join(', ')
             let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];
 
             //let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
-            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico || "DonutChart" ? "line" : data[chart].tipo_grafico;
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" || data[chart].tipo_grafico === "BarChart" ? "column" :
+                data[chart].tipo_grafico === "DonutChart" ? "pie" :
+                data[chart].tipo_grafico;
 
 
 
             for(let j in dataChart){
+
+                if(tipoGrafico === "pie"){
+                    labels.push(dataChart[j].label);
+                    series.push(dataChart[j].value);
+
+                    continue;
+                }
 
                 //Quando tiver o key///////////////////////////////
                 if(dataChart[j].hasOwnProperty('key')){
@@ -75,15 +93,17 @@ class Indicator extends React.Component{
                 ///////////////////////////////////////////////////
 
                 //Não é executado se tiver o key//////////////
-                if(!series[j]){
-                    series[j] = {
+                if(!series[0]){
+                    series[0] = {
                         type: '',
-                        values: []
+                        data: []
                     };
                 }
                 labels.push(dataChart[j].label)
-                series[j].type = tipoGrafico;
-                series[j].values.push(dataChart[j].value);
+                //labels.push("")
+                series[0].name = "";
+                series[0].type = tipoGrafico;
+                series[0].data.push(dataChart[j].value);
 
                 ///////////////////////////////////////////////
 
@@ -93,58 +113,111 @@ class Indicator extends React.Component{
             //console.log("CHART" + chart);
             //console.log(series);
 
-            charts.push({chart: chart, labels: labels, series: series});
+            charts.push({chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico});
 
         }
 
-        //console.log(charts);
+        console.log(charts);
 
         this.setState({
             charts: charts,
             data: props.data,
+        }, function(){
+            this.generateTable(props.data);
         });
+    }
+
+    generateTable(data){
+
+        let tables = [];
+
+        for(let chart in data) {
+            //console.log("######"+i+"######");
+            let dataTable = data[chart].series_2;
+            if(!dataTable){
+                dataTable = data[chart].series_1;
+            }
+
+            let name = data[chart].titulo;
+            let fontes = data[chart].fontes.join(', ')
+            let head = data[chart].titulo_colunas;
+            let rows = [];
+
+            for(let h in head){
+                head[h] = replaceAll(head[h], "'", "");
+            }
+
+            for(let j in dataTable){
+
+                let table = dataTable[j];
+
+                //Quando tiver o key///////////////////////////////
+                if(table.hasOwnProperty('key')){
+                    for(let k in table.values){
+                        if(!rows[j]){
+                            rows[j] = [];
+                        }
+                        rows[j].push([table.key, table.values[k].label, table.values[k].value]);
+                        //console.log(j,k, rows[j]);
+                    }
+
+                    //console.log(j, rows[j]);
+
+                    continue;
+                }
+
+            }
+
+            tables.push({data: {head: head, rows: rows}, name: name, fontes: fontes});
+            //console.log("table: ", tables);
+        }
+
+        console.log(tables);
+        this.setState({tables: tables});
     }
 
     loadChart(props){
 
     }
 
+    callModal(chart){
+
+        let modal = this.state.modal;
+
+        let table = this.state.tables[chart];
+        console.log(table);
+        modal.name = table.name;
+        modal.fontes = table.fontes;
+
+        modal.head = table.data.head.map(function (item, index){
+            return (<th key={'thModal'+index}>{item}</th>);
+        })
+
+        modal.rows = table.data.rows.map(function (item, index){
+            return (
+                <tr key={'trModal'+index}>
+                    <td>{item[0]}</td>
+                    <td>{item[1]}</td>
+                    <td>{item[2]}</td>
+                </tr>
+            );
+        });
+
+        this.setState({modal: modal}, function(){
+            $('#modalTable').modal('show');
+        });
+    }
+
     modal(){
 
-        let tbody = [];
-
-        if(this.state.table){
-            tbody = (
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            );
-        }
 
         return (
-        <div className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="modalTable" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Título do modal</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">{this.state.modal.name}</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -154,18 +227,17 @@ class Indicator extends React.Component{
                         <table className="table">
                             <thead className="thead-light">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Primeiro</th>
-                                <th scope="col">Último</th>
-                                <th scope="col">Nickname</th>
+                                {this.state.modal.head}
                             </tr>
                             </thead>
-                            {tbody}
+                            <tbody>
+                                {this.state.modal.rows}
+                            </tbody>
                         </table>
 
                         <div className="bd-callout bd-callout-warning">
                             <h5 id="incompatibilidade-jquery">Fonte:</h5>
-                            <p className="box-chart-model-font">Representante de OSC, LIE/MESP 2017, RAIS, CNEAS/MDS, CNPJ/SRF/MF 2018, CEBAS/MS 09/2019, CEBAS/MDS 2017, CNES/MS 2017, CADSOL/MTE 2017, CEBAS/MEC 10/2017, CNEA/MMA 08/2019, OSCIP/MJ, Censo SUAS 08/2019</p>
+                            <p className="box-chart-model-font">{this.state.modal.fontes}</p>
                         </div>
                     </div>
                     <div className="modal-footer">
@@ -198,29 +270,41 @@ class Indicator extends React.Component{
         let charts = null;
 
         if(this.state.charts){
-            charts = this.state.charts.map(function(item){
+            charts = this.state.charts.map(function(item, index){
+
+                let chart = null;
+                switch (item.type) {
+                    case "column":
+                        chart = <MixedChart id={'mix-chart'+item.chart} yaxis={['Teste']} series={item.series} labels={item.labels}/>;
+                        break;
+                    case "pie":
+                        chart = <PieChart id={'pie-chart'+item.chart} series={item.series} labels={item.labels}/>;
+                        break;
+                }
+
+
                 return (
                     <div className="box-chart" key={"divChart"+item.chart}>
                         <div className="title-style" style={{perspective: '1000px'}}>
-                            <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                Regiões, 2018</h2>
+                            <h2>{index+1} - {item.name}</h2>
                             <div className="line line-fix block" data-move-x="980px"
                                  style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />
                             <hr/>
                         </div>
-                        <MixedChart id={'mix-chart'+item.chart} yaxis={['Teste']} series={item.series} labels={item.labels}/>
+                        {chart}
                         <p className="box-chart-font bg-lgt">
-                            <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS
+                            <strong>Fonte:</strong> {item.fontes}
                         </p>
-                        <div className="btn btn-outline-primary float-right" data-toggle="modal"
-                             data-target=".bd-example-modal-lg">Visualize os dados em tabela
+                        <div className="btn btn-outline-primary float-right" onClick={() => this.callModal(item.chart)}>Visualize os dados em tabela
                         </div>
                         <br/><br/>
                     </div>
 
                 );
-            });
+            }.bind(this));
         }
+
+
 
 
         let modal = this.modal();
