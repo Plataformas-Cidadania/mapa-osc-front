@@ -3,28 +3,24 @@ class Indicator extends React.Component {
         super(props);
         this.state = {
             mychart: null,
-            data: {
-                chart: {},
-                chart2: {}
-            },
             loading: false,
             yaxis: [],
             labels: [],
             series: [],
             charts: [],
-
             table: [],
             modal: {
                 name: null,
                 fontes: null,
                 head: [],
                 rows: []
-            }
-
+            },
+            menu: []
         };
 
         this.loadChart = this.loadChart.bind(this);
         this.callModal = this.callModal.bind(this);
+        this.callMenu = this.callMenu.bind(this);
     }
 
     componentDidMount() {
@@ -79,11 +75,6 @@ class Indicator extends React.Component {
                         }
                         series[k].data[j] = values[k].value;
                     }
-
-                    //console.log(labels);
-                    //console.log(series);
-                    //charts.push({labels: labels, series:series});
-
                     continue;
                 }
                 ///////////////////////////////////////////////////
@@ -102,22 +93,16 @@ class Indicator extends React.Component {
                 series[0].data.push(dataChart[j].value);
 
                 ///////////////////////////////////////////////
-
             }
-
-            //console.log("CHART" + chart);
-            //console.log(series);
-
             charts.push({ chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico });
         }
-
-        console.log(charts);
 
         this.setState({
             charts: charts,
             data: props.data
         }, function () {
             this.generateTable(props.data);
+            this.generateMenu(props.data);
         });
     }
 
@@ -142,31 +127,36 @@ class Indicator extends React.Component {
             }
 
             for (let j in dataTable) {
-
                 let table = dataTable[j];
-
                 //Quando tiver o key///////////////////////////////
                 if (table.hasOwnProperty('key')) {
                     for (let k in table.values) {
                         if (!rows[j]) {
                             rows[j] = [];
                         }
-                        rows[j].push([table.key, table.values[k].label, table.values[k].value]);
-                        //console.log(j,k, rows[j]);
+                        rows.push([table.key, table.values[k].label, table.values[k].value]);
                     }
-
-                    //console.log(j, rows[j]);
-
                     continue;
                 }
             }
-
             tables.push({ data: { head: head, rows: rows }, name: name, fontes: fontes });
-            //console.log("table: ", tables);
         }
-
-        console.log(tables);
         this.setState({ tables: tables });
+    }
+
+    generateMenu(data) {
+        let menu = [];
+        for (let i in data) {
+            menu.push(data[i].titulo);
+        }
+        this.setState({ menu: menu });
+    }
+    callMenu(index) {
+        $(".divOff").hide(1000);
+        $("#divChart" + index).first().slideDown("slow");
+
+        $(".menu-left-active").attr('class', "list-group-item-theme");
+        $("#divMenuChart" + index).attr('class', "menu-left-active");
     }
 
     loadChart(props) {}
@@ -176,7 +166,7 @@ class Indicator extends React.Component {
         let modal = this.state.modal;
 
         let table = this.state.tables[chart];
-        console.log(table);
+        //console.log(table);
         modal.name = table.name;
         modal.fontes = table.fontes;
 
@@ -230,9 +220,13 @@ class Indicator extends React.Component {
                         "div",
                         { className: "modal-header" },
                         React.createElement(
-                            "h5",
+                            "h4",
                             { className: "modal-title", id: "exampleModalLabel" },
-                            this.state.modal.name
+                            React.createElement(
+                                "strong",
+                                null,
+                                this.state.modal.name
+                            )
                         ),
                         React.createElement(
                             "button",
@@ -249,7 +243,7 @@ class Indicator extends React.Component {
                         { className: "modal-body" },
                         React.createElement(
                             "table",
-                            { className: "table" },
+                            { className: "table table-hover" },
                             React.createElement(
                                 "thead",
                                 { className: "thead-light" },
@@ -300,19 +294,25 @@ class Indicator extends React.Component {
         document.getElementById('column').style.display = "block";
         document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top icons-top-active cursor");
         document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top cursor");
+        $(".divOff").hide(1000);
+        $("#divChart0").show(1000);
     }
     showHideLine() {
         document.getElementById('line').setAttribute("class", "col-md-12");
         document.getElementById('column').style.display = "none";
         document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top icons-top-active cursor");
         document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top cursor");
+        $(".divOff").show(1000);
     }
 
     render() {
 
         let charts = null;
+        let menu = null;
+        let modal = this.modal();
 
         if (this.state.charts) {
+
             charts = this.state.charts.map(function (item, index) {
 
                 let chart = null;
@@ -327,7 +327,7 @@ class Indicator extends React.Component {
 
                 return React.createElement(
                     "div",
-                    { className: "box-chart", key: "divChart" + item.chart },
+                    { className: "box-chart divOff", key: "divChart" + item.chart, id: "divChart" + index, style: { display: index === 0 ? 'block' : '' } },
                     React.createElement(
                         "div",
                         { className: "title-style", style: { perspective: '1000px' } },
@@ -365,7 +365,22 @@ class Indicator extends React.Component {
             }.bind(this));
         }
 
-        let modal = this.modal();
+        if (this.state.menu) {
+            menu = this.state.menu.map(function (item, index) {
+                return React.createElement(
+                    "li",
+                    { className: index === 0 ? 'menu-left-active' : '', key: 'menu' + index, id: "divMenuChart" + index, style: { cursor: 'pointer' } },
+                    React.createElement(
+                        "a",
+                        { onClick: () => this.callMenu(index) },
+                        index + 1,
+                        " - ",
+                        item
+                    )
+                );
+                console.log(this.callMenu());
+            }.bind(this));
+        }
 
         return React.createElement(
             "div",
@@ -398,24 +413,7 @@ class Indicator extends React.Component {
                         React.createElement(
                             "ul",
                             { className: "menu-left menu-left-chart" },
-                            React.createElement(
-                                "li",
-                                { className: "list-group-item-theme  menu-left-active" },
-                                React.createElement(
-                                    "a",
-                                    { href: "#" },
-                                    "1- Distribui\xE7\xE3o de OSCs, por faixas de v\xEDnculo formais, segundo Grandes Regi\xF5es, 2018"
-                                )
-                            ),
-                            React.createElement(
-                                "li",
-                                { className: "list-group-item-theme" },
-                                React.createElement(
-                                    "a",
-                                    { href: "#" },
-                                    "2- N\xFAmero de v\xEDnculos formais de trabalho nas OSC, segundo Grandes Regi\xF5es, 2018"
-                                )
-                            )
+                            menu
                         )
                     ),
                     React.createElement(

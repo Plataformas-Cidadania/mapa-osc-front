@@ -3,28 +3,24 @@ class Indicator extends React.Component{
         super(props);
         this.state = {
             mychart: null,
-            data: {
-                chart: {},
-                chart2: {}
-            },
             loading: false,
             yaxis: [],
             labels: [],
             series: [],
             charts: [],
-
             table: [],
             modal: {
                 name: null,
                 fontes: null,
                 head: [],
                 rows: []
-            }
-
+            },
+            menu: [],
         };
 
         this.loadChart = this.loadChart.bind(this);
         this.callModal = this.callModal.bind(this);
+        this.callMenu = this.callMenu.bind(this);
     }
 
     componentDidMount(){
@@ -52,8 +48,6 @@ class Indicator extends React.Component{
             let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" || data[chart].tipo_grafico === "BarChart" ? "column" :
                 data[chart].tipo_grafico === "DonutChart" ? "pie" :
                 data[chart].tipo_grafico;
-
-
 
             for(let j in dataChart){
 
@@ -83,11 +77,6 @@ class Indicator extends React.Component{
                         }
                         series[k].data[j] = values[k].value;
                     }
-
-                    //console.log(labels);
-                    //console.log(series);
-                    //charts.push({labels: labels, series:series});
-
                     continue;
                 }
                 ///////////////////////////////////////////////////
@@ -106,24 +95,16 @@ class Indicator extends React.Component{
                 series[0].data.push(dataChart[j].value);
 
                 ///////////////////////////////////////////////
-
-
             }
-
-            //console.log("CHART" + chart);
-            //console.log(series);
-
             charts.push({chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico});
-
         }
-
-        console.log(charts);
 
         this.setState({
             charts: charts,
             data: props.data,
         }, function(){
             this.generateTable(props.data);
+            this.generateMenu(props.data);
         });
     }
 
@@ -148,32 +129,36 @@ class Indicator extends React.Component{
             }
 
             for(let j in dataTable){
-
                 let table = dataTable[j];
-
                 //Quando tiver o key///////////////////////////////
                 if(table.hasOwnProperty('key')){
                     for(let k in table.values){
                         if(!rows[j]){
                             rows[j] = [];
                         }
-                        rows[j].push([table.key, table.values[k].label, table.values[k].value]);
-                        //console.log(j,k, rows[j]);
+                        rows.push([table.key, table.values[k].label, table.values[k].value]);
                     }
-
-                    //console.log(j, rows[j]);
-
                     continue;
                 }
-
             }
-
             tables.push({data: {head: head, rows: rows}, name: name, fontes: fontes});
-            //console.log("table: ", tables);
         }
-
-        console.log(tables);
         this.setState({tables: tables});
+    }
+
+    generateMenu(data){
+        let menu = [];
+        for(let i in data){
+            menu.push(data[i].titulo);
+        }
+        this.setState({menu: menu});
+    }
+    callMenu(index){
+        $(".divOff").hide(1000);
+        $("#divChart"+index).first().slideDown("slow");
+
+        $(".menu-left-active").attr('class', "list-group-item-theme");
+        $("#divMenuChart"+index).attr('class', "menu-left-active");
     }
 
     loadChart(props){
@@ -185,7 +170,7 @@ class Indicator extends React.Component{
         let modal = this.state.modal;
 
         let table = this.state.tables[chart];
-        console.log(table);
+        //console.log(table);
         modal.name = table.name;
         modal.fontes = table.fontes;
 
@@ -212,23 +197,24 @@ class Indicator extends React.Component{
 
 
         return (
+
         <div id="modalTable" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">{this.state.modal.name}</h5>
+                        <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modal.name}</strong></h4>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
 
-                        <table className="table">
+                        <table className="table table-hover">
                             <thead className="thead-light">
-                            <tr>
-                                {this.state.modal.head}
-                            </tr>
+                                <tr>
+                                    {this.state.modal.head}
+                                </tr>
                             </thead>
                             <tbody>
                                 {this.state.modal.rows}
@@ -256,20 +242,26 @@ class Indicator extends React.Component{
         document.getElementById('column').style.display = "block";
         document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top icons-top-active cursor");
         document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top cursor");
+        $(".divOff").hide(1000);
+        $("#divChart0").show(1000);
     }
     showHideLine(){
         document.getElementById('line').setAttribute("class", "col-md-12");
         document.getElementById('column').style.display = "none";
         document.getElementById('iconLine').setAttribute("class", "fas fa-bars fa-2x float-right icons-top icons-top-active cursor");
         document.getElementById('iconColumn').setAttribute("class", "fas fa-columns fa-2x float-right icons-top cursor");
+        $(".divOff").show(1000);
     }
 
 
     render(){
 
         let charts = null;
+        let menu = null;
+        let modal = this.modal();
 
         if(this.state.charts){
+
             charts = this.state.charts.map(function(item, index){
 
                 let chart = null;
@@ -282,9 +274,8 @@ class Indicator extends React.Component{
                         break;
                 }
 
-
                 return (
-                    <div className="box-chart" key={"divChart"+item.chart}>
+                    <div className="box-chart divOff" key={"divChart"+item.chart} id={"divChart"+index} style={{display: index === 0 ? 'block' : ''}}>
                         <div className="title-style" style={{perspective: '1000px'}}>
                             <h2>{index+1} - {item.name}</h2>
                             <div className="line line-fix block" data-move-x="980px"
@@ -306,13 +297,20 @@ class Indicator extends React.Component{
 
 
 
-
-        let modal = this.modal();
+        if(this.state.menu) {
+            menu = this.state.menu.map(function (item, index) {
+                return (
+                    <li className={index === 0 ? 'menu-left-active' : ''} key={'menu' + index} id={"divMenuChart"+index} style={{cursor:'pointer'}}>
+                        <a onClick={() => this.callMenu(index)}>{index + 1} - {item}</a>
+                    </li>
+                )
+                console.log(this.callMenu());
+            }.bind(this));
+        }
 
         return (
+
             <div>
-
-
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12" style={{margin: '-20px 0 0 0'}}>
@@ -322,94 +320,18 @@ class Indicator extends React.Component{
                         </div>
                         <div id="column" className="col-md-3">
                             <ul className="menu-left menu-left-chart">
-                                <li className="list-group-item-theme  menu-left-active">
-                                    <a href="#">1- Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes
-                                        Regiões, 2018</a>
-                                </li>
-                                <li className="list-group-item-theme">
-                                    <a href="#">2- Número de vínculos formais de trabalho nas OSC, segundo Grandes
-                                        Regiões, 2018</a>
-                                </li>
+                               {menu}
                             </ul>
                         </div>
                         <div id="line" className="col-md-9">
                             {charts}
-                            {/*/!*Bloco Chart start*!/*/}
-                            {/*<div className="box-chart">*/}
-                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
-                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
-                            {/*            Regiões, 2018</h2>*/}
-                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
-                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
-                            {/*        <hr/>*/}
-                            {/*    </div>*/}
-                            {/*    <MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>*/}
-                            {/*    /!*<MixedChart id='mix-chart1' yaxis={['Teste']} series={this.state.series} labels={this.state.labels}/>*!/*/}
-                            {/*    <p className="box-chart-font bg-lgt">*/}
-                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
-                            {/*    </p>*/}
-                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
-                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
-                            {/*    </div>*/}
-                            {/*    <br/><br/>*/}
-                            {/*</div>*/}
-                            {/*/!*Bloco Chart end*!/*/}
-
-                            {/*/!*Bloco Chart start*!/*/}
-                            {/*<div className="box-chart">*/}
-                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
-                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
-                            {/*            Regiões, 2018</h2>*/}
-                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
-                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
-                            {/*        <hr/>*/}
-                            {/*    </div>*/}
-                            {/*    <MixedChart id='mix-chart2' yaxis={['Teste']} series={this.state.data.chart.series} labels={this.state.data.chart.labels}/>*/}
-                            {/*    /!*<MixedChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*!/*/}
-                            {/*    /!*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*!/*/}
-                            {/*    <p className="box-chart-font bg-lgt">*/}
-                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
-                            {/*    </p>*/}
-                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
-                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
-                            {/*    </div>*/}
-                            {/*    <br/><br/>*/}
-                            {/*</div>*/}
-                            {/*/!*Bloco Chart end*!/*/}
-
-                            {/*/!*Bloco Chart start*!/*/}
-                            {/*<div className="box-chart">*/}
-                            {/*    <div className="title-style" style={{perspective: '1000px'}}>*/}
-                            {/*        <h2>1 - Distribuição de OSCs, por faixas de vínculo formais, segundo Grandes*/}
-                            {/*            Regiões, 2018</h2>*/}
-                            {/*        <div className="line line-fix block" data-move-x="980px"*/}
-                            {/*             style={{opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s'}} />*/}
-                            {/*        <hr/>*/}
-                            {/*    </div>*/}
-                            {/*    <PieChart id='pie-chart' series={this.state.data.chart2.series} labels={this.state.data.chart2.labels}/>*/}
-                            {/*    /!*<MixedChart id='mix-chart2' yaxis={['Teste2']} series={this.state.series} labels={this.state.labels}/>*!/*/}
-                            {/*    <p className="box-chart-font bg-lgt">*/}
-                            {/*        <strong>Fonte:</strong> CNPJ/SRF/MF 2018, OSCIP/MJ, RAIS*/}
-                            {/*    </p>*/}
-                            {/*    <div className="btn btn-outline-primary float-right" data-toggle="modal"*/}
-                            {/*         data-target=".bd-example-modal-lg">Visualize os dados em tabela*/}
-                            {/*    </div>*/}
-                            {/*    <br/><br/>*/}
-                            {/*</div>*/}
-                            {/*/!*Bloco Chart end*!/*/}
                         </div>
                     </div>
-
                     {modal}
-
                 </div>
             </div>
         );
 
     }
-
-
-
-
 
 }

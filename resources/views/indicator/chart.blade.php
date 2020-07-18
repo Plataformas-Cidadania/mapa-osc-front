@@ -188,5 +188,8 @@
         .cursor{
             cursor: pointer;
         }
+        .divOff{
+            display: none;
+        }
     </style>
 @endsection
