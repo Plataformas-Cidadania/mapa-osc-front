@@ -11356,6 +11356,61 @@ a.text-dark:focus {
   }
 }
 
+.menu-left-chart li {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.box-chart {
+  margin: 0 0 50px 0;
+}
+
+.box-chart h2 {
+  font-size: 18px !important;
+}
+
+.box-chart-font {
+  font-size: 12px;
+  margin-top: 30px;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.box-chart-model-font {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.bd-callout-warning {
+  border-left-color: #f0ad4e !important;
+}
+
+.bd-callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.icons-top {
+  margin: -20px 5px 5px 5px;
+  color: #CCCCCC;
+}
+
+.icons-top-active {
+  color: #3A559B;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.divOff {
+  display: none;
+}
+
 body {
   font-family: Arial, verdana, Helvetica Neue, Helvetica, sans-serif;
   font-size: 15px;

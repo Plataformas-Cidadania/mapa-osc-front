@@ -173,9 +173,9 @@
         </div>
     </div>
 
-    <div class="container">
-        <div id="page"></div>
-    </div>
+    {{--Chapa chart react--}}
+    <div id="home"></div>
+
 
     <div class="space">&nbsp;</div>
     <div class="container">

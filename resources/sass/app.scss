@@ -8,6 +8,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Layout
+@import "mixins/layout/chart";
 @import "mixins/layout/fonts";
 @import "mixins/layout/items";
 @import "mixins/layout/menu";
