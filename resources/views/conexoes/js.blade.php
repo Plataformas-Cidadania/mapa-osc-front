@@ -29,6 +29,9 @@
 <script src="js/components/charts/charts.js"></script>
 <script src="js/components/charts/page/home.js"></script>
 
+
+<script src="js/components/home/next/api.js"></script>
+
 @endif
 @if($rota=='indicadores')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>

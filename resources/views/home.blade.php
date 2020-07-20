@@ -110,9 +110,11 @@
                 </div>
             </div>
             <div class="col-md-12 text-center">
+
+                {{--OSCs proximas--}}
+                <div id="nextOsc"></div>
+
                 <ul class="menu-items">
-
-
                     @foreach($areas_atuacao as $key => $area_atuacao)
                     <li>
                         <a href="">
@@ -121,21 +123,8 @@
                         </a>
                     </li>
                     @endforeach
-
-
-                    {{--<li>
-                        <a href="">
-                            <i class="fa fa-user"></i>
-                            <p>Cultura e recreação</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-user"></i>
-                            <p>Educação e pesquisa</p>
-                        </a>
-                    </li>--}}
                 </ul>
+
                 <br>
             </div>
             <div class="col-md-8 bg-map"

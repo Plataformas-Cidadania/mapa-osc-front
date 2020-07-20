@@ -1,4 +1,4 @@
-class Chart extends React.Component {
+class Indicator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ class Chart extends React.Component {
             let tituloY = data[chart].titulo_colunas[1];
 
             //let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
-            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" || data[chart].tipo_grafico === "BarChart" ? "column" : data[chart].tipo_grafico === "LinePlusBarChart" || data[chart].tipo_grafico === "LineChart" ? "line" : data[chart].tipo_grafico === "DonutChart" ? "pie" : data[chart].tipo_grafico;
+            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" || data[chart].tipo_grafico === "BarChart" ? "column" : data[chart].tipo_grafico === "DonutChart" ? "pie" : data[chart].tipo_grafico;
 
             for (let j in dataChart) {
 
@@ -318,7 +318,6 @@ class Chart extends React.Component {
                 let chart = null;
                 switch (item.type) {
                     case "column":
-                    case "line":
                         chart = React.createElement(MixedChart, { id: 'mix-chart' + item.chart, yaxis: ['Teste'], series: item.series, labels: item.labels });
                         break;
                     case "pie":
