@@ -17,7 +17,8 @@ class NextOsc extends React.Component {
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            //url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
             data: {
             },
             cache: false,
@@ -36,7 +37,8 @@ class NextOsc extends React.Component {
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            //url: 'http://localhost:8000/api/menu/osc/area_atuacao',
+            url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
             data: {
             },
             cache: false,
@@ -56,7 +58,8 @@ class NextOsc extends React.Component {
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: 'http://localhost:8000/api/osc/listaareaatuacao/'+index,
+            //url: 'http://localhost:8000/api/osc/listaareaatuacao/'+index,
+            url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {
             },
             cache: false,

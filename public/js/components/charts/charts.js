@@ -1,4 +1,4 @@
-class Chart extends React.Component {
+class Charts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,7 +40,7 @@ class Chart extends React.Component {
             let labels = [];
             let series = [];
             let name = data[chart].titulo;
-            let fontes = data[chart].fontes.join(', ');
+            let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
             let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];
 
@@ -57,7 +57,7 @@ class Chart extends React.Component {
                 }
 
                 //Quando tiver o key///////////////////////////////
-                if (dataChart[j].hasOwnProperty('key')) {
+                if (dataChart[j].hasOwnProperty('key') && data[chart].tipo_grafico === "MultiBarChart") {
 
                     labels.push(dataChart[j].key);
                     let values = dataChart[j].values;
@@ -75,6 +75,32 @@ class Chart extends React.Component {
                         }
                         series[k].data[j] = values[k].value;
                     }
+                    continue;
+                }
+                ///////////////////////////////////////////////////
+
+                //Quando tiver o key///////////////////////////////
+                if (dataChart[j].hasOwnProperty('key') && (data[chart].tipo_grafico === "LineChart" || data[chart].tipo_grafico === "LinePlusBarChart")) {
+
+                    let colLabel = data[chart].tipo_grafico === "LineChart" ? 'x' : 'label';
+                    let colValue = data[chart].tipo_grafico === "LineChart" ? 'y' : 'value';
+
+                    let values = dataChart[j].values;
+
+                    let serie = {
+                        name: dataChart[j].key,
+                        type: tipoGrafico,
+                        data: []
+                    };
+
+                    for (let k in values) {
+                        labels.push(values[k][colLabel]);
+
+                        serie.data.push(values[k][colValue]);
+                    }
+
+                    series.push(serie);
+
                     continue;
                 }
                 ///////////////////////////////////////////////////
@@ -97,6 +123,8 @@ class Chart extends React.Component {
             charts.push({ chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico });
         }
 
+        console.log(charts);
+
         this.setState({
             charts: charts,
             data: props.data
@@ -118,7 +146,7 @@ class Chart extends React.Component {
             }
 
             let name = data[chart].titulo;
-            let fontes = data[chart].fontes.join(', ');
+            let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
             let head = data[chart].titulo_colunas;
             let rows = [];
 

@@ -49,8 +49,8 @@ class Home extends React.Component {
         $.ajax({
             method:'GET',
             //url: 'get-indicador',
-            //url: 'http://172.22.0.3/api/analises?id='+charts[i],
-            url: 'http://localhost:8000/api/analises?id='+charts[i],
+            url: 'http://172.22.0.3/api/analises?id='+charts[i],
+            //url: 'http://localhost:8000/api/analises?id='+charts[i],
             data:{
 
             },
@@ -74,7 +74,7 @@ class Home extends React.Component {
     render(){
         return (
             <div>
-                <Chart
+                <Charts
                     chartId="chart"
                     data={this.state.data}
                 />
