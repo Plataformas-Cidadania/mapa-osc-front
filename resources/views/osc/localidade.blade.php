@@ -22,7 +22,7 @@
     <br>
     <div class="container">
         <div class="row">
-            <div id="page"></div>
+            <div id="textChart"></div>
         </div>
     </div>
 

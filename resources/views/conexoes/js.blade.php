@@ -32,11 +32,8 @@
 
 
 <script src="js/components/home/next/api.js"></script>
-
-
-
-
 @endif
+
 @if($rota=='indicadores')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -47,6 +44,19 @@
 <script src="js/components/charts/charts.js"></script>
 <script src="js/components/charts/page/indicator.js"></script>
 @endif
+
+
+@if($rota=='localidade/{id}')
+    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+
+<script src="js/components/charts/mixedChart.js"></script>
+<script src="js/components/charts/pieChart.js"></script>
+<script src="js/components/charts/textCharts.js"></script>
+<script src="js/components/charts/page/textChart.js"></script>
+@endif
+
 
 @if($rota=='mapa')
 <script src="js/leaflet.js"></script>
@@ -162,14 +172,7 @@
     <script src="/js/components/forms/filter.js"></script>
     <script src="/js/utils.js"></script>
 @endif
-@if($rota=="localidade/{id}")
-    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
-    <script src="js/components/charts/mixedChart.js"></script>
-    <script src="js/components/localidade/localidade-chart.js"></script>
-    <script src="js/components/localidade/page/page.js"></script>
-@endif
+
 @if($rota=="artigo/{id}/{titulo}")
     <script src="/js/components/forms/comment.js"></script>
     <script src="/js/utils.js"></script>
