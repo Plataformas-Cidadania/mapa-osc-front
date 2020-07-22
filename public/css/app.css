@@ -12897,15 +12897,15 @@ label, input, .btn-number {
           transform: rotate(-30deg);
 }
 
-.circle2 #icon5 {
-  -webkit-transform: rotate(30deg);
-          transform: rotate(30deg);
+.circle2 #icon0 {
+  -webkit-transform: rotate(65deg);
+          transform: rotate(65deg);
   /*Rotaciona no eixo*/
 }
 
-.circle2 #icon5 div {
-  -webkit-transform: rotate(-30deg);
-          transform: rotate(-30deg);
+.circle2 #icon0 div {
+  -webkit-transform: rotate(-65deg);
+          transform: rotate(-65deg);
   /*Coloca virado para cima*/
 }
 

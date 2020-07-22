@@ -2,6 +2,7 @@
 
 <script src="js/app.js"></script>
 <script src="js/utils.js"></script>
+<script src="js/rotas.js"></script>
 
 <script>
     $.ajaxSetup({
@@ -32,6 +33,9 @@
 
 <script src="js/components/home/next/api.js"></script>
 
+
+
+
 @endif
 @if($rota=='indicadores')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
@@ -50,6 +54,8 @@
 <script src="js/components/maps/page/page.js"></script>
 
 @endif
+
+
 <script>
     // Basic usage of $.animateScroll.
     //$('#iniciodorodape a', '#acessibilidade a').animateScroll();

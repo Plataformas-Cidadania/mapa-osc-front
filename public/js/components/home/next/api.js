@@ -17,27 +17,8 @@ class NextOsc extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: 'http://localhost:8000/api/menu/osc/area_atuacao',
-            url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
-            data: {},
-            cache: false,
-            success: function (data) {
-                //console.log(data);
-                this.setState({ data: data, loadingList: false });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                this.setState({ loading: false });
-            }.bind(this)
-        });
-    }
-
-    load() {
-        this.setState({ loadingList: true });
-        $.ajax({
-            method: 'GET',
-            //url: 'http://localhost:8000/api/menu/osc/area_atuacao',
-            url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
+            url: getBaseUrl + 'menu/osc/area_atuacao',
+            //url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
             data: {},
             cache: false,
             success: function (data) {
@@ -52,12 +33,12 @@ class NextOsc extends React.Component {
     }
 
     callMenu(index) {
-        console.log(index);
+        //console.log("2 ", index);
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: 'http://localhost:8000/api/osc/listaareaatuacao/'+index,
-            url: 'http://172.22.0.3/api/osc/listaareaatuacao/' + index,
+            url: getBaseUrl + 'osc/listaareaatuacao/' + index,
+            //url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {},
             cache: false,
             success: function (data) {
@@ -70,6 +51,8 @@ class NextOsc extends React.Component {
             }.bind(this)
         });
 
+        $("#txtNext").hide(1000);
+
         /*$(".divOff").hide(1000);
         $("#divChart"+index).first().slideDown("slow");
          $(".menu-left-active").attr('class', "list-group-item-theme");
@@ -78,7 +61,8 @@ class NextOsc extends React.Component {
 
     render() {
 
-        console.log(this.state.nextsOsc);
+        //console.log("1 ", this.state.nextsOsc.length);
+        console.log("1 ", nextOscTitle);
 
         let menu = null;
         if (this.state.data) {
@@ -101,6 +85,9 @@ class NextOsc extends React.Component {
         }
 
         let nextOsc = null;
+        let nextOscTitulo = null;
+        let totalnextsOsc = this.state.nextsOsc.length;
+
         if (this.state.nextsOsc) {
             nextOsc = this.state.nextsOsc.map(function (item, index) {
                 return React.createElement(
@@ -109,24 +96,88 @@ class NextOsc extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'circle-item' },
-                        item.id_osc
+                        React.createElement('img', { src: 'img/sem-imagem.png', alt: '{item.id_osc}', width: '65' })
                     )
+                );
+            }.bind(this));
+
+            nextOscTitulo = this.state.nextsOsc.map(function (item, index) {
+                return React.createElement(
+                    'li',
+                    { id: 'txt' + index },
+                    React.createElement(
+                        'a',
+                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: 'circle-item' },
+                        index + 1,
+                        ' ',
+                        item.tx_nome_osc,
+                        ' ',
+                        React.createElement('i', { className: 'fas fa-file-import' })
+                    ),
+                    React.createElement('hr', null)
                 );
             }.bind(this));
         }
 
         return React.createElement(
             'div',
-            { className: 'col-md-12 text-center' },
+            { className: 'col-md-12' },
             React.createElement(
-                'ul',
-                { className: 'menu-items' },
-                menu
+                'div',
+                { className: 'text-center' },
+                React.createElement(
+                    'ul',
+                    { className: 'menu-items' },
+                    menu
+                )
             ),
             React.createElement(
                 'div',
-                { className: 'circle' },
-                nextOsc
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-7 bg-map', style: { backgroundImage: "url(" + nextOscImg + ")" } },
+                    React.createElement(
+                        'div',
+                        { className: 'icon-next' },
+                        React.createElement('i', { className: 'fas fa-user' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'circle' },
+                        nextOsc
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'circle2' },
+                        nextOsc
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-5' },
+                    React.createElement('br', null),
+                    React.createElement('br', null),
+                    React.createElement('br', null),
+                    React.createElement(
+                        'h2',
+                        null,
+                        totalnextsOsc,
+                        ' ',
+                        nextOscTitle
+                    ),
+                    React.createElement(
+                        'ul',
+                        { className: 'menu-items-basic' },
+                        nextOscTitulo
+                    ),
+                    React.createElement(
+                        'p',
+                        { id: 'txtNext' },
+                        ' ',
+                        nextOscDescription
+                    )
+                )
             ),
             React.createElement('br', null),
             React.createElement('br', null),
