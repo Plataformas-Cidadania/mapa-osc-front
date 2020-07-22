@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div id="filter"></div>
+                <div id="api"></div>
             </div>
         </div>
     </div>

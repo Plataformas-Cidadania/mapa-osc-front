@@ -16,17 +16,34 @@ class Filter extends React.Component{
                 cel: true,
             },
             showMsg: false,
-            msg: ''
+            msg: '',
+            certificados: null,
+            areaAtuacao: null,
+            subAreaAtuacao: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
         this.validate = this.validate.bind(this);
-        this.getDadosGerais = this.getDadosGerais.bind(this);
+
     }
 
     componentDidMount(){
-        this.getDadosGerais()
     }
+
+    componentDidUpdate(props){
+        if(this.state.certificados != props.certificados ||
+            this.state.areaAtuacao != props.areaAtuacao ||
+            this.state.subAreaAtuacao != props.subAreaAtuacao
+        ){
+            this.setState({
+                certificados: props.certificados,
+                areaAtuacao: props.areaAtuacao,
+                subAreaAtuacao: props.subAreaAtuacao,
+            });
+        }
+    }
+
+
 
     handleInputChange(event) {
         const target = event.target;
@@ -142,14 +159,17 @@ class Filter extends React.Component{
         });
     }
 
-    getDadosGerais(){
+
+    callSubAreaAtuacao(id){
+        console.log(id);
+
         this.setState({button:false});
         $.ajax({
             method: 'GET',
             cache: false,
-            url: ' http://localhost:8000/api/menu/osc/area_atuacao',
+            url: getBaseUrl+'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({loading: false, form: data, button:true})
+                this.setState({loading: false, subAreaAtuacao: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -159,6 +179,42 @@ class Filter extends React.Component{
 
 
     render(){
+
+        let certificados = null;
+        if(this.state.certificados){
+            certificados = this.state.certificados.map(function (item) {
+               return (
+                   <div className="custom-control custom-checkbox" key={"cert_"+item.cd_certificado}>
+                       <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_certificado} required/>
+                       <label className="custom-control-label" htmlFor={"cert_"+item.cd_certificado}>{item.tx_nome_certificado}</label>
+                   </div>
+               );
+            });
+        }
+        let areaAtuacao = null;
+        if(this.state.areaAtuacao){
+            areaAtuacao = this.state.areaAtuacao.map(function (item) {
+               return (
+                   <div className="custom-control custom-checkbox" key={"cert_"+item.cd_area_atuacao} onClick={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
+                       <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_area_atuacao} required/>
+                       <label className="custom-control-label" htmlFor={"cert_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                   </div>
+               );
+            }.bind(this));
+        }
+
+        let subAreaAtuacao = null;
+        if(this.state.subAreaAtuacao){
+            subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
+                return (
+                    <div className="custom-control custom-checkbox" key={"cert_"+item.cd_subarea_atuacao}>
+                        <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_subarea_atuacao} required/>
+                        <label className="custom-control-label" htmlFor={"cert_"+item.cd_subarea_atuacao}>{item.tx_nome_subarea_atuacao}</label>
+                    </div>
+                );
+            }.bind(this));
+        }
+
         return (
 
             <form>
@@ -220,12 +276,12 @@ class Filter extends React.Component{
                                             <div className="label-box-info-off"/>
                                         </div>*/}
 
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Open this select menu</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>
+                                        </select>*/}
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">
@@ -266,20 +322,20 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>
+                                        </select>*/}
                                     </div>
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Metas Relacionadas ao ODS</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>
+                                        </select>*/}
                                     </div>
 
                                 </div>
@@ -313,32 +369,23 @@ class Filter extends React.Component{
                                     </div>
                                     <div className="col-md-12">
                                         <strong>Área de Atuação</strong><br/>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Habitação</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
-                                        <br/>
-                                        <strong>Subárea de Atuação</strong><br/>
 
-                                        <div className="bg-lgt p-2">
-                                            <strong>Habitação</strong><br/>
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                                <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                                <div className="invalid-feedback">Example invalid feedback text</div>
+                                        {areaAtuacao}
+
+                                        <br/><br/>
+
+                                        <strong>Subárea de Atuação</strong><br/>
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <div className="bg-lgt p-2">
+                                                    <strong>Habitação</strong><br/>
+
+                                                    {subAreaAtuacao}
+
+                                                </div>
                                             </div>
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -360,11 +407,7 @@ class Filter extends React.Component{
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
+                                        {certificados}
                                     </div>
                                 </div>
                             </div>
@@ -487,7 +530,7 @@ class Filter extends React.Component{
 
                 <div >
                     <label htmlFor="name">Como podemos ajudar?</label>
-                    <select className="form-control" id="assunto">
+                    {/*<select className="form-control" id="assunto">
                         <option value="">Selecione o assunto</option>
                         <option value="1">Cadastro Município-Estado</option>
                         <option value="2">Cadastro Representante</option>
@@ -497,7 +540,7 @@ class Filter extends React.Component{
                         <option value="6">Relatar Problemas</option>
                         <option value="7">Sugestão</option>
                         <option value="8">Outros</option>
-                    </select><br/>
+                    </select><br/>*/}
                 </div>
 
 
@@ -550,8 +593,4 @@ class Filter extends React.Component{
     }
 }
 
-ReactDOM.render(
-    /*<Filter email={email}/>,*/
-    <Filter />,
-    document.getElementById('filter')
-);
+
