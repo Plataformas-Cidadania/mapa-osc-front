@@ -19,7 +19,8 @@ class Filter extends React.Component {
             msg: '',
             certificados: null,
             areaAtuacao: null,
-            subAreaAtuacao: null
+            subAreaAtuacao: null,
+            showWarning: true
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
@@ -161,12 +162,16 @@ class Filter extends React.Component {
             cache: false,
             url: getBaseUrl + 'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({ loading: false, subAreaAtuacao: data, button: true });
+                this.setState({ loading: false, subAreaAtuacao: data, id_area: id });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
+    }
+    callIdh(id) {
+        console.log(id);
+        $("#divIdh").show();
     }
 
     render() {
@@ -191,32 +196,42 @@ class Filter extends React.Component {
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
                 return React.createElement(
                     'div',
-                    { className: 'custom-control custom-checkbox', key: "cert_" + item.cd_area_atuacao, onClick: () => this.callSubAreaAtuacao(item.cd_area_atuacao) },
-                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "cert_" + item.cd_area_atuacao, required: true }),
+                    { className: 'custom-control custom-checkbox', key: "area_" + item.cd_area_atuacao, onClick: () => this.callSubAreaAtuacao(item.cd_area_atuacao) },
+                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_area_atuacao, required: true }),
                     React.createElement(
                         'label',
-                        { className: 'custom-control-label', htmlFor: "cert_" + item.cd_area_atuacao },
+                        { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
                         item.tx_nome_area_atuacao
                     )
                 );
             }.bind(this));
         }
 
-        let subAreaAtuacao = null;
-        if (this.state.subAreaAtuacao) {
-            subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
-                return React.createElement(
-                    'div',
-                    { className: 'custom-control custom-checkbox', key: "cert_" + item.cd_subarea_atuacao },
-                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "cert_" + item.cd_subarea_atuacao, required: true }),
-                    React.createElement(
-                        'label',
-                        { className: 'custom-control-label', htmlFor: "cert_" + item.cd_subarea_atuacao },
-                        item.tx_nome_subarea_atuacao
-                    )
-                );
-            }.bind(this));
-        }
+        $("#divIdh").hide();
+        /* let subAreaAtuacao = null;
+          if(this.state.subAreaAtuacao){
+              let subArea = [];
+              for (let i in this.state.subAreaAtuacao){
+                    if(!subArea[i]){
+                     subArea[i] = {
+                         subId: [],
+                         subTitle: []
+                     };
+                 }
+                 subArea[i].subId.push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
+                 subArea[i].subTitle.push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
+             }
+              subArea.push({subArea: subArea});
+              console.log('subId ', subArea);
+              subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
+                 return (
+                     <div className="custom-control custom-checkbox" key={"cert_"+item.cd_subarea_atuacao}>
+                         <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_subarea_atuacao} required/>
+                         <label className="custom-control-label" htmlFor={"cert_"+item.cd_subarea_atuacao}>{item.tx_nome_subarea_atuacao}</label>
+                     </div>
+                 );
+             }.bind(this));
+         }*/
 
         return React.createElement(
             'form',
@@ -496,8 +511,7 @@ class Filter extends React.Component {
                                                     null,
                                                     'Habita\xE7\xE3o'
                                                 ),
-                                                React.createElement('br', null),
-                                                subAreaAtuacao
+                                                React.createElement('br', null)
                                             )
                                         )
                                     )
@@ -708,7 +722,57 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '888'
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onClick: () => this.callIdh() },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'IDH_Municipal' },
+                                    'IDH Municipal'
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { id: 'divIdh' },
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'strong',
+                                    null,
+                                    ' Faixas de IDHM:'
+                                ),
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox ' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: 'baixo' },
+                                        'Baixo (abaixo de 0,600)'
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox ' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: 'medio' },
+                                        'M\xE9dio (entre 0,600 e 0,699)'
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox ' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: 'alto' },
+                                        'Alto (0,700 ou mais)'
+                                    )
+                                )
+                            )
                         )
                     )
                 ),

@@ -20,12 +20,15 @@ class Filter extends React.Component{
             certificados: null,
             areaAtuacao: null,
             subAreaAtuacao: null,
+            showWarning: true
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
         this.validate = this.validate.bind(this);
 
+
     }
+
 
     componentDidMount(){
     }
@@ -169,12 +172,16 @@ class Filter extends React.Component{
             cache: false,
             url: getBaseUrl+'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({loading: false, subAreaAtuacao: data, button:true})
+                this.setState({loading: false, subAreaAtuacao: data, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
+    }
+    callIdh(id){
+        console.log(id)
+        $("#divIdh").show();
     }
 
 
@@ -195,16 +202,36 @@ class Filter extends React.Component{
         if(this.state.areaAtuacao){
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
                return (
-                   <div className="custom-control custom-checkbox" key={"cert_"+item.cd_area_atuacao} onClick={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
-                       <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_area_atuacao} required/>
-                       <label className="custom-control-label" htmlFor={"cert_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onClick={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
+                       <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
+                       <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
                    </div>
                );
             }.bind(this));
         }
 
-        let subAreaAtuacao = null;
+        $("#divIdh").hide();
+       /* let subAreaAtuacao = null;
+
         if(this.state.subAreaAtuacao){
+
+            let subArea = [];
+
+            for (let i in this.state.subAreaAtuacao){
+                   if(!subArea[i]){
+                    subArea[i] = {
+                        subId: [],
+                        subTitle: []
+                    };
+                }
+                subArea[i].subId.push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
+                subArea[i].subTitle.push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
+            }
+
+            subArea.push({subArea: subArea});
+
+            console.log('subId ', subArea);
+
             subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
                 return (
                     <div className="custom-control custom-checkbox" key={"cert_"+item.cd_subarea_atuacao}>
@@ -213,7 +240,7 @@ class Filter extends React.Component{
                     </div>
                 );
             }.bind(this));
-        }
+        }*/
 
         return (
 
@@ -352,7 +379,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-2">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
                                  aria-controls="collapse2">
-                                Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"></i>
+                                Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse2" className="collapse" aria-labelledby="heading2"
@@ -380,7 +407,7 @@ class Filter extends React.Component{
                                                 <div className="bg-lgt p-2">
                                                     <strong>Habitação</strong><br/>
 
-                                                    {subAreaAtuacao}
+                                                    {/*{subAreaAtuacao}*/}
 
                                                 </div>
                                             </div>
@@ -399,7 +426,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-3">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
                                  aria-controls="collapse3">
-                                Titulações e Certificações <i className="fas fa-angle-down float-right"></i>
+                                Titulações e Certificações <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse3" className="collapse" aria-labelledby="heading3"
@@ -418,7 +445,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-4">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
                                  aria-controls="collapse4">
-                                Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"></i>
+                                Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse4" className="collapse" aria-labelledby="heading4"
@@ -455,7 +482,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-5">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
                                  aria-controls="collapse5">
-                                Espaços de Participação Social <i className="fas fa-angle-down float-right"></i>
+                                Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse5" className="collapse" aria-labelledby="heading5"
@@ -470,7 +497,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-6">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
                                  aria-controls="collapse6">
-                                Projetos <i className="fas fa-angle-down float-right"></i>
+                                Projetos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse6" className="collapse" aria-labelledby="heading6"
@@ -485,7 +512,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-7">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
                                  aria-controls="collapse7">
-                                Fontes de Recursos <i className="fas fa-angle-down float-right"></i>
+                                Fontes de Recursos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse7" className="collapse" aria-labelledby="heading7"
@@ -506,7 +533,32 @@ class Filter extends React.Component{
                         <div id="collapse8" className="collapse" aria-labelledby="heading8"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                888
+
+                                <div className="custom-control custom-checkbox" onClick={() => this.callIdh()} >
+                                    <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
+                                    <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+                                </div>
+
+
+                                <div id="divIdh" >
+                                    <br/>
+                                    <strong> Faixas de IDHM:</strong>
+                                    <br/>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="baixo" required/>
+                                        <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
+                                    </div>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="medio" required/>
+                                        <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
+                                    </div>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="alto" required/>
+                                        <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

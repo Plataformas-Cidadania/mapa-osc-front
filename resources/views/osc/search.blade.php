@@ -31,6 +31,7 @@
 
 
     <style>
+
         .mb-0{
             background-color: #FFFFFF !important;
             /*border-bottom: solid 1px #3490dc;*/
