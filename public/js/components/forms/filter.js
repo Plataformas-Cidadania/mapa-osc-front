@@ -20,6 +20,7 @@ class Filter extends React.Component {
             certificados: null,
             areaAtuacao: null,
             subAreaAtuacao: null,
+            ipeaData: null,
             active: false
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -152,12 +153,6 @@ class Filter extends React.Component {
     }
 
     callSubAreaAtuacao(id) {
-        console.log(id);
-
-        /*let areaAtuacao = this.state.areaAtuacao.find(function(item){
-            return item.cd_area_atuacao === id;
-        });*/
-
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
@@ -175,9 +170,7 @@ class Filter extends React.Component {
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-
                 this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id });
-                //this.setState({loading: false, subAreaAtuacao: data, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -208,6 +201,23 @@ class Filter extends React.Component {
                 );
             });
         }
+
+        let ipeaData = null;
+        if (this.props.ipeaData) {
+            ipeaData = this.props.ipeaData.map(function (item) {
+                return React.createElement(
+                    'div',
+                    { className: 'custom-control custom-checkbox', key: "ipeaData_" + item.cd_indice },
+                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "ipeaData_" + item.cd_indice, required: true }),
+                    React.createElement(
+                        'label',
+                        { className: 'custom-control-label', htmlFor: "ipeaData_" + item.cd_indice },
+                        item.tx_nome_indice
+                    )
+                );
+            });
+        }
+
         let areaAtuacao = null;
         let subAreaAtuacao = [];
         if (this.state.areaAtuacao) {
@@ -218,20 +228,25 @@ class Filter extends React.Component {
                     subarea = item.subareas.map(function (subitem) {
                         return React.createElement(
                             'div',
-                            { className: 'custom-control custom-checkbox', key: "subarea_" + subitem.cd_subarea_atuacao, onChange: () => console.log(subitem.cd_subarea_atuacao) },
-                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true }),
+                            { key: "subarea_" + subitem.cd_subarea_atuacao },
                             React.createElement(
-                                'label',
-                                { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_subarea_atuacao },
-                                subitem.tx_nome_subarea_atuacao
-                            )
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_subarea_atuacao) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_subarea_atuacao },
+                                    subitem.tx_nome_subarea_atuacao
+                                )
+                            ),
+                            React.createElement('br', null)
                         );
                     });
                 }
 
                 subAreaAtuacao.push(React.createElement(
                     'div',
-                    { key: "divArea_" + item.cd_area_atuacao, className: 'col-md-3', style: { display: item.checked ? '' : 'none' } },
+                    { key: "divArea_" + item.cd_area_atuacao, className: 'card', style: { display: item.checked ? '' : 'none' } },
                     React.createElement(
                         'div',
                         { className: 'bg-lgt p-2' },
@@ -257,34 +272,6 @@ class Filter extends React.Component {
                 );
             }.bind(this));
         }
-
-        /*let subAreaAtuacao = null;
-          if(this.state.subAreaAtuacao){
-              console.log('subId ', this.state.subAreaAtuacao);
-              let subArea = [];
-              for (let i in this.state.subAreaAtuacao){
-                   if(!subArea[i]){
-                    subArea[i] = {
-                        aresId: [],
-                        subId: [],
-                        subTitle: []
-                    };
-                }
-                subArea[i].push(this.state.subAreaAtuacao[i].cd_area_atuacao);
-                subArea[i].push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
-                subArea[i].push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
-            }
-              subArea.push({subArea: subArea});
-              console.log('subArea ', subArea);
-              subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
-                return (
-                    <div className="custom-control custom-checkbox" key={"cert_"+item.cd_subarea_atuacao}>
-                        <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_subarea_atuacao} required/>
-                        <label className="custom-control-label" htmlFor={"cert_"+item.cd_subarea_atuacao}>{item.tx_nome_subarea_atuacao}</label>
-                    </div>
-                );
-            }.bind(this));
-        }*/
 
         return React.createElement(
             'form',
@@ -550,19 +537,23 @@ class Filter extends React.Component {
                                         null,
                                         '\xC1rea de Atua\xE7\xE3o'
                                     ),
-                                    React.createElement('br', null),
-                                    areaAtuacao,
-                                    React.createElement('br', null),
-                                    React.createElement('br', null),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        areaAtuacao,
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
                                     React.createElement(
                                         'strong',
                                         null,
                                         'Sub\xE1rea de Atua\xE7\xE3o'
                                     ),
-                                    React.createElement('br', null),
+                                    React.createElement('hr', null),
                                     React.createElement(
                                         'div',
-                                        { className: 'row' },
+                                        { className: 'card-columns' },
                                         subAreaAtuacao
                                     )
                                 )
@@ -882,7 +873,11 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '999'
+                            React.createElement(
+                                'div',
+                                null,
+                                ipeaData
+                            )
                         )
                     )
                 )

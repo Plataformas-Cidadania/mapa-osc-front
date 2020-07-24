@@ -2,7 +2,7 @@ class Api extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: []
         };
         this.getCertificado = this.getCertificado.bind(this);
         this.getAreaAtuacao = this.getAreaAtuacao.bind(this);
@@ -13,82 +13,82 @@ class Api extends React.Component {
     }
 
     componentDidMount() {
-        this.getCertificado()
-        this.getAreaAtuacao()
-        this.getSituacaoImovel()
-        this.getObjetivoProjeto()
-        this.getIpeaData()
+        this.getCertificado();
+        this.getAreaAtuacao();
+        this.getSituacaoImovel();
+        this.getObjetivoProjeto();
+        this.getIpeaData();
         //this.getSubAreaAtuacao()
     }
 
-    getCertificado(){
-        this.setState({button:false});
+    getCertificado() {
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/certificado',
+            url: getBaseUrl + 'menu/osc/certificado',
             success: function (data) {
-                this.setState({loading: false, certificados: data, button:true})
+                this.setState({ loading: false, certificados: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
     }
-    getAreaAtuacao(){
-        this.setState({button:false});
+    getAreaAtuacao() {
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/area_atuacao',
+            url: getBaseUrl + 'menu/osc/area_atuacao',
             success: function (data) {
-                data.find(function(item){
+                data.find(function (item) {
                     item.checked = false;
                 });
-                this.setState({loading: false, areaAtuacao: data, button:true})
+                this.setState({ loading: false, areaAtuacao: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
     }
-    getSituacaoImovel(){
-        this.setState({button:false});
+    getSituacaoImovel() {
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/situacao_imovel',
+            url: getBaseUrl + 'menu/osc/situacao_imovel',
             success: function (data) {
-                this.setState({loading: false, form: data, button:true})
+                this.setState({ loading: false, form: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
     }
-    getObjetivoProjeto(){
-        this.setState({button:false});
+    getObjetivoProjeto() {
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
             success: function (data) {
-                this.setState({loading: false, form: data, button:true})
+                this.setState({ loading: false, form: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
     }
-    getIpeaData(){
-        this.setState({button:false});
+    getIpeaData() {
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/ipeadata',
+            url: getBaseUrl + 'menu/osc/ipeadata',
             success: function (data) {
 
-                this.setState({loading: false, ipeaData: data, button:true})
+                this.setState({ loading: false, ipeaData: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -98,18 +98,12 @@ class Api extends React.Component {
 
     render() {
         console.log(this.state.ipeaData);
-        return (
-            <Filter
-                certificados={this.state.certificados}
-                areaAtuacao={this.state.areaAtuacao}
-                ipeaData={this.state.ipeaData}
-            />
-        );
-
+        return React.createElement(Filter, {
+            certificados: this.state.certificados,
+            areaAtuacao: this.state.areaAtuacao,
+            ipeaData: this.state.ipeaData
+        });
     }
 }
 
-ReactDOM.render(
-    <Api />,
-    document.getElementById('api')
-);
+ReactDOM.render(React.createElement(Api, null), document.getElementById('api'));

@@ -20,6 +20,7 @@ class Filter extends React.Component{
             certificados: null,
             areaAtuacao: null,
             subAreaAtuacao: null,
+            ipeaData: null,
             active: false,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,7 +44,7 @@ class Filter extends React.Component{
             this.setState({
                 certificados: props.certificados,
                 areaAtuacao: props.areaAtuacao,
-                subAreaAtuacao: props.subAreaAtuacao,
+                subAreaAtuacao: props.subAreaAtuacao
             });
         }
     }
@@ -160,12 +161,6 @@ class Filter extends React.Component{
 
 
     callSubAreaAtuacao(id){
-        console.log(id);
-
-        /*let areaAtuacao = this.state.areaAtuacao.find(function(item){
-            return item.cd_area_atuacao === id;
-        });*/
-
         this.setState({button:false});
         $.ajax({
             method: 'GET',
@@ -183,9 +178,7 @@ class Filter extends React.Component{
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-
                 this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id})
-                //this.setState({loading: false, subAreaAtuacao: data, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -201,6 +194,8 @@ class Filter extends React.Component{
 
     render(){
 
+
+
         let certificados = null;
         if(this.state.certificados){
             certificados = this.state.certificados.map(function (item) {
@@ -212,6 +207,19 @@ class Filter extends React.Component{
                );
             });
         }
+
+        let ipeaData = null;
+        if(this.props.ipeaData){
+            ipeaData = this.props.ipeaData.map(function (item) {
+               return (
+                   <div className="custom-control custom-checkbox" key={"ipeaData_"+item.cd_indice}>
+                       <input type="checkbox" className="custom-control-input" id={"ipeaData_"+item.cd_indice} required/>
+                       <label className="custom-control-label" htmlFor={"ipeaData_"+item.cd_indice}>{item.tx_nome_indice}</label>
+                   </div>
+               );
+            });
+        }
+
         let areaAtuacao = null;
         let subAreaAtuacao = [];
         if(this.state.areaAtuacao){
@@ -221,25 +229,25 @@ class Filter extends React.Component{
                 if(item.subareas){
                     subarea = item.subareas.map(function(subitem){
                         return(
-                            <div className="custom-control custom-checkbox" key={"subarea_"+subitem.cd_subarea_atuacao} onChange={() => console.log(subitem.cd_subarea_atuacao)}>
-                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
-                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
+                            <div key={"subarea_"+subitem.cd_subarea_atuacao}>
+                                <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_subarea_atuacao)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
+                                </div>
+                                <br />
                             </div>
                         );
                     });
                 }
 
                 subAreaAtuacao.push(
-                    <div key={"divArea_"+item.cd_area_atuacao} className="col-md-3" style={{display: item.checked ? '' : 'none'}}>
+                    <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checked ? '' : 'none'}}>
                         <div className="bg-lgt p-2">
                             <strong>{item.tx_nome_area_atuacao}</strong><br/>
-
                             {subarea}
-
                         </div>
                     </div>
                 );
-
 
                return (
                    <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
@@ -249,42 +257,6 @@ class Filter extends React.Component{
                );
             }.bind(this));
         }
-
-
-        /*let subAreaAtuacao = null;
-
-        if(this.state.subAreaAtuacao){
-
-            console.log('subId ', this.state.subAreaAtuacao);
-
-            let subArea = [];
-
-            for (let i in this.state.subAreaAtuacao){
-                   if(!subArea[i]){
-                    subArea[i] = {
-                        aresId: [],
-                        subId: [],
-                        subTitle: []
-                    };
-                }
-                subArea[i].push(this.state.subAreaAtuacao[i].cd_area_atuacao);
-                subArea[i].push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
-                subArea[i].push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
-            }
-
-            subArea.push({subArea: subArea});
-
-            console.log('subArea ', subArea);
-
-            subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
-                return (
-                    <div className="custom-control custom-checkbox" key={"cert_"+item.cd_subarea_atuacao}>
-                        <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_subarea_atuacao} required/>
-                        <label className="custom-control-label" htmlFor={"cert_"+item.cd_subarea_atuacao}>{item.tx_nome_subarea_atuacao}</label>
-                    </div>
-                );
-            }.bind(this));
-        }*/
 
 
         return (
@@ -450,18 +422,15 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-12">
-                                        <strong>Área de Atuação</strong><br/>
+                                        <strong>Área de Atuação</strong><hr/>
+                                        <div>
+                                            {areaAtuacao}
+                                            <br/><br/>
+                                        </div>
 
-                                        {areaAtuacao}
-
-                                        <br/><br/>
-
-                                        <strong>Subárea de Atuação</strong><br/>
-                                        <div className="row">
-
+                                        <strong>Subárea de Atuação</strong><hr/>
+                                        <div className="card-columns">
                                             {subAreaAtuacao}
-
-
                                         </div>
 
 
@@ -632,7 +601,9 @@ class Filter extends React.Component{
                         <div id="collapse9" className="collapse" aria-labelledby="heading9"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                999
+                                <div>
+                                    {ipeaData}
+                                </div>
                             </div>
                         </div>
                     </div>
