@@ -42,6 +42,9 @@ class Api extends React.Component {
             cache: false,
             url: getBaseUrl + 'menu/osc/area_atuacao',
             success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                });
                 this.setState({ loading: false, areaAtuacao: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {

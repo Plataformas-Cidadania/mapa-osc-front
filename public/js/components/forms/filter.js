@@ -153,13 +153,31 @@ class Filter extends React.Component {
 
     callSubAreaAtuacao(id) {
         console.log(id);
+
+        /*let areaAtuacao = this.state.areaAtuacao.find(function(item){
+            return item.cd_area_atuacao === id;
+        });*/
+
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl + 'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({ loading: false, subAreaAtuacao: data, id_area: id });
+
+                let areaAtuacao = this.state.areaAtuacao;
+
+                this.state.areaAtuacao.find(function (item) {
+                    if (item.cd_area_atuacao === id) {
+                        item.checked = !item.checked;
+                    }
+                    item.subareas = data.filter(function (subitem) {
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });
+
+                this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id });
+                //this.setState({loading: false, subAreaAtuacao: data, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -191,8 +209,42 @@ class Filter extends React.Component {
             });
         }
         let areaAtuacao = null;
+        let subAreaAtuacao = [];
         if (this.state.areaAtuacao) {
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
+
+                let subarea = null;
+                if (item.subareas) {
+                    subarea = item.subareas.map(function (subitem) {
+                        return React.createElement(
+                            'div',
+                            { className: 'custom-control custom-checkbox', key: "subarea_" + subitem.cd_subarea_atuacao, onChange: () => console.log(subitem.cd_subarea_atuacao) },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true }),
+                            React.createElement(
+                                'label',
+                                { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_subarea_atuacao },
+                                subitem.tx_nome_subarea_atuacao
+                            )
+                        );
+                    });
+                }
+
+                subAreaAtuacao.push(React.createElement(
+                    'div',
+                    { key: "divArea_" + item.cd_area_atuacao, className: 'col-md-3', style: { display: item.checked ? '' : 'none' } },
+                    React.createElement(
+                        'div',
+                        { className: 'bg-lgt p-2' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            item.tx_nome_area_atuacao
+                        ),
+                        React.createElement('br', null),
+                        subarea
+                    )
+                ));
+
                 return React.createElement(
                     'div',
                     { className: 'custom-control custom-checkbox', key: "area_" + item.cd_area_atuacao, onChange: () => this.callSubAreaAtuacao(item.cd_area_atuacao) },
@@ -511,20 +563,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-3' },
-                                            React.createElement(
-                                                'div',
-                                                { className: 'bg-lgt p-2' },
-                                                React.createElement(
-                                                    'strong',
-                                                    null,
-                                                    'Habita\xE7\xE3o'
-                                                ),
-                                                React.createElement('br', null)
-                                            )
-                                        )
+                                        subAreaAtuacao
                                     )
                                 )
                             )

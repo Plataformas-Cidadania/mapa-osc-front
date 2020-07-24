@@ -161,13 +161,31 @@ class Filter extends React.Component{
 
     callSubAreaAtuacao(id){
         console.log(id);
+
+        /*let areaAtuacao = this.state.areaAtuacao.find(function(item){
+            return item.cd_area_atuacao === id;
+        });*/
+
         this.setState({button:false});
         $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl+'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({loading: false, subAreaAtuacao: data, id_area:id})
+
+                let areaAtuacao = this.state.areaAtuacao;
+
+                this.state.areaAtuacao.find(function(item){
+                    if(item.cd_area_atuacao === id){
+                        item.checked = !item.checked;
+                    }
+                    item.subareas = data.filter(function(subitem){
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });
+
+                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id})
+                //this.setState({loading: false, subAreaAtuacao: data, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -195,8 +213,34 @@ class Filter extends React.Component{
             });
         }
         let areaAtuacao = null;
+        let subAreaAtuacao = [];
         if(this.state.areaAtuacao){
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
+
+                let subarea = null;
+                if(item.subareas){
+                    subarea = item.subareas.map(function(subitem){
+                        return(
+                            <div className="custom-control custom-checkbox" key={"subarea_"+subitem.cd_subarea_atuacao} onChange={() => console.log(subitem.cd_subarea_atuacao)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
+                            </div>
+                        );
+                    });
+                }
+
+                subAreaAtuacao.push(
+                    <div key={"divArea_"+item.cd_area_atuacao} className="col-md-3" style={{display: item.checked ? '' : 'none'}}>
+                        <div className="bg-lgt p-2">
+                            <strong>{item.tx_nome_area_atuacao}</strong><br/>
+
+                            {subarea}
+
+                        </div>
+                    </div>
+                );
+
+
                return (
                    <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
@@ -414,14 +458,10 @@ class Filter extends React.Component{
 
                                         <strong>Subárea de Atuação</strong><br/>
                                         <div className="row">
-                                            <div className="col-md-3">
-                                                <div className="bg-lgt p-2">
-                                                    <strong>Habitação</strong><br/>
 
-                                                    {/*{subAreaAtuacao}*/}
+                                            {subAreaAtuacao}
 
-                                                </div>
-                                            </div>
+
                                         </div>
 
 
