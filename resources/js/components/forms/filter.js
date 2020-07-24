@@ -20,11 +20,13 @@ class Filter extends React.Component{
             certificados: null,
             areaAtuacao: null,
             subAreaAtuacao: null,
-            showWarning: true
+            active: false,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
         this.validate = this.validate.bind(this);
+
+        this.clickIdh = this.clickIdh.bind(this);
 
 
     }
@@ -46,8 +48,6 @@ class Filter extends React.Component{
         }
     }
 
-
-
     handleInputChange(event) {
         const target = event.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
@@ -65,7 +65,6 @@ class Filter extends React.Component{
 
         this.setState({form: form});
     }
-
     validate(){
 
         let valid = true;
@@ -97,7 +96,6 @@ class Filter extends React.Component{
 
         return valid;
     }
-
     validateName(name){
         let array_name = name.split(' ');
         //console.log(array_name);
@@ -108,7 +106,6 @@ class Filter extends React.Component{
 
         return true;
     }
-
     validateCel(cel){
         cel = cel.replace(/[^0-9]/g,'');
         let qtd = cel.length;
@@ -131,7 +128,6 @@ class Filter extends React.Component{
         }
         return true;
     }
-
     filter(e){
         //console.log(this.validate());
         if(!this.validate()){
@@ -165,7 +161,6 @@ class Filter extends React.Component{
 
     callSubAreaAtuacao(id){
         console.log(id);
-
         this.setState({button:false});
         $.ajax({
             method: 'GET',
@@ -179,11 +174,12 @@ class Filter extends React.Component{
             }.bind(this)
         });
     }
-    callIdh(id){
-        console.log(id)
-        $("#divIdh").show();
-    }
 
+    clickIdh() {
+        this.setState({
+            active: !this.state.active
+        });
+    }
 
     render(){
 
@@ -202,7 +198,7 @@ class Filter extends React.Component{
         if(this.state.areaAtuacao){
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
                return (
-                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onClick={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
+                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
                        <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
                    </div>
@@ -210,27 +206,31 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
-        $("#divIdh").hide();
-       /* let subAreaAtuacao = null;
+
+        /*let subAreaAtuacao = null;
 
         if(this.state.subAreaAtuacao){
+
+            console.log('subId ', this.state.subAreaAtuacao);
 
             let subArea = [];
 
             for (let i in this.state.subAreaAtuacao){
                    if(!subArea[i]){
                     subArea[i] = {
+                        aresId: [],
                         subId: [],
                         subTitle: []
                     };
                 }
-                subArea[i].subId.push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
-                subArea[i].subTitle.push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
+                subArea[i].push(this.state.subAreaAtuacao[i].cd_area_atuacao);
+                subArea[i].push(this.state.subAreaAtuacao[i].cd_subarea_atuacao);
+                subArea[i].push(this.state.subAreaAtuacao[i].tx_nome_subarea_atuacao);
             }
 
             subArea.push({subArea: subArea});
 
-            console.log('subId ', subArea);
+            console.log('subArea ', subArea);
 
             subAreaAtuacao = this.state.subAreaAtuacao.map(function (item) {
                 return (
@@ -242,7 +242,10 @@ class Filter extends React.Component{
             }.bind(this));
         }*/
 
+
         return (
+
+
 
             <form>
 
@@ -330,21 +333,28 @@ class Filter extends React.Component{
                                     <div className="col-md-12">
                                         <br/>
                                         <strong>Natureza Jurídica:</strong><br/>
+
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_associacaoPrivada" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_associacaoPrivada">Associação Privada</label>
                                         </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_fundacaoPrivada" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_fundacaoPrivada">Fundação Privada</label>
                                         </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoReligiosa" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoReligiosa">Organização Religiosa</label>
                                         </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoSocial" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoSocial">Organização Social</label>
+                                        </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_outra" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_outra">Não informado</label>
+                                        </div>
+
                                         <br/><br/>
                                     </div>
 
@@ -379,6 +389,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-2">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
                                  aria-controls="collapse2">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -426,6 +437,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-3">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
                                  aria-controls="collapse3">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Titulações e Certificações <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -445,6 +457,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-4">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
                                  aria-controls="collapse4">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -482,6 +495,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-5">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
                                  aria-controls="collapse5">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -497,6 +511,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-6">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
                                  aria-controls="collapse6">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Projetos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -512,6 +527,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-7">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
                                  aria-controls="collapse7">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Fontes de Recursos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
@@ -527,6 +543,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-8">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
                                  aria-controls="collapse8">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"></i>
                             </div>
                         </div>
@@ -534,13 +551,14 @@ class Filter extends React.Component{
                              data-parent="#accordionExample">
                             <div className="card-body">
 
-                                <div className="custom-control custom-checkbox" onClick={() => this.callIdh()} >
+
+                                <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
                                     <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
                                     <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+
                                 </div>
 
-
-                                <div id="divIdh" >
+                                <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
                                     <br/>
                                     <strong> Faixas de IDHM:</strong>
                                     <br/>
@@ -567,6 +585,7 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-9">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
                                  aria-controls="collapse9">
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"></i>
                             </div>
                         </div>
