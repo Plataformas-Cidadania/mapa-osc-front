@@ -22,6 +22,7 @@ class Filter extends React.Component{
             subAreaAtuacao: null,
             ipeaData: null,
             active: false,
+            //inputValue: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
@@ -192,15 +193,39 @@ class Filter extends React.Component{
         });
     }
 
+    onInput(event) {
+
+        let input = 0;
+        let inputMax = 100;
+
+
+        console.log(event);
+        //console.log(event.target.defaultValue);
+        const id = event.target.id;
+        if(event.target.defaultValue==0){
+            input = document.getElementById(id).value;
+        }else{
+            inputMax = document.getElementById(id).value;
+        }
+
+        var currentVal = 'de: ' + input + ' até: ' + inputMax;
+        document.getElementById(event.target.name).value = currentVal;
+        //console.log(currentVal);
+
+        /*this.setState({
+            /!*value: currentVal*!/
+            inputValue: inputValue
+        })*/
+
+    }
+
     render(){
-
-
 
         let certificados = null;
         if(this.state.certificados){
             certificados = this.state.certificados.map(function (item) {
                return (
-                   <div className="custom-control custom-checkbox" key={"cert_"+item.cd_certificado}>
+                   <div className="custom-control custom-checkbox"  key={"cert_"+item.cd_certificado}>
                        <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_certificado} required/>
                        <label className="custom-control-label" htmlFor={"cert_"+item.cd_certificado}>{item.tx_nome_certificado}</label>
                    </div>
@@ -208,17 +233,47 @@ class Filter extends React.Component{
             });
         }
 
-        let ipeaData = null;
+
+        const ipeaData = [];
         if(this.props.ipeaData){
-            ipeaData = this.props.ipeaData.map(function (item) {
-               return (
-                   <div className="custom-control custom-checkbox" key={"ipeaData_"+item.cd_indice}>
-                       <input type="checkbox" className="custom-control-input" id={"ipeaData_"+item.cd_indice} required/>
-                       <label className="custom-control-label" htmlFor={"ipeaData_"+item.cd_indice}>{item.tx_nome_indice}</label>
-                   </div>
-               );
-            });
+            const map = new Map();
+            for (const item of this.props.ipeaData) {
+
+                let subThema = null;
+                if(item.cd_indice){
+
+                    subThema = this.props.ipeaData.map(function(subitem){
+                        return(
+                        <div key={"subarea_"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                            </div>
+                            <br />
+                        </div>
+
+                        );
+                    });
+                }
+                //console.log('subThema ', subThema);
+
+
+                if(!map.has(item.tx_tema)){
+                    map.set(item.tx_tema, true);
+                    ipeaData.push(
+                        <div key={"ipeaData_"+item.cd_indice} >
+                            <strong>{item.tx_tema}</strong>
+                            <hr />
+                            {subThema}
+                            <br/>
+                        </div>
+                    );
+                }
+            }
+            //console.log(ipeaData);
         }
+
+
 
         let areaAtuacao = null;
         let subAreaAtuacao = [];
@@ -329,15 +384,27 @@ class Filter extends React.Component{
                                             <option value="3">Three</option>
                                         </select>*/}
                                     </div>
-                                    <div className="col-md-3">
+                                    {/*<div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>
                                             <label htmlFor="name">Ano de Fundação</label>
                                             <div className="label-box-info-off"/>
                                         </div>
-                                        <input type="range" className="custom-range" min="0" max="5"  id="customRange2" style={{float:'left'}}/>
-                                        <input type="range" className="custom-range" min="0" max="5"  id="customRange2" style={{float:'right'}}/>
+                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="0" id="ranger1" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
+                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="100" id="ranger2" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
+                                    </div>*/}
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" />
+                                            <label htmlFor="name">Ano de Fundação</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="0" name="textRanger" id="rangerMin" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
+                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="100" name="textRanger" id="rangerMax" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
                                     </div>
+
+
                                     <div className="col-md-3">
                                         <div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_nome_municipio" onChange={this.handleInputChange} placeholder=" "/>
@@ -511,7 +578,47 @@ class Filter extends React.Component{
                         <div id="collapse5" className="collapse" aria-labelledby="heading5"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                555
+                                <div className="row">
+
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome do Conselho</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_dirigente">Data de Início de Vigência</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome de representante conselho</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Titularidade</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="date" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -543,7 +650,25 @@ class Filter extends React.Component{
                         <div id="collapse7" className="collapse" aria-labelledby="heading7"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                777
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <h4>Fontes de recursos anuais da OSC</h4>
+                                        <hr />
+
+                                        <h4>Recursos próprios</h4>
+                                        <hr />
+
+                                        <h4>Recursos públicos</h4>
+                                        <hr />
+
+                                        <h4>Recursos privados</h4>
+                                        <hr />
+
+                                        <h4>Recursos não financeiros</h4>
+                                        <hr />
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -553,7 +678,7 @@ class Filter extends React.Component{
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
                                  aria-controls="collapse8">
                                 <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"></i>
+                                Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse8" className="collapse" aria-labelledby="heading8"

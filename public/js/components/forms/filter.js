@@ -22,6 +22,7 @@ class Filter extends React.Component {
             subAreaAtuacao: null,
             ipeaData: null,
             active: false
+            //inputValue: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
@@ -184,6 +185,30 @@ class Filter extends React.Component {
         });
     }
 
+    onInput(event) {
+
+        let input = 0;
+        let inputMax = 100;
+
+        console.log(event);
+        //console.log(event.target.defaultValue);
+        const id = event.target.id;
+        if (event.target.defaultValue == 0) {
+            input = document.getElementById(id).value;
+        } else {
+            inputMax = document.getElementById(id).value;
+        }
+
+        var currentVal = 'de: ' + input + ' até: ' + inputMax;
+        document.getElementById(event.target.name).value = currentVal;
+        //console.log(currentVal);
+
+        /*this.setState({
+            /!*value: currentVal*!/
+            inputValue: inputValue
+        })*/
+    }
+
     render() {
 
         let certificados = null;
@@ -202,20 +227,52 @@ class Filter extends React.Component {
             });
         }
 
-        let ipeaData = null;
+        const ipeaData = [];
         if (this.props.ipeaData) {
-            ipeaData = this.props.ipeaData.map(function (item) {
-                return React.createElement(
-                    'div',
-                    { className: 'custom-control custom-checkbox', key: "ipeaData_" + item.cd_indice },
-                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "ipeaData_" + item.cd_indice, required: true }),
-                    React.createElement(
-                        'label',
-                        { className: 'custom-control-label', htmlFor: "ipeaData_" + item.cd_indice },
-                        item.tx_nome_indice
-                    )
-                );
-            });
+            const map = new Map();
+            for (const item of this.props.ipeaData) {
+
+                let subThema = null;
+                if (item.cd_indice) {
+
+                    subThema = this.props.ipeaData.map(function (subitem) {
+                        return React.createElement(
+                            'div',
+                            { key: "subarea_" + subitem.cd_indice },
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_indice) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_indice, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_indice },
+                                    subitem.tx_nome_indice
+                                )
+                            ),
+                            React.createElement('br', null)
+                        );
+                    });
+                }
+                //console.log('subThema ', subThema);
+
+
+                if (!map.has(item.tx_tema)) {
+                    map.set(item.tx_tema, true);
+                    ipeaData.push(React.createElement(
+                        'div',
+                        { key: "ipeaData_" + item.cd_indice },
+                        React.createElement(
+                            'strong',
+                            null,
+                            item.tx_tema
+                        ),
+                        React.createElement('hr', null),
+                        subThema,
+                        React.createElement('br', null)
+                    ));
+                }
+            }
+            //console.log(ipeaData);
         }
 
         let areaAtuacao = null;
@@ -390,7 +447,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger', placeholder: '' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'name' },
@@ -398,8 +455,8 @@ class Filter extends React.Component {
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     ),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '5', id: 'customRange2', style: { float: 'left' } }),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '5', id: 'customRange2', style: { float: 'right' } })
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '0', name: 'textRanger', id: 'rangerMin', style: { float: 'left' }, onInput: this.onInput.bind(this) }),
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '100', name: 'textRanger', id: 'rangerMax', style: { float: 'right' }, onInput: this.onInput.bind(this) })
                                 ),
                                 React.createElement(
                                     'div',
@@ -703,7 +760,85 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '555'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                            'Nome do Conselho'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control", type: 'date', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_dirigente' },
+                                            'Data de In\xEDcio de Vig\xEAncia'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                            'Nome de representante conselho'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                            'Titularidade'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                            'Data de Fim de Vig\xEAncia'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                )
+                            )
                         )
                     )
                 ),
@@ -763,7 +898,44 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '777'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'h4',
+                                        null,
+                                        'Fontes de recursos anuais da OSC'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'h4',
+                                        null,
+                                        'Recursos pro\u0301prios'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'h4',
+                                        null,
+                                        'Recursos pu\u0301blicos'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'h4',
+                                        null,
+                                        'Recursos privados'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'h4',
+                                        null,
+                                        'Recursos na\u0303o financeiros'
+                                    ),
+                                    React.createElement('hr', null)
+                                )
+                            )
                         )
                     )
                 ),
