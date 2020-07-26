@@ -22,7 +22,7 @@ class Filter extends React.Component{
             subAreaAtuacao: null,
             ipeaData: null,
             active: false,
-            //inputValue: null,
+            rangerMin1: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
@@ -195,18 +195,23 @@ class Filter extends React.Component{
 
     onInput(event) {
 
+
         let input = 0;
         let inputMax = 100;
 
+        console.log(event.target.id);
 
-        console.log(event);
         //console.log(event.target.defaultValue);
+
         const id = event.target.id;
-        if(event.target.defaultValue==0){
+        if(event.target.min===event.target.defaultValue){
             input = document.getElementById(id).value;
         }else{
             inputMax = document.getElementById(id).value;
         }
+
+
+        //console.log(input);
 
         var currentVal = 'de: ' + input + ' até: ' + inputMax;
         document.getElementById(event.target.name).value = currentVal;
@@ -214,7 +219,7 @@ class Filter extends React.Component{
 
         /*this.setState({
             /!*value: currentVal*!/
-            inputValue: inputValue
+            rangerMin1: rangerMin1
         })*/
 
     }
