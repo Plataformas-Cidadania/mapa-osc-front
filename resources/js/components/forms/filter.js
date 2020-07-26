@@ -23,6 +23,9 @@ class Filter extends React.Component{
             ipeaData: null,
             active: false,
             rangerMin1: null,
+            input: 0,
+            inputMax: 100,
+            textRanger: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
@@ -193,11 +196,22 @@ class Filter extends React.Component{
         });
     }
 
+    handleInputMin(event){
+        let input = this.state.input;
+        var currentVal = 'de: ' + input + ' até: ' + this.state.inputMax;
+        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+    }
+    handleInputMax(event){
+        let inputMax = this.state.inputMax;
+        var currentVal = 'de: ' + this.state.input + ' até: ' + inputMax;
+        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+    }
+
     onInput(event) {
 
 
-        let input = 0;
-        let inputMax = 100;
+        let input = this.state.input;
+        let inputMax = this.state.inputMax;
 
         console.log(event.target.id);
 
@@ -214,7 +228,10 @@ class Filter extends React.Component{
         //console.log(input);
 
         var currentVal = 'de: ' + input + ' até: ' + inputMax;
-        document.getElementById(event.target.name).value = currentVal;
+
+        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+
+        //document.getElementById(event.target.name).value = currentVal;
         //console.log(currentVal);
 
         /*this.setState({
@@ -401,7 +418,7 @@ class Filter extends React.Component{
                                     <div className="col-md-3">
                                         <div className="label-float">
                                             {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" />
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger" value={this.state.textRanger} placeholder="" />
                                             <label htmlFor="name">Ano de Fundação</label>
                                             <div className="label-box-info-off"/>
                                         </div>
