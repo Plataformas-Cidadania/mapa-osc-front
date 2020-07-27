@@ -204,10 +204,6 @@ class Filter extends React.Component {
         let input = this.state.input;
         let inputMax = this.state.inputMax;
 
-        console.log(event.target.id);
-
-        //console.log(event.target.defaultValue);
-
         const id = event.target.id;
         if (event.target.min === event.target.defaultValue) {
             input = document.getElementById(id).value;
@@ -215,19 +211,11 @@ class Filter extends React.Component {
             inputMax = document.getElementById(id).value;
         }
 
-        //console.log(input);
-
         var currentVal = 'de: ' + input + ' até: ' + inputMax;
 
-        this.setState({ input: input, inputMax: inputMax, textRanger: currentVal });
+        document.getElementById(event.target.name).value = currentVal;
 
-        //document.getElementById(event.target.name).value = currentVal;
-        //console.log(currentVal);
-
-        /*this.setState({
-            /!*value: currentVal*!/
-            rangerMin1: rangerMin1
-        })*/
+        this.setState({ input: input, inputMax: inputMax /*, textRanger: currentVal*/ });
     }
 
     render() {
@@ -274,9 +262,6 @@ class Filter extends React.Component {
                         );
                     });
                 }
-                //console.log('subThema ', subThema);
-
-
                 if (!map.has(item.tx_tema)) {
                     map.set(item.tx_tema, true);
                     ipeaData.push(React.createElement(
@@ -293,7 +278,6 @@ class Filter extends React.Component {
                     ));
                 }
             }
-            //console.log(ipeaData);
         }
 
         let areaAtuacao = null;
@@ -468,7 +452,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger', value: this.state.textRanger, placeholder: '' }),
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger', placeholder: '' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'name' },
@@ -478,6 +462,23 @@ class Filter extends React.Component {
                                     ),
                                     React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '0', name: 'textRanger', id: 'rangerMin', style: { float: 'left' }, onInput: this.onInput.bind(this) }),
                                     React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '100', name: 'textRanger', id: 'rangerMax', style: { float: 'right' }, onInput: this.onInput.bind(this) })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger2', placeholder: '' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'name' },
+                                            'Ano de Funda\xE7\xE3o2'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    ),
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '1990', max: '2020', step: '1', defaultValue: '0', name: 'textRanger2', id: 'rangerMin2', style: { float: 'left' }, onInput: this.onInput.bind(this) }),
+                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '1990', max: '2020', step: '1', defaultValue: '100', name: 'textRanger2', id: 'rangerMax2', style: { float: 'right' }, onInput: this.onInput.bind(this) })
                                 ),
                                 React.createElement(
                                     'div',
