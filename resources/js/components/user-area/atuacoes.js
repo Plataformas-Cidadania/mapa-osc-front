@@ -15,12 +15,19 @@ class Atuacoes extends React.Component{
             loadingRemove: [],
             atuacao: {},
             editId: 0,
+
+            showCategories: false,
+            categoriesSelected: [],
         };
 
         this.listArea = this.listArea.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+
+        this.clickSearch = this.clickSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.addCategory = this.addCategory.bind(this);
     }
 
     componentDidMount(){
@@ -44,15 +51,10 @@ class Atuacoes extends React.Component{
     }
 
     edit(id){
-       // this.setState({actionForm: 'edit'});
         this.setState({actionForm: 'edit', showForm: false, editId: id});
     }
 
-    cancelRemove(id){
-        let remove = this.state.remove;
-        remove[id] = false;
-        this.setState({remove: remove});
-    }
+
 
     remove(id){
         let remove = this.state.remove;
@@ -74,11 +76,31 @@ class Atuacoes extends React.Component{
             },
             cache: false,
             success: function(data){
+
+                let categoriesUrl = this.props.categoriesUrl;
+                let categoriesSelected = this.state.categoriesSelected;
+                for(let i in data){
+                    for(let j in categoriesUrl){
+                        if(data[i].id==categoriesUrl[j]){
+                            let add = true;
+                            for(let k in categoriesSelected){
+                                //console.log(categoriesUrl[j], categoriesSelected[k].id);
+                                if(categoriesUrl[j]==categoriesSelected[k].id){
+                                    add = false;
+                                }
+                            }
+                            if(add){
+                                categoriesSelected.push(data[i]);
+                            }
+                        }
+                    }
+                }
+
                 //console.log(data);
                 this.listArea();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
-                this.setState({loadingRemove: loadingRemove});
+                this.setState({loadingRemove: loadingRemove, categoriesSelected: categoriesSelected});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -92,7 +114,6 @@ class Atuacoes extends React.Component{
 
     showHideForm(action){
         let showForm = !this.state.showForm;
-
 
         let actionForm = action;
 
@@ -109,7 +130,7 @@ class Atuacoes extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/areas_atuacao',
+            url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
             success: function(data){
                 //console.log(data);
@@ -122,52 +143,79 @@ class Atuacoes extends React.Component{
         });
     }
 
-    render(){
+    clickSearch(){
+        let showCategories = !this.state.showCategories;
+        this.setState({showCategories: showCategories}, function(){
+            this.listArea();
+        })
+    }
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-        console.log(this.state.atuacoes);
+    handleSearch(e){
+        this.setState({search: e.target.value}, function(){
+            this.listArea();
+        });
+    }
 
-        let atuacoes = this.state.atuacoes.map(function(item, index){
-
-
-
-            let hr = null;
-            if(index < this.state.atuacoes.length-1){
-                hr = <hr/>;
+    addCategory(item){
+        //console.log('addCategory', item);
+        let add = true;
+        this.state.categoriesSelected.find(function(cat){
+            if(item.cd_area_atuacao===cat.cd_area_atuacao){
+                add = false;
             }
+        });
+        if(add){
+            let categoriesSelected = this.state.categoriesSelected;
+            categoriesSelected.push(item);
+            //console.log('addCategory - categoriesSelected', categoriesSelected);
+            this.setState({showCategories: false});
+            this.setState({categoriesSelected: categoriesSelected}, function(){
+                //this.props.filterCategories(this.state.categoriesSelected);
+            });
+        }
 
+    }
+
+    render(){
+        console.log(this.state);
+
+        let firstCategories = this.state.atuacoes.map(function (item, index){
+
+                let sizeSearch = this.state.search;
+                let firstPiece = item.tx_nome_area_atuacao.substr(0, sizeSearch);
+
+                return (
+                    <li key={'cat_'+item.cd_area_atuacao}
+                        className="list-group-item d-flex "
+                        onClick={() => this.addCategory(item)}
+                    >
+                        {firstPiece}
+                    </li>
+                )
+
+
+        }.bind(this));
+
+        let categoriesSelected = this.state.categoriesSelected.map(function (item){
             return (
-                <tr key={"atuacao_"+index}>
-                    <td>{item.cd_atuacao}</td>
-                    <td>{item.dt_inicio_atuacao}</td>
-                    <td>{item.dt_fim_atuacao}</td>
-                    <td>{item.cd_uf}</td>
-                    <td width="70">
-                        <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                        <a onClick={() => this.remove(item.id_atuacao)} style={{display: this.state.loadingRemove[item.id_atuacao] ? 'none' : ''}}>
-                            <i className={"fas "+( this.state.remove[item.id_atuacao] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id_atuacao)} style={{display: this.state.remove[item.id_atuacao] && !this.state.loadingRemove[item.id_atuacao] ? '' : 'none'}}>
-                            <i className="fas fa-undo"/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_atuacao] ? '' : 'none'}}/>
-                    </td>
-                </tr>
-            );
+                <button key={"btn_category_"+item.id} id={item.id} onClick={this.removeCategory} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
+                    {item.tx_nome_area_atuacao} <i className="fas fa-times"/>
+                </button>
+            )
         }.bind(this));
 
         return(
 
 
+
             <div>
-                {/*{this.state.atuacoes}*/}
+
                 <div className="row">
                     <div className="col-md-12">
                         <br/><br/>
                         <div className="title-style">
                             <h2>Áreas e Subáreas de atuação da OSC</h2>
-                            <div className="line line-fix"></div>
+                            <div className="line line-fix"/>
                             <hr/>
                         </div>
                         <div className="text-center">Atividade econômica (CNAE)</div>
@@ -176,24 +224,27 @@ class Atuacoes extends React.Component{
                 </div>
 
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <div className="alert alert-secondary">
-                            <h2 className="text-center">Área de atuação 1</h2>
+                            {/*<h2 className="text-center">Área de atuação 1</h2>*/}
                             <div className="input-icon">
                                 <input type="text" className="form-control"
-                                       placeholder="Busque um artigo..."/>
-                                <i className="fas fa-search"/>
+                                       placeholder="Busque um artigo..." onClick={this.clickSearch} onChange={this.handleSearch}/>
+                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                <div>
+                                    <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+                                        {firstCategories}
+                                    </ul>
+                                </div>
+                                <br/>
+                                <div>
+                                    {categoriesSelected}
+                                </div>
+
                             </div>
                             <div>
                                 <br/>
 
-                                {/*<select name="tx_nome_situacao_imovel_osc" className={"form-control"} value={this.state.form[0].tx_nome_area_atuacao} onChange={this.handleInputChange}>
-                                    <option value="-1">Selecione</option>
-                                    <option value="Próprio">Próprio</option>
-                                    <option value="Alugado">Alugado</option>
-                                    <option value="Cedido">Cedido</option>
-                                    <option value="Comodato">Comodato</option>
-                                </select>*/}
 
                                     <div className="custom-control custom-checkbox ">
                                         <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
@@ -212,7 +263,7 @@ class Atuacoes extends React.Component{
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6">
+                    {/*<div className="col-md-6">
                         <div className="alert alert-secondary">
                             <h2 className="text-center">Área de atuação 2</h2>
                             <div className="input-icon">
@@ -221,48 +272,11 @@ class Atuacoes extends React.Component{
                                 <i className="fas fa-search"/>
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
 
 
 
-                {/*<div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-atuacao" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
-                    <p>Você tem {this.state.atuacoes.length} títulos ou atuacoes cadastrados</p>
-                    <hr/>
-                </div>
-
-                <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
-                    <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <table className="table">
-                            <thead className="bg-pri text-light">
-                            <tr>
-                                <th scope="col">Titulo / Atuacao</th>
-                                <th scope="col">Início da validade</th>
-                                <th scope="col">Fim da validade</th>
-                                <th scope="col">Localidade</th>
-                                <th scope="col"/>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {atuacoes}
-                            </tbody>
-                        </table>
-
-                        <div style={{float: 'right', cursor: 'pointer', display: this.state.atuacoes.length < maxAtuacoes ? 'block' : 'none' }}>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>
-                        </div>
-
-                        <div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
-                            <FormAtuacao action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>
-                    </div>
-
-                </div>*/}
             </div>
         );
     }

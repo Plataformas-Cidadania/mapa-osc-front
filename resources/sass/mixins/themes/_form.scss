@@ -6,10 +6,10 @@ label{
     padding-right: 40px;
 }
 .input-icon svg{
-    float: right;
-    margin-top: -28px;
-    font-size: 20px;
-    margin-right: 10px;
+    float: right!important;
+    margin-top: -28px!important;
+    font-size: 20px!important;
+    margin-right: 10px!important;
 }
 
 /* --  Personalização checkbox -- */
@@ -288,4 +288,19 @@ label, input, .btn-number {
 }
 .custom-range-r{
     float: right;
+}
+.box-search-itens{
+    position: absolute;
+    background: #FFFFFF;
+    overflow: auto;
+    width: 95%;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    margin-right: 20px;
+    z-index: 99;
+
+}
+.box-search-itens li{
+    cursor: pointer;
 }

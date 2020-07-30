@@ -14,13 +14,20 @@ class Atuacoes extends React.Component {
             remove: [],
             loadingRemove: [],
             atuacao: {},
-            editId: 0
+            editId: 0,
+
+            showCategories: false,
+            categoriesSelected: []
         };
 
         this.listArea = this.listArea.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+
+        this.clickSearch = this.clickSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.addCategory = this.addCategory.bind(this);
     }
 
     componentDidMount() {
@@ -43,14 +50,7 @@ class Atuacoes extends React.Component {
     }
 
     edit(id) {
-        // this.setState({actionForm: 'edit'});
         this.setState({ actionForm: 'edit', showForm: false, editId: id });
-    }
-
-    cancelRemove(id) {
-        let remove = this.state.remove;
-        remove[id] = false;
-        this.setState({ remove: remove });
     }
 
     remove(id) {
@@ -71,11 +71,31 @@ class Atuacoes extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
+
+                let categoriesUrl = this.props.categoriesUrl;
+                let categoriesSelected = this.state.categoriesSelected;
+                for (let i in data) {
+                    for (let j in categoriesUrl) {
+                        if (data[i].id == categoriesUrl[j]) {
+                            let add = true;
+                            for (let k in categoriesSelected) {
+                                //console.log(categoriesUrl[j], categoriesSelected[k].id);
+                                if (categoriesUrl[j] == categoriesSelected[k].id) {
+                                    add = false;
+                                }
+                            }
+                            if (add) {
+                                categoriesSelected.push(data[i]);
+                            }
+                        }
+                    }
+                }
+
                 //console.log(data);
                 this.listArea();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
-                this.setState({ loadingRemove: loadingRemove });
+                this.setState({ loadingRemove: loadingRemove, categoriesSelected: categoriesSelected });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -104,7 +124,7 @@ class Atuacoes extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/areas_atuacao',
+            url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
             success: function (data) {
                 //console.log(data);
@@ -117,63 +137,63 @@ class Atuacoes extends React.Component {
         });
     }
 
-    render() {
+    clickSearch() {
+        let showCategories = !this.state.showCategories;
+        this.setState({ showCategories: showCategories }, function () {
+            this.listArea();
+        });
+    }
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-        console.log(this.state.atuacoes);
+    handleSearch(e) {
+        this.setState({ search: e.target.value }, function () {
+            this.listArea();
+        });
+    }
 
-        let atuacoes = this.state.atuacoes.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.atuacoes.length - 1) {
-                hr = React.createElement('hr', null);
+    addCategory(item) {
+        //console.log('addCategory', item);
+        let add = true;
+        this.state.categoriesSelected.find(function (cat) {
+            if (item.cd_area_atuacao === cat.cd_area_atuacao) {
+                add = false;
             }
+        });
+        if (add) {
+            let categoriesSelected = this.state.categoriesSelected;
+            categoriesSelected.push(item);
+            //console.log('addCategory - categoriesSelected', categoriesSelected);
+            this.setState({ showCategories: false });
+            this.setState({ categoriesSelected: categoriesSelected }, function () {
+                //this.props.filterCategories(this.state.categoriesSelected);
+            });
+        }
+    }
+
+    render() {
+        console.log(this.state);
+
+        let firstCategories = this.state.atuacoes.map(function (item, index) {
+
+            let sizeSearch = this.state.search;
+            let firstPiece = item.tx_nome_area_atuacao.substr(0, sizeSearch);
 
             return React.createElement(
-                'tr',
-                { key: "atuacao_" + index },
-                React.createElement(
-                    'td',
-                    null,
-                    item.cd_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.dt_inicio_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.dt_fim_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.cd_uf
-                ),
-                React.createElement(
-                    'td',
-                    { width: '70' },
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.edit(item.id) },
-                        React.createElement('i', { className: 'far fa-edit text-primary' })
-                    ),
-                    '\xA0\xA0',
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.remove(item.id_atuacao), style: { display: this.state.loadingRemove[item.id_atuacao] ? 'none' : '' } },
-                        React.createElement('i', { className: "fas " + (this.state.remove[item.id_atuacao] ? "fa-times text-primary" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id_atuacao), style: { display: this.state.remove[item.id_atuacao] && !this.state.loadingRemove[item.id_atuacao] ? '' : 'none' } },
-                        React.createElement('i', { className: 'fas fa-undo' })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_atuacao] ? '' : 'none' } })
-                )
+                'li',
+                { key: 'cat_' + item.cd_area_atuacao,
+                    className: 'list-group-item d-flex ',
+                    onClick: () => this.addCategory(item)
+                },
+                firstPiece
+            );
+        }.bind(this));
+
+        let categoriesSelected = this.state.categoriesSelected.map(function (item) {
+            return React.createElement(
+                'button',
+                { key: "btn_category_" + item.id, id: item.id, onClick: this.removeCategory, type: 'button', className: 'btn btn-success btn-xs btn-remove', style: { margin: "0 5px 5px 0" } },
+                item.tx_nome_area_atuacao,
+                ' ',
+                React.createElement('i', { className: 'fas fa-times' })
             );
         }.bind(this));
 
@@ -212,21 +232,31 @@ class Atuacoes extends React.Component {
                 { className: 'row' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
+                    { className: 'col-md-12' },
                     React.createElement(
                         'div',
                         { className: 'alert alert-secondary' },
                         React.createElement(
-                            'h2',
-                            { className: 'text-center' },
-                            '\xC1rea de atua\xE7\xE3o 1'
-                        ),
-                        React.createElement(
                             'div',
                             { className: 'input-icon' },
                             React.createElement('input', { type: 'text', className: 'form-control',
-                                placeholder: 'Busque um artigo...' }),
-                            React.createElement('i', { className: 'fas fa-search' })
+                                placeholder: 'Busque um artigo...', onClick: this.clickSearch, onChange: this.handleSearch }),
+                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    'ul',
+                                    { className: 'box-search-itens', style: { display: this.state.showCategories ? '' : 'none' } },
+                                    firstCategories
+                                )
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                null,
+                                categoriesSelected
+                            )
                         ),
                         React.createElement(
                             'div',
@@ -262,26 +292,6 @@ class Atuacoes extends React.Component {
                                     'Example invalid feedback text'
                                 )
                             )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'alert alert-secondary' },
-                        React.createElement(
-                            'h2',
-                            { className: 'text-center' },
-                            '\xC1rea de atua\xE7\xE3o 2'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'input-icon' },
-                            React.createElement('input', { type: 'text', className: 'form-control',
-                                placeholder: 'Busque um artigo...' }),
-                            React.createElement('i', { className: 'fas fa-search' })
                         )
                     )
                 )
