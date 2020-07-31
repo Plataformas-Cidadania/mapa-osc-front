@@ -116,12 +116,12 @@ class Certificates extends React.Component{
         $.ajax({
             method: 'GET',
             //url: '/list-users-certificates',
-            url: 'http://localhost:8000/api/osc/certificados/455128',
+            url: getBaseUrl + 'osc/certificados/455128',
             data: {
             },
             cache: false,
             success: function(data){
-                console.log(data);
+                console.log("data: ",data);
                 this.setState({certificates: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -133,6 +133,7 @@ class Certificates extends React.Component{
 
     render(){
 
+        console.log("Certificado: ", this.state.certificates);
         //console.log(this.state.showForm);
         //console.log('state.remove', this.state.remove);
 
