@@ -5,6 +5,7 @@ class Atuacoes extends React.Component {
             loadingList: false,
             loading: false,
             atuacoes: [],
+            subAtuacoes: [],
             cd_atuacao: {
                 1: 'Utilidade Pública Municipal',
                 2: 'Utilidade Pública Estadual'
@@ -28,6 +29,8 @@ class Atuacoes extends React.Component {
         this.clickSearch = this.clickSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
+        this.subCategory = this.subCategory.bind(this);
     }
 
     componentDidMount() {
@@ -119,15 +122,12 @@ class Atuacoes extends React.Component {
     }
 
     listArea() {
-
         this.setState({ loadingList: true });
-
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
             success: function (data) {
-                //console.log(data);
                 this.setState({ atuacoes: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -151,7 +151,6 @@ class Atuacoes extends React.Component {
     }
 
     addCategory(item) {
-        //console.log('addCategory', item);
         let add = true;
         this.state.categoriesSelected.find(function (cat) {
             if (item.cd_area_atuacao === cat.cd_area_atuacao) {
@@ -161,22 +160,51 @@ class Atuacoes extends React.Component {
         if (add) {
             let categoriesSelected = this.state.categoriesSelected;
             categoriesSelected.push(item);
-            //console.log('addCategory - categoriesSelected', categoriesSelected);
             this.setState({ showCategories: false });
             this.setState({ categoriesSelected: categoriesSelected }, function () {
                 //this.props.filterCategories(this.state.categoriesSelected);
+
             });
         }
     }
 
+    removeCategory(e) {
+
+        let categoriesSelected = this.state.categoriesSelected;
+        let category = {};
+        categoriesSelected.find(function (item) {
+            if (item.id == e.target.id) {
+                category = item;
+            }
+        });
+        let index = categoriesSelected.indexOf(category);
+        categoriesSelected.splice(index, 1);
+        this.setState({ categoriesSelected: categoriesSelected }, function () {
+            //this.props.filterCategories(this.state.categoriesSelected);
+        });
+    }
+
+    subCategory() {
+        //this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'areas_atuacao',
+            cache: false,
+            success: function (data) {
+                console.log("111");
+                this.setState({ subAtuacoes: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     render() {
-        console.log(this.state);
-
         let firstCategories = this.state.atuacoes.map(function (item, index) {
-
             let sizeSearch = this.state.search;
             let firstPiece = item.tx_nome_area_atuacao.substr(0, sizeSearch);
-
             return React.createElement(
                 'li',
                 { key: 'cat_' + item.cd_area_atuacao,
@@ -186,17 +214,40 @@ class Atuacoes extends React.Component {
                 firstPiece
             );
         }.bind(this));
-
         let categoriesSelected = this.state.categoriesSelected.map(function (item) {
             return React.createElement(
-                'button',
-                { key: "btn_category_" + item.id, id: item.id, onClick: this.removeCategory, type: 'button', className: 'btn btn-success btn-xs btn-remove', style: { margin: "0 5px 5px 0" } },
-                item.tx_nome_area_atuacao,
-                ' ',
-                React.createElement('i', { className: 'fas fa-times' })
+                'div',
+                { key: "btn_category_" + item.id, id: item.id, className: 'btn-group ', role: 'group', 'aria-label': 'Basic example' },
+                React.createElement(
+                    'button',
+                    { onClick: this.subCategory, type: 'button', className: 'btn btn-light' },
+                    item.tx_nome_area_atuacao
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.removeCategory, type: 'button', className: 'btn btn-danger btn-margin-right' },
+                    'x'
+                )
             );
         }.bind(this));
 
+        let subAtuacoes = this.state.subAtuacoes.map(function (item, index) {
+            return React.createElement(
+                'div',
+                { className: 'custom-control custom-checkbox', key: "subarea_" + index, id: "subarea_" + index },
+                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + index, required: true }),
+                React.createElement(
+                    'label',
+                    { className: 'custom-control-label', htmlFor: "subarea_" + index },
+                    item.tx_nome_area_atuacao
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'invalid-feedback' },
+                    'Example invalid feedback text'
+                )
+            );
+        }.bind(this));
         return React.createElement(
             'div',
             null,
@@ -262,36 +313,8 @@ class Atuacoes extends React.Component {
                             'div',
                             null,
                             React.createElement('br', null),
-                            React.createElement(
-                                'div',
-                                { className: 'custom-control custom-checkbox ' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
-                                React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
-                                    'Associa\xE7\xE3o Privada'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'invalid-feedback' },
-                                    'Example invalid feedback text'
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'custom-control custom-checkbox ' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
-                                React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
-                                    'Associa\xE7\xE3o Privada'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'invalid-feedback' },
-                                    'Example invalid feedback text'
-                                )
-                            )
+                            React.createElement('div', { style: { clear: 'both' } }),
+                            subAtuacoes
                         )
                     )
                 )

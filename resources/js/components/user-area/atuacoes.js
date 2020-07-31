@@ -5,6 +5,7 @@ class Atuacoes extends React.Component{
             loadingList:false,
             loading:false,
             atuacoes:[],
+            subAtuacoes:[],
             cd_atuacao:{
                 1: 'Utilidade Pública Municipal',
                 2: 'Utilidade Pública Estadual',
@@ -28,6 +29,8 @@ class Atuacoes extends React.Component{
         this.clickSearch = this.clickSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
+        this.subCategory = this.subCategory.bind(this);
     }
 
     componentDidMount(){
@@ -125,15 +128,12 @@ class Atuacoes extends React.Component{
     }
 
     listArea(){
-
         this.setState({loadingList: true});
-
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.setState({atuacoes: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -157,7 +157,6 @@ class Atuacoes extends React.Component{
     }
 
     addCategory(item){
-        //console.log('addCategory', item);
         let add = true;
         this.state.categoriesSelected.find(function(cat){
             if(item.cd_area_atuacao===cat.cd_area_atuacao){
@@ -167,103 +166,132 @@ class Atuacoes extends React.Component{
         if(add){
             let categoriesSelected = this.state.categoriesSelected;
             categoriesSelected.push(item);
-            //console.log('addCategory - categoriesSelected', categoriesSelected);
             this.setState({showCategories: false});
             this.setState({categoriesSelected: categoriesSelected}, function(){
                 //this.props.filterCategories(this.state.categoriesSelected);
+
             });
         }
+    }
 
+    removeCategory(e){
+
+        let categoriesSelected = this.state.categoriesSelected;
+        let category = {};
+        categoriesSelected.find(function(item){
+            if(item.id==e.target.id){
+                category = item
+            }
+        });
+        let index = categoriesSelected.indexOf(category);
+        categoriesSelected.splice(index, 1);
+        this.setState({categoriesSelected: categoriesSelected}, function(){
+            //this.props.filterCategories(this.state.categoriesSelected);
+        });
+    }
+
+    subCategory(){
+        //this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'areas_atuacao',
+            cache: false,
+            success: function(data){
+                console.log("111");
+                this.setState({subAtuacoes: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
     }
 
     render(){
-        console.log(this.state);
-
         let firstCategories = this.state.atuacoes.map(function (item, index){
-
-                let sizeSearch = this.state.search;
-                let firstPiece = item.tx_nome_area_atuacao.substr(0, sizeSearch);
-
-                return (
-                    <li key={'cat_'+item.cd_area_atuacao}
-                        className="list-group-item d-flex "
-                        onClick={() => this.addCategory(item)}
-                    >
-                        {firstPiece}
-                    </li>
-                )
-
-
+            let sizeSearch = this.state.search;
+            let firstPiece = item.tx_nome_area_atuacao.substr(0, sizeSearch);
+            return (
+                <li key={'cat_'+item.cd_area_atuacao}
+            className="list-group-item d-flex "
+            onClick={() => this.addCategory(item)}
+        >
+            {firstPiece}
+        </li>
+        )
         }.bind(this));
-
         let categoriesSelected = this.state.categoriesSelected.map(function (item){
             return (
-                <button key={"btn_category_"+item.id} id={item.id} onClick={this.removeCategory} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
-                    {item.tx_nome_area_atuacao} <i className="fas fa-times"/>
-                </button>
-            )
+                <div key={"btn_category_"+item.id} id={item.id} className="btn-group " role="group" aria-label="Basic example">
+                <button onClick={this.subCategory} type="button" className="btn btn-light">{item.tx_nome_area_atuacao}</button>
+                <button onClick={this.removeCategory} type="button" className="btn btn-danger btn-margin-right">x</button>
+                </div>
+        )
         }.bind(this));
 
+        let subAtuacoes = this.state.subAtuacoes.map(function (item, index){
+            return (
+                <div className="custom-control custom-checkbox" key={"subarea_"+index} id={"subarea_"+index}>
+                <input type="checkbox" className="custom-control-input" id={"subarea_"+index} required/>
+            <label className="custom-control-label" htmlFor={"subarea_"+index}>{item.tx_nome_area_atuacao}</label>
+                <div className="invalid-feedback">Example invalid feedback text</div>
+            </div>
+        )
+        }.bind(this));
         return(
-
-
-
             <div>
+            <div className="row">
+            <div className="col-md-12">
+            <br/><br/>
+            <div className="title-style">
+            <h2>Áreas e Subáreas de atuação da OSC</h2>
+        <div className="line line-fix"/>
+            <hr/>
+            </div>
+            <div className="text-center">Atividade econômica (CNAE)</div>
+        <br/>
+        </div>
+        </div>
 
-                <div className="row">
-                    <div className="col-md-12">
-                        <br/><br/>
-                        <div className="title-style">
-                            <h2>Áreas e Subáreas de atuação da OSC</h2>
-                            <div className="line line-fix"/>
-                            <hr/>
-                        </div>
-                        <div className="text-center">Atividade econômica (CNAE)</div>
-                        <br/>
-                    </div>
-                </div>
+        <div className="row">
+            <div className="col-md-12">
+            <div className="alert alert-secondary">
+            {/*<h2 className="text-center">Área de atuação 1</h2>*/}
+            <div className="input-icon">
+            <input type="text" className="form-control"
+        placeholder="Busque um artigo..." onClick={this.clickSearch} onChange={this.handleSearch}/>
+        <i className="fas fa-search" style={{top: '-28px'}}/>
+        <div>
+        <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+        {firstCategories}
+    </ul>
+        </div>
+        <br/>
+        <div>
+        {categoriesSelected}
+        </div>
 
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="alert alert-secondary">
-                            {/*<h2 className="text-center">Área de atuação 1</h2>*/}
-                            <div className="input-icon">
-                                <input type="text" className="form-control"
-                                       placeholder="Busque um artigo..." onClick={this.clickSearch} onChange={this.handleSearch}/>
-                                <i className="fas fa-search" style={{top: '-28px'}}/>
-                                <div>
-                                    <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
-                                        {firstCategories}
-                                    </ul>
-                                </div>
-                                <br/>
-                                <div>
-                                    {categoriesSelected}
-                                </div>
+        </div>
+        <div>
+        <br/>
+        <div style={{clear: 'both'}}/>
 
-                            </div>
-                            <div>
-                                <br/>
-
-
-                                    <div className="custom-control custom-checkbox ">
+        {subAtuacoes}
+        {/*<div className="custom-control custom-checkbox ">
                                         <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
                                         <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
                                         <div className="invalid-feedback">Example invalid feedback text</div>
                                     </div>
-
-
-
                                     <div className="custom-control custom-checkbox ">
                                         <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
                                         <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
                                         <div className="invalid-feedback">Example invalid feedback text</div>
-                                    </div>
+                                    </div>*/}
 
-                            </div>
-                        </div>
-                    </div>
-                    {/*<div className="col-md-6">
+    </div>
+        </div>
+        </div>
+        {/*<div className="col-md-6">
                         <div className="alert alert-secondary">
                             <h2 className="text-center">Área de atuação 2</h2>
                             <div className="input-icon">
@@ -273,17 +301,17 @@ class Atuacoes extends React.Component{
                             </div>
                         </div>
                     </div>*/}
-                </div>
+    </div>
 
 
 
-            </div>
-        );
+        </div>
+    );
     }
 }
 
 
 ReactDOM.render(
-    <Atuacoes/>,
+<Atuacoes/>,
     document.getElementById('atuacoes')
 );

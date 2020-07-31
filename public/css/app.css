@@ -12657,6 +12657,19 @@ label, input, .btn-number {
   cursor: pointer;
 }
 
+.btn-close {
+  float: left;
+  padding-top: 28px;
+}
+
+.btn-close svg {
+  padding-top: 10px;
+}
+
+.btn-margin-right {
+  margin-right: 10px;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;
