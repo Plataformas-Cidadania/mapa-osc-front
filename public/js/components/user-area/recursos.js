@@ -22,7 +22,8 @@ class Recursos extends React.Component {
             },
             showMsg: false,
             msg: '',
-            juridica: false
+            juridica: false,
+            anosRecursos: {}
 
         };
 
@@ -40,10 +41,11 @@ class Recursos extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: '/get-recursos',
+            //url: '/get-recursos',
+            url: getBaseUrl + 'osc/no_project/789809',
             cache: false,
             success: function (data) {
-                this.setState({ loading: false, form: data.recursos, button: true });
+                this.setState({ loading: false, anosRecursos: data.recursos, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -116,6 +118,23 @@ class Recursos extends React.Component {
     }
 
     render() {
+        console.log(this.state.anosRecursos.recursos);
+
+        //if(!empty(this.state.anosRecursos.recursos)) {
+        let anosRecursos = this.state.anosRecursos.recursos.map(function (item) {
+            return React.createElement(
+                'div',
+                { key: "anos_" + item.id, id: item.id, className: 'btn-group ', role: 'group',
+                    'aria-label': 'Basic example' },
+                React.createElement(
+                    'button',
+                    { onClick: this.subCategory, type: 'button',
+                        className: 'btn btn-light' },
+                    item.dt_ano_recursos_osc
+                )
+            );
+        }.bind(this));
+        //}
 
         return React.createElement(
             'div',

@@ -214,6 +214,7 @@ class Atuacoes extends React.Component {
                 firstPiece
             );
         }.bind(this));
+
         let categoriesSelected = this.state.categoriesSelected.map(function (item) {
             return React.createElement(
                 'div',

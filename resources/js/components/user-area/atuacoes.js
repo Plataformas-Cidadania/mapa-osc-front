@@ -220,6 +220,7 @@ class Atuacoes extends React.Component{
         </li>
         )
         }.bind(this));
+
         let categoriesSelected = this.state.categoriesSelected.map(function (item){
             return (
                 <div key={"btn_category_"+item.id} id={item.id} className="btn-group " role="group" aria-label="Basic example">
