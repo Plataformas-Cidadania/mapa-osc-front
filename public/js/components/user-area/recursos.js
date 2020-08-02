@@ -23,7 +23,7 @@ class Recursos extends React.Component {
             showMsg: false,
             msg: '',
             juridica: false,
-            anosRecursos: {}
+            anosRecursos: []
 
         };
 
@@ -31,6 +31,7 @@ class Recursos extends React.Component {
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
+        this.subCategory = this.subCategory.bind(this);
     }
 
     componentDidMount() {
@@ -45,6 +46,7 @@ class Recursos extends React.Component {
             url: getBaseUrl + 'osc/no_project/789809',
             cache: false,
             success: function (data) {
+                //console.log(data);
                 this.setState({ loading: false, anosRecursos: data.recursos, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -91,7 +93,7 @@ class Recursos extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
+                    //console.log('reg', data);
 
                     let msg = 'Já existe outro cadastro com esse';
 
@@ -117,23 +119,51 @@ class Recursos extends React.Component {
         });
     }
 
-    render() {
-        console.log(this.state.anosRecursos.recursos);
+    subCategory() {
+        console.log('aaa');
+        /*$.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'areas_atuacao',
+            cache: false,
+            success: function (data) {
+                console.log("111");
+                this.setState({ subAtuacoes: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });*/
+    }
 
-        //if(!empty(this.state.anosRecursos.recursos)) {
-        let anosRecursos = this.state.anosRecursos.recursos.map(function (item) {
-            return React.createElement(
-                'div',
-                { key: "anos_" + item.id, id: item.id, className: 'btn-group ', role: 'group',
-                    'aria-label': 'Basic example' },
-                React.createElement(
+    render() {
+
+        console.log(this.state.anosRecursos.recursos);
+        let anosRecursos = [];
+
+        if (this.state.anosRecursos.recursos) {
+            for (const item of this.state.anosRecursos.recursos) {
+                anosRecursos.push(React.createElement(
                     'button',
-                    { onClick: this.subCategory, type: 'button',
+                    {
+                        key: "anos_" + item.dt_ano_recursos_osc, id: item.dt_ano_recursos_osc,
+                        onClick: this.subCategory, type: 'button',
                         className: 'btn btn-light' },
                     item.dt_ano_recursos_osc
-                )
-            );
-        }.bind(this));
+                ));
+            }
+        }
+
+        //if(!empty(this.state.anosRecursos.recursos)) {
+        /*let anosRecursos = this.state.anosRecursos.recursos.map(function (item) {
+            return (
+                <div key={"anos_" + item.id} id={item.id} className="btn-group " role="group"
+                     aria-label="Basic example">
+                    <button onClick={this.subCategory} type="button"
+                            className="btn btn-light">{item.dt_ano_recursos_osc}</button>
+                </div>
+            )
+        }.bind(this));*/
         //}
 
         return React.createElement(
@@ -174,71 +204,22 @@ class Recursos extends React.Component {
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'btn-group', role: 'group', 'aria-label': 'Exemplo b\xE1sico' },
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-primary' },
-                                    '2020'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2019'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2018'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2017'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2016'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2015'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2014'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2013'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2012'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2011'
-                                ),
-                                React.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-outline-secondary' },
-                                    '2010'
-                                )
+                                { className: 'btn-group', role: 'group', 'aria-label': 'Anos' },
+                                anosRecursos
                             ),
                             React.createElement('br', null),
                             React.createElement(
-                                'p',
-                                { className: 'form-check' },
-                                React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
+                                'div',
+                                { className: 'custom-control custom-checkbox', key: '', id: '' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: '', required: true }),
                                 React.createElement(
                                     'label',
-                                    { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                    { className: 'custom-control-label', htmlFor: '' },
+                                    'N\xE3o possui recursos para este ano.'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'invalid-feedback' },
                                     'N\xE3o possui recursos para este ano.'
                                 )
                             ),
@@ -251,12 +232,17 @@ class Recursos extends React.Component {
                                     'Recursos pro\u0301prios'
                                 ),
                                 React.createElement(
-                                    'p',
-                                    { className: 'form-check' },
-                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'gridCheck' }),
+                                    'div',
+                                    { className: 'custom-control custom-checkbox', key: '', id: '' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: '', required: true }),
                                     React.createElement(
                                         'label',
-                                        { className: 'form-check-label', htmlFor: 'gridCheck' },
+                                        { className: 'custom-control-label', htmlFor: '' },
+                                        'N\xE3o possui recursos pro\u0301prios para este ano.'
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'invalid-feedback' },
                                         'N\xE3o possui recursos pro\u0301prios para este ano.'
                                     )
                                 )
