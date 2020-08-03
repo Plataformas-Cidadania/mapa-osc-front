@@ -26,12 +26,19 @@ class Filter extends React.Component{
             input: 0,
             inputMax: 100,
             textRanger: null,
+            filters: {
+                ano_fundacao: {start: null, end:null},
+                ano_fundacao2: {start: null, end:null},
+            },
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
         this.validate = this.validate.bind(this);
 
         this.clickIdh = this.clickIdh.bind(this);
+
+        this.setAnoFundacao = this.setAnoFundacao.bind(this);
+        this.setAnoFundacao2 = this.setAnoFundacao2.bind(this);
 
 
     }
@@ -196,35 +203,18 @@ class Filter extends React.Component{
         });
     }
 
-    handleInputMin(event){
-        let input = this.state.input;
-        var currentVal = 'de: ' + input + ' até: ' + this.state.inputMax;
-        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
-    }
-    handleInputMax(event){
-        let inputMax = this.state.inputMax;
-        var currentVal = 'de: ' + this.state.input + ' até: ' + inputMax;
-        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+    setAnoFundacao(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
     }
 
-    onInput(event) {
-
-        let input = this.state.input;
-        let inputMax = this.state.inputMax;
-
-        const id = event.target.id;
-        if(event.target.min===event.target.defaultValue){
-            input = document.getElementById(id).value;
-        }else{
-            inputMax = document.getElementById(id).value;
-        }
-
-        var currentVal = 'de: ' + input + ' até: ' + inputMax;
-
-        document.getElementById(event.target.name).value = currentVal;
-
-        this.setState({input: input, inputMax: inputMax/*, textRanger: currentVal*/});
-
+    setAnoFundacao2(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao2.start = start;
+        filters.ano_fundacao2.end = end;
+        this.setState({filters: filters});
     }
 
     render(){
@@ -317,6 +307,7 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
+        console.log(this.state.filters);
 
         return (
 
@@ -397,10 +388,10 @@ class Filter extends React.Component{
                                         <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="0" id="ranger1" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
                                         <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="100" id="ranger2" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
                                     </div>*/}
-                                    <div className="col-md-3">
+                                    {/*<div className="col-md-3">
                                         <div className="label-float">
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger" value={this.state.textRanger} placeholder="" />*/}
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger" value={this.state.textRanger} placeholder="" />
                                             <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" />
                                             <label htmlFor="name">Ano de Fundação</label>
                                             <div className="label-box-info-off"/>
@@ -411,13 +402,36 @@ class Filter extends React.Component{
 
                                     <div className="col-md-3">
                                         <div className="label-float">
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>
                                             <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger2"  placeholder="" />
                                             <label htmlFor="name">Ano de Fundação2</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                         <input type="range" className="custom-range" min="1990" max="2020" step="1" defaultValue="0" name="textRanger2" id="rangerMin2" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
                                         <input type="range" className="custom-range" min="1990" max="2020" step="1" defaultValue="100" name="textRanger2" id="rangerMax2" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
+                                    </div>*/}
+
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano de Fundação"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setAnoFundacao}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano de Fundação 2"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setAnoFundacao2}
+                                        />
                                     </div>
 
 

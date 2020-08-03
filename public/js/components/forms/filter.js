@@ -25,13 +25,20 @@ class Filter extends React.Component {
             rangerMin1: null,
             input: 0,
             inputMax: 100,
-            textRanger: null
+            textRanger: null,
+            filters: {
+                ano_fundacao: { start: null, end: null },
+                ano_fundacao2: { start: null, end: null }
+            }
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
         this.validate = this.validate.bind(this);
 
         this.clickIdh = this.clickIdh.bind(this);
+
+        this.setAnoFundacao = this.setAnoFundacao.bind(this);
+        this.setAnoFundacao2 = this.setAnoFundacao2.bind(this);
     }
 
     componentDidMount() {}
@@ -188,34 +195,18 @@ class Filter extends React.Component {
         });
     }
 
-    handleInputMin(event) {
-        let input = this.state.input;
-        var currentVal = 'de: ' + input + ' até: ' + this.state.inputMax;
-        this.setState({ input: input, inputMax: inputMax, textRanger: currentVal });
-    }
-    handleInputMax(event) {
-        let inputMax = this.state.inputMax;
-        var currentVal = 'de: ' + this.state.input + ' até: ' + inputMax;
-        this.setState({ input: input, inputMax: inputMax, textRanger: currentVal });
+    setAnoFundacao(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
     }
 
-    onInput(event) {
-
-        let input = this.state.input;
-        let inputMax = this.state.inputMax;
-
-        const id = event.target.id;
-        if (event.target.min === event.target.defaultValue) {
-            input = document.getElementById(id).value;
-        } else {
-            inputMax = document.getElementById(id).value;
-        }
-
-        var currentVal = 'de: ' + input + ' até: ' + inputMax;
-
-        document.getElementById(event.target.name).value = currentVal;
-
-        this.setState({ input: input, inputMax: inputMax /*, textRanger: currentVal*/ });
+    setAnoFundacao2(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao2.start = start;
+        filters.ano_fundacao2.end = end;
+        this.setState({ filters: filters });
     }
 
     render() {
@@ -335,6 +326,8 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
+        console.log(this.state.filters);
+
         return React.createElement(
             'form',
             null,
@@ -449,36 +442,28 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger', placeholder: '' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Ano de Funda\xE7\xE3o'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    ),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '0', name: 'textRanger', id: 'rangerMin', style: { float: 'left' }, onInput: this.onInput.bind(this) }),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '0', max: '100', step: '1', defaultValue: '100', name: 'textRanger', id: 'rangerMax', style: { float: 'right' }, onInput: this.onInput.bind(this) })
+                                    React.createElement(Range, {
+                                        title: 'Ano de Funda\xE7\xE3o',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setAnoFundacao
+                                    })
                                 ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', id: 'textRanger2', placeholder: '' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Ano de Funda\xE7\xE3o2'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    ),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '1990', max: '2020', step: '1', defaultValue: '0', name: 'textRanger2', id: 'rangerMin2', style: { float: 'left' }, onInput: this.onInput.bind(this) }),
-                                    React.createElement('input', { type: 'range', className: 'custom-range', min: '1990', max: '2020', step: '1', defaultValue: '100', name: 'textRanger2', id: 'rangerMax2', style: { float: 'right' }, onInput: this.onInput.bind(this) })
+                                    React.createElement(Range, {
+                                        title: 'Ano de Funda\xE7\xE3o 2',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setAnoFundacao2
+                                    })
                                 ),
                                 React.createElement(
                                     'div',

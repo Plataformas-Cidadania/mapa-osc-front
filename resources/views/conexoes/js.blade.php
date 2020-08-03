@@ -177,6 +177,7 @@
     <script src="/js/components/maps/address.js"></script>
 @endif
 @if($rota=="filtro")
+    <script src="/js/components/forms/range.js"></script>
     <script src="/js/components/forms/filter.js"></script>
     <script src="/js/components/forms/page/api.js"></script>
     <script src="/js/utils.js"></script>
