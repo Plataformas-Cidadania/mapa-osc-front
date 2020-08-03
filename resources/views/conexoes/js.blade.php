@@ -4,12 +4,20 @@
 <script src="js/utils.js"></script>
 <script src="js/rotas.js"></script>
 
+
+
 <script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    <?php if($rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user"){ ?>
+        pageRoute = false;
+    <?php }else{?>
+        pageRoute = true;
+    <?php }?>
 </script>
 
 <script src="/js/react/react.development.js" crossorigin></script>

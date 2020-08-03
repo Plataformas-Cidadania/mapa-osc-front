@@ -114,8 +114,9 @@ class Projetos extends React.Component{
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-projetos',
+            method: 'GET',
+            //url: '/list-users-projetos',
+            url: getBaseUrl2 + 'osc/projetos/455128',
             data: {
 
             },
@@ -145,9 +146,9 @@ class Projetos extends React.Component{
 
             return (
                 <tr key={"projeto_"+index}>
-                    <td>{item.cd_projeto}</td>
-                    <td>{item.dt_inicio_projeto}</td>
-                    <td>{item.dt_fim_projeto}</td>
+                    <td>{item.tx_nome_projeto}</td>
+                    <td>{item.dt_data_inicio_projeto}</td>
+                    <td>{item.dt_data_fim_projeto}</td>
                     <td>{item.cd_uf}</td>
                     <td width="70">
                         <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
