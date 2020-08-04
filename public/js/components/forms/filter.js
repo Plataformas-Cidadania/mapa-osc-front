@@ -31,14 +31,53 @@ class Filter extends React.Component {
                 ano_fundacao2: { start: null, end: null }
             }
         };
+
+        this.clickSearch = this.clickSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.listArea = this.listArea.bind(this);
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.filter = this.filter.bind(this);
-        this.validate = this.validate.bind(this);
 
         this.clickIdh = this.clickIdh.bind(this);
 
         this.setAnoFundacao = this.setAnoFundacao.bind(this);
-        this.setAnoFundacao2 = this.setAnoFundacao2.bind(this);
+        this.setTotalTrabalhadores = this.setTotalTrabalhadores.bind(this);
+        this.setTotalEmpregados = this.setTotalEmpregados.bind(this);
+        this.setTrabalhadoresDeficiencia = this.setTrabalhadoresDeficiencia.bind(this);
+        this.setTrabalhadoresVoluntarios = this.setTrabalhadoresVoluntarios.bind(this);
+
+        this.setAnoFonteRecurso = this.setAnoFonteRecurso.bind(this);
+        this.setRendimentosFinanceirosReservas = this.setRendimentosFinanceirosReservas.bind(this);
+        this.setRendimentosFundosPatrimoniais = this.setRendimentosFundosPatrimoniais.bind(this);
+        this.setMensalidadesContribuicoes = this.setMensalidadesContribuicoes.bind(this);
+        this.setVendaBensDireitos = this.setVendaBensDireitos.bind(this);
+        this.setPremiosRecebidos = this.setPremiosRecebidos.bind(this);
+        this.setVendaProdutos = this.setVendaProdutos.bind(this);
+        this.setPrestacaoServicos = this.setPrestacaoServicos.bind(this);
+
+        this.setEmpresasPublicasSociedadesEconomia = this.setEmpresasPublicasSociedadesEconomia.bind(this);
+        this.setAcordoOrganismosMultilaterais = this.setAcordoOrganismosMultilaterais.bind(this);
+        this.setAcordoGovernosEstrangeiros = this.setAcordoGovernosEstrangeiros.bind(this);
+        this.setParceriaGovernoEstadual = this.setParceriaGovernoEstadual.bind(this);
+        this.setParceriaGovernoMunicipal = this.setParceriaGovernoMunicipal.bind(this);
+        this.setTransferenciasFederaisRecebidas = this.setTransferenciasFederaisRecebidas.bind(this);
+
+        this.setParceriaBrasileiras = this.setParceriaBrasileiras.bind(this);
+        this.setParceriaEstrangeiras = this.setParceriaEstrangeiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasBrasileiras = this.setParceriaOrganizacoesReligiosasBrasileiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasEstrangeiras = this.setParceriaOrganizacoesReligiosasEstrangeiras.bind(this);
+        this.setEmpresasPrivadasBrasileiras = this.setEmpresasPrivadasBrasileiras.bind(this);
+        this.setEmpresasEstrangeiras = this.setEmpresasEstrangeiras.bind(this);
+        this.setDoacoesPessoaJuridica = this.setDoacoesPessoaJuridica.bind(this);
+        this.setDoacoesPessoaFisica = this.setDoacoesPessoaFisica.bind(this);
+        this.setDoacoesFormaProdutosServicos = this.setDoacoesFormaProdutosServicos.bind(this);
+
+        this.setVoluntariado = this.setVoluntariado.bind(this);
+        this.setIsencoes = this.setIsencoes.bind(this);
+        this.setImunidades = this.setImunidades.bind(this);
+        this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
+        this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
     }
 
     componentDidMount() {}
@@ -58,86 +97,66 @@ class Filter extends React.Component {
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if (target.name === 'cel') {
+        /*if(target.name==='cel'){
             value = maskCel(value);
         }
-        if (target.name === 'whatsapp') {
+        if(target.name==='whatsapp'){
             value = maskCel(value);
-        }
+        }*/
 
         let form = this.state.form;
         form[name] = value;
 
         this.setState({ form: form });
     }
-    validate() {
 
-        let valid = true;
-
-        let requireds = this.state.requireds;
-
-        let form = this.state.form;
-
-        for (let index in requireds) {
-            if (!form[index] || form[index] === '') {
+    clickSearch() {
+        let showCategories = !this.state.showCategories;
+        this.setState({ showCategories: showCategories }, function () {
+            this.listArea();
+        });
+    }
+    handleSearch(e) {
+        this.setState({ search: e.target.value }, function () {
+            this.listArea();
+        });
+    }
+    listArea() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            cache: false,
+            success: function (data) {
+                this.setState({ atuacoes: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    /*validate(){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
+            if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
-            } else {
+            }else{
                 requireds[index] = true;
             }
         }
+          this.setState({requireds: requireds});
+         return valid;
+    }*/
 
-        if (!this.validateName(this.state.form.name)) {
-            requireds.name = false;
-            valid = false;
-        }
-
-        if (this.validateCel(this.state.form.cel) === "") {
-            requireds.cel = false;
-            valid = false;
-        }
-
-        this.setState({ requireds: requireds });
-
-        return valid;
-    }
-    validateName(name) {
-        let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
-        if (array_name.length < 2) {
-            return false;
-        }
-
-        return true;
-    }
-    validateCel(cel) {
-        cel = cel.replace(/[^0-9]/g, '');
-        let qtd = cel.length;
-
-        if (qtd < 10 || qtd > 11) {
-            return false;
-        }
-        if (qtd === 11) {
-            if (cel.substr(2, 1) != 9) {
-                return false;
-            }
-            if (cel.substr(3, 1) != 9 && cel.substr(3, 1) != 8 && cel.substr(3, 1) != 7 && cel.substr(3, 1) != 6) {
-                return false;
-            }
-        }
-        if (qtd === 10) {
-            if (cel.substr(2, 1) != 9 && cel.substr(2, 1) != 8 && cel.substr(2, 1) != 7 && cel.substr(2, 1) != 6) {
-                return false;
-            }
-        }
-        return true;
-    }
     filter(e) {
         //console.log(this.validate());
-        if (!this.validate()) {
+        /*if(!this.validate()){
             return;
-        }
+        }*/
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
 
@@ -152,7 +171,7 @@ class Filter extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
+                    //console.log('reg', data);
                     this.setState({ loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -201,11 +220,196 @@ class Filter extends React.Component {
         filters.ano_fundacao.end = end;
         this.setState({ filters: filters });
     }
-
-    setAnoFundacao2(start, end) {
+    setTotalTrabalhadores(start, end) {
         let filters = this.state.filters;
-        filters.ano_fundacao2.start = start;
-        filters.ano_fundacao2.end = end;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setTotalEmpregados(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setTrabalhadoresDeficiencia(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setTrabalhadoresVoluntarios(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setAnoFonteRecurso(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setRendimentosFinanceirosReservas(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setRendimentosFundosPatrimoniais(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setMensalidadesContribuicoes(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setVendaBensDireitos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setPremiosRecebidos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setVendaProdutos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setPrestacaoServicos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setEmpresasPublicasSociedadesEconomia(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setAcordoOrganismosMultilaterais(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setAcordoGovernosEstrangeiros(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaGovernoEstadual(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaGovernoMunicipal(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setTransferenciasFederaisRecebidas(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaBrasileiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaEstrangeiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaOrganizacoesReligiosasBrasileiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setParceriaOrganizacoesReligiosasEstrangeiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setEmpresasPrivadasBrasileiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setEmpresasEstrangeiras(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setDoacoesPessoaJuridica(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setDoacoesPessoaFisica(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setDoacoesFormaProdutosServicos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setVoluntariado(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setIsencoes(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setImunidades(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setBensRecebidosDireito(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+    setDoacoesRecebidasFormaProdutosServicos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
         this.setState({ filters: filters });
     }
 
@@ -326,7 +530,7 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
-        console.log(this.state.filters);
+        //console.log(this.state.filters);
 
         return React.createElement(
             'form',
@@ -391,6 +595,30 @@ class Filter extends React.Component {
                                             'Regi\xE3o'
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-12' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'alert alert-secondary' },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'input-icon' },
+                                                    React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma \xC1reas de atua\xE7\xE3o...', onClick: this.clickSearch, onChange: this.handleSearch }),
+                                                    React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
+                                                    React.createElement(
+                                                        'div',
+                                                        null,
+                                                        React.createElement('ul', { className: 'box-search-itens', style: { display: this.state.showCategories ? '' : 'none' } })
+                                                    ),
+                                                    React.createElement('br', null)
+                                                )
+                                            )
+                                        )
                                     )
                                 ),
                                 React.createElement(
@@ -438,7 +666,11 @@ class Filter extends React.Component {
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     )
                                 ),
-                                React.createElement('div', { className: 'col-md-3' }),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    'a'
+                                ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
@@ -450,19 +682,6 @@ class Filter extends React.Component {
                                         defaultValueStart: '0',
                                         defaultValueEnd: '100',
                                         setValue: this.setAnoFundacao
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano de Funda\xE7\xE3o 2',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setAnoFundacao2
                                     })
                                 ),
                                 React.createElement(
@@ -736,6 +955,58 @@ class Filter extends React.Component {
                                         ),
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Total de trabalhadores',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setTotalTrabalhadores
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Total de empregados',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setTotalEmpregados
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Trabalhadores com defici\xEAncia',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setTrabalhadoresDeficiencia
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Trabalhadores volunt\xE1rios',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setTrabalhadoresVoluntarios
+                                    })
                                 )
                             )
                         )
@@ -918,11 +1189,123 @@ class Filter extends React.Component {
                                     ),
                                     React.createElement('hr', null),
                                     React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-3' },
+                                            React.createElement(Range, {
+                                                title: 'Ano',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setAnoFonteRecurso
+                                            })
+                                        )
+                                    ),
+                                    React.createElement(
                                         'h4',
                                         null,
                                         'Recursos pro\u0301prios'
                                     ),
                                     React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Rendimentos financeiros de reservas ou contas correntes pr\xF3prias',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setRendimentosFinanceirosReservas
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Rendimentos de fundos patrimoniais',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setRendimentosFundosPatrimoniais
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Mensalidades ou contribui\xE7\xF5es de associados',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setMensalidadesContribuicoes
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Venda de bens e direitos',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setVendaBensDireitos
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Pr\xEAmios recebidos',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setPremiosRecebidos
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Venda de produtos',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setVendaProdutos
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Presta\xE7\xE3o de servi\xE7os',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setPrestacaoServicos
+                                            })
+                                        )
+                                    ),
                                     React.createElement(
                                         'h4',
                                         null,
@@ -930,17 +1313,289 @@ class Filter extends React.Component {
                                     ),
                                     React.createElement('hr', null),
                                     React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Empresas p\xFAblicas ou sociedades de economia mista',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setEmpresasPublicasSociedadesEconomia
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Acordo com organismos multilaterais',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setAcordoOrganismosMultilaterais
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Acordo com governos estrangeiros',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setAcordoGovernosEstrangeiros
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com o governo estadual',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaGovernoEstadual
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com o governo municipal',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaGovernoMunicipal
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Transfer\xEAncias federais recebidas pela OSC',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setTransferenciasFederaisRecebidas
+                                            })
+                                        )
+                                    ),
+                                    React.createElement(
                                         'h4',
                                         null,
                                         'Recursos privados'
                                     ),
                                     React.createElement('hr', null),
                                     React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com OSCs brasileiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaBrasileiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com OSCs estrangeiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaEstrangeiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com organiza\xE7\xF5es religiosas brasileiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaOrganizacoesReligiosasBrasileiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Parceria com organiza\xE7\xF5es religiosas estrangeiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setParceriaOrganizacoesReligiosasEstrangeiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Empresas privadas brasileiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setEmpresasPrivadasBrasileiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Empresas estrangeiras',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setEmpresasEstrangeiras
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Doa\xE7\xF5es de pessoa jur\xEDdica',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setDoacoesPessoaJuridica
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Doa\xE7\xF5es de pessoa f\xEDsica',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setDoacoesPessoaFisica
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (com NF)',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setDoacoesFormaProdutosServicos
+                                            })
+                                        )
+                                    ),
+                                    React.createElement(
                                         'h4',
                                         null,
                                         'Recursos na\u0303o financeiros'
                                     ),
-                                    React.createElement('hr', null)
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Voluntariado',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setVoluntariado
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Isen\xE7\xF5es',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setIsencoes
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Imunidades',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setImunidades
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-4' },
+                                            React.createElement(Range, {
+                                                title: 'Bens recebidos em direito de uso',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setBensRecebidosDireito
+                                            })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            React.createElement(Range, {
+                                                title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (sem NF)',
+                                                min: '0',
+                                                max: '100',
+                                                step: '1',
+                                                defaultValueStart: '0',
+                                                defaultValueEnd: '100',
+                                                setValue: this.setDoacoesRecebidasFormaProdutosServicos
+                                            })
+                                        )
+                                    )
                                 )
                             )
                         )

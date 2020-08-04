@@ -291,8 +291,7 @@ class Atuacoes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'input-icon' },
-                            React.createElement('input', { type: 'text', className: 'form-control',
-                                placeholder: 'Busque um artigo...', onClick: this.clickSearch, onChange: this.handleSearch }),
+                            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma \xC1reas de atua\xE7\xE3o...', onClick: this.clickSearch, onChange: this.handleSearch }),
                             React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
                             React.createElement(
                                 'div',

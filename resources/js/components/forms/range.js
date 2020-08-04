@@ -9,20 +9,18 @@ class Range extends React.Component {
             step: props.step ? props.step : 1,
             defaultValueStart: props.defaultValueStart ? props.defaultValueStart : 0,
             defaultValueEnd: props.defaultValueEnd ? props.defaultValueEnd : 100,
-            title: props.title ? props.title : "Range",
+            title: props.title ? props.title : "",
             start: min,
             end: max,
-            value: "De " + min + " Até " + max
+            value: "de " + min + " até " + max
         };
-
         this.handleEnd = this.handleEnd.bind(this);
         this.handleStart = this.handleStart.bind(this);
     }
-
     handleStart(e){
         let start = e.target.value;
         let end = this.state.end;
-        let value = "De " + start + " Até " + end;
+        let value = "de " + start + " até " + end;
         this.setState({start: start, value: value}, function(){
             this.props.setValue(start, end);
         })
@@ -30,23 +28,16 @@ class Range extends React.Component {
     handleEnd(e){
         let end = e.target.value;
         let start = this.state.start;
-        let value = "De " + start + " Até " + end;
+        let value = "de " + start + " até " + end;
         this.setState({end: end, value: value}, function(){
             this.props.setValue(start, end);
         })
     }
-
     nothing(){}
-
     render(){
-
-
-
         return(
             <div>
                 <div className="label-float">
-                    {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
-                    {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger" value={this.state.textRanger} placeholder="" />*/}
                     <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.value} onChange={this.nothing} />
                     <label htmlFor="name">{this.state.title}</label>
                     <div className="label-box-info-off"/>

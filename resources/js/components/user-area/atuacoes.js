@@ -256,23 +256,20 @@ class Atuacoes extends React.Component{
 
         <div className="row">
             <div className="col-md-12">
-            <div className="alert alert-secondary">
-            {/*<h2 className="text-center">Área de atuação 1</h2>*/}
-            <div className="input-icon">
-            <input type="text" className="form-control"
-        placeholder="Busque um artigo..." onClick={this.clickSearch} onChange={this.handleSearch}/>
-        <i className="fas fa-search" style={{top: '-28px'}}/>
-        <div>
-        <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
-        {firstCategories}
-    </ul>
-        </div>
-        <br/>
-        <div>
-        {categoriesSelected}
-        </div>
-
-        </div>
+                <div className="alert alert-secondary">
+                    <div className="input-icon">
+                        <input type="text" className="form-control" placeholder="Busque uma Áreas de atuação..." onClick={this.clickSearch} onChange={this.handleSearch}/>
+                        <i className="fas fa-search" style={{top: '-28px'}}/>
+                        <div>
+                            <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+                                {firstCategories}
+                            </ul>
+                        </div>
+                        <br/>
+                    <div>
+                    {categoriesSelected}
+                </div>
+            </div>
         <div>
         <br/>
         <div style={{clear: 'both'}}/>
