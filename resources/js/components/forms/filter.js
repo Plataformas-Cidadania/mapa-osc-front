@@ -30,16 +30,19 @@ class Filter extends React.Component{
                 ano_fundacao: {start: null, end:null},
                 ano_fundacao2: {start: null, end:null},
             },
+            listRegiao:[],
         };
 
         this.clickSearch = this.clickSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
-        this.listArea = this.listArea.bind(this);
+
+        this.listRegiao = this.listRegiao.bind(this);
+        this.addRegiao = this.addRegiao.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
+
+
         this.filter = this.filter.bind(this);
-
-
         this.clickIdh = this.clickIdh.bind(this);
 
         this.setAnoFundacao = this.setAnoFundacao.bind(this);
@@ -124,22 +127,22 @@ class Filter extends React.Component{
     clickSearch(){
         let showCategories = !this.state.showCategories;
         this.setState({showCategories: showCategories}, function(){
-            this.listArea();
+            this.listRegiao();
         })
     }
     handleSearch(e){
         this.setState({search: e.target.value}, function(){
-            this.listArea();
+            this.listRegiao();
         });
     }
-    listArea(){
+    listRegiao(){
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
             url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
             cache: false,
             success: function(data){
-                this.setState({atuacoes: data, loadingList: false});
+                this.setState({listRegiao: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -147,6 +150,24 @@ class Filter extends React.Component{
             }.bind(this)
         });
     }
+    addRegiao(item){
+        /*let add = true;
+        this.state.categoriesSelected.find(function(cat){
+            if(item.cd_area_atuacao===cat.cd_area_atuacao){
+                add = false;
+            }
+        });
+        if(add){
+            let categoriesSelected = this.state.categoriesSelected;
+            categoriesSelected.push(item);
+            this.setState({showCategories: false});
+            this.setState({categoriesSelected: categoriesSelected}, function(){
+                //this.props.filterCategories(this.state.categoriesSelected);
+
+            });
+        }*/
+    }
+
     /*validate(){
 
         let valid = true;
@@ -524,6 +545,21 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
+        console.log(this.state);
+
+        let firstRegioes = this.state.listRegiao.map(function (item, index){
+            let sizeSearch = this.state.search;
+            let firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+            return (
+                <li key={'cat_'+item.edre_cd_regiao}
+                    className="list-group-item d-flex "
+                    onClick={() => this.addRegiao(item)}
+                >
+                    {firstPiece}
+                </li>
+            )
+        }.bind(this));
+
         //console.log(this.state.filters);
 
         return (
@@ -554,31 +590,16 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Região</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="alert alert-secondary">
-                                                    <div className="input-icon">
-                                                        <input type="text" className="form-control" placeholder="Busque uma Áreas de atuação..." onClick={this.clickSearch} onChange={this.handleSearch}/>
-                                                        <i className="fas fa-search" style={{top: '-28px'}}/>
-                                                        <div>
-                                                            <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
-                                                                {/*{firstCategories}*/}
-                                                            </ul>
-                                                        </div>
-                                                        <br/>
-                                                    </div>
-                                                    {/*{categoriesSelected}*/}
-                                                </div>
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao" onClick={this.clickSearch} onChange={this.handleSearch}/>
+                                            <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+                                                    {firstRegioes}
+                                                </ul>
                                             </div>
+                                            <br/>
                                         </div>
-
-
                                     </div>
                                     <div className="col-md-9">
                                         <div className="label-float">

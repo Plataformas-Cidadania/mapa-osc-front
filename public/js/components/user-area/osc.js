@@ -27,7 +27,11 @@ class Osc extends React.Component {
             },
             showMsg: false,
             msg: '',
-            showIcon: false
+            showIcon: false,
+            objetivos: null,
+            subobjetivos: null,
+            titleMeta: null,
+            titleObjetivo: ""
 
         };
 
@@ -36,11 +40,14 @@ class Osc extends React.Component {
         this.validate = this.validate.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
         this.getOsc = this.getOsc.bind(this);
+
+        this.listArea = this.listArea.bind(this);
     }
 
     componentDidMount() {
         this.getCabecalho();
         this.getOsc();
+        this.listArea();
     }
 
     getCabecalho() {
@@ -113,7 +120,7 @@ class Osc extends React.Component {
                 success: function (data) {
 
                     /*let msg = 'Já existe outro cadastro com esse';
-                      if(data.tx_razao_social_osc || data.email){
+                     if(data.tx_razao_social_osc || data.email){
                         if(data.tx_razao_social_osc){
                             msg+= ' tx_razao_social_osc';
                         }
@@ -136,7 +143,97 @@ class Osc extends React.Component {
         });
     }
 
+    listArea() {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                });
+                this.setState({ loading: false, objetivos: data, button: true });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    callSubobjetivos(id) {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            success: function (data) {
+
+                let objetivos = this.state.objetivos;
+                let titleObjetivo = this.state.objetivos[0].tx_nome_objetivo_projeto;
+
+                //console.log('objetivos: ', this.state.objetivos);
+
+                /*this.state.objetivos.find(function(item){
+                    if(item.cd_area_atuacao === id){
+                        item.checked = !item.checked;
+                    }
+                    item.subareas = data.filter(function(subitem){
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });*/
+                this.setState({ loading: false, metas: data, id_area: id, titleMeta: true, titleObjetivo: titleObjetivo });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     render() {
+
+        function padDigits(number, digits) {
+            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+        }
+
+        let objetivos = null;
+        let metas = null;
+        if (this.state.objetivos) {
+            objetivos = this.state.objetivos.map(function (item) {
+
+                let png = padDigits(item.cd_objetivo_projeto, 2);
+                return React.createElement(
+                    'div',
+                    { className: 'custom-control custom-checkbox', key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
+                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_objetivo_projeto, required: true }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: 'item-off', width: '80', style: { position: 'relative' } })
+                    )
+                );
+            }.bind(this));
+        }
+
+        if (this.state.metas) {
+            metas = this.state.metas.map(function (item) {
+                return React.createElement(
+                    'div',
+                    { key: "subarea_" + item.cd_meta_projeto },
+                    React.createElement(
+                        'div',
+                        { className: 'custom-control custom-checkbox', onChange: () => console.log(item.cd_meta_projeto) },
+                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + item.cd_meta_projeto, required: true }),
+                        React.createElement(
+                            'label',
+                            { className: 'custom-control-label', htmlFor: "subarea_" + item.cd_meta_projeto },
+                            item.tx_nome_meta_projeto
+                        )
+                    ),
+                    React.createElement('hr', null)
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
@@ -528,157 +625,47 @@ class Osc extends React.Component {
                             React.createElement('br', null),
                             React.createElement('br', null),
                             React.createElement(
-                                'h4',
-                                null,
-                                'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
-                            ),
-                            React.createElement(
                                 'div',
-                                null,
-                                React.createElement(
-                                    'ul',
-                                    { className: 'menu-txt-icon' },
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/01.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/02.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/03.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/04.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/05.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/06.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/07.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/08.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/09.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/10.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/11.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/12.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/13.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/14.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/15.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/16.png', alt: '', className: 'item-off', width: '87' })
-                                    ),
-                                    React.createElement(
-                                        'li',
-                                        null,
-                                        React.createElement('img', { src: 'img/ods/17.png', alt: '', className: 'item-off', width: '87' })
-                                    )
-                                ),
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    null,
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'div',
-                                        null,
-                                        React.createElement('br', null),
-                                        React.createElement('br', null),
+                                        { className: 'col-md-12' },
                                         React.createElement(
-                                            'h4',
+                                            'strong',
                                             null,
+                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            objetivos,
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.titleMeta ? '' : 'none' } },
                                             React.createElement(
                                                 'strong',
                                                 null,
-                                                '1 - Acabar com a pobreza em todas as suas formas, em todos os lugares'
-                                            )
-                                        ),
-                                        React.createElement('br', null)
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        React.createElement(
-                                            'div',
-                                            { className: 'form-group' },
-                                            React.createElement(
-                                                'div',
-                                                { className: 'custom-control custom-checkbox ' },
-                                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
-                                                React.createElement(
-                                                    'label',
-                                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
-                                                    'Associa\xE7\xE3o Privada'
-                                                ),
-                                                React.createElement(
-                                                    'div',
-                                                    { className: 'invalid-feedback' },
-                                                    'Example invalid feedback text'
-                                                )
+                                                'Metas Relacionadas ao ODS definido'
                                             ),
-                                            React.createElement('br', null),
+                                            React.createElement('hr', null),
                                             React.createElement(
                                                 'div',
-                                                { className: 'custom-control custom-checkbox ' },
-                                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'customControlValidation1', required: true }),
+                                                null,
                                                 React.createElement(
-                                                    'label',
-                                                    { className: 'custom-control-label', htmlFor: 'customControlValidation1' },
-                                                    'Associa\xE7\xE3o Privada'
+                                                    'strong',
+                                                    null,
+                                                    this.state.titleObjetivo
                                                 ),
-                                                React.createElement(
-                                                    'div',
-                                                    { className: 'invalid-feedback' },
-                                                    'Example invalid feedback text'
-                                                )
+                                                React.createElement('br', null),
+                                                React.createElement('br', null),
+                                                metas
                                             )
                                         )
                                     )

@@ -21,10 +21,16 @@ class Governancas extends React.Component{
             governanca: {},
             conselho: {},
             editId: 0,
+
+            deficiencia: null,
+            empregados: null,
+            voluntarios: null,
+            totalTrabalhadores: null,
+
         };
 
         this.governanca = this.governanca.bind(this);
-        this.conselhoFiscal = this.conselhoFiscal.bind(this);
+        //this.conselhoFiscal = this.conselhoFiscal.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
@@ -32,7 +38,7 @@ class Governancas extends React.Component{
 
     componentDidMount(){
         this.governanca();
-        this.conselhoFiscal();
+        //this.conselhoFiscal();
     }
 
     getAge(dateString){
@@ -130,7 +136,15 @@ class Governancas extends React.Component{
             },
             cache: false,
             success: function(data){
-                this.setState({governancas: data.governanca, loadingGovernanca: false});
+                this.setState({
+                    governancas: data.governanca,
+                    conselhos: data.conselho_fiscal,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+                    voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+                    totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
+                    loadingGovernanca: false
+                });
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -139,7 +153,7 @@ class Governancas extends React.Component{
         });
     }
 
-    conselhoFiscal(){
+    /*conselhoFiscal(){
 
         this.setState({loadingGovernanca: true});
 
@@ -159,7 +173,7 @@ class Governancas extends React.Component{
                 this.setState({loadingGovernanca: false});
             }.bind(this)
         });
-    }
+    }*/
 
     render(){
 
@@ -259,7 +273,11 @@ class Governancas extends React.Component{
             );
         }.bind(this));
 
+        console.log('test: ', this.state.governancas);
+
         return(
+
+
             <div>
                 <div className="title-user-area">
 
@@ -307,8 +325,8 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Total de Trabalhadores</h3>
                                     <div>
-                                        <h2>11</h2>
-                                        <p className='not-info'>a</p>
+                                        <h2>{this.state.totalTrabalhadores}</h2>
+                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
                                     </div>
                                 </div>
                             </div>
@@ -317,9 +335,9 @@ class Governancas extends React.Component{
                                     <h3>Empregados</h3>
                                     <div>
 
-                                        <h2>aa</h2>
+                                        <h2>{this.state.empregados}</h2>
 
-                                        <p className='not-info'>aa</p>
+                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
 
                                     </div>
                                 </div>
@@ -329,9 +347,9 @@ class Governancas extends React.Component{
                                     <h3>Deficiência</h3>
                                     <div>
 
-                                        <h2>aa</h2>
+                                        <h2>{this.state.deficiencia}</h2>
 
-                                        <p className='not-info'>aa</p>
+                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
 
                                     </div>
                                 </div>
@@ -341,8 +359,8 @@ class Governancas extends React.Component{
                                     <h3>Voluntários</h3>
                                     <div>
 
-                                        <input type="number" value="10" className="input-lg" min="1"/>
-                                        <p className='not-info'>&nbsp;</p>
+                                        <input type="number" value={this.state.voluntarios} className="input-lg" min="1"/>
+                                        <p className='not-info'>Atualize suas informações sobre Voluntários</p>
                                     </div>
                                 </div>
                             </div>

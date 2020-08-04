@@ -3,6 +3,7 @@ class Menu extends React.Component{
         super(props);
         this.state = {
         }
+
     }
     render(){
         let menu = [
@@ -12,7 +13,7 @@ class Menu extends React.Component{
                     <li><a href="/oscs-user"><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</a></li>
                     <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"/> Meus Dados</a></li>
                     <li><a href="/declaracao" target='_blank'><i className="fa fa-user" aria-hidden="true"/> Declaração</a></li>
-                    <li><a href="/dados-user"><i className="fa fa-user" aria-hidden="true"/> Selo Site</a></li>
+                    <li><a href="/selo-user"><i className="fa fa-user" aria-hidden="true"/> Selo Site</a></li>
                     <li><a href="/logout-user"><i className="fa fa-power-off" aria-hidden="true"/> Sair</a></li>
                 </ul>
             </div>

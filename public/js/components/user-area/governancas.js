@@ -20,11 +20,17 @@ class Governancas extends React.Component {
             loadingRemove: [],
             governanca: {},
             conselho: {},
-            editId: 0
+            editId: 0,
+
+            deficiencia: null,
+            empregados: null,
+            voluntarios: null,
+            totalTrabalhadores: null
+
         };
 
         this.governanca = this.governanca.bind(this);
-        this.conselhoFiscal = this.conselhoFiscal.bind(this);
+        //this.conselhoFiscal = this.conselhoFiscal.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
@@ -32,7 +38,7 @@ class Governancas extends React.Component {
 
     componentDidMount() {
         this.governanca();
-        this.conselhoFiscal();
+        //this.conselhoFiscal();
     }
 
     getAge(dateString) {
@@ -123,7 +129,15 @@ class Governancas extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                this.setState({ governancas: data.governanca, loadingGovernanca: false });
+                this.setState({
+                    governancas: data.governanca,
+                    conselhos: data.conselho_fiscal,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+                    voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+                    totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
+                    loadingGovernanca: false
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -132,25 +146,24 @@ class Governancas extends React.Component {
         });
     }
 
-    conselhoFiscal() {
-
-        this.setState({ loadingGovernanca: true });
-
-        $.ajax({
+    /*conselhoFiscal(){
+         this.setState({loadingGovernanca: true});
+         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
-            data: {},
+            data: {
+             },
             cache: false,
-            success: function (data) {
+            success: function(data){
                 console.log(data);
-                this.setState({ conselhos: data.conselho_fiscal, loadingGovernanca: false });
+                this.setState({conselhos: data.conselho_fiscal, loadingGovernanca: false});
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({ loadingGovernanca: false });
+                this.setState({loadingGovernanca: false});
             }.bind(this)
         });
-    }
+    }*/
 
     render() {
 
@@ -288,6 +301,8 @@ class Governancas extends React.Component {
             );
         }.bind(this));
 
+        console.log('test: ', this.state.governancas);
+
         return React.createElement(
             'div',
             null,
@@ -408,12 +423,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        '11'
+                                        this.state.totalTrabalhadores
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'a'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -435,12 +450,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.empregados
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -462,12 +477,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.deficiencia
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -486,11 +501,11 @@ class Governancas extends React.Component {
                                 React.createElement(
                                     'div',
                                     null,
-                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
+                                    React.createElement('input', { type: 'number', value: this.state.voluntarios, className: 'input-lg', min: '1' }),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        '\xA0'
+                                        'Atualize suas informa\xE7\xF5es sobre Volunt\xE1rios'
                                     )
                                 )
                             )

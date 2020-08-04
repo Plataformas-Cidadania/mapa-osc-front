@@ -13,7 +13,7 @@
         }
     });
 
-    <?php if($rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user"){ ?>
+    <?php if($rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user" || $rota == "selo-user"){ ?>
         pageRoute = false;
     <?php }else{?>
         pageRoute = true;
@@ -223,7 +223,8 @@
     $rota=="projetos-user" ||
     $rota=="governancas-user" ||
     $rota=="participacoes-user" ||
-    $rota=="recursos-user"
+    $rota=="recursos-user" ||
+    $rota=="selo-user"
     )
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
@@ -266,6 +267,9 @@
 @endif
 @if($rota=="recursos-user")
     <script src="/js/components/user-area/recursos.js"></script>
+@endif
+@if($rota=="selo-user")
+    <script src="/js/components/user-area/seal.js"></script>
 @endif
 @if($rota=="dados-arquivos")
     <script src="/js/components/user-area/documents.js"></script>

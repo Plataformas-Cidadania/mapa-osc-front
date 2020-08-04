@@ -55,7 +55,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dados-user" },
+                        { href: "/selo-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Selo Site"
                     )

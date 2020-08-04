@@ -27,7 +27,11 @@ class Osc extends React.Component{
             },
             showMsg: false,
             msg: '',
-            showIcon: false
+            showIcon: false,
+            objetivos: null,
+            subobjetivos: null,
+            titleMeta: null,
+            titleObjetivo: "",
 
         };
 
@@ -36,11 +40,14 @@ class Osc extends React.Component{
         this.validate = this.validate.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
         this.getOsc = this.getOsc.bind(this);
+
+        this.listArea = this.listArea.bind(this);
     }
 
     componentDidMount(){
         this.getCabecalho();
         this.getOsc();
+        this.listArea();
     }
 
     getCabecalho(){
@@ -138,9 +145,92 @@ class Osc extends React.Component{
         });
     }
 
+    listArea(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                });
+                this.setState({loading: false, objetivos: data, button:true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
 
+    callSubobjetivos(id){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            success: function (data) {
+
+                let objetivos = this.state.objetivos;
+                let titleObjetivo = this.state.objetivos[0].tx_nome_objetivo_projeto;
+
+
+                //console.log('objetivos: ', this.state.objetivos);
+
+                /*this.state.objetivos.find(function(item){
+                    if(item.cd_area_atuacao === id){
+                        item.checked = !item.checked;
+                    }
+                    item.subareas = data.filter(function(subitem){
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });*/
+                this.setState({loading: false, metas: data, id_area:id, titleMeta:true, titleObjetivo:titleObjetivo})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
 
     render(){
+
+        function padDigits(number, digits) {
+            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+        }
+
+        let objetivos = null;
+        let metas = null;
+        if(this.state.objetivos){
+            objetivos = this.state.objetivos.map(function (item) {
+
+                let png = padDigits(item.cd_objetivo_projeto, 2);
+                return (
+                    <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
+                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
+                        <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
+                        {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
+                            {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
+                            <img src={"img/ods/" + png + ".png"} alt="" className="item-off" width="80" style={{position: 'relative'}}/>
+                        </label>
+                    </div>
+                );
+            }.bind(this));
+        }
+
+        if(this.state.metas){
+            metas = this.state.metas.map(function (item) {
+                return(
+                    <div key={"subarea_"+item.cd_meta_projeto}>
+                        <div className="custom-control custom-checkbox" onChange={() => console.log(item.cd_meta_projeto)}>
+                            <input type="checkbox" className="custom-control-input" id={"subarea_"+item.cd_meta_projeto} required/>
+                            <label className="custom-control-label" htmlFor={"subarea_"+item.cd_meta_projeto} >{item.tx_nome_meta_projeto}</label>
+                        </div>
+                        <hr />
+                    </div>
+                );
+            }.bind(this));
+        }
 
         return (
             <div>
@@ -310,46 +400,21 @@ class Osc extends React.Component{
 
                                     <br/><br/>
 
-                                    <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
 
-                                    <div>
-                                        <ul className="menu-txt-icon">
-                                            <li><img src="img/ods/01.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/02.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/03.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/04.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/05.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/06.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/07.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/08.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/09.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/10.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/11.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/12.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/13.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/14.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/15.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/16.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/17.png" alt="" className="item-off" width="87"/></li>
-                                        </ul>
-                                        <div>
-                                            <div>
-                                                <br/><br/>
-                                                <h4><strong>1 - Acabar com a pobreza em todas as suas formas, em todos os lugares</strong></h4>
-                                                <br/>
-                                            </div>
-                                            <div>
-                                                <div className="form-group">
-                                                    <div className="custom-control custom-checkbox ">
-                                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                                        <div className="invalid-feedback">Example invalid feedback text</div>
-                                                    </div>
-                                                    <br/>
-                                                    <div className="custom-control custom-checkbox ">
-                                                        <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                                        <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                                        <div className="invalid-feedback">Example invalid feedback text</div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="col-md-12">
+                                                <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
+                                                <div>
+                                                    {objetivos}
+                                                    <br/><br/>
+                                                </div>
+                                                <div style={{display: this.state.titleMeta ? '' : 'none'}}>
+                                                    <strong>Metas Relacionadas ao ODS definido</strong><hr/>
+                                                   {/* <div className="card-columns">*/}
+                                                    <div>
+                                                        <strong>{this.state.titleObjetivo}</strong><br/><br/>
+                                                        {metas}
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,33 +422,6 @@ class Osc extends React.Component{
                                     </div>
 
 
-
-
-                                    {/*<div className="col-md-12">
-                                        <div>
-                                            <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                            <br/>
-                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                                        </div>
-                                    </div>*/}
-
-
-                                    {/*<div className="row">
-                                        <div className="col-md-12">
-                                            <div style={{marginTop: '-10px'}}>
-                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+this.state.color}>
-                                                    <i className="far fa-check-circle" style={{display: this.state.showIcon ? 'none' : ''}}/>
-                                                    <i className="far fa-times-circle" style={{display: this.state.showIconErro ? 'none' : ''}}/>
-                                                    {this.state.msg}
-                                                </div>
-                                                <button  className="btn btn-success" onClick={this.register}><i
-                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
-                                                <br/>
-                                            </div>
-                                        </div>
-                                    </div>*/}
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div style={{marginTop: '-10px'}}>

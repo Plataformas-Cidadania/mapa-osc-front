@@ -29,16 +29,19 @@ class Filter extends React.Component {
             filters: {
                 ano_fundacao: { start: null, end: null },
                 ano_fundacao2: { start: null, end: null }
-            }
+            },
+            listRegiao: []
         };
 
         this.clickSearch = this.clickSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
-        this.listArea = this.listArea.bind(this);
+
+        this.listRegiao = this.listRegiao.bind(this);
+        this.addRegiao = this.addRegiao.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.filter = this.filter.bind(this);
 
+        this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
 
         this.setAnoFundacao = this.setAnoFundacao.bind(this);
@@ -113,22 +116,22 @@ class Filter extends React.Component {
     clickSearch() {
         let showCategories = !this.state.showCategories;
         this.setState({ showCategories: showCategories }, function () {
-            this.listArea();
+            this.listRegiao();
         });
     }
     handleSearch(e) {
         this.setState({ search: e.target.value }, function () {
-            this.listArea();
+            this.listRegiao();
         });
     }
-    listArea() {
+    listRegiao() {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
             url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
             cache: false,
             success: function (data) {
-                this.setState({ atuacoes: data, loadingList: false });
+                this.setState({ listRegiao: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -136,6 +139,23 @@ class Filter extends React.Component {
             }.bind(this)
         });
     }
+    addRegiao(item) {}
+    /*let add = true;
+    this.state.categoriesSelected.find(function(cat){
+        if(item.cd_area_atuacao===cat.cd_area_atuacao){
+            add = false;
+        }
+    });
+    if(add){
+        let categoriesSelected = this.state.categoriesSelected;
+        categoriesSelected.push(item);
+        this.setState({showCategories: false});
+        this.setState({categoriesSelected: categoriesSelected}, function(){
+            //this.props.filterCategories(this.state.categoriesSelected);
+         });
+    }*/
+
+
     /*validate(){
          let valid = true;
          let requireds = this.state.requireds;
@@ -530,6 +550,21 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
+        console.log(this.state);
+
+        let firstRegioes = this.state.listRegiao.map(function (item, index) {
+            let sizeSearch = this.state.search;
+            let firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+            return React.createElement(
+                'li',
+                { key: 'cat_' + item.edre_cd_regiao,
+                    className: 'list-group-item d-flex ',
+                    onClick: () => this.addRegiao(item)
+                },
+                firstPiece
+            );
+        }.bind(this));
+
         //console.log(this.state.filters);
 
         return React.createElement(
@@ -587,38 +622,19 @@ class Filter extends React.Component {
                                     { className: 'col-md-3' },
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_regiao', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Regi\xE3o'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
+                                        { className: 'input-icon' },
+                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao', onClick: this.clickSearch, onChange: this.handleSearch }),
+                                        React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
                                         React.createElement(
                                             'div',
-                                            { className: 'col-md-12' },
+                                            null,
                                             React.createElement(
-                                                'div',
-                                                { className: 'alert alert-secondary' },
-                                                React.createElement(
-                                                    'div',
-                                                    { className: 'input-icon' },
-                                                    React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma \xC1reas de atua\xE7\xE3o...', onClick: this.clickSearch, onChange: this.handleSearch }),
-                                                    React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
-                                                    React.createElement(
-                                                        'div',
-                                                        null,
-                                                        React.createElement('ul', { className: 'box-search-itens', style: { display: this.state.showCategories ? '' : 'none' } })
-                                                    ),
-                                                    React.createElement('br', null)
-                                                )
+                                                'ul',
+                                                { className: 'box-search-itens', style: { display: this.state.showCategories ? '' : 'none' } },
+                                                firstRegioes
                                             )
-                                        )
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 ),
                                 React.createElement(
