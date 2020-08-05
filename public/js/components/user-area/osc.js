@@ -40,6 +40,7 @@ class Osc extends React.Component {
         this.validate = this.validate.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
         this.getOsc = this.getOsc.bind(this);
+        this.checkMetas = this.checkMetas.bind(this);
 
         this.listArea = this.listArea.bind(this);
     }
@@ -152,6 +153,7 @@ class Osc extends React.Component {
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
+                    item.metas = null;
                 });
                 this.setState({ loading: false, objetivos: data, button: true });
             }.bind(this),
@@ -172,6 +174,30 @@ class Osc extends React.Component {
                 let objetivos = this.state.objetivos;
                 let titleObjetivo = this.state.objetivos[0].tx_nome_objetivo_projeto;
 
+                data.find(function (item) {
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                objetivos.find(function (item) {
+
+                    if (item.metas) {
+                        item.metas.find(function (itemMeta) {
+                            itemMeta.display = false;
+                        });
+
+                        if (item.cd_objetivo_projeto === id) {
+                            item.metas.find(function (itemMeta) {
+                                itemMeta.display = true;
+                            });
+                        }
+                    }
+
+                    if (item.cd_objetivo_projeto === id && !item.metas) {
+                        item.metas = data;
+                    }
+                });
+
                 //console.log('objetivos: ', this.state.objetivos);
 
                 /*this.state.objetivos.find(function(item){
@@ -182,7 +208,7 @@ class Osc extends React.Component {
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });*/
-                this.setState({ loading: false, metas: data, id_area: id, titleMeta: true, titleObjetivo: titleObjetivo });
+                this.setState({ loading: false, objetivos: objetivos, id_area: id, titleMeta: true, titleObjetivo: titleObjetivo });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -190,7 +216,24 @@ class Osc extends React.Component {
         });
     }
 
+    checkMetas(cd_objetivo, cd_meta) {
+        console.log(cd_objetivo, cd_meta);
+        let objetivos = this.state.objetivos;
+        objetivos.find(function (item) {
+            if (item.cd_objetivo_projeto === cd_objetivo) {
+                item.metas.find(function (itemMeta) {
+                    if (itemMeta.cd_meta_projeto === cd_meta) {
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });
+        this.setState({ objetivos: objetivos });
+    }
+
     render() {
+
+        console.log(this.state.objetivos);
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -202,6 +245,32 @@ class Osc extends React.Component {
             objetivos = this.state.objetivos.map(function (item) {
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
+
+                let checkedMetas = false;
+
+                if (item.metas) {
+                    metas = item.metas.map(function (itemMeta) {
+                        if (itemMeta.checked) {
+                            checkedMetas = true;
+                        }
+                        return React.createElement(
+                            'div',
+                            { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
+                                    itemMeta.tx_nome_meta_projeto
+                                )
+                            ),
+                            React.createElement('hr', null)
+                        );
+                    }.bind(this));
+                }
+
                 return React.createElement(
                     'div',
                     { className: 'custom-control custom-checkbox', key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
@@ -209,31 +278,25 @@ class Osc extends React.Component {
                     React.createElement(
                         'label',
                         { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
-                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: 'item-off', width: '80', style: { position: 'relative' } })
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: "item-off " + (checkedMetas ? "btn btn-primary" : ""), width: '80', style: { position: 'relative' } })
                     )
                 );
             }.bind(this));
         }
 
-        if (this.state.metas) {
+        /*if(this.state.metas){
             metas = this.state.metas.map(function (item) {
-                return React.createElement(
-                    'div',
-                    { key: "subarea_" + item.cd_meta_projeto },
-                    React.createElement(
-                        'div',
-                        { className: 'custom-control custom-checkbox', onChange: () => console.log(item.cd_meta_projeto) },
-                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + item.cd_meta_projeto, required: true }),
-                        React.createElement(
-                            'label',
-                            { className: 'custom-control-label', htmlFor: "subarea_" + item.cd_meta_projeto },
-                            item.tx_nome_meta_projeto
-                        )
-                    ),
-                    React.createElement('hr', null)
+                return(
+                    <div key={"subarea_"+item.cd_meta_projeto}>
+                        <div className="custom-control custom-checkbox" onChange={() => console.log(item.cd_meta_projeto)}>
+                            <input type="checkbox" className="custom-control-input" id={"subarea_"+item.cd_meta_projeto} required/>
+                            <label className="custom-control-label" htmlFor={"subarea_"+item.cd_meta_projeto} >{item.tx_nome_meta_projeto}</label>
+                        </div>
+                        <hr />
+                    </div>
                 );
             }.bind(this));
-        }
+        }*/
 
         return React.createElement(
             'div',

@@ -107,7 +107,7 @@ class Governancas extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-         this.setState({showForm: showForm, actionForm: action});*/
+          this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -147,12 +147,12 @@ class Governancas extends React.Component {
     }
 
     /*conselhoFiscal(){
-         this.setState({loadingGovernanca: true});
-         $.ajax({
+          this.setState({loadingGovernanca: true});
+          $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
             data: {
-             },
+              },
             cache: false,
             success: function(data){
                 console.log(data);
