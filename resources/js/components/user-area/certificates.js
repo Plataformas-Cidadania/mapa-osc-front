@@ -116,7 +116,7 @@ class Certificates extends React.Component{
         $.ajax({
             method: 'GET',
             //url: '/list-users-certificates',
-            url: getBaseUrl + 'osc/certificados/455128',
+            url: getBaseUrl2 + 'osc/certificados/455128',
             data: {
             },
             cache: false,

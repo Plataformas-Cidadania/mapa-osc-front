@@ -1,5 +1,5 @@
 <div id="printDivCertificate" class="conteudoCertificate" style="padding-left: 0;">
-    <div class="row">
+    <div class="row printOff">
         <div class="col-md-12 text-center">
             <div class="tx-print">
                 <br>
@@ -60,7 +60,13 @@
         display: block;
         font-family: Verdana, Arial, Helvetica, sans-serif;
     }
+    .printOff{
+        display: none;
+    }
     @media print {
+        .printOff{
+            display: block;
+        }
         .conteudoCertificate{
             display: block;
         }

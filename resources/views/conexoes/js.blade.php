@@ -4,12 +4,20 @@
 <script src="js/utils.js"></script>
 <script src="js/rotas.js"></script>
 
+
+
 <script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    <?php if($rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user" || $rota == "selo-user"){ ?>
+        pageRoute = false;
+    <?php }else{?>
+        pageRoute = true;
+    <?php }?>
 </script>
 
 <script src="/js/react/react.development.js" crossorigin></script>
@@ -169,6 +177,7 @@
     <script src="/js/components/maps/address.js"></script>
 @endif
 @if($rota=="filtro")
+    <script src="/js/components/forms/range.js"></script>
     <script src="/js/components/forms/filter.js"></script>
     <script src="/js/components/forms/page/api.js"></script>
     <script src="/js/utils.js"></script>
@@ -214,7 +223,8 @@
     $rota=="projetos-user" ||
     $rota=="governancas-user" ||
     $rota=="participacoes-user" ||
-    $rota=="recursos-user"
+    $rota=="recursos-user" ||
+    $rota=="selo-user"
     )
     <script src="/js/components/user-area/headerUser.js"></script>
     <script src="/js/components/user-area/menu.js"></script>
@@ -257,6 +267,9 @@
 @endif
 @if($rota=="recursos-user")
     <script src="/js/components/user-area/recursos.js"></script>
+@endif
+@if($rota=="selo-user")
+    <script src="/js/components/user-area/seal.js"></script>
 @endif
 @if($rota=="dados-arquivos")
     <script src="/js/components/user-area/documents.js"></script>

@@ -26,12 +26,65 @@ class Filter extends React.Component{
             input: 0,
             inputMax: 100,
             textRanger: null,
+            filters: {
+                ano_fundacao: {start: null, end:null},
+                ano_fundacao2: {start: null, end:null},
+            },
+            listRegiao:[],
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.filter = this.filter.bind(this);
-        this.validate = this.validate.bind(this);
 
+        this.clickSearch = this.clickSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+
+        this.listRegiao = this.listRegiao.bind(this);
+        this.addRegiao = this.addRegiao.bind(this);
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+
+
+        this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
+
+        this.setAnoFundacao = this.setAnoFundacao.bind(this);
+        this.setTotalTrabalhadores = this.setTotalTrabalhadores.bind(this);
+        this.setTotalEmpregados = this.setTotalEmpregados.bind(this);
+        this.setTrabalhadoresDeficiencia = this.setTrabalhadoresDeficiencia.bind(this);
+        this.setTrabalhadoresVoluntarios = this.setTrabalhadoresVoluntarios.bind(this);
+
+        this.setAnoFonteRecurso = this.setAnoFonteRecurso.bind(this);
+        this.setRendimentosFinanceirosReservas = this.setRendimentosFinanceirosReservas.bind(this);
+        this.setRendimentosFundosPatrimoniais = this.setRendimentosFundosPatrimoniais.bind(this);
+        this.setMensalidadesContribuicoes = this.setMensalidadesContribuicoes.bind(this);
+        this.setVendaBensDireitos = this.setVendaBensDireitos.bind(this);
+        this.setPremiosRecebidos = this.setPremiosRecebidos.bind(this);
+        this.setVendaProdutos = this.setVendaProdutos.bind(this);
+        this.setPrestacaoServicos = this.setPrestacaoServicos.bind(this);
+
+        this.setEmpresasPublicasSociedadesEconomia = this.setEmpresasPublicasSociedadesEconomia.bind(this);
+        this.setAcordoOrganismosMultilaterais = this.setAcordoOrganismosMultilaterais.bind(this);
+        this.setAcordoGovernosEstrangeiros = this.setAcordoGovernosEstrangeiros.bind(this);
+        this.setParceriaGovernoEstadual = this.setParceriaGovernoEstadual.bind(this);
+        this.setParceriaGovernoMunicipal = this.setParceriaGovernoMunicipal.bind(this);
+        this.setTransferenciasFederaisRecebidas = this.setTransferenciasFederaisRecebidas.bind(this);
+
+        this.setParceriaBrasileiras = this.setParceriaBrasileiras.bind(this);
+        this.setParceriaEstrangeiras = this.setParceriaEstrangeiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasBrasileiras = this.setParceriaOrganizacoesReligiosasBrasileiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasEstrangeiras = this.setParceriaOrganizacoesReligiosasEstrangeiras.bind(this);
+        this.setEmpresasPrivadasBrasileiras = this.setEmpresasPrivadasBrasileiras.bind(this);
+        this.setEmpresasEstrangeiras = this.setEmpresasEstrangeiras.bind(this);
+        this.setDoacoesPessoaJuridica = this.setDoacoesPessoaJuridica.bind(this);
+        this.setDoacoesPessoaFisica = this.setDoacoesPessoaFisica.bind(this);
+        this.setDoacoesFormaProdutosServicos = this.setDoacoesFormaProdutosServicos.bind(this);
+
+        this.setVoluntariado = this.setVoluntariado.bind(this);
+        this.setIsencoes = this.setIsencoes.bind(this);
+        this.setImunidades = this.setImunidades.bind(this);
+        this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
+        this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
+
+
+
 
 
     }
@@ -58,19 +111,64 @@ class Filter extends React.Component{
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if(target.name==='cel'){
+        /*if(target.name==='cel'){
             value = maskCel(value);
         }
         if(target.name==='whatsapp'){
             value = maskCel(value);
-        }
+        }*/
 
         let form = this.state.form;
         form[name] = value;
 
         this.setState({form: form});
     }
-    validate(){
+
+    clickSearch(){
+        let showCategories = !this.state.showCategories;
+        this.setState({showCategories: showCategories}, function(){
+            this.listRegiao();
+        })
+    }
+    handleSearch(e){
+        this.setState({search: e.target.value}, function(){
+            this.listRegiao();
+        });
+    }
+    listRegiao(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            cache: false,
+            success: function(data){
+                this.setState({listRegiao: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    addRegiao(item){
+        /*let add = true;
+        this.state.categoriesSelected.find(function(cat){
+            if(item.cd_area_atuacao===cat.cd_area_atuacao){
+                add = false;
+            }
+        });
+        if(add){
+            let categoriesSelected = this.state.categoriesSelected;
+            categoriesSelected.push(item);
+            this.setState({showCategories: false});
+            this.setState({categoriesSelected: categoriesSelected}, function(){
+                //this.props.filterCategories(this.state.categoriesSelected);
+
+            });
+        }*/
+    }
+
+    /*validate(){
 
         let valid = true;
 
@@ -87,57 +185,18 @@ class Filter extends React.Component{
             }
         }
 
-        if(!this.validateName(this.state.form.name)){
-            requireds.name = false;
-            valid = false;
-        }
-
-        if(this.validateCel(this.state.form.cel)===""){
-            requireds.cel = false;
-            valid = false;
-        }
 
         this.setState({requireds: requireds});
 
         return valid;
-    }
-    validateName(name){
-        let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
-        if(array_name.length<2){
-            return false;
-        }
+    }*/
 
-        return true;
-    }
-    validateCel(cel){
-        cel = cel.replace(/[^0-9]/g,'');
-        let qtd = cel.length;
 
-        if(qtd < 10 || qtd > 11){
-            return false;
-        }
-        if(qtd === 11){
-            if(cel.substr(2,1)!=9){
-                return false;
-            }
-            if(cel.substr(3,1)!=9 && cel.substr(3,1)!=8 && cel.substr(3,1)!=7 && cel.substr(3,1)!=6){
-                return false;
-            }
-        }
-        if(qtd === 10){
-            if(cel.substr(2,1)!=9 && cel.substr(2,1)!=8 && cel.substr(2,1)!=7 && cel.substr(2,1)!=6){
-                return false;
-            }
-        }
-        return true;
-    }
     filter(e){
         //console.log(this.validate());
-        if(!this.validate()){
+        /*if(!this.validate()){
             return;
-        }
+        }*/
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
@@ -152,7 +211,7 @@ class Filter extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
+                    //console.log('reg', data);
                     this.setState({loading: false});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -196,36 +255,205 @@ class Filter extends React.Component{
         });
     }
 
-    handleInputMin(event){
-        let input = this.state.input;
-        var currentVal = 'de: ' + input + ' até: ' + this.state.inputMax;
-        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+    setAnoFundacao(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
     }
-    handleInputMax(event){
-        let inputMax = this.state.inputMax;
-        var currentVal = 'de: ' + this.state.input + ' até: ' + inputMax;
-        this.setState({input: input, inputMax: inputMax, textRanger: currentVal});
+    setTotalTrabalhadores(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTotalEmpregados(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTrabalhadoresDeficiencia(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTrabalhadoresVoluntarios(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAnoFonteRecurso(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setRendimentosFinanceirosReservas(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setRendimentosFundosPatrimoniais(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setMensalidadesContribuicoes(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVendaBensDireitos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setPremiosRecebidos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVendaProdutos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setPrestacaoServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasPublicasSociedadesEconomia(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAcordoOrganismosMultilaterais(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAcordoGovernosEstrangeiros(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaGovernoEstadual(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaGovernoMunicipal(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTransferenciasFederaisRecebidas(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaOrganizacoesReligiosasBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaOrganizacoesReligiosasEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasPrivadasBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesPessoaJuridica(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesPessoaFisica(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesFormaProdutosServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVoluntariado(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setIsencoes(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setImunidades(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setBensRecebidosDireito(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesRecebidasFormaProdutosServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
     }
 
-    onInput(event) {
-
-        let input = this.state.input;
-        let inputMax = this.state.inputMax;
-
-        const id = event.target.id;
-        if(event.target.min===event.target.defaultValue){
-            input = document.getElementById(id).value;
-        }else{
-            inputMax = document.getElementById(id).value;
-        }
-
-        var currentVal = 'de: ' + input + ' até: ' + inputMax;
-
-        document.getElementById(event.target.name).value = currentVal;
-
-        this.setState({input: input, inputMax: inputMax/*, textRanger: currentVal*/});
-
-    }
 
     render(){
 
@@ -317,6 +545,22 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
+        console.log(this.state);
+
+        let firstRegioes = this.state.listRegiao.map(function (item, index){
+            let sizeSearch = this.state.search;
+            let firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+            return (
+                <li key={'cat_'+item.edre_cd_regiao}
+                    className="list-group-item d-flex "
+                    onClick={() => this.addRegiao(item)}
+                >
+                    {firstPiece}
+                </li>
+            )
+        }.bind(this));
+
+        //console.log(this.state.filters);
 
         return (
 
@@ -346,10 +590,15 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Região</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao" onClick={this.clickSearch} onChange={this.handleSearch}/>
+                                            <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+                                                    {firstRegioes}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
                                     </div>
                                     <div className="col-md-9">
@@ -369,56 +618,34 @@ class Filter extends React.Component{
 
                                     <div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "/>
+                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "  />
                                             <label htmlFor="name">CNPJ</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        {/*<div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Situação do Imóvel</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>*/}
 
-                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                    <div className="col-md-3">
+                                        a{/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={'0'} onChange={this.handleInputChange}>
+                                            <option value="0" selected>Selecione</option>
+                                            <option value="1">Próprio</option>
+                                            <option value="2">Alugado</option>
+                                            <option value="3">Cedido</option>
+                                            <option value="4">Comodato</option>
                                         </select>*/}
                                     </div>
-                                    {/*<div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>
-                                            <label htmlFor="name">Ano de Fundação</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="0" id="ranger1" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
-                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="100" id="ranger2" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
-                                    </div>*/}
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger" value={this.state.textRanger} placeholder="" />*/}
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" />
-                                            <label htmlFor="name">Ano de Fundação</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="0" name="textRanger" id="rangerMin" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
-                                        <input type="range" className="custom-range" min="0" max="100" step="1" defaultValue="100" name="textRanger" id="rangerMax" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
-                                    </div>
 
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger"  placeholder="" value={this.state.form}/>*/}
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" id="textRanger2"  placeholder="" />
-                                            <label htmlFor="name">Ano de Fundação2</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                        <input type="range" className="custom-range" min="1990" max="2020" step="1" defaultValue="0" name="textRanger2" id="rangerMin2" style={{float:'left'}} onInput={this.onInput.bind(this)}/>
-                                        <input type="range" className="custom-range" min="1990" max="2020" step="1" defaultValue="100" name="textRanger2" id="rangerMax2" style={{float:'right'}} onInput={this.onInput.bind(this)}/>
+                                        <Range
+                                            title="Ano de Fundação"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setAnoFundacao}
+                                        />
                                     </div>
+
 
 
                                     <div className="col-md-3">
@@ -578,6 +805,50 @@ class Filter extends React.Component{
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Total de trabalhadores"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalTrabalhadores}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Total de empregados"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalEmpregados}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Trabalhadores com deficiência"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTrabalhadoresDeficiencia}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Trabalhadores voluntários"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTrabalhadoresVoluntarios}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -670,19 +941,339 @@ class Filter extends React.Component{
                                     <div className="col-md-12">
                                         <h4>Fontes de recursos anuais da OSC</h4>
                                         <hr />
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <Range
+                                                    title="Ano"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAnoFonteRecurso}
+                                                />
+                                            </div>
+                                        </div>
 
                                         <h4>Recursos próprios</h4>
                                         <hr />
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Rendimentos financeiros de reservas ou contas correntes próprias"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setRendimentosFinanceirosReservas}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Rendimentos de fundos patrimoniais"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setRendimentosFundosPatrimoniais}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Mensalidades ou contribuições de associados"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setMensalidadesContribuicoes}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Venda de bens e direitos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVendaBensDireitos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Prêmios recebidos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setPremiosRecebidos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Venda de produtos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVendaProdutos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Prestação de serviços"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setPrestacaoServicos}
+                                                />
+                                            </div>
+                                        </div>
 
                                         <h4>Recursos públicos</h4>
                                         <hr />
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas públicas ou sociedades de economia mista"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasPublicasSociedadesEconomia}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Acordo com organismos multilaterais"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAcordoOrganismosMultilaterais}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Acordo com governos estrangeiros"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAcordoGovernosEstrangeiros}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com o governo estadual"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaGovernoEstadual}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com o governo municipal"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaGovernoMunicipal}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Transferências federais recebidas pela OSC"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setTransferenciasFederaisRecebidas}
+                                                />
+                                            </div>
+                                        </div>
+
+
 
                                         <h4>Recursos privados</h4>
                                         <hr />
 
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com OSCs brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com OSCs estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com organizações religiosas brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaOrganizacoesReligiosasBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com organizações religiosas estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaOrganizacoesReligiosasEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas privadas brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasPrivadasBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações de pessoa jurídica"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesPessoaJuridica}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações de pessoa física"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesPessoaFisica}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações recebidas na forma de produtos e serviços (com NF)"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesFormaProdutosServicos}
+                                                />
+                                            </div>
+                                        </div>
+
                                         <h4>Recursos não financeiros</h4>
                                         <hr />
-
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Voluntariado"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVoluntariado}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Isenções"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setIsencoes}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Imunidades"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setImunidades}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Bens recebidos em direito de uso"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setBensRecebidosDireito}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Doações recebidas na forma de produtos e serviços (sem NF)"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesRecebidasFormaProdutosServicos}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

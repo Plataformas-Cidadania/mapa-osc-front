@@ -2,7 +2,7 @@ class Governancas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadingList: false,
+            loadingGovernanca: false,
             loading: false,
             governancas: [],
             conselhos: [],
@@ -20,19 +20,25 @@ class Governancas extends React.Component {
             loadingRemove: [],
             governanca: {},
             conselho: {},
-            editId: 0
+            editId: 0,
+
+            deficiencia: null,
+            empregados: null,
+            voluntarios: null,
+            totalTrabalhadores: null
+
         };
 
-        this.list = this.list.bind(this);
-        this.list2 = this.list2.bind(this);
+        this.governanca = this.governanca.bind(this);
+        //this.conselhoFiscal = this.conselhoFiscal.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
     }
 
     componentDidMount() {
-        this.list();
-        this.list2();
+        this.governanca();
+        //this.conselhoFiscal();
     }
 
     getAge(dateString) {
@@ -80,7 +86,7 @@ class Governancas extends React.Component {
             cache: false,
             success: function (data) {
                 //console.log(data);
-                this.list();
+                this.governanca();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
                 this.setState({ loadingRemove: loadingRemove });
@@ -101,7 +107,7 @@ class Governancas extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -112,45 +118,52 @@ class Governancas extends React.Component {
         this.setState({ showForm: false });
     }
 
-    list() {
+    governanca() {
 
-        this.setState({ loadingList: true });
+        this.setState({ loadingGovernanca: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-governancas',
+            method: 'GET',
+            //url: '/governanca-users-governancas',
+            url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
-                this.setState({ governancas: data, loadingList: false });
+                this.setState({
+                    governancas: data.governanca,
+                    conselhos: data.conselho_fiscal,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+                    voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+                    totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
+                    loadingGovernanca: false
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                this.setState({ loadingGovernanca: false });
             }.bind(this)
         });
     }
 
-    list2() {
-
-        this.setState({ loadingList: true });
-
-        $.ajax({
-            method: 'POST',
-            url: '/list-users-conselhos',
-            data: {},
+    /*conselhoFiscal(){
+         this.setState({loadingGovernanca: true});
+         $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
+            data: {
+             },
             cache: false,
-            success: function (data) {
+            success: function(data){
                 console.log(data);
-                this.setState({ conselhos: data, loadingList: false });
+                this.setState({conselhos: data.conselho_fiscal, loadingGovernanca: false});
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                this.setState({loadingGovernanca: false});
             }.bind(this)
         });
-    }
+    }*/
 
     render() {
 
@@ -166,7 +179,7 @@ class Governancas extends React.Component {
 
             return (
 
-                /*<div className="box-insert-list"  key={"governanca_"+index}>
+                /*<div className="box-insert-governanca"  key={"governanca_"+index}>
                     <i className="far fa-trash-alt text-danger float-right"/>
                     <p>{item.tx_cargo_dirigente}</p>
                     <p>{item.tx_nome_dirigente}</p>
@@ -175,7 +188,7 @@ class Governancas extends React.Component {
 
                 React.createElement(
                     'div',
-                    { className: 'box-insert-list', key: "governanca_" + index },
+                    { className: 'box-insert-governanca', key: "governanca_" + index },
                     React.createElement(
                         'div',
                         { className: 'float-right', style: { marginRight: '40px' } },
@@ -258,7 +271,7 @@ class Governancas extends React.Component {
 
             return React.createElement(
                 'div',
-                { className: 'box-insert-list', key: "conselho_" + index },
+                { className: 'box-insert-governanca', key: "conselho_" + index },
                 React.createElement(
                     'div',
                     { className: 'float-right', style: { width: '50px' } },
@@ -287,6 +300,8 @@ class Governancas extends React.Component {
                 )
             );
         }.bind(this));
+
+        console.log('test: ', this.state.governancas);
 
         return React.createElement(
             'div',
@@ -333,11 +348,11 @@ class Governancas extends React.Component {
             React.createElement(
                 'div',
                 { style: { display: this.state.showForm ? 'block' : 'none' } },
-                React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.governanca, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
             ),
             React.createElement(
                 'div',
-                { style: { display: this.state.loadingList ? 'true' : 'none' } },
+                { style: { display: this.state.loadingGovernanca ? 'true' : 'none' } },
                 React.createElement('img', { style: { marginTop: '80px' }, src: '/img/loading.gif', width: '150px', alt: 'carregando', title: 'carregando' })
             ),
             React.createElement('br', null),
@@ -408,12 +423,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        '11'
+                                        this.state.totalTrabalhadores
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'a'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -435,12 +450,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.empregados
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -462,12 +477,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.deficiencia
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -486,11 +501,11 @@ class Governancas extends React.Component {
                                 React.createElement(
                                     'div',
                                     null,
-                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
+                                    React.createElement('input', { type: 'number', value: this.state.voluntarios, className: 'input-lg', min: '1' }),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        '\xA0'
+                                        'Atualize suas informa\xE7\xF5es sobre Volunt\xE1rios'
                                     )
                                 )
                             )

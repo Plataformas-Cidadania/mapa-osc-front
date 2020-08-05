@@ -3,9 +3,8 @@ class Menu extends React.Component {
         super(props);
         this.state = {};
     }
-
     render() {
-        return React.createElement(
+        let menu = [React.createElement(
             "div",
             null,
             React.createElement(
@@ -46,7 +45,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/declaracao" },
+                        { href: "/declaracao", target: "_blank" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Declara\xE7\xE3o"
                     )
@@ -56,7 +55,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dados-user" },
+                        { href: "/selo-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Selo Site"
                     )
@@ -71,9 +70,10 @@ class Menu extends React.Component {
                         " Sair"
                     )
                 )
-            ),
-            React.createElement("br", null),
-            React.createElement(
+            )
+        )];
+        if (pageRoute === true) {
+            menu.push(React.createElement(
                 "ul",
                 { className: "menu-area" },
                 React.createElement(
@@ -163,8 +163,9 @@ class Menu extends React.Component {
                         " Fontes de recursos"
                     )
                 )
-            )
-        );
+            ));
+        }
+        return menu;
     }
 }
 

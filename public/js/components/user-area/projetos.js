@@ -93,7 +93,7 @@ class Projetos extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -109,8 +109,9 @@ class Projetos extends React.Component {
         this.setState({ loadingList: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-projetos',
+            method: 'GET',
+            //url: '/list-users-projetos',
+            url: getBaseUrl2 + 'osc/projetos/455128',
             data: {},
             cache: false,
             success: function (data) {
@@ -142,17 +143,17 @@ class Projetos extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.cd_projeto
+                    item.tx_nome_projeto
                 ),
                 React.createElement(
                     'td',
                     null,
-                    item.dt_inicio_projeto
+                    item.dt_data_inicio_projeto
                 ),
                 React.createElement(
                     'td',
                     null,
-                    item.dt_fim_projeto
+                    item.dt_data_fim_projeto
                 ),
                 React.createElement(
                     'td',

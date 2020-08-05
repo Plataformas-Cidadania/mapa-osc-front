@@ -133,6 +133,7 @@ Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
 Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
+Route::get('/selo-user', 'UserAreaController@seal')->middleware('auth');
 
 Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
 Route::get('/projetos-user', 'UserAreaController@projetos')->middleware('auth');
