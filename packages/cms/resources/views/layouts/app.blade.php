@@ -112,6 +112,9 @@
                     <a href="cms/texts"><i class="fa fa-fw fa-anchor"></i> Textos</a>
                 </li>
                 <li>
+                    <a href="cms/categorias"><i class="fa fa-fw fa-file-text-o"></i> Categorias</a>
+                </li>
+                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>
 

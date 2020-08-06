@@ -43,10 +43,11 @@ class Recursos extends React.Component {
         $.ajax({
             method: 'GET',
             //url: '/get-recursos',
-            url: getBaseUrl + 'osc/no_project/789809',
+            //url: getBaseUrl+'osc/no_project/789809',
+            url: getBaseUrl + 'osc/anos_fonte_recursos/789809',
             cache: false,
             success: function (data) {
-                //console.log(data);
+                console.log(data);
                 this.setState({ loading: false, anosRecursos: data.recursos, button: true });
             }.bind(this),
             error: function (xhr, status, err) {

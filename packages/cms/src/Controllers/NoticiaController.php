@@ -13,8 +13,8 @@ use Intervention\Image\Facades\Image;
 
 class NoticiaController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
@@ -37,11 +37,12 @@ class NoticiaController extends Controller
     function index()
     {
 
+        $categorias = \App\Categoria::pluck('titulo', 'id')->all();
         $noticias = \App\Noticia::all();
         //$idiomas = \App\Idioma::lists('titulo', 'id')->all();
 
 
-        return view('cms::noticia.listar', ['noticias' => $noticias]);
+        return view('cms::noticia.listar', ['noticias' => $noticias, 'categorias' => $categorias]);
         //return view('cms::noticia.listar', ['noticias' => $noticias, 'idiomas' => $idiomas]);
     }
 
@@ -81,8 +82,8 @@ class NoticiaController extends Controller
 
         $file = $request->file('file');
         $arquivo = $request->file('arquivo');
-	
-	Log::info($request);
+
+	//Log::info($request);
 
         $successFile = true;
         if($file!=null){
@@ -117,12 +118,13 @@ class NoticiaController extends Controller
 
     public function detalhar($id)
     {
+        $categorias = \App\Categoria::pluck('titulo', 'id')->all();
         $noticia = $this->noticia->where([
             ['id', '=', $id],
         ])->firstOrFail();
         //$idiomas = \App\Idioma::lists('titulo', 'id')->all();
 
-        return view('cms::noticia.detalhar', ['noticia' => $noticia]);
+        return view('cms::noticia.detalhar', ['noticia' => $noticia, 'categorias' => $categorias]);
         //return view('cms::noticia.detalhar', ['noticia' => $noticia, 'idiomas' => $idiomas]);
     }
 
@@ -252,7 +254,7 @@ class NoticiaController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($noticia->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();

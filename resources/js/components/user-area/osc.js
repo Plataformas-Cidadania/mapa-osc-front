@@ -120,20 +120,6 @@ class Osc extends React.Component{
                 data: this.state.form,
                 cache: false,
                 success: function(data) {
-
-                    /*let msg = 'Já existe outro cadastro com esse';
-
-                    if(data.tx_razao_social_osc || data.email){
-                        if(data.tx_razao_social_osc){
-                            msg+= ' tx_razao_social_osc';
-                        }
-                        if(data.email){
-                            msg+= ' email';
-                        }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, showIcon: true});
-                        return;
-                    }*/
-
                     let msg = 'Dados alterados com sucesso!';
                     this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true});
                 }.bind(this),
@@ -174,7 +160,8 @@ class Osc extends React.Component{
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
-                let titleObjetivo = this.state.objetivos[0].tx_nome_objetivo_projeto;
+
+                let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
 
                 data.find(function(item){
                     item.display = true;
@@ -250,6 +237,8 @@ class Osc extends React.Component{
 
                 let checkedMetas = false;
 
+                console.log(checkedMetas);
+
                 if(item.metas){
                     metas = item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
@@ -273,7 +262,7 @@ class Osc extends React.Component{
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
                         {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
                             {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
-                            <img src={"img/ods/" + png + ".png"} alt="" className={"item-off "+(checkedMetas ? "btn btn-primary" : "")} width="80" style={{position: 'relative'}}/>
+                            <img src={"img/ods/" + png + ".png"} alt="" className={checkedMetas ? "" : "item-off"} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
                         </label>
                     </div>
                 );
@@ -465,19 +454,17 @@ class Osc extends React.Component{
 
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div className="col-md-12">
-                                                <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
+                                            <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
+                                            <div>
+                                                {objetivos}
+                                                <br/><br/>
+                                            </div>
+                                            <div style={{display: this.state.titleMeta ? '' : 'none'}}>
+                                                <strong>Metas Relacionadas ao ODS definido</strong><hr/>
+                                               {/* <div className="card-columns">*/}
                                                 <div>
-                                                    {objetivos}
-                                                    <br/><br/>
-                                                </div>
-                                                <div style={{display: this.state.titleMeta ? '' : 'none'}}>
-                                                    <strong>Metas Relacionadas ao ODS definido</strong><hr/>
-                                                   {/* <div className="card-columns">*/}
-                                                    <div>
-                                                        <strong>{this.state.titleObjetivo}</strong><br/><br/>
-                                                        {metas}
-                                                    </div>
+                                                    <strong>{this.state.titleObjetivo}</strong><br/><br/>
+                                                    {metas}
                                                 </div>
                                             </div>
                                         </div>

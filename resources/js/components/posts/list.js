@@ -157,8 +157,6 @@ class List extends React.Component{
 
     render(){
 
-        //console.log('categoriesSelected', this.state.categoriesSelected);
-
         let totalAds = this.state.ads.total;
 
         let ads = null;
@@ -200,10 +198,9 @@ class List extends React.Component{
                     </div>*/
                      /*OPCAO 2 UTILIZAR NA TROCA*/
                     <div key={"ads_"+item.id}>
-                        <a href={"/artigo/"+item.id+"/"+cleanReplace(item.title)}>
+                        <a href={"/artigo/"+item.id+"/"+cleanReplace(item.titulo)}>
                             <div>
                                 <br/>
-                                <h5 className="float-right"><i className="fas fa-comment"></i> {item.qtd_comments}</h5>
                                 <img data-src="holder.js/200x200" className="img-fluid" alt="200x200"
                                      src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true"
                                      width="100%"/>
@@ -215,8 +212,8 @@ class List extends React.Component{
                                         </time>
                                     </div>
                                 </div>
-                                <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
-                                <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
+                                <h2 data-message={item.titulo} tabIndex="0">{item.titulo}</h2>
+                                <p data-message={item.resumida} tabIndex="0">{item.resumida}</p>
                                 <h4 className="btn-plus">Continue lendo</h4>
                                 <br/>
                                 <hr/>

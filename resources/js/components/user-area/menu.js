@@ -22,7 +22,7 @@ class Menu extends React.Component{
             menu.push(
                 <ul className="menu-area">
                     <li className="">OSC Apac</li>
-                    <div className="line line-fix "></div><br/>
+                    <div className="line line-fix "/><br/>
                     <li><a href="/osc-user/789809"><i className="fa fa-user" aria-hidden="true"/> Dados gerais</a></li>
                     <li><a href="/areas-atuacao-user"><i className="fa fa-user" aria-hidden="true"/> Áreas de atuação</a></li>
                     <li><a href="/descricao-user"><i className="fas fa-align-justify" aria-hidden="true"/> Descrição</a></li>

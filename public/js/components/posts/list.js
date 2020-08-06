@@ -144,8 +144,6 @@ class List extends React.Component {
 
     render() {
 
-        //console.log('categoriesSelected', this.state.categoriesSelected);
-
         let totalAds = this.state.ads.total;
 
         let ads = null;
@@ -180,9 +178,9 @@ class List extends React.Component {
                                     <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
                                     <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
                                     <h4 className="btn-plus">Continue lendo</h4>
-                                      </div>
+                                   </div>
                                 <div className="col-md-12"><hr/></div>
-                              </div>
+                             </div>
                         </a>
                     </div>*/
                     /*OPCAO 2 UTILIZAR NA TROCA*/
@@ -191,18 +189,11 @@ class List extends React.Component {
                         { key: "ads_" + item.id },
                         React.createElement(
                             'a',
-                            { href: "/artigo/" + item.id + "/" + cleanReplace(item.title) },
+                            { href: "/artigo/" + item.id + "/" + cleanReplace(item.titulo) },
                             React.createElement(
                                 'div',
                                 null,
                                 React.createElement('br', null),
-                                React.createElement(
-                                    'h5',
-                                    { className: 'float-right' },
-                                    React.createElement('i', { className: 'fas fa-comment' }),
-                                    ' ',
-                                    item.qtd_comments
-                                ),
                                 React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: '200x200',
                                     src: 'https://www.w3schools.com/html/pic_trulli.jpg', 'data-holder-rendered': 'true',
                                     width: '100%' }),
@@ -232,13 +223,13 @@ class List extends React.Component {
                                 ),
                                 React.createElement(
                                     'h2',
-                                    { 'data-message': '{{$list->title}}', tabIndex: '0' },
-                                    item.title
+                                    { 'data-message': item.titulo, tabIndex: '0' },
+                                    item.titulo
                                 ),
                                 React.createElement(
                                     'p',
-                                    { 'data-message': '{{$list->tease}}', tabIndex: '0' },
-                                    item.teaser
+                                    { 'data-message': item.resumida, tabIndex: '0' },
+                                    item.resumida
                                 ),
                                 React.createElement(
                                     'h4',

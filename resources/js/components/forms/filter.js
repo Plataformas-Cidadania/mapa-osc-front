@@ -1327,7 +1327,7 @@ class Filter extends React.Component{
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
                                  aria-controls="collapse9">
                                 <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"></i>
+                                Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse9" className="collapse" aria-labelledby="heading9"

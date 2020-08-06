@@ -87,7 +87,7 @@ class MembersFilter extends React.Component {
         //console.log('addMember', item);
         let add = true;
         this.state.membersSelected.find(function (memb) {
-            if (item.name == memb.name) {
+            if (item.titulo == memb.titulo) {
                 add = false;
             }
         });
@@ -126,13 +126,13 @@ class MembersFilter extends React.Component {
         let firstMembers = this.state.members.map(function (item, index) {
             if (index < showQtdItems) {
                 let sizeSearch = this.state.search.length;
-                let firstPiece = item.name.substr(0, sizeSearch);
-                let lastPiece = item.name.substr(sizeSearch);
+                let firstPiece = item.titulo.substr(0, sizeSearch);
+                let lastPiece = item.titulo.substr(sizeSearch);
                 let qtd = item.qtd;
 
                 let color = '';
                 this.state.membersSelected.find(function (memb) {
-                    if (item.name == memb.name) {
+                    if (item.titulo == memb.titulo) {
                         color = '#b7b7b7';
                         return;
                     }
@@ -167,13 +167,13 @@ class MembersFilter extends React.Component {
         let otherMembers = this.state.members.map(function (item, index) {
             if (index >= showQtdItems) {
                 let sizeSearch = this.state.search.length;
-                let firstPiece = item.name.substr(0, sizeSearch);
-                let lastPiece = item.name.substr(sizeSearch);
+                let firstPiece = item.titulo.substr(0, sizeSearch);
+                let lastPiece = item.titulo.substr(sizeSearch);
                 let qtd = item.qtd;
 
                 let color = '';
                 this.state.membersSelected.find(function (memb) {
-                    if (item.name == memb.name) {
+                    if (item.titulo == memb.titulo) {
                         color = '#b7b7b7';
                         return;
                     }
@@ -207,7 +207,7 @@ class MembersFilter extends React.Component {
             return React.createElement(
                 'button',
                 { key: "btn_member_" + item.id, id: item.id, onClick: this.removeMember, type: 'button', className: 'btn btn-success btn-xs btn-remove', style: { margin: "0 5px 5px 0" } },
-                item.name,
+                item.titulo,
                 ' ',
                 React.createElement('i', { className: 'fas fa-times' })
             );

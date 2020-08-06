@@ -40,9 +40,9 @@ class PostController extends Controller
             DB::Raw("
                 categorias.id,
                 categorias.titulo,
-                categorias.count(id) as qtd
+                count(categorias.id) as qtd
             "))
-            ->join('noticias', 'categorias.id', '=', 'noticias.category_id')
+            ->join('noticias', 'categorias.id', '=', 'noticias.categoria_id')
             ->where('noticias.titulo', 'ilike', $request->search.'%')
             ->groupBy('categorias.id', 'categorias.titulo')
             ->distinct()
@@ -53,17 +53,16 @@ class PostController extends Controller
 
     public function members(Request $request){
 
-        $members = \App\PubMember::
+        $members = \App\Integrante::
             select(
             DB::Raw("
-                pub_members.id,
-                pub_members.name,
-                count(jnc_articles_members.member_id) as qtd
+                id,
+                titulo,
+                count(id) as qtd
             ")
         )
-            ->join('jnc_articles_members', 'pub_members.id', '=', 'jnc_articles_members.member_id')
-            ->where('pub_members.name', 'ilike', $request->search.'%')
-            ->groupBy('pub_members.id', 'pub_members.name')
+            ->where('titulo', 'ilike', $request->search.'%')
+            ->groupBy('id', 'titulo')
             ->get();
 
         return $members;
@@ -112,38 +111,35 @@ class PostController extends Controller
         $total = $this->obj
             ->select('*')
             ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('category_id', $categories);
+                return $query->whereIn('categoria_id', $categories);
             })
             ->get();
 
         $total = count($total);
 
         $result = $this->obj
-            ->leftJoin('jnc_articles_members', 'id', '=', 'jnc_articles_members.article_id')
-            //->leftJoin('pub_comments', 'id', '=', 'pub_comments.origin_id')
             ->select(
                 DB::Raw("
                 *,
-                to_char(date, 'HH12:MI:SS') as hour,
-                to_char(date, 'DD') as date,
-                to_char(date, 'TMMonth') as month,
-                to_char(date, 'YYYY') as year,
-                pub_comments.origin_id,
-                title,
-                teaser,
-                description
+                to_char(data, 'HH12:MI:SS') as hour,
+                to_char(data, 'DD') as date,
+                to_char(data, 'TMMonth') as month,
+                to_char(data, 'YYYY') as year,
+                titulo,
+                resumida,
+                descricao
                 ")
             )
             ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('category_id', $categories);
+                return $query->whereIn('categoria_id', $categories);
             })
             ->when(count($members) > 0, function($query) use ($members){
-                return $query->whereIn('jnc_articles_members.member_id', $members);
+                return $query->whereIn('member_id', $members);
             })
             ->when(count($archives) > 0, function($query) use ($archives){
                 return $query->whereIn(DB::Raw("to_char(date, 'YYYY-MM')"), $archives);
             })
-            ->where('title', 'ilike', '%'.$search.'%')
+            ->where('titulo', 'ilike', '%'.$search.'%')
             ->orderby($request->order, $request->directionOrder)
             ->distinct('id')
             ->take($request->qtdItemsLoad)
@@ -158,9 +154,9 @@ class PostController extends Controller
 
 
         foreach($ads['data'] as $index => $ad){
-            $categories = DB::table('pub_categories')
-                ->select('pub_categories.*')
-                ->where('pub_categories.id', $ad->id)
+            $categories = DB::table('categorias')
+                ->select('categorias.*')
+                ->where('categorias.id', $ad->id)
                 ->get();
             $ads['data'][$index]->categories = $categories;
         }

@@ -119,19 +119,6 @@ class Osc extends React.Component {
                 data: this.state.form,
                 cache: false,
                 success: function (data) {
-
-                    /*let msg = 'Já existe outro cadastro com esse';
-                     if(data.tx_razao_social_osc || data.email){
-                        if(data.tx_razao_social_osc){
-                            msg+= ' tx_razao_social_osc';
-                        }
-                        if(data.email){
-                            msg+= ' email';
-                        }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, showIcon: true});
-                        return;
-                    }*/
-
                     let msg = 'Dados alterados com sucesso!';
                     this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true });
                 }.bind(this),
@@ -172,7 +159,8 @@ class Osc extends React.Component {
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
-                let titleObjetivo = this.state.objetivos[0].tx_nome_objetivo_projeto;
+
+                let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
 
                 data.find(function (item) {
                     item.display = true;
@@ -248,6 +236,8 @@ class Osc extends React.Component {
 
                 let checkedMetas = false;
 
+                console.log(checkedMetas);
+
                 if (item.metas) {
                     metas = item.metas.map(function (itemMeta) {
                         if (itemMeta.checked) {
@@ -278,7 +268,7 @@ class Osc extends React.Component {
                     React.createElement(
                         'label',
                         { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
-                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: "item-off " + (checkedMetas ? "btn btn-primary" : ""), width: '80', style: { position: 'relative' } })
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: checkedMetas ? "" : "item-off", width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
                     )
                 );
             }.bind(this));
@@ -694,42 +684,38 @@ class Osc extends React.Component {
                                     'div',
                                     { className: 'col-md-12' },
                                     React.createElement(
+                                        'strong',
+                                        null,
+                                        'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
                                         'div',
-                                        { className: 'col-md-12' },
+                                        null,
+                                        objetivos,
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.titleMeta ? '' : 'none' } },
                                         React.createElement(
                                             'strong',
                                             null,
-                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                            'Metas Relacionadas ao ODS definido'
                                         ),
                                         React.createElement('hr', null),
                                         React.createElement(
                                             'div',
                                             null,
-                                            objetivos,
-                                            React.createElement('br', null),
-                                            React.createElement('br', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.titleMeta ? '' : 'none' } },
                                             React.createElement(
                                                 'strong',
                                                 null,
-                                                'Metas Relacionadas ao ODS definido'
+                                                this.state.titleObjetivo
                                             ),
-                                            React.createElement('hr', null),
-                                            React.createElement(
-                                                'div',
-                                                null,
-                                                React.createElement(
-                                                    'strong',
-                                                    null,
-                                                    this.state.titleObjetivo
-                                                ),
-                                                React.createElement('br', null),
-                                                React.createElement('br', null),
-                                                metas
-                                            )
+                                            React.createElement('br', null),
+                                            React.createElement('br', null),
+                                            metas
                                         )
                                     )
                                 )

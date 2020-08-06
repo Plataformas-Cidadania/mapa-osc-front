@@ -4,10 +4,12 @@
         $idiomas,
 null, ['class'=>"form-control width-medio <% validar(noticia.idioma_id) %>", 'ng-model'=>'noticia.idioma_id', 'init-model'=>'noticia.idioma_id']) !!}<br>
 </div>--}}
-{{--
-{!! Form::label('data', 'Data *') !!}<br>
-{!! Form::date('data', null, ['class'=>"form-control width-medio <% validar(noticia.data) %>", 'ng-model'=>'noticia.data', 'ng-required'=>'true', 'init-model'=>'noticia.data', 'placeholder' => '']) !!}<br>
---}}
+
+
+{!! Form::label('categoria_id', 'Categoria') !!}<br>
+{!! Form::select('categoria_id',
+        $categorias,
+null, ['class'=>"form-control width-medio <% validar(noticia.categoria_id) %>", 'ng-model'=>'noticia.categoria_id', 'init-model'=>'noticia.categoria_id', 'placeholder' => 'Sem Categoria']) !!}<br>
 
 <label for="data">Data</label><br>
 <input type="date" name="data" class="form-control width-medio <% validar(noticia.data) %>" ng-model="noticia.data" ng-required="true" @if(!empty($noticia))ng-init="noticia.data=stringToDate('{{$noticia->data}}')"@endif ><br>
