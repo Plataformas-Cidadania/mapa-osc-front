@@ -44,11 +44,11 @@ class Recursos extends React.Component {
             method: 'GET',
             //url: '/get-recursos',
             //url: getBaseUrl+'osc/no_project/789809',
-            url: getBaseUrl + 'osc/anos_fonte_recursos/789809',
+            url: getBaseUrl2 + 'osc/anos_fonte_recursos/789809',
             cache: false,
             success: function (data) {
                 console.log(data);
-                this.setState({ loading: false, anosRecursos: data.recursos, button: true });
+                this.setState({ loading: false, anosRecursos: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -139,11 +139,11 @@ class Recursos extends React.Component {
 
     render() {
 
-        console.log(this.state.anosRecursos.recursos);
+        console.log(this.state.anosRecursos);
         let anosRecursos = [];
 
-        if (this.state.anosRecursos.recursos) {
-            for (const item of this.state.anosRecursos.recursos) {
+        if (this.state.anosRecursos) {
+            for (const item of this.state.anosRecursos) {
                 anosRecursos.push(React.createElement(
                     'button',
                     {
