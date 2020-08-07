@@ -31,7 +31,6 @@ class Recursos extends React.Component {
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
-        this.subCategory = this.subCategory.bind(this);
     }
 
     componentDidMount() {
@@ -120,52 +119,103 @@ class Recursos extends React.Component {
         });
     }
 
-    subCategory() {
-        console.log('aaa');
-        /*$.ajax({
+    callSubObjetivos(id) {
+
+        this.setState({ button: false });
+        $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
+            url: getBaseUrl + 'osc/no_project/789809',
             success: function (data) {
-                console.log("111");
-                this.setState({ subAtuacoes: data });
+
+                let anosRecursos = this.state.anosRecursos;
+
+                console.log(data.recursos);
+
+                data.recursos.find(function (item) {
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                anosRecursos.find(function (item) {
+
+                    if (item.metas) {
+                        item.metas.find(function (itemMeta) {
+                            itemMeta.display = false;
+                        });
+
+                        if (item.cd_objetivo_projeto === id) {
+                            item.metas.find(function (itemMeta) {
+                                itemMeta.display = true;
+                            });
+                        }
+                    }
+
+                    if (item.cd_objetivo_projeto === id && !item.metas) {
+                        item.metas = data;
+                    }
+                });
+
+                this.setState({ loading: false, anosRecursos: anosRecursos, id_area: id, titleMeta: true });
             }.bind(this),
             error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                console.error(status, err.toString());
             }.bind(this)
-        });*/
+        });
     }
 
     render() {
 
         console.log(this.state.anosRecursos);
-        let anosRecursos = [];
 
+        let anosRecursos = null;
+        let metas = null;
         if (this.state.anosRecursos) {
-            for (const item of this.state.anosRecursos) {
-                anosRecursos.push(React.createElement(
-                    'button',
-                    {
-                        key: "anos_" + item.dt_ano_recursos_osc, id: item.dt_ano_recursos_osc,
-                        onClick: this.subCategory, type: 'button',
-                        className: 'btn btn-light' },
+            anosRecursos = this.state.anosRecursos.map(function (item, index) {
+
+                let checkedMetas = false;
+
+                //console.log(checkedMetas);
+
+                /*if(item.metas){
+                    metas = item.metas.map(function (itemMeta) {
+                        if(itemMeta.checked){
+                            checkedMetas = true;
+                        }
+                        return(
+                            <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_recurso_projeto, itemMeta.cd_meta_projeto)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
+                                </div>
+                                <hr />
+                            </div>
+                        );
+                    }.bind(this));
+                }*/
+
+                return React.createElement(
+                    'div',
+                    { key: "anos_" + index, id: "anos_" + index,
+                        onClick: () => this.callSubObjetivos(item.dt_ano_recursos_osc),
+                        className: 'btn btn-light ' },
                     item.dt_ano_recursos_osc
-                ));
-            }
+                );
+            }.bind(this));
         }
 
-        //if(!empty(this.state.anosRecursos.recursos)) {
-        /*let anosRecursos = this.state.anosRecursos.recursos.map(function (item) {
-            return (
-                <div key={"anos_" + item.id} id={item.id} className="btn-group " role="group"
-                     aria-label="Basic example">
-                    <button onClick={this.subCategory} type="button"
-                            className="btn btn-light">{item.dt_ano_recursos_osc}</button>
-                </div>
-            )
-        }.bind(this));*/
-        //}
+        /*let anosRecursos = [];
+         if(this.state.anosRecursos){
+           for (const item of this.state.anosRecursos) {
+               anosRecursos.push(
+                        <button
+                            key={"anos_" + item.dt_ano_recursos_osc} id={item.dt_ano_recursos_osc}
+                            onClick={this.subCategory} type="button"
+                            onChange={() => this.checkMetas()}
+                            className="btn btn-light ">{item.dt_ano_recursos_osc}</button>/!*btn-primary*!/
+                )
+            }
+        }*/
 
         return React.createElement(
             'div',
@@ -209,45 +259,6 @@ class Recursos extends React.Component {
                                 anosRecursos
                             ),
                             React.createElement('br', null),
-                            React.createElement(
-                                'div',
-                                { className: 'custom-control custom-checkbox', key: '', id: '' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: '', required: true }),
-                                React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: '' },
-                                    'N\xE3o possui recursos para este ano.'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'invalid-feedback' },
-                                    'N\xE3o possui recursos para este ano.'
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'box-itens-g' },
-                                React.createElement(
-                                    'h2',
-                                    null,
-                                    'Recursos pro\u0301prios'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'custom-control custom-checkbox', key: '', id: '' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: '', required: true }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'custom-control-label', htmlFor: '' },
-                                        'N\xE3o possui recursos pro\u0301prios para este ano.'
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'invalid-feedback' },
-                                        'N\xE3o possui recursos pro\u0301prios para este ano.'
-                                    )
-                                )
-                            ),
                             React.createElement(
                                 'div',
                                 { className: 'row' },

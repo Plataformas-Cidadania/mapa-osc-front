@@ -32,7 +32,6 @@ class Recursos extends React.Component{
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
-        this.subCategory = this.subCategory.bind(this);
     }
 
     componentDidMount(){
@@ -123,21 +122,49 @@ class Recursos extends React.Component{
 
     }
 
-    subCategory() {
-        console.log('aaa');
-        /*$.ajax({
+    callSubObjetivos(id){
+
+        this.setState({button:false});
+        $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'areas_atuacao',
             cache: false,
+            url: getBaseUrl+'osc/no_project/789809',
             success: function (data) {
-                console.log("111");
-                this.setState({ subAtuacoes: data });
+
+                let anosRecursos = this.state.anosRecursos;
+
+                console.log(data.recursos);
+
+                data.recursos.find(function(item){
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                anosRecursos.find(function(item){
+
+                    if(item.metas){
+                        item.metas.find(function(itemMeta){
+                            itemMeta.display = false;
+                        });
+
+                        if(item.cd_objetivo_projeto === id){
+                            item.metas.find(function(itemMeta){
+                                itemMeta.display = true;
+                            });
+                        }
+                    }
+
+                    if(item.cd_objetivo_projeto === id && !item.metas){
+                        item.metas = data;
+                    }
+                });
+
+                this.setState({loading: false, anosRecursos: anosRecursos, id_area:id, titleMeta:true})
             }.bind(this),
             error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                console.error(status, err.toString());
             }.bind(this)
-        });*/
+        });
     }
 
 
@@ -145,7 +172,47 @@ class Recursos extends React.Component{
 
 
         console.log(this.state.anosRecursos);
-        let anosRecursos = [];
+
+
+        let anosRecursos = null;
+        let metas = null;
+        if(this.state.anosRecursos){
+            anosRecursos = this.state.anosRecursos.map(function (item, index) {
+
+                let checkedMetas = false;
+
+
+                //console.log(checkedMetas);
+
+                /*if(item.metas){
+                    metas = item.metas.map(function (itemMeta) {
+                        if(itemMeta.checked){
+                            checkedMetas = true;
+                        }
+                        return(
+                            <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_recurso_projeto, itemMeta.cd_meta_projeto)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
+                                </div>
+                                <hr />
+                            </div>
+                        );
+                    }.bind(this));
+                }*/
+
+                return (
+                <div key={"anos_" + index} id={"anos_" + index}
+                    onClick={() => this.callSubObjetivos(item.dt_ano_recursos_osc)}
+                    className="btn btn-light ">{item.dt_ano_recursos_osc}</div>
+                );
+            }.bind(this));
+        }
+
+
+
+
+        /*let anosRecursos = [];
 
         if(this.state.anosRecursos){
            for (const item of this.state.anosRecursos) {
@@ -153,22 +220,11 @@ class Recursos extends React.Component{
                         <button
                             key={"anos_" + item.dt_ano_recursos_osc} id={item.dt_ano_recursos_osc}
                             onClick={this.subCategory} type="button"
-                            className="btn btn-light">{item.dt_ano_recursos_osc}</button>
+                            onChange={() => this.checkMetas()}
+                            className="btn btn-light ">{item.dt_ano_recursos_osc}</button>/!*btn-primary*!/
                 )
             }
-        }
-
-        //if(!empty(this.state.anosRecursos.recursos)) {
-            /*let anosRecursos = this.state.anosRecursos.recursos.map(function (item) {
-                return (
-                    <div key={"anos_" + item.id} id={item.id} className="btn-group " role="group"
-                         aria-label="Basic example">
-                        <button onClick={this.subCategory} type="button"
-                                className="btn btn-light">{item.dt_ano_recursos_osc}</button>
-                    </div>
-                )
-            }.bind(this));*/
-        //}
+        }*/
 
         return (
             <div>
@@ -183,37 +239,18 @@ class Recursos extends React.Component{
                                         <hr/><br/>
                                     </div>
 
-                                    {/*<div className="row">
-                                        <div className="form-group col-md-4">
-                                            <label htmlFor="inputEstado">Situação do Imóvel</label>
-                                            <select id="inputEstado" className="form-control">
-                                                <option selected>Escolher...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                    </div>*/}
+
 
 
 
                                     <div style={{fontSize: "13px"}}>Anos: </div>
                                     <div className="btn-group" role="group" aria-label="Anos">
                                         {anosRecursos}
-                                        {/*<button type="button" className="btn btn-primary">2020</button>
-                                        <button type="button" className="btn btn-outline-secondary">2019</button>
-                                        <button type="button" className="btn btn-outline-secondary">2018</button>
-                                        <button type="button" className="btn btn-outline-secondary">2017</button>
-                                        <button type="button" className="btn btn-outline-secondary">2016</button>
-                                        <button type="button" className="btn btn-outline-secondary">2015</button>
-                                        <button type="button" className="btn btn-outline-secondary">2014</button>
-                                        <button type="button" className="btn btn-outline-secondary">2013</button>
-                                        <button type="button" className="btn btn-outline-secondary">2012</button>
-                                        <button type="button" className="btn btn-outline-secondary">2011</button>
-                                        <button type="button" className="btn btn-outline-secondary">2010</button>*/}
                                     </div>
                                     <br/>
 
-                                    <div className="custom-control custom-checkbox" key="" id="">
-                                        <input type="checkbox" className="custom-control-input" id="" required/>
+                                    {/*<div className="custom-control custom-checkbox" key="11" id="11">
+                                        <input type="checkbox" className="custom-control-input" id="11" required/>
                                         <label className="custom-control-label" htmlFor="">Não possui recursos para este ano.</label>
                                         <div className="invalid-feedback">Não possui recursos para este ano.</div>
                                     </div>
@@ -223,12 +260,12 @@ class Recursos extends React.Component{
 
                                     <div className="box-itens-g">
                                         <h2>Recursos próprios</h2>
-                                        <div className="custom-control custom-checkbox" key="" id="">
-                                            <input type="checkbox" className="custom-control-input" id="" required/>
+                                        <div className="custom-control custom-checkbox" key="22" id="22">
+                                            <input type="checkbox" className="custom-control-input" id="22" required/>
                                             <label className="custom-control-label" htmlFor="">Não possui recursos próprios para este ano.</label>
                                             <div className="invalid-feedback">Não possui recursos próprios para este ano.</div>
                                         </div>
-                                    </div>
+                                    </div>*/}
 
                                     <div className="row">
 
