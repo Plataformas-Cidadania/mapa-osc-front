@@ -26,6 +26,30 @@ class Recursos extends React.Component{
             juridica: false,
             anosRecursos: [],
 
+            recursos_proprios: {
+                mensalidades_contribuicoes_associados: {
+                    nr_valor_recursos_osc: '',
+                },
+                premios_recebidos: {
+                    nr_valor_recursos_osc: '',
+                },
+                prestacao_servicos: {
+                    nr_valor_recursos_osc: '',
+                },
+                rendimentos_financeiros_reservas_contas_correntes_proprias: {
+                    nr_valor_recursos_osc: '',
+                },
+                rendimentos_fundos_patrimoniais: {
+                    nr_valor_recursos_osc: '',
+                },
+                venda_bens_direitos: {
+                    nr_valor_recursos_osc: '',
+                },
+                venda_produtos: {
+                    nr_valor_recursos_osc: '',
+                }
+            },
+
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -128,19 +152,30 @@ class Recursos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
+            //url: getBaseUrl2+'osc/fonte_recursos/789809',
             url: getBaseUrl+'osc/no_project/789809',
             success: function (data) {
 
+                data = data.recursos.recursos;//REMOVER NOVA ROTA
+
                 let anosRecursos = this.state.anosRecursos;
 
-                console.log(data.recursos);
+                console.log('data: ', data);
 
-                data.recursos.find(function(item){
-                    item.display = true;
-                    item.checked = false;
-                });
+                let recursos_proprios = null;
 
-                anosRecursos.find(function(item){
+                for(let i in data){
+                    if(data[i].dt_ano_recursos_osc == id){
+
+                        recursos_proprios = data[i].recursos_proprios;
+                        console.log(data[i].recursos_proprios);
+                        //item.display = true;
+                        //item.checked = false;
+                    }
+                }
+
+
+                /*anosRecursos.find(function(item){
 
                     if(item.metas){
                         item.metas.find(function(itemMeta){
@@ -157,9 +192,9 @@ class Recursos extends React.Component{
                     if(item.cd_objetivo_projeto === id && !item.metas){
                         item.metas = data;
                     }
-                });
+                });*/
 
-                this.setState({loading: false, anosRecursos: anosRecursos, id_area:id, titleMeta:true})
+                this.setState({loading: false, anosRecursos: anosRecursos, id_area:id, titleMeta:true, recursos_proprios: recursos_proprios})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -171,7 +206,7 @@ class Recursos extends React.Component{
     render(){
 
 
-        console.log(this.state.anosRecursos);
+        console.log("state: ", this.state);
 
 
         let anosRecursos = null;
@@ -248,6 +283,7 @@ class Recursos extends React.Component{
                                         {anosRecursos}
                                     </div>
                                     <br/>
+                                    <br/>
 
                                     {/*<div className="custom-control custom-checkbox" key="11" id="11">
                                         <input type="checkbox" className="custom-control-input" id="11" required/>
@@ -269,9 +305,14 @@ class Recursos extends React.Component{
 
                                     <div className="row">
 
+                                        <div className="col-md-12">
+                                            <h2>Recursos próprios</h2>
+                                            <hr/>
+                                        </div>
+
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Rendimentos de fundos patrimoniais</label>
                                                 <div className="label-box-info-off">
@@ -282,7 +323,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Rendimentos financeiros de reservas ou c/c próprias</label>
                                                 <div className="label-box-info-off">
@@ -293,7 +334,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Mensalidades ou contribuições de associados</label>
                                                 <div className="label-box-info-off">
@@ -304,7 +345,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Prêmios recebidos</label>
                                                 <div className="label-box-info-off">
@@ -315,7 +356,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Venda de produtos</label>
                                                 <div className="label-box-info-off">
@@ -326,7 +367,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Prestação de serviços</label>
                                                 <div className="label-box-info-off">
@@ -337,7 +378,7 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Venda de bens e direitos</label>
                                                 <div className="label-box-info-off">
