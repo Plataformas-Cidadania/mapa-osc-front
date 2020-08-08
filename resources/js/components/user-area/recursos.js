@@ -18,7 +18,6 @@ class Recursos extends React.Component{
                 tx_nome_situacao_imovel_recursos: true,
                 tx_nome_responsavel_legal: true,
 
-
                 cnpj: true,
             },
             showMsg: false,
