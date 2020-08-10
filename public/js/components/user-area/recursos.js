@@ -20,6 +20,7 @@ class Recursos extends React.Component {
 
                 cnpj: true
             },
+            ano: 0,
             showMsg: false,
             msg: '',
             juridica: false,
@@ -47,7 +48,8 @@ class Recursos extends React.Component {
                 venda_produtos: {
                     nr_valor_recursos_osc: ''
                 }
-            }
+            },
+            loadingAnos: true
 
         };
 
@@ -55,10 +57,12 @@ class Recursos extends React.Component {
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
+        this.getRecursosProprios = this.getRecursosProprios.bind(this);
     }
 
     componentDidMount() {
         this.getRecursos();
+        this.callSubObjetivos();
     }
 
     getRecursos() {
@@ -67,7 +71,7 @@ class Recursos extends React.Component {
             method: 'GET',
             //url: '/get-recursos',
             //url: getBaseUrl+'osc/no_project/789809',
-            url: getBaseUrl2 + 'osc/anos_fonte_recursos/789809',
+            url: getBaseUrl2 + 'osc/anos_fonte_recursos/598868',
             cache: false,
             success: function (data) {
                 console.log(data);
@@ -143,51 +147,31 @@ class Recursos extends React.Component {
         });
     }
 
-    callSubObjetivos(id) {
+    getRecursosProprios(ano) {
+        let recursos_proprios = null;
+        let recursos = this.state.recursos;
+        for (let i in recursos) {
+            if (recursos[i].dt_ano_recursos_osc == ano) {
+                recursos_proprios = recursos[i].recursos_proprios;
+                console.log(recursos[i].recursos_proprios);
+                break;
+            }
+        }
+        this.setState({ recursos_proprios: recursos_proprios, ano: ano });
+    }
 
-        this.setState({ button: false });
+    callSubObjetivos() {
+        this.setState({ button: false, loadingAnos: true });
         $.ajax({
             method: 'GET',
             cache: false,
             //url: getBaseUrl2+'osc/fonte_recursos/789809',
-            url: getBaseUrl + 'osc/no_project/789809',
+            url: getBaseUrl + 'osc/no_project/598868',
             success: function (data) {
-
-                data = data.recursos.recursos; //REMOVER NOVA ROTA
 
                 let anosRecursos = this.state.anosRecursos;
 
-                console.log('data: ', data);
-
-                let recursos_proprios = null;
-
-                for (let i in data) {
-                    if (data[i].dt_ano_recursos_osc == id) {
-
-                        recursos_proprios = data[i].recursos_proprios;
-                        console.log(data[i].recursos_proprios);
-                        //item.display = true;
-                        //item.checked = false;
-                    }
-                }
-
-                /*anosRecursos.find(function(item){
-                     if(item.metas){
-                        item.metas.find(function(itemMeta){
-                            itemMeta.display = false;
-                        });
-                         if(item.cd_objetivo_projeto === id){
-                            item.metas.find(function(itemMeta){
-                                itemMeta.display = true;
-                            });
-                        }
-                    }
-                     if(item.cd_objetivo_projeto === id && !item.metas){
-                        item.metas = data;
-                    }
-                });*/
-
-                this.setState({ loading: false, anosRecursos: anosRecursos, id_area: id, titleMeta: true, recursos_proprios: recursos_proprios });
+                this.setState({ loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta: true, recursos: data.recursos.recursos });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -197,56 +181,18 @@ class Recursos extends React.Component {
 
     render() {
 
-        console.log("state: ", this.state);
-
         let anosRecursos = null;
-        let metas = null;
         if (this.state.anosRecursos) {
             anosRecursos = this.state.anosRecursos.map(function (item, index) {
-
-                let checkedMetas = false;
-
-                //console.log(checkedMetas);
-
-                /*if(item.metas){
-                    metas = item.metas.map(function (itemMeta) {
-                        if(itemMeta.checked){
-                            checkedMetas = true;
-                        }
-                        return(
-                            <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
-                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_recurso_projeto, itemMeta.cd_meta_projeto)}>
-                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required/>
-                                    <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
-                                </div>
-                                <hr />
-                            </div>
-                        );
-                    }.bind(this));
-                }*/
-
                 return React.createElement(
                     'div',
                     { key: "anos_" + index, id: "anos_" + index,
-                        onClick: () => this.callSubObjetivos(item.dt_ano_recursos_osc),
+                        onClick: () => this.getRecursosProprios(item.dt_ano_recursos_osc),
                         className: 'btn btn-light ' },
                     item.dt_ano_recursos_osc
                 );
             }.bind(this));
         }
-
-        /*let anosRecursos = [];
-         if(this.state.anosRecursos){
-           for (const item of this.state.anosRecursos) {
-               anosRecursos.push(
-                        <button
-                            key={"anos_" + item.dt_ano_recursos_osc} id={item.dt_ano_recursos_osc}
-                            onClick={this.subCategory} type="button"
-                            onChange={() => this.checkMetas()}
-                            className="btn btn-light ">{item.dt_ano_recursos_osc}</button>/!*btn-primary*!/
-                )
-            }
-        }*/
 
         return React.createElement(
             'div',
@@ -287,7 +233,16 @@ class Recursos extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'btn-group', role: 'group', 'aria-label': 'Anos' },
-                                anosRecursos
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.loadingAnos ? '' : 'none' } },
+                                    React.createElement('i', { className: 'fas fa-spinner fa-spin' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.loadingAnos ? 'none' : '' } },
+                                    anosRecursos
+                                )
                             ),
                             React.createElement('br', null),
                             React.createElement('br', null),
@@ -310,7 +265,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -334,7 +290,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -358,7 +315,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -382,7 +340,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.premios_recebidos ? this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -406,7 +365,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.venda_produtos ? this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -430,7 +390,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.prestacao_servicos ? this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -454,7 +415,8 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc,
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.venda_bens_direitos ? this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
