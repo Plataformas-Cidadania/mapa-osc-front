@@ -268,7 +268,7 @@ class Participacoes extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div>
+                    <div className="mn-accordion-icon"><i className="fa fa-users" aria-hidden="true"/></div>
                     <h3>Espaços de Participação Social</h3>
                     <hr/><br/>
                 </div>

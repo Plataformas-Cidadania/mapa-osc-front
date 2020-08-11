@@ -167,7 +167,7 @@ class Projetos extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-projeto" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
+                    <div className="mn-accordion-icon"><i className="fa fa-project-diagram" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
                     <p>Você tem {this.state.projetos.length} títulos ou projetos cadastrados</p>
                     <hr/>
                 </div>

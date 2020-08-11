@@ -117,10 +117,10 @@ class Atuacoes extends React.Component{
 
         <div className="row">
             <div className="col-md-12">
-                <div className="title-style">
-                    <h2>Áreas e Subáreas de atuação da OSC</h2>
-                    <div className="line line-fix"/>
-                    <hr/>
+                <div className="title-user-area">
+                    <div className="mn-accordion-icon"><i className="fa fa-share-alt" aria-hidden="true"/></div>
+                    <h3>Áreas e Subáreas de atuação da OSC</h3>
+                    <hr/><br/>
                 </div>
                 <div className="text-center">Atividade econômica (CNAE)</div>
                 <br/>

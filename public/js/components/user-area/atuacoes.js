@@ -133,14 +133,19 @@ class Atuacoes extends React.Component {
                 { className: 'col-md-12' },
                 React.createElement(
                     'div',
-                    { className: 'title-style' },
+                    { className: 'title-user-area' },
                     React.createElement(
-                        'h2',
+                        'div',
+                        { className: 'mn-accordion-icon' },
+                        React.createElement('i', { className: 'fa fa-share-alt', 'aria-hidden': 'true' })
+                    ),
+                    React.createElement(
+                        'h3',
                         null,
                         '\xC1reas e Sub\xE1reas de atua\xE7\xE3o da OSC'
                     ),
-                    React.createElement('div', { className: 'line line-fix' }),
-                    React.createElement('hr', null)
+                    React.createElement('hr', null),
+                    React.createElement('br', null)
                 ),
                 React.createElement(
                     'div',

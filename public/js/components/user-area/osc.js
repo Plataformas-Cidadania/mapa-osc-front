@@ -31,7 +31,8 @@ class Osc extends React.Component {
             objetivos: null,
             subobjetivos: null,
             titleMeta: null,
-            titleObjetivo: ""
+            titleObjetivo: "",
+            buttonObjrtivos: 0
 
         };
 
@@ -168,35 +169,25 @@ class Osc extends React.Component {
                 });
 
                 objetivos.find(function (item) {
-
                     if (item.metas) {
                         item.metas.find(function (itemMeta) {
                             itemMeta.display = false;
+                            console.log('display: ' + itemMeta.display);
                         });
 
                         if (item.cd_objetivo_projeto === id) {
                             item.metas.find(function (itemMeta) {
                                 itemMeta.display = true;
+                                console.log('display2: ' + itemMeta.display);
                             });
                         }
                     }
-
                     if (item.cd_objetivo_projeto === id && !item.metas) {
                         item.metas = data;
                     }
                 });
 
-                //console.log('objetivos: ', this.state.objetivos);
-
-                /*this.state.objetivos.find(function(item){
-                    if(item.cd_area_atuacao === id){
-                        item.checked = !item.checked;
-                    }
-                    item.subareas = data.filter(function(subitem){
-                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
-                    });
-                });*/
-                this.setState({ loading: false, objetivos: objetivos, id_area: id, titleMeta: true, titleObjetivo: titleObjetivo });
+                this.setState({ loading: false, objetivos: objetivos, id_area: id, buttonObjrtivos: id, titleMeta: true, titleObjetivo: titleObjetivo });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -221,8 +212,6 @@ class Osc extends React.Component {
 
     render() {
 
-        console.log(this.state.objetivos);
-
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
         }
@@ -236,7 +225,7 @@ class Osc extends React.Component {
 
                 let checkedMetas = false;
 
-                console.log(checkedMetas);
+                //console.log('objetivos: ', this.state.buttonObjrtivos, item.cd_objetivo_projeto);
 
                 if (item.metas) {
                     metas = item.metas.map(function (itemMeta) {
@@ -268,7 +257,7 @@ class Osc extends React.Component {
                     React.createElement(
                         'label',
                         { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
-                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: checkedMetas ? "" : "item-off", width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: checkedMetas ? "" : "item-off" + (this.state.buttonObjrtivos == item.cd_objetivo_projeto) ? "item-off" : "item-off item-focus", width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
                     )
                 );
             }.bind(this));
@@ -308,14 +297,19 @@ class Osc extends React.Component {
                                 { className: 'col-md-12' },
                                 React.createElement(
                                     'div',
-                                    { className: 'title-style' },
+                                    { className: 'title-user-area' },
                                     React.createElement(
-                                        'h2',
+                                        'div',
+                                        { className: 'mn-accordion-icon' },
+                                        React.createElement('i', { className: 'fa fa-file-alt', 'aria-hidden': 'true' })
+                                    ),
+                                    React.createElement(
+                                        'h3',
                                         null,
                                         'Dados Gerais'
                                     ),
-                                    React.createElement('div', { className: 'line line-fix' }),
-                                    React.createElement('hr', null)
+                                    React.createElement('hr', null),
+                                    React.createElement('br', null)
                                 )
                             )
                         ),

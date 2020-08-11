@@ -298,7 +298,7 @@ class Participacoes extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'mn-accordion-icon' },
-                    React.createElement('i', { className: 'fas fa-briefcase', 'aria-hidden': 'true' })
+                    React.createElement('i', { className: 'fa fa-users', 'aria-hidden': 'true' })
                 ),
                 React.createElement(
                     'h3',

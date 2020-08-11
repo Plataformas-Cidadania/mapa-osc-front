@@ -61,7 +61,10 @@ class PostController extends Controller
                 count(id) as qtd
             ")
         )
-            ->where('titulo', 'ilike', $request->search.'%')
+            ->where([
+                ['titulo', 'ilike', $request->search.'%'],
+                ['conteudo', 1]
+            ])
             ->groupBy('id', 'titulo')
             ->get();
 

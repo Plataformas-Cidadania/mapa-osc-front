@@ -32,6 +32,7 @@ class Osc extends React.Component{
             subobjetivos: null,
             titleMeta: null,
             titleObjetivo: "",
+            buttonObjrtivos: 0,
 
         };
 
@@ -161,43 +162,39 @@ class Osc extends React.Component{
 
                 let objetivos = this.state.objetivos;
 
+
                 let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
 
                 data.find(function(item){
                     item.display = true;
                     item.checked = false;
+
                 });
 
-                objetivos.find(function(item){
 
+
+                objetivos.find(function(item){
                     if(item.metas){
                         item.metas.find(function(itemMeta){
                             itemMeta.display = false;
+                            console.log('display: '+itemMeta.display);
                         });
 
                         if(item.cd_objetivo_projeto === id){
                             item.metas.find(function(itemMeta){
                                 itemMeta.display = true;
+                                console.log('display2: '+itemMeta.display);
                             });
                         }
                     }
-
                     if(item.cd_objetivo_projeto === id && !item.metas){
                         item.metas = data;
                     }
+
+
                 });
 
-                //console.log('objetivos: ', this.state.objetivos);
-
-                /*this.state.objetivos.find(function(item){
-                    if(item.cd_area_atuacao === id){
-                        item.checked = !item.checked;
-                    }
-                    item.subareas = data.filter(function(subitem){
-                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
-                    });
-                });*/
-                this.setState({loading: false, objetivos: objetivos, id_area:id, titleMeta:true, titleObjetivo:titleObjetivo})
+                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjrtivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -222,7 +219,7 @@ class Osc extends React.Component{
 
     render(){
 
-        console.log(this.state.objetivos);
+
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -237,7 +234,7 @@ class Osc extends React.Component{
 
                 let checkedMetas = false;
 
-                console.log(checkedMetas);
+                //console.log('objetivos: ', this.state.buttonObjrtivos, item.cd_objetivo_projeto);
 
                 if(item.metas){
                     metas = item.metas.map(function (itemMeta) {
@@ -262,7 +259,9 @@ class Osc extends React.Component{
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
                         {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
                             {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
-                            <img src={"img/ods/" + png + ".png"} alt="" className={checkedMetas ? "" : "item-off"} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                            <img src={"img/ods/" + png + ".png"} alt="" className={checkedMetas ? "" : "item-off" + (this.state.buttonObjrtivos==item.cd_objetivo_projeto) ? "item-off" : "item-off item-focus"} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                            {/*checkedMetas ? "" : "item-off" +*/}
+                            {/*(this.state.buttonObjrtivos==item.cd_objetivo_projeto+1) ? "item-off " : "item-off item-focus"*/}
                         </label>
                     </div>
                 );
@@ -292,10 +291,10 @@ class Osc extends React.Component{
 
                             <div className="row">
                                 <div className="col-md-12">
-                                    <div className="title-style">
-                                        <h2>Dados Gerais</h2>
-                                        <div className="line line-fix"/>
-                                        <hr/>
+                                    <div className="title-user-area">
+                                        <div className="mn-accordion-icon"><i className="fa fa-file-alt" aria-hidden="true"/></div>
+                                        <h3>Dados Gerais</h3>
+                                        <hr/><br/>
                                     </div>
                                 </div>
                             </div>

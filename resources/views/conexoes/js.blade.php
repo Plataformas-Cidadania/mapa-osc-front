@@ -13,7 +13,7 @@
         }
     });
 
-    <?php if($rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user" || $rota == "selo-user"){ ?>
+    <?php if($rota == "area-user" || $rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user" || $rota == "selo-user"){ ?>
         pageRoute = false;
     <?php }else{?>
         pageRoute = true;

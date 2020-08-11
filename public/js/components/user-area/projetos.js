@@ -193,7 +193,7 @@ class Projetos extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'mn-accordion-icon' },
-                    React.createElement('i', { className: 'fas fa-projeto', 'aria-hidden': 'true' })
+                    React.createElement('i', { className: 'fa fa-project-diagram', 'aria-hidden': 'true' })
                 ),
                 ' ',
                 React.createElement(

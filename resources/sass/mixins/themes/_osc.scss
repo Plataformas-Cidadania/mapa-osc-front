@@ -13,6 +13,10 @@
     transform: scale(1.1);
     opacity: 9;
 }
+.item-focus {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+}
 .item-off, .item-off:hover {
     -webkit-transition: .3s;
     transition: .3s;

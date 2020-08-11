@@ -13,14 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class IntegranteController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
         $this->integrante = new \App\Integrante;
         $this->campos = [
-            'imagem', 'titulo', 'url', 'arquivo', 'cmsuser_id',
+            'imagem', 'titulo', 'url', 'arquivo', 'conteudo', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/integrantes';
         $this->sizesImagem = [
@@ -81,7 +81,7 @@ class IntegranteController extends Controller
 
         $file = $request->file('file');
         $arquivo = $request->file('arquivo');
-	
+
 	Log::info($request);
 
         $successFile = true;
@@ -252,7 +252,7 @@ class IntegranteController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($integrante->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();
@@ -270,7 +270,7 @@ class IntegranteController extends Controller
 
     }
 
-    
+
 
 
 }

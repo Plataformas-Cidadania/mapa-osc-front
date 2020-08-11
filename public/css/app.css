@@ -12978,6 +12978,11 @@ label, input, .btn-number {
   opacity: 9;
 }
 
+.item-focus {
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
 .item-off,
 .item-off:hover {
   -webkit-transition: 0.3s;

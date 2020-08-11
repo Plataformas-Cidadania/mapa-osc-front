@@ -36,15 +36,7 @@ class ArticleController extends Controller{
             ->take(4)
             ->get();
 
-        $members = \App\Integrante::
-            select(
-                DB::Raw("
-                    id,
-                    titulo,
-                    count(id) as qtd
-                ")
-            )
-            //->where('article_id', $detail->id)
+        $members = \App\Integrante::where('conteudo', 1)
             ->groupBy('id', 'titulo')
             ->get();
 
