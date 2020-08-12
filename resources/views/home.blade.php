@@ -138,7 +138,8 @@
     <div id="home"></div>
 
 
-    <div class="space">&nbsp;</div>
+    {{--<div class="space">&nbsp;</div>--}}
+    <br><br>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

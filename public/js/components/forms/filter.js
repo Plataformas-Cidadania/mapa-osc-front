@@ -459,6 +459,10 @@ class Filter extends React.Component {
                 let subThema = null;
                 if (item.cd_indice) {
 
+                    for (const i of this.props.ipeaData) {
+                        console.log('i', i.cd_indice);
+                    }
+
                     subThema = this.props.ipeaData.map(function (subitem) {
                         return React.createElement(
                             'div',
@@ -550,7 +554,7 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
-        console.log(this.state);
+        //console.log(this.state);
 
         let firstRegioes = this.state.listRegiao.map(function (item, index) {
             let sizeSearch = this.state.search;
@@ -685,7 +689,41 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    'a'
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Situa\xE7\xE3o do Im\xF3vel'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '1' },
+                                                'Pr\xF3prio'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '2' },
+                                                'Alugado'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '3' },
+                                                'Cedido'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '4' },
+                                                'Comodato'
+                                            )
+                                        ),
+                                        React.createElement('label', { htmlFor: 'name' }),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
@@ -1114,6 +1152,41 @@ class Filter extends React.Component {
                                             { htmlFor: 'cd_conselhoSelectBoxItText' },
                                             'Titularidade'
                                         ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_conselhoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Situa\xE7\xE3o do Im\xF3vel'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '1' },
+                                                'Pr\xF3prio'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '2' },
+                                                'Alugado'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '3' },
+                                                'Cedido'
+                                            ),
+                                            React.createElement(
+                                                'option',
+                                                { value: '4' },
+                                                'Comodato'
+                                            )
+                                        ),
+                                        React.createElement('label', { htmlFor: 'name' }),
                                         React.createElement('div', { className: 'label-box-info-off' })
                                     )
                                 ),
@@ -1732,84 +1805,8 @@ class Filter extends React.Component {
                     )
                 )
             ),
-            React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'label',
-                    { htmlFor: 'name' },
-                    'Como podemos ajudar?'
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'label-float' },
-                React.createElement('input', { className: "form-control form-g" + (this.state.requireds.email ? '' : 'invalid-field'), type: 'text', name: 'email', onChange: this.handleInputChange, value: this.state.form.email, placeholder: ' ', required: this.state.requireds.email ? '' : 'required' }),
-                React.createElement(
-                    'label',
-                    { htmlFor: 'email' },
-                    'E-mail'
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'label-box-info' },
-                    React.createElement(
-                        'p',
-                        { style: { display: this.state.requireds.email ? 'none' : 'block' } },
-                        React.createElement('i', { className: 'fas fa-exclamation-circle' }),
-                        ' Escolha um endere\xE7o de e-mail valido'
-                    )
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g", type: 'text', name: 'cel', onChange: this.handleInputChange, value: this.state.form.cel, placeholder: ' ', maxLength: '15', required: this.state.requireds.cel ? '' : 'required' }),
-                        React.createElement(
-                            'label',
-                            { htmlFor: 'cel' },
-                            'Celular'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info' },
-                            React.createElement(
-                                'p',
-                                { style: { display: this.state.requireds.name ? 'none' : 'block' } },
-                                React.createElement('i', { className: 'fas fa-exclamation-circle' }),
-                                ' Digite um n\xFAmero de celular'
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'label-float' },
-                        React.createElement('input', { className: "form-control", type: 'text', name: 'whatsapp', onChange: this.handleInputChange, value: this.state.form.whatsapp, placeholder: ' ', maxLength: '15' }),
-                        React.createElement(
-                            'label',
-                            { htmlFor: 'name' },
-                            'Whatsapp',
-                            React.createElement(
-                                'span',
-                                { className: "label-float-optional" },
-                                ' - Opicional'
-                            )
-                        ),
-                        React.createElement('div', { className: 'label-box-info' })
-                    )
-                )
-            ),
             React.createElement('div', { className: 'clear-float' }),
+            React.createElement('br', null),
             React.createElement(
                 'button',
                 { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.filter },

@@ -43,15 +43,22 @@ class HomeController extends Controller
 
         //return $area_atuacao;
 
-        return view('home', [
-            'webdoors' => $webdoors,
-            'teasers' => $teasers,
-            'osc_recentes' => $osc_recentes,
-            'areas_atuacao' => $area_atuacao,
-            'text' => $text,
-            'midias' => $midias,
-            'midiaSelect' => $midiaSelect,
-        ]);
+        if(!empty($text)){
+            return view('home', [
+                'webdoors' => $webdoors,
+                'teasers' => $teasers,
+                'osc_recentes' => $osc_recentes,
+                'areas_atuacao' => $area_atuacao,
+                'text' => $text,
+                'midias' => $midias,
+                'midiaSelect' => $midiaSelect,
+            ]);
+        }
+
+        return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
+                    Ops! Cadastre no CMS em texts o slug
+                    <strong>osc-proximas</strong> e <strong>contato-expediente</strong>
+                </div>";
     }
 
     public function getChartHome(){

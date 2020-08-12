@@ -478,6 +478,10 @@ class Filter extends React.Component{
                 let subThema = null;
                 if(item.cd_indice){
 
+                    for(const i of this.props.ipeaData){
+                        console.log('i', i.cd_indice);
+                    }
+
                     subThema = this.props.ipeaData.map(function(subitem){
                         return(
                         <div key={"subarea_"+subitem.cd_indice}>
@@ -487,14 +491,13 @@ class Filter extends React.Component{
                             </div>
                             <br />
                         </div>
-
                         );
                     });
                 }
                 if(!map.has(item.tx_tema)){
                     map.set(item.tx_tema, true);
                     ipeaData.push(
-                        <div key={"ipeaData_"+item.cd_indice} >
+                        <div key={"ipeaData_"+item.cd_indice}>
                             <strong>{item.tx_tema}</strong>
                             <hr />
                             {subThema}
@@ -545,7 +548,7 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
-        console.log(this.state);
+        //console.log(this.state);
 
         let firstRegioes = this.state.listRegiao.map(function (item, index){
             let sizeSearch = this.state.search;
@@ -625,13 +628,18 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-3">
-                                        a{/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={'0'} onChange={this.handleInputChange}>
-                                            <option value="0" selected>Selecione</option>
-                                            <option value="1">Próprio</option>
-                                            <option value="2">Alugado</option>
-                                            <option value="3">Cedido</option>
-                                            <option value="4">Comodato</option>
-                                        </select>*/}
+
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                <option value="1">Próprio</option>
+                                                <option value="2">Alugado</option>
+                                                <option value="3">Cedido</option>
+                                                <option value="4">Comodato</option>
+                                            </select>
+                                            <label htmlFor="name"/>
+                                            <div className="label-box-info-off"/>
+                                        </div>
                                     </div>
 
                                     <div className="col-md-3">
@@ -893,6 +901,18 @@ class Filter extends React.Component{
                                         <div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
                                             <label htmlFor="cd_conselhoSelectBoxItText">Titularidade</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_conselhoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                <option value="1">Próprio</option>
+                                                <option value="2">Alugado</option>
+                                                <option value="3">Cedido</option>
+                                                <option value="4">Comodato</option>
+                                            </select>
+                                            <label htmlFor="name"/>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
@@ -1342,9 +1362,9 @@ class Filter extends React.Component{
                 </div>
 
 
-                <div >
+                {/* <div >
                     <label htmlFor="name">Como podemos ajudar?</label>
-                    {/*<select className="form-control" id="assunto">
+                    <select className="form-control" id="assunto">
                         <option value="">Selecione o assunto</option>
                         <option value="1">Cadastro Município-Estado</option>
                         <option value="2">Cadastro Representante</option>
@@ -1354,12 +1374,12 @@ class Filter extends React.Component{
                         <option value="6">Relatar Problemas</option>
                         <option value="7">Sugestão</option>
                         <option value="8">Outros</option>
-                    </select><br/>*/}
-                </div>
+                    </select><br/>
+                </div>*/}
 
 
 
-                <div className="label-float">
+                {/*<div className="label-float">
                     <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
                     <label htmlFor="email">E-mail</label>
                     <div className="label-box-info">
@@ -1385,11 +1405,12 @@ class Filter extends React.Component{
                             <div className="label-box-info"></div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
 
 
 
-                <div className="clear-float"></div>
+                <div className="clear-float"/>
+                <br/>
                 {/*<p><i>* campos obrigatórios</i></p>*/}
 
 
