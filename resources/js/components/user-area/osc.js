@@ -32,7 +32,7 @@ class Osc extends React.Component{
             subobjetivos: null,
             titleMeta: null,
             titleObjetivo: "",
-            buttonObjrtivos: 0,
+            buttonObjetivos: 0,
 
         };
 
@@ -56,7 +56,8 @@ class Osc extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/cabecalho/455128',
+            //url: 'http://mapa-osc-api.local/api/osc/cabecalho/455128',
+            url: 'http://172.22.0.3/api/osc/cabecalho/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, txt: data, button:true})
@@ -71,7 +72,8 @@ class Osc extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+            //url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+            url: 'http://172.22.0.4/api/osc/dados_gerais/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -117,7 +119,8 @@ class Osc extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
-                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+                //url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+                url: 'http://172.22.0.4/api/osc/dados_gerais/455128',
                 data: this.state.form,
                 cache: false,
                 success: function(data) {
@@ -172,6 +175,7 @@ class Osc extends React.Component{
                 });
 
 
+                console.log(objetivos);
 
                 objetivos.find(function(item){
                     if(item.metas){
@@ -189,12 +193,13 @@ class Osc extends React.Component{
                     }
                     if(item.cd_objetivo_projeto === id && !item.metas){
                         item.metas = data;
+                        console.log('display3: ' + item.display)
                     }
 
 
                 });
 
-                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjrtivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
+                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -226,7 +231,7 @@ class Osc extends React.Component{
         }
 
         let objetivos = null;
-        let metas = null;
+        let metas = [];
         if(this.state.objetivos){
             objetivos = this.state.objetivos.map(function (item) {
 
@@ -234,13 +239,14 @@ class Osc extends React.Component{
 
                 let checkedMetas = false;
 
-                //console.log('objetivos: ', this.state.buttonObjrtivos, item.cd_objetivo_projeto);
+                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if(item.metas){
-                    metas = item.metas.map(function (itemMeta) {
+                    metas.push(item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
                             checkedMetas = true;
                         }
+                        console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
                                 <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto)}>
@@ -250,7 +256,7 @@ class Osc extends React.Component{
                                 <hr />
                             </div>
                         );
-                    }.bind(this));
+                    }.bind(this)));
                 }
 
                 return (
@@ -259,9 +265,9 @@ class Osc extends React.Component{
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
                         {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
                             {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
-                            <img src={"img/ods/" + png + ".png"} alt="" className={checkedMetas ? "" : "item-off" + (this.state.buttonObjrtivos==item.cd_objetivo_projeto) ? "item-off" : "item-off item-focus"} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                            <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
                             {/*checkedMetas ? "" : "item-off" +*/}
-                            {/*(this.state.buttonObjrtivos==item.cd_objetivo_projeto+1) ? "item-off " : "item-off item-focus"*/}
+                            {/*(this.state.buttonObjetivos==item.cd_objetivo_projeto+1) ? "item-off " : "item-off item-focus"*/}
                         </label>
                     </div>
                 );

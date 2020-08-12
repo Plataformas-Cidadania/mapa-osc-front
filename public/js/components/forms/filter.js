@@ -451,52 +451,91 @@ class Filter extends React.Component {
             });
         }
 
-        const ipeaData = [];
+        let indicadores = [];
         if (this.props.ipeaData) {
-            const map = new Map();
+
+            this.props.ipeaData.find(function (item) {
+
+                let existeTema = false;
+
+                for (let i in indicadores) {
+                    if (item.tx_tema === indicadores[i].tema) {
+                        indicadores[i].indices.push(item);
+                        existeTema = true;
+                        break;
+                    }
+                }
+
+                if (!existeTema) {
+                    let tema = { tema: item.tx_tema, indices: [item] };
+                    indicadores.push(tema);
+                }
+            });
+
+            indicadores = indicadores.map(function (item) {
+                let indices = item.indices.map(function (subitem) {
+                    return React.createElement(
+                        'div',
+                        { key: "subarea_" + subitem.cd_indice },
+                        React.createElement(
+                            'div',
+                            { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_indice) },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_indice, required: true }),
+                            React.createElement(
+                                'label',
+                                { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_indice },
+                                subitem.tx_nome_indice
+                            )
+                        ),
+                        React.createElement('br', null)
+                    );
+                });
+
+                return React.createElement(
+                    'div',
+                    { key: "ipeaData_" + item.cd_indice },
+                    React.createElement(
+                        'strong',
+                        null,
+                        item.tema
+                    ),
+                    React.createElement('hr', null),
+                    indices,
+                    React.createElement('br', null)
+                );
+            });
+
+            /*const map = new Map();
             for (const item of this.props.ipeaData) {
-
-                let subThema = null;
-                if (item.cd_indice) {
-
-                    for (const i of this.props.ipeaData) {
+                 let subThema = null;
+                if(item.cd_indice){
+                     for(const i of this.props.ipeaData){
                         console.log('i', i.cd_indice);
                     }
-
-                    subThema = this.props.ipeaData.map(function (subitem) {
-                        return React.createElement(
-                            'div',
-                            { key: "subarea_" + subitem.cd_indice },
-                            React.createElement(
-                                'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_indice) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_indice, required: true }),
-                                React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_indice },
-                                    subitem.tx_nome_indice
-                                )
-                            ),
-                            React.createElement('br', null)
+                     subThema = this.props.ipeaData.map(function(subitem){
+                        return(
+                        <div key={"subarea_"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                            </div>
+                            <br />
+                        </div>
                         );
                     });
                 }
-                if (!map.has(item.tx_tema)) {
+                if(!map.has(item.tx_tema)){
                     map.set(item.tx_tema, true);
-                    ipeaData.push(React.createElement(
-                        'div',
-                        { key: "ipeaData_" + item.cd_indice },
-                        React.createElement(
-                            'strong',
-                            null,
-                            item.tx_tema
-                        ),
-                        React.createElement('hr', null),
-                        subThema,
-                        React.createElement('br', null)
-                    ));
+                    ipeaData.push(
+                        <div key={"ipeaData_"+item.cd_indice}>
+                            <strong>{item.tx_tema}</strong>
+                            <hr />
+                            {subThema}
+                            <br/>
+                        </div>
+                    );
                 }
-            }
+            }*/
         }
 
         let areaAtuacao = null;
@@ -1799,7 +1838,7 @@ class Filter extends React.Component {
                             React.createElement(
                                 'div',
                                 null,
-                                ipeaData
+                                indicadores
                             )
                         )
                     )

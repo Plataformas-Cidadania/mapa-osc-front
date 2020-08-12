@@ -470,9 +470,55 @@ class Filter extends React.Component{
         }
 
 
-        const ipeaData = [];
+        let indicadores = [];
         if(this.props.ipeaData){
-            const map = new Map();
+
+
+            this.props.ipeaData.find(function(item){
+
+                let existeTema = false;
+
+                for(let i in indicadores){
+                    if(item.tx_tema === indicadores[i].tema){
+                        indicadores[i].indices.push(item);
+                        existeTema = true;
+                        break;
+                    }
+                }
+
+                if(!existeTema){
+                    let tema = {tema: item.tx_tema, indices: [item]};
+                    indicadores.push(tema);
+                }
+            });
+
+            indicadores = indicadores.map(function(item){
+                let indices = item.indices.map(function(subitem){
+                    return(
+                        <div key={"subarea_"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                            </div>
+                            <br />
+                        </div>
+                    );
+                });
+
+                return (
+                    <div key={"ipeaData_"+item.cd_indice}>
+                        <strong>{item.tema}</strong>
+                        <hr />
+                        {indices}
+                        <br/>
+                    </div>
+                );
+            });
+
+
+
+
+            /*const map = new Map();
             for (const item of this.props.ipeaData) {
 
                 let subThema = null;
@@ -505,7 +551,7 @@ class Filter extends React.Component{
                         </div>
                     );
                 }
-            }
+            }*/
         }
 
 
@@ -1354,7 +1400,7 @@ class Filter extends React.Component{
                              data-parent="#accordionExample">
                             <div className="card-body">
                                 <div>
-                                    {ipeaData}
+                                    {indicadores}
                                 </div>
                             </div>
                         </div>
