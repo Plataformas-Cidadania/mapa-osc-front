@@ -55,7 +55,7 @@ class NextOsc extends React.Component {
 
         /*$(".divOff").hide(1000);
         $("#divChart"+index).first().slideDown("slow");
-         $(".menu-left-active").attr('class', "list-group-item-theme");
+          $(".menu-left-active").attr('class', "list-group-item-theme");
         $("#divMenuChart"+index).attr('class', "menu-left-active");*/
     }
 

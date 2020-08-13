@@ -56,8 +56,7 @@ class Osc extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            //url: 'http://mapa-osc-api.local/api/osc/cabecalho/455128',
-            url: 'http://172.22.0.3/api/osc/cabecalho/455128',
+            url: getBaseUrl2 + 'osc/cabecalho/455128',
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, txt: data, button: true });
@@ -72,8 +71,7 @@ class Osc extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            //url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
-            url: 'http://172.22.0.4/api/osc/dados_gerais/455128',
+            url: getBaseUrl2 + 'osc/dados_gerais/455128',
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, form: data, button: true });
@@ -118,8 +116,7 @@ class Osc extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'PUT',
-                //url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
-                url: 'http://172.22.0.4/api/osc/dados_gerais/455128',
+                url: getBaseUrl2 + 'osc/dados_gerais/455128',
                 data: this.state.form,
                 cache: false,
                 success: function (data) {

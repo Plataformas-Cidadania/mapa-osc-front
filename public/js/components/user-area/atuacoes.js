@@ -11,7 +11,8 @@ class Atuacoes extends React.Component {
             editId: 0,
             areaAtuacao: null,
             subareaAtuacao: null,
-            titleSub: null
+            titleSub: null,
+            imputOutros: false
         };
 
         this.listArea = this.listArea.bind(this);
@@ -46,20 +47,22 @@ class Atuacoes extends React.Component {
             cache: false,
             url: getBaseUrl + 'menu/osc/subarea_atuacao',
             success: function (data) {
-
                 let areaAtuacao = this.state.areaAtuacao;
-
-                console.log('areaAtuacao: ', this.state.areaAtuacao);
+                let imputOutros = this.state.imputOutros;
 
                 this.state.areaAtuacao.find(function (item) {
+
                     if (item.cd_area_atuacao === id) {
                         item.checked = !item.checked;
+                        if (id === 10) {
+                            imputOutros = !imputOutros;
+                        }
                     }
                     item.subareas = data.filter(function (subitem) {
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-                this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id, titleSub: true });
+                this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id, titleSub: true, imputOutros: imputOutros });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -114,12 +117,20 @@ class Atuacoes extends React.Component {
 
                 return React.createElement(
                     'div',
-                    { className: 'custom-control custom-checkbox col-md-6', key: "area_" + item.cd_area_atuacao, onChange: () => this.callSubareaAtuacao(item.cd_area_atuacao) },
-                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_area_atuacao, required: true }),
+                    { className: 'col-md-6', key: "area_" + item.cd_area_atuacao, onChange: () => this.callSubareaAtuacao(item.cd_area_atuacao) },
                     React.createElement(
-                        'label',
-                        { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
-                        item.tx_nome_area_atuacao
+                        'div',
+                        { className: 'bg-lgt items-checkbox' },
+                        React.createElement(
+                            'div',
+                            { className: 'custom-control custom-checkbox' },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_area_atuacao, required: true }),
+                            React.createElement(
+                                'label',
+                                { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
+                                item.tx_nome_area_atuacao
+                            )
+                        )
                     )
                 );
             }.bind(this));
@@ -171,11 +182,16 @@ class Atuacoes extends React.Component {
                         React.createElement('hr', null),
                         React.createElement(
                             'div',
-                            null,
+                            { className: 'row' },
                             areaAtuacao,
-                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ' }),
                             React.createElement('br', null),
-                            React.createElement('br', null)
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'col-md-12', style: { display: this.state.imputOutros ? '' : 'none' } },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ' }),
+                                React.createElement('br', null)
+                            )
                         ),
                         React.createElement(
                             'div',

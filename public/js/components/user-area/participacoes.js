@@ -323,13 +323,17 @@ class Participacoes extends React.Component {
                             'Conselhos de Pol\xEDticas P\xFAblicas'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConselho', onClick: this.showHideConselho }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConselho' },
-                                'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkConselho' },
+                                    'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                )
                             )
                         ),
                         React.createElement('br', null),
@@ -504,13 +508,17 @@ class Participacoes extends React.Component {
                             'Confer\xEAncias de Pol\xEDticas P\xFAblicas'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConferencia', onClick: this.showHideConferencia }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConferencia' },
-                                'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkConferencia' },
+                                    'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                )
                             )
                         ),
                         React.createElement('br', null),
@@ -640,13 +648,17 @@ class Participacoes extends React.Component {
                             'Outros espa\xE7os de participa\xE7\xE3o social'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkOutro', onClick: this.showHideOutro }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkOutro' },
-                                'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkOutro', required: true, onClick: this.showHideOutro }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkOutro' },
+                                    'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                )
                             )
                         ),
                         React.createElement('br', null),

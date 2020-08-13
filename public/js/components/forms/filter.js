@@ -152,15 +152,15 @@ class Filter extends React.Component {
         this.setState({showCategories: false});
         this.setState({categoriesSelected: categoriesSelected}, function(){
             //this.props.filterCategories(this.state.categoriesSelected);
-         });
+          });
     }*/
 
 
     /*validate(){
-         let valid = true;
-         let requireds = this.state.requireds;
-         let form = this.state.form;
-         for(let index in requireds){
+          let valid = true;
+          let requireds = this.state.requireds;
+          let form = this.state.form;
+          for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -168,8 +168,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-          this.setState({requireds: requireds});
-         return valid;
+            this.setState({requireds: requireds});
+          return valid;
     }*/
 
     filter(e) {
@@ -507,12 +507,12 @@ class Filter extends React.Component {
 
             /*const map = new Map();
             for (const item of this.props.ipeaData) {
-                 let subThema = null;
+                  let subThema = null;
                 if(item.cd_indice){
-                     for(const i of this.props.ipeaData){
+                      for(const i of this.props.ipeaData){
                         console.log('i', i.cd_indice);
                     }
-                     subThema = this.props.ipeaData.map(function(subitem){
+                      subThema = this.props.ipeaData.map(function(subitem){
                         return(
                         <div key={"subarea_"+subitem.cd_indice}>
                             <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>

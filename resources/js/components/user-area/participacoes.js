@@ -277,12 +277,16 @@ class Participacoes extends React.Component{
                     <div className="col-md-12">
                         <div className="box-groups">
                             <h2>Conselhos de Políticas Públicas</h2>
-                            <p className="form-check text-center">
-                                <input className="form-check-input" type="checkbox" id="checkConselho" onClick={this.showHideConselho}/>
-                                <label className="form-check-label box-groups-info" htmlFor="checkConselho">
-                                    Não possui conselhos de políticas públicas
-                                </label>
-                            </p><br/>
+
+
+                            <div className="text-center">
+                                <div className="custom-control custom-checkbox text-center">
+                                    <input type="checkbox" className="custom-control-input" id="checkConselho" required onClick={this.showHideConselho}/>
+                                    <label className="custom-control-label" htmlFor="checkConselho" >Não possui conselhos de políticas públicas</label>
+                                </div>
+                            </div>
+
+                            <br/>
                             <div className="row" style={{display: this.state.showConselho ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-g text-left">
@@ -325,6 +329,7 @@ class Participacoes extends React.Component{
                                 </div>
                                 <div className="col-md-6">
                                     <div className=" box-insert-g">
+
                                         <div className="box-insert-btn text-center">
                                             <a className="cursor" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block", marginTop: "50%"}}>
                                                 <i className="fas fa-plus-circle fa-3x tx-pri" /><br/>
@@ -351,12 +356,14 @@ class Participacoes extends React.Component{
                         <div className="box-groups">
                             <br/><br/>
                             <h2>Conferências de Políticas Públicas</h2>
-                            <p className="form-check text-center">
-                                <input className="form-check-input" type="checkbox" id="checkConferencia" onClick={this.showHideConferencia}/>
-                                <label className="form-check-label box-groups-info" htmlFor="checkConferencia">
-                                    Não possui conferências de políticas públicas
-                                </label>
-                            </p><br/>
+
+                            <div className="text-center">
+                                <div className="custom-control custom-checkbox text-center">
+                                    <input type="checkbox" className="custom-control-input" id="checkConferencia" required onClick={this.showHideConferencia}/>
+                                    <label className="custom-control-label" htmlFor="checkConferencia" >Não possui conferências de políticas públicas</label>
+                                </div>
+                            </div>
+                            <br/>
                             <div className="row" style={{display: this.state.showConferencia ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-m">
@@ -410,12 +417,15 @@ class Participacoes extends React.Component{
                         <div className="box-groups">
                             <br/><br/>
                             <h2>Outros espaços de participação social</h2>
-                            <p className="form-check text-center">
-                                <input className="form-check-input" type="checkbox" id="checkOutro" onClick={this.showHideOutro}/>
-                                <label className="form-check-label box-groups-info" htmlFor="checkOutro">
-                                    Não possui outros espaços de participação social
-                                </label>
-                            </p><br/>
+
+                            <div className="text-center">
+                                <div className="custom-control custom-checkbox text-center">
+                                    <input type="checkbox" className="custom-control-input" id="checkOutro" required onClick={this.showHideOutro}/>
+                                    <label className="custom-control-label" htmlFor="checkOutro" >Não possui outros espaços de participação social</label>
+                                </div>
+                            </div>
+
+                            <br/>
                             <div className="row" style={{display: this.state.showOutro ? "none" : ""}}>
                                 <div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-p">

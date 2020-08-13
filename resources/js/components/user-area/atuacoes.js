@@ -12,6 +12,7 @@ class Atuacoes extends React.Component{
             areaAtuacao: null,
             subareaAtuacao: null,
             titleSub: null,
+            imputOutros: false,
         };
 
         this.listArea = this.listArea.bind(this);
@@ -47,20 +48,22 @@ class Atuacoes extends React.Component{
             cache: false,
             url: getBaseUrl+'menu/osc/subarea_atuacao',
             success: function (data) {
-
                 let areaAtuacao = this.state.areaAtuacao;
-
-                console.log('areaAtuacao: ', this.state.areaAtuacao);
+                let imputOutros = this.state.imputOutros;
 
                 this.state.areaAtuacao.find(function(item){
+
                     if(item.cd_area_atuacao === id){
                         item.checked = !item.checked;
+                        if(id===10){
+                            imputOutros = !imputOutros;
+                        }
                     }
                     item.subareas = data.filter(function(subitem){
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, titleSub:true})
+                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, titleSub:true, imputOutros:imputOutros})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -98,16 +101,19 @@ class Atuacoes extends React.Component{
                         <div className="bg-lgt p-2">
                             <strong>{item.tx_nome_area_atuacao}</strong><br/>
                             {subarea}
-                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" style={{display: this.state.showCategories ? '' : 'none'}} placeholder=" "/>*/}
                             <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" "/>
                         </div>
                     </div>
                 );
 
                 return (
-                    <div className="custom-control custom-checkbox col-md-6" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubareaAtuacao(item.cd_area_atuacao)}>
-                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
-                        <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                    <div className="col-md-6" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubareaAtuacao(item.cd_area_atuacao)}>
+                        <div className="bg-lgt items-checkbox">
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
+                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                            </div>
+                        </div>
                     </div>
                 );
             }.bind(this));
@@ -130,11 +136,14 @@ class Atuacoes extends React.Component{
                 <div className="col-md-12">
                     <div className="col-md-12">
                         <strong>Área de Atuação</strong><hr/>
-                        <div>
+                        <div className="row">
                             {areaAtuacao}
-                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf" style={{display: this.state.showCategories ? '' : 'none'}} placeholder=" "/>*/}
-                            <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" "/>
-                            <br/><br/>
+                            <br/>
+                            <br/>
+                            <div className="col-md-12"  style={{display: this.state.imputOutros ? '' : 'none'}}>
+                                <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" "/><br/>
+                            </div>
+
                         </div>
                         <div style={{display: this.state.titleSub ? '' : 'none'}}>
                             <strong>Subárea de Atuação</strong><hr/>
