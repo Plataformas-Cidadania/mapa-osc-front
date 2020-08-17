@@ -28,7 +28,8 @@ class Filter extends React.Component {
             textRanger: null,
             filters: {
                 ano_fundacao: { start: null, end: null },
-                ano_fundacao2: { start: null, end: null }
+                ano_fundacao2: { start: null, end: null },
+                regiao: null
             },
             listRegiao: []
         };
@@ -37,7 +38,8 @@ class Filter extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
 
         this.listRegiao = this.listRegiao.bind(this);
-        this.addRegiao = this.addRegiao.bind(this);
+        this.setRegiao = this.setRegiao.bind(this);
+        this.removeRegiao = this.removeRegiao.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -114,21 +116,24 @@ class Filter extends React.Component {
     }
 
     clickSearch() {
-        let showCategories = !this.state.showCategories;
-        this.setState({ showCategories: showCategories }, function () {
+        /*let showCategories = !this.state.showCategories;
+        this.setState({showCategories: showCategories}, function(){
             this.listRegiao();
-        });
+        })*/
+        this.listRegiao(' ');
     }
     handleSearch(e) {
-        this.setState({ search: e.target.value }, function () {
-            this.listRegiao();
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ search: search }, function () {
+            this.listRegiao(search);
         });
     }
-    listRegiao() {
+    listRegiao(search) {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            //url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            url: getBaseUrl + 'menu/geo/regiao/' + search,
             cache: false,
             success: function (data) {
                 this.setState({ listRegiao: data, loadingList: false });
@@ -139,28 +144,37 @@ class Filter extends React.Component {
             }.bind(this)
         });
     }
-    addRegiao(item) {}
-    /*let add = true;
-    this.state.categoriesSelected.find(function(cat){
-        if(item.cd_area_atuacao===cat.cd_area_atuacao){
-            add = false;
-        }
-    });
-    if(add){
-        let categoriesSelected = this.state.categoriesSelected;
-        categoriesSelected.push(item);
-        this.setState({showCategories: false});
-        this.setState({categoriesSelected: categoriesSelected}, function(){
-            //this.props.filterCategories(this.state.categoriesSelected);
-          });
-    }*/
 
+    setRegiao(item) {
+        let filters = this.state.filters;
+        filters.regiao = item;
+        this.setState({ filters: filters });
+        /*let add = true;
+        this.state.categoriesSelected.find(function(cat){
+            if(item.cd_area_atuacao===cat.cd_area_atuacao){
+                add = false;
+            }
+        });
+        if(add){
+            let categoriesSelected = this.state.categoriesSelected;
+            categoriesSelected.push(item);
+            this.setState({showCategories: false});
+            this.setState({categoriesSelected: categoriesSelected}, function(){
+                //this.props.filterCategories(this.state.categoriesSelected);
+             });
+        }*/
+    }
+    removeRegiao() {
+        let filters = this.state.filters;
+        filters.regiao = null;
+        this.setState({ filters: filters });
+    }
 
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -168,8 +182,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
@@ -472,7 +486,7 @@ class Filter extends React.Component {
                 }
             });
 
-            indicadores = indicadores.map(function (item) {
+            indicadores = indicadores.map(function (item, index) {
                 let indices = item.indices.map(function (subitem) {
                     return React.createElement(
                         'div',
@@ -493,7 +507,7 @@ class Filter extends React.Component {
 
                 return React.createElement(
                     'div',
-                    { key: "ipeaData_" + item.cd_indice },
+                    { key: "ipeaData_" + index },
                     React.createElement(
                         'strong',
                         null,
@@ -507,12 +521,12 @@ class Filter extends React.Component {
 
             /*const map = new Map();
             for (const item of this.props.ipeaData) {
-                  let subThema = null;
+                 let subThema = null;
                 if(item.cd_indice){
-                      for(const i of this.props.ipeaData){
+                     for(const i of this.props.ipeaData){
                         console.log('i', i.cd_indice);
                     }
-                      subThema = this.props.ipeaData.map(function(subitem){
+                     subThema = this.props.ipeaData.map(function(subitem){
                         return(
                         <div key={"subarea_"+subitem.cd_indice}>
                             <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
@@ -596,17 +610,35 @@ class Filter extends React.Component {
         //console.log(this.state);
 
         let firstRegioes = this.state.listRegiao.map(function (item, index) {
-            let sizeSearch = this.state.search;
-            let firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+
+            //console.log(this.state.search, sizeSearch);
+
+            let firstPiece = null;
+            let secondPiece = item.edre_nm_regiao;
+
+            if (this.state.search) {
+                firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+                secondPiece = item.edre_nm_regiao.substr(sizeSearch);
+            }
+
             return React.createElement(
                 'li',
                 { key: 'cat_' + item.edre_cd_regiao,
                     className: 'list-group-item d-flex ',
-                    onClick: () => this.addRegiao(item)
+                    onClick: () => this.setRegiao(item)
                 },
-                firstPiece
+                React.createElement(
+                    'u',
+                    null,
+                    firstPiece
+                ),
+                secondPiece
             );
         }.bind(this));
+
+        //console.log(firstRegioes);
 
         //console.log(this.state.filters);
 
@@ -666,14 +698,29 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'input-icon' },
-                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao', onClick: this.clickSearch, onChange: this.handleSearch }),
-                                        React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } }),
+                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao',
+                                            style: { display: this.state.filters.regiao ? 'none' : '' },
+                                            onClick: this.clickSearch, onChange: this.handleSearch }),
+                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_regiao2',
+                                            style: { display: this.state.filters.regiao ? '' : 'none' },
+                                            readOnly: this.state.filters.regiao,
+                                            defaultValue: this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : '' }),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.filters.regiao ? 'none' : '' } },
+                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.filters.regiao ? '' : 'none' }, onClick: this.removeRegiao },
+                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                        ),
                                         React.createElement(
                                             'div',
                                             null,
                                             React.createElement(
                                                 'ul',
-                                                { className: 'box-search-itens', style: { display: this.state.showCategories ? '' : 'none' } },
+                                                { className: 'box-search-itens', style: { display: firstRegioes && !this.state.filters.regiao ? '' : 'none' } },
                                                 firstRegioes
                                             )
                                         ),

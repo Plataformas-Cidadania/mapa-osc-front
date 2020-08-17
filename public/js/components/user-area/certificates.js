@@ -14,13 +14,17 @@ class Certificates extends React.Component {
             remove: [],
             loadingRemove: [],
             certificate: {},
-            editId: 0
+            editId: 0,
+            modal: {}
         };
 
         this.list = this.list.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+        this.modal = this.modal.bind(this);
+        this.callModal = this.callModal.bind(this);
+        this.edit = this.edit.bind(this);
     }
 
     componentDidMount() {
@@ -44,7 +48,9 @@ class Certificates extends React.Component {
 
     edit(id) {
         // this.setState({actionForm: 'edit'});
-        this.setState({ actionForm: 'edit', showForm: false, editId: id });
+        this.setState({ actionForm: 'edit', editId: id }, function () {
+            this.callModal();
+        });
     }
 
     cancelRemove(id) {
@@ -125,7 +131,59 @@ class Certificates extends React.Component {
         });
     }
 
+    callModal() {
+        let modal = this.state.modal;
+        this.setState({ modal: modal }, function () {
+            $('#modalForm').modal('show');
+        });
+    }
+
+    modal() {
+
+        return React.createElement(
+            'div',
+            { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'T\xEDtulo'
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        React.createElement(FormCertificate, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                    )
+                )
+            )
+        );
+    }
+
     render() {
+
+        let modal = this.modal();
 
         console.log("Certificado: ", this.state.certificates);
         //console.log(this.state.showForm);
@@ -266,24 +324,14 @@ class Certificates extends React.Component {
                         { style: { float: 'right', cursor: 'pointer', display: this.state.certificates.length < maxCertificates ? 'block' : 'none' } },
                         React.createElement(
                             'a',
-                            { onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block" }, className: 'btn btn-warning' },
+                            { onClick: this.callModal, style: { display: this.state.showForm ? "none" : "block" }, className: 'btn btn-warning' },
                             React.createElement('i', { className: 'fa fa-plus' }),
                             ' Adicionar novo t\xEDtulo'
-                        ),
-                        React.createElement(
-                            'a',
-                            { onClick: this.showHideForm, style: { display: this.state.showForm ? "block" : "none" }, className: 'btn btn-warning' },
-                            React.createElement('i', { className: 'fa fa-times' }),
-                            ' Cancelar'
                         )
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { clear: 'both', display: this.state.showForm ? 'block' : 'none' } },
-                        React.createElement(FormCertificate, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                     )
                 )
-            )
+            ),
+            modal
         );
     }
 }

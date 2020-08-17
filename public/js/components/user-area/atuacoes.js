@@ -16,6 +16,9 @@ class Atuacoes extends React.Component {
         };
 
         this.listArea = this.listArea.bind(this);
+        //this.checkArea = this.checkArea.bind(this);
+        this.checkSubArea = this.checkSubArea.bind(this);
+        this.checkedOutros = this.checkedOutros.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +44,19 @@ class Atuacoes extends React.Component {
     }
 
     callSubareaAtuacao(id) {
+
+        //this.checkArea(id);
+        let areas = this.state.areaAtuacao;
+        if (areas[0].subareas) {
+            areas.find(function (item) {
+                if (item.cd_area_atuacao === id) {
+                    item.checked = !item.checked;
+                }
+            });
+            this.setState({ areaAtuacao: areas });
+            return;
+        }
+
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
@@ -49,6 +65,10 @@ class Atuacoes extends React.Component {
             success: function (data) {
                 let areaAtuacao = this.state.areaAtuacao;
                 let imputOutros = this.state.imputOutros;
+
+                data.find(function (item) {
+                    item.checked = false;
+                });
 
                 this.state.areaAtuacao.find(function (item) {
 
@@ -70,7 +90,58 @@ class Atuacoes extends React.Component {
         });
     }
 
+    /*checkArea(id){
+        console.log(id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function(item){
+            if(item.cd_area_atuacao === id){
+                item.checked = !item.checked;
+            }
+        });
+        this.setState({areaAtuacao: areas});
+    }*/
+
+    checkSubArea(area_id, subarea_id) {
+        console.log(area_id, subarea_id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function (item) {
+            if (item.cd_area_atuacao === area_id) {
+                item.subareas.find(function (subitem) {
+                    if (subitem.cd_subarea_atuacao === subarea_id) {
+                        subitem.checked = !subitem.checked;
+                    }
+                });
+            }
+        });
+        this.setState({ areaAtuacao: areas });
+    }
+
+    checkedOutros(area_id) {
+        let checked = false;
+        this.state.areaAtuacao.find(function (item) {
+            if (item.cd_area_atuacao === area_id) {
+                console.log('cd_area_atuacao', item.cd_area_atuacao);
+                console.log(item.subareas);
+                if (item.subareas) {
+                    item.subareas.find(function (subitem) {
+                        if (subitem.tx_nome_subarea_atuacao === "Outros") {
+                            console.log("Outros");
+                            checked = subitem.checked;
+                            console.log('dentro do if', checked);
+                        }
+                    });
+                }
+            }
+        });
+
+        console.log(checked);
+
+        return checked;
+    }
+
     render() {
+
+        //console.log(this.state.areaAtuacao);
 
         let areaAtuacao = null;
         let subareaAtuacao = [];
@@ -85,7 +156,7 @@ class Atuacoes extends React.Component {
                             { key: "subarea_" + subitem.cd_subarea_atuacao },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_subarea_atuacao) },
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkSubArea(item.cd_area_atuacao, subitem.cd_subarea_atuacao) },
                                 React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true }),
                                 React.createElement(
                                     'label',
@@ -95,7 +166,7 @@ class Atuacoes extends React.Component {
                             ),
                             React.createElement('br', null)
                         );
-                    });
+                    }.bind(this));
                 }
 
                 subareaAtuacao.push(React.createElement(
@@ -111,7 +182,7 @@ class Atuacoes extends React.Component {
                         ),
                         React.createElement('br', null),
                         subarea,
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ' })
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ', style: { display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none' } })
                     )
                 ));
 

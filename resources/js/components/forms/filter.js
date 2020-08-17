@@ -29,6 +29,7 @@ class Filter extends React.Component{
             filters: {
                 ano_fundacao: {start: null, end:null},
                 ano_fundacao2: {start: null, end:null},
+                regiao: null,
             },
             listRegiao:[],
         };
@@ -37,7 +38,8 @@ class Filter extends React.Component{
         this.handleSearch = this.handleSearch.bind(this);
 
         this.listRegiao = this.listRegiao.bind(this);
-        this.addRegiao = this.addRegiao.bind(this);
+        this.setRegiao = this.setRegiao.bind(this);
+        this.removeRegiao = this.removeRegiao.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -125,21 +127,24 @@ class Filter extends React.Component{
     }
 
     clickSearch(){
-        let showCategories = !this.state.showCategories;
+        /*let showCategories = !this.state.showCategories;
         this.setState({showCategories: showCategories}, function(){
             this.listRegiao();
-        })
+        })*/
+        this.listRegiao(' ');
     }
     handleSearch(e){
-        this.setState({search: e.target.value}, function(){
-            this.listRegiao();
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({search: search}, function(){
+            this.listRegiao(search);
         });
     }
-    listRegiao(){
+    listRegiao(search){
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            //url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
+            url: getBaseUrl + 'menu/geo/regiao/'+search,
             cache: false,
             success: function(data){
                 this.setState({listRegiao: data, loadingList: false});
@@ -150,7 +155,11 @@ class Filter extends React.Component{
             }.bind(this)
         });
     }
-    addRegiao(item){
+
+    setRegiao(item){
+        let filters = this.state.filters;
+        filters.regiao = item;
+        this.setState({filters: filters});
         /*let add = true;
         this.state.categoriesSelected.find(function(cat){
             if(item.cd_area_atuacao===cat.cd_area_atuacao){
@@ -166,6 +175,11 @@ class Filter extends React.Component{
 
             });
         }*/
+    }
+    removeRegiao(){
+        let filters = this.state.filters;
+        filters.regiao = null;
+        this.setState({filters: filters})
     }
 
     /*validate(){
@@ -492,7 +506,7 @@ class Filter extends React.Component{
                 }
             });
 
-            indicadores = indicadores.map(function(item){
+            indicadores = indicadores.map(function(item, index){
                 let indices = item.indices.map(function(subitem){
                     return(
                         <div key={"subarea_"+subitem.cd_indice}>
@@ -506,7 +520,7 @@ class Filter extends React.Component{
                 });
 
                 return (
-                    <div key={"ipeaData_"+item.cd_indice}>
+                    <div key={"ipeaData_"+index}>
                         <strong>{item.tema}</strong>
                         <hr />
                         {indices}
@@ -597,17 +611,30 @@ class Filter extends React.Component{
         //console.log(this.state);
 
         let firstRegioes = this.state.listRegiao.map(function (item, index){
-            let sizeSearch = this.state.search;
-            let firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+
+            //console.log(this.state.search, sizeSearch);
+
+            let firstPiece = null;
+            let secondPiece = item.edre_nm_regiao;
+
+            if(this.state.search){
+                firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+                secondPiece = item.edre_nm_regiao.substr(sizeSearch);
+            }
+
             return (
                 <li key={'cat_'+item.edre_cd_regiao}
                     className="list-group-item d-flex "
-                    onClick={() => this.addRegiao(item)}
+                    onClick={() => this.setRegiao(item)}
                 >
-                    {firstPiece}
+                    <u>{firstPiece}</u>{secondPiece}
                 </li>
             )
         }.bind(this));
+
+        //console.log(firstRegioes);
 
         //console.log(this.state.filters);
 
@@ -640,10 +667,21 @@ class Filter extends React.Component{
                                     </div>
                                     <div className="col-md-3">
                                         <div className="input-icon">
-                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao" onClick={this.clickSearch} onChange={this.handleSearch}/>
-                                            <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
+                                                   style={{display: (this.state.filters.regiao ? 'none' : '')}}
+                                                   onClick={this.clickSearch} onChange={this.handleSearch}/>
+                                            <input type="text" className="form-control" name="tx_nome_regiao2"
+                                                   style={{display: (this.state.filters.regiao ? '' : 'none')}}
+                                                   readOnly={this.state.filters.regiao}
+                                                   defaultValue={this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : ''}/>
+                                               <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
+                                                   <i className="fas fa-search" style={{top: '-28px'}}/>
+                                               </div>
+                                               <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
+                                                   <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                               </div>
                                             <div>
-                                                <ul className="box-search-itens" style={{display: this.state.showCategories ? '' : 'none'}}>
+                                                <ul className="box-search-itens" style={{display: (firstRegioes && !this.state.filters.regiao) ? '' : 'none'}}>
                                                     {firstRegioes}
                                                 </ul>
                                             </div>

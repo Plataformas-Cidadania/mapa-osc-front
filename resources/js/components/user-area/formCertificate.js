@@ -55,7 +55,8 @@ class FormCertificate extends React.Component{
     edit(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-certificate/'+this.state.editId,
+            //url: '/edit-user-certificate/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/certificados/455128',
             data: {
 
             },

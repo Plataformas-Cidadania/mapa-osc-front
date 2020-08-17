@@ -97,7 +97,7 @@ class Api extends React.Component {
     }
 
     render() {
-        console.log(this.state.ipeaData);
+        //console.log(this.state.ipeaData);
         return React.createElement(Filter, {
             certificados: this.state.certificados,
             areaAtuacao: this.state.areaAtuacao,
