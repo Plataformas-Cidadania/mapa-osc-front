@@ -30,16 +30,38 @@ class Filter extends React.Component{
                 ano_fundacao: {start: null, end:null},
                 ano_fundacao2: {start: null, end:null},
                 regiao: null,
+                uf: null,
+                municipio: null,
             },
             listRegiao:[],
+            listUf:[],
+            listMunicipio:[],
+            listCnae:[],
         };
 
-        this.clickSearch = this.clickSearch.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-
+        this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
+        this.handleSearchRegiao = this.handleSearchRegiao.bind(this);
         this.listRegiao = this.listRegiao.bind(this);
         this.setRegiao = this.setRegiao.bind(this);
         this.removeRegiao = this.removeRegiao.bind(this);
+
+        this.clickSearchUf = this.clickSearchUf.bind(this);
+        this.handleSearchUf = this.handleSearchUf.bind(this);
+        this.listUf = this.listUf.bind(this);
+        this.setUf = this.setUf.bind(this);
+        this.removeUf = this.removeUf.bind(this);
+
+        this.clickSearchMunicipio = this.clickSearchMunicipio.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.listMunicipio = this.listMunicipio.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
+        this.removeMunicipio = this.removeMunicipio.bind(this);
+
+        this.clickSearchCnae = this.clickSearchCnae.bind(this);
+        this.handleSearchCnae = this.handleSearchCnae.bind(this);
+        this.listCnae = this.listCnae.bind(this);
+        this.setCnae = this.setCnae.bind(this);
+        this.removeCnae = this.removeCnae.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -86,9 +108,6 @@ class Filter extends React.Component{
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
 
 
-
-
-
     }
 
 
@@ -126,24 +145,20 @@ class Filter extends React.Component{
         this.setState({form: form});
     }
 
-    clickSearch(){
-        /*let showCategories = !this.state.showCategories;
-        this.setState({showCategories: showCategories}, function(){
-            this.listRegiao();
-        })*/
-        this.listRegiao(' ');
-    }
-    handleSearch(e){
+    /*Regiao*/
+    handleSearchRegiao(e){
         let search = e.target.value ? e.target.value : ' ';
         this.setState({search: search}, function(){
             this.listRegiao(search);
         });
     }
+    clickSearchRegiao(){
+        this.listRegiao(' ');
+    }
     listRegiao(search){
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
             url: getBaseUrl + 'menu/geo/regiao/'+search,
             cache: false,
             success: function(data){
@@ -155,26 +170,10 @@ class Filter extends React.Component{
             }.bind(this)
         });
     }
-
     setRegiao(item){
         let filters = this.state.filters;
         filters.regiao = item;
         this.setState({filters: filters});
-        /*let add = true;
-        this.state.categoriesSelected.find(function(cat){
-            if(item.cd_area_atuacao===cat.cd_area_atuacao){
-                add = false;
-            }
-        });
-        if(add){
-            let categoriesSelected = this.state.categoriesSelected;
-            categoriesSelected.push(item);
-            this.setState({showCategories: false});
-            this.setState({categoriesSelected: categoriesSelected}, function(){
-                //this.props.filterCategories(this.state.categoriesSelected);
-
-            });
-        }*/
     }
     removeRegiao(){
         let filters = this.state.filters;
@@ -182,6 +181,113 @@ class Filter extends React.Component{
         this.setState({filters: filters})
     }
 
+    /*UF*/
+    handleSearchUf(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({search: search}, function(){
+            this.listUf(search);
+        });
+    }
+    clickSearchUf(){
+        this.listUf(' ');
+    }
+    listUf(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/estado/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listUf: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setUf(item){
+        let filters = this.state.filters;
+        filters.uf = item;
+        this.setState({filters: filters});
+    }
+    removeUf(){
+        let filters = this.state.filters;
+        filters.uf = null;
+        this.setState({filters: filters})
+    }
+
+    /*Municipio*/
+    handleSearchMunicipio(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({search: search}, function(){
+            this.listMunicipio(search);
+        });
+    }
+    clickSearchMunicipio(){
+        this.listMunicipio(' ');
+    }
+    listMunicipio(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listMunicipio: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setMunicipio(item){
+        let filters = this.state.filters;
+        filters.municipio = item;
+        this.setState({filters: filters});
+    }
+    removeMunicipio(){
+        let filters = this.state.filters;
+        filters.municipio = null;
+        this.setState({filters: filters})
+    }
+    /*Cnae*/
+    handleSearchCnae(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({search: search}, function(){
+            this.listCnae(search);
+        });
+    }
+    clickSearchCnae(){
+        this.listCnae(' ');
+    }
+    listCnae(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listCnae: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setCnae(item){
+        let filters = this.state.filters;
+        filters.cnae = item;
+        this.setState({filters: filters});
+    }
+    removeCnae(){
+        let filters = this.state.filters;
+        filters.cnae = null;
+        this.setState({filters: filters})
+    }
+    /*************************************/
     /*validate(){
 
         let valid = true;
@@ -608,13 +714,10 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
-        //console.log(this.state);
 
         let firstRegioes = this.state.listRegiao.map(function (item, index){
 
             let sizeSearch = this.state.search ? this.state.search.length : 0;
-
-            //console.log(this.state.search, sizeSearch);
 
             let firstPiece = null;
             let secondPiece = item.edre_nm_regiao;
@@ -634,9 +737,71 @@ class Filter extends React.Component{
             )
         }.bind(this));
 
-        //console.log(firstRegioes);
 
-        //console.log(this.state.filters);
+
+        let firstUfs = this.state.listUf.map(function (item, index){
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.eduf_nm_uf;
+
+            if(this.state.search){
+                firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
+                secondPiece = item.eduf_nm_uf.substr(sizeSearch);
+            }
+
+            return (
+                <li key={'cat_'+item.eduf_cd_uf}
+                    className="list-group-item d-flex "
+                    onClick={() => this.setUf(item)}
+                >
+                    <u>{firstPiece}</u>{secondPiece}
+                </li>
+            )
+        }.bind(this));
+
+
+        let firstMunicipios = this.state.listMunicipio.map(function (item, index){
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.edmu_nm_municipio;
+
+            if(this.state.search){
+                firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
+                secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
+            }
+            return (
+                <li key={'cat_'+item.edmu_cd_municipio}
+                    className="list-group-item d-flex "
+                    onClick={() => this.setMunicipio(item)}
+                >
+                    <u>{firstPiece}</u>{secondPiece}
+                </li>
+            )
+        }.bind(this));
+
+        let firstCnae = this.state.listCnae.map(function (item, index){
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.tx_atividade_economica;
+
+            if(this.state.search){
+                firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
+                secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+            }
+            return (
+                <li key={'cat_'+item.cd_classe_atividade_economica}
+                    className="list-group-item d-flex "
+                    onClick={() => this.setCnae(item)}
+                >
+                    <u>{firstPiece}</u>{secondPiece}
+                </li>
+            )
+        }.bind(this));
+
+
 
         return (
 
@@ -669,17 +834,19 @@ class Filter extends React.Component{
                                         <div className="input-icon">
                                             <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
                                                    style={{display: (this.state.filters.regiao ? 'none' : '')}}
-                                                   onClick={this.clickSearch} onChange={this.handleSearch}/>
+                                                   onClick={this.clickSearchRegiao} onChange={this.handleSearchRegiao}/>
                                             <input type="text" className="form-control" name="tx_nome_regiao2"
                                                    style={{display: (this.state.filters.regiao ? '' : 'none')}}
                                                    readOnly={this.state.filters.regiao}
                                                    defaultValue={this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : ''}/>
+
                                                <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
                                                    <i className="fas fa-search" style={{top: '-28px'}}/>
                                                </div>
                                                <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
                                                </div>
+
                                             <div>
                                                 <ul className="box-search-itens" style={{display: (firstRegioes && !this.state.filters.regiao) ? '' : 'none'}}>
                                                     {firstRegioes}
@@ -696,11 +863,37 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div className="label-float">
+                                        {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
                                             <label htmlFor="name">Estado</label>
                                             <div className="label-box-info-off"/>
+                                        </div>*/}
+
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque um estado" name="tx_nome_uf"
+                                                   style={{display: (this.state.filters.uf ? 'none' : '')}}
+                                                   onClick={this.clickSearchUf} onChange={this.handleSearchUf}/>
+                                            <input type="text" className="form-control" name="tx_nome_uf2"
+                                                   style={{display: (this.state.filters.uf ? '' : 'none')}}
+                                                   readOnly={this.state.filters.uf}
+                                                   defaultValue={this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : ''}/>
+
+                                            <div style={{display: (this.state.filters.uf ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.uf ? '' : 'none')}} onClick={this.removeUf}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: (firstUfs && !this.state.filters.uf) ? '' : 'none'}}>
+                                                    {firstUfs}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
+
                                     </div>
 
                                     <div className="col-md-3">
@@ -741,11 +934,30 @@ class Filter extends React.Component{
 
 
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_municipio" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Município</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque um Município" name="tx_nome_municipio"
+                                                   style={{display: (this.state.filters.municipio ? 'none' : '')}}
+                                                   onClick={this.clickSearchMunicipio} onChange={this.handleSearchMunicipio}/>
+                                            <input type="text" className="form-control" name="tx_nome_municipio2"
+                                                   style={{display: (this.state.filters.municipio ? '' : 'none')}}
+                                                   readOnly={this.state.filters.municipio}
+                                                   defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
+
+                                            <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.municipio ? '' : 'none')}} onClick={this.removeMunicipio}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: (firstMunicipios && !this.state.filters.municipio) ? '' : 'none'}}>
+                                                    {firstMunicipios}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
                                     </div>
 
                                     <div className="col-md-12">
@@ -817,11 +1029,38 @@ class Filter extends React.Component{
 
                                 <div className="row">
                                     <div className="col-md-9">
-                                        <div className="label-float">
+                                        {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_atividade_economica" onChange={this.handleInputChange} placeholder=" " />
                                             <label htmlFor="name">Atividade Econômica (CNAE)</label>
                                             <div className="label-box-info-off"/>
+                                        </div>*/}
+
+
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque uma Atividade Econômica" name="tx_atividade_economica"
+                                                   style={{display: (this.state.filters.cnae ? 'none' : '')}}
+                                                   onClick={this.clickSearchCnae} onChange={this.handleSearchCnae}/>
+                                            <input type="text" className="form-control" name="tx_atividade_economica2"
+                                                   style={{display: (this.state.filters.cnae ? '' : 'none')}}
+                                                   readOnly={this.state.filters.cnae}
+                                                   defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : ''}/>
+
+                                            <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.cnae ? '' : 'none')}} onClick={this.removeCnae}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: (firstCnae && !this.state.filters.cnae) ? '' : 'none'}}>
+                                                    {firstCnae}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
+
                                     </div>
                                     <div className="col-md-12">
                                         <strong>Área de Atuação</strong><hr/>
@@ -983,12 +1222,6 @@ class Filter extends React.Component{
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="cd_conselhoSelectBoxItText">Titularidade</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-
-                                        <div className="label-float">
                                             <select className="custom-select" name="cd_conselhoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
                                                 <option value="0">Situação do Imóvel</option>
                                                 <option value="1">Próprio</option>
@@ -999,6 +1232,7 @@ class Filter extends React.Component{
                                             <label htmlFor="name"/>
                                             <div className="label-box-info-off"/>
                                         </div>
+
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">

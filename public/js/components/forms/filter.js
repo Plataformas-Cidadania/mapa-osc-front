@@ -29,17 +29,39 @@ class Filter extends React.Component {
             filters: {
                 ano_fundacao: { start: null, end: null },
                 ano_fundacao2: { start: null, end: null },
-                regiao: null
+                regiao: null,
+                uf: null,
+                municipio: null
             },
-            listRegiao: []
+            listRegiao: [],
+            listUf: [],
+            listMunicipio: [],
+            listCnae: []
         };
 
-        this.clickSearch = this.clickSearch.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-
+        this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
+        this.handleSearchRegiao = this.handleSearchRegiao.bind(this);
         this.listRegiao = this.listRegiao.bind(this);
         this.setRegiao = this.setRegiao.bind(this);
         this.removeRegiao = this.removeRegiao.bind(this);
+
+        this.clickSearchUf = this.clickSearchUf.bind(this);
+        this.handleSearchUf = this.handleSearchUf.bind(this);
+        this.listUf = this.listUf.bind(this);
+        this.setUf = this.setUf.bind(this);
+        this.removeUf = this.removeUf.bind(this);
+
+        this.clickSearchMunicipio = this.clickSearchMunicipio.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.listMunicipio = this.listMunicipio.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
+        this.removeMunicipio = this.removeMunicipio.bind(this);
+
+        this.clickSearchCnae = this.clickSearchCnae.bind(this);
+        this.handleSearchCnae = this.handleSearchCnae.bind(this);
+        this.listCnae = this.listCnae.bind(this);
+        this.setCnae = this.setCnae.bind(this);
+        this.removeCnae = this.removeCnae.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -115,24 +137,20 @@ class Filter extends React.Component {
         this.setState({ form: form });
     }
 
-    clickSearch() {
-        /*let showCategories = !this.state.showCategories;
-        this.setState({showCategories: showCategories}, function(){
-            this.listRegiao();
-        })*/
-        this.listRegiao(' ');
-    }
-    handleSearch(e) {
+    /*Regiao*/
+    handleSearchRegiao(e) {
         let search = e.target.value ? e.target.value : ' ';
         this.setState({ search: search }, function () {
             this.listRegiao(search);
         });
     }
+    clickSearchRegiao() {
+        this.listRegiao(' ');
+    }
     listRegiao(search) {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/geo/regiao/Sul/10/0',
             url: getBaseUrl + 'menu/geo/regiao/' + search,
             cache: false,
             success: function (data) {
@@ -144,25 +162,10 @@ class Filter extends React.Component {
             }.bind(this)
         });
     }
-
     setRegiao(item) {
         let filters = this.state.filters;
         filters.regiao = item;
         this.setState({ filters: filters });
-        /*let add = true;
-        this.state.categoriesSelected.find(function(cat){
-            if(item.cd_area_atuacao===cat.cd_area_atuacao){
-                add = false;
-            }
-        });
-        if(add){
-            let categoriesSelected = this.state.categoriesSelected;
-            categoriesSelected.push(item);
-            this.setState({showCategories: false});
-            this.setState({categoriesSelected: categoriesSelected}, function(){
-                //this.props.filterCategories(this.state.categoriesSelected);
-             });
-        }*/
     }
     removeRegiao() {
         let filters = this.state.filters;
@@ -170,6 +173,113 @@ class Filter extends React.Component {
         this.setState({ filters: filters });
     }
 
+    /*UF*/
+    handleSearchUf(e) {
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ search: search }, function () {
+            this.listUf(search);
+        });
+    }
+    clickSearchUf() {
+        this.listUf(' ');
+    }
+    listUf(search) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/estado/' + search,
+            cache: false,
+            success: function (data) {
+                this.setState({ listUf: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    setUf(item) {
+        let filters = this.state.filters;
+        filters.uf = item;
+        this.setState({ filters: filters });
+    }
+    removeUf() {
+        let filters = this.state.filters;
+        filters.uf = null;
+        this.setState({ filters: filters });
+    }
+
+    /*Municipio*/
+    handleSearchMunicipio(e) {
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ search: search }, function () {
+            this.listMunicipio(search);
+        });
+    }
+    clickSearchMunicipio() {
+        this.listMunicipio(' ');
+    }
+    listMunicipio(search) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/' + search,
+            cache: false,
+            success: function (data) {
+                this.setState({ listMunicipio: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    setMunicipio(item) {
+        let filters = this.state.filters;
+        filters.municipio = item;
+        this.setState({ filters: filters });
+    }
+    removeMunicipio() {
+        let filters = this.state.filters;
+        filters.municipio = null;
+        this.setState({ filters: filters });
+    }
+    /*Cnae*/
+    handleSearchCnae(e) {
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ search: search }, function () {
+            this.listCnae(search);
+        });
+    }
+    clickSearchCnae() {
+        this.listCnae(' ');
+    }
+    listCnae(search) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'search/atividade_economica/autocomplete/' + search,
+            cache: false,
+            success: function (data) {
+                this.setState({ listCnae: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    setCnae(item) {
+        let filters = this.state.filters;
+        filters.cnae = item;
+        this.setState({ filters: filters });
+    }
+    removeCnae() {
+        let filters = this.state.filters;
+        filters.cnae = null;
+        this.setState({ filters: filters });
+    }
+    /*************************************/
     /*validate(){
          let valid = true;
          let requireds = this.state.requireds;
@@ -607,13 +717,9 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
-        //console.log(this.state);
-
         let firstRegioes = this.state.listRegiao.map(function (item, index) {
 
             let sizeSearch = this.state.search ? this.state.search.length : 0;
-
-            //console.log(this.state.search, sizeSearch);
 
             let firstPiece = null;
             let secondPiece = item.edre_nm_regiao;
@@ -638,9 +744,81 @@ class Filter extends React.Component {
             );
         }.bind(this));
 
-        //console.log(firstRegioes);
+        let firstUfs = this.state.listUf.map(function (item, index) {
 
-        //console.log(this.state.filters);
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.eduf_nm_uf;
+
+            if (this.state.search) {
+                firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
+                secondPiece = item.eduf_nm_uf.substr(sizeSearch);
+            }
+
+            return React.createElement(
+                'li',
+                { key: 'cat_' + item.eduf_cd_uf,
+                    className: 'list-group-item d-flex ',
+                    onClick: () => this.setUf(item)
+                },
+                React.createElement(
+                    'u',
+                    null,
+                    firstPiece
+                ),
+                secondPiece
+            );
+        }.bind(this));
+
+        let firstMunicipios = this.state.listMunicipio.map(function (item, index) {
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.edmu_nm_municipio;
+
+            if (this.state.search) {
+                firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
+                secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
+            }
+            return React.createElement(
+                'li',
+                { key: 'cat_' + item.edmu_cd_municipio,
+                    className: 'list-group-item d-flex ',
+                    onClick: () => this.setMunicipio(item)
+                },
+                React.createElement(
+                    'u',
+                    null,
+                    firstPiece
+                ),
+                secondPiece
+            );
+        }.bind(this));
+
+        let firstCnae = this.state.listCnae.map(function (item, index) {
+
+            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            let firstPiece = null;
+            let secondPiece = item.tx_atividade_economica;
+
+            if (this.state.search) {
+                firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
+                secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+            }
+            return React.createElement(
+                'li',
+                { key: 'cat_' + item.cd_classe_atividade_economica,
+                    className: 'list-group-item d-flex ',
+                    onClick: () => this.setCnae(item)
+                },
+                React.createElement(
+                    'u',
+                    null,
+                    firstPiece
+                ),
+                secondPiece
+            );
+        }.bind(this));
 
         return React.createElement(
             'form',
@@ -700,7 +878,7 @@ class Filter extends React.Component {
                                         { className: 'input-icon' },
                                         React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao',
                                             style: { display: this.state.filters.regiao ? 'none' : '' },
-                                            onClick: this.clickSearch, onChange: this.handleSearch }),
+                                            onClick: this.clickSearchRegiao, onChange: this.handleSearchRegiao }),
                                         React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_regiao2',
                                             style: { display: this.state.filters.regiao ? '' : 'none' },
                                             readOnly: this.state.filters.regiao,
@@ -747,14 +925,34 @@ class Filter extends React.Component {
                                     { className: 'col-md-3' },
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        { className: 'input-icon' },
+                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um estado', name: 'tx_nome_uf',
+                                            style: { display: this.state.filters.uf ? 'none' : '' },
+                                            onClick: this.clickSearchUf, onChange: this.handleSearchUf }),
+                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_uf2',
+                                            style: { display: this.state.filters.uf ? '' : 'none' },
+                                            readOnly: this.state.filters.uf,
+                                            defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
                                         React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Estado'
+                                            'div',
+                                            { style: { display: this.state.filters.uf ? 'none' : '' } },
+                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
                                         ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.filters.uf ? '' : 'none' }, onClick: this.removeUf },
+                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'ul',
+                                                { className: 'box-search-itens', style: { display: firstUfs && !this.state.filters.uf ? '' : 'none' } },
+                                                firstUfs
+                                            )
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 ),
                                 React.createElement(
@@ -829,14 +1027,34 @@ class Filter extends React.Component {
                                     { className: 'col-md-3' },
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_municipio', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        { className: 'input-icon' },
+                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um Munic\xEDpio', name: 'tx_nome_municipio',
+                                            style: { display: this.state.filters.municipio ? 'none' : '' },
+                                            onClick: this.clickSearchMunicipio, onChange: this.handleSearchMunicipio }),
+                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_municipio2',
+                                            style: { display: this.state.filters.municipio ? '' : 'none' },
+                                            readOnly: this.state.filters.municipio,
+                                            defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
                                         React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Munic\xEDpio'
+                                            'div',
+                                            { style: { display: this.state.filters.municipio ? 'none' : '' } },
+                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
                                         ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
+                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'ul',
+                                                { className: 'box-search-itens', style: { display: firstMunicipios && !this.state.filters.municipio ? '' : 'none' } },
+                                                firstMunicipios
+                                            )
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 ),
                                 React.createElement(
@@ -942,14 +1160,34 @@ class Filter extends React.Component {
                                     { className: 'col-md-9' },
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_atividade_economica', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        { className: 'input-icon' },
+                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma Atividade Econ\xF4mica', name: 'tx_atividade_economica',
+                                            style: { display: this.state.filters.cnae ? 'none' : '' },
+                                            onClick: this.clickSearchCnae, onChange: this.handleSearchCnae }),
+                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_atividade_economica2',
+                                            style: { display: this.state.filters.cnae ? '' : 'none' },
+                                            readOnly: this.state.filters.cnae,
+                                            defaultValue: this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : '' }),
                                         React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Atividade Econ\xF4mica (CNAE)'
+                                            'div',
+                                            { style: { display: this.state.filters.cnae ? 'none' : '' } },
+                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
                                         ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.filters.cnae ? '' : 'none' }, onClick: this.removeCnae },
+                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'ul',
+                                                { className: 'box-search-itens', style: { display: firstCnae && !this.state.filters.cnae ? '' : 'none' } },
+                                                firstCnae
+                                            )
+                                        ),
+                                        React.createElement('br', null)
                                     )
                                 ),
                                 React.createElement(
@@ -1229,17 +1467,6 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
-                                            'Titularidade'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    ),
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
