@@ -14,7 +14,7 @@ class AlterNoticiasTable extends Migration
     public function up()
     {
         Schema::table('noticias', function (Blueprint $table) {
-            $table->integer('categoria_id');
+            $table->integer('categoria_id')->default(0);
         });
     }
 
