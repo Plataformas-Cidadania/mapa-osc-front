@@ -41,8 +41,6 @@ class Certificates extends React.Component{
             age--;
         }
 
-        //console.log(age);
-
         return age;
 
     }
@@ -73,8 +71,8 @@ class Certificates extends React.Component{
         loadingRemove[id] = true;
         this.setState({loadingRemove: loadingRemove});
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-certificate/'+id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/certificados/'+id,
             data: {
 
             },
@@ -121,7 +119,6 @@ class Certificates extends React.Component{
 
         $.ajax({
             method: 'GET',
-            //url: '/list-users-certificates',
             url: getBaseUrl2 + 'osc/certificados/455128',
             data: {
             },
@@ -175,11 +172,6 @@ class Certificates extends React.Component{
     render(){
 
         let modal = this.modal();
-
-        console.log("Certificado: ", this.state.certificates);
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
         let certificates = this.state.certificates.map(function(item, index){
 
             let hr = null;
@@ -189,10 +181,10 @@ class Certificates extends React.Component{
 
             return (
                 <tr key={"certificate_"+index}>
-                    <td>{item.cd_certificado}</td>
+                    <td>{item.dc_certificado.tx_nome_certificado}</td>
                     <td>{item.dt_inicio_certificado}</td>
                     <td>{item.dt_fim_certificado}</td>
-                    <td>{item.cd_uf}</td>
+                    <td>{item.edmu_nm_municipio}</td>
                     <td width="70">
                         <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.remove(item.id_certificado)} style={{display: this.state.loadingRemove[item.id_certificado] ? 'none' : ''}}>

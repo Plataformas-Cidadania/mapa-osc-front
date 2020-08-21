@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,7 +14,7 @@ class CreateSettingsTable extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('imagem');
             $table->string('email');
             $table->string('titulo');
@@ -37,7 +38,7 @@ class CreateSettingsTable extends Migration
             $table->string('instagram');
             $table->string('blog');
             $table->integer('cmsuser_id')->unsigned();
-            $table->foreign('cmsuser_id')->references('id')->on('cms_users')->onDelete('restrict');
+            /*$table->foreign('cmsuser_id')->references('id')->on('cms_users')->onDelete('restrict');*/
             $table->timestamps();
         });
     }
@@ -49,6 +50,6 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('settings');
+        Schema::dropIfExists('settings');
     }
 }

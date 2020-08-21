@@ -57,7 +57,7 @@ class HomeController extends Controller
 
         return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
                     Ops! Cadastre no CMS em texts o slug
-                    <strong>osc-proximas</strong> e <strong>contato-expediente</strong>
+                    <strong>osc-proximas</strong>
                 </div>";
     }
 

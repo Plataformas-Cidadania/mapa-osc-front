@@ -69,7 +69,8 @@
                     <br><br>
                     @endif
 
-                    <p  data-message="{!! $page->descricao !!}" tabindex="0">{!! $page->descricao !!}</p>
+                    <p {{--data-message="{!! $page->descricao !!}"--}} tabindex="0">{!! $page->descricao !!}</p>
+                    {{--<p data-message="{!! $page->descricao !!}" tabindex="0">{!! $page->descricao !!}</p>--}}
 
                     @if($items)
                         @include('page.about.accordion')

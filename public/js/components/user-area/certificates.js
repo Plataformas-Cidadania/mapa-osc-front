@@ -41,8 +41,6 @@ class Certificates extends React.Component {
             age--;
         }
 
-        //console.log(age);
-
         return age;
     }
 
@@ -72,8 +70,8 @@ class Certificates extends React.Component {
         loadingRemove[id] = true;
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-certificate/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/certificados/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -99,7 +97,7 @@ class Certificates extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -116,7 +114,6 @@ class Certificates extends React.Component {
 
         $.ajax({
             method: 'GET',
-            //url: '/list-users-certificates',
             url: getBaseUrl2 + 'osc/certificados/455128',
             data: {},
             cache: false,
@@ -184,11 +181,6 @@ class Certificates extends React.Component {
     render() {
 
         let modal = this.modal();
-
-        console.log("Certificado: ", this.state.certificates);
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
         let certificates = this.state.certificates.map(function (item, index) {
 
             let hr = null;
@@ -202,7 +194,7 @@ class Certificates extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.cd_certificado
+                    item.dc_certificado.tx_nome_certificado
                 ),
                 React.createElement(
                     'td',
@@ -217,7 +209,7 @@ class Certificates extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.cd_uf
+                    item.edmu_nm_municipio
                 ),
                 React.createElement(
                     'td',
