@@ -33,10 +33,14 @@ class Filter extends React.Component {
                 uf: null,
                 municipio: null
             },
-            listRegiao: [],
-            listUf: [],
-            listMunicipio: [],
-            listCnae: []
+            searchRegiao: null,
+            searchUf: null,
+            searchMunicipio: null,
+            searchCnae: null,
+            listRegiao: null,
+            listUf: null,
+            listMunicipio: null,
+            listCnae: null
         };
 
         this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
@@ -140,12 +144,13 @@ class Filter extends React.Component {
     /*Regiao*/
     handleSearchRegiao(e) {
         let search = e.target.value ? e.target.value : ' ';
-        this.setState({ search: search }, function () {
+        this.setState({ searchRegiao: search }, function () {
             this.listRegiao(search);
         });
     }
     clickSearchRegiao() {
-        this.listRegiao(' ');
+        let search = this.state.searchRegiao ? this.state.searchRegiao : ' ';
+        this.listRegiao(search);
     }
     listRegiao(search) {
         this.setState({ loadingList: true });
@@ -165,7 +170,7 @@ class Filter extends React.Component {
     setRegiao(item) {
         let filters = this.state.filters;
         filters.regiao = item;
-        this.setState({ filters: filters });
+        this.setState({ filters: filters, searchRegiao: null });
     }
     removeRegiao() {
         let filters = this.state.filters;
@@ -176,12 +181,13 @@ class Filter extends React.Component {
     /*UF*/
     handleSearchUf(e) {
         let search = e.target.value ? e.target.value : ' ';
-        this.setState({ search: search }, function () {
+        this.setState({ searchUf: search }, function () {
             this.listUf(search);
         });
     }
     clickSearchUf() {
-        this.listUf(' ');
+        let search = this.state.searchUf ? this.state.searchUf : ' ';
+        this.listUf(search);
     }
     listUf(search) {
         this.setState({ loadingList: true });
@@ -212,12 +218,13 @@ class Filter extends React.Component {
     /*Municipio*/
     handleSearchMunicipio(e) {
         let search = e.target.value ? e.target.value : ' ';
-        this.setState({ search: search }, function () {
+        this.setState({ searchMunicipio: search }, function () {
             this.listMunicipio(search);
         });
     }
     clickSearchMunicipio() {
-        this.listMunicipio(' ');
+        let search = this.state.searchMunicipio ? this.state.searchMunicipio : ' ';
+        this.listMunicipio(search);
     }
     listMunicipio(search) {
         this.setState({ loadingList: true });
@@ -247,12 +254,13 @@ class Filter extends React.Component {
     /*Cnae*/
     handleSearchCnae(e) {
         let search = e.target.value ? e.target.value : ' ';
-        this.setState({ search: search }, function () {
+        this.setState({ searchCnae: search }, function () {
             this.listCnae(search);
         });
     }
     clickSearchCnae() {
-        this.listCnae(' ');
+        let search = this.state.searchCnae ? this.state.searchCnae : ' ';
+        this.listCnae(search);
     }
     listCnae(search) {
         this.setState({ loadingList: true });
@@ -717,108 +725,120 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
-        let firstRegioes = this.state.listRegiao.map(function (item, index) {
+        let regioes = null;
+        if (this.state.listRegiao) {
+            regioes = this.state.listRegiao.map(function (item, index) {
 
-            let sizeSearch = this.state.search ? this.state.search.length : 0;
+                let sizeSearch = this.state.searchRegiao ? this.state.searchRegiao.length : 0;
 
-            let firstPiece = null;
-            let secondPiece = item.edre_nm_regiao;
+                let firstPiece = null;
+                let secondPiece = item.edre_nm_regiao;
 
-            if (this.state.search) {
-                firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
-                secondPiece = item.edre_nm_regiao.substr(sizeSearch);
-            }
+                if (this.state.searchRegiao) {
+                    firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+                    secondPiece = item.edre_nm_regiao.substr(sizeSearch);
+                }
 
-            return React.createElement(
-                'li',
-                { key: 'cat_' + item.edre_cd_regiao,
-                    className: 'list-group-item d-flex ',
-                    onClick: () => this.setRegiao(item)
-                },
-                React.createElement(
-                    'u',
-                    null,
-                    firstPiece
-                ),
-                secondPiece
-            );
-        }.bind(this));
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.edre_cd_regiao,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setRegiao(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
 
-        let firstUfs = this.state.listUf.map(function (item, index) {
+        let ufs = null;
+        if (this.state.listUf) {
+            ufs = this.state.listUf.map(function (item, index) {
 
-            let sizeSearch = this.state.search ? this.state.search.length : 0;
-            let firstPiece = null;
-            let secondPiece = item.eduf_nm_uf;
+                let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.eduf_nm_uf;
 
-            if (this.state.search) {
-                firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
-                secondPiece = item.eduf_nm_uf.substr(sizeSearch);
-            }
+                if (this.state.searchUf) {
+                    firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
+                    secondPiece = item.eduf_nm_uf.substr(sizeSearch);
+                }
 
-            return React.createElement(
-                'li',
-                { key: 'cat_' + item.eduf_cd_uf,
-                    className: 'list-group-item d-flex ',
-                    onClick: () => this.setUf(item)
-                },
-                React.createElement(
-                    'u',
-                    null,
-                    firstPiece
-                ),
-                secondPiece
-            );
-        }.bind(this));
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.eduf_cd_uf,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setUf(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
 
-        let firstMunicipios = this.state.listMunicipio.map(function (item, index) {
+        let municipios = null;
+        if (this.state.listMunicipio) {
+            municipios = this.state.listMunicipio.map(function (item, index) {
 
-            let sizeSearch = this.state.search ? this.state.search.length : 0;
-            let firstPiece = null;
-            let secondPiece = item.edmu_nm_municipio;
+                let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.edmu_nm_municipio;
 
-            if (this.state.search) {
-                firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
-                secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
-            }
-            return React.createElement(
-                'li',
-                { key: 'cat_' + item.edmu_cd_municipio,
-                    className: 'list-group-item d-flex ',
-                    onClick: () => this.setMunicipio(item)
-                },
-                React.createElement(
-                    'u',
-                    null,
-                    firstPiece
-                ),
-                secondPiece
-            );
-        }.bind(this));
+                if (this.state.searchMunicipio) {
+                    firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
+                    secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
+                }
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.edmu_cd_municipio,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setMunicipio(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
 
-        let firstCnae = this.state.listCnae.map(function (item, index) {
+        let cnae = null;
+        if (this.state.listCnae) {
+            cnae = this.state.listCnae.map(function (item, index) {
 
-            let sizeSearch = this.state.search ? this.state.search.length : 0;
-            let firstPiece = null;
-            let secondPiece = item.tx_atividade_economica;
+                let sizeSearch = this.state.searchCnae ? this.state.searchCnae.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.tx_atividade_economica;
 
-            if (this.state.search) {
-                firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
-                secondPiece = item.tx_atividade_economica.substr(sizeSearch);
-            }
-            return React.createElement(
-                'li',
-                { key: 'cat_' + item.cd_classe_atividade_economica,
-                    className: 'list-group-item d-flex ',
-                    onClick: () => this.setCnae(item)
-                },
-                React.createElement(
-                    'u',
-                    null,
-                    firstPiece
-                ),
-                secondPiece
-            );
-        }.bind(this));
+                if (this.state.searchCnae) {
+                    firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
+                    secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+                }
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.cd_classe_atividade_economica,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setCnae(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
 
         console.log(this.state.filters.uf);
 
@@ -900,8 +920,8 @@ class Filter extends React.Component {
                                             null,
                                             React.createElement(
                                                 'ul',
-                                                { className: 'box-search-itens', style: { display: this.state.listRegiao ? '' : 'none' } },
-                                                firstRegioes
+                                                { className: 'box-search-itens', style: { display: (this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao ? '' : 'none' } },
+                                                regioes
                                             )
                                         ),
                                         React.createElement('br', null)
@@ -950,8 +970,8 @@ class Filter extends React.Component {
                                             null,
                                             React.createElement(
                                                 'ul',
-                                                { className: 'box-search-itens', style: { display: firstUfs && !this.state.filters.uf ? '' : 'none' } },
-                                                firstUfs
+                                                { className: 'box-search-itens', style: { display: (this.state.searchUf || this.state.listUf) && !this.state.filters.uf ? '' : 'none' } },
+                                                ufs
                                             )
                                         ),
                                         React.createElement('br', null)
@@ -1052,8 +1072,8 @@ class Filter extends React.Component {
                                             null,
                                             React.createElement(
                                                 'ul',
-                                                { className: 'box-search-itens', style: { display: firstMunicipios && !this.state.filters.municipio ? '' : 'none' } },
-                                                firstMunicipios
+                                                { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
+                                                municipios
                                             )
                                         ),
                                         React.createElement('br', null)
@@ -1185,8 +1205,8 @@ class Filter extends React.Component {
                                             null,
                                             React.createElement(
                                                 'ul',
-                                                { className: 'box-search-itens', style: { display: firstCnae && !this.state.filters.cnae ? '' : 'none' } },
-                                                firstCnae
+                                                { className: 'box-search-itens', style: { display: (this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ? '' : 'none' } },
+                                                cnae
                                             )
                                         ),
                                         React.createElement('br', null)
