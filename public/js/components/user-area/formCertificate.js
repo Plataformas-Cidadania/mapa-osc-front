@@ -21,8 +21,8 @@ class FormCertificate extends React.Component {
             certificates: [],
             maxAlert: false,
             cd_certificado: {
-                1: 'Utilidade Pública Municipal',
-                2: 'Utilidade Pública Estadual'
+                8: 'Utilidade Pública Municipal',
+                7: 'Utilidade Pública Estadual'
             },
             action: '', //new | edit
             editId: this.props.id
@@ -59,7 +59,7 @@ class FormCertificate extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
+                //console.log("data: ", data);
                 this.setState({ form: data }, function () {
                     //this.props.showHideForm();
                 });
@@ -90,20 +90,20 @@ class FormCertificate extends React.Component {
     }
 
     validate() {
-        console.log(this.state.form);
+        //console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        for (let index in requireds) {
-            if (!form[index] || form[index] == '') {
+        /*for(let index in requireds){
+            if(!form[index] || form[index]==''){
                 requireds[index] = false;
                 valid = false;
-            } else {
+            }else{
                 requireds[index] = true;
             }
-        }
+        }*/
 
         //console.log(requireds);
 
@@ -118,11 +118,13 @@ class FormCertificate extends React.Component {
             return;
         }
 
-        let url = '/register-certificate';
+        //let url = '/register-certificate';
+        let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
         if (this.state.action === 'edit') {
             id = this.state.editId;
-            url = '/update-user-certificate';
+            //url = '/update-user-certificate';
+            url = getBaseUrl2 + 'osc/certificados/455128';
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
@@ -131,8 +133,16 @@ class FormCertificate extends React.Component {
                 url: url,
                 //url: '/register-certificate',
                 data: {
-                    form: this.state.form,
-                    id: id
+                    //form: this.state.form,
+                    dt_inicio_certificado: this.state.form.dt_inicio_certificado,
+                    dt_fim_certificado: this.state.form.dt_fim_certificado,
+                    cd_uf: this.state.form.cd_uf,
+                    cd_certificado: this.state.form.cd_certificado,
+                    /*ft_certificado: 'Representante de OSC',
+                    ft_inicio_certificado: 'Representante de OSC',
+                    ft_fim_certificado: 'Representante de OSC',*/
+                    id: id,
+                    id_osc: '455128'
                 },
                 cache: false,
                 success: function (data) {
@@ -178,7 +188,7 @@ class FormCertificate extends React.Component {
             age--;
         }
 
-        console.log(age);
+        //console.log(age);
 
         return age;
     }
@@ -202,14 +212,14 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'label',
-                                { htmlFor: 'nome' },
+                                { htmlFor: 'cd_certificado' },
                                 'Nome*'
                             ),
                             React.createElement('br', null),
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.cd_certificado ? '' : 'invalid-field'),
-                                    name: 'tipo', onChange: this.handleInputChange, defaultValue: this.state.form.cd_certificado },
+                                    name: 'cd_certificado', onChange: this.handleInputChange, defaultValue: this.state.form.cd_certificado },
                                 React.createElement(
                                     'option',
                                     { value: '0' },
@@ -217,12 +227,12 @@ class FormCertificate extends React.Component {
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: '1' },
+                                    { value: '8' },
                                     'Utilidade P\xFAblica Municipal'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: '2' },
+                                    { value: '7' },
                                     'Utilidade P\xFAblica Estadual'
                                 )
                             ),
@@ -233,12 +243,12 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'label',
-                                { htmlFor: 'tipo' },
+                                { htmlFor: 'cd_uf' },
                                 'Localidade*'
                             ),
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.cd_uf ? '' : 'invalid-field'),
-                                type: 'text', name: 'nome', onChange: this.handleInputChange,
+                                type: 'text', name: 'cd_uf', onChange: this.handleInputChange,
                                 defaultValue: this.state.form.cd_uf, placeholder: '' }),
                             React.createElement('br', null)
                         )
@@ -251,7 +261,7 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'label',
-                                { htmlFor: 'cep' },
+                                { htmlFor: 'dt_inicio_certificado' },
                                 'Data in\xEDcio da validade*'
                             ),
                             React.createElement('br', null),
@@ -265,7 +275,7 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'label',
-                                { htmlFor: 'cep' },
+                                { htmlFor: 'dt_fim_certificado' },
                                 'Data fim da validade*'
                             ),
                             React.createElement('br', null),
@@ -292,7 +302,7 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'button',
-                                { style: { display: this.state.action === 'edit' ? 'block' : this.state.certificates.length < maxCertificates ? 'block' : 'none' },
+                                { style: { display: this.state.action === 'edit' ? 'block' : "" },
                                     className: 'btn btn-success', onClick: this.register },
                                 'Adicionar'
                             )

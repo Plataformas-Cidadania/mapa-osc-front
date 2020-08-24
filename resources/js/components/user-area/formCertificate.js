@@ -21,8 +21,8 @@ class FormCertificate extends React.Component{
             certificates: [],
             maxAlert: false,
             cd_certificado:{
-                1: 'Utilidade Pública Municipal',
-                2: 'Utilidade Pública Estadual',
+                8: 'Utilidade Pública Municipal',
+                7: 'Utilidade Pública Estadual',
             },
             action: '',//new | edit
             editId: this.props.id,
@@ -62,7 +62,7 @@ class FormCertificate extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log(data);
+                //console.log("data: ", data);
                 this.setState({form: data}, function(){
                     //this.props.showHideForm();
                 });
@@ -93,20 +93,20 @@ class FormCertificate extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
+        //console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        for(let index in requireds){
+        /*for(let index in requireds){
             if(!form[index] || form[index]==''){
                 requireds[index] = false;
                 valid = false;
             }else{
                 requireds[index] = true;
             }
-        }
+        }*/
 
         //console.log(requireds);
 
@@ -121,11 +121,13 @@ class FormCertificate extends React.Component{
             return;
         }
 
-        let url = '/register-certificate';
+        //let url = '/register-certificate';
+        let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-certificate';
+            //url = '/update-user-certificate';
+            url = getBaseUrl2 + 'osc/certificados/455128';
         }
 
 
@@ -135,8 +137,16 @@ class FormCertificate extends React.Component{
                 url: url,
                 //url: '/register-certificate',
                 data:{
-                    form: this.state.form,
+                    //form: this.state.form,
+                    dt_inicio_certificado: this.state.form.dt_inicio_certificado,
+                    dt_fim_certificado: this.state.form.dt_fim_certificado,
+                    cd_uf: this.state.form.cd_uf,
+                    cd_certificado: this.state.form.cd_certificado,
+                    /*ft_certificado: 'Representante de OSC',
+                    ft_inicio_certificado: 'Representante de OSC',
+                    ft_fim_certificado: 'Representante de OSC',*/
                     id: id,
+                    id_osc: '455128',
                 },
                 cache: false,
                 success: function(data) {
@@ -184,7 +194,7 @@ class FormCertificate extends React.Component{
             age--;
         }
 
-        console.log(age);
+        //console.log(age);
 
         return age;
 
@@ -199,30 +209,30 @@ class FormCertificate extends React.Component{
 
                         <div className="row">
                             <div className="col-md-6">
-                                <label htmlFor="nome">Nome*</label><br/>
+                                <label htmlFor="cd_certificado">Nome*</label><br/>
                                 <select className={"form-control form-m "+(this.state.requireds.cd_certificado ? '' : 'invalid-field')}
-                                        name="tipo" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
+                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
                                     <option value="0">Selecione</option>
-                                    <option value="1">Utilidade Pública Municipal</option>
-                                    <option value="2">Utilidade Pública Estadual</option>
+                                    <option value="8">Utilidade Pública Municipal</option>
+                                    <option value="7">Utilidade Pública Estadual</option>
                                 </select><br/>
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="tipo">Localidade*</label><br/>
+                                <label htmlFor="cd_uf">Localidade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.cd_uf ? '' : 'invalid-field')}
-                                       type="text" name="nome" onChange={this.handleInputChange}
+                                       type="text" name="cd_uf" onChange={this.handleInputChange}
                                        defaultValue={this.state.form.cd_uf} placeholder=""/><br/>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <label htmlFor="cep">Data início da validade*</label><br/>
+                                <label htmlFor="dt_inicio_certificado">Data início da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_inicio_certificado ? '' : 'invalid-field')}
                                        type="date" name="dt_inicio_certificado" onChange={this.handleInputChange}
                                        defaultValue={this.state.form.dt_inicio_certificado} placeholder=""/><br/>
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="cep">Data fim da validade*</label><br/>
+                                <label htmlFor="dt_fim_certificado">Data fim da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_fim_certificado ? '' : 'invalid-field')}
                                        type="date" name="dt_fim_certificado" onChange={this.handleInputChange}
                                        defaultValue={this.state.form.dt_fim_certificado} placeholder=""/><br/>
@@ -232,10 +242,14 @@ class FormCertificate extends React.Component{
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">
                             <div className="col-md-6">
-                                <button style={{display: this.state.action==='edit' ? 'block' : (this.state.certificates.length < maxCertificates ?  'block' : 'none')}}
+                                <button style={{display: this.state.action==='edit' ? 'block' : ""}}
                                         className="btn btn-success" onClick={this.register}>
                                     Adicionar
                                 </button>
+                                {/*<button style={{display: this.state.action==='edit' ? 'block' : (this.state.certificates.length < maxCertificates ?  'block' : 'none')}}
+                                        className="btn btn-success" onClick={this.register}>
+                                    Adicionar
+                                </button>*/}
                             </div>
                         </div>
                         <br/>
