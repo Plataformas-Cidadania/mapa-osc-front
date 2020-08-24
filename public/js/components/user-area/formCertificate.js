@@ -209,7 +209,7 @@ class FormCertificate extends React.Component {
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.cd_certificado ? '' : 'invalid-field'),
-                                    name: 'tipo', onChange: this.handleInputChange, value: this.state.form.cd_certificado },
+                                    name: 'tipo', onChange: this.handleInputChange, defaultValue: this.state.form.cd_certificado },
                                 React.createElement(
                                     'option',
                                     { value: '0' },
@@ -239,7 +239,7 @@ class FormCertificate extends React.Component {
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.cd_uf ? '' : 'invalid-field'),
                                 type: 'text', name: 'nome', onChange: this.handleInputChange,
-                                value: this.state.form.cd_uf, placeholder: '' }),
+                                defaultValue: this.state.form.cd_uf, placeholder: '' }),
                             React.createElement('br', null)
                         )
                     ),
@@ -256,8 +256,8 @@ class FormCertificate extends React.Component {
                             ),
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.dt_inicio_certificado ? '' : 'invalid-field'),
-                                type: 'date', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.dt_inicio_certificado, placeholder: '' }),
+                                type: 'date', name: 'dt_inicio_certificado', onChange: this.handleInputChange,
+                                defaultValue: this.state.form.dt_inicio_certificado, placeholder: '' }),
                             React.createElement('br', null)
                         ),
                         React.createElement(
@@ -270,8 +270,8 @@ class FormCertificate extends React.Component {
                             ),
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.dt_fim_certificado ? '' : 'invalid-field'),
-                                type: 'date', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.dt_fim_certificado, placeholder: '' }),
+                                type: 'date', name: 'dt_fim_certificado', onChange: this.handleInputChange,
+                                defaultValue: this.state.form.dt_fim_certificado, placeholder: '' }),
                             React.createElement('br', null)
                         )
                     ),

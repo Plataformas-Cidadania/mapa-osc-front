@@ -201,7 +201,7 @@ class FormCertificate extends React.Component{
                             <div className="col-md-6">
                                 <label htmlFor="nome">Nome*</label><br/>
                                 <select className={"form-control form-m "+(this.state.requireds.cd_certificado ? '' : 'invalid-field')}
-                                        name="tipo" onChange={this.handleInputChange} value={this.state.form.cd_certificado}>
+                                        name="tipo" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
                                     <option value="0">Selecione</option>
                                     <option value="1">Utilidade Pública Municipal</option>
                                     <option value="2">Utilidade Pública Estadual</option>
@@ -211,21 +211,21 @@ class FormCertificate extends React.Component{
                                 <label htmlFor="tipo">Localidade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.cd_uf ? '' : 'invalid-field')}
                                        type="text" name="nome" onChange={this.handleInputChange}
-                                       value={this.state.form.cd_uf} placeholder=""/><br/>
+                                       defaultValue={this.state.form.cd_uf} placeholder=""/><br/>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">
                                 <label htmlFor="cep">Data início da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_inicio_certificado ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_inicio_certificado} placeholder=""/><br/>
+                                       type="date" name="dt_inicio_certificado" onChange={this.handleInputChange}
+                                       defaultValue={this.state.form.dt_inicio_certificado} placeholder=""/><br/>
                             </div>
                             <div className="col-md-6">
                                 <label htmlFor="cep">Data fim da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_fim_certificado ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_fim_certificado} placeholder=""/><br/>
+                                       type="date" name="dt_fim_certificado" onChange={this.handleInputChange}
+                                       defaultValue={this.state.form.dt_fim_certificado} placeholder=""/><br/>
                             </div>
                         </div>
 

@@ -801,6 +801,7 @@ class Filter extends React.Component{
             )
         }.bind(this));
 
+        console.log(this.state.filters.uf);
 
 
         return (
@@ -848,7 +849,8 @@ class Filter extends React.Component{
                                                </div>
 
                                             <div>
-                                                <ul className="box-search-itens" style={{display: (firstRegioes && !this.state.filters.regiao) ? '' : 'none'}}>
+                                                {/*<ul className="box-search-itens" style={{display: (firstRegioes && !this.state.filters.regiao) ? '' : 'none'}}>*/}
+                                                <ul className="box-search-itens" style={{display: (this.state.listRegiao) ? '' : 'none'}}>
                                                     {firstRegioes}
                                                 </ul>
                                             </div>
