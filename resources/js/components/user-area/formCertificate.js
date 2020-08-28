@@ -53,17 +53,19 @@ class FormCertificate extends React.Component{
     }
 
     edit(){
+        console.log('edit: ', this.state.editId);
         $.ajax({
             method: 'GET',
             //url: '/edit-user-certificate/'+this.state.editId,
-            url: getBaseUrl2 + 'osc/certificados/455128',
+            url: getBaseUrl2 + 'osc/certificado/'+this.state.editId,
             data: {
 
             },
             cache: false,
             success: function(data){
-                //console.log("data: ", data);
-                this.setState({form: data}, function(){
+                this.setState({
+                    form: data
+                }, function(){
                     //this.props.showHideForm();
                 });
             }.bind(this),
@@ -115,24 +117,31 @@ class FormCertificate extends React.Component{
     }
 
     register(e){
+
+        console.log('tipo: ', this.state.action);
         e.preventDefault();
 
         if(!this.validate()){
             return;
         }
 
+
+
         //let url = '/register-certificate';
         let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
+        let method = 'POST';
         if(this.state.action==='edit'){
             id = this.state.editId;
+            let method = 'PUT';
             //url = '/update-user-certificate';
-            url = getBaseUrl2 + 'osc/certificados/455128';
+            url = getBaseUrl2 + 'osc/certificados';
         }
 
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
+                //method:"'"+method+"'",
                 method:'POST',
                 url: url,
                 //url: '/register-certificate',

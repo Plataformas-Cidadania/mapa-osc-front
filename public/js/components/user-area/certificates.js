@@ -216,7 +216,7 @@ class Certificates extends React.Component {
                     { width: '70' },
                     React.createElement(
                         'a',
-                        { onClick: () => this.edit(item.id) },
+                        { onClick: () => this.edit(item.id_certificado) },
                         React.createElement('i', { className: 'far fa-edit text-primary' })
                     ),
                     '\xA0\xA0',

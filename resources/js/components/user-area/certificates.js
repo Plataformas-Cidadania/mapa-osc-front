@@ -186,7 +186,7 @@ class Certificates extends React.Component{
                     <td>{item.dt_fim_certificado}</td>
                     <td>{item.edmu_nm_municipio}</td>
                     <td width="70">
-                        <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                        <a onClick={() => this.edit(item.id_certificado)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.remove(item.id_certificado)} style={{display: this.state.loadingRemove[item.id_certificado] ? 'none' : ''}}>
                             <i className={"fas "+( this.state.remove[item.id_certificado] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
                         </a>
