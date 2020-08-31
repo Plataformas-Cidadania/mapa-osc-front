@@ -17,6 +17,7 @@ class FormCertificate extends React.Component{
                 cd_certificado: true,
             },
             showMsg: false,
+            updateOk: false,
             msg: '',
             certificates: [],
             maxAlert: false,
@@ -26,6 +27,7 @@ class FormCertificate extends React.Component{
             },
             action: '',//new | edit
             editId: this.props.id,
+
         };
 
 
@@ -126,11 +128,13 @@ class FormCertificate extends React.Component{
         let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
         let method = 'POST';
+        let msg = "Dados inserido com sucesso!";
 
         if(this.state.action==='edit'){
             id = this.state.editId;
             method = 'PUT';
             url = getBaseUrl2 + 'osc/certificado/'+id;
+            msg = "Dados alterados com sucesso!";
         }
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
@@ -149,7 +153,7 @@ class FormCertificate extends React.Component{
                 success: function(data) {
                     if(data.max){
                         let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, certificates: data.certificates});
+                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, certificates: data.certificates, updateOk: true, showMsg: true});
                         return;
                     }
 
@@ -161,17 +165,16 @@ class FormCertificate extends React.Component{
                     }
 
                     let btnContinue = false;
-
                     this.props.list();
-
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue,  updateOk: true, msg: msg, showMsg: true})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false, button: true});
+                    let msg = "Ocorreu um erro!";
+                    this.setState({loading: false, msg: msg, button: true,  updateOk: false});
                 }.bind(this)
             });
         });
@@ -234,20 +237,29 @@ class FormCertificate extends React.Component{
                             </div>
                         </div>
 
-                        <p><i>* campos obrigatórios</i></p>
+                        {/*<p><i>* campos obrigatórios</i></p>*/}
+
+                        <div>
+                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                {this.state.msg}
+                            </div>
+                        </div>
                         <div className="row">
                             <div className="col-md-6">
                                 <button className="btn btn-success" onClick={this.register}>
-                                    <span style={{display: this.state.action==='edit' ? 'block' : "none"}}>Editar</span>
-                                    <span style={{display: this.state.action==='edit' ? 'none' : "block"}}>Adicionar</span>
+                                    <span style={{display: this.state.action==='edit' ? 'block' : "none"}}>
+                                        <i className="fas fa-cloud-download-alt"/> Salvar alteração</span>
+                                    <span style={{display: this.state.action==='edit' ? 'none' : "block"}}>
+                                        <i className="fas fa-plus"/> Adicionar</span>
                                 </button>
                             </div>
                         </div>
                         <br/>
 
-                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
-                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Certificatos Cadastrados</div>
+
+                        {/*<div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Certificatos Cadastrados</div>*/}
 
                     </form>
                     <br/><br/>

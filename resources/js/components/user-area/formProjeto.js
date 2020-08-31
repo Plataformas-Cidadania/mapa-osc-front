@@ -132,7 +132,6 @@ class FormProjeto extends React.Component{
             $.ajax({
                 method:'POST',
                 url: url,
-                //url: '/register-projeto',
                 data:{
                     form: this.state.form,
                     id: id,
@@ -196,37 +195,173 @@ class FormProjeto extends React.Component{
                 <div className="col-md-12">
                     <form>
 
+
+
                         <div className="row">
-                            <div className="col-md-6">
-                                <label htmlFor="nome">Nome*</label><br/>
-                                <select className={"form-control form-m "+(this.state.requireds.cd_projeto ? '' : 'invalid-field')}
-                                        name="tipo" onChange={this.handleInputChange} value={this.state.form.cd_projeto}>
-                                    <option value="0">Selecione</option>
-                                    <option value="1">Utilidade Pública Municipal</option>
-                                    <option value="2">Utilidade Pública Estadual</option>
+
+
+
+                            <div className="form-group col-md-12">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.tx_nome_projeto}
+                                           placeholder={this.state.requireds.tx_nome_projeto} />
+                                    <label htmlFor="tx_nome_projeto">Nome do projeto, atividade ou programa</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-4">
+                                <label htmlFor="cd_certificado">Nome*</label><br/>
+                                <select className={"form-control form-m "+(this.state.requireds.cd_certificado ? '' : 'invalid-field')}
+                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
+                                    <option value="-1">Selecione</option>
+                                    <option value="Arquivado, cancelado ou indeferido">Utilidade Pública Municipal</option>
+                                    <option value="Proposta">Proposta</option>
+                                    <option value="Projeto em andamento">Projeto em andamento</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                    <option value="Outro">Outro</option>
                                 </select><br/>
                             </div>
-                            <div className="col-md-6">
-                                <label htmlFor="tipo">Localidade*</label><br/>
-                                <input className={"form-control "+(this.state.requireds.cd_uf ? '' : 'invalid-field')}
-                                       type="text" name="nome" onChange={this.handleInputChange}
-                                       value={this.state.form.cd_uf} placeholder=""/><br/>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="tx_nome_status_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.tx_nome_status_projeto}
+                                           placeholder={this.state.requireds.tx_nome_status_projeto} />
+                                    <label htmlFor="tx_nome_status_projeto">Situação do projeto</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.dt_data_inicio_projeto}
+                                           placeholder={this.state.requireds.dt_data_inicio_projeto} />
+                                    <label htmlFor="dt_data_inicio_projeto">Data de Início</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.dt_data_fim_projeto}
+                                           placeholder={this.state.requireds.dt_data_fim_projeto} />
+                                    <label htmlFor="dt_data_fim_projeto">Data de Fim</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-8">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.tx_link_projeto}
+                                           placeholder={this.state.requireds.tx_link_projeto} />
+                                    <label htmlFor="tx_link_projeto">Link para o projeto</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="nr_total_beneficiarios" onChange={this.handleInputChange}
+                                           value={this.state.form.nr_total_beneficiarios}
+                                           placeholder={this.state.requireds.nr_total_beneficiarios} />
+                                    <label htmlFor="nr_total_beneficiarios">Total de Beneficiários</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.nr_valor_total_projeto}
+                                           placeholder={this.state.requireds.nr_valor_total_projeto} />
+                                    <label htmlFor="nr_valor_total_projeto">Valor Total</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-4">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.nr_valor_captado_projeto}
+                                           placeholder={this.state.requireds.nr_valor_captado_projeto} />
+                                    <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="form-group col-md-12">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="tx_descricao_projeto" onChange={this.handleInputChange}
+                                           value={this.state.form.tx_descricao_projeto}
+                                           placeholder={this.state.requireds.tx_descricao_projeto} />
+                                    <label htmlFor="tx_descricao_projeto">Descrição do Projeto, atividade e/ou programa</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group col-md-12">
+                                <div className="label-float">
+                                    <input className={"form-control form-g "} type="text" name="tx_metodologia_monitoramento" onChange={this.handleInputChange}
+                                           value={this.state.form.tx_metodologia_monitoramento}
+                                           placeholder={this.state.requireds.tx_metodologia_monitoramento} />
+                                    <label htmlFor="tx_metodologia_monitoramento">Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa</label>
+                                    <div className="label-box-info-off">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div className="col-md-4">
+                                {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
+                                <select className={"form-control form-m "+(this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field')}
+                                        name="tx_nome_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_abrangencia_projeto}>
+                                    <option value="-1">Selecione</option>
+                                    <option value="Municipal">Municipal</option>
+                                    <option value="Estadual">Estadual</option>
+                                    <option value="Regional">Regional</option>
+                                    <option value="Nacional">Nacional</option>
+                                </select><br/>
+                            </div>
+
+                            <div className="col-md-4">
+                                {/*<label htmlFor="tx_nome_zona_atuacao">Zona de Atuação*</label><br/>*/}
+                                <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
+                                        name="tx_nome_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_zona_atuacao}>
+                                    <option value="-1">Selecione</option>
+                                    <option value="Rural">Rural</option>
+                                    <option value="Urbana">Urbana</option>
+                                </select><br/>
+                            </div>
+
+
                         </div>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <label htmlFor="cep">Data início da validade*</label><br/>
-                                <input className={"form-control "+(this.state.requireds.dt_inicio_projeto ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_inicio_projeto} placeholder=""/><br/>
-                            </div>
-                            <div className="col-md-6">
-                                <label htmlFor="cep">Data fim da validade*</label><br/>
-                                <input className={"form-control "+(this.state.requireds.dt_fim_projeto ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_fim_projeto} placeholder=""/><br/>
-                            </div>
-                        </div>
+
 
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">

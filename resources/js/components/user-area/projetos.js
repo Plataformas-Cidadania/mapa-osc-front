@@ -21,6 +21,8 @@ class Projetos extends React.Component{
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+        this.modal = this.modal.bind(this);
+        this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount(){
@@ -45,7 +47,11 @@ class Projetos extends React.Component{
 
     edit(id){
        // this.setState({actionForm: 'edit'});
-        this.setState({actionForm: 'edit', showForm: false, editId: id});
+        //this.setState({actionForm: 'edit', showForm: false, editId: id});
+
+        this.setState({actionForm: 'edit', editId: id}, function(){
+            this.callModal();
+        });
     }
 
     cancelRemove(id){
@@ -132,11 +138,39 @@ class Projetos extends React.Component{
         });
     }
 
+    callModal(){
+        let modal = this.state.modal;
+        this.setState({modal: modal}, function(){
+            $('#modalForm').modal('show');
+        });
+    }
+
+    modal(){
+        return (
+
+            <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>Título</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     render(){
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
+        let modal = this.modal();
         let projetos = this.state.projetos.map(function(item, index){
 
             let hr = null;
@@ -149,7 +183,7 @@ class Projetos extends React.Component{
                     <td>{item.tx_nome_projeto}</td>
                     <td>{item.dt_data_inicio_projeto}</td>
                     <td>{item.dt_data_fim_projeto}</td>
-                    <td>{item.cd_uf}</td>
+                    <td>{item.nr_valor_total_projeto}</td>
                     <td width="70">
                         <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.remove(item.id_projeto)} style={{display: this.state.loadingRemove[item.id_projeto] ? 'none' : ''}}>
@@ -167,7 +201,7 @@ class Projetos extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fa fa-project-diagram" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
+                    <div className="mn-accordion-icon"><i className="fa fa-project-diagram" aria-hidden="true"/></div> <h3>Projetos</h3><br/>
                     <p>Você tem {this.state.projetos.length} títulos ou projetos cadastrados</p>
                     <hr/>
                 </div>
@@ -183,7 +217,7 @@ class Projetos extends React.Component{
                                 <th scope="col">Titulo / Projeto</th>
                                 <th scope="col">Início da validade</th>
                                 <th scope="col">Fim da validade</th>
-                                <th scope="col">Localidade</th>
+                                <th scope="col">Valor total projeto</th>
                                 <th scope="col"/>
                             </tr>
                             </thead>
@@ -192,16 +226,16 @@ class Projetos extends React.Component{
                             </tbody>
                         </table>
 
-                        <div style={{float: 'right', cursor: 'pointer', display: this.state.projetos.length < maxProjetos ? 'block' : 'none' }}>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>
+                        <div style={{float: 'right', cursor: 'pointer'}}>
+                            <a onClick={this.callModal} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
+                           {/* <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>*/}
                         </div>
 
-                        <div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
+                        {/*<div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
                             <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>
+                        </div>*/}
                     </div>
-
+                    {modal}
                 </div>
             </div>
         );

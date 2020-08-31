@@ -17,6 +17,7 @@ class FormCertificate extends React.Component {
                 cd_certificado: true
             },
             showMsg: false,
+            updateOk: false,
             msg: '',
             certificates: [],
             maxAlert: false,
@@ -26,6 +27,7 @@ class FormCertificate extends React.Component {
             },
             action: '', //new | edit
             editId: this.props.id
+
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -123,11 +125,13 @@ class FormCertificate extends React.Component {
         let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
         let method = 'POST';
+        let msg = "Dados inserido com sucesso!";
 
         if (this.state.action === 'edit') {
             id = this.state.editId;
             method = 'PUT';
             url = getBaseUrl2 + 'osc/certificado/' + id;
+            msg = "Dados alterados com sucesso!";
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
@@ -146,7 +150,7 @@ class FormCertificate extends React.Component {
                 success: function (data) {
                     if (data.max) {
                         let msg = data.msg;
-                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, certificates: data.certificates });
+                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, certificates: data.certificates, updateOk: true, showMsg: true });
                         return;
                     }
 
@@ -158,17 +162,16 @@ class FormCertificate extends React.Component {
                     }
 
                     let btnContinue = false;
-
                     this.props.list();
-
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({ certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue });
+                    this.setState({ certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue, updateOk: true, msg: msg, showMsg: true });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({ loading: false, button: true });
+                    let msg = "Ocorreu um erro!";
+                    this.setState({ loading: false, msg: msg, button: true, updateOk: false });
                 }.bind(this)
             });
         });
@@ -282,12 +285,22 @@ class FormCertificate extends React.Component {
                         )
                     ),
                     React.createElement(
-                        'p',
+                        'div',
                         null,
                         React.createElement(
-                            'i',
-                            null,
-                            '* campos obrigat\xF3rios'
+                            'div',
+                            { style: { display: this.state.loading ? 'block' : 'none' } },
+                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                            ' Processando ',
+                            React.createElement('br', null),
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                            React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                            this.state.msg
                         )
                     ),
                     React.createElement(
@@ -302,33 +315,19 @@ class FormCertificate extends React.Component {
                                 React.createElement(
                                     'span',
                                     { style: { display: this.state.action === 'edit' ? 'block' : "none" } },
-                                    'Editar'
+                                    React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
+                                    ' Salvar altera\xE7\xE3o'
                                 ),
                                 React.createElement(
                                     'span',
                                     { style: { display: this.state.action === 'edit' ? 'none' : "block" } },
-                                    'Adicionar'
+                                    React.createElement('i', { className: 'fas fa-plus' }),
+                                    ' Adicionar'
                                 )
                             )
                         )
                     ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },
-                        this.state.msg
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.loading ? 'block' : 'none' } },
-                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                        'Processando'
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
-                        'M\xE1ximo de Certificatos Cadastrados'
-                    )
+                    React.createElement('br', null)
                 ),
                 React.createElement('br', null),
                 React.createElement('br', null)
