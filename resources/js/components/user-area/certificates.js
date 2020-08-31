@@ -46,7 +46,6 @@ class Certificates extends React.Component{
     }
 
     edit(id){
-       // this.setState({actionForm: 'edit'});
         this.setState({actionForm: 'edit', editId: id}, function(){
             this.callModal();
         });
@@ -96,14 +95,6 @@ class Certificates extends React.Component{
 
     showHideForm(action){
         let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-
-        this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
 
         this.setState({showForm: showForm, actionForm: actionForm});
@@ -227,13 +218,10 @@ class Certificates extends React.Component{
                             </tbody>
                         </table>
 
-                        <div style={{float: 'right', cursor: 'pointer', display: this.state.certificates.length < maxCertificates ? 'block' : 'none' }}>
-                            <a onClick={this.callModal} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
+                        <div style={{float: 'right', cursor: 'pointer'}}>
+                            <a onClick={this.callModal}  className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
                         </div>
 
-                        {/*<div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
-                            <FormCertificate action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>*/}
                     </div>
 
                 </div>

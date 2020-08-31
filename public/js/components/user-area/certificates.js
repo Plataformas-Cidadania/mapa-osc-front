@@ -45,7 +45,6 @@ class Certificates extends React.Component {
     }
 
     edit(id) {
-        // this.setState({actionForm: 'edit'});
         this.setState({ actionForm: 'edit', editId: id }, function () {
             this.callModal();
         });
@@ -92,13 +91,6 @@ class Certificates extends React.Component {
 
     showHideForm(action) {
         let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
 
         this.setState({ showForm: showForm, actionForm: actionForm });
@@ -313,10 +305,10 @@ class Certificates extends React.Component {
                     ),
                     React.createElement(
                         'div',
-                        { style: { float: 'right', cursor: 'pointer', display: this.state.certificates.length < maxCertificates ? 'block' : 'none' } },
+                        { style: { float: 'right', cursor: 'pointer' } },
                         React.createElement(
                             'a',
-                            { onClick: this.callModal, style: { display: this.state.showForm ? "none" : "block" }, className: 'btn btn-warning' },
+                            { onClick: this.callModal, className: 'btn btn-warning' },
                             React.createElement('i', { className: 'fa fa-plus' }),
                             ' Adicionar novo t\xEDtulo'
                         )

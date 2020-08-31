@@ -117,50 +117,36 @@ class FormCertificate extends React.Component{
     }
 
     register(e){
-
-        console.log('tipo: ', this.state.action);
         e.preventDefault();
 
         if(!this.validate()){
             return;
         }
 
-
-
-        //let url = '/register-certificate';
         let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
         let method = 'POST';
+
         if(this.state.action==='edit'){
             id = this.state.editId;
-            let method = 'PUT';
-            //url = '/update-user-certificate';
-            url = getBaseUrl2 + 'osc/certificados';
+            method = 'PUT';
+            url = getBaseUrl2 + 'osc/certificado/'+id;
         }
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                //method:"'"+method+"'",
-                method:'POST',
+                method:method,
                 url: url,
-                //url: '/register-certificate',
                 data:{
-                    //form: this.state.form,
                     dt_inicio_certificado: this.state.form.dt_inicio_certificado,
                     dt_fim_certificado: this.state.form.dt_fim_certificado,
                     cd_uf: this.state.form.cd_uf,
                     cd_certificado: this.state.form.cd_certificado,
-                    /*ft_certificado: 'Representante de OSC',
-                    ft_inicio_certificado: 'Representante de OSC',
-                    ft_fim_certificado: 'Representante de OSC',*/
                     id: id,
                     id_osc: '455128',
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
                     if(data.max){
                         let msg = data.msg;
                         this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, certificates: data.certificates});
@@ -251,14 +237,10 @@ class FormCertificate extends React.Component{
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">
                             <div className="col-md-6">
-                                <button style={{display: this.state.action==='edit' ? 'block' : ""}}
-                                        className="btn btn-success" onClick={this.register}>
-                                    Adicionar
+                                <button className="btn btn-success" onClick={this.register}>
+                                    <span style={{display: this.state.action==='edit' ? 'block' : "none"}}>Editar</span>
+                                    <span style={{display: this.state.action==='edit' ? 'none' : "block"}}>Adicionar</span>
                                 </button>
-                                {/*<button style={{display: this.state.action==='edit' ? 'block' : (this.state.certificates.length < maxCertificates ?  'block' : 'none')}}
-                                        className="btn btn-success" onClick={this.register}>
-                                    Adicionar
-                                </button>*/}
                             </div>
                         </div>
                         <br/>
