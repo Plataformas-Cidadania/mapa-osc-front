@@ -15,7 +15,8 @@ class Certificates extends React.Component {
             loadingRemove: [],
             certificate: {},
             editId: 0,
-            modal: {}
+            modal: {},
+            modalTitle: 'Inserir título ou certificação'
         };
 
         this.list = this.list.bind(this);
@@ -45,7 +46,7 @@ class Certificates extends React.Component {
     }
 
     edit(id) {
-        this.setState({ actionForm: 'edit', editId: id }, function () {
+        this.setState({ actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação' }, function () {
             this.callModal();
         });
     }
@@ -147,7 +148,7 @@ class Certificates extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                'T\xEDtulo'
+                                this.state.modalTitle
                             )
                         ),
                         React.createElement(

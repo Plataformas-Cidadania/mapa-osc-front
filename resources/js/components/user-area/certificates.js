@@ -15,7 +15,8 @@ class Certificates extends React.Component{
             loadingRemove: [],
             certificate: {},
             editId: 0,
-            modal: {}
+            modal: {},
+            modalTitle: 'Inserir título ou certificação',
         };
 
         this.list = this.list.bind(this);
@@ -46,7 +47,7 @@ class Certificates extends React.Component{
     }
 
     edit(id){
-        this.setState({actionForm: 'edit', editId: id}, function(){
+        this.setState({actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação'}, function(){
             this.callModal();
         });
     }
@@ -142,7 +143,7 @@ class Certificates extends React.Component{
                     <div className="modal-content">
 
                         <div className="modal-header">
-                            <h4 className="modal-title" id="exampleModalLabel"><strong>Título</strong></h4>
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modalTitle}</strong></h4>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
                                 <span aria-hidden="true">&times;</span>
                             </button>
