@@ -239,10 +239,11 @@
 @endif
 @if($rota=="governancas-user")
     <script src="/js/components/user-area/formGovernanca.js"></script>
+    <script src="/js/components/user-area/formConselho.js"></script>
     <script src="/js/components/user-area/governancas.js"></script>
 @endif
 @if($rota=="participacoes-user")
-    <script src="/js/components/user-area/formParticipacao.js"></script>
+    <script src="/js/components/user-area/formParticipacaoConselho.js"></script>
     <script src="/js/components/user-area/formParticipacaoConferencia.js"></script>
     <script src="/js/components/user-area/formParticipacaoOutro.js"></script>
     <script src="/js/components/user-area/participacoes.js"></script>

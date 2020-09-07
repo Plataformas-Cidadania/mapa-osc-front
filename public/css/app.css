@@ -13226,6 +13226,17 @@ label, input, .btn-number {
   margin: 2px 0;
 }
 
+.btn-add {
+  margin-top: -57px;
+  position: absolute;
+  margin-left: -23px;
+  cursor: pointer;
+}
+
+.btn-add svg {
+  color: #3A559B !important;
+}
+
 #chart {
   max-width: 100%;
   margin: 35px auto;

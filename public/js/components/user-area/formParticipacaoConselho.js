@@ -1,4 +1,4 @@
-class FormParticipacaoConferencia extends React.Component {
+class FormParticipacaoConselho extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +29,7 @@ class FormParticipacaoConferencia extends React.Component {
             },
             showMsg: false,
             msg: '',
-            conferencias: [],
+            participacoes: [],
             maxAlert: false,
             tipo: {
                 1: 'Residencial',
@@ -69,7 +69,7 @@ class FormParticipacaoConferencia extends React.Component {
     edit() {
         $.ajax({
             method: 'GET',
-            url: '/edit-user-conferencia/' + this.state.editId,
+            url: '/edit-user-conselho/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
@@ -132,18 +132,18 @@ class FormParticipacaoConferencia extends React.Component {
             return;
         }
 
-        let url = '/register-conferencia';
+        let url = '/register-conselho';
         let id = null;
         if (this.state.action === 'edit') {
             id = this.state.editId;
-            url = '/update-user-conferencia';
+            url = '/update-user-conselho';
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
                 url: url,
-                //url: '/register-conferencia',
+                //url: '/register-conselho',
                 data: {
                     form: this.state.form,
                     id: id
@@ -154,24 +154,24 @@ class FormParticipacaoConferencia extends React.Component {
 
                     if (data.max) {
                         let msg = data.msg;
-                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, conferencias: data.conferencias });
+                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, participacoes: data.participacoes });
                         return;
                     }
 
                     /*let button = true;
-                    if(data.conferencias.length >= data.maxConferencias){
+                    if(data.participacoes.length >= data.maxParticipacoes){
                         button = false;
                     }*/
 
                     let button = true;
                     if (this.state.action === 'new') {
-                        if (data.conferencias.length >= data.maxConferencias) {
+                        if (data.participacoes.length >= data.maxParticipacoes) {
                             button = false;
                         }
                     }
 
                     let btnContinue = false;
-                    /*if(data.conferencias.length > 0){
+                    /*if(data.participacoes.length > 0){
                         btnContinue = true;
                     }*/
 
@@ -180,7 +180,7 @@ class FormParticipacaoConferencia extends React.Component {
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({ conferencias: data.conferencias, loading: false, button: button, btnContinue: btnContinue });
+                    this.setState({ participacoes: data.participacoes, loading: false, button: button, btnContinue: btnContinue });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -224,7 +224,7 @@ class FormParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome da Confer\xEAncia'
+                            'Nome do Conselho'
                         ),
                         React.createElement(
                             'div',
@@ -244,7 +244,7 @@ class FormParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Ano de realiza\xE7\xE3o da confer\xEAncia'
+                            'Titularidade'
                         ),
                         React.createElement(
                             'div',
@@ -264,7 +264,67 @@ class FormParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'label',
                             { htmlFor: 'tx_link_estatuto_osc' },
-                            'Forma de participa\xE7\xE3o na confer\xEAncia'
+                            'Nome de representante'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Periodicidade da Reuni\xE3o'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Data de in\xEDcio de vig\xEAncia'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-float' },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
+                            placeholder: 'Se houver, insira o link que' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_link_estatuto_osc' },
+                            'Data de fim de vig\xEAncia'
                         ),
                         React.createElement(
                             'div',
@@ -295,7 +355,7 @@ class FormParticipacaoConferencia extends React.Component {
                     React.createElement(
                         'div',
                         { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
-                        'M\xE1ximo de Conferenciaz Cadastrados'
+                        'M\xE1ximo de Conselhoz Cadastrados'
                     )
                 ),
                 React.createElement('br', null),

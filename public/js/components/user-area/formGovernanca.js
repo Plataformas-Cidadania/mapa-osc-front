@@ -143,7 +143,6 @@ class FormGovernanca extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: url,
-                //url: '/register-governanca',
                 data: {
                     form: this.state.form,
                     id: id
@@ -216,89 +215,20 @@ class FormGovernanca extends React.Component {
                 React.createElement(
                     'form',
                     null,
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'tipo' },
-                        'Tipo*'
-                    ),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
+                        type: 'text', name: 'nome', onChange: this.handleInputChange,
+                        value: this.state.form.nome, placeholder: 'Nome' }),
+                    React.createElement('br', null),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
+                        type: 'text', name: 'cep', onChange: this.handleInputChange,
+                        value: this.state.form.cep, placeholder: 'Cargo do dirigente' }),
                     React.createElement('br', null),
                     React.createElement(
-                        'select',
-                        { className: "form-control form-m " + (this.state.requireds.tipo ? '' : 'invalid-field'),
-                            name: 'tipo', onChange: this.handleInputChange, value: this.state.form.tipo },
-                        React.createElement(
-                            'option',
-                            { value: '0' },
-                            'Selecione'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '1' },
-                            'Quadro de Dirigentes'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '2' },
-                            'Conselho Fiscal'
-                        )
+                        'button',
+                        { style: { display: this.state.action === 'edit' ? 'block' : this.state.governancas.length < maxGovernancas ? 'block' : 'none' },
+                            className: 'btn btn-success', onClick: this.register },
+                        'Cadastrar'
                     ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'nome' },
-                                'Nome*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
-                                type: 'text', name: 'nome', onChange: this.handleInputChange,
-                                value: this.state.form.nome, placeholder: '' }),
-                            React.createElement('br', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'cep' },
-                                'Cargo do dirigente*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
-                                type: 'text', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.cep, placeholder: '' }),
-                            React.createElement('br', null)
-                        )
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        React.createElement(
-                            'i',
-                            null,
-                            '* campos obrigat\xF3rios'
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'button',
-                                { style: { display: this.state.action === 'edit' ? 'block' : this.state.governancas.length < maxGovernancas ? 'block' : 'none' },
-                                    className: 'btn btn-style-primary', onClick: this.register },
-                                'Cadastrar'
-                            )
-                        )
-                    ),
-                    React.createElement('br', null),
                     React.createElement(
                         'div',
                         { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },
@@ -315,9 +245,7 @@ class FormGovernanca extends React.Component {
                         { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
                         'M\xE1ximo de Governancaz Cadastrados'
                     )
-                ),
-                React.createElement('br', null),
-                React.createElement('br', null)
+                )
             )
         );
     }

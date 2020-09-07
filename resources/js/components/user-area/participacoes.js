@@ -4,8 +4,9 @@ class Participacoes extends React.Component{
         this.state = {
             loadingList:false,
             loading:false,
-            participacoes:[],
+            conferencias:[],
             conselhos:[],
+            outros:[],
             tipo:{
                 1: 'Residencial',
                 2: 'Comercial',
@@ -22,13 +23,13 @@ class Participacoes extends React.Component{
             actionFormOutro: '',
             remove: [],
             loadingRemove: [],
-            participacao: {},
+            conferencia: {},
             conselho: {},
+            outro: {},
             editId: 0,
         };
 
         this.list = this.list.bind(this);
-        this.list2 = this.list2.bind(this);
         this.remove = this.remove.bind(this);
 
         this.showHideForm = this.showHideForm.bind(this);
@@ -46,24 +47,8 @@ class Participacoes extends React.Component{
 
     componentDidMount(){
         this.list();
-        this.list2();
     }
 
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
-
-    }
 
     edit(id){
        // this.setState({actionForm: 'edit'});
@@ -106,7 +91,6 @@ class Participacoes extends React.Component{
                 console.log(status, err.toString());
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
             }.bind(this)
         });
 
@@ -166,15 +150,21 @@ class Participacoes extends React.Component{
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-participacoes',
+            method: 'GET',
+            //url: '/list-users-participacoes',
+            url: getBaseUrl2 + 'osc/participacao_social/611720',
+            //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {
 
             },
             cache: false,
             success: function(data){
                 console.log(data);
-                this.setState({participacoes: data, loadingList: false});
+                this.setState({
+                    conferencias: data.conferencias_politicas_publicas,
+                    conselhos: data.conselhos_politicas_publicas,
+                    outros: data.outros_espacos_participacao_social,
+                    loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -183,7 +173,7 @@ class Participacoes extends React.Component{
         });
     }
 
-    list2(){
+   /* list2(){
 
         this.setState({loadingList: true});
 
@@ -203,43 +193,9 @@ class Participacoes extends React.Component{
                 this.setState({loadingList: false});
             }.bind(this)
         });
-    }
+    }*/
 
     render(){
-
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
-        let participacoes = this.state.participacoes.map(function(item, index){
-
-            let hr = null;
-            if(index < this.state.participacoes.length-1){
-                hr = <hr/>;
-            }
-
-            return (
-
-
-                <div className="box-insert-list" key={"participacao_"+index}>
-                    {/*<i className="far fa-trash-alt text-danger float-right"/>*/}
-                    <div className="float-right" style={{marginRight: '40px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
-                            <i className={"fa fa-undo"}/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
-                    </div>
-                    <p>{item.tx_nome_dirigente}</p>
-                    <p><strong>{item.tx_cargo_dirigente}</strong></p>
-
-                </div>
-
-            );
-        }.bind(this));
-
 
         let conselhos = this.state.conselhos.map(function(item, index){
 
@@ -249,21 +205,145 @@ class Participacoes extends React.Component{
             }
 
             return (
-                <div className="box-insert-list" key={"conselho_"+index}>
-                    <div className="float-right" style={{width: '50px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
-                            <i className={"fa fa-undo"}/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
+
+                <div className="col-md-6" style={{border: '0'}} key={"conselho_"+index}>
+                    <div className="box-insert-g text-left">
+                        <div className="box-insert-item box-insert-list">
+                            <br/>
+                            <i className="far fa-trash-alt text-danger float-right" />
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <br/>
+                            <div>
+                                <h3>Nome do Conselho:</h3>
+                                <p>{item.dc_conselho.tx_nome_conselho}</p>
+                                <hr/>
+                            </div>
+                            <div>
+                                <h3>Titularidade:</h3>
+                                <p>{item.dc_tipo_participacao.tx_nome_tipo_participacao}</p>
+                                <hr/>
+                            </div>
+                            <div>
+                                <h3>Nome de representante:</h3>
+                                <p>*For*{/*<input  value="Fernando Lima de Souza "/>*/}</p>
+                                <hr/>
+                            </div>
+                            <div>
+                                <h3>Periodicidade da Reunião:</h3>
+                                <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}{/*<input  value="Mensal"/>*/}</p>
+                                <hr/>
+                            </div>
+                            <div>
+                                <h3>Data de início de vigência:</h3>
+                                <p>{item.dt_data_inicio_conselho}{/*<input  value="01/12/2019"/>*/}</p>
+                                <hr/>
+                            </div>
+                            <div>
+                                <h3>Data de fim de vigência:</h3>
+                                <p>{item.dt_data_fim_conselho}{/*<input  value="01/12/2019"/>*/}</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>{item.tx_nome_conselheiro}</p>
+                    <br/>
                 </div>
+
             );
         }.bind(this));
+
+
+        let conferencias = this.state.conferencias.map(function(item, index){
+
+            let hr = null;
+            if(index < this.state.conferencias.length-1){
+                hr = <hr/>;
+            }
+
+            return (
+
+                <div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
+                    <div className="box-insert-m">
+                        <div className="box-insert-item box-insert-list">
+                            <br/>
+                            <i className="far fa-trash-alt text-danger float-right" />
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <br/>
+                            <div>
+                                <h3>Nome da Conferência:</h3>
+                                <p>{item.dc_conferencia.tx_nome_conferencia}{/*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*/}</p>
+                            </div>
+                            <hr/>
+                            <div>
+                                <h3>Ano de realização da conferência:</h3>
+                                <p>{item.dt_ano_realizacao}{/*<input  value="1900"/>*/}</p>
+                            </div>
+                            <hr/>
+                            <div>
+                                <h3>Forma de participação na conferência:</h3>
+                                <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}{/*<input  value="Membro de comissão organizadora nacional"/>*/}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+
+            );
+        }.bind(this));
+
+        let outros = this.state.outros.map(function(item, index){
+
+            let hr = null;
+            if(index < this.state.outros.length-1){
+                hr = <hr/>;
+            }
+
+            return (
+
+                <div className="col-md-6" style={{border: '0'}} key={"outros_"+index}>
+                    <div className="box-insert-p">
+                        <div className="box-insert-item box-insert-list">
+                            <br/>
+                            <i className="far fa-trash-alt text-danger float-right" />
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <br/>
+                            <div>
+                                <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
+                                <p>{item.tx_nome_participacao_social_outra}{/*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*/}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+
+                /*<div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
+                    <div className="box-insert-m">
+                        <div className="box-insert-item box-insert-list">
+                            <br/>
+                            <i className="far fa-trash-alt text-danger float-right" />
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <br/>
+                            <div>
+                                <h3>Nome da Conferência:</h3>
+                                <p>{item.dc_conferencia.tx_nome_conferencia}{/!*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*!/}</p>
+                            </div>
+                            <hr/>
+                            <div>
+                                <h3>Ano de realização da conferência:</h3>
+                                <p>{item.dt_ano_realizacao}{/!*<input  value="1900"/>*!/}</p>
+                            </div>
+                            <hr/>
+                            <div>
+                                <h3>Forma de participação na conferência:</h3>
+                                <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}{/!*<input  value="Membro de comissão organizadora nacional"/>*!/}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*/
+
+            );
+        }.bind(this));
+
+
+
 
         return(
             <div>
@@ -278,7 +358,6 @@ class Participacoes extends React.Component{
                         <div className="box-groups">
                             <h2>Conselhos de Políticas Públicas</h2>
 
-
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
                                     <input type="checkbox" className="custom-control-input" id="checkConselho" required onClick={this.showHideConselho}/>
@@ -288,7 +367,10 @@ class Participacoes extends React.Component{
 
                             <br/>
                             <div className="row" style={{display: this.state.showConselho ? "none" : ""}}>
-                                <div className="col-md-6" style={{border: '0'}}>
+
+                                {conselhos}
+
+                                {/*<div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-g text-left">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
@@ -326,7 +408,7 @@ class Participacoes extends React.Component{
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*/}
                                 <div className="col-md-6">
                                     <div className=" box-insert-g">
 
@@ -339,7 +421,7 @@ class Participacoes extends React.Component{
                                         <div className="col-md-12">
                                             <div style={{display: this.state.showForm ? 'block' : 'none'}}>
                                                 <a onClick={this.showHideForm}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
-                                                <FormParticipacao action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                                                <FormParticipacaoConferencia action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                                             </div>
                                             <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                                                 <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
@@ -365,7 +447,8 @@ class Participacoes extends React.Component{
                             </div>
                             <br/>
                             <div className="row" style={{display: this.state.showConferencia ? "none" : ""}}>
-                                <div className="col-md-6" style={{border: '0'}}>
+                                {conferencias}
+                                {/*<div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-m">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
@@ -388,7 +471,7 @@ class Participacoes extends React.Component{
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*/}
                                 <div className="col-md-6">
                                     <div className="box-insert-m">
                                         <div className="box-insert-btn text-center">
@@ -427,7 +510,9 @@ class Participacoes extends React.Component{
 
                             <br/>
                             <div className="row" style={{display: this.state.showOutro ? "none" : ""}}>
-                                <div className="col-md-6" style={{border: '0'}}>
+
+                                {outros}
+                                {/*<div className="col-md-6" style={{border: '0'}}>
                                     <div className="box-insert-p">
                                         <div className="box-insert-item box-insert-list">
                                             <br/>
@@ -440,7 +525,7 @@ class Participacoes extends React.Component{
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*/}
                                 <div className="col-md-6">
                                     <div className="box-insert-p">
                                         <div className="box-insert-btn text-center">

@@ -217,3 +217,12 @@
 .items-checkbox{
     margin: 2px 0;
 }
+.btn-add{
+    margin-top: -57px;
+    position: absolute;
+    margin-left: -23px;
+    cursor: pointer;
+}
+.btn-add svg{
+    color: $color-pri!important;
+}

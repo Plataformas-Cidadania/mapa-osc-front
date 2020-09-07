@@ -1,44 +1,20 @@
-class FormGovernanca extends React.Component{
+class FormConselho extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             form: {
                 nome: '',
-                cep: '',
-                endereco: '',
-                numero: '',
-                complemento: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                obs: '',
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
                 nome: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
-                tipo: true,
-                principal: true,
             },
             showMsg: false,
             msg: '',
-            governancas: [],
+            conselhos: [],
             maxAlert: false,
-            tipo:{
-                1: 'Residencial',
-                2: 'Comercial',
-            },
-            principal:{
-                1: 'Residencial',
-                2: 'Comercial',
-            },
             action: '',//new | edit
             editId: this.props.id,
         };
@@ -52,12 +28,11 @@ class FormGovernanca extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log(props);
         let lastEditId = this.state.editId;
         if(this.state.action != props.action || this.state.editId != props.id){
             this.setState({action: props.action, editId: props.id}, function(){
                 if(lastEditId != props.id){
-                    this.props.showHideForm(this.state.action);
+                    this.props.showHideFormConselho(this.state.action);
                     this.edit();
                 }
                 if(this.state.action=='new'){
@@ -70,7 +45,7 @@ class FormGovernanca extends React.Component{
     edit(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-governanca/'+this.state.editId,
+            url: '/edit-user-conselho/'+this.state.editId,
             data: {
 
             },
@@ -135,11 +110,11 @@ class FormGovernanca extends React.Component{
             return;
         }
 
-        let url = '/register-governanca';
+        let url = '/register-conselho';
         let id = null;
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-governanca';
+            url = '/update-user-conselho';
         }
 
 
@@ -147,6 +122,7 @@ class FormGovernanca extends React.Component{
             $.ajax({
                 method:'POST',
                 url: url,
+                //url: '/register-conselho',
                 data:{
                     form: this.state.form,
                     id: id,
@@ -157,24 +133,20 @@ class FormGovernanca extends React.Component{
 
                     if(data.max){
                         let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, governancas: data.governancas});
+                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, conselhos: data.conselhos});
                         return;
                     }
 
-                    /*let button = true;
-                    if(data.governancas.length >= data.maxGovernancas){
-                        button = false;
-                    }*/
 
                     let button = true;
-                    if(this.state.action==='new'){
-                        if(data.governancas.length >= data.maxGovernancas){
+                    /*if(this.state.action==='new'){
+                        if(data.conselhos.length >= data.maxConselhos){
                             button = false;
                         }
-                    }
+                    }*/
 
                     let btnContinue = false;
-                    /*if(data.governancas.length > 0){
+                    /*if(data.conselhos.length > 0){
                         btnContinue = true;
                     }*/
 
@@ -183,7 +155,7 @@ class FormGovernanca extends React.Component{
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({governancas: data.governancas, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({conselhos: data.conselhos, loading: false, button: button, btnContinue: btnContinue})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -222,18 +194,14 @@ class FormGovernanca extends React.Component{
                                type="text" name="nome" onChange={this.handleInputChange}
                                value={this.state.form.nome} placeholder="Nome"/><br/>
 
-                        <input className={"form-control "+(this.state.requireds.cep ? '' : 'invalid-field')}
-                               type="text" name="cep" onChange={this.handleInputChange}
-                               value={this.state.form.cep} placeholder="Cargo do dirigente"/><br/>
-
-                        <button style={{display: this.state.action==='edit' ? 'block' : (this.state.governancas.length < maxGovernancas ?  'block' : 'none')}}
+                        <button style={{display: this.state.action==='edit' ? 'none' : 'block'}}
                                 className="btn btn-success" onClick={this.register}>
                             Cadastrar
                         </button>
 
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Governancaz Cadastrados</div>
+                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Conselhoz Cadastrados</div>
                     </form>
                 </div>
             </div>
