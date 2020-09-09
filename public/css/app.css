@@ -12308,6 +12308,12 @@ figcaption {
   cursor: pointer;
 }
 
+.box-border {
+  min-height: 120px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px;
+}
+
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;

@@ -23,6 +23,12 @@
 <script src="/js/react/react.development.js" crossorigin></script>
 <script src="/js/react/react-dom.development.js" crossorigin></script>
 
+@if($rota=='detalhar/{id}/{title}')
+    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+    <script src="/js/components/charts/polarChart.js"></script>
+@endif
 @if($rota=='/')
 <script src="js/home.js" ></script>
 <script src="js/conf-owl-carousel.js"></script>
@@ -37,7 +43,6 @@
 <script src="js/components/charts/pieChart.js"></script>
 <script src="js/components/charts/charts.js"></script>
 <script src="js/components/charts/page/home.js"></script>
-
 
 <script src="js/components/home/next/api.js"></script>
 @endif

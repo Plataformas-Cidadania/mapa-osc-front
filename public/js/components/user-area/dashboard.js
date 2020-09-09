@@ -75,10 +75,66 @@ class Daschboard extends React.Component {
                 'Ol\xE1 tudo bem! Estamos sentindo sua falta.'
             ),
             React.createElement('br', null),
-            React.createElement('br', null),
             React.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'row text-center' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-4' },
+                    React.createElement(
+                        'div',
+                        { className: 'box-border' },
+                        React.createElement('br', null),
+                        React.createElement(
+                            'p',
+                            null,
+                            'Total de OSCs'
+                        ),
+                        React.createElement(
+                            'h2',
+                            null,
+                            '20'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-4' },
+                    React.createElement(
+                        'div',
+                        { className: 'box-border' },
+                        React.createElement('br', null),
+                        React.createElement(
+                            'p',
+                            null,
+                            'Total de projetos'
+                        ),
+                        React.createElement(
+                            'h2',
+                            null,
+                            '10'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-4' },
+                    React.createElement(
+                        'div',
+                        { className: 'box-border' },
+                        React.createElement('br', null),
+                        React.createElement(
+                            'p',
+                            null,
+                            'Total de projetos'
+                        ),
+                        React.createElement(
+                            'h2',
+                            null,
+                            '30'
+                        )
+                    )
+                ),
                 totais
             ),
             React.createElement(
