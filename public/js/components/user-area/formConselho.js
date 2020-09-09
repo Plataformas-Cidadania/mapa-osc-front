@@ -3,13 +3,13 @@ class FormConselho extends React.Component {
         super(props);
         this.state = {
             form: {
-                nome: ''
+                tx_nome_conselheiro: ''
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                nome: true
+                tx_nome_conselheiro: true
             },
             showMsg: false,
             msg: '',
@@ -42,9 +42,10 @@ class FormConselho extends React.Component {
     }
 
     edit() {
+
         $.ajax({
             method: 'GET',
-            url: '/edit-user-conselho/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/conselho/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
@@ -107,25 +108,27 @@ class FormConselho extends React.Component {
             return;
         }
 
-        let url = '/register-conselho';
+        let url = 'osc/conselho';
         let id = null;
+        let method = 'POST';
         if (this.state.action === 'edit') {
             id = this.state.editId;
-            url = '/update-user-conselho';
+            url = 'osc/conselho/' + id;
+            method = 'PUT';
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: url,
-                //url: '/register-conselho',
+                method: method,
+                url: getBaseUrl2 + url,
                 data: {
-                    form: this.state.form,
+                    tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
+                    bo_oficial: 0,
+                    id_osc: 455128,
                     id: id
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
 
                     if (data.max) {
                         let msg = data.msg;
@@ -134,16 +137,7 @@ class FormConselho extends React.Component {
                     }
 
                     let button = true;
-                    /*if(this.state.action==='new'){
-                        if(data.conselhos.length >= data.maxConselhos){
-                            button = false;
-                        }
-                    }*/
-
                     let btnContinue = false;
-                    /*if(data.conselhos.length > 0){
-                        btnContinue = true;
-                    }*/
 
                     this.props.list();
 
@@ -160,21 +154,6 @@ class FormConselho extends React.Component {
         });
     }
 
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
-    }
-
     render() {
 
         return React.createElement(
@@ -186,14 +165,13 @@ class FormConselho extends React.Component {
                 React.createElement(
                     'form',
                     null,
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
-                        type: 'text', name: 'nome', onChange: this.handleInputChange,
-                        value: this.state.form.nome, placeholder: 'Nome' }),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_nome_conselheiro ? '' : 'invalid-field'),
+                        type: 'text', name: 'tx_nome_conselheiro', onChange: this.handleInputChange,
+                        value: this.state.form.tx_nome_conselheiro, placeholder: 'Nome' }),
                     React.createElement('br', null),
                     React.createElement(
                         'button',
-                        { style: { display: this.state.action === 'edit' ? 'none' : 'block' },
-                            className: 'btn btn-success', onClick: this.register },
+                        { className: 'btn btn-success', onClick: this.register },
                         'Cadastrar'
                     ),
                     React.createElement(

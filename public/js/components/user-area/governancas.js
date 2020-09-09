@@ -73,8 +73,8 @@ class Governancas extends React.Component {
         loadingRemove[id] = true;
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-governanca/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -155,8 +155,8 @@ class Governancas extends React.Component {
         loadingRemoveConselho[id] = true;
         this.setState({ loadingRemoveConselho: loadingRemoveConselho });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-governanca/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/conselho/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -177,11 +177,6 @@ class Governancas extends React.Component {
 
         let governancas = this.state.governancas.map(function (item, index) {
 
-            let hr = null;
-            if (index < this.state.governancas.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
             return React.createElement(
                 'div',
                 { className: 'box-insert-governanca', key: "governanca_" + index },
@@ -190,21 +185,21 @@ class Governancas extends React.Component {
                     { className: 'float-right', style: { marginRight: '40px' } },
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
+                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id_dirigente) },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
                     '\xA0',
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id_dirigente), style: { display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block' } },
+                        React.createElement('i', { className: "fa " + (this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
                     ),
                     React.createElement(
                         'a',
-                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
+                        { onClick: () => this.cancelRemove(item.id_dirigente), style: { display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none' } },
                         React.createElement('i', { className: "fa fa-undo" })
                     ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none' } })
                 ),
                 React.createElement(
                     'p',
@@ -225,11 +220,6 @@ class Governancas extends React.Component {
 
         let conselhos = this.state.conselhos.map(function (item, index) {
 
-            let hr = null;
-            if (index < this.state.conselhos.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
             return React.createElement(
                 'div',
                 { className: 'box-insert-governanca', key: "conselho_" + index },
@@ -238,21 +228,21 @@ class Governancas extends React.Component {
                     { className: 'float-right', style: { width: '50px' } },
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id) },
+                        { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id_conselheiro) },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
                     '\xA0',
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id), style: { display: this.state.loadingRemoveConselho[item.id] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                        { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id_conselheiro), style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block' } },
+                        React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
                     ),
                     React.createElement(
                         'a',
-                        { onClick: () => this.cancelRemoveConselho(item.id), style: { display: this.state.removeConselho[item.id] && !this.state.loadingRemoveConselho[item.id] ? 'block' : 'none' } },
+                        { onClick: () => this.cancelRemoveConselho(item.id_conselheiro), style: { display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none' } },
                         React.createElement('i', { className: "fa fa-undo" })
                     ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemoveConselho[item.id] ? '' : 'none' } })
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none' } })
                 ),
                 React.createElement(
                     'p',
@@ -261,8 +251,6 @@ class Governancas extends React.Component {
                 )
             );
         }.bind(this));
-
-        console.log('test: ', this.state.governancas);
 
         return React.createElement(
             'div',

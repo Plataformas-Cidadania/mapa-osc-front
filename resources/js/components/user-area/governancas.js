@@ -29,9 +29,6 @@ class Governancas extends React.Component{
             editIdConselho: 0,
             loadingRemoveConselho: [],
 
-
-
-
             deficiencia: null,
             empregados: null,
             voluntarios: null,
@@ -76,8 +73,8 @@ class Governancas extends React.Component{
         loadingRemove[id] = true;
         this.setState({loadingRemove: loadingRemove});
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-governanca/'+id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/'+id,
             data: {
 
             },
@@ -163,8 +160,8 @@ class Governancas extends React.Component{
         loadingRemoveConselho[id] = true;
         this.setState({loadingRemoveConselho: loadingRemoveConselho});
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-governanca/'+id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/conselho/'+id,
             data: {
 
             },
@@ -190,24 +187,19 @@ class Governancas extends React.Component{
 
         let governancas = this.state.governancas.map(function(item, index){
 
-            let hr = null;
-            if(index < this.state.governancas.length-1){
-                hr = <hr/>;
-            }
-
             return (
 
                 <div className="box-insert-governanca" key={"governanca_"+index}>
                     {/*<i className="far fa-trash-alt text-danger float-right"/>*/}
                     <div className="float-right" style={{marginRight: '40px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
+                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)}><i className="fa fa-edit"/></a>&nbsp;
+                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id_dirigente)} style={{display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block'}}>
+                            <i className={"fa "+( this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                         </a>
-                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
+                        <a onClick={() => this.cancelRemove(item.id_dirigente)} style={{display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none'}}>
                             <i className={"fa fa-undo"}/>
                         </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none'}}/>
                     </div>
                     <p>{item.tx_nome_dirigente}</p>
                     <p><strong>{item.tx_cargo_dirigente}</strong></p>
@@ -220,29 +212,23 @@ class Governancas extends React.Component{
 
         let conselhos = this.state.conselhos.map(function(item, index){
 
-            let hr = null;
-            if(index < this.state.conselhos.length-1){
-                hr = <hr/>;
-            }
-
             return (
                 <div className="box-insert-governanca" key={"conselho_"+index}>
                     <div className="float-right" style={{width: '50px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id)} style={{display: this.state.loadingRemoveConselho[item.id] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.removeConselho[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
+                        <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id_conselheiro)}><i className="fa fa-edit"/></a>&nbsp;
+                        <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselheiro)} style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block'}}>
+                            <i className={"fa "+( this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                         </a>
-                        <a onClick={() => this.cancelRemoveConselho(item.id)} style={{display: this.state.removeConselho[item.id] && !this.state.loadingRemoveConselho[item.id] ? 'block' : 'none'}}>
+                        <a onClick={() => this.cancelRemoveConselho(item.id_conselheiro)} style={{display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none'}}>
                             <i className={"fa fa-undo"}/>
                         </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemoveConselho[item.id] ? '' : 'none'}}/>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none'}}/>
                     </div>
                     <p>{item.tx_nome_conselheiro}</p>
                 </div>
             );
         }.bind(this));
 
-        console.log('test: ', this.state.governancas);
 
         return(
 
