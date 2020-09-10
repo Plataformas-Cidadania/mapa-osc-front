@@ -14,6 +14,12 @@ class Governancas extends React.Component{
                 1: 'Endereço principal',
                 2: ' ',
             },
+            form: {
+                voluntarios: '',
+            },
+            requireds: {
+                voluntarios: true,
+            },
 
             loadingRemove: [],
             governanca: {},
@@ -34,6 +40,8 @@ class Governancas extends React.Component{
             voluntarios: null,
             totalTrabalhadores: null,
 
+            editIdVoluntario: 0,
+
         };
 
         this.governanca = this.governanca.bind(this);
@@ -44,6 +52,20 @@ class Governancas extends React.Component{
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
         this.removeConselho = this.removeConselho.bind(this);
         this.closeFormConselho = this.closeFormConselho.bind(this);
+
+        this.updateVoluntario = this.updateVoluntario.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        let form = this.state.form;
+        let placeholder = this.state.placeholder;
+        form[name] = value;
+
+        this.setState({form: form, placeholder: placeholder});
     }
 
     componentDidMount(){
@@ -122,9 +144,13 @@ class Governancas extends React.Component{
                     conselhos: data.conselho_fiscal,
                     deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
                     empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
-                    voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+
                     totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
-                    loadingGovernanca: false
+                    loadingGovernanca: false,
+                    editIdVoluntario: data.relacoes_trabalho.id_osc,
+                    form:{
+                        voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+                    }
                 });
             }.bind(this),
             error: function(xhr, status, err){
@@ -177,6 +203,46 @@ class Governancas extends React.Component{
                 let loadingRemoveConselho = this.state.loadingRemoveConselho;
                 loadingRemoveConselho[id] = false;
             }.bind(this)
+        });
+
+    }
+
+    validate(){
+        let valid = true;
+
+        let requireds = this.state.requireds;
+        let form = this.state.form;
+
+        this.setState({requireds: requireds});
+        return valid;
+    }
+
+    updateVoluntario(e){
+
+        console.log('->', this.state);
+
+        e.preventDefault();
+
+        if(!this.validate()){
+            return;
+        }
+
+        this.setState({loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: ''}, function(){
+            $.ajax({
+                method:'PUT',
+                url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdVoluntario,
+                data: this.state,
+                cache: false,
+                success: function(data) {
+                    let msgVoluntario = "Dados alterados com sucesso!";
+                    this.setState({loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true,  updateOkVoluntario: true, buttonVoluntario: true});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    let msgVoluntario = "Ocorreu um erro!";
+                    this.setState({loadingVoluntario: false,  msgVoluntario: msgVoluntario, showMsgVoluntario: true, updateOkVoluntario: false, buttonVoluntario: true});
+                }.bind(this)
+            });
         });
 
     }
@@ -273,7 +339,6 @@ class Governancas extends React.Component{
                             <div style={{display: this.state.showFormConselho ? 'block' : 'none'}}>
                                 <FormConselho action={this.state.actionFormConselho} list={this.governanca} id={this.state.editIdConselho} showHideFormConselho={this.showHideFormConselho} closeForm={this.closeFormConselho}/>
                             </div>
-
                             {conselhos}
                         </div>
                     </div>
@@ -298,11 +363,8 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Empregados</h3>
                                     <div>
-
                                         <h2>{this.state.empregados}</h2>
-
                                         <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
-
                                     </div>
                                 </div>
                             </div>
@@ -310,11 +372,8 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Deficiência</h3>
                                     <div>
-
                                         <h2>{this.state.deficiencia}</h2>
-
                                         <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
-
                                     </div>
                                 </div>
                             </div>
@@ -322,22 +381,27 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Voluntários</h3>
                                     <div>
-                                        <div style={{clear: 'both'}}/>
-                                        <input type="number" value={this.state.voluntarios} className="input-lg" min="1" style={{float: 'left'}}/>
-                                        <div style={{marginTop: '-10px'}}>
-                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
-                                                <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
-                                                {this.state.msg}
-                                            </div>
-                                            <button type="button" className="btn btn-success" onClick={this.updateDescricao}><i
+                                        <div style={{clear: 'both', height:'1px'}}/>
+                                        {/*<input type="number" value={this.state.voluntarios} className="input-lg" min="1" style={{float: 'left'}}/>*/}
+
+
+                                        <input className="input-lg" type="number" min="1" name="voluntarios" onChange={this.handleInputChange} defaultValue={this.state.form.voluntarios}
+                                               style={{float: 'left'}} placeholder="0" />
+
+                                        <div>
+                                            <button type="button" className="btn btn-success" onClick={this.updateVoluntario}><i
                                                 className="fas fa-cloud-download-alt"/> </button>
                                             <br/>
                                         </div>
+
                                         <div style={{clear: 'both'}}/>
-
-
+                                        <div style={{display: this.state.loadingVoluntario ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                        <div style={{display: this.state.showMsgVoluntario ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOkVoluntario ? "success" : "danger")}>
+                                            <i className={"far "+(this.state.updateOkVoluntario ? "fa-check-circle" : "fa-times-circle")} />
+                                            {this.state.msgVoluntario}
+                                        </div>
                                         <p className='not-info'>Atualize suas informações sobre Voluntários</p>
+
                                     </div>
 
 

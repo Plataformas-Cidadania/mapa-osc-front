@@ -168,12 +168,12 @@ class Participacoes extends React.Component {
     }
 
     /* list2(){
-           this.setState({loadingList: true});
-           $.ajax({
+          this.setState({loadingList: true});
+          $.ajax({
              method: 'POST',
              url: '/list-users-conselhos',
              data: {
-               },
+              },
              cache: false,
              success: function(data){
                  console.log(data);

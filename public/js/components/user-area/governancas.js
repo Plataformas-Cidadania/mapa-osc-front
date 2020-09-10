@@ -14,6 +14,12 @@ class Governancas extends React.Component {
                 1: 'Endereço principal',
                 2: ' '
             },
+            form: {
+                voluntarios: ''
+            },
+            requireds: {
+                voluntarios: true
+            },
 
             loadingRemove: [],
             governanca: {},
@@ -32,7 +38,9 @@ class Governancas extends React.Component {
             deficiencia: null,
             empregados: null,
             voluntarios: null,
-            totalTrabalhadores: null
+            totalTrabalhadores: null,
+
+            editIdVoluntario: 0
 
         };
 
@@ -44,6 +52,20 @@ class Governancas extends React.Component {
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
         this.removeConselho = this.removeConselho.bind(this);
         this.closeFormConselho = this.closeFormConselho.bind(this);
+
+        this.updateVoluntario = this.updateVoluntario.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        let form = this.state.form;
+        let placeholder = this.state.placeholder;
+        form[name] = value;
+
+        this.setState({ form: form, placeholder: placeholder });
     }
 
     componentDidMount() {
@@ -117,9 +139,13 @@ class Governancas extends React.Component {
                     conselhos: data.conselho_fiscal,
                     deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
                     empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
-                    voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+
                     totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
-                    loadingGovernanca: false
+                    loadingGovernanca: false,
+                    editIdVoluntario: data.relacoes_trabalho.id_osc,
+                    form: {
+                        voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios
+                    }
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -170,6 +196,45 @@ class Governancas extends React.Component {
                 let loadingRemoveConselho = this.state.loadingRemoveConselho;
                 loadingRemoveConselho[id] = false;
             }.bind(this)
+        });
+    }
+
+    validate() {
+        let valid = true;
+
+        let requireds = this.state.requireds;
+        let form = this.state.form;
+
+        this.setState({ requireds: requireds });
+        return valid;
+    }
+
+    updateVoluntario(e) {
+
+        console.log('->', this.state);
+
+        e.preventDefault();
+
+        if (!this.validate()) {
+            return;
+        }
+
+        this.setState({ loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: '' }, function () {
+            $.ajax({
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/rel_trabalho/' + this.state.editIdVoluntario,
+                data: this.state,
+                cache: false,
+                success: function (data) {
+                    let msgVoluntario = "Dados alterados com sucesso!";
+                    this.setState({ loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true, updateOkVoluntario: true, buttonVoluntario: true });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    let msgVoluntario = "Ocorreu um erro!";
+                    this.setState({ loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true, updateOkVoluntario: false, buttonVoluntario: true });
+                }.bind(this)
+            });
         });
     }
 
@@ -468,29 +533,15 @@ class Governancas extends React.Component {
                                 React.createElement(
                                     'div',
                                     null,
-                                    React.createElement('div', { style: { clear: 'both' } }),
-                                    React.createElement('input', { type: 'number', value: this.state.voluntarios, className: 'input-lg', min: '1', style: { float: 'left' } }),
+                                    React.createElement('div', { style: { clear: 'both', height: '1px' } }),
+                                    React.createElement('input', { className: 'input-lg', type: 'number', min: '1', name: 'voluntarios', onChange: this.handleInputChange, defaultValue: this.state.form.voluntarios,
+                                        style: { float: 'left' }, placeholder: '0' }),
                                     React.createElement(
                                         'div',
-                                        { style: { marginTop: '-10px' } },
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.loading ? 'block' : 'none' } },
-                                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                            ' Processando ',
-                                            React.createElement('br', null),
-                                            ' ',
-                                            React.createElement('br', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
-                                            React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
-                                            this.state.msg
-                                        ),
+                                        null,
                                         React.createElement(
                                             'button',
-                                            { type: 'button', className: 'btn btn-success', onClick: this.updateDescricao },
+                                            { type: 'button', className: 'btn btn-success', onClick: this.updateVoluntario },
                                             React.createElement('i', {
                                                 className: 'fas fa-cloud-download-alt' }),
                                             ' '
@@ -498,6 +549,21 @@ class Governancas extends React.Component {
                                         React.createElement('br', null)
                                     ),
                                     React.createElement('div', { style: { clear: 'both' } }),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loadingVoluntario ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsgVoluntario ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOkVoluntario ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOkVoluntario ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msgVoluntario
+                                    ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
