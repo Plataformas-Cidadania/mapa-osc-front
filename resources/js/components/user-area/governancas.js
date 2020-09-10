@@ -59,11 +59,13 @@ class Governancas extends React.Component{
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
+        //const defaultValue = target.type === 'checkbox' ? target.checked : target.defaultValue;
         const name = target.name;
 
         let form = this.state.form;
         let placeholder = this.state.placeholder;
         form[name] = value;
+        //form[name] = defaultValue;
 
         this.setState({form: form, placeholder: placeholder});
     }
@@ -228,10 +230,11 @@ class Governancas extends React.Component{
         }
 
         this.setState({loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: ''}, function(){
+            console.log('**', this.state.form.voluntarios);
             $.ajax({
                 method:'PUT',
                 url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdVoluntario,
-                data: this.state,
+                data: this.state.voluntarios,
                 cache: false,
                 success: function(data) {
                     let msgVoluntario = "Dados alterados com sucesso!";
