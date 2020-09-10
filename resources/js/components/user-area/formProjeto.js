@@ -214,27 +214,15 @@ class FormProjeto extends React.Component{
                             </div>
 
                             <div className="col-md-4">
-                                <select className={"form-control form-m "+(this.state.requireds.cd_certificado ? '' : 'invalid-field')}
-                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
+                                <select className={"form-control form-m "+(this.state.form.tx_nome_status_projeto ? '' : 'invalid-field')}
+                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_status_projeto}>
                                     <option value="-1">Selecione</option>
-                                    <option value="Arquivado, cancelado ou indeferido">Utilidade Pública Municipal</option>
+                                    <option value="Arquivado, cancelado ou indeferido">Arquivado, cancelado ou indeferido</option>
                                     <option value="Proposta">Proposta</option>
                                     <option value="Projeto em andamento">Projeto em andamento</option>
                                     <option value="Finalizado">Finalizado</option>
                                     <option value="Outro">Outro</option>
                                 </select><br/>
-                            </div>
-
-                            <div className="form-group col-md-4">
-                                <div className="label-float">
-                                    <input className={"form-control form-g "} type="text" name="tx_nome_status_projeto" onChange={this.handleInputChange}
-                                           value={this.state.form.tx_nome_status_projeto}
-                                           placeholder="Situação do projeto" />
-                                    <label htmlFor="tx_nome_status_projeto">Situação do projeto</label>
-                                    <div className="label-box-info-off">
-                                        <p>&nbsp;</p>
-                                    </div>
-                                </div>
                             </div>
 
                             <div className="form-group col-md-4">
@@ -356,6 +344,19 @@ class FormProjeto extends React.Component{
                                     <option value="Rural">Rural</option>
                                     <option value="Urbana">Urbana</option>
                                 </select><br/>
+                            </div>
+
+
+
+                            <div className="col-md-6">
+                                <br/>
+                                <h3>Fontes de Recursos</h3>
+                                <hr/>
+                            </div>
+                            <div className="col-md-6">
+                                <br/>
+                                <h3>Tipo de Parceria</h3>
+                                <hr/>
                             </div>
 
 

@@ -225,8 +225,8 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-4' },
                             React.createElement(
                                 'select',
-                                { className: "form-control form-m " + (this.state.requireds.cd_certificado ? '' : 'invalid-field'),
-                                    name: 'cd_certificado', onChange: this.handleInputChange, defaultValue: this.state.form.cd_certificado },
+                                { className: "form-control form-m " + (this.state.form.tx_nome_status_projeto ? '' : 'invalid-field'),
+                                    name: 'cd_certificado', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_status_projeto },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -235,7 +235,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'option',
                                     { value: 'Arquivado, cancelado ou indeferido' },
-                                    'Utilidade P\xFAblica Municipal'
+                                    'Arquivado, cancelado ou indeferido'
                                 ),
                                 React.createElement(
                                     'option',
@@ -259,31 +259,6 @@ class FormProjeto extends React.Component {
                                 )
                             ),
                             React.createElement('br', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group col-md-4' },
-                            React.createElement(
-                                'div',
-                                { className: 'label-float' },
-                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_status_projeto', onChange: this.handleInputChange,
-                                    value: this.state.form.tx_nome_status_projeto,
-                                    placeholder: 'Situa\xE7\xE3o do projeto' }),
-                                React.createElement(
-                                    'label',
-                                    { htmlFor: 'tx_nome_status_projeto' },
-                                    'Situa\xE7\xE3o do projeto'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'label-box-info-off' },
-                                    React.createElement(
-                                        'p',
-                                        null,
-                                        '\xA0'
-                                    )
-                                )
-                            )
                         ),
                         React.createElement(
                             'div',
@@ -544,6 +519,28 @@ class FormProjeto extends React.Component {
                                 )
                             ),
                             React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Fontes de Recursos'
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Tipo de Parceria'
+                            ),
+                            React.createElement('hr', null)
                         )
                     ),
                     React.createElement(
