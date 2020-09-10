@@ -322,10 +322,27 @@ class Governancas extends React.Component{
                                 <div className="bg-lgt box-itens">
                                     <h3>Voluntários</h3>
                                     <div>
+                                        <div style={{clear: 'both'}}/>
+                                        <input type="number" value={this.state.voluntarios} className="input-lg" min="1" style={{float: 'left'}}/>
+                                        <div style={{marginTop: '-10px'}}>
+                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                                <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                                {this.state.msg}
+                                            </div>
+                                            <button type="button" className="btn btn-success" onClick={this.updateDescricao}><i
+                                                className="fas fa-cloud-download-alt"/> </button>
+                                            <br/>
+                                        </div>
+                                        <div style={{clear: 'both'}}/>
 
-                                        <input type="number" value={this.state.voluntarios} className="input-lg" min="1"/>
+
                                         <p className='not-info'>Atualize suas informações sobre Voluntários</p>
                                     </div>
+
+
+
+
                                 </div>
                             </div>
                         </div>
