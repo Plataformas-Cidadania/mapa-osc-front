@@ -148,6 +148,8 @@ class Recursos extends React.Component {
     }
 
     getRecursosProprios(ano) {
+        ano = ano + "-01-01";
+        console.log('recursos:', this.state.recursos);
         let recursos_proprios = null;
         let recursos_publicos = null;
         let recursos_privados = null;
@@ -170,14 +172,15 @@ class Recursos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/fonte_recursos/789809',
-            //url: getBaseUrl+'osc/no_project/598868',
+            //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
             url: getBaseUrl + 'osc/no_project/789809',
+            //url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
             success: function (data) {
 
                 let anosRecursos = this.state.anosRecursos;
 
                 this.setState({ loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta: true, recursos: data.recursos.recursos });
+                //this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());

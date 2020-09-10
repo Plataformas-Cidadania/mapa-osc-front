@@ -15,10 +15,10 @@ class Governancas extends React.Component{
                 2: ' ',
             },
             form: {
-                voluntarios: '',
+                nr_trabalhadores_voluntarios: '',
             },
             requireds: {
-                voluntarios: true,
+                nr_trabalhadores_voluntarios: true,
             },
 
             loadingRemove: [],
@@ -37,13 +37,13 @@ class Governancas extends React.Component{
 
             deficiencia: null,
             empregados: null,
-            voluntarios: null,
+            //voluntarios: null,
             totalTrabalhadores: null,
 
-            editIdVoluntario: 0,
+            editIdOsc: 0,
 
         };
-
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.governanca = this.governanca.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
@@ -55,6 +55,7 @@ class Governancas extends React.Component{
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
     }
+
 
     handleInputChange(event) {
         const target = event.target;
@@ -149,9 +150,9 @@ class Governancas extends React.Component{
 
                     totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
                     loadingGovernanca: false,
-                    editIdVoluntario: data.relacoes_trabalho.id_osc,
+                    editIdOsc: data.relacoes_trabalho.id_osc,
                     form:{
-                        voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
+                        nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
                     }
                 });
             }.bind(this),
@@ -230,11 +231,11 @@ class Governancas extends React.Component{
         }
 
         this.setState({loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: ''}, function(){
-            console.log('**', this.state.form.voluntarios);
+            console.log('**', this.state.form.nr_trabalhadores_voluntarios);
             $.ajax({
                 method:'PUT',
-                url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdVoluntario,
-                data: this.state.voluntarios,
+                url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdOsc,
+                data: this.state.form,
                 cache: false,
                 success: function(data) {
                     let msgVoluntario = "Dados alterados com sucesso!";
@@ -388,7 +389,7 @@ class Governancas extends React.Component{
                                         {/*<input type="number" value={this.state.voluntarios} className="input-lg" min="1" style={{float: 'left'}}/>*/}
 
 
-                                        <input className="input-lg" type="number" min="1" name="voluntarios" onChange={this.handleInputChange} defaultValue={this.state.form.voluntarios}
+                                        <input className="input-lg" type="number" min="1" name="nr_trabalhadores_voluntarios" onChange={this.handleInputChange} defaultValue={this.state.form.nr_trabalhadores_voluntarios}
                                                style={{float: 'left'}} placeholder="0" />
 
                                         <div>
