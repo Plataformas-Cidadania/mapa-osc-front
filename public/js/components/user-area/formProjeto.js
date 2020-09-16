@@ -529,7 +529,63 @@ class FormProjeto extends React.Component {
                                 null,
                                 'Fontes de Recursos'
                             ),
-                            React.createElement('hr', null)
+                            React.createElement('hr', null),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Recursos p\xFAblicos'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Recursos privados'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Recursos pr\xF3prios'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Recursos na\u0303o financeiros'
+                                    )
+                                )
+                            )
                         ),
                         React.createElement(
                             'div',
@@ -540,7 +596,232 @@ class FormProjeto extends React.Component {
                                 null,
                                 'Tipo de Parceria'
                             ),
-                            React.createElement('hr', null)
+                            React.createElement('hr', null),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Acordo de coopera\xE7\xE3o t\xE9cnica'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Termo de fomento'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Termo de colabora\xE7\xE3o'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Termo de parceria'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Contrato de gest\xE3o'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Conv\xEAnio'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "area_" },
+                                        'Outro'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-11' },
+                                    React.createElement(
+                                        'h3',
+                                        null,
+                                        'OSCs Parceiras'
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-1 float-right' },
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-primary' },
+                                        React.createElement('i', { className: 'fas fa-plus' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('hr', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
+                                            value: this.state.form.tx_link_projeto,
+                                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_projeto' },
+                                            'OSCs Parceiras'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
+                                        React.createElement('i', { className: 'fas fa-minus' })
+                                    )
+                                )
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'h3',
+                                        null,
+                                        'P\xFAblico Beneficiado'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
+                                                value: this.state.form.tx_link_projeto,
+                                                placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_link_projeto' },
+                                                'OSCs Parceiras'
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'label-box-info-off' },
+                                                React.createElement(
+                                                    'p',
+                                                    null,
+                                                    '\xA0'
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'button',
+                                            { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
+                                            React.createElement('i', { className: 'fas fa-minus' })
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'h3',
+                                        null,
+                                        'Local de execu\xE7\xE3o'
+                                    ),
+                                    React.createElement('hr', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'h3',
+                                        null,
+                                        'Financiadores do Projeto'
+                                    ),
+                                    React.createElement('hr', null)
+                                )
+                            )
                         )
                     ),
                     React.createElement(

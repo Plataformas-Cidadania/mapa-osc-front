@@ -352,12 +352,159 @@ class FormProjeto extends React.Component{
                                 <br/>
                                 <h3>Fontes de Recursos</h3>
                                 <hr/>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos públicos</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos privados</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos próprios</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos não financeiros</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div className="col-md-6">
                                 <br/>
                                 <h3>Tipo de Parceria</h3>
                                 <hr/>
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Acordo de cooperação técnica</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de fomento</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de colaboração</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de parceria</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Contrato de gestão</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Convênio</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
+                                        <label className="custom-control-label" htmlFor={"area_"} >Outro</label>
+                                    </div>
+                                </div>
                             </div>
+                            <div className="col-md-12">
+                                <br/>
+                                <div className="row">
+
+                                    <div className="col-md-11">
+                                        <h3>OSCs Parceiras</h3>
+                                    </div>
+                                    <div className="col-md-1 float-right">
+                                        <button className="btn btn-primary">
+                                            <i className="fas fa-plus"/>
+                                        </button>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <hr/>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
+                                                   value={this.state.form.tx_link_projeto}
+                                                   placeholder="Insica o CNPJ da OSC Parceira" />
+                                            <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
+                                            <div className="label-box-info-off">
+                                                <p>&nbsp;</p>
+                                            </div>
+                                        </div>
+                                        <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
+                                            <i className="fas fa-minus"/>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <h3>Público Beneficiado</h3>
+                                        <hr/>
+
+                                        <div className="col-md-12">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
+                                                       value={this.state.form.tx_link_projeto}
+                                                       placeholder="Insica o CNPJ da OSC Parceira" />
+                                                <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                            <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
+                                                <i className="fas fa-minus"/>
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                    <div className="col-md-4">
+                                        <h3>Local de execução</h3>
+                                        <hr/>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <h3>Financiadores do Projeto</h3>
+                                        <hr/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
 
 
                         </div>

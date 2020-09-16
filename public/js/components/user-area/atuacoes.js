@@ -20,9 +20,9 @@ class Atuacoes extends React.Component {
                 4: 'fas fa-graduation-cap fa-2x',
                 5: 'fas fa-hands-helping fa-2x',
                 6: 'fas fa-church fa-2x',
-                7: '',
+                7: 'fas fa-users fa-2x',
                 8: 'fas fa-seedling fa-2x',
-                9: '',
+                9: 'fas fa-balance-scale fa-2x',
                 10: '',
                 11: '',
                 12: ''
