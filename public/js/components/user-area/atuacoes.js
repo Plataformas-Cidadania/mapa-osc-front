@@ -12,7 +12,21 @@ class Atuacoes extends React.Component {
             areaAtuacao: null,
             subareaAtuacao: null,
             titleSub: null,
-            imputOutros: false
+            imputOutros: false,
+            icons: {
+                1: 'fas fa-hotel fa-2x',
+                2: 'fas fa-briefcase-medical fa-2x',
+                3: 'fas fa-theater-masks fa-2x',
+                4: 'fas fa-graduation-cap fa-2x',
+                5: 'fas fa-hands-helping fa-2x',
+                6: 'fas fa-church fa-2x',
+                7: '',
+                8: 'fas fa-seedling fa-2x',
+                9: '',
+                10: '',
+                11: '',
+                12: ''
+            }
         };
 
         this.listArea = this.listArea.bind(this);
@@ -178,9 +192,12 @@ class Atuacoes extends React.Component {
                         React.createElement(
                             'strong',
                             null,
+                            React.createElement('i', { className: this.state.icons[item.cd_area_atuacao] }),
+                            ' ',
                             item.tx_nome_area_atuacao
                         ),
                         React.createElement('br', null),
+                        React.createElement('hr', null),
                         subarea,
                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ', style: { display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none' } })
                     )
@@ -199,6 +216,8 @@ class Atuacoes extends React.Component {
                             React.createElement(
                                 'label',
                                 { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
+                                React.createElement('i', { className: this.state.icons[item.cd_area_atuacao] }),
+                                '  ',
                                 item.tx_nome_area_atuacao
                             )
                         )

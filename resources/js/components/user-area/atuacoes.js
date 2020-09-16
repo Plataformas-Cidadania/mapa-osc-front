@@ -13,6 +13,20 @@ class Atuacoes extends React.Component{
             subareaAtuacao: null,
             titleSub: null,
             imputOutros: false,
+            icons:{
+                1: 'fas fa-hotel fa-2x',
+                2: 'fas fa-briefcase-medical fa-2x',
+                3: 'fas fa-theater-masks fa-2x',
+                4: 'fas fa-graduation-cap fa-2x',
+                5: 'fas fa-hands-helping fa-2x',
+                6: 'fas fa-church fa-2x',
+                7: '',
+                8: 'fas fa-seedling fa-2x',
+                9: '',
+                10: '',
+                11: '',
+                12: '',
+            },
         };
 
         this.listArea = this.listArea.bind(this);
@@ -168,7 +182,8 @@ class Atuacoes extends React.Component{
                 subareaAtuacao.push(
                     <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checked ? '' : 'none'}}>
                         <div className="bg-lgt p-2">
-                            <strong>{item.tx_nome_area_atuacao}</strong><br/>
+                            <strong><i className={this.state.icons[item.cd_area_atuacao]}/> {item.tx_nome_area_atuacao}</strong><br/>
+                            <hr/>
                             {subarea}
                             <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" " style={{display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none'}}/>
                         </div>
@@ -180,7 +195,7 @@ class Atuacoes extends React.Component{
                         <div className="bg-lgt items-checkbox">
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
-                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} ><i className={this.state.icons[item.cd_area_atuacao]}/>  {item.tx_nome_area_atuacao}</label>
                             </div>
                         </div>
                     </div>
