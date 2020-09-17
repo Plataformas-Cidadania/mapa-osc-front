@@ -25,7 +25,13 @@ class FormProjeto extends React.Component {
                 2: 'Utilidade Pública Estadual'
             },
             action: '', //new | edit
-            editId: this.props.id
+            editId: this.props.id,
+
+            objetivos: null,
+            subobjetivos: null,
+            titleMeta: null,
+            titleObjetivo: "",
+            buttonObjetivos: 0
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,10 +39,16 @@ class FormProjeto extends React.Component {
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+
+        this.checkMetas = this.checkMetas.bind(this);
+        this.listArea = this.listArea.bind(this);
+    }
+
+    componentDidMount() {
+        this.listArea();
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
         let lastEditId = this.state.editId;
         if (this.state.action != props.action || this.state.editId != props.id) {
             this.setState({ action: props.action, editId: props.id }, function () {
@@ -166,22 +178,143 @@ class FormProjeto extends React.Component {
         });
     }
 
-    getAge(dateString) {
+    /*Objetivos e metas*/
 
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
+    listArea() {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+                this.setState({ loading: false, objetivos: data, button: true });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
     }
 
+    callSubobjetivos(id) {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            success: function (data) {
+
+                let objetivos = this.state.objetivos;
+
+                let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
+
+                data.find(function (item) {
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                console.log(objetivos);
+
+                objetivos.find(function (item) {
+                    if (item.metas) {
+                        item.metas.find(function (itemMeta) {
+                            itemMeta.display = false;
+                            console.log('display: ' + itemMeta.display);
+                        });
+
+                        if (item.cd_objetivo_projeto === id) {
+                            item.metas.find(function (itemMeta) {
+                                itemMeta.display = true;
+                                console.log('display2: ' + itemMeta.display);
+                            });
+                        }
+                    }
+                    if (item.cd_objetivo_projeto === id && !item.metas) {
+                        item.metas = data;
+                        console.log('display3: ' + item.display);
+                    }
+                });
+
+                this.setState({ loading: false, objetivos: objetivos, id_area: id, buttonObjetivos: id, titleMeta: true, titleObjetivo: titleObjetivo });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    checkMetas(cd_objetivo, cd_meta) {
+        console.log(cd_objetivo, cd_meta);
+        let objetivos = this.state.objetivos;
+        objetivos.find(function (item) {
+            if (item.cd_objetivo_projeto === cd_objetivo) {
+                item.metas.find(function (itemMeta) {
+                    if (itemMeta.cd_meta_projeto === cd_meta) {
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });
+        this.setState({ objetivos: objetivos });
+    }
+    /*******************/
+
     render() {
+
+        function padDigits(number, digits) {
+            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+        }
+
+        let objetivos = null;
+        let metas = [];
+        if (this.state.objetivos) {
+            objetivos = this.state.objetivos.map(function (item) {
+
+                let png = padDigits(item.cd_objetivo_projeto, 2);
+
+                let checkedMetas = false;
+
+                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+
+                if (item.metas) {
+                    metas.push(item.metas.map(function (itemMeta) {
+                        if (itemMeta.checked) {
+                            checkedMetas = true;
+                        }
+                        console.log('cd_objetivo_projeto: ' + item.cd_objetivo_projeto + ' cd_meta_projeto: ' + itemMeta.cd_meta_projeto + ' display: ' + itemMeta.display);
+                        return React.createElement(
+                            'div',
+                            { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
+                                    itemMeta.tx_nome_meta_projeto
+                                )
+                            ),
+                            React.createElement('hr', null)
+                        );
+                    }.bind(this)));
+                }
+
+                return React.createElement(
+                    'div',
+                    { className: 'custom-control custom-checkbox', key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
+                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_objetivo_projeto, required: true }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: (checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: '80', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
+                    )
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
@@ -765,9 +898,13 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'col-md-4' },
                                     React.createElement(
-                                        'h3',
+                                        'p',
                                         null,
-                                        'P\xFAblico Beneficiado'
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'P\xFAblico Beneficiado'
+                                        )
                                     ),
                                     React.createElement('hr', null),
                                     React.createElement(
@@ -805,9 +942,13 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'col-md-4' },
                                     React.createElement(
-                                        'h3',
+                                        'p',
                                         null,
-                                        'Local de execu\xE7\xE3o'
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Local de execu\xE7\xE3o'
+                                        )
                                     ),
                                     React.createElement('hr', null)
                                 ),
@@ -815,11 +956,58 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'col-md-4' },
                                     React.createElement(
-                                        'h3',
+                                        'p',
                                         null,
-                                        'Financiadores do Projeto'
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Financiadores do Projeto'
+                                        )
                                     ),
                                     React.createElement('hr', null)
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'strong',
+                                        null,
+                                        'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        objetivos,
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.titleMeta ? '' : 'none' } },
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Metas Relacionadas ao ODS definido'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'strong',
+                                                null,
+                                                this.state.titleObjetivo
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null),
+                                            metas
+                                        )
+                                    )
                                 )
                             )
                         )
