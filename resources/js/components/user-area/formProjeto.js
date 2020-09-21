@@ -32,6 +32,8 @@ class FormProjeto extends React.Component{
             titleMeta: null,
             titleObjetivo: "",
             buttonObjetivos: 0,
+
+            active: false,
         };
 
 
@@ -43,6 +45,8 @@ class FormProjeto extends React.Component{
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
+
+        this.clickFontRecurso = this.clickFontRecurso.bind(this);
     }
 
     componentDidMount(){
@@ -274,6 +278,12 @@ class FormProjeto extends React.Component{
     }
     /*******************/
 
+    clickFontRecurso() {
+        this.setState({
+            active: !this.state.active
+        });
+    }
+
 
 
 
@@ -485,91 +495,92 @@ class FormProjeto extends React.Component{
 
 
 
-                            <div className="col-md-6">
+
+                            <div className={this.state.active === false ? 'col-md-12' : 'col-md-6'}>
                                 <br/>
                                 <h3>Fontes de Recursos</h3>
                                 <hr/>
 
-                                <div className="bg-lgt items-checkbox">
+                                <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos públicos</label>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"} required/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_publico"} >Recursos públicos</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos privados</label>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_privado"} required/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_privado"} >Recursos privados</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos próprios</label>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_proprio"} required/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_proprio"} >Recursos próprios</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Recursos não financeiros</label>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_nao_financeiro"} required/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_nao_financeiro"} >Recursos não financeiros</label>
                                     </div>
                                 </div>
 
 
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6" style={{display: this.state.active === false ? 'none' : ''}}>
                                 <br/>
                                 <h3>Tipo de Parceria</h3>
                                 <hr/>
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Acordo de cooperação técnica</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_acordo"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_acordo"} >Acordo de cooperação técnica</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de fomento</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_fomento"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_fomento"} >Termo de fomento</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de colaboração</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_colaboracao"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_colaboracao"} >Termo de colaboração</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Termo de parceria</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_parceria"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_parceria"} >Termo de parceria</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Contrato de gestão</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_contrato"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_contrato"} >Contrato de gestão</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Convênio</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_convenio"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_convenio"} >Convênio</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"area_"} required/>
-                                        <label className="custom-control-label" htmlFor={"area_"} >Outro</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_outro"} required/>
+                                        <label className="custom-control-label" htmlFor={"tipo_parceria_outro"} >Outro</label>
                                     </div>
                                 </div>
                             </div>
@@ -610,23 +621,18 @@ class FormProjeto extends React.Component{
                                     <div className="col-md-4">
                                         <p><strong>Público Beneficiado</strong></p>
                                         <hr/>
-
-                                        <div className="col-md-12">
-                                            <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
-                                                       value={this.state.form.tx_link_projeto}
-                                                       placeholder="Insica o CNPJ da OSC Parceira" />
-                                                <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
-                                                <div className="label-box-info-off">
-                                                    <p>&nbsp;</p>
-                                                </div>
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
+                                                   value={this.state.form.tx_link_projeto}
+                                                   placeholder="Insica o CNPJ da OSC Parceira" />
+                                            <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
+                                            <div className="label-box-info-off">
+                                                <p>&nbsp;</p>
                                             </div>
-                                            <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
-                                                <i className="fas fa-minus"/>
-                                            </button>
                                         </div>
-
-
+                                        <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
+                                            <i className="fas fa-minus"/>
+                                        </button>
                                     </div>
                                     <div className="col-md-4">
                                         <p><strong>Local de execução</strong></p>

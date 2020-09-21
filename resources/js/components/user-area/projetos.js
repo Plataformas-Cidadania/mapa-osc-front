@@ -29,21 +29,6 @@ class Projetos extends React.Component{
         this.list();
     }
 
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
-
-    }
 
     edit(id){
        // this.setState({actionForm: 'edit'});
@@ -227,7 +212,7 @@ class Projetos extends React.Component{
                         </table>
 
                         <div style={{float: 'right', cursor: 'pointer'}}>
-                            <a onClick={this.callModal} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
+                            <a onClick={this.callModal} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
                            {/* <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>*/}
                         </div>
 

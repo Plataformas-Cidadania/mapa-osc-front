@@ -29,21 +29,6 @@ class Projetos extends React.Component {
         this.list();
     }
 
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
-    }
-
     edit(id) {
         // this.setState({actionForm: 'edit'});
         //this.setState({actionForm: 'edit', showForm: false, editId: id});
@@ -99,7 +84,7 @@ class Projetos extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -318,7 +303,7 @@ class Projetos extends React.Component {
                         { style: { float: 'right', cursor: 'pointer' } },
                         React.createElement(
                             'a',
-                            { onClick: this.callModal, style: { display: this.state.showForm ? "none" : "block" }, className: 'btn btn-warning' },
+                            { onClick: this.callModal, className: 'btn btn-warning' },
                             React.createElement('i', { className: 'fa fa-plus' }),
                             ' Adicionar novo projeto'
                         )

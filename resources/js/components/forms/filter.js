@@ -1653,7 +1653,6 @@ class Filter extends React.Component{
                                 <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
                                     <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
                                     <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
-
                                 </div>
 
                                 <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
