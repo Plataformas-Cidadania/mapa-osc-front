@@ -138,6 +138,38 @@ class OscMap extends React.Component{
         }*/
     }
 
+    makeInfo(){
+        let mapElements = this.state.mapElements;
+
+
+        this.setState({info: L.control()}, function(){
+            this.state.info.onAdd = function () {
+                this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                this.update();
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            let _this = this;
+            this.state.info.update = function (props) {
+                //console.log('info', props);
+
+                let sigla = '';
+                if(props){
+                    if(props.sigla!==props.nome){
+                        sigla = props.sigla + ' - ';
+                    }
+                }
+
+                this._div.innerHTML =
+                    '<h6 style="margin: 3px 0; font-weight: bold">'+_this.state.serie+'</h6>' +  (props ? '<b>' + sigla + props.nome + '</b><br />' + formatNumber(props.total, _this.props.decimais, ',', '.')
+                    : "Passe o mouse sobre na região");
+            };
+            this.state.info.addTo(mapElements.map);
+            this.setState({mapElements: mapElements});
+        });
+    }
+
 
     loadFirstMap(){
 
