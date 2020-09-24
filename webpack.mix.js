@@ -180,4 +180,7 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarDirectiveCtrl.j
 mix.scripts('packages/cms/resources/assets/js/controllers/printingCtrl.js', 'public/assets-cms/js/controllers/printingCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarPrintingCtrl.js', 'public/assets-cms/js/controllers/alterarPrintingCtrl.js');
 
+//Settings
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarSettingCtrl.js', 'public/assets-cms/js/controllers/alterarSettingCtrl.js');
+
 //FIM CMS///////////////////////////////////////////////////////////////////

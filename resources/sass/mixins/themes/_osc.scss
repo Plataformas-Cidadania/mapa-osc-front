@@ -13,6 +13,10 @@
     transform: scale(1.1);
     opacity: 9;
 }
+.item-focus {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+}
 .item-off, .item-off:hover {
     -webkit-transition: .3s;
     transition: .3s;
@@ -209,4 +213,16 @@
 }
 .box-groups-info{
     font-size: 13px;
+}
+.items-checkbox{
+    margin: 2px 0;
+}
+.btn-add{
+    margin-top: -57px;
+    position: absolute;
+    margin-left: -23px;
+    cursor: pointer;
+}
+.btn-add svg{
+    color: $color-pri!important;
 }

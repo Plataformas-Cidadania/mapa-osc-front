@@ -1,10 +1,15 @@
 class PieChart extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
+            series: props.series,
             options: {
-                //labels: ['Team A', 'Team B'],
-                labels: props.data ? props.labels : [],
+                chart: {
+                    width: 380,
+                    type: 'pie',
+                },
+                labels: props.labels,
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -17,23 +22,6 @@ class PieChart extends React.Component {
                     }
                 }]
             },
-            //series: [44, 55, 13, 43, 22],
-            series: props.data ? props.series : null,
-        }
-    }
-
-    componentWillReceiveProps(props){
-        if(props){
-            if(props.labels != this.state.options.labels || props.series != this.state.series){
-
-                let options = this.state.options;
-                options.labels = props.labels;
-
-                let series = props.series;
-
-                this.setState({options: options, series: series}, function(){
-                });
-            }
         }
     }
 

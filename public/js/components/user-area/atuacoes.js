@@ -4,288 +4,299 @@ class Atuacoes extends React.Component {
         this.state = {
             loadingList: false,
             loading: false,
-            atuacoes: [],
-            cd_atuacao: {
-                1: 'Utilidade Pública Municipal',
-                2: 'Utilidade Pública Estadual'
-            },
-            showForm: false,
             actionForm: '',
             remove: [],
             loadingRemove: [],
             atuacao: {},
-            editId: 0
+            editId: 0,
+            areaAtuacao: null,
+            subareaAtuacao: null,
+            titleSub: null,
+            imputOutros: false,
+            icons: {
+                1: 'fas fa-hotel fa-2x',
+                2: 'fas fa-briefcase-medical fa-2x',
+                3: 'fas fa-theater-masks fa-2x',
+                4: 'fas fa-graduation-cap fa-2x',
+                5: 'fas fa-hands-helping fa-2x',
+                6: 'fas fa-church fa-2x',
+                7: 'fas fa-users fa-2x',
+                8: 'fas fa-seedling fa-2x',
+                9: 'fas fa-balance-scale fa-2x',
+                10: '',
+                11: '',
+                12: ''
+            }
         };
 
-        this.list = this.list.bind(this);
-        this.showHideForm = this.showHideForm.bind(this);
-        this.remove = this.remove.bind(this);
-        this.closeForm = this.closeForm.bind(this);
+        this.listArea = this.listArea.bind(this);
+        //this.checkArea = this.checkArea.bind(this);
+        this.checkSubArea = this.checkSubArea.bind(this);
+        this.checkedOutros = this.checkedOutros.bind(this);
     }
 
     componentDidMount() {
-        this.list();
+        this.listArea();
     }
 
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
+    listArea() {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'menu/osc/area_atuacao',
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                });
+                this.setState({ loading: false, areaAtuacao: data, button: true });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
     }
 
-    edit(id) {
-        // this.setState({actionForm: 'edit'});
-        this.setState({ actionForm: 'edit', showForm: false, editId: id });
-    }
+    callSubareaAtuacao(id) {
 
-    cancelRemove(id) {
-        let remove = this.state.remove;
-        remove[id] = false;
-        this.setState({ remove: remove });
-    }
-
-    remove(id) {
-        let remove = this.state.remove;
-
-        if (!remove[id]) {
-            remove[id] = true;
-            this.setState({ remove: remove });
+        //this.checkArea(id);
+        let areas = this.state.areaAtuacao;
+        if (areas[0].subareas) {
+            areas.find(function (item) {
+                if (item.cd_area_atuacao === id) {
+                    item.checked = !item.checked;
+                }
+            });
+            this.setState({ areaAtuacao: areas });
             return;
         }
 
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({ loadingRemove: loadingRemove });
+        this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            url: '/remove-user-atuacao/' + id,
-            data: {},
             cache: false,
+            url: getBaseUrl + 'menu/osc/subarea_atuacao',
             success: function (data) {
-                //console.log(data);
-                this.list();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({ loadingRemove: loadingRemove });
+                let areaAtuacao = this.state.areaAtuacao;
+                let imputOutros = this.state.imputOutros;
+
+                data.find(function (item) {
+                    item.checked = false;
+                });
+
+                this.state.areaAtuacao.find(function (item) {
+
+                    if (item.cd_area_atuacao === id) {
+                        item.checked = !item.checked;
+                        if (id === 10) {
+                            imputOutros = !imputOutros;
+                        }
+                    }
+                    item.subareas = data.filter(function (subitem) {
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });
+                this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id, titleSub: true, imputOutros: imputOutros });
             }.bind(this),
             error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
+                console.error(status, err.toString());
             }.bind(this)
         });
     }
 
-    showHideForm(action) {
-        let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
-        let actionForm = action;
-
-        this.setState({ showForm: showForm, actionForm: actionForm });
-    }
-
-    closeForm() {
-        this.setState({ showForm: false });
-    }
-
-    list() {
-
-        this.setState({ loadingList: true });
-
-        $.ajax({
-            method: 'POST',
-            url: '/list-users-atuacoes',
-            data: {},
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                this.setState({ atuacoes: data, loadingList: false });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                this.setState({ loadingList: false });
-            }.bind(this)
+    /*checkArea(id){
+        console.log(id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function(item){
+            if(item.cd_area_atuacao === id){
+                item.checked = !item.checked;
+            }
         });
+        this.setState({areaAtuacao: areas});
+    }*/
+
+    checkSubArea(area_id, subarea_id) {
+        console.log(area_id, subarea_id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function (item) {
+            if (item.cd_area_atuacao === area_id) {
+                item.subareas.find(function (subitem) {
+                    if (subitem.cd_subarea_atuacao === subarea_id) {
+                        subitem.checked = !subitem.checked;
+                    }
+                });
+            }
+        });
+        this.setState({ areaAtuacao: areas });
+    }
+
+    checkedOutros(area_id) {
+        let checked = false;
+        this.state.areaAtuacao.find(function (item) {
+            if (item.cd_area_atuacao === area_id) {
+                console.log('cd_area_atuacao', item.cd_area_atuacao);
+                console.log(item.subareas);
+                if (item.subareas) {
+                    item.subareas.find(function (subitem) {
+                        if (subitem.tx_nome_subarea_atuacao === "Outros") {
+                            console.log("Outros");
+                            checked = subitem.checked;
+                            console.log('dentro do if', checked);
+                        }
+                    });
+                }
+            }
+        });
+
+        console.log(checked);
+
+        return checked;
     }
 
     render() {
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
+        //console.log(this.state.areaAtuacao);
 
-        let atuacoes = this.state.atuacoes.map(function (item, index) {
+        let areaAtuacao = null;
+        let subareaAtuacao = [];
+        if (this.state.areaAtuacao) {
+            areaAtuacao = this.state.areaAtuacao.map(function (item) {
 
-            let hr = null;
-            if (index < this.state.atuacoes.length - 1) {
-                hr = React.createElement('hr', null);
-            }
+                let subarea = null;
+                if (item.subareas) {
+                    subarea = item.subareas.map(function (subitem) {
+                        return React.createElement(
+                            'div',
+                            { key: "subarea_" + subitem.cd_subarea_atuacao },
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkSubArea(item.cd_area_atuacao, subitem.cd_subarea_atuacao) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_subarea_atuacao },
+                                    subitem.tx_nome_subarea_atuacao
+                                )
+                            ),
+                            React.createElement('br', null)
+                        );
+                    }.bind(this));
+                }
 
-            return React.createElement(
-                'tr',
-                { key: "atuacao_" + index },
-                React.createElement(
-                    'td',
-                    null,
-                    item.cd_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.dt_inicio_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.dt_fim_atuacao
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.cd_uf
-                ),
-                React.createElement(
-                    'td',
-                    { width: '70' },
+                subareaAtuacao.push(React.createElement(
+                    'div',
+                    { key: "divArea_" + item.cd_area_atuacao, className: 'card', style: { display: item.checked ? '' : 'none' } },
                     React.createElement(
-                        'a',
-                        { onClick: () => this.edit(item.id) },
-                        React.createElement('i', { className: 'far fa-edit text-primary' })
-                    ),
-                    '\xA0\xA0',
+                        'div',
+                        { className: 'bg-lgt p-2' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            React.createElement('i', { className: this.state.icons[item.cd_area_atuacao] }),
+                            ' ',
+                            item.tx_nome_area_atuacao
+                        ),
+                        React.createElement('br', null),
+                        React.createElement('hr', null),
+                        subarea,
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ', style: { display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none' } })
+                    )
+                ));
+
+                return React.createElement(
+                    'div',
+                    { className: 'col-md-6', key: "area_" + item.cd_area_atuacao, onChange: () => this.callSubareaAtuacao(item.cd_area_atuacao) },
                     React.createElement(
-                        'a',
-                        { onClick: () => this.remove(item.id_atuacao), style: { display: this.state.loadingRemove[item.id_atuacao] ? 'none' : '' } },
-                        React.createElement('i', { className: "fas " + (this.state.remove[item.id_atuacao] ? "fa-times text-primary" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id_atuacao), style: { display: this.state.remove[item.id_atuacao] && !this.state.loadingRemove[item.id_atuacao] ? '' : 'none' } },
-                        React.createElement('i', { className: 'fas fa-undo' })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_atuacao] ? '' : 'none' } })
-                )
-            );
-        }.bind(this));
+                        'div',
+                        { className: 'bg-lgt items-checkbox' },
+                        React.createElement(
+                            'div',
+                            { className: 'custom-control custom-checkbox' },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_area_atuacao, required: true }),
+                            React.createElement(
+                                'label',
+                                { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
+                                React.createElement('i', { className: this.state.icons[item.cd_area_atuacao] }),
+                                '  ',
+                                item.tx_nome_area_atuacao
+                            )
+                        )
+                    )
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
-            null,
+            { className: 'row' },
             React.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'col-md-12' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-12' },
-                    React.createElement('br', null),
-                    React.createElement('br', null),
+                    { className: 'title-user-area' },
                     React.createElement(
                         'div',
-                        { className: 'title-style' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            '\xC1reas e Sub\xE1reas de atua\xE7\xE3o da OSC'
-                        ),
-                        React.createElement('div', { className: 'line line-fix' }),
-                        React.createElement('hr', null)
+                        { className: 'mn-accordion-icon' },
+                        React.createElement('i', { className: 'fa fa-share-alt', 'aria-hidden': 'true' })
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'text-center' },
-                        'Atividade econ\xF4mica (CNAE)'
+                        'h3',
+                        null,
+                        '\xC1reas e Sub\xE1reas de atua\xE7\xE3o da OSC'
                     ),
+                    React.createElement('hr', null),
                     React.createElement('br', null)
-                )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'text-center' },
+                    'Atividade econ\xF4mica (CNAE)'
+                ),
+                React.createElement('br', null)
             ),
             React.createElement(
                 'div',
                 { className: 'row' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
+                    { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        { className: 'alert alert-secondary' },
+                        { className: 'col-md-12' },
                         React.createElement(
-                            'h2',
-                            { className: 'text-center' },
-                            '\xC1rea de atua\xE7\xE3o 1'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'input-icon' },
-                            React.createElement('input', { type: 'text', className: 'form-control',
-                                placeholder: 'Busque um artigo...' }),
-                            React.createElement('i', { className: 'fas fa-search' })
-                        ),
-                        React.createElement(
-                            'div',
+                            'strong',
                             null,
+                            '\xC1rea de Atua\xE7\xE3o'
+                        ),
+                        React.createElement('hr', null),
+                        React.createElement(
+                            'div',
+                            { className: 'row' },
+                            areaAtuacao,
+                            React.createElement('br', null),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
-                                { className: 'form-group' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-check' },
-                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                        id: 'gridCheck' }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'form-check-label',
-                                            htmlFor: 'gridCheck' },
-                                        'Educa\xE7\xE3o infantil'
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-check' },
-                                    React.createElement('input', { className: 'form-check-input', type: 'checkbox',
-                                        id: 'gridCheck2' }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'form-check-label',
-                                            htmlFor: 'gridCheck2' },
-                                        'Ensino m\xE9dio'
-                                    )
-                                )
+                                { className: 'col-md-12', style: { display: this.state.imputOutros ? '' : 'none' } },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_uf', placeholder: ' ' }),
+                                React.createElement('br', null)
                             )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement(
-                        'div',
-                        { className: 'alert alert-secondary' },
-                        React.createElement(
-                            'h2',
-                            { className: 'text-center' },
-                            '\xC1rea de atua\xE7\xE3o 2'
                         ),
                         React.createElement(
                             'div',
-                            { className: 'input-icon' },
-                            React.createElement('input', { type: 'text', className: 'form-control',
-                                placeholder: 'Busque um artigo...' }),
-                            React.createElement('i', { className: 'fas fa-search' })
+                            { style: { display: this.state.titleSub ? '' : 'none' } },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Sub\xE1rea de Atua\xE7\xE3o'
+                            ),
+                            React.createElement('hr', null),
+                            React.createElement(
+                                'div',
+                                { className: 'card-columns' },
+                                subareaAtuacao
+                            )
                         )
                     )
                 )

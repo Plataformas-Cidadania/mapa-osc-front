@@ -4,270 +4,247 @@ class Atuacoes extends React.Component{
         this.state = {
             loadingList:false,
             loading:false,
-            atuacoes:[],
-            cd_atuacao:{
-                1: 'Utilidade Pública Municipal',
-                2: 'Utilidade Pública Estadual',
-            },
-            showForm: false,
             actionForm: '',
             remove: [],
             loadingRemove: [],
             atuacao: {},
             editId: 0,
+            areaAtuacao: null,
+            subareaAtuacao: null,
+            titleSub: null,
+            imputOutros: false,
+            icons:{
+                1: 'fas fa-hotel fa-2x',
+                2: 'fas fa-briefcase-medical fa-2x',
+                3: 'fas fa-theater-masks fa-2x',
+                4: 'fas fa-graduation-cap fa-2x',
+                5: 'fas fa-hands-helping fa-2x',
+                6: 'fas fa-church fa-2x',
+                7: 'fas fa-users fa-2x',
+                8: 'fas fa-seedling fa-2x',
+                9: 'fas fa-balance-scale fa-2x',
+                10: '',
+                11: '',
+                12: '',
+            },
         };
 
-        this.list = this.list.bind(this);
-        this.showHideForm = this.showHideForm.bind(this);
-        this.remove = this.remove.bind(this);
-        this.closeForm = this.closeForm.bind(this);
+        this.listArea = this.listArea.bind(this);
+        //this.checkArea = this.checkArea.bind(this);
+        this.checkSubArea = this.checkSubArea.bind(this);
+        this.checkedOutros = this.checkedOutros.bind(this);
+
     }
 
     componentDidMount(){
-        this.list();
+        this.listArea();
     }
 
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
-
+    listArea(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'menu/osc/area_atuacao',
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                });
+                this.setState({loading: false, areaAtuacao: data, button:true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
     }
 
-    edit(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionForm: 'edit', showForm: false, editId: id});
-    }
+    callSubareaAtuacao(id){
 
-    cancelRemove(id){
-        let remove = this.state.remove;
-        remove[id] = false;
-        this.setState({remove: remove});
-    }
-
-    remove(id){
-        let remove = this.state.remove;
-
-        if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
+        //this.checkArea(id);
+        let areas = this.state.areaAtuacao;
+        if(areas[0].subareas){
+            areas.find(function(item){
+                if(item.cd_area_atuacao === id){
+                    item.checked = !item.checked;
+                }
+            });
+            this.setState({areaAtuacao: areas});
             return;
         }
 
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({loadingRemove: loadingRemove});
+        this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: '/remove-user-atuacao/'+id,
-            data: {
-
-            },
             cache: false,
-            success: function(data){
-                //console.log(data);
-                this.list();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({loadingRemove: loadingRemove});
+            url: getBaseUrl+'menu/osc/subarea_atuacao',
+            success: function (data) {
+                let areaAtuacao = this.state.areaAtuacao;
+                let imputOutros = this.state.imputOutros;
+
+                data.find(function(item){
+                    item.checked = false;
+                });
+
+                this.state.areaAtuacao.find(function(item){
+
+                    if(item.cd_area_atuacao === id){
+                        item.checked = !item.checked;
+                        if(id===10){
+                            imputOutros = !imputOutros;
+                        }
+                    }
+                    item.subareas = data.filter(function(subitem){
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });
+                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, titleSub:true, imputOutros:imputOutros})
             }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
-            }.bind(this)
-        });
-
-    }
-
-    showHideForm(action){
-        let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-
-        this.setState({showForm: showForm, actionForm: action});*/
-
-        let actionForm = action;
-
-        this.setState({showForm: showForm, actionForm: actionForm});
-    }
-
-    closeForm(){
-        this.setState({showForm: false});
-    }
-
-    list(){
-
-        this.setState({loadingList: true});
-
-        $.ajax({
-            method: 'POST',
-            url: '/list-users-atuacoes',
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                console.log(data);
-                this.setState({atuacoes: data, loadingList: false});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                this.setState({loadingList: false});
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
             }.bind(this)
         });
     }
+
+    /*checkArea(id){
+        console.log(id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function(item){
+            if(item.cd_area_atuacao === id){
+                item.checked = !item.checked;
+            }
+        });
+        this.setState({areaAtuacao: areas});
+    }*/
+
+    checkSubArea(area_id, subarea_id){
+        console.log(area_id, subarea_id);
+        let areas = this.state.areaAtuacao;
+        areas.find(function(item){
+            if(item.cd_area_atuacao === area_id){
+                item.subareas.find(function(subitem){
+                    if(subitem.cd_subarea_atuacao === subarea_id){
+                        subitem.checked = !subitem.checked;
+                    }
+                });
+            }
+        });
+        this.setState({areaAtuacao: areas});
+    }
+
+    checkedOutros(area_id){
+        let checked = false;
+        this.state.areaAtuacao.find(function(item){
+            if(item.cd_area_atuacao === area_id){
+                console.log('cd_area_atuacao', item.cd_area_atuacao);
+                console.log(item.subareas);
+                if(item.subareas){
+                    item.subareas.find(function(subitem){
+                        if(subitem.tx_nome_subarea_atuacao === "Outros"){
+                            console.log("Outros");
+                            checked = subitem.checked;
+                            console.log('dentro do if', checked);
+                        }
+                    });
+                }
+            }
+        });
+
+        console.log(checked);
+
+        return checked;
+    }
+
 
     render(){
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
+        //console.log(this.state.areaAtuacao);
 
-        let atuacoes = this.state.atuacoes.map(function(item, index){
+        let areaAtuacao = null;
+        let subareaAtuacao = [];
+        if(this.state.areaAtuacao){
+            areaAtuacao = this.state.areaAtuacao.map(function (item) {
 
-            let hr = null;
-            if(index < this.state.atuacoes.length-1){
-                hr = <hr/>;
-            }
+                let subarea = null;
+                if(item.subareas){
+                    subarea = item.subareas.map(function(subitem){
+                        return(
+                            <div key={"subarea_"+subitem.cd_subarea_atuacao}>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkSubArea(item.cd_area_atuacao, subitem.cd_subarea_atuacao)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
+                                </div>
+                                <br />
+                            </div>
+                        );
+                    }.bind(this));
+                }
 
-            return (
-                <tr key={"atuacao_"+index}>
-                    <td>{item.cd_atuacao}</td>
-                    <td>{item.dt_inicio_atuacao}</td>
-                    <td>{item.dt_fim_atuacao}</td>
-                    <td>{item.cd_uf}</td>
-                    <td width="70">
-                        <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                        <a onClick={() => this.remove(item.id_atuacao)} style={{display: this.state.loadingRemove[item.id_atuacao] ? 'none' : ''}}>
-                            <i className={"fas "+( this.state.remove[item.id_atuacao] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id_atuacao)} style={{display: this.state.remove[item.id_atuacao] && !this.state.loadingRemove[item.id_atuacao] ? '' : 'none'}}>
-                            <i className="fas fa-undo"/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_atuacao] ? '' : 'none'}}/>
-                    </td>
-                </tr>
-            );
-        }.bind(this));
+                subareaAtuacao.push(
+                    <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checked ? '' : 'none'}}>
+                        <div className="bg-lgt p-2">
+                            <strong><i className={this.state.icons[item.cd_area_atuacao]}/> {item.tx_nome_area_atuacao}</strong><br/>
+                            <hr/>
+                            {subarea}
+                            <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" " style={{display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none'}}/>
+                        </div>
+                    </div>
+                );
+
+                return (
+                    <div className="col-md-6" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubareaAtuacao(item.cd_area_atuacao)}>
+                        <div className="bg-lgt items-checkbox">
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
+                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} ><i className={this.state.icons[item.cd_area_atuacao]}/>  {item.tx_nome_area_atuacao}</label>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }.bind(this));
+        }
 
         return(
-            <div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <br/><br/>
-                        <div className="title-style">
-                            <h2>Áreas e Subáreas de atuação da OSC</h2>
-                            <div className="line line-fix"></div>
-                            <hr/>
-                        </div>
-                        <div className="text-center">Atividade econômica (CNAE)</div>
-                        <br/>
-                    </div>
+
+        <div className="row">
+            <div className="col-md-12">
+                <div className="title-user-area">
+                    <div className="mn-accordion-icon"><i className="fa fa-share-alt" aria-hidden="true"/></div>
+                    <h3>Áreas e Subáreas de atuação da OSC</h3>
+                    <hr/><br/>
                 </div>
-
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="alert alert-secondary">
-                            <h2 className="text-center">Área de atuação 1</h2>
-                            <div className="input-icon">
-                                <input type="text" className="form-control"
-                                       placeholder="Busque um artigo..."/>
-                                <i className="fas fa-search"/>
-                            </div>
-                            <div>
-                                <br/>
-                                <div className="form-group">
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox"
-                                               id="gridCheck"/>
-                                        <label className="form-check-label"
-                                               htmlFor="gridCheck">
-                                            Educação infantil
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox"
-                                               id="gridCheck2"/>
-                                        <label className="form-check-label"
-                                               htmlFor="gridCheck2">
-                                            Ensino médio
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="alert alert-secondary">
-                            <h2 className="text-center">Área de atuação 2</h2>
-                            <div className="input-icon">
-                                <input type="text" className="form-control"
-                                       placeholder="Busque um artigo..."/>
-                                <i className="fas fa-search"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                {/*<div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-atuacao" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
-                    <p>Você tem {this.state.atuacoes.length} títulos ou atuacoes cadastrados</p>
-                    <hr/>
-                </div>
-
-                <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
-                    <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <table className="table">
-                            <thead className="bg-pri text-light">
-                            <tr>
-                                <th scope="col">Titulo / Atuacao</th>
-                                <th scope="col">Início da validade</th>
-                                <th scope="col">Fim da validade</th>
-                                <th scope="col">Localidade</th>
-                                <th scope="col"/>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {atuacoes}
-                            </tbody>
-                        </table>
-
-                        <div style={{float: 'right', cursor: 'pointer', display: this.state.atuacoes.length < maxAtuacoes ? 'block' : 'none' }}>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>
-                        </div>
-
-                        <div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
-                            <FormAtuacao action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>
-                    </div>
-
-                </div>*/}
+                <div className="text-center">Atividade econômica (CNAE)</div>
+                <br/>
             </div>
-        );
+
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="col-md-12">
+                        <strong>Área de Atuação</strong><hr/>
+                        <div className="row">
+                            {areaAtuacao}
+                            <br/>
+                            <br/>
+                            <div className="col-md-12"  style={{display: this.state.imputOutros ? '' : 'none'}}>
+                                <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" "/><br/>
+                            </div>
+
+                        </div>
+                        <div style={{display: this.state.titleSub ? '' : 'none'}}>
+                            <strong>Subárea de Atuação</strong><hr/>
+                            <div className="card-columns">
+                                {subareaAtuacao}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
     }
 }
 
 
 ReactDOM.render(
-    <Atuacoes/>,
+<Atuacoes/>,
     document.getElementById('atuacoes')
 );

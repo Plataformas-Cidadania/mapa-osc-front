@@ -1,10 +1,8 @@
 class MixedChart extends React.Component {
-
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {
-            labels: [],
             options: {
                 chart: {
                     stacked: false,
@@ -63,33 +61,16 @@ class MixedChart extends React.Component {
                         stops: [0, 100, 100, 100]
                     }
                 },
-                //labels: props.labels,
-                //labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'],
                 markers: {
                     size: 0
                 },
                 xaxis: {
                     type: 'number',
                     categories: props.labels
+                    //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
                 },
-                yaxis: [props.yaxis]
-                /*yaxis: [{
-                    title: {
-                        text: 'Website Blog',
-                    },
-                 }, {
-                    opposite: true,
-                    title: {
-                        text: 'Social Media'
-                    }
-                }]*/
-                /*yaxis: {
-                    title: {
-                        text: 'Valores baseado primeira série',
-                    },
-                    min: 0
-                }*/
-                , tooltip: {
+                yaxis: [props.yaxis],
+                tooltip: {
                     shared: true,
                     intersect: false,
                     y: {
@@ -103,69 +84,18 @@ class MixedChart extends React.Component {
                     }
                 }
             },
-            series: []
+            series: props.series
         };
-        //console.log(props.labels);
-        //console.log(series);
     }
 
-    componentWillReceiveProps(props) {
-
-        if (props.series) {
-            /*console.log(this.props.id, 'props series', props.series);
-            console.log(this.props.id, 'state series', this.state.series);
-            console.log(this.props.id, 'props labels', props.labels);
-            console.log(this.props.id, 'state labels', this.state.labels);*/
-
-            if (props.series != this.state.series || props.labels != this.state.labels) {
-
-                let labels = [];
-                for (let i in props.labels) {
-                    labels.push(props.labels[i]);
-                }
-
-                let options = this.state.options;
-                options.xaxis.categories = props.labels;
-                options.yaxis = props.yaxis;
-                for (let i in options.yaxis) {
-                    //options.yaxis[i]['labels'] = {
-                    options.yaxis[i] = {
-                        formatter: function (val, index) {
-                            return val.toFixed(options.yaxis[i]['decimais']);
-                        }
-                    };
-                }
-
-                /*let series = [
-                    {
-                        name: 'teste',
-                        type: 'column',
-                        data: props.series,
-                    }
-                ];*/
-                this.setState({ series: props.series, options: options, labels: labels }, function () {
-                    //console.log(this.props.id);
-                    //console.log(this.props.id, 'labels', labels);
-                    //console.log(this.props.id, 'series', props.series);
-                    //console.log(this.props.id, 'options', options);
-
-                    ApexCharts.exec(this.props.id, 'updateSeries', props.series);
-                    ApexCharts.exec(this.props.id, 'updateOptions', options);
-                    // }
-
-                });
-            }
-        }
+    componentDidMount() {
+        console.log('aaaa');
     }
 
     render() {
-
-        //console.log(this.state.series);
-
         if (!this.state.series) {
             return;
         }
-
         return React.createElement(
             'div',
             null,

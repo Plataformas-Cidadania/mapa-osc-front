@@ -1,6 +1,7 @@
 <?php $rota = Route::getCurrentRoute()->uri();?>
 
 <?php
+    $setting = DB::table('settings')->orderBy('id', 'desc')->first();
     $base_href = config('app.url');
     $barra = "";
 ?>

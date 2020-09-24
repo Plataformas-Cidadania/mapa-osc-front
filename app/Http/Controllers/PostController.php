@@ -10,6 +10,12 @@ use Mockery\Exception;
 class PostController extends Controller
 {
 
+    public function __construct(){
+        $this->obj = new \App\Noticia();
+        $this->module = 'noticias';
+
+    }
+
     public function post($type){
         return view('post.list', ['type' => $type]);
     }
@@ -30,16 +36,15 @@ class PostController extends Controller
 
     public function categories(Request $request){
 
-        $categories = \App\PubCategory::select(
+        $categories = \App\Categoria::select(
             DB::Raw("
-                pub_categories.id,
-                lng_pub_categories.title,
-                count(pub_categories.id) as qtd
+                categorias.id,
+                categorias.titulo,
+                count(categorias.id) as qtd
             "))
-            ->join('lng_pub_categories', 'pub_categories.id', '=', 'lng_pub_categories.publish_id')
-            ->join('pub_articles', 'pub_categories.id', '=', 'pub_articles.category_id')
-            ->where('lng_pub_categories.title', 'ilike', $request->search.'%')
-            ->groupBy('pub_categories.id', 'lng_pub_categories.title')
+            ->join('noticias', 'categorias.id', '=', 'noticias.categoria_id')
+            ->where('noticias.titulo', 'ilike', $request->search.'%')
+            ->groupBy('categorias.id', 'categorias.titulo')
             ->distinct()
             ->get();
 
@@ -48,17 +53,19 @@ class PostController extends Controller
 
     public function members(Request $request){
 
-        $members = \App\PubMember::
+        $members = \App\Integrante::
             select(
             DB::Raw("
-                pub_members.id,
-                pub_members.name,
-                count(jnc_articles_members.member_id) as qtd
+                id,
+                titulo,
+                count(id) as qtd
             ")
         )
-            ->join('jnc_articles_members', 'pub_members.id', '=', 'jnc_articles_members.member_id')
-            ->where('pub_members.name', 'ilike', $request->search.'%')
-            ->groupBy('pub_members.id', 'pub_members.name')
+            ->where([
+                ['titulo', 'ilike', $request->search.'%'],
+                ['conteudo', 1]
+            ])
+            ->groupBy('id', 'titulo')
             ->get();
 
         return $members;
@@ -66,14 +73,13 @@ class PostController extends Controller
 
     public function archives(Request $request){
 
-        $archives = DB::table('pub_articles')
-            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
+        $archives = $this->obj
             ->select(
                 DB::Raw("
-                to_char(pub_articles.date, 'YYYY-MM') as date_menu,
-                count(date) as qtd,
-                to_char(pub_articles.date, 'TMMonth') as month,
-                to_char(pub_articles.date, 'YYYY') as year
+                to_char(data, 'YYYY-MM') as date_menu,
+                count(data) as qtd,
+                to_char(data, 'TMMonth') as month,
+                to_char(data, 'YYYY') as year
                 "))
             ->groupBy('date_menu', 'month', 'year')
             ->orderby('date_menu')
@@ -105,60 +111,55 @@ class PostController extends Controller
             $archives = $request->filters['archives'];
         }
 
-        $total = DB::table('publications')
-            ->join('pub_categories', 'pub_categories.id', '=', 'pub_articles.category_id')
-            ->select('pub_articles.*', 'lng_pub_articles.title', 'lng_pub_articles.description')
+        $total = $this->obj
+            ->select('*')
             ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('pub_articles.category_id', $categories);
+                return $query->whereIn('categoria_id', $categories);
             })
             ->get();
 
         $total = count($total);
 
-        $result = DB::table('pub_articles')
-            ->join('lng_pub_articles', 'pub_articles.id', '=', 'lng_pub_articles.publish_id')
-            ->leftJoin('jnc_articles_members', 'pub_articles.id', '=', 'jnc_articles_members.article_id')
-            ->leftJoin('pub_comments', 'pub_articles.id', '=', 'pub_comments.origin_id')
+        $result = $this->obj
             ->select(
                 DB::Raw("
-                pub_articles.*,
-                to_char(pub_articles.date, 'HH12:MI:SS') as hour,
-                to_char(pub_articles.date, 'DD') as date,
-                to_char(pub_articles.date, 'TMMonth') as month,
-                to_char(pub_articles.date, 'YYYY') as year,
-                pub_comments.origin_id,
-                lng_pub_articles.title,
-                lng_pub_articles.teaser,
-                lng_pub_articles.description
+                *,
+                to_char(data, 'HH12:MI:SS') as hour,
+                to_char(data, 'DD') as date,
+                to_char(data, 'TMMonth') as month,
+                to_char(data, 'YYYY') as year,
+                titulo,
+                resumida,
+                descricao
                 ")
             )
             ->when(count($categories) > 0, function($query) use ($categories){
-                return $query->whereIn('pub_articles.category_id', $categories);
+                return $query->whereIn('categoria_id', $categories);
             })
             ->when(count($members) > 0, function($query) use ($members){
-                return $query->whereIn('jnc_articles_members.member_id', $members);
+                return $query->whereIn('member_id', $members);
             })
             ->when(count($archives) > 0, function($query) use ($archives){
-                return $query->whereIn(DB::Raw("to_char(pub_articles.date, 'YYYY-MM')"), $archives);
+                return $query->whereIn(DB::Raw("to_char(date, 'YYYY-MM')"), $archives);
             })
-            ->where('lng_pub_articles.title', 'ilike', '%'.$search.'%')
+            ->where('titulo', 'ilike', '%'.$search.'%')
             ->orderby($request->order, $request->directionOrder)
-            ->distinct('pub_articles.id')
+            ->distinct('id')
             ->take($request->qtdItemsLoad)
             ->get();
 
-        foreach ($result as $item) {
+        /*foreach ($result as $item) {
             $item->qtd_comments = \App\PubComment::where('origin_id', $item->id)->count();
-        }
+        }*/
 
         $ads['total'] = $total;
         $ads['data'] = $result;
 
 
         foreach($ads['data'] as $index => $ad){
-            $categories = DB::table('pub_categories')
-                ->select('pub_categories.*')
-                ->where('pub_categories.id', $ad->id)
+            $categories = DB::table('categorias')
+                ->select('categorias.*')
+                ->where('categorias.id', $ad->id)
                 ->get();
             $ads['data'][$index]->categories = $categories;
         }

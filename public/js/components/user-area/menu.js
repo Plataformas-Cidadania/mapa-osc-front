@@ -3,11 +3,10 @@ class Menu extends React.Component {
         super(props);
         this.state = {};
     }
-
     render() {
-        return React.createElement(
+        let menu = [React.createElement(
             "div",
-            null,
+            { key: "menu" },
             React.createElement(
                 "ul",
                 { className: "menu-area" },
@@ -46,7 +45,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/declaracao" },
+                        { href: "/declaracao", target: "_blank" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Declara\xE7\xE3o"
                     )
@@ -56,7 +55,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dados-user" },
+                        { href: "/selo-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Selo Site"
                     )
@@ -71,11 +70,12 @@ class Menu extends React.Component {
                         " Sair"
                     )
                 )
-            ),
-            React.createElement("br", null),
-            React.createElement(
+            )
+        )];
+        if (pageRoute === true) {
+            menu.push(React.createElement(
                 "ul",
-                { className: "menu-area" },
+                { className: "menu-area", key: "menuOsc" },
                 React.createElement(
                     "li",
                     { className: "" },
@@ -89,7 +89,7 @@ class Menu extends React.Component {
                     React.createElement(
                         "a",
                         { href: "/osc-user/789809" },
-                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
                         " Dados gerais"
                     )
                 ),
@@ -99,7 +99,7 @@ class Menu extends React.Component {
                     React.createElement(
                         "a",
                         { href: "/areas-atuacao-user" },
-                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                        React.createElement("i", { className: "fa fa-share-alt", "aria-hidden": "true" }),
                         " \xC1reas de atua\xE7\xE3o"
                     )
                 ),
@@ -139,7 +139,7 @@ class Menu extends React.Component {
                     React.createElement(
                         "a",
                         { href: "/participacoes-user" },
-                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        React.createElement("i", { className: "fas fa-users", "aria-hidden": "true" }),
                         " Participa\xE7\xE3o Social"
                     )
                 ),
@@ -149,7 +149,7 @@ class Menu extends React.Component {
                     React.createElement(
                         "a",
                         { href: "/projetos-user" },
-                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        React.createElement("i", { className: "fas fa-project-diagram", "aria-hidden": "true" }),
                         " Projetos"
                     )
                 ),
@@ -159,12 +159,13 @@ class Menu extends React.Component {
                     React.createElement(
                         "a",
                         { href: "/recursos-user" },
-                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
+                        React.createElement("i", { className: "fas fa-boxes", "aria-hidden": "true" }),
                         " Fontes de recursos"
                     )
                 )
-            )
-        );
+            ));
+        }
+        return menu;
     }
 }
 

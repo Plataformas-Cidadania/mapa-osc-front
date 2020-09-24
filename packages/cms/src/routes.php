@@ -12,6 +12,10 @@ Route::group(['middleware' => 'cms'], function () {
 
         Route::get('/cms', 'Cms\Controllers\HomeController@index');
 
+        //Setting
+        Route::get('/cms/setting/', 'Cms\Controllers\SettingController@detalhar');
+        Route::post('/cms/alterar-setting/{id}', 'Cms\Controllers\SettingController@alterar');
+
         //WEBDOORS
         Route::get('/cms/webdoors', 'Cms\Controllers\WebdoorController@index');
         Route::get('/cms/listar-webdoors', 'Cms\Controllers\WebdoorController@listar');

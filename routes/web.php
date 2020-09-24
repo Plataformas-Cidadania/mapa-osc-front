@@ -67,6 +67,7 @@ Route::get('get-indicador/', 'IndicatorController@getIndicator');
 Route::get('mapa', 'MapController@details');
 Route::get('contato', 'ContactController@email');
 Route::get('filtro', 'FilterController@search');
+Route::get('localidade/{id}', 'LocalidadeController@localidade');
 
 Route::post('contact', 'ContactController@send');
 Route::post('comment', 'CommentController@send');
@@ -132,6 +133,7 @@ Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
 Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
 Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
+Route::get('/selo-user', 'UserAreaController@seal')->middleware('auth');
 
 Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
 Route::get('/projetos-user', 'UserAreaController@projetos')->middleware('auth');

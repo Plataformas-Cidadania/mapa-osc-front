@@ -2,7 +2,7 @@ class Governancas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadingList: false,
+            loadingGovernanca: false,
             loading: false,
             governancas: [],
             conselhos: [],
@@ -14,44 +14,67 @@ class Governancas extends React.Component {
                 1: 'Endereço principal',
                 2: ' '
             },
-            showForm: false,
-            actionForm: '',
-            remove: [],
+            form: {
+                nr_trabalhadores_voluntarios: ''
+            },
+            requireds: {
+                nr_trabalhadores_voluntarios: true
+            },
+
             loadingRemove: [],
             governanca: {},
             conselho: {},
-            editId: 0
-        };
+            editId: 0,
+            showForm: false,
+            actionForm: '',
+            remove: [],
 
-        this.list = this.list.bind(this);
-        this.list2 = this.list2.bind(this);
+            showFormConselho: false,
+            actionFormConselho: '',
+            removeConselho: [],
+            editIdConselho: 0,
+            loadingRemoveConselho: [],
+
+            deficiencia: null,
+            empregados: null,
+            //voluntarios: null,
+            totalTrabalhadores: null,
+
+            editIdOsc: 0
+
+        };
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.governanca = this.governanca.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+
+        this.showHideFormConselho = this.showHideFormConselho.bind(this);
+        this.removeConselho = this.removeConselho.bind(this);
+        this.closeFormConselho = this.closeFormConselho.bind(this);
+
+        this.updateVoluntario = this.updateVoluntario.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        //const defaultValue = target.type === 'checkbox' ? target.checked : target.defaultValue;
+        const name = target.name;
+
+        let form = this.state.form;
+        let placeholder = this.state.placeholder;
+        form[name] = value;
+        //form[name] = defaultValue;
+
+        this.setState({ form: form, placeholder: placeholder });
     }
 
     componentDidMount() {
-        this.list();
-        this.list2();
-    }
-
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
+        this.governanca();
     }
 
     edit(id) {
-        // this.setState({actionForm: 'edit'});
         this.setState({ actionForm: 'edit', showForm: false, editId: id });
     }
 
@@ -74,13 +97,13 @@ class Governancas extends React.Component {
         loadingRemove[id] = true;
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-governanca/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/' + id,
             data: {},
             cache: false,
             success: function (data) {
                 //console.log(data);
-                this.list();
+                this.governanca();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
                 this.setState({ loadingRemove: loadingRemove });
@@ -96,189 +119,198 @@ class Governancas extends React.Component {
 
     showHideForm(action) {
         let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
-        let actionForm = action;
-
-        this.setState({ showForm: showForm, actionForm: actionForm });
+        this.setState({ showForm: showForm, actionForm: action });
     }
 
     closeForm() {
         this.setState({ showForm: false });
     }
 
-    list() {
+    governanca() {
 
-        this.setState({ loadingList: true });
+        this.setState({ loadingGovernanca: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-governancas',
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
-                this.setState({ governancas: data, loadingList: false });
+                this.setState({
+                    governancas: data.governanca,
+                    conselhos: data.conselho_fiscal,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+
+                    totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
+                    loadingGovernanca: false,
+                    editIdOsc: data.relacoes_trabalho.id_osc,
+                    form: {
+                        nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios
+                    }
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                this.setState({ loadingGovernanca: false });
             }.bind(this)
         });
     }
 
-    list2() {
+    editConselho(id) {
+        this.setState({ actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id });
+    }
 
-        this.setState({ loadingList: true });
+    showHideFormConselho(action) {
+        let showFormConselho = !this.state.showFormConselho;
+        this.setState({ showFormConselho: showFormConselho, actionFormConselho: action });
+    }
 
+    closeFormConselho() {
+        this.setState({ showFormConselho: false });
+    }
+
+    removeConselho(id) {
+        let removeConselho = this.state.removeConselho;
+
+        if (!removeConselho[id]) {
+            removeConselho[id] = true;
+            this.setState({ removeConselho: removeConselho });
+            return;
+        }
+
+        let loadingRemoveConselho = this.state.loadingRemoveConselho;
+        loadingRemoveConselho[id] = true;
+        this.setState({ loadingRemoveConselho: loadingRemoveConselho });
         $.ajax({
-            method: 'POST',
-            url: '/list-users-conselhos',
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/conselho/' + id,
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
-                this.setState({ conselhos: data, loadingList: false });
+                this.governanca();
+                let loadingRemoveConselho = this.state.loadingRemoveConselho;
+                loadingRemoveConselho[id] = false;
+                this.setState({ loadingRemoveConselho: loadingRemoveConselho });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                let loadingRemoveConselho = this.state.loadingRemoveConselho;
+                loadingRemoveConselho[id] = false;
             }.bind(this)
+        });
+    }
+
+    validate() {
+        let valid = true;
+
+        let requireds = this.state.requireds;
+        let form = this.state.form;
+
+        this.setState({ requireds: requireds });
+        return valid;
+    }
+
+    updateVoluntario(e) {
+
+        console.log('->', this.state);
+
+        e.preventDefault();
+
+        if (!this.validate()) {
+            return;
+        }
+
+        this.setState({ loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: '' }, function () {
+            console.log('**', this.state.form.nr_trabalhadores_voluntarios);
+            $.ajax({
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/rel_trabalho/' + this.state.editIdOsc,
+                data: this.state.form,
+                cache: false,
+                success: function (data) {
+                    let msgVoluntario = "Dados alterados com sucesso!";
+                    this.setState({ loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true, updateOkVoluntario: true, buttonVoluntario: true });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    let msgVoluntario = "Ocorreu um erro!";
+                    this.setState({ loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true, updateOkVoluntario: false, buttonVoluntario: true });
+                }.bind(this)
+            });
         });
     }
 
     render() {
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
         let governancas = this.state.governancas.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.governancas.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
-            return (
-
-                /*<div className="box-insert-list"  key={"governanca_"+index}>
-                    <i className="far fa-trash-alt text-danger float-right"/>
-                    <p>{item.tx_cargo_dirigente}</p>
-                    <p>{item.tx_nome_dirigente}</p>
-                    <hr/>
-                </div>*/
-
-                React.createElement(
-                    'div',
-                    { className: 'box-insert-list', key: "governanca_" + index },
-                    React.createElement(
-                        'div',
-                        { className: 'float-right', style: { marginRight: '40px' } },
-                        React.createElement(
-                            'a',
-                            { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
-                            React.createElement('i', { className: 'fa fa-edit' })
-                        ),
-                        '\xA0',
-                        React.createElement(
-                            'a',
-                            { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
-                            React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
-                        ),
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
-                            React.createElement('i', { className: "fa fa-undo" })
-                        ),
-                        React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        item.tx_nome_dirigente
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        React.createElement(
-                            'strong',
-                            null,
-                            item.tx_cargo_dirigente
-                        )
-                    )
-                )
-
-                /*<div className="col-md-6"  key={"governanca_"+item.id}>
-                    <div className="panel panel-default">
-                        <div className="panel-body">
-                            <div className="row">
-                                <div className="col-md-offset-9 col-md-1"><a href="#" onClick={() => this.edit(item.id)}><i className="fa fa-pencil fa-2x"/></a></div>
-                                <div className="col-md-1">
-                                    <a href="#" onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : 'block'}}>
-                                        <i className={"fa  fa-2x "+( this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash")}/>
-                                    </a>
-                                    <a href="#" onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none'}}>
-                                        <i className={"fa  fa-2x fa-undo"}/>
-                                    </a>
-                                    <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
-                                </div>
-                            </div>
-                            <div>
-                                <h3>{item.nome}</h3>
-                                <p>{item.endereco}, {item.numero}, {item.complemento}</p>
-                                <p>{item.bairro}</p>
-                                <p>{item.cep}</p>
-                                <p>{item.cidade} - {item.estado}</p>
-                                <p>{this.state.tipo[item.tipo]}</p>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12"><strong>OBS: </strong>{item.obs}</div>
-                            </div>
-                            <div className="row text-right">
-                                <h6>{this.state.principal[item.principal]} &nbsp;  </h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>*/
-
-            );
-        }.bind(this));
-
-        let conselhos = this.state.conselhos.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.conselhos.length - 1) {
-                hr = React.createElement('hr', null);
-            }
 
             return React.createElement(
                 'div',
-                { className: 'box-insert-list', key: "conselho_" + index },
+                { className: 'box-insert-governanca', key: "governanca_" + index },
                 React.createElement(
                     'div',
-                    { className: 'float-right', style: { width: '50px' } },
+                    { className: 'float-right', style: { marginRight: '40px' } },
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
+                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id_dirigente) },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
                     '\xA0',
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id_dirigente), style: { display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block' } },
+                        React.createElement('i', { className: "fa " + (this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
                     ),
                     React.createElement(
                         'a',
-                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
+                        { onClick: () => this.cancelRemove(item.id_dirigente), style: { display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none' } },
                         React.createElement('i', { className: "fa fa-undo" })
                     ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none' } })
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    item.tx_nome_dirigente
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    React.createElement(
+                        'strong',
+                        null,
+                        item.tx_cargo_dirigente
+                    )
+                )
+            );
+        }.bind(this));
+
+        let conselhos = this.state.conselhos.map(function (item, index) {
+
+            return React.createElement(
+                'div',
+                { className: 'box-insert-governanca', key: "conselho_" + index },
+                React.createElement(
+                    'div',
+                    { className: 'float-right', style: { width: '50px' } },
+                    React.createElement(
+                        'a',
+                        { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id_conselheiro) },
+                        React.createElement('i', { className: 'fa fa-edit' })
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'a',
+                        { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id_conselheiro), style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block' } },
+                        React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                    ),
+                    React.createElement(
+                        'a',
+                        { onClick: () => this.cancelRemoveConselho(item.id_conselheiro), style: { display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none' } },
+                        React.createElement('i', { className: "fa fa-undo" })
+                    ),
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none' } })
                 ),
                 React.createElement(
                     'p',
@@ -313,31 +345,11 @@ class Governancas extends React.Component {
                     this.state.governancas.length,
                     ' Trabalhos ou Governan\xE7as cadastrados'
                 ),
-                React.createElement('hr', null),
-                React.createElement(
-                    'div',
-                    { style: { float: 'right', display: this.state.governancas.length < maxConselhos ? 'block' : 'none' } },
-                    React.createElement(
-                        'a',
-                        { onClick: this.showHideForm },
-                        React.createElement('i', { className: 'fa fa-plus', style: { display: this.state.showForm ? "none" : "block" } })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: this.showHideForm },
-                        React.createElement('i', { className: 'fa fa-times', style: { display: this.state.showForm ? "block" : "none" } })
-                    )
-                ),
-                React.createElement('div', { style: { clear: 'both' } })
+                React.createElement('hr', null)
             ),
             React.createElement(
                 'div',
-                { style: { display: this.state.showForm ? 'block' : 'none' } },
-                React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
-            ),
-            React.createElement(
-                'div',
-                { style: { display: this.state.loadingList ? 'true' : 'none' } },
+                { style: { display: this.state.loadingGovernanca ? 'true' : 'none' } },
                 React.createElement('img', { style: { marginTop: '80px' }, src: '/img/loading.gif', width: '150px', alt: 'carregando', title: 'carregando' })
             ),
             React.createElement('br', null),
@@ -355,6 +367,25 @@ class Governancas extends React.Component {
                             null,
                             'Quadro de Dirigentes'
                         ),
+                        React.createElement(
+                            'div',
+                            { style: { float: 'right' } },
+                            React.createElement(
+                                'a',
+                                { className: 'btn-add', onClick: this.showHideForm },
+                                React.createElement('i', { className: 'fas fa-plus-circle fa-2x', style: { display: this.state.showForm ? "none" : "block" } })
+                            ),
+                            React.createElement(
+                                'a',
+                                { onClick: this.showHideForm },
+                                React.createElement('i', { className: 'fa fa-times', style: { display: this.state.showForm ? "block" : "none" } })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.showForm ? 'block' : 'none' } },
+                            React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.governanca, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                        ),
                         governancas
                     )
                 ),
@@ -368,6 +399,25 @@ class Governancas extends React.Component {
                             'h2',
                             null,
                             'Conselho Fiscal'
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { float: 'right' } },
+                            React.createElement(
+                                'a',
+                                { className: 'btn-add', onClick: this.showHideFormConselho },
+                                React.createElement('i', { className: 'fas fa-plus-circle fa-2x', style: { display: this.state.showFormConselho ? "none" : "block" } })
+                            ),
+                            React.createElement(
+                                'a',
+                                { onClick: this.showHideFormConselho },
+                                React.createElement('i', { className: 'fa fa-times', style: { display: this.state.showFormConselho ? "block" : "none" } })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.showFormConselho ? 'block' : 'none' } },
+                            React.createElement(FormConselho, { action: this.state.actionFormConselho, list: this.governanca, id: this.state.editIdConselho, showHideFormConselho: this.showHideFormConselho, closeForm: this.closeFormConselho })
                         ),
                         conselhos
                     )
@@ -408,12 +458,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        '11'
+                                        this.state.totalTrabalhadores
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'a'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -435,12 +485,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.empregados
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -462,12 +512,12 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'h2',
                                         null,
-                                        'aa'
+                                        this.state.deficiencia
                                     ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'aa'
+                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
                                     )
                                 )
                             )
@@ -486,11 +536,41 @@ class Governancas extends React.Component {
                                 React.createElement(
                                     'div',
                                     null,
-                                    React.createElement('input', { type: 'number', value: '10', className: 'input-lg', min: '1' }),
+                                    React.createElement('div', { style: { clear: 'both', height: '1px' } }),
+                                    React.createElement('input', { className: 'input-lg', type: 'number', min: '1', name: 'nr_trabalhadores_voluntarios', onChange: this.handleInputChange, defaultValue: this.state.form.nr_trabalhadores_voluntarios,
+                                        style: { float: 'left' }, placeholder: '0' }),
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        React.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn btn-success', onClick: this.updateVoluntario },
+                                            React.createElement('i', {
+                                                className: 'fas fa-cloud-download-alt' }),
+                                            ' '
+                                        ),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement('div', { style: { clear: 'both' } }),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loadingVoluntario ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsgVoluntario ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOkVoluntario ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOkVoluntario ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msgVoluntario
+                                    ),
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        '\xA0'
+                                        'Atualize suas informa\xE7\xF5es sobre Volunt\xE1rios'
                                     )
                                 )
                             )

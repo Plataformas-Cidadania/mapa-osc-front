@@ -27,27 +27,36 @@ class Osc extends React.Component{
             },
             showMsg: false,
             msg: '',
-            showIcon: false
+            showIcon: false,
+            objetivos: null,
+            subobjetivos: null,
+            titleMeta: null,
+            titleObjetivo: "",
+            buttonObjetivos: 0,
 
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updateOsc = this.updateOsc.bind(this);
         this.validate = this.validate.bind(this);
-        this.getOsc = this.getOsc.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
+        this.getOsc = this.getOsc.bind(this);
+        this.checkMetas = this.checkMetas.bind(this);
+
+        this.listArea = this.listArea.bind(this);
     }
 
     componentDidMount(){
-        this.getOsc();
         this.getCabecalho();
+        this.getOsc();
+        this.listArea();
     }
 
     getCabecalho(){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/cabecalho/455128',
+            url: getBaseUrl2+'osc/cabecalho/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, txt: data, button:true})
@@ -62,7 +71,7 @@ class Osc extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+            url: getBaseUrl2+'osc/dados_gerais/455128',
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -108,24 +117,10 @@ class Osc extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
-                url: 'http://mapa-osc-api.local/api/osc/dados_gerais/455128',
+                url: getBaseUrl2+'osc/dados_gerais/455128',
                 data: this.state.form,
                 cache: false,
                 success: function(data) {
-
-                    /*let msg = 'Já existe outro cadastro com esse';
-
-                    if(data.tx_razao_social_osc || data.email){
-                        if(data.tx_razao_social_osc){
-                            msg+= ' tx_razao_social_osc';
-                        }
-                        if(data.email){
-                            msg+= ' email';
-                        }
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, showIcon: true});
-                        return;
-                    }*/
-
                     let msg = 'Dados alterados com sucesso!';
                     this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true});
                 }.bind(this),
@@ -138,9 +133,157 @@ class Osc extends React.Component{
         });
     }
 
+    listArea(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+                this.setState({loading: false, objetivos: data, button:true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
 
+    callSubobjetivos(id){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            success: function (data) {
+
+                let objetivos = this.state.objetivos;
+
+
+                let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
+
+                data.find(function(item){
+                    item.display = true;
+                    item.checked = false;
+
+                });
+
+
+                console.log(objetivos);
+
+                objetivos.find(function(item){
+                    if(item.metas){
+                        item.metas.find(function(itemMeta){
+                            itemMeta.display = false;
+                            console.log('display: '+itemMeta.display);
+                        });
+
+                        if(item.cd_objetivo_projeto === id){
+                            item.metas.find(function(itemMeta){
+                                itemMeta.display = true;
+                                console.log('display2: '+itemMeta.display);
+                            });
+                        }
+                    }
+                    if(item.cd_objetivo_projeto === id && !item.metas){
+                        item.metas = data;
+                        console.log('display3: ' + item.display)
+                    }
+
+
+                });
+
+                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    checkMetas(cd_objetivo, cd_meta){
+        console.log(cd_objetivo, cd_meta);
+        let objetivos = this.state.objetivos;
+        objetivos.find(function(item){
+            if(item.cd_objetivo_projeto === cd_objetivo){
+                item.metas.find(function (itemMeta) {
+                    if(itemMeta.cd_meta_projeto === cd_meta){
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });
+        this.setState({objetivos: objetivos});
+    }
 
     render(){
+
+
+
+        function padDigits(number, digits) {
+            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+        }
+
+        let objetivos = null;
+        let metas = [];
+        if(this.state.objetivos){
+            objetivos = this.state.objetivos.map(function (item) {
+
+                let png = padDigits(item.cd_objetivo_projeto, 2);
+
+                let checkedMetas = false;
+
+                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+
+                if(item.metas){
+                    metas.push(item.metas.map(function (itemMeta) {
+                        if(itemMeta.checked){
+                            checkedMetas = true;
+                        }
+                        console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+                        return(
+                            <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
+                                </div>
+                                <hr />
+                            </div>
+                        );
+                    }.bind(this)));
+                }
+
+                return (
+                    <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
+                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
+                        <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
+                        {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
+                            {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
+                            <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                            {/*checkedMetas ? "" : "item-off" +*/}
+                            {/*(this.state.buttonObjetivos==item.cd_objetivo_projeto+1) ? "item-off " : "item-off item-focus"*/}
+                        </label>
+                    </div>
+                );
+            }.bind(this));
+        }
+
+        /*if(this.state.metas){
+            metas = this.state.metas.map(function (item) {
+                return(
+                    <div key={"subarea_"+item.cd_meta_projeto}>
+                        <div className="custom-control custom-checkbox" onChange={() => console.log(item.cd_meta_projeto)}>
+                            <input type="checkbox" className="custom-control-input" id={"subarea_"+item.cd_meta_projeto} required/>
+                            <label className="custom-control-label" htmlFor={"subarea_"+item.cd_meta_projeto} >{item.tx_nome_meta_projeto}</label>
+                        </div>
+                        <hr />
+                    </div>
+                );
+            }.bind(this));
+        }*/
 
         return (
             <div>
@@ -151,10 +294,10 @@ class Osc extends React.Component{
 
                             <div className="row">
                                 <div className="col-md-12">
-                                    <div className="title-style">
-                                        <h2>Dados Gerais</h2>
-                                        <div className="line line-fix"/>
-                                        <hr/>
+                                    <div className="title-user-area">
+                                        <div className="mn-accordion-icon"><i className="fa fa-file-alt" aria-hidden="true"/></div>
+                                        <h3>Dados Gerais</h3>
+                                        <hr/><br/>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +338,7 @@ class Osc extends React.Component{
                                         </div>
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g"} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} value={this.state.form.tx_razao_social_osc}
+                                                <input className={"form-control form-g"} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} value={this.state.form.tx_nome_fantasia_osc}
                                                        placeholder="Insira o Nome Fantasia" />
                                                 <label htmlFor="tx_razao_social_osc">Nome Fantasia</label>
                                                 <div className="label-box-info-off">
@@ -211,8 +354,8 @@ class Osc extends React.Component{
                                             <div className="alert alert-secondary">
                                                 <i className="fas fa-database float-right tx-pri"/>
                                                 <strong>Endereço:</strong><br/>
-                                                {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}, ***<br/>
-                                                {this.state.form.tx_bairro}, {this.state.form.cd_municipio} - ***<br/>
+                                                {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}<br/>
+                                                {this.state.form.tx_bairro}, {this.state.form.tx_nome_municipio} - {this.state.form.tx_nome_uf}<br/>
                                                 <strong>CEP.:</strong> {this.state.form.nr_cep}
                                             </div>
                                         </div>
@@ -221,19 +364,21 @@ class Osc extends React.Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputEstado">Situação do Imóvel</label>
-                                            <select id="inputEstado" className="form-control">
-                                                <option selected>Escolher...</option>
-                                                <option>...</option>
+                                            <select name="tx_nome_situacao_imovel_osc" className={"form-control"} value={this.state.form.tx_nome_situacao_imovel_osc} onChange={this.handleInputChange}>
+                                                <option value="-1">Selecione</option>
+                                                <option value="Próprio">Próprio</option>
+                                                <option value="Alugado">Alugado</option>
+                                                <option value="Cedido">Cedido</option>
+                                                <option value="Comodato">Comodato</option>
                                             </select>
                                         </div>
                                         <div className="form-group col-md-4">
-                                            <label htmlFor="inputAddress2">Ano de inscrição no Cadastro de CNPJ</label>
-                                            <input type="date" className="form-control" id="inputAddress2"
-                                                   placeholder="Apartamento, hotel, casa, etc."/>
+                                            <label htmlFor="inputAddress2">Ano de inscrição do CNPJ</label>
+                                            <input className={"form-control form-g "} type="date" name="dt_ano_cadastro_cnpj" onChange={this.handleInputChange} value={this.state.form.dt_ano_cadastro_cnpj}/>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputCity">Ano de Fundação</label>
-                                            <input type="date" className="form-control" id="inputCity"/>
+                                            <input className={"form-control form-g "} type="date" name="dt_fundacao_osc" onChange={this.handleInputChange} value={this.state.form.dt_fundacao_osc}/>
                                         </div>
                                     </div>
 
@@ -241,7 +386,7 @@ class Osc extends React.Component{
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_email" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal}
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_responsavel_legal" onChange={this.handleInputChange} value={this.state.form.tx_nome_responsavel_legal}
                                                        placeholder="Insira o Responsável Legal" />
                                                 <label htmlFor="tx_email">Responsável Legal</label>
                                                 <div className="label-box-info-off">
@@ -295,9 +440,9 @@ class Osc extends React.Component{
 
                                         <div className="col-md-12">
                                             <div className="label-float-tx">
-                                            <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
+                                            <textarea className="form-control form-g" name="tx_resumo_osc" onChange={this.handleInputChange} value={this.state.form.tx_resumo_osc}
                                                       rows="3" placeholder="O que a OSC faz"/>
-                                                <label htmlFor="tx_finalidades_estatutarias">O que a OSC faz</label>
+                                                <label htmlFor="tx_resumo_osc">O que a OSC faz</label>
                                                 <div className="label-box-info-tx">
                                                     <p>&nbsp;</p>
                                                 </div>
@@ -308,122 +453,26 @@ class Osc extends React.Component{
 
                                     <br/><br/>
 
-                                    <h4>Objetivos do Desenvolvimento Sustentável - ODS</h4>
 
-                                    <div>
-                                        <ul className="menu-txt-icon">
-                                            <li><img src="img/ods/01.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/02.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/03.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/04.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/05.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/06.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/07.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/08.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/09.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/10.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/11.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/12.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/13.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/14.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/15.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/16.png" alt="" className="item-off" width="87"/></li>
-                                            <li><img src="img/ods/17.png" alt="" className="item-off" width="87"/></li>
-                                        </ul>
-                                        <div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
                                             <div>
+                                                {objetivos}
                                                 <br/><br/>
-                                                <h4><strong>1 - Acabar com a pobreza em todas as suas formas, em todos os lugares</strong></h4>
-                                                <br/>
                                             </div>
-                                            <div>
-                                                <div className="form-group">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck">
-                                                                1.1 Até 2030, erradicar a pobreza extrema para todas as
-                                                                pessoas em todos os lugares, atualmente medida como
-                                                                pessoas vivendo com menos de US$ 1,25 por dia
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck2"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck2">
-                                                                1.2 Até 2030, reduzir pelo menos à metade a proporção de
-                                                                homens, mulheres e crianças, de todas as idades, que
-                                                                vivem na pobreza, em todas as suas dimensões, de acordo
-                                                                com as definições nacionais
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck3"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck3">
-                                                                1.3 Implementar, em nível nacional, medidas e sistemas
-                                                                de proteção social adequados, para todos, incluindo
-                                                                pisos, e até 2030 atingir a cobertura substancial dos
-                                                                pobres e vulneráveis
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck4"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck4">
-                                                                1.4 Até 2030, garantir que todos os homens e mulheres,
-                                                                particularmente os pobres e vulneráveis, tenham direitos
-                                                                iguais aos recursos econômicos, bem como o acesso a
-                                                                serviços básicos, propriedade e controle sobre a terra e
-                                                                outras formas de propriedade, herança, recursos
-                                                                naturais, novas tecnologias apropriadas e serviços
-                                                                financeiros, incluindo microfinanças
-                                                            </label>
-                                                    </div>
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               id="gridCheck5"/>
-                                                            <label className="form-check-label" htmlFor="gridCheck5">
-                                                                1.5 Até 2030, construir a resiliência dos pobres e
-                                                                daqueles em situação de vulnerabilidade, e reduzir a
-                                                                exposição e vulnerabilidade destes a eventos extremos
-                                                                relacionados com o clima e outros choques e desastres
-                                                                econômicos, sociais e ambientais
-                                                            </label>
-                                                    </div>
+                                            <div style={{display: this.state.titleMeta ? '' : 'none'}}>
+                                                <strong>Metas Relacionadas ao ODS definido</strong><hr/>
+                                               {/* <div className="card-columns">*/}
+                                                <div>
+                                                    <strong>{this.state.titleObjetivo}</strong><br/><br/>
+                                                    {metas}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
 
-
-
-                                    {/*<div className="col-md-12">
-                                        <div>
-                                            <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                            <br/>
-                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                                        </div>
-                                    </div>*/}
-
-
-                                    {/*<div className="row">
-                                        <div className="col-md-12">
-                                            <div style={{marginTop: '-10px'}}>
-                                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+this.state.color}>
-                                                    <i className="far fa-check-circle" style={{display: this.state.showIcon ? 'none' : ''}}/>
-                                                    <i className="far fa-times-circle" style={{display: this.state.showIconErro ? 'none' : ''}}/>
-                                                    {this.state.msg}
-                                                </div>
-                                                <button  className="btn btn-success" onClick={this.register}><i
-                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
-                                                <br/>
-                                            </div>
-                                        </div>
-                                    </div>*/}
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div style={{marginTop: '-10px'}}>

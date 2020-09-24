@@ -15,12 +15,17 @@ class Certificates extends React.Component{
             loadingRemove: [],
             certificate: {},
             editId: 0,
+            modal: {},
+            modalTitle: 'Inserir título ou certificação',
         };
 
         this.list = this.list.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+        this.modal = this.modal.bind(this);
+        this.callModal = this.callModal.bind(this);
+        this.edit = this.edit.bind(this);
     }
 
     componentDidMount(){
@@ -37,15 +42,14 @@ class Certificates extends React.Component{
             age--;
         }
 
-        //console.log(age);
-
         return age;
 
     }
 
     edit(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionForm: 'edit', showForm: false, editId: id});
+        this.setState({actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação'}, function(){
+            this.callModal();
+        });
     }
 
     cancelRemove(id){
@@ -67,8 +71,8 @@ class Certificates extends React.Component{
         loadingRemove[id] = true;
         this.setState({loadingRemove: loadingRemove});
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-certificate/'+id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/certificados/'+id,
             data: {
 
             },
@@ -92,14 +96,6 @@ class Certificates extends React.Component{
 
     showHideForm(action){
         let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-
-        this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
 
         this.setState({showForm: showForm, actionForm: actionForm});
@@ -114,14 +110,13 @@ class Certificates extends React.Component{
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-certificates',
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/certificados/455128',
             data: {
-
             },
             cache: false,
             success: function(data){
-                console.log(data);
+                console.log("data: ",data);
                 this.setState({certificates: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -131,11 +126,44 @@ class Certificates extends React.Component{
         });
     }
 
+    callModal(){
+        let modal = this.state.modal;
+        this.setState({modal: modal}, function(){
+            $('#modalForm').modal('show');
+        });
+    }
+
+    modal(){
+
+
+        return (
+
+            <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modalTitle}</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                                <FormCertificate action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                        </div>
+                        {/*<div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>*/}
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     render(){
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
+        let modal = this.modal();
         let certificates = this.state.certificates.map(function(item, index){
 
             let hr = null;
@@ -145,12 +173,12 @@ class Certificates extends React.Component{
 
             return (
                 <tr key={"certificate_"+index}>
-                    <td>{item.cd_certificado}</td>
+                    <td>{item.dc_certificado.tx_nome_certificado}</td>
                     <td>{item.dt_inicio_certificado}</td>
                     <td>{item.dt_fim_certificado}</td>
-                    <td>{item.cd_uf}</td>
+                    <td>{item.edmu_nm_municipio}</td>
                     <td width="70">
-                        <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                        <a onClick={() => this.edit(item.id_certificado)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.remove(item.id_certificado)} style={{display: this.state.loadingRemove[item.id_certificado] ? 'none' : ''}}>
                             <i className={"fas "+( this.state.remove[item.id_certificado] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
                         </a>
@@ -191,17 +219,15 @@ class Certificates extends React.Component{
                             </tbody>
                         </table>
 
-                        <div style={{float: 'right', cursor: 'pointer', display: this.state.certificates.length < maxCertificates ? 'block' : 'none' }}>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
-                            <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>
+                        <div style={{float: 'right', cursor: 'pointer'}}>
+                            <a onClick={this.callModal}  className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
                         </div>
 
-                        <div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
-                            <FormCertificate action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>
                     </div>
 
                 </div>
+
+                {modal}
             </div>
         );
     }

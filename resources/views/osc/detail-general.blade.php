@@ -16,13 +16,15 @@
                 <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif" alt="">
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-5">
             <p>
                 <strong>CNPJ:</strong> {{$dados_gerais->cd_identificador_osc}}<br>
                 <strong>Natureza Jurídica:</strong> <br>
             </p>
             <br>
-
+        </div>
+        <div class="col-md-4">
+            <div id="polarChart"></div>
         </div>
     </div>
     <br><br>
@@ -99,7 +101,7 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="item-detail alert alert-secondary">
+            <div class="item-detail alert alert-secondary" >
                 <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>
                 <br>
                 <div class="item-obj">

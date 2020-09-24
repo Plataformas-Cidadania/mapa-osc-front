@@ -3,8 +3,6 @@
 @section('content')
 
 
-
-
 <div class="container">
 
     <div class="row justify-content-md-center">
@@ -111,75 +109,37 @@
                     <hr/>
                 </div>
             </div>
-            <div class="col-md-12 text-center">
-                <ul class="menu-items">
-
-
-                    @foreach($areas_atuacao as $key => $area_atuacao)
-                    <li>
-                        <a href="">
-                            <i class="fa fa-user theme-{{$key}}"></i>
-                            <p>{{$area_atuacao}}</p>
-                        </a>
-                    </li>
-                    @endforeach
-
-
-                    {{--<li>
-                        <a href="">
-                            <i class="fa fa-user"></i>
-                            <p>Cultura e recreação</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-user"></i>
-                            <p>Educação e pesquisa</p>
-                        </a>
-                    </li>--}}
-                </ul>
-                <br>
+            <div class="col-md-12">
+                {{--OSCs proximas--}}
+                <div id="nextOsc"></div>
             </div>
-            <div class="col-md-8 bg-map"
-                 @if(!empty($text->imagem))
-                 style="background-image: url('imagens/texts/{{$text->imagem}}');"
-                 @endif
-            >
-                <div class="circle">
-                    @foreach($osc_recentes as $key => $osc_recente)
-                    <div id="icon{{$key}}" class="rotate">
-                        <div class="circle-item">
-                            {{$osc_recente->id_osc}}
-                            {{--<img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">--}}
+
+            {{--<div class="custom0 owl-carousel owl-theme">
+                @foreach($osc_recentes as $item)
+                    <a href="" target="_blank">
+                        <div class="item">
+                            <picture>
+                                <source data-src="/imagens/items/lg-" media="(max-width: 468px)">
+                                <source data-src="/imagens/items/md-" media="(max-width: 768px)">
+                                <source data-src="/imagens/items/md-" class="img-responsive">
+                                <img src="/img/pre-img.gif" data-src="/imagens/items/lg-" alt="Imagem sobre " title="Imagem sobre " width="100%" class="cliente-list-img-hover lazyload">
+                            </picture>
                         </div>
-                    </div>
-                    @endforeach
-                </div>
-                <div class="circle2">
-                    @foreach($osc_recentes as $key => $osc_recente)
-                        <div id="icon{{$key}}" class="rotate2">
-                            <div class="circle-item">
-                                {{$osc_recente->id_osc}}
-                                {{--<img src="img/loading.gif" data-src="https://rihappy.vteximg.com.br/arquivos/ids/391006-400-400/quebra-cabeca-3d-mapa-do-brasil-elka-1109_detalhe1.jpg" alt="Imagem sobre " title="Imagem sobre "  class=" rounded-circle lazyload items-hover" width="55">--}}
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @if(!empty($text->titulo))
-                <div class="col-md-4">
-                    <h2>{{$text->titulo}}</h2>
-                    <p>{!!$text->descricao!!}</p>
-                </div>
-            @endif
+                    </a>
+                @endforeach
+            </div>--}}
+
+
+
         </div>
     </div>
 
-    <div class="container">
-        <div id="page"></div>
-    </div>
+    {{--Chapa chart react--}}
+    <div id="home"></div>
 
-    <div class="space">&nbsp;</div>
+
+    {{--<div class="space">&nbsp;</div>--}}
+    <br><br>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -232,6 +192,79 @@
         elements: false,
         restartOnRequestAfter: false
     }
+
+    nextOscTitle = "{{$text->titulo}}";
+    nextOscDescription = "{{strip_tags($text->descricao)}}";
+    nextOscImg = "imagens/texts/{{$text->imagem}}";
+
+</script>
+<style>
+    .icon-next{
+        background-color: #FFFFFF;
+        border: solid 4px #1C4969;
+        width: 70px;
+        height: 70px;
+        margin: auto;
+        margin-top: 161px;
+        margin-left: 271px;
+        border-radius: 50%;
+        text-align: center;
+        position: absolute;
+    }
+    .icon-next svg{
+        color: #1C4969;
+        font-size: 45px;
+        margin-top: 7px;
+
+    }
+</style>
+
+    <style>
+        .menu-items-basic{
+            margin: 0;
+            padding: 0;
+        }
+        .menu-items-basic li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .menu-items-basic svg{
+            float: right;
+        }
+        .menu-items-basic hr{
+            margin: 0;
+            padding: 3px 0;
+        }
+    </style>
+
+
+
+<script>
+
+    $(document).ready(function() {
+        var owl = $('.customMn');
+        owl.owlCarousel({
+            margin: 10,
+            nav: true,
+            loop: true,
+            autoplay:true,
+            navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+            autoplayTimeout:5000,
+            responsive: {
+                0: {
+                    items: 5
+                },
+                600: {
+                    items: 8
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    })
+
 </script>
 
 @endsection

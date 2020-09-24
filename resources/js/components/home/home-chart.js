@@ -21,7 +21,7 @@ class HomeChart extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        //console.log(props);
+        console.log(props);
 
         this.setState({
             data: props.data,
@@ -151,13 +151,7 @@ class HomeChart extends React.Component{
                         </div>
                     </div>
 
-                   {/* <div className="row">
-                        <div className="col-md-7">
-                            <br/><br/>
-                            <h4>Quantidade Mensal e velocidade</h4>
-                            <MixedChart  id='mix-chart2' yaxis={this.state.brtDataMonthChartY} series={this.state.brtDataMonthChart} labels={this.state.labelsMonth}/>
-                        </div>
-                    </div>*/}
+
 
 
             </div>

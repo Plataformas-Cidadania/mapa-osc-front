@@ -11356,6 +11356,61 @@ a.text-dark:focus {
   }
 }
 
+.menu-left-chart li {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.box-chart {
+  margin: 0 0 50px 0;
+}
+
+.box-chart h2 {
+  font-size: 18px !important;
+}
+
+.box-chart-font {
+  font-size: 12px;
+  margin-top: 30px;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.box-chart-model-font {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.bd-callout-warning {
+  border-left-color: #f0ad4e !important;
+}
+
+.bd-callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.icons-top {
+  margin: -20px 5px 5px 5px;
+  color: #CCCCCC;
+}
+
+.icons-top-active {
+  color: #3A559B;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.divOff {
+  display: none;
+}
+
 body {
   font-family: Arial, verdana, Helvetica Neue, Helvetica, sans-serif;
   font-size: 15px;
@@ -12194,7 +12249,8 @@ figcaption {
 }
 
 .input-lg {
-  font-size: 40px;
+  text-align: center;
+  font-size: 35px;
   border: 0;
   background-color: #EEEEEE;
   width: 100px;
@@ -12253,6 +12309,12 @@ figcaption {
   cursor: pointer;
 }
 
+.box-border {
+  min-height: 120px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px;
+}
+
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;
@@ -12269,10 +12331,10 @@ label {
 }
 
 .input-icon svg {
-  float: right;
-  margin-top: -28px;
-  font-size: 20px;
-  margin-right: 10px;
+  float: right !important;
+  margin-top: -28px !important;
+  font-size: 20px !important;
+  margin-right: 10px !important;
 }
 
 /* --  Personalização checkbox -- */
@@ -12558,8 +12620,6 @@ label, input, .btn-number {
     padding-right:2%;
     outline:none;
     cursor: pointer;
-
-
 }
 .btn-number.formMin{
     background-color: #CCCCCC;
@@ -12581,11 +12641,40 @@ label, input, .btn-number {
   margin-top: -32px;
   position: relative;
   z-index: 9999;
-  width: 100px;
+  width: 50%;
 }
 
 .custom-range-r {
   float: right;
+}
+
+.box-search-itens {
+  position: absolute;
+  background: #FFFFFF;
+  overflow: auto;
+  width: 95%;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  margin-right: 20px;
+  z-index: 99;
+}
+
+.box-search-itens li {
+  cursor: pointer;
+}
+
+.btn-close {
+  float: left;
+  padding-top: 28px;
+}
+
+.btn-close svg {
+  padding-top: 10px;
+}
+
+.btn-margin-right {
+  margin-right: 10px;
 }
 
 .fa-svg svg {
@@ -12844,15 +12933,15 @@ label, input, .btn-number {
           transform: rotate(-30deg);
 }
 
-.circle2 #icon5 {
-  -webkit-transform: rotate(30deg);
-          transform: rotate(30deg);
+.circle2 #icon0 {
+  -webkit-transform: rotate(65deg);
+          transform: rotate(65deg);
   /*Rotaciona no eixo*/
 }
 
-.circle2 #icon5 div {
-  -webkit-transform: rotate(-30deg);
-          transform: rotate(-30deg);
+.circle2 #icon0 div {
+  -webkit-transform: rotate(-65deg);
+          transform: rotate(-65deg);
   /*Coloca virado para cima*/
 }
 
@@ -12894,6 +12983,11 @@ label, input, .btn-number {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
   opacity: 9;
+}
+
+.item-focus {
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .item-off,
@@ -13133,6 +13227,21 @@ label, input, .btn-number {
 
 .box-groups-info {
   font-size: 13px;
+}
+
+.items-checkbox {
+  margin: 2px 0;
+}
+
+.btn-add {
+  margin-top: -57px;
+  position: absolute;
+  margin-left: -23px;
+  cursor: pointer;
+}
+
+.btn-add svg {
+  color: #3A559B !important;
 }
 
 #chart {

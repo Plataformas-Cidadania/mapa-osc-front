@@ -14,13 +14,18 @@ class Certificates extends React.Component {
             remove: [],
             loadingRemove: [],
             certificate: {},
-            editId: 0
+            editId: 0,
+            modal: {},
+            modalTitle: 'Inserir título ou certificação'
         };
 
         this.list = this.list.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
+        this.modal = this.modal.bind(this);
+        this.callModal = this.callModal.bind(this);
+        this.edit = this.edit.bind(this);
     }
 
     componentDidMount() {
@@ -37,14 +42,13 @@ class Certificates extends React.Component {
             age--;
         }
 
-        //console.log(age);
-
         return age;
     }
 
     edit(id) {
-        // this.setState({actionForm: 'edit'});
-        this.setState({ actionForm: 'edit', showForm: false, editId: id });
+        this.setState({ actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação' }, function () {
+            this.callModal();
+        });
     }
 
     cancelRemove(id) {
@@ -66,8 +70,8 @@ class Certificates extends React.Component {
         loadingRemove[id] = true;
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-certificate/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/certificados/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -88,13 +92,6 @@ class Certificates extends React.Component {
 
     showHideForm(action) {
         let showForm = !this.state.showForm;
-
-        /*let action = this.state.actionForm;
-        if(showForm){
-            let actionForm = 'new';
-        }
-         this.setState({showForm: showForm, actionForm: action});*/
-
         let actionForm = action;
 
         this.setState({ showForm: showForm, actionForm: actionForm });
@@ -109,12 +106,12 @@ class Certificates extends React.Component {
         this.setState({ loadingList: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-certificates',
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/certificados/455128',
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
+                console.log("data: ", data);
                 this.setState({ certificates: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -124,11 +121,59 @@ class Certificates extends React.Component {
         });
     }
 
+    callModal() {
+        let modal = this.state.modal;
+        this.setState({ modal: modal }, function () {
+            $('#modalForm').modal('show');
+        });
+    }
+
+    modal() {
+
+        return React.createElement(
+            'div',
+            { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.modalTitle
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        React.createElement(FormCertificate, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                    )
+                )
+            )
+        );
+    }
+
     render() {
 
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
+        let modal = this.modal();
         let certificates = this.state.certificates.map(function (item, index) {
 
             let hr = null;
@@ -142,7 +187,7 @@ class Certificates extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.cd_certificado
+                    item.dc_certificado.tx_nome_certificado
                 ),
                 React.createElement(
                     'td',
@@ -157,14 +202,14 @@ class Certificates extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.cd_uf
+                    item.edmu_nm_municipio
                 ),
                 React.createElement(
                     'td',
                     { width: '70' },
                     React.createElement(
                         'a',
-                        { onClick: () => this.edit(item.id) },
+                        { onClick: () => this.edit(item.id_certificado) },
                         React.createElement('i', { className: 'far fa-edit text-primary' })
                     ),
                     '\xA0\xA0',
@@ -261,27 +306,17 @@ class Certificates extends React.Component {
                     ),
                     React.createElement(
                         'div',
-                        { style: { float: 'right', cursor: 'pointer', display: this.state.certificates.length < maxCertificates ? 'block' : 'none' } },
+                        { style: { float: 'right', cursor: 'pointer' } },
                         React.createElement(
                             'a',
-                            { onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block" }, className: 'btn btn-warning' },
+                            { onClick: this.callModal, className: 'btn btn-warning' },
                             React.createElement('i', { className: 'fa fa-plus' }),
                             ' Adicionar novo t\xEDtulo'
-                        ),
-                        React.createElement(
-                            'a',
-                            { onClick: this.showHideForm, style: { display: this.state.showForm ? "block" : "none" }, className: 'btn btn-warning' },
-                            React.createElement('i', { className: 'fa fa-times' }),
-                            ' Cancelar'
                         )
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { clear: 'both', display: this.state.showForm ? 'block' : 'none' } },
-                        React.createElement(FormCertificate, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                     )
                 )
-            )
+            ),
+            modal
         );
     }
 }

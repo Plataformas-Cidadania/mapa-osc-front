@@ -87,7 +87,7 @@ class CategoriesFilter extends React.Component{
         //console.log('addCategory', item);
         let add = true;
         this.state.categoriesSelected.find(function(cat){
-            if(item.title==cat.title){
+            if(item.titulo==cat.titulo){
                 add = false;
             }
         });
@@ -127,13 +127,13 @@ class CategoriesFilter extends React.Component{
         let firstCategories = this.state.categories.map(function (item, index){
             if(index < showQtdItems){
                 let sizeSearch = this.state.search.length;
-                let firstPiece = item.title.substr(0, sizeSearch);
-                let lastPiece = item.title.substr(sizeSearch);
+                let firstPiece = item.titulo.substr(0, sizeSearch);
+                let lastPiece = item.titulo.substr(sizeSearch);
                 let qtd = item.qtd;
 
                 let color = '';
                 this.state.categoriesSelected.find(function(cat){
-                    if(item.title==cat.title){
+                    if(item.titulo==cat.titulo){
                         color = '#b7b7b7';
                         return;
                     }
@@ -156,13 +156,13 @@ class CategoriesFilter extends React.Component{
         let otherCategories = this.state.categories.map(function (item, index){
             if(index >= showQtdItems){
                 let sizeSearch = this.state.search.length;
-                let firstPiece = item.title.substr(0, sizeSearch);
-                let lastPiece = item.title.substr(sizeSearch);
+                let firstPiece = item.titulo.substr(0, sizeSearch);
+                let lastPiece = item.titulo.substr(sizeSearch);
                 let qtd = item.qtd;
 
                 let color = '';
                 this.state.categoriesSelected.find(function(cat){
-                    if(item.title==cat.title){
+                    if(item.titulo==cat.titulo){
                         color = '#b7b7b7';
                         return;
                     }
@@ -184,7 +184,7 @@ class CategoriesFilter extends React.Component{
         let categoriesSelected = this.state.categoriesSelected.map(function (item){
             return (
                 <button key={"btn_category_"+item.id} id={item.id} onClick={this.removeCategory} type="button" className="btn btn-success btn-xs btn-remove" style={{margin: "0 5px 5px 0"}}>
-                    {item.title} <i className="fas fa-times"/>
+                    {item.titulo} <i className="fas fa-times"/>
                 </button>
             )
         }.bind(this));

@@ -17,15 +17,15 @@ class Page extends React.Component {
     load(){
         let _this = this;
         $.ajax({
-            method:'GET',
-            url: 'get-home-chart',
+            type:'GET',
+            //url: 'get-home-chart',
+            url: 'http://localhost:8000/api/analises?id=9',
             data:{
             },
             cache: false,
             success: function(data) {
                 //console.log(data);
                 _this.setState({data: data});
-
             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());

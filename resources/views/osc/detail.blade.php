@@ -39,7 +39,7 @@
                     <header>
                         <br>
                         <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
-                        <h5><a href="/">Home</a> / <a href="artigos">Artigos</a> / </h5>
+                        <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>
                         <a onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>
                         <a href="declaracao"><i class="fas fa-certificate fa-2x float-right"></i></a>
                         <a class=" float-right" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8"><i class="fas fa-sort-amount-down fa-2x"></i>&nbsp;</a>
@@ -56,19 +56,19 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="alert alert-secondary box-floating">
+                <div class="alert alert-secondary box-floating"  style="z-index: 999;">
                     <i class="fas fa-chevron-right menu-icons-close btn-menu-txt"></i>
                     <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" style="display: none;"></i>
                     <ul class="menu-icons menu-right">
                         <li id="btn-right"></li>
-                        <li><a href="detalhar/1#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt">Dados gerais</p></a></li>
-                        <li><a href="detalhar/1#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
-                        <li><a href="detalhar/1#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
-                        <li><a href="detalhar/1#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>
-                        <li><a href="detalhar/1#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e Governança</p></a></li>
-                        <li><a href="detalhar/1#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
-                        <li><a href="detalhar/1#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
-                        <li><a href="detalhar/1#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
+                        <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt">Dados gerais</p></a></li>
+                        <li><a href="detalhar/974758#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
+                        <li><a href="detalhar/974758#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
+                        <li><a href="detalhar/974758#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>
+                        <li><a href="detalhar/974758#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e Governança</p></a></li>
+                        <li><a href="detalhar/974758#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
+                        <li><a href="detalhar/974758#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
+                        <li><a href="detalhar/974758#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
                     </ul>
                     <i class="fas fa-times fa-2x float-right btn-right"></i>
                 </div>

@@ -4,8 +4,9 @@ class Participacoes extends React.Component {
         this.state = {
             loadingList: false,
             loading: false,
-            participacoes: [],
+            conferencias: [],
             conselhos: [],
+            outros: [],
             tipo: {
                 1: 'Residencial',
                 2: 'Comercial'
@@ -22,13 +23,13 @@ class Participacoes extends React.Component {
             actionFormOutro: '',
             remove: [],
             loadingRemove: [],
-            participacao: {},
+            conferencia: {},
             conselho: {},
+            outro: {},
             editId: 0
         };
 
         this.list = this.list.bind(this);
-        this.list2 = this.list2.bind(this);
         this.remove = this.remove.bind(this);
 
         this.showHideForm = this.showHideForm.bind(this);
@@ -46,22 +47,6 @@ class Participacoes extends React.Component {
 
     componentDidMount() {
         this.list();
-        this.list2();
-    }
-
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
     }
 
     edit(id) {
@@ -103,7 +88,6 @@ class Participacoes extends React.Component {
                 console.log(status, err.toString());
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
             }.bind(this)
         });
     }
@@ -162,13 +146,19 @@ class Participacoes extends React.Component {
         this.setState({ loadingList: true });
 
         $.ajax({
-            method: 'POST',
-            url: '/list-users-participacoes',
+            method: 'GET',
+            //url: '/list-users-participacoes',
+            url: getBaseUrl2 + 'osc/participacao_social/611720',
+            //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {},
             cache: false,
             success: function (data) {
                 console.log(data);
-                this.setState({ participacoes: data, loadingList: false });
+                this.setState({
+                    conferencias: data.conferencias_politicas_publicas,
+                    conselhos: data.conselhos_politicas_publicas,
+                    outros: data.outros_espacos_participacao_social,
+                    loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -177,78 +167,26 @@ class Participacoes extends React.Component {
         });
     }
 
-    list2() {
-
-        this.setState({ loadingList: true });
-
-        $.ajax({
-            method: 'POST',
-            url: '/list-users-conselhos',
-            data: {},
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                this.setState({ conselhos: data, loadingList: false });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                this.setState({ loadingList: false });
-            }.bind(this)
-        });
-    }
+    /* list2(){
+          this.setState({loadingList: true});
+          $.ajax({
+             method: 'POST',
+             url: '/list-users-conselhos',
+             data: {
+              },
+             cache: false,
+             success: function(data){
+                 console.log(data);
+                 this.setState({conselhos: data, loadingList: false});
+             }.bind(this),
+             error: function(xhr, status, err){
+                 console.log(status, err.toString());
+                 this.setState({loadingList: false});
+             }.bind(this)
+         });
+     }*/
 
     render() {
-
-        //console.log(this.state.showForm);
-        //console.log('state.remove', this.state.remove);
-
-        let participacoes = this.state.participacoes.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.participacoes.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
-            return React.createElement(
-                'div',
-                { className: 'box-insert-list', key: "participacao_" + index },
-                React.createElement(
-                    'div',
-                    { className: 'float-right', style: { marginRight: '40px' } },
-                    React.createElement(
-                        'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
-                        React.createElement('i', { className: 'fa fa-edit' })
-                    ),
-                    '\xA0',
-                    React.createElement(
-                        'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
-                        React.createElement('i', { className: "fa fa-undo" })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
-                ),
-                React.createElement(
-                    'p',
-                    null,
-                    item.tx_nome_dirigente
-                ),
-                React.createElement(
-                    'p',
-                    null,
-                    React.createElement(
-                        'strong',
-                        null,
-                        item.tx_cargo_dirigente
-                    )
-                )
-            );
-        }.bind(this));
 
         let conselhos = this.state.conselhos.map(function (item, index) {
 
@@ -259,34 +197,247 @@ class Participacoes extends React.Component {
 
             return React.createElement(
                 'div',
-                { className: 'box-insert-list', key: "conselho_" + index },
+                { className: 'col-md-6', style: { border: '0' }, key: "conselho_" + index },
                 React.createElement(
                     'div',
-                    { className: 'float-right', style: { width: '50px' } },
+                    { className: 'box-insert-g text-left' },
                     React.createElement(
-                        'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id) },
-                        React.createElement('i', { className: 'fa fa-edit' })
-                    ),
-                    '\xA0',
-                    React.createElement(
-                        'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.remove[item.id] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? 'block' : 'none' } },
-                        React.createElement('i', { className: "fa fa-undo" })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
+                        'div',
+                        { className: 'box-insert-item box-insert-list' },
+                        React.createElement('br', null),
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement('br', null),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Nome do Conselho:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dc_conselho.tx_nome_conselho
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Titularidade:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dc_tipo_participacao.tx_nome_tipo_participacao
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Nome de representante:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                '*For*'
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Periodicidade da Reuni\xE3o:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Data de in\xEDcio de vig\xEAncia:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dt_data_inicio_conselho
+                            ),
+                            React.createElement('hr', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Data de fim de vig\xEAncia:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dt_data_fim_conselho
+                            )
+                        )
+                    )
                 ),
-                React.createElement(
-                    'p',
-                    null,
-                    item.tx_nome_conselheiro
-                )
+                React.createElement('br', null)
             );
+        }.bind(this));
+
+        let conferencias = this.state.conferencias.map(function (item, index) {
+
+            let hr = null;
+            if (index < this.state.conferencias.length - 1) {
+                hr = React.createElement('hr', null);
+            }
+
+            return React.createElement(
+                'div',
+                { className: 'col-md-6', style: { border: '0' }, key: "conferencia_" + index },
+                React.createElement(
+                    'div',
+                    { className: 'box-insert-m' },
+                    React.createElement(
+                        'div',
+                        { className: 'box-insert-item box-insert-list' },
+                        React.createElement('br', null),
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement('br', null),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Nome da Confer\xEAncia:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dc_conferencia.tx_nome_conferencia
+                            )
+                        ),
+                        React.createElement('hr', null),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dt_ano_realizacao
+                            )
+                        ),
+                        React.createElement('hr', null),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Forma de participa\xE7\xE3o na confer\xEAncia:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia
+                            )
+                        )
+                    )
+                ),
+                React.createElement('br', null)
+            );
+        }.bind(this));
+
+        let outros = this.state.outros.map(function (item, index) {
+
+            let hr = null;
+            if (index < this.state.outros.length - 1) {
+                hr = React.createElement('hr', null);
+            }
+
+            return React.createElement(
+                'div',
+                { className: 'col-md-6', style: { border: '0' }, key: "outros_" + index },
+                React.createElement(
+                    'div',
+                    { className: 'box-insert-p' },
+                    React.createElement(
+                        'div',
+                        { className: 'box-insert-item box-insert-list' },
+                        React.createElement('br', null),
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement('br', null),
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                item.tx_nome_participacao_social_outra
+                            )
+                        )
+                    )
+                ),
+                React.createElement('br', null)
+            )
+
+            /*<div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
+                <div className="box-insert-m">
+                    <div className="box-insert-item box-insert-list">
+                        <br/>
+                        <i className="far fa-trash-alt text-danger float-right" />
+                        <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                        <br/>
+                        <div>
+                            <h3>Nome da Conferência:</h3>
+                            <p>{item.dc_conferencia.tx_nome_conferencia}{/!*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*!/}</p>
+                        </div>
+                        <hr/>
+                        <div>
+                            <h3>Ano de realização da conferência:</h3>
+                            <p>{item.dt_ano_realizacao}{/!*<input  value="1900"/>*!/}</p>
+                        </div>
+                        <hr/>
+                        <div>
+                            <h3>Forma de participação na conferência:</h3>
+                            <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}{/!*<input  value="Membro de comissão organizadora nacional"/>*!/}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>*/
+
+            ;
         }.bind(this));
 
         return React.createElement(
@@ -298,7 +449,7 @@ class Participacoes extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'mn-accordion-icon' },
-                    React.createElement('i', { className: 'fas fa-briefcase', 'aria-hidden': 'true' })
+                    React.createElement('i', { className: 'fa fa-users', 'aria-hidden': 'true' })
                 ),
                 React.createElement(
                     'h3',
@@ -323,124 +474,24 @@ class Participacoes extends React.Component {
                             'Conselhos de Pol\xEDticas P\xFAblicas'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConselho', onClick: this.showHideConselho }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConselho' },
-                                'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkConselho' },
+                                    'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                )
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
                             { className: 'row', style: { display: this.state.showConselho ? "none" : "" } },
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-6', style: { border: '0' } },
-                                React.createElement(
-                                    'div',
-                                    { className: 'box-insert-g text-left' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'box-insert-item box-insert-list' },
-                                        React.createElement('br', null),
-                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Nome do Conselho:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Conselho Estadual Antidrogas/Conselho ' })
-                                            ),
-                                            React.createElement('hr', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Titularidade:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Suplente' })
-                                            ),
-                                            React.createElement('hr', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Nome de representante:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Fernando Lima de Souza ' })
-                                            ),
-                                            React.createElement('hr', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Periodicidade da Reuni\xE3o:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Mensal' })
-                                            ),
-                                            React.createElement('hr', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Data de in\xEDcio de vig\xEAncia:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: '01/12/2019' })
-                                            ),
-                                            React.createElement('hr', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Data de fim de vig\xEAncia:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: '01/12/2019' })
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
+                            conselhos,
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6' },
@@ -473,7 +524,7 @@ class Participacoes extends React.Component {
                                                 { onClick: this.showHideForm },
                                                 React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
                                             ),
-                                            React.createElement(FormParticipacao, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                                            React.createElement(FormParticipacaoConferencia, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                                         ),
                                         React.createElement(
                                             'div',
@@ -504,79 +555,24 @@ class Participacoes extends React.Component {
                             'Confer\xEAncias de Pol\xEDticas P\xFAblicas'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkConferencia', onClick: this.showHideConferencia }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkConferencia' },
-                                'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkConferencia' },
+                                    'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                )
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
                             { className: 'row', style: { display: this.state.showConferencia ? "none" : "" } },
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-6', style: { border: '0' } },
-                                React.createElement(
-                                    'div',
-                                    { className: 'box-insert-m' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'box-insert-item box-insert-list' },
-                                        React.createElement('br', null),
-                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Nome da Confer\xEAncia:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Confer\xEAncia Brasileira de Arranjos Produtivos Locais' })
-                                            )
-                                        ),
-                                        React.createElement('hr', null),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Ano de realiza\xE7\xE3o da confer\xEAncia:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: '1900' })
-                                            )
-                                        ),
-                                        React.createElement('hr', null),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Forma de participa\xE7\xE3o na confer\xEAncia:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Membro de comiss\xE3o organizadora nacional' })
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
+                            conferencias,
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6' },
@@ -640,49 +636,24 @@ class Participacoes extends React.Component {
                             'Outros espa\xE7os de participa\xE7\xE3o social'
                         ),
                         React.createElement(
-                            'p',
-                            { className: 'form-check text-center' },
-                            React.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'checkOutro', onClick: this.showHideOutro }),
+                            'div',
+                            { className: 'text-center' },
                             React.createElement(
-                                'label',
-                                { className: 'form-check-label box-groups-info', htmlFor: 'checkOutro' },
-                                'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                'div',
+                                { className: 'custom-control custom-checkbox text-center' },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkOutro', required: true, onClick: this.showHideOutro }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: 'checkOutro' },
+                                    'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                )
                             )
                         ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
                             { className: 'row', style: { display: this.state.showOutro ? "none" : "" } },
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-6', style: { border: '0' } },
-                                React.createElement(
-                                    'div',
-                                    { className: 'box-insert-p' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'box-insert-item box-insert-list' },
-                                        React.createElement('br', null),
-                                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'h3',
-                                                null,
-                                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
-                                            ),
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                React.createElement('input', { value: 'Confer\xEAncia Brasileira de Arranjos Produtivos Locais' })
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
+                            outros,
                             React.createElement(
                                 'div',
                                 { className: 'col-md-6' },

@@ -25,7 +25,15 @@ class FormProjeto extends React.Component {
                 2: 'Utilidade Pública Estadual'
             },
             action: '', //new | edit
-            editId: this.props.id
+            editId: this.props.id,
+
+            objetivos: null,
+            subobjetivos: null,
+            titleMeta: null,
+            titleObjetivo: "",
+            buttonObjetivos: 0,
+
+            active: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,10 +41,18 @@ class FormProjeto extends React.Component {
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+
+        this.checkMetas = this.checkMetas.bind(this);
+        this.listArea = this.listArea.bind(this);
+
+        this.clickFontRecurso = this.clickFontRecurso.bind(this);
+    }
+
+    componentDidMount() {
+        this.listArea();
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
         let lastEditId = this.state.editId;
         if (this.state.action != props.action || this.state.editId != props.id) {
             this.setState({ action: props.action, editId: props.id }, function () {
@@ -128,7 +144,6 @@ class FormProjeto extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: url,
-                //url: '/register-projeto',
                 data: {
                     form: this.state.form,
                     id: id
@@ -167,22 +182,149 @@ class FormProjeto extends React.Component {
         });
     }
 
-    getAge(dateString) {
+    /*Objetivos e metas*/
 
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
+    listArea() {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+                this.setState({ loading: false, objetivos: data, button: true });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
 
-        console.log(age);
+    callSubobjetivos(id) {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            success: function (data) {
 
-        return age;
+                let objetivos = this.state.objetivos;
+
+                let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
+
+                data.find(function (item) {
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                console.log(objetivos);
+
+                objetivos.find(function (item) {
+                    if (item.metas) {
+                        item.metas.find(function (itemMeta) {
+                            itemMeta.display = false;
+                            console.log('display: ' + itemMeta.display);
+                        });
+
+                        if (item.cd_objetivo_projeto === id) {
+                            item.metas.find(function (itemMeta) {
+                                itemMeta.display = true;
+                                console.log('display2: ' + itemMeta.display);
+                            });
+                        }
+                    }
+                    if (item.cd_objetivo_projeto === id && !item.metas) {
+                        item.metas = data;
+                        console.log('display3: ' + item.display);
+                    }
+                });
+
+                this.setState({ loading: false, objetivos: objetivos, id_area: id, buttonObjetivos: id, titleMeta: true, titleObjetivo: titleObjetivo });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    checkMetas(cd_objetivo, cd_meta) {
+        console.log(cd_objetivo, cd_meta);
+        let objetivos = this.state.objetivos;
+        objetivos.find(function (item) {
+            if (item.cd_objetivo_projeto === cd_objetivo) {
+                item.metas.find(function (itemMeta) {
+                    if (itemMeta.cd_meta_projeto === cd_meta) {
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });
+        this.setState({ objetivos: objetivos });
+    }
+    /*******************/
+
+    clickFontRecurso() {
+        this.setState({
+            active: !this.state.active
+        });
     }
 
     render() {
+
+        function padDigits(number, digits) {
+            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+        }
+
+        let objetivos = null;
+        let metas = [];
+        if (this.state.objetivos) {
+            objetivos = this.state.objetivos.map(function (item) {
+
+                let png = padDigits(item.cd_objetivo_projeto, 2);
+
+                let checkedMetas = false;
+
+                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+
+                if (item.metas) {
+                    metas.push(item.metas.map(function (itemMeta) {
+                        if (itemMeta.checked) {
+                            checkedMetas = true;
+                        }
+                        console.log('cd_objetivo_projeto: ' + item.cd_objetivo_projeto + ' cd_meta_projeto: ' + itemMeta.cd_meta_projeto + ' display: ' + itemMeta.display);
+                        return React.createElement(
+                            'div',
+                            { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
+                            React.createElement(
+                                'div',
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true }),
+                                React.createElement(
+                                    'label',
+                                    { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
+                                    itemMeta.tx_nome_meta_projeto
+                                )
+                            ),
+                            React.createElement('hr', null)
+                        );
+                    }.bind(this)));
+                }
+
+                return React.createElement(
+                    'div',
+                    { className: 'custom-control custom-checkbox', key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
+                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_objetivo_projeto, required: true }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: (checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: '80', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
+                    )
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
@@ -198,80 +340,682 @@ class FormProjeto extends React.Component {
                         { className: 'row' },
                         React.createElement(
                             'div',
-                            { className: 'col-md-6' },
+                            { className: 'col-md-12' },
                             React.createElement(
-                                'label',
-                                { htmlFor: 'nome' },
-                                'Nome*'
-                            ),
-                            React.createElement('br', null),
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.tx_nome_projeto,
+                                    placeholder: 'Nome do projeto, atividade ou programa' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'tx_nome_projeto' },
+                                    'Nome do projeto, atividade ou programa'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-4' },
                             React.createElement(
                                 'select',
-                                { className: "form-control form-m " + (this.state.requireds.cd_projeto ? '' : 'invalid-field'),
-                                    name: 'tipo', onChange: this.handleInputChange, value: this.state.form.cd_projeto },
+                                { className: "form-control form-m " + (this.state.form.tx_nome_status_projeto ? '' : 'invalid-field'),
+                                    name: 'cd_certificado', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_status_projeto },
                                 React.createElement(
                                     'option',
-                                    { value: '0' },
+                                    { value: '-1' },
                                     'Selecione'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: '1' },
-                                    'Utilidade P\xFAblica Municipal'
+                                    { value: 'Arquivado, cancelado ou indeferido' },
+                                    'Arquivado, cancelado ou indeferido'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: '2' },
-                                    'Utilidade P\xFAblica Estadual'
+                                    { value: 'Proposta' },
+                                    'Proposta'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Projeto em andamento' },
+                                    'Projeto em andamento'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Finalizado' },
+                                    'Finalizado'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Outro' },
+                                    'Outro'
                                 )
                             ),
                             React.createElement('br', null)
                         ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6' },
+                            { className: 'form-group col-md-4' },
                             React.createElement(
-                                'label',
-                                { htmlFor: 'tipo' },
-                                'Localidade*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.cd_uf ? '' : 'invalid-field'),
-                                type: 'text', name: 'nome', onChange: this.handleInputChange,
-                                value: this.state.form.cd_uf, placeholder: '' }),
-                            React.createElement('br', null)
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.dt_data_inicio_projeto,
+                                    placeholder: 'Data de In\xEDcio' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'dt_data_inicio_projeto' },
+                                    'Data de In\xEDcio'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6' },
+                            { className: 'form-group col-md-4' },
                             React.createElement(
-                                'label',
-                                { htmlFor: 'cep' },
-                                'Data in\xEDcio da validade*'
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.dt_data_fim_projeto,
+                                    placeholder: 'Data de Fim' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'dt_data_fim_projeto' },
+                                    'Data de Fim'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-8' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.tx_link_projeto,
+                                    placeholder: 'Link para o projeto' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'tx_link_projeto' },
+                                    'Link para o projeto'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-4' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_total_beneficiarios', onChange: this.handleInputChange,
+                                    value: this.state.form.nr_total_beneficiarios,
+                                    placeholder: 'Total de Benefici\xE1rios' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'nr_total_beneficiarios' },
+                                    'Total de Benefici\xE1rios'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-4' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_total_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.nr_valor_total_projeto,
+                                    placeholder: 'Valor Total' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'nr_valor_total_projeto' },
+                                    'Valor Total'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-4' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_captado_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.nr_valor_captado_projeto,
+                                    placeholder: 'Valor Recebido' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'nr_valor_captado_projeto' },
+                                    'Valor Recebido'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-12' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_descricao_projeto', onChange: this.handleInputChange,
+                                    value: this.state.form.tx_descricao_projeto,
+                                    placeholder: 'Descri\xE7\xE3o do Projeto, atividade e/ou programa' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'tx_descricao_projeto' },
+                                    'Descri\xE7\xE3o do Projeto, atividade e/ou programa'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group col-md-12' },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_metodologia_monitoramento', onChange: this.handleInputChange,
+                                    value: this.state.form.tx_metodologia_monitoramento,
+                                    placeholder: 'Metodologia de Monitoramento e Avalia\xE7\xE3o do Projeto, atividade e/ou programa' }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'tx_metodologia_monitoramento' },
+                                    'Metodologia de Monitoramento e Avalia\xE7\xE3o do Projeto, atividade e/ou programa'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'label-box-info-off' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        '\xA0'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-4' },
+                            React.createElement(
+                                'select',
+                                { className: "form-control form-m " + (this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field'),
+                                    name: 'tx_nome_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_abrangencia_projeto },
+                                React.createElement(
+                                    'option',
+                                    { value: '-1' },
+                                    'Selecione'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Municipal' },
+                                    'Municipal'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Estadual' },
+                                    'Estadual'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Regional' },
+                                    'Regional'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Nacional' },
+                                    'Nacional'
+                                )
                             ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.dt_inicio_projeto ? '' : 'invalid-field'),
-                                type: 'date', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.dt_inicio_projeto, placeholder: '' }),
                             React.createElement('br', null)
                         ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6' },
+                            { className: 'col-md-4' },
                             React.createElement(
-                                'label',
-                                { htmlFor: 'cep' },
-                                'Data fim da validade*'
+                                'select',
+                                { className: "form-control form-m " + (this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field'),
+                                    name: 'tx_nome_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_zona_atuacao },
+                                React.createElement(
+                                    'option',
+                                    { value: '-1' },
+                                    'Selecione'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Rural' },
+                                    'Rural'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'Urbana' },
+                                    'Urbana'
+                                )
+                            ),
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: this.state.active === false ? 'col-md-12' : 'col-md-6' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Fontes de Recursos'
+                            ),
+                            React.createElement('hr', null),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox', onChange: this.clickFontRecurso },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_publico", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "fontes_recursos_publico" },
+                                        'Recursos p\xFAblicos'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_privado", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "fontes_recursos_privado" },
+                                        'Recursos privados'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_proprio", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "fontes_recursos_proprio" },
+                                        'Recursos pr\xF3prios'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_nao_financeiro", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "fontes_recursos_nao_financeiro" },
+                                        'Recursos na\u0303o financeiros'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-6', style: { display: this.state.active === false ? 'none' : '' } },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Tipo de Parceria'
+                            ),
+                            React.createElement('hr', null),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_acordo", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_acordo" },
+                                        'Acordo de coopera\xE7\xE3o t\xE9cnica'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_fomento", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_fomento" },
+                                        'Termo de fomento'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_colaboracao", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_colaboracao" },
+                                        'Termo de colabora\xE7\xE3o'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_parceria", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_parceria" },
+                                        'Termo de parceria'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_contrato", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_contrato" },
+                                        'Contrato de gest\xE3o'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_convenio", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_convenio" },
+                                        'Conv\xEAnio'
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'bg-lgt items-checkbox' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox' },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_outro", required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_outro" },
+                                        'Outro'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-11' },
+                                    React.createElement(
+                                        'h3',
+                                        null,
+                                        'OSCs Parceiras'
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-1 float-right' },
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-primary' },
+                                        React.createElement('i', { className: 'fas fa-plus' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement('hr', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
+                                            value: this.state.form.tx_link_projeto,
+                                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_projeto' },
+                                            'OSCs Parceiras'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
+                                        React.createElement('i', { className: 'fas fa-minus' })
+                                    )
+                                )
                             ),
                             React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.dt_fim_projeto ? '' : 'invalid-field'),
-                                type: 'date', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.dt_fim_projeto, placeholder: '' }),
-                            React.createElement('br', null)
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'P\xFAblico Beneficiado'
+                                        )
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
+                                            value: this.state.form.tx_link_projeto,
+                                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_link_projeto' },
+                                            'OSCs Parceiras'
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-box-info-off' },
+                                            React.createElement(
+                                                'p',
+                                                null,
+                                                '\xA0'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
+                                        React.createElement('i', { className: 'fas fa-minus' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Local de execu\xE7\xE3o'
+                                        )
+                                    ),
+                                    React.createElement('hr', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    React.createElement(
+                                        'p',
+                                        null,
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Financiadores do Projeto'
+                                        )
+                                    ),
+                                    React.createElement('hr', null)
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'strong',
+                                        null,
+                                        'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        objetivos,
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.titleMeta ? '' : 'none' } },
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Metas Relacionadas ao ODS definido'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            null,
+                                            React.createElement(
+                                                'strong',
+                                                null,
+                                                this.state.titleObjetivo
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null),
+                                            metas
+                                        )
+                                    )
+                                )
+                            )
                         )
                     ),
                     React.createElement(

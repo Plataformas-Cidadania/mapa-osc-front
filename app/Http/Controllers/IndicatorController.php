@@ -25,10 +25,17 @@ class IndicatorController extends Controller{
             ->groupBy('area_atuacao')
             ->get();
 
-        return view('indicator.chart', [
-            'text' => $text,
-            'areas_atuacao' => $areas_atuacao,
-        ]);
+        if(!empty($text)){
+            return view('indicator.chart', [
+                'text' => $text,
+                'areas_atuacao' => $areas_atuacao,
+            ]);
+        }
+
+        return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
+                    Ops! Cadastre no CMS em texts o slug
+                    <strong>dados-indicadores</strong>
+                </div>";
 
     }
 

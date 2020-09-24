@@ -3,42 +3,20 @@ class FormGovernanca extends React.Component {
         super(props);
         this.state = {
             form: {
-                nome: '',
-                cep: '',
-                endereco: '',
-                numero: '',
-                complemento: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                obs: ''
+                tx_nome_dirigente: '',
+                tx_cargo_dirigente: ''
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                nome: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
-                tipo: true,
-                principal: true
+                tx_nome_dirigente: true,
+                tx_cargo_dirigente: true
             },
             showMsg: false,
             msg: '',
             governancas: [],
             maxAlert: false,
-            tipo: {
-                1: 'Residencial',
-                2: 'Comercial'
-            },
-            principal: {
-                1: 'Residencial',
-                2: 'Comercial'
-            },
             action: '', //new | edit
             editId: this.props.id
         };
@@ -69,7 +47,7 @@ class FormGovernanca extends React.Component {
     edit() {
         $.ajax({
             method: 'GET',
-            url: '/edit-user-governanca/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/governanca/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
@@ -119,8 +97,6 @@ class FormGovernanca extends React.Component {
             }
         }
 
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -132,25 +108,28 @@ class FormGovernanca extends React.Component {
             return;
         }
 
-        let url = '/register-governanca';
+        let url = 'osc/governanca';
         let id = null;
+        let method = 'POST';
         if (this.state.action === 'edit') {
             id = this.state.editId;
-            url = '/update-user-governanca';
+            url = 'osc/governanca/' + id;
+            method = 'PUT';
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: url,
-                //url: '/register-governanca',
+                method: method,
+                url: getBaseUrl2 + url,
                 data: {
-                    form: this.state.form,
+                    tx_nome_dirigente: this.state.form.tx_nome_dirigente,
+                    tx_cargo_dirigente: this.state.form.tx_cargo_dirigente,
+                    bo_oficial: 0,
+                    id_osc: 455128,
                     id: id
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
 
                     if (data.max) {
                         let msg = data.msg;
@@ -158,17 +137,12 @@ class FormGovernanca extends React.Component {
                         return;
                     }
 
-                    /*let button = true;
-                    if(data.governancas.length >= data.maxGovernancas){
-                        button = false;
-                    }*/
-
                     let button = true;
-                    if (this.state.action === 'new') {
-                        if (data.governancas.length >= data.maxGovernancas) {
-                            button = false;
-                        }
-                    }
+                    /* if(this.state.action==='new'){
+                         if(data.governancas.length >= data.maxGovernancas){
+                             button = false;
+                         }
+                     }*/
 
                     let btnContinue = false;
                     /*if(data.governancas.length > 0){
@@ -190,21 +164,6 @@ class FormGovernanca extends React.Component {
         });
     }
 
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
-    }
-
     render() {
 
         return React.createElement(
@@ -216,89 +175,19 @@ class FormGovernanca extends React.Component {
                 React.createElement(
                     'form',
                     null,
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'tipo' },
-                        'Tipo*'
-                    ),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_nome_dirigente ? '' : 'invalid-field'),
+                        type: 'text', name: 'tx_nome_dirigente', onChange: this.handleInputChange,
+                        value: this.state.form.tx_nome_dirigente, placeholder: 'Nome' }),
+                    React.createElement('br', null),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_cargo_dirigente ? '' : 'invalid-field'),
+                        type: 'text', name: 'tx_cargo_dirigente', onChange: this.handleInputChange,
+                        value: this.state.form.tx_cargo_dirigente, placeholder: 'Cargo do dirigente' }),
                     React.createElement('br', null),
                     React.createElement(
-                        'select',
-                        { className: "form-control form-m " + (this.state.requireds.tipo ? '' : 'invalid-field'),
-                            name: 'tipo', onChange: this.handleInputChange, value: this.state.form.tipo },
-                        React.createElement(
-                            'option',
-                            { value: '0' },
-                            'Selecione'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '1' },
-                            'Quadro de Dirigentes'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: '2' },
-                            'Conselho Fiscal'
-                        )
+                        'button',
+                        { className: 'btn btn-success', onClick: this.register },
+                        'Cadastrar'
                     ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'nome' },
-                                'Nome*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.nome ? '' : 'invalid-field'),
-                                type: 'text', name: 'nome', onChange: this.handleInputChange,
-                                value: this.state.form.nome, placeholder: '' }),
-                            React.createElement('br', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'label',
-                                { htmlFor: 'cep' },
-                                'Cargo do dirigente*'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.cep ? '' : 'invalid-field'),
-                                type: 'text', name: 'cep', onChange: this.handleInputChange,
-                                value: this.state.form.cep, placeholder: '' }),
-                            React.createElement('br', null)
-                        )
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        React.createElement(
-                            'i',
-                            null,
-                            '* campos obrigat\xF3rios'
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'button',
-                                { style: { display: this.state.action === 'edit' ? 'block' : this.state.governancas.length < maxGovernancas ? 'block' : 'none' },
-                                    className: 'btn btn-style-primary', onClick: this.register },
-                                'Cadastrar'
-                            )
-                        )
-                    ),
-                    React.createElement('br', null),
                     React.createElement(
                         'div',
                         { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },
@@ -315,9 +204,7 @@ class FormGovernanca extends React.Component {
                         { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
                         'M\xE1ximo de Governancaz Cadastrados'
                     )
-                ),
-                React.createElement('br', null),
-                React.createElement('br', null)
+                )
             )
         );
     }

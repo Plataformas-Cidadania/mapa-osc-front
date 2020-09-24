@@ -50,15 +50,37 @@ class Daschboard extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <h3><i className="fa fa-home" aria-hidden="true"></i> Minha área</h3>
+                    <h3><i className="fa fa-home" aria-hidden="true"/> Minha área</h3>
                     <hr/>
                 </div>
 
                 <p>Olá tudo bem! Estamos sentindo sua falta.</p>
-                {/*Boa tarde, estamos sentindo sua falta, aproveite para ver os lançamentos de nossa loja.*/}
-                <br/><br/>
-                <div className="row">
+
+                <br/>
+                <div className="row text-center">
+                    <div className="col-md-4">
+                        <div className="box-border">
+                            <br/>
+                            <p>Total de OSCs</p>
+                            <h2>20</h2>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="box-border">
+                            <br/>
+                            <p>Total de projetos</p>
+                            <h2>10</h2>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="box-border">
+                            <br/>
+                            <p>Total de projetos</p>
+                            <h2>30</h2>
+                        </div>
+                    </div>
                     {totais}
+
                 </div>
                 <div className="row">
                     <br/><br/> <br/>

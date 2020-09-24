@@ -17,15 +17,17 @@ class FormCertificate extends React.Component{
                 cd_certificado: true,
             },
             showMsg: false,
+            updateOk: false,
             msg: '',
             certificates: [],
             maxAlert: false,
             cd_certificado:{
-                1: 'Utilidade Pública Municipal',
-                2: 'Utilidade Pública Estadual',
+                8: 'Utilidade Pública Municipal',
+                7: 'Utilidade Pública Estadual',
             },
             action: '',//new | edit
             editId: this.props.id,
+
         };
 
 
@@ -53,16 +55,19 @@ class FormCertificate extends React.Component{
     }
 
     edit(){
+        console.log('edit: ', this.state.editId);
         $.ajax({
             method: 'GET',
-            url: '/edit-user-certificate/'+this.state.editId,
+            //url: '/edit-user-certificate/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/certificado/'+this.state.editId,
             data: {
 
             },
             cache: false,
             success: function(data){
-                console.log(data);
-                this.setState({form: data}, function(){
+                this.setState({
+                    form: data
+                }, function(){
                     //this.props.showHideForm();
                 });
             }.bind(this),
@@ -92,20 +97,20 @@ class FormCertificate extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
+        //console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        for(let index in requireds){
+        /*for(let index in requireds){
             if(!form[index] || form[index]==''){
                 requireds[index] = false;
                 valid = false;
             }else{
                 requireds[index] = true;
             }
-        }
+        }*/
 
         //console.log(requireds);
 
@@ -120,30 +125,35 @@ class FormCertificate extends React.Component{
             return;
         }
 
-        let url = '/register-certificate';
+        let url = getBaseUrl2 + 'osc/certificados/455128';
         let id = null;
+        let method = 'POST';
+        let msg = "Dados inserido com sucesso!";
+
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-certificate';
+            method = 'PUT';
+            url = getBaseUrl2 + 'osc/certificado/'+id;
+            msg = "Dados alterados com sucesso!";
         }
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:'POST',
+                method:method,
                 url: url,
-                //url: '/register-certificate',
                 data:{
-                    form: this.state.form,
+                    dt_inicio_certificado: this.state.form.dt_inicio_certificado,
+                    dt_fim_certificado: this.state.form.dt_fim_certificado,
+                    cd_uf: this.state.form.cd_uf,
+                    cd_certificado: this.state.form.cd_certificado,
                     id: id,
+                    id_osc: '455128',
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
                     if(data.max){
                         let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, certificates: data.certificates});
+                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, certificates: data.certificates, updateOk: true, showMsg: true});
                         return;
                     }
 
@@ -155,17 +165,16 @@ class FormCertificate extends React.Component{
                     }
 
                     let btnContinue = false;
-
                     this.props.list();
-
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue,  updateOk: true, msg: msg, showMsg: true})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false, button: true});
+                    let msg = "Ocorreu um erro!";
+                    this.setState({loading: false, msg: msg, button: true,  updateOk: false});
                 }.bind(this)
             });
         });
@@ -183,7 +192,7 @@ class FormCertificate extends React.Component{
             age--;
         }
 
-        console.log(age);
+        //console.log(age);
 
         return age;
 
@@ -198,50 +207,59 @@ class FormCertificate extends React.Component{
 
                         <div className="row">
                             <div className="col-md-6">
-                                <label htmlFor="nome">Nome*</label><br/>
+                                <label htmlFor="cd_certificado">Nome*</label><br/>
                                 <select className={"form-control form-m "+(this.state.requireds.cd_certificado ? '' : 'invalid-field')}
-                                        name="tipo" onChange={this.handleInputChange} value={this.state.form.cd_certificado}>
+                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.cd_certificado}>
                                     <option value="0">Selecione</option>
-                                    <option value="1">Utilidade Pública Municipal</option>
-                                    <option value="2">Utilidade Pública Estadual</option>
+                                    <option value="8">Utilidade Pública Municipal</option>
+                                    <option value="7">Utilidade Pública Estadual</option>
                                 </select><br/>
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="tipo">Localidade*</label><br/>
+                                <label htmlFor="cd_uf">Localidade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.cd_uf ? '' : 'invalid-field')}
-                                       type="text" name="nome" onChange={this.handleInputChange}
-                                       value={this.state.form.cd_uf} placeholder=""/><br/>
+                                       type="text" name="cd_uf" onChange={this.handleInputChange}
+                                       defaultValue={this.state.form.cd_uf} placeholder=""/><br/>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <label htmlFor="cep">Data início da validade*</label><br/>
+                                <label htmlFor="dt_inicio_certificado">Data início da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_inicio_certificado ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_inicio_certificado} placeholder=""/><br/>
+                                       type="date" name="dt_inicio_certificado" onChange={this.handleInputChange}
+                                       defaultValue={this.state.form.dt_inicio_certificado} placeholder=""/><br/>
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="cep">Data fim da validade*</label><br/>
+                                <label htmlFor="dt_fim_certificado">Data fim da validade*</label><br/>
                                 <input className={"form-control "+(this.state.requireds.dt_fim_certificado ? '' : 'invalid-field')}
-                                       type="date" name="cep" onChange={this.handleInputChange}
-                                       value={this.state.form.dt_fim_certificado} placeholder=""/><br/>
+                                       type="date" name="dt_fim_certificado" onChange={this.handleInputChange}
+                                       defaultValue={this.state.form.dt_fim_certificado} placeholder=""/><br/>
                             </div>
                         </div>
 
-                        <p><i>* campos obrigatórios</i></p>
+                        {/*<p><i>* campos obrigatórios</i></p>*/}
+
+                        <div>
+                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                {this.state.msg}
+                            </div>
+                        </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <button style={{display: this.state.action==='edit' ? 'block' : (this.state.certificates.length < maxCertificates ?  'block' : 'none')}}
-                                        className="btn btn-success" onClick={this.register}>
-                                    Adicionar
+                                <button className="btn btn-success" onClick={this.register}>
+                                    <span style={{display: this.state.action==='edit' ? 'block' : "none"}}>
+                                        <i className="fas fa-cloud-download-alt"/> Salvar alteração</span>
+                                    <span style={{display: this.state.action==='edit' ? 'none' : "block"}}>
+                                        <i className="fas fa-plus"/> Adicionar</span>
                                 </button>
                             </div>
                         </div>
                         <br/>
 
-                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
-                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Certificatos Cadastrados</div>
+
+                        {/*<div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Certificatos Cadastrados</div>*/}
 
                     </form>
                     <br/><br/>

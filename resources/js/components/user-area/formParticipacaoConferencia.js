@@ -29,7 +29,7 @@ class FormParticipacaoConferencia extends React.Component{
             },
             showMsg: false,
             msg: '',
-            participacoes: [],
+            conferencias: [],
             maxAlert: false,
             tipo:{
                 1: 'Residencial',
@@ -70,7 +70,7 @@ class FormParticipacaoConferencia extends React.Component{
     edit(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-participacao/'+this.state.editId,
+            url: '/edit-user-conferencia/'+this.state.editId,
             data: {
 
             },
@@ -135,11 +135,11 @@ class FormParticipacaoConferencia extends React.Component{
             return;
         }
 
-        let url = '/register-participacao';
+        let url = '/register-conferencia';
         let id = null;
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-participacao';
+            url = '/update-user-conferencia';
         }
 
 
@@ -147,7 +147,7 @@ class FormParticipacaoConferencia extends React.Component{
             $.ajax({
                 method:'POST',
                 url: url,
-                //url: '/register-participacao',
+                //url: '/register-conferencia',
                 data:{
                     form: this.state.form,
                     id: id,
@@ -158,24 +158,24 @@ class FormParticipacaoConferencia extends React.Component{
 
                     if(data.max){
                         let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, participacoes: data.participacoes});
+                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, conferencias: data.conferencias});
                         return;
                     }
 
                     /*let button = true;
-                    if(data.participacoes.length >= data.maxParticipacoes){
+                    if(data.conferencias.length >= data.maxConferencias){
                         button = false;
                     }*/
 
                     let button = true;
                     if(this.state.action==='new'){
-                        if(data.participacoes.length >= data.maxParticipacoes){
+                        if(data.conferencias.length >= data.maxConferencias){
                             button = false;
                         }
                     }
 
                     let btnContinue = false;
-                    /*if(data.participacoes.length > 0){
+                    /*if(data.conferencias.length > 0){
                         btnContinue = true;
                     }*/
 
@@ -184,7 +184,7 @@ class FormParticipacaoConferencia extends React.Component{
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({participacoes: data.participacoes, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({conferencias: data.conferencias, loading: false, button: button, btnContinue: btnContinue})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -253,7 +253,7 @@ class FormParticipacaoConferencia extends React.Component{
 
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Participacaoz Cadastrados</div>
+                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Conferenciaz Cadastrados</div>
 
                     </form>
                     <br/><br/>

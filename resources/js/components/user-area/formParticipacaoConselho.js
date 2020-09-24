@@ -1,4 +1,4 @@
-class FormParticipacao extends React.Component{
+class FormParticipacaoConselho extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -70,7 +70,7 @@ class FormParticipacao extends React.Component{
     edit(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-participacao/'+this.state.editId,
+            url: '/edit-user-conselho/'+this.state.editId,
             data: {
 
             },
@@ -135,11 +135,11 @@ class FormParticipacao extends React.Component{
             return;
         }
 
-        let url = '/register-participacao';
+        let url = '/register-conselho';
         let id = null;
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-participacao';
+            url = '/update-user-conselho';
         }
 
 
@@ -147,7 +147,7 @@ class FormParticipacao extends React.Component{
             $.ajax({
                 method:'POST',
                 url: url,
-                //url: '/register-participacao',
+                //url: '/register-conselho',
                 data:{
                     form: this.state.form,
                     id: id,
@@ -276,7 +276,7 @@ class FormParticipacao extends React.Component{
 
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Participacaoz Cadastrados</div>
+                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Conselhoz Cadastrados</div>
 
                     </form>
                     <br/><br/>

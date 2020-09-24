@@ -16,16 +16,119 @@ class Filter extends React.Component{
                 cel: true,
             },
             showMsg: false,
-            msg: ''
+            msg: '',
+            certificados: null,
+            areaAtuacao: null,
+            subAreaAtuacao: null,
+            ipeaData: null,
+            active: false,
+            rangerMin1: null,
+            input: 0,
+            inputMax: 100,
+            textRanger: null,
+            filters: {
+                ano_fundacao: {start: null, end:null},
+                ano_fundacao2: {start: null, end:null},
+                regiao: null,
+                uf: null,
+                municipio: null,
+            },
+            searchRegiao: null,
+            searchUf: null,
+            searchMunicipio: null,
+            searchCnae: null,
+            listRegiao:null,
+            listUf:null,
+            listMunicipio:null,
+            listCnae:null,
         };
+
+        this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
+        this.handleSearchRegiao = this.handleSearchRegiao.bind(this);
+        this.listRegiao = this.listRegiao.bind(this);
+        this.setRegiao = this.setRegiao.bind(this);
+        this.removeRegiao = this.removeRegiao.bind(this);
+
+        this.clickSearchUf = this.clickSearchUf.bind(this);
+        this.handleSearchUf = this.handleSearchUf.bind(this);
+        this.listUf = this.listUf.bind(this);
+        this.setUf = this.setUf.bind(this);
+        this.removeUf = this.removeUf.bind(this);
+
+        this.clickSearchMunicipio = this.clickSearchMunicipio.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.listMunicipio = this.listMunicipio.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
+        this.removeMunicipio = this.removeMunicipio.bind(this);
+
+        this.clickSearchCnae = this.clickSearchCnae.bind(this);
+        this.handleSearchCnae = this.handleSearchCnae.bind(this);
+        this.listCnae = this.listCnae.bind(this);
+        this.setCnae = this.setCnae.bind(this);
+        this.removeCnae = this.removeCnae.bind(this);
+
         this.handleInputChange = this.handleInputChange.bind(this);
+
+
         this.filter = this.filter.bind(this);
-        this.validate = this.validate.bind(this);
-        this.getDadosGerais = this.getDadosGerais.bind(this);
+        this.clickIdh = this.clickIdh.bind(this);
+
+        this.setAnoFundacao = this.setAnoFundacao.bind(this);
+        this.setTotalTrabalhadores = this.setTotalTrabalhadores.bind(this);
+        this.setTotalEmpregados = this.setTotalEmpregados.bind(this);
+        this.setTrabalhadoresDeficiencia = this.setTrabalhadoresDeficiencia.bind(this);
+        this.setTrabalhadoresVoluntarios = this.setTrabalhadoresVoluntarios.bind(this);
+
+        this.setAnoFonteRecurso = this.setAnoFonteRecurso.bind(this);
+        this.setRendimentosFinanceirosReservas = this.setRendimentosFinanceirosReservas.bind(this);
+        this.setRendimentosFundosPatrimoniais = this.setRendimentosFundosPatrimoniais.bind(this);
+        this.setMensalidadesContribuicoes = this.setMensalidadesContribuicoes.bind(this);
+        this.setVendaBensDireitos = this.setVendaBensDireitos.bind(this);
+        this.setPremiosRecebidos = this.setPremiosRecebidos.bind(this);
+        this.setVendaProdutos = this.setVendaProdutos.bind(this);
+        this.setPrestacaoServicos = this.setPrestacaoServicos.bind(this);
+
+        this.setEmpresasPublicasSociedadesEconomia = this.setEmpresasPublicasSociedadesEconomia.bind(this);
+        this.setAcordoOrganismosMultilaterais = this.setAcordoOrganismosMultilaterais.bind(this);
+        this.setAcordoGovernosEstrangeiros = this.setAcordoGovernosEstrangeiros.bind(this);
+        this.setParceriaGovernoEstadual = this.setParceriaGovernoEstadual.bind(this);
+        this.setParceriaGovernoMunicipal = this.setParceriaGovernoMunicipal.bind(this);
+        this.setTransferenciasFederaisRecebidas = this.setTransferenciasFederaisRecebidas.bind(this);
+
+        this.setParceriaBrasileiras = this.setParceriaBrasileiras.bind(this);
+        this.setParceriaEstrangeiras = this.setParceriaEstrangeiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasBrasileiras = this.setParceriaOrganizacoesReligiosasBrasileiras.bind(this);
+        this.setParceriaOrganizacoesReligiosasEstrangeiras = this.setParceriaOrganizacoesReligiosasEstrangeiras.bind(this);
+        this.setEmpresasPrivadasBrasileiras = this.setEmpresasPrivadasBrasileiras.bind(this);
+        this.setEmpresasEstrangeiras = this.setEmpresasEstrangeiras.bind(this);
+        this.setDoacoesPessoaJuridica = this.setDoacoesPessoaJuridica.bind(this);
+        this.setDoacoesPessoaFisica = this.setDoacoesPessoaFisica.bind(this);
+        this.setDoacoesFormaProdutosServicos = this.setDoacoesFormaProdutosServicos.bind(this);
+
+        this.setVoluntariado = this.setVoluntariado.bind(this);
+        this.setIsencoes = this.setIsencoes.bind(this);
+        this.setImunidades = this.setImunidades.bind(this);
+        this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
+        this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
+
+
     }
 
+
     componentDidMount(){
-        this.getDadosGerais()
+    }
+
+    componentDidUpdate(props){
+        if(this.state.certificados != props.certificados ||
+            this.state.areaAtuacao != props.areaAtuacao ||
+            this.state.subAreaAtuacao != props.subAreaAtuacao
+        ){
+            this.setState({
+                certificados: props.certificados,
+                areaAtuacao: props.areaAtuacao,
+                subAreaAtuacao: props.subAreaAtuacao
+            });
+        }
     }
 
     handleInputChange(event) {
@@ -33,12 +136,12 @@ class Filter extends React.Component{
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if(target.name==='cel'){
+        /*if(target.name==='cel'){
             value = maskCel(value);
         }
         if(target.name==='whatsapp'){
             value = maskCel(value);
-        }
+        }*/
 
         let form = this.state.form;
         form[name] = value;
@@ -46,7 +149,154 @@ class Filter extends React.Component{
         this.setState({form: form});
     }
 
-    validate(){
+    /*Regiao*/
+    handleSearchRegiao(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({searchRegiao: search}, function(){
+            this.listRegiao(search);
+        });
+    }
+    clickSearchRegiao(){
+        let search = this.state.searchRegiao ? this.state.searchRegiao : ' ';
+        this.listRegiao(search);
+    }
+    listRegiao(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/regiao/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listRegiao: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setRegiao(item){
+        let filters = this.state.filters;
+        filters.regiao = item;
+        this.setState({filters: filters, searchRegiao: null});
+    }
+    removeRegiao(){
+        let filters = this.state.filters;
+        filters.regiao = null;
+        this.setState({filters: filters})
+    }
+
+    /*UF*/
+    handleSearchUf(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({searchUf: search}, function(){
+            this.listUf(search);
+        });
+    }
+    clickSearchUf(){
+        let search = this.state.searchUf ? this.state.searchUf : ' ';
+        this.listUf(search);
+    }
+    listUf(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/estado/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listUf: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setUf(item){
+        let filters = this.state.filters;
+        filters.uf = item;
+        this.setState({filters: filters});
+    }
+    removeUf(){
+        let filters = this.state.filters;
+        filters.uf = null;
+        this.setState({filters: filters})
+    }
+
+    /*Municipio*/
+    handleSearchMunicipio(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({searchMunicipio: search}, function(){
+            this.listMunicipio(search);
+        });
+    }
+    clickSearchMunicipio(){
+        let search = this.state.searchMunicipio ? this.state.searchMunicipio : ' ';
+        this.listMunicipio(search);
+    }
+    listMunicipio(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listMunicipio: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setMunicipio(item){
+        let filters = this.state.filters;
+        filters.municipio = item;
+        this.setState({filters: filters});
+    }
+    removeMunicipio(){
+        let filters = this.state.filters;
+        filters.municipio = null;
+        this.setState({filters: filters})
+    }
+    /*Cnae*/
+    handleSearchCnae(e){
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({searchCnae: search}, function(){
+            this.listCnae(search);
+        });
+    }
+    clickSearchCnae(){
+        let search = this.state.searchCnae ? this.state.searchCnae : ' ';
+        this.listCnae(search);
+    }
+    listCnae(search){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
+            cache: false,
+            success: function(data){
+                this.setState({listCnae: data, loadingList: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+    setCnae(item){
+        let filters = this.state.filters;
+        filters.cnae = item;
+        this.setState({filters: filters});
+    }
+    removeCnae(){
+        let filters = this.state.filters;
+        filters.cnae = null;
+        this.setState({filters: filters})
+    }
+    /*************************************/
+    /*validate(){
 
         let valid = true;
 
@@ -63,60 +313,18 @@ class Filter extends React.Component{
             }
         }
 
-        if(!this.validateName(this.state.form.name)){
-            requireds.name = false;
-            valid = false;
-        }
-
-        if(this.validateCel(this.state.form.cel)===""){
-            requireds.cel = false;
-            valid = false;
-        }
 
         this.setState({requireds: requireds});
 
         return valid;
-    }
+    }*/
 
-    validateName(name){
-        let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
-        if(array_name.length<2){
-            return false;
-        }
-
-        return true;
-    }
-
-    validateCel(cel){
-        cel = cel.replace(/[^0-9]/g,'');
-        let qtd = cel.length;
-
-        if(qtd < 10 || qtd > 11){
-            return false;
-        }
-        if(qtd === 11){
-            if(cel.substr(2,1)!=9){
-                return false;
-            }
-            if(cel.substr(3,1)!=9 && cel.substr(3,1)!=8 && cel.substr(3,1)!=7 && cel.substr(3,1)!=6){
-                return false;
-            }
-        }
-        if(qtd === 10){
-            if(cel.substr(2,1)!=9 && cel.substr(2,1)!=8 && cel.substr(2,1)!=7 && cel.substr(2,1)!=6){
-                return false;
-            }
-        }
-        return true;
-    }
 
     filter(e){
         //console.log(this.validate());
-        if(!this.validate()){
+        /*if(!this.validate()){
             return;
-        }
+        }*/
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
@@ -131,7 +339,7 @@ class Filter extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
+                    //console.log('reg', data);
                     this.setState({loading: false});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -142,19 +350,26 @@ class Filter extends React.Component{
         });
     }
 
-    getDadosGerais(){
+
+    callSubAreaAtuacao(id){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-
-            /*headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },*/
-            //headers: {'Access-Control-Allow-Origin': '*'},
-            url: 'http://localhost:8000/api/menu/osc/area_atuacao',
             cache: false,
+            url: getBaseUrl+'menu/osc/subarea_atuacao',
             success: function (data) {
-                this.setState({loading: false, form: data, button:true})
+
+                let areaAtuacao = this.state.areaAtuacao;
+
+                this.state.areaAtuacao.find(function(item){
+                    if(item.cd_area_atuacao === id){
+                        item.checked = !item.checked;
+                    }
+                    item.subareas = data.filter(function(subitem){
+                        return item.cd_area_atuacao === subitem.cd_area_atuacao;
+                    });
+                });
+                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -162,9 +377,454 @@ class Filter extends React.Component{
         });
     }
 
+    clickIdh() {
+        this.setState({
+            active: !this.state.active
+        });
+    }
+
+    setAnoFundacao(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTotalTrabalhadores(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTotalEmpregados(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTrabalhadoresDeficiencia(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTrabalhadoresVoluntarios(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAnoFonteRecurso(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setRendimentosFinanceirosReservas(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setRendimentosFundosPatrimoniais(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setMensalidadesContribuicoes(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVendaBensDireitos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setPremiosRecebidos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVendaProdutos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setPrestacaoServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasPublicasSociedadesEconomia(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAcordoOrganismosMultilaterais(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setAcordoGovernosEstrangeiros(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaGovernoEstadual(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaGovernoMunicipal(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setTransferenciasFederaisRecebidas(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaOrganizacoesReligiosasBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setParceriaOrganizacoesReligiosasEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasPrivadasBrasileiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setEmpresasEstrangeiras(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesPessoaJuridica(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesPessoaFisica(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesFormaProdutosServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setVoluntariado(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setIsencoes(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setImunidades(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setBensRecebidosDireito(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+    setDoacoesRecebidasFormaProdutosServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
 
     render(){
+
+        let certificados = null;
+        if(this.state.certificados){
+            certificados = this.state.certificados.map(function (item) {
+               return (
+                   <div className="custom-control custom-checkbox"  key={"cert_"+item.cd_certificado}>
+                       <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_certificado} required/>
+                       <label className="custom-control-label" htmlFor={"cert_"+item.cd_certificado}>{item.tx_nome_certificado}</label>
+                   </div>
+               );
+            });
+        }
+
+
+        let indicadores = [];
+        if(this.props.ipeaData){
+
+
+            this.props.ipeaData.find(function(item){
+
+                let existeTema = false;
+
+                for(let i in indicadores){
+                    if(item.tx_tema === indicadores[i].tema){
+                        indicadores[i].indices.push(item);
+                        existeTema = true;
+                        break;
+                    }
+                }
+
+                if(!existeTema){
+                    let tema = {tema: item.tx_tema, indices: [item]};
+                    indicadores.push(tema);
+                }
+            });
+
+            indicadores = indicadores.map(function(item, index){
+                let indices = item.indices.map(function(subitem){
+                    return(
+                        <div key={"subarea_"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                            </div>
+                            <br />
+                        </div>
+                    );
+                });
+
+                return (
+                    <div key={"ipeaData_"+index}>
+                        <strong>{item.tema}</strong>
+                        <hr />
+                        {indices}
+                        <br/>
+                    </div>
+                );
+            });
+
+
+
+
+            /*const map = new Map();
+            for (const item of this.props.ipeaData) {
+
+                let subThema = null;
+                if(item.cd_indice){
+
+                    for(const i of this.props.ipeaData){
+                        console.log('i', i.cd_indice);
+                    }
+
+                    subThema = this.props.ipeaData.map(function(subitem){
+                        return(
+                        <div key={"subarea_"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                            </div>
+                            <br />
+                        </div>
+                        );
+                    });
+                }
+                if(!map.has(item.tx_tema)){
+                    map.set(item.tx_tema, true);
+                    ipeaData.push(
+                        <div key={"ipeaData_"+item.cd_indice}>
+                            <strong>{item.tx_tema}</strong>
+                            <hr />
+                            {subThema}
+                            <br/>
+                        </div>
+                    );
+                }
+            }*/
+        }
+
+
+
+        let areaAtuacao = null;
+        let subAreaAtuacao = [];
+        if(this.state.areaAtuacao){
+            areaAtuacao = this.state.areaAtuacao.map(function (item) {
+
+                let subarea = null;
+                if(item.subareas){
+                    subarea = item.subareas.map(function(subitem){
+                        return(
+                            <div key={"subarea_"+subitem.cd_subarea_atuacao}>
+                                <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_subarea_atuacao)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
+                                    <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
+                                </div>
+                                <br />
+                            </div>
+                        );
+                    });
+                }
+
+                subAreaAtuacao.push(
+                    <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checked ? '' : 'none'}}>
+                        <div className="bg-lgt p-2">
+                            <strong>{item.tx_nome_area_atuacao}</strong><br/>
+                            {subarea}
+                        </div>
+                    </div>
+                );
+
+               return (
+                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
+                       <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
+                       <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
+                   </div>
+               );
+            }.bind(this));
+        }
+
+        let regioes = null
+        if(this.state.listRegiao){
+            regioes = this.state.listRegiao.map(function (item, index){
+
+                let sizeSearch = this.state.searchRegiao ? this.state.searchRegiao.length : 0;
+
+                let firstPiece = null;
+                let secondPiece = item.edre_nm_regiao;
+
+                if(this.state.searchRegiao){
+                    firstPiece = item.edre_nm_regiao.substr(0, sizeSearch);
+                    secondPiece = item.edre_nm_regiao.substr(sizeSearch);
+                }
+
+                return (
+                    <li key={'cat_'+item.edre_cd_regiao}
+                        className="list-group-item d-flex "
+                        onClick={() => this.setRegiao(item)}
+                    >
+                        <u>{firstPiece}</u>{secondPiece}
+                    </li>
+                )
+            }.bind(this));
+        }
+
+
+
+        let ufs = null
+        if(this.state.listUf) {
+            ufs = this.state.listUf.map(function (item, index) {
+
+                let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.eduf_nm_uf;
+
+                if (this.state.searchUf) {
+                    firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
+                    secondPiece = item.eduf_nm_uf.substr(sizeSearch);
+                }
+
+                return (
+                    <li key={'cat_' + item.eduf_cd_uf}
+                        className="list-group-item d-flex "
+                        onClick={() => this.setUf(item)}
+                    >
+                        <u>{firstPiece}</u>{secondPiece}
+                    </li>
+                )
+            }.bind(this));
+        }
+
+        let municipios = null
+        if(this.state.listMunicipio) {
+            municipios = this.state.listMunicipio.map(function (item, index) {
+
+                let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.edmu_nm_municipio;
+
+                if (this.state.searchMunicipio) {
+                    firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
+                    secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
+                }
+                return (
+                    <li key={'cat_' + item.edmu_cd_municipio}
+                        className="list-group-item d-flex "
+                        onClick={() => this.setMunicipio(item)}
+                    >
+                        <u>{firstPiece}</u>{secondPiece}
+                    </li>
+                )
+            }.bind(this));
+        }
+
+        let cnae = null
+        if(this.state.listCnae) {
+            cnae = this.state.listCnae.map(function (item, index) {
+
+                let sizeSearch = this.state.searchCnae ? this.state.searchCnae.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.tx_atividade_economica;
+
+                if (this.state.searchCnae) {
+                    firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
+                    secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+                }
+                return (
+                    <li key={'cat_' + item.cd_classe_atividade_economica}
+                        className="list-group-item d-flex "
+                        onClick={() => this.setCnae(item)}
+                    >
+                        <u>{firstPiece}</u>{secondPiece}
+                    </li>
+                )
+            }.bind(this));
+        }
+
+        console.log(this.state.filters.uf);
+
+
         return (
+
+
 
             <form>
 
@@ -175,7 +835,7 @@ class Filter extends React.Component{
                                  aria-controls="collapse1">
                                 <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
                                 Dados Gerais
-                                 <i className="fas fa-angle-down float-right"></i>
+                                 <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse1" className="collapse show " aria-labelledby="heading1"
@@ -190,10 +850,28 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Região</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
+                                                   style={{display: (this.state.filters.regiao ? 'none' : '')}}
+                                                   onClick={this.clickSearchRegiao} onChange={this.handleSearchRegiao}/>
+                                            <input type="text" className="form-control" name="tx_nome_regiao2"
+                                                   style={{display: (this.state.filters.regiao ? '' : 'none')}}
+                                                   readOnly={this.state.filters.regiao}
+                                                   defaultValue={this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : ''}/>
+
+                                               <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
+                                                   <i className="fas fa-search" style={{top: '-28px'}}/>
+                                               </div>
+                                               <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
+                                                   <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                               </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: ((this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao) ? '' : 'none'}}>
+                                                    {regioes}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
                                     </div>
                                     <div className="col-md-9">
@@ -204,87 +882,146 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div className="label-float">
+                                        {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
                                             <label htmlFor="name">Estado</label>
                                             <div className="label-box-info-off"/>
+                                        </div>*/}
+
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque um estado" name="tx_nome_uf"
+                                                   style={{display: (this.state.filters.uf ? 'none' : '')}}
+                                                   onClick={this.clickSearchUf} onChange={this.handleSearchUf}/>
+                                            <input type="text" className="form-control" name="tx_nome_uf2"
+                                                   style={{display: (this.state.filters.uf ? '' : 'none')}}
+                                                   readOnly={this.state.filters.uf}
+                                                   defaultValue={this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : ''}/>
+
+                                            <div style={{display: (this.state.filters.uf ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.uf ? '' : 'none')}} onClick={this.removeUf}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: ((this.state.searchUf || this.state.listUf) && !this.state.filters.uf) ? '' : 'none'}}>
+                                                    {ufs}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
+
                                     </div>
 
                                     <div className="col-md-3">
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "/>
+                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "  />
                                             <label htmlFor="name">CNPJ</label>
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        {/*<div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Situação do Imóvel</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>*/}
 
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
                                     <div className="col-md-3">
+
                                         <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Ano de Fundação</label>
+                                            <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                <option value="1">Próprio</option>
+                                                <option value="2">Alugado</option>
+                                                <option value="3">Cedido</option>
+                                                <option value="4">Comodato</option>
+                                            </select>
+                                            <label htmlFor="name"/>
                                             <div className="label-box-info-off"/>
                                         </div>
-                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'left'}}/>
-                                        <input type="range" className="custom-range" min="0" max="5" id="customRange2" style={{float:'right'}}/>
                                     </div>
+
                                     <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_municipio" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Município</label>
-                                            <div className="label-box-info-off"/>
+                                        <Range
+                                            title="Ano de Fundação"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setAnoFundacao}
+                                        />
+                                    </div>
+
+
+
+                                    <div className="col-md-3">
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque um Município" name="tx_nome_municipio"
+                                                   style={{display: (this.state.filters.municipio ? 'none' : '')}}
+                                                   onClick={this.clickSearchMunicipio} onChange={this.handleSearchMunicipio}/>
+                                            <input type="text" className="form-control" name="tx_nome_municipio2"
+                                                   style={{display: (this.state.filters.municipio ? '' : 'none')}}
+                                                   readOnly={this.state.filters.municipio}
+                                                   defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
+
+                                            <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.municipio ? '' : 'none')}} onClick={this.removeMunicipio}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
+                                                    {municipios}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
                                     </div>
 
                                     <div className="col-md-12">
                                         <br/>
                                         <strong>Natureza Jurídica:</strong><br/>
+
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_associacaoPrivada" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_associacaoPrivada">Associação Privada</label>
                                         </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_fundacaoPrivada" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_fundacaoPrivada">Fundação Privada</label>
                                         </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoReligiosa" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoReligiosa">Organização Religiosa</label>
                                         </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoSocial" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoSocial">Organização Social</label>
+                                        </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_outra" required/>
+                                            <label className="custom-control-label" htmlFor="naturezaJuridica_outra">Não informado</label>
+                                        </div>
+
                                         <br/><br/>
                                     </div>
 
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>
+                                        </select>*/}
                                     </div>
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Metas Relacionadas ao ODS</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>
+                                        </select>*/}
                                     </div>
 
                                 </div>
@@ -301,7 +1038,8 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-2">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
                                  aria-controls="collapse2">
-                                Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse2" className="collapse" aria-labelledby="heading2"
@@ -310,40 +1048,51 @@ class Filter extends React.Component{
 
                                 <div className="row">
                                     <div className="col-md-9">
-                                        <div className="label-float">
+                                        {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_atividade_economica" onChange={this.handleInputChange} placeholder=" " />
                                             <label htmlFor="name">Atividade Econômica (CNAE)</label>
                                             <div className="label-box-info-off"/>
+                                        </div>*/}
+
+
+                                        <div className="input-icon">
+                                            <input type="text" className="form-control" placeholder="Busque uma Atividade Econômica" name="tx_atividade_economica"
+                                                   style={{display: (this.state.filters.cnae ? 'none' : '')}}
+                                                   onClick={this.clickSearchCnae} onChange={this.handleSearchCnae}/>
+                                            <input type="text" className="form-control" name="tx_atividade_economica2"
+                                                   style={{display: (this.state.filters.cnae ? '' : 'none')}}
+                                                   readOnly={this.state.filters.cnae}
+                                                   defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : ''}/>
+
+                                            <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
+                                                <i className="fas fa-search" style={{top: '-28px'}}/>
+                                            </div>
+                                            <div style={{display: (this.state.filters.cnae ? '' : 'none')}} onClick={this.removeCnae}>
+                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                            </div>
+
+                                            <div>
+                                                <ul className="box-search-itens" style={{display: ((this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ) ? '' : 'none'}}>
+                                                    {cnae}
+                                                </ul>
+                                            </div>
+                                            <br/>
                                         </div>
+
+
                                     </div>
                                     <div className="col-md-12">
-                                        <strong>Área de Atuação</strong><br/>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Habitação</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
+                                        <strong>Área de Atuação</strong><hr/>
+                                        <div>
+                                            {areaAtuacao}
+                                            <br/><br/>
                                         </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
-                                        <br/>
-                                        <strong>Subárea de Atuação</strong><br/>
 
-                                        <div className="bg-lgt p-2">
-                                            <strong>Habitação</strong><br/>
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                                <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                                <div className="invalid-feedback">Example invalid feedback text</div>
-                                            </div>
+                                        <strong>Subárea de Atuação</strong><hr/>
+                                        <div className="card-columns">
+                                            {subAreaAtuacao}
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -357,7 +1106,8 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-3">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
                                  aria-controls="collapse3">
-                                Titulações e Certificações <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Titulações e Certificações <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse3" className="collapse" aria-labelledby="heading3"
@@ -365,11 +1115,7 @@ class Filter extends React.Component{
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="customControlValidation1" required/>
-                                            <label className="custom-control-label" htmlFor="customControlValidation1">Associação Privada</label>
-                                            <div className="invalid-feedback">Example invalid feedback text</div>
-                                        </div>
+                                        {certificados}
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +1126,8 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-4">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
                                  aria-controls="collapse4">
-                                Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse4" className="collapse" aria-labelledby="heading4"
@@ -408,6 +1155,50 @@ class Filter extends React.Component{
                                             <div className="label-box-info-off"/>
                                         </div>
                                     </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Total de trabalhadores"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalTrabalhadores}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Total de empregados"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalEmpregados}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Trabalhadores com deficiência"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTrabalhadoresDeficiencia}
+                                        />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Trabalhadores voluntários"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTrabalhadoresVoluntarios}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -417,13 +1208,61 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-5">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
                                  aria-controls="collapse5">
-                                Espaços de Participação Social <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse5" className="collapse" aria-labelledby="heading5"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                555
+                                <div className="row">
+
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome do Conselho</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_dirigente">Data de Início de Vigência</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome de representante conselho</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_conselhoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                <option value="1">Próprio</option>
+                                                <option value="2">Alugado</option>
+                                                <option value="3">Cedido</option>
+                                                <option value="4">Comodato</option>
+                                            </select>
+                                            <label htmlFor="name"/>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="date" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -432,7 +1271,8 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-6">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
                                  aria-controls="collapse6">
-                                Projetos <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Projetos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse6" className="collapse" aria-labelledby="heading6"
@@ -447,13 +1287,352 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-7">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
                                  aria-controls="collapse7">
-                                Fontes de Recursos <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Fontes de Recursos <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse7" className="collapse" aria-labelledby="heading7"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                777
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <h4>Fontes de recursos anuais da OSC</h4>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <Range
+                                                    title="Ano"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAnoFonteRecurso}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <h4>Recursos próprios</h4>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Rendimentos financeiros de reservas ou contas correntes próprias"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setRendimentosFinanceirosReservas}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Rendimentos de fundos patrimoniais"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setRendimentosFundosPatrimoniais}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Mensalidades ou contribuições de associados"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setMensalidadesContribuicoes}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Venda de bens e direitos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVendaBensDireitos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Prêmios recebidos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setPremiosRecebidos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Venda de produtos"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVendaProdutos}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Prestação de serviços"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setPrestacaoServicos}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <h4>Recursos públicos</h4>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas públicas ou sociedades de economia mista"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasPublicasSociedadesEconomia}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Acordo com organismos multilaterais"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAcordoOrganismosMultilaterais}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Acordo com governos estrangeiros"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setAcordoGovernosEstrangeiros}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com o governo estadual"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaGovernoEstadual}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com o governo municipal"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaGovernoMunicipal}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Transferências federais recebidas pela OSC"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setTransferenciasFederaisRecebidas}
+                                                />
+                                            </div>
+                                        </div>
+
+
+
+                                        <h4>Recursos privados</h4>
+                                        <hr />
+
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com OSCs brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com OSCs estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com organizações religiosas brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaOrganizacoesReligiosasBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Parceria com organizações religiosas estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setParceriaOrganizacoesReligiosasEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas privadas brasileiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasPrivadasBrasileiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Empresas estrangeiras"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setEmpresasEstrangeiras}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações de pessoa jurídica"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesPessoaJuridica}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações de pessoa física"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesPessoaFisica}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Doações recebidas na forma de produtos e serviços (com NF)"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesFormaProdutosServicos}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <h4>Recursos não financeiros</h4>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Voluntariado"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setVoluntariado}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Isenções"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setIsencoes}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Imunidades"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setImunidades}
+                                                />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Range
+                                                    title="Bens recebidos em direito de uso"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setBensRecebidosDireito}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Range
+                                                    title="Doações recebidas na forma de produtos e serviços (sem NF)"
+                                                    min="0"
+                                                    max="100"
+                                                    step="1"
+                                                    defaultValueStart="0"
+                                                    defaultValueEnd="100"
+                                                    setValue={this.setDoacoesRecebidasFormaProdutosServicos}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -462,13 +1641,39 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-8">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
                                  aria-controls="collapse8">
-                                Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse8" className="collapse" aria-labelledby="heading8"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                888
+
+
+                                <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
+                                    <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
+                                    <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+                                </div>
+
+                                <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
+                                    <br/>
+                                    <strong> Faixas de IDHM:</strong>
+                                    <br/>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="baixo" required/>
+                                        <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
+                                    </div>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="medio" required/>
+                                        <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
+                                    </div>
+                                    <div className="custom-control custom-checkbox ">
+                                        <input type="checkbox" className="custom-control-input" id="alto" required/>
+                                        <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -477,20 +1682,23 @@ class Filter extends React.Component{
                         <div className="card-header" id="item-9">
                             <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
                                  aria-controls="collapse9">
-                                Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"></i>
+                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"/>
                             </div>
                         </div>
                         <div id="collapse9" className="collapse" aria-labelledby="heading9"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                999
+                                <div>
+                                    {indicadores}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div >
+                {/* <div >
                     <label htmlFor="name">Como podemos ajudar?</label>
                     <select className="form-control" id="assunto">
                         <option value="">Selecione o assunto</option>
@@ -503,11 +1711,11 @@ class Filter extends React.Component{
                         <option value="7">Sugestão</option>
                         <option value="8">Outros</option>
                     </select><br/>
-                </div>
+                </div>*/}
 
 
 
-                <div className="label-float">
+                {/*<div className="label-float">
                     <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
                     <label htmlFor="email">E-mail</label>
                     <div className="label-box-info">
@@ -533,11 +1741,12 @@ class Filter extends React.Component{
                             <div className="label-box-info"></div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
 
 
 
-                <div className="clear-float"></div>
+                <div className="clear-float"/>
+                <br/>
                 {/*<p><i>* campos obrigatórios</i></p>*/}
 
 
@@ -555,8 +1764,4 @@ class Filter extends React.Component{
     }
 }
 
-ReactDOM.render(
-    /*<Filter email={email}/>,*/
-    <Filter />,
-    document.getElementById('filter')
-);
+

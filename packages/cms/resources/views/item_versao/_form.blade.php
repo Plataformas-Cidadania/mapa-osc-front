@@ -5,8 +5,8 @@
 {!! Form::select('tipo_id',
         array(
             '1' => 'Coordenador',
-            '3' => 'Coordenador Equipe',
-            '2' => 'Equipe técnica',
+            '2' => 'Coordenador Equipe',
+            '3' => 'Equipe técnica',
         ),
 null, ['class'=>"form-control width-medio <% validar(item.tipo_id) %>", 'ng-model'=>'item.tipo_id', 'ng-required'=>'true', 'init-model'=>'item.tipo_id', 'placeholder' => '']) !!}<br>
 

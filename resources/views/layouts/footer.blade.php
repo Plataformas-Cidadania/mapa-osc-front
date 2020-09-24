@@ -55,13 +55,68 @@
     </style>
 
     <div class="bg-lgt" style="position: relative;">
-        aa <br>
-        aa <br>
-        aa <br>
-        aa <br>
-        aa <br>
-        aa <br>
-        aa <br>
+        {{----}}
+        <div class="row rp-menu" >
+            <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div>
+                            <h3>Mapa das OSCs</h3>
+                            <ul>
+                                <li><a href="filtros-series/">Metodologia</a></li>
+                                <li><a href="filtros-series/">Termos de Uso</a></li>
+                                <li><a href="filtros-series/">Cadastro de Representante</a></li>
+                                <li><a href="filtros-series/">Contato e Sugestões</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <h3>Ajuda</h3>
+                            <ul>
+                                <li><a href="contato">Glossário</a></li>
+                                <li><a href="noticias">Perguntas Frequentes</a></li>
+                                <li><a href="artigos/0/todos">Tutoriais</a></li>
+                                <li><a href="videos">Mapa do Site</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div>
+                            <h3>Ipea</h3>
+                            <ul>
+                                <li><a href="contato">Portal dos Convênios</a></li>
+                                <li><a href="contato">Atlas da Vulnerabilidade Social</a></li>
+                                <li><a href="contato">Extrator de Dados do Ipea</a></li>
+                                <li><a href="contato">Participação em Foco</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    @if($setting->twitter!="" || $setting->youtube!="" || $setting->facebook!="" || $setting->pinterest!="")
+                        <div class="col-md-3">
+                            <div>
+                                <h3>Redes</h3>
+                                <ul>
+                                    @if($setting->twitter!="")<li><a href="{{$setting->twitter}}" target="_blank">Twitter</a></li>@endif
+                                    @if($setting->youtube!="")<li><a href="{{$setting->youtube}}" target="_blank">YouTube</a></li>@endif
+                                    @if($setting->facebook!="")<li><a href="{{$setting->facebook}}" target="_blank">Facebook</a></li>@endif
+                                    @if($setting->pinterest!="")<li><a href="{{$setting->pinterest}}" target="_blank">Pinterest</a></li>@endif
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+        {{----}}
         <div>
             <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
                 <p>Top</p>
@@ -74,6 +129,24 @@
 
 
     <style>
+        .rp-menu{
+            padding: 30px 0;
+        }
+        .rp-menu .col-md-3{
+            border-left: dotted 1px #999;
+        }
+        .rp-menu ul{
+            margin: 0;
+            padding: 0;
+        }
+        .rp-menu ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .rp-menu h3{
+            font-weight: bold;
+        }
         .btn-circle{
             float: right;
             width: 60px;

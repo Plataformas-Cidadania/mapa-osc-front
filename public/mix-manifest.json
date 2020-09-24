@@ -64,5 +64,6 @@
     "/assets-cms/js/controllers/directiveCtrl.js": "/assets-cms/js/controllers/directiveCtrl.js",
     "/assets-cms/js/controllers/alterarDirectiveCtrl.js": "/assets-cms/js/controllers/alterarDirectiveCtrl.js",
     "/assets-cms/js/controllers/printingCtrl.js": "/assets-cms/js/controllers/printingCtrl.js",
-    "/assets-cms/js/controllers/alterarPrintingCtrl.js": "/assets-cms/js/controllers/alterarPrintingCtrl.js"
+    "/assets-cms/js/controllers/alterarPrintingCtrl.js": "/assets-cms/js/controllers/alterarPrintingCtrl.js",
+    "/assets-cms/js/controllers/alterarSettingCtrl.js": "/assets-cms/js/controllers/alterarSettingCtrl.js"
 }

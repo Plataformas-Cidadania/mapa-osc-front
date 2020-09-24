@@ -18,12 +18,38 @@ class Recursos extends React.Component{
                 tx_nome_situacao_imovel_recursos: true,
                 tx_nome_responsavel_legal: true,
 
-
                 cnpj: true,
             },
+            ano: 0,
             showMsg: false,
             msg: '',
-            juridica: false
+            juridica: false,
+            anosRecursos: [],
+
+            /*recursos_proprios: {
+                mensalidades_contribuicoes_associados: {
+                    nr_valor_recursos_osc: '',
+                },
+                premios_recebidos: {
+                    nr_valor_recursos_osc: '',
+                },
+                prestacao_servicos: {
+                    nr_valor_recursos_osc: '',
+                },
+                rendimentos_financeiros_reservas_contas_correntes_proprias: {
+                    nr_valor_recursos_osc: '',
+                },
+                rendimentos_fundos_patrimoniais: {
+                    nr_valor_recursos_osc: '',
+                },
+                venda_bens_direitos: {
+                    nr_valor_recursos_osc: '',
+                },
+                venda_produtos: {
+                    nr_valor_recursos_osc: '',
+                }
+            },*/
+            loadingAnos: true,
 
         };
 
@@ -31,20 +57,25 @@ class Recursos extends React.Component{
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
+        this.getRecursosProprios = this.getRecursosProprios.bind(this);
     }
 
     componentDidMount(){
         this.getRecursos();
+        this.callSubObjetivos();
     }
 
     getRecursos(){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: '/get-recursos',
+            //url: '/get-recursos',
+            //url: getBaseUrl+'osc/no_project/789809',
+            url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data.recursos, button:true})
+                console.log('data: ', data);
+                this.setState({loading: false, anosRecursos: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -91,7 +122,7 @@ class Recursos extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
+                    //console.log('reg', data);
 
                     let msg = 'Já existe outro cadastro com esse';
 
@@ -118,8 +149,61 @@ class Recursos extends React.Component{
 
     }
 
+    getRecursosProprios(ano){
+        ano = ano+"-01-01";
+        console.log('recursos:', this.state.recursos);
+        let recursos_proprios = null;
+        let recursos_publicos = null;
+        let recursos_privados = null;
+        let recursos_nao_financeiros = null;
+        let recursos = this.state.recursos;
+        for(let i in recursos){
+            if(recursos[i].dt_ano_recursos_osc == ano){
+                recursos_proprios = recursos[i].recursos_proprios;
+                recursos_publicos = recursos[i].recursos_publicos;
+                recursos_privados = recursos[i].recursos_privados;
+                recursos_nao_financeiros = recursos[i].recursos_nao_financeiros;
+                break;
+            }
+        }
+        this.setState({recursos_proprios: recursos_proprios, recursos_publicos: recursos_publicos, recursos_privados: recursos_privados, recursos_nao_financeiros: recursos_nao_financeiros, ano:ano})
+    }
+
+    callSubObjetivos(){
+        this.setState({button:false, loadingAnos:true});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
+            url: getBaseUrl+'osc/no_project/789809',
+            //url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
+            success: function (data) {
+
+                let anosRecursos = this.state.anosRecursos;
+
+                this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data.recursos.recursos})
+                //this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
 
     render(){
+
+        let anosRecursos = null;
+        if(this.state.anosRecursos){
+            anosRecursos = this.state.anosRecursos.map(function (item, index) {
+                return (
+                <div key={"anos_" + index} id={"anos_" + index}
+                    onClick={() => this.getRecursosProprios(item.dt_ano_recursos_osc)}
+                    //className="btn btn-light ">{item.dt_ano_recursos_osc}</div>
+                    className={this.state.ano==item.dt_ano_recursos_osc ? 'btn btn-primary' : 'btn btn-light'}>{item.dt_ano_recursos_osc}</div>
+                );
+            }.bind(this));
+        }
 
         return (
             <div>
@@ -134,53 +218,50 @@ class Recursos extends React.Component{
                                         <hr/><br/>
                                     </div>
 
-                                    {/*<div className="row">
-                                        <div className="form-group col-md-4">
-                                            <label htmlFor="inputEstado">Situação do Imóvel</label>
-                                            <select id="inputEstado" className="form-control">
-                                                <option selected>Escolher...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                    </div>*/}
+
                                     <div style={{fontSize: "13px"}}>Anos: </div>
-                                    <div className="btn-group" role="group" aria-label="Exemplo básico">
-                                        <button type="button" className="btn btn-primary">2020</button>
-                                        <button type="button" className="btn btn-outline-secondary">2019</button>
-                                        <button type="button" className="btn btn-outline-secondary">2018</button>
-                                        <button type="button" className="btn btn-outline-secondary">2017</button>
-                                        <button type="button" className="btn btn-outline-secondary">2016</button>
-                                        <button type="button" className="btn btn-outline-secondary">2015</button>
-                                        <button type="button" className="btn btn-outline-secondary">2014</button>
-                                        <button type="button" className="btn btn-outline-secondary">2013</button>
-                                        <button type="button" className="btn btn-outline-secondary">2012</button>
-                                        <button type="button" className="btn btn-outline-secondary">2011</button>
-                                        <button type="button" className="btn btn-outline-secondary">2010</button>
+                                    <div className="btn-group" role="group" aria-label="Anos">
+                                        <div style={{display: this.state.loadingAnos ? '' : 'none'}}>
+                                            <i className="fas fa-spinner fa-spin" />
+                                        </div>
+                                        <div style={{display: this.state.loadingAnos ? 'none' : ''}}>
+                                            {anosRecursos}
+                                        </div>
                                     </div>
                                     <br/>
-                                    <p className="form-check">
-                                        <input className="form-check-input" type="checkbox" id="gridCheck"/>
-                                        <label className="form-check-label" htmlFor="gridCheck">
-                                            Não possui recursos para este ano.
-                                        </label>
-                                    </p>
+                                    <br/>
+
+                                    {/*<div className="custom-control custom-checkbox" key="11" id="11">
+                                        <input type="checkbox" className="custom-control-input" id="11" required/>
+                                        <label className="custom-control-label" htmlFor="">Não possui recursos para este ano.</label>
+                                        <div className="invalid-feedback">Não possui recursos para este ano.</div>
+                                    </div>
+
+
 
 
                                     <div className="box-itens-g">
                                         <h2>Recursos próprios</h2>
-                                        <p className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="gridCheck"/>
-                                            <label className="form-check-label" htmlFor="gridCheck">
-                                                Não possui recursos próprios para este ano.
-                                            </label>
-                                        </p>
-                                    </div>
+                                        <div className="custom-control custom-checkbox" key="22" id="22">
+                                            <input type="checkbox" className="custom-control-input" id="22" required/>
+                                            <label className="custom-control-label" htmlFor="">Não possui recursos próprios para este ano.</label>
+                                            <div className="invalid-feedback">Não possui recursos próprios para este ano.</div>
+                                        </div>
+                                    </div>*/}
 
                                     <div className="row">
 
+                                        <div className="col-md-12">
+                                            <h2>Recursos próprios</h2>
+                                            <hr/>
+                                        </div>
+
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                             (this.state.recursos_proprios.rendimentos_fundos_patrimoniais ?
+                                                              this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Rendimentos de fundos patrimoniais</label>
                                                 <div className="label-box-info-off">
@@ -191,7 +272,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                             (this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias ?
+                                                              this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Rendimentos financeiros de reservas ou c/c próprias</label>
                                                 <div className="label-box-info-off">
@@ -202,7 +286,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.mensalidades_contribuicoes_associados ?
+                                                           this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Mensalidades ou contribuições de associados</label>
                                                 <div className="label-box-info-off">
@@ -213,7 +300,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.premios_recebidos ?
+                                                           this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc  : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Prêmios recebidos</label>
                                                 <div className="label-box-info-off">
@@ -224,7 +314,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.venda_produtos ?
+                                                           this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc  : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Venda de produtos</label>
                                                 <div className="label-box-info-off">
@@ -235,7 +328,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.prestacao_servicos ?
+                                                           this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc  : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Prestação de serviços</label>
                                                 <div className="label-box-info-off">
@@ -246,7 +342,10 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.venda_bens_direitos ?
+                                                           this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc  : "") : ""}
                                                        placeholder="Informe o valor" />
                                                 <label htmlFor="tx_link_estatuto_osc">Venda de bens e direitos</label>
                                                 <div className="label-box-info-off">
@@ -254,6 +353,315 @@ class Recursos extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
+
+                                    </div>
+
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/>
+                                            <h2>Recursos públicos</h2>
+                                            <hr/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.parceria_governo_estadual ?
+                                                               this.state.recursos_publicos.parceria_governo_estadual.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parceria com o governo estadual</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.acordo_organismos_multilaterais ?
+                                                               this.state.recursos_publicos.acordo_organismos_multilaterais.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Acordo com organismos multilaterais</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista ?
+                                                               this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Empresas públicas ou sociedades de economia mista</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.parceria_governo_municipal ?
+                                                               this.state.recursos_publicos.parceria_governo_municipal.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parceria com o governo municipal</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.acordo_governos_estrangeiros ?
+                                                               this.state.recursos_publicos.acordo_governos_estrangeiros.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Acordo com governos estrangeiros</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_publicos ?
+                                                           (this.state.recursos_publicos.transferências_federais_recebidas_osc ?
+                                                               this.state.recursos_publicos.transferências_federais_recebidas_osc.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Transferências federais recebidas pela OSC</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/>
+                                            <h2>Recursos privados</h2>
+                                            <hr/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.parceria_oscs_brasileiras ?
+                                                               this.state.recursos_privados.parceria_oscs_brasileiras.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parceria com OSCs brasileiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras ?
+                                                               this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parcerias com organizações religiosas brasileiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.empresas_privadas_brasileiras ?
+                                                               this.state.recursos_privados.empresas_privadas_brasileiras.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Empresas privadas brasileiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.doacoes_pessoa_juridica ?
+                                                               this.state.recursos_privados.doacoes_pessoa_juridica.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Doações de pessoa jurídica</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal ?
+                                                               this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Doações recebidas na forma de produtos e serviços (com Nota Fiscal)</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.parcerias_oscs_estrangeiras ?
+                                                               this.state.recursos_privados.parcerias_oscs_estrangeiras.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parcerias com OSCs estrangeiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras ?
+                                                               this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Parcerias com organizações religiosas estrangeiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.empresas_privadas_estrangeiras ?
+                                                               this.state.recursos_privados.empresas_privadas_estrangeiras.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Empresas estrangeiras</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_privados ?
+                                                           (this.state.recursos_privados.doacoes_pessoa_fisica ?
+                                                               this.state.recursos_privados.doacoes_pessoa_fisica.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Doações de pessoa física</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <br/>
+                                            <h2>Recursos não financeiros</h2>
+                                            <hr/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_nao_financeiros ?
+                                                           (this.state.recursos_nao_financeiros.voluntariado ?
+                                                               this.state.recursos_nao_financeiros.voluntariado.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Voluntariado</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_nao_financeiros ?
+                                                           (this.state.recursos_nao_financeiros.imunidades ?
+                                                               this.state.recursos_nao_financeiros.imunidades.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Imunidades</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_nao_financeiros ?
+                                                           (this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal ?
+                                                               this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal.nr_valor_recursos_osc : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Doações recebidas na forma de produtos e serviços (sem Nota Fiscal)</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_nao_financeiros ?
+                                                           (this.state.recursos_nao_financeiros.isencoes ?
+                                                               this.state.recursos_nao_financeiros.isencoes.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Isenções</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                       value={this.state.recursos_nao_financeiros ?
+                                                           (this.state.recursos_nao_financeiros.bens_recebidos_direito_uso ?
+                                                               this.state.recursos_nao_financeiros.bens_recebidos_direito_uso.nr_valor_recursos_osc  : "") : ""}
+                                                       placeholder="Informe o valor" />
+                                                <label htmlFor="tx_link_estatuto_osc">Bens recebidos em direito de uso</label>
+                                                <div className="label-box-info-off">
+                                                    <p>&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                     </div>
 

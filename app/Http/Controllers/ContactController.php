@@ -29,7 +29,16 @@ class ContactController extends Controller{
     public function email(){
         $text = \App\Text::where('slug', 'contato')->first();
         $expediente = \App\Text::where('slug', 'contato-expediente')->first();
-        return view($this->module.'.contact', ['text' => $text, 'expediente' => $expediente]);
+
+        if(!empty($text) && !empty($expediente)){
+            return view($this->module.'.contact', ['text' => $text, 'expediente' => $expediente]);
+        }
+
+        return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
+                    Ops! Cadastre no CMS em texts o slug
+                    <strong>contato</strong> e <strong>contato-expediente</strong>
+                </div>";
+
     }
 
     public function send(Request $request){
@@ -42,7 +51,7 @@ class ContactController extends Controller{
         Config::set('mail.port', '2525');
         //Config::set('mail.address', $settings->email);
         //Config::set('mail.name', $settings->titulo);
-        Config::set('mail.address', 'relison@cd10.com.br');
+        Config::set('mail.address', 'admin@cms.com.br');
         Config::set('mail.name', 'Eu');
         Config::set('mail.username', 'fd8cb8ad9fa769f7180f7ba7e5cee288');
         Config::set('mail.password', '4139e727907608a7e113cbea20c66cee');
@@ -59,9 +68,9 @@ class ContactController extends Controller{
             /*$message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);
             $message->to($settings->email, $data['name']);*/
-            $message->from('relison@cd10.com.br', 'Eu');
-            $message->sender('relison@cd10.com.br', 'Eu');
-            $message->to('relison@cd10.com.br', $data['name']);
+            $message->from('admin@cms.com.br', 'Eu');
+            $message->sender('admin@cms.com.br', 'Eu');
+            $message->to('admin@cms.com.br', $data['name']);
             //$message->bcc($address, $name = null);
             $message->replyTo($data['email'], $data['name']);
            //$message->subject('Contato - '.$settings->titulo);
@@ -76,8 +85,8 @@ class ContactController extends Controller{
         {
             /*$message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);*/
-            $message->from('relison@cd10.com.br', 'Eu');
-            $message->sender('relison@cd10.com.br', 'Eu');
+            $message->from('admin@cms.com.br', 'Eu');
+            $message->sender('admin@cms.com.br', 'Eu');
             $message->to($data['email'], $data['name']);
             //$message->subject('Contato - '.$settings->titulo);
             $message->subject('Contato - '.'Eu');

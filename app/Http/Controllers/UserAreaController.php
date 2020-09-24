@@ -27,6 +27,9 @@ class UserAreaController extends Controller
     public function data(){
         return view('user-area', ['pgUserArea' => 'data']);
     }
+    public function seal(){
+        return view('user-area', ['pgUserArea' => 'seal']);
+    }
 
     public function descricao(){
         return view('user-area', ['pgUserArea' => 'descricao']);
