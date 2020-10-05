@@ -151,7 +151,7 @@
             </div>
             @foreach($midias as $item)
                 <div class="col-md-4">
-                    <a href="{{$midiaSelect[0]}}/{{$item->id}}/{{clean($item->titulo)}}">
+                    <a href="post/{{$midiaSelect[0]}}/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
                             @if($item->imagem!="")
                             <picture>
@@ -178,7 +178,7 @@
             <div class="col-md-12 text-center">
                 <br>
                 <br>
-                <a href="{{$midiaSelect[1]}}">
+                <a href="posts/{{$midiaSelect[1]}}">
                     <button type="button" class="btn btn-outline-primary">Visualize todas {{$midiaSelect[3]}}</button>
                 </a>
             </div>
