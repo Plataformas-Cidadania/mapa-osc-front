@@ -69,7 +69,7 @@ class FormParticipacaoConselho extends React.Component {
     edit() {
         $.ajax({
             method: 'GET',
-            url: '/edit-user-conselho/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/ps_conselho/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
@@ -132,36 +132,33 @@ class FormParticipacaoConselho extends React.Component {
             return;
         }
 
-        let url = '/register-conselho';
+        let url = 'osc/ps_conselho';
         let id = null;
+        let method = 'POST';
         if (this.state.action === 'edit') {
             id = this.state.editId;
-            url = '/update-user-conselho';
+            url = 'osc/ps_conselho/' + id;
+            method = 'PUT';
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: url,
-                //url: '/register-conselho',
+                method: method,
+                url: getBaseUrl2 + url,
                 data: {
-                    form: this.state.form,
+                    tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
+                    bo_oficial: 0,
+                    id_osc: 455128,
                     id: id
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
 
                     if (data.max) {
                         let msg = data.msg;
                         this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, participacoes: data.participacoes });
                         return;
                     }
-
-                    /*let button = true;
-                    if(data.participacoes.length >= data.maxParticipacoes){
-                        button = false;
-                    }*/
 
                     let button = true;
                     if (this.state.action === 'new') {
@@ -171,9 +168,6 @@ class FormParticipacaoConselho extends React.Component {
                     }
 
                     let btnContinue = false;
-                    /*if(data.participacoes.length > 0){
-                        btnContinue = true;
-                    }*/
 
                     this.props.list();
 

@@ -421,7 +421,7 @@ class Participacoes extends React.Component{
                                         <div className="col-md-12">
                                             <div style={{display: this.state.showForm ? 'block' : 'none'}}>
                                                 <a onClick={this.showHideForm}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
-                                                <FormParticipacaoConferencia action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                                                <FormParticipacaoConselho action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                                             </div>
                                             <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                                                 <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>

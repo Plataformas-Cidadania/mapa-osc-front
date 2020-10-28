@@ -168,12 +168,12 @@ class Participacoes extends React.Component {
     }
 
     /* list2(){
-           this.setState({loadingList: true});
-           $.ajax({
+          this.setState({loadingList: true});
+          $.ajax({
              method: 'POST',
              url: '/list-users-conselhos',
              data: {
-               },
+              },
              cache: false,
              success: function(data){
                  console.log(data);
@@ -524,7 +524,7 @@ class Participacoes extends React.Component {
                                                 { onClick: this.showHideForm },
                                                 React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
                                             ),
-                                            React.createElement(FormParticipacaoConferencia, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                                            React.createElement(FormParticipacaoConselho, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                                         ),
                                         React.createElement(
                                             'div',
