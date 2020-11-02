@@ -143,16 +143,9 @@ class FormGovernanca extends React.Component{
 
 
                     let button = true;
-                   /* if(this.state.action==='new'){
-                        if(data.governancas.length >= data.maxGovernancas){
-                            button = false;
-                        }
-                    }*/
 
                     let btnContinue = false;
-                    /*if(data.governancas.length > 0){
-                        btnContinue = true;
-                    }*/
+
 
                     this.props.list();
 

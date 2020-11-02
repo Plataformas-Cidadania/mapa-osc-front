@@ -15,43 +15,63 @@ class Participacoes extends React.Component {
                 1: 'Endereço principal',
                 2: ' '
             },
-            showForm: false,
-            actionForm: '',
+
+            showFormConselho: false,
+            actionFormConselho: '',
+
             showFormConferencia: false,
             actionFormConferencia: '',
+
             showFormOutro: false,
             actionFormOutro: '',
+
             remove: [],
             loadingRemove: [],
             conferencia: {},
             conselho: {},
             outro: {},
-            editId: 0
+            editIdConselho: 0,
+            editIdConferencia: 0,
+            editIdOutro: 0,
+
+            removeConselho: []
         };
 
         this.list = this.list.bind(this);
         this.remove = this.remove.bind(this);
 
-        this.showHideForm = this.showHideForm.bind(this);
-        this.closeForm = this.closeForm.bind(this);
-
+        this.showHideFormConselho = this.showHideFormConselho.bind(this);
         this.showHideFormConferencia = this.showHideFormConferencia.bind(this);
-        this.closeFormConferencia = this.closeFormConferencia.bind(this);
         this.showHideFormOutro = this.showHideFormOutro.bind(this);
+
+        this.closeFormConselho = this.closeFormConselho.bind(this);
+        this.closeFormConferencia = this.closeFormConferencia.bind(this);
         this.closeFormOutro = this.closeFormOutro.bind(this);
 
         this.showHideConselho = this.showHideConselho.bind(this);
         this.showHideConferencia = this.showHideConferencia.bind(this);
         this.showHideOutro = this.showHideOutro.bind(this);
+
+        this.removeConselho = this.removeConselho.bind(this);
+        this.removeConferencia = this.removeConferencia.bind(this);
+        this.removeConferencia = this.removeConferencia.bind(this);
     }
 
     componentDidMount() {
         this.list();
     }
 
-    edit(id) {
+    editConselho(id) {
         // this.setState({actionForm: 'edit'});
-        this.setState({ actionForm: 'edit', showForm: false, editId: id });
+        this.setState({ actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id });
+    }
+    editConferencia(id) {
+        // this.setState({actionForm: 'edit'});
+        this.setState({ actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id });
+    }
+    editOutro(id) {
+        // this.setState({actionForm: 'edit'});
+        this.setState({ actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id });
     }
 
     cancelRemove(id) {
@@ -73,8 +93,8 @@ class Participacoes extends React.Component {
         loadingRemove[id] = true;
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
-            method: 'GET',
-            url: '/remove-user-participacao/' + id,
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -92,11 +112,11 @@ class Participacoes extends React.Component {
         });
     }
 
-    showHideForm(action) {
-        let showForm = !this.state.showForm;
-        let actionForm = action;
-        console.log(showForm);
-        this.setState({ showForm: showForm, actionForm: actionForm });
+    showHideFormConselho(action) {
+        let showFormConselho = !this.state.showFormConselho;
+        let actionFormConselho = action;
+        console.log(showFormConselho);
+        this.setState({ showFormConselho: showFormConselho, actionFormConselho: actionFormConselho });
     }
     showHideFormConferencia(action) {
         let showFormConferencia = !this.state.showFormConferencia;
@@ -129,7 +149,7 @@ class Participacoes extends React.Component {
         this.setState({ showOutro: showOutro, actionOutro: actionOutro });
     }
 
-    closeForm() {
+    closeFormConselho() {
         this.setState({ showForm: false });
     }
 
@@ -167,33 +187,78 @@ class Participacoes extends React.Component {
         });
     }
 
-    /* list2(){
-          this.setState({loadingList: true});
-          $.ajax({
-             method: 'POST',
-             url: '/list-users-conselhos',
-             data: {
-              },
-             cache: false,
-             success: function(data){
-                 console.log(data);
-                 this.setState({conselhos: data, loadingList: false});
-             }.bind(this),
-             error: function(xhr, status, err){
-                 console.log(status, err.toString());
-                 this.setState({loadingList: false});
-             }.bind(this)
-         });
-     }*/
+    removeConselho(id) {
+        let remove = this.state.removeConselho;
+
+        if (!remove[id]) {
+            remove[id] = true;
+            this.setState({ remove: remove });
+            return;
+        }
+
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.list();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    removeConferencia(id) {
+        let remove = this.state.removeConselho;
+
+        if (!remove[id]) {
+            remove[id] = true;
+            this.setState({ remove: remove });
+            return;
+        }
+
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.list();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    removeOutro(id) {
+        let remove = this.state.removeConselho;
+
+        if (!remove[id]) {
+            remove[id] = true;
+            this.setState({ remove: remove });
+            return;
+        }
+
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.list();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
 
     render() {
 
         let conselhos = this.state.conselhos.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.conselhos.length - 1) {
-                hr = React.createElement('hr', null);
-            }
 
             return React.createElement(
                 'div',
@@ -205,8 +270,27 @@ class Participacoes extends React.Component {
                         'div',
                         { className: 'box-insert-item box-insert-list' },
                         React.createElement('br', null),
-                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement(
+                            'div',
+                            { className: 'float-right', style: { marginRight: '40px' } },
+                            React.createElement(
+                                'a',
+                                { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id_conselho) },
+                                React.createElement('i', { className: 'fa fa-edit' })
+                            ),
+                            '\xA0',
+                            React.createElement(
+                                'a',
+                                { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id_conselho), style: { display: this.state.loadingRemove[item.id_conselho] ? 'none' : 'block' } },
+                                React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id_conselho] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                            ),
+                            React.createElement(
+                                'a',
+                                { onClick: () => this.cancelRemove(item.id_conselho), style: { display: this.state.remove[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none' } },
+                                React.createElement('i', { className: "fa fa-undo" })
+                            ),
+                            React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_conselho] ? '' : 'none' } })
+                        ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
@@ -410,34 +494,7 @@ class Participacoes extends React.Component {
                     )
                 ),
                 React.createElement('br', null)
-            )
-
-            /*<div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
-                <div className="box-insert-m">
-                    <div className="box-insert-item box-insert-list">
-                        <br/>
-                        <i className="far fa-trash-alt text-danger float-right" />
-                        <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
-                        <br/>
-                        <div>
-                            <h3>Nome da Conferência:</h3>
-                            <p>{item.dc_conferencia.tx_nome_conferencia}{/!*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*!/}</p>
-                        </div>
-                        <hr/>
-                        <div>
-                            <h3>Ano de realização da conferência:</h3>
-                            <p>{item.dt_ano_realizacao}{/!*<input  value="1900"/>*!/}</p>
-                        </div>
-                        <hr/>
-                        <div>
-                            <h3>Forma de participação na conferência:</h3>
-                            <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}{/!*<input  value="Membro de comissão organizadora nacional"/>*!/}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>*/
-
-            ;
+            );
         }.bind(this));
 
         return React.createElement(
@@ -503,7 +560,7 @@ class Participacoes extends React.Component {
                                         { className: 'box-insert-btn text-center' },
                                         React.createElement(
                                             'a',
-                                            { className: 'cursor', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block", marginTop: "50%" } },
+                                            { className: 'cursor', onClick: this.showHideFormConselho, style: { display: this.state.showFormConselho ? "none" : "block", marginTop: "50%" } },
                                             React.createElement('i', { className: 'fas fa-plus-circle fa-3x tx-pri' }),
                                             React.createElement('br', null),
                                             React.createElement(
@@ -518,13 +575,18 @@ class Participacoes extends React.Component {
                                         { className: 'col-md-12' },
                                         React.createElement(
                                             'div',
-                                            { style: { display: this.state.showForm ? 'block' : 'none' } },
+                                            { style: { display: this.state.showFormConselho ? 'block' : 'none' } },
                                             React.createElement(
                                                 'a',
-                                                { onClick: this.showHideForm },
+                                                { onClick: this.showHideFormConselho },
                                                 React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
                                             ),
-                                            React.createElement(FormParticipacaoConselho, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                                            React.createElement(FormParticipacaoConselho, {
+                                                actionConselho: this.state.actionFormConselho,
+                                                list: this.list,
+                                                id: this.state.editIdConselho,
+                                                showHideFormConselho: this.showHideFormConselho,
+                                                closeFormConselho: this.closeFormConselho })
                                         ),
                                         React.createElement(
                                             'div',

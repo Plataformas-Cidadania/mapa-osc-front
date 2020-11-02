@@ -3,29 +3,17 @@ class FormParticipacaoConferencia extends React.Component {
         super(props);
         this.state = {
             form: {
-                nome: '',
-                cep: '',
-                endereco: '',
-                numero: '',
-                complemento: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                obs: ''
+                tx_nome_conferencia: '',
+                dt_ano_realizacao: '',
+                tx_nome_forma_participacao_conferencia: ''
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                nome: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
-                tipo: true,
-                principal: true
+                tx_nome_conferencia: true,
+                dt_ano_realizacao: true,
+                tx_nome_forma_participacao_conferencia: true
             },
             showMsg: false,
             msg: '',
@@ -40,7 +28,10 @@ class FormParticipacaoConferencia extends React.Component {
                 2: 'Comercial'
             },
             action: '', //new | edit
-            editId: this.props.id
+            editId: this.props.id,
+
+            listConferencia: [],
+            listForma: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -48,6 +39,11 @@ class FormParticipacaoConferencia extends React.Component {
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+    }
+
+    componentDidMount() {
+        this.listConferencia();
+        this.listForma();
     }
 
     componentWillReceiveProps(props) {
@@ -145,7 +141,11 @@ class FormParticipacaoConferencia extends React.Component {
                 url: url,
                 //url: '/register-conferencia',
                 data: {
-                    form: this.state.form,
+                    tx_nome_conferencia: this.state.form.tx_nome_conferencia,
+                    dt_ano_realizacao: this.state.form.dt_ano_realizacao,
+                    tx_nome_forma_participacao_conferencia: this.state.form.tx_nome_forma_participacao_conferencia,
+                    bo_oficial: 0,
+                    id_osc: 455128,
                     id: id
                 },
                 cache: false,
@@ -205,7 +205,57 @@ class FormParticipacaoConferencia extends React.Component {
         return age;
     }
 
+    listConferencia() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/conferencia',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({ listConferencia: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    listForma() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/forma_participacao_conferencia',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({ listForma: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     render() {
+
+        let listConferencia = this.state.listConferencia.map(function (item, index) {
+            return React.createElement(
+                'option',
+                { value: item.cd_conferencia, key: 'listReuniao' + index },
+                item.tx_nome_conferencia
+            );
+        }.bind(this));
+
+        let listForma = this.state.listForma.map(function (item, index) {
+            return React.createElement(
+                'option',
+                { value: item.cd_forma_participacao_conferencia, key: 'listReuniao' + index },
+                item.tx_nome_forma_participacao_conferencia
+            );
+        }.bind(this));
 
         return React.createElement(
             'div',
@@ -219,62 +269,49 @@ class FormParticipacaoConferencia extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
-                            placeholder: 'Se houver, insira o link que' }),
                         React.createElement(
-                            'label',
-                            { htmlFor: 'tx_link_estatuto_osc' },
-                            'Nome da Confer\xEAncia'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info-off' },
+                            'select',
+                            { className: "form-control ",
+                                name: 'tx_nome_conselho', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_conferencia },
                             React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
-                            )
-                        )
+                                'option',
+                                { value: '0' },
+                                'Selecione'
+                            ),
+                            listConferencia
+                        ),
+                        React.createElement('br', null)
                     ),
                     React.createElement(
                         'div',
                         { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
-                            placeholder: 'Se houver, insira o link que' }),
                         React.createElement(
-                            'label',
-                            { htmlFor: 'tx_link_estatuto_osc' },
-                            'Ano de realiza\xE7\xE3o da confer\xEAncia'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info-off' },
+                            'select',
+                            { className: "form-control ",
+                                name: 'dt_ano_realizacao', onChange: this.handleInputChange, defaultValue: this.state.form.dt_ano_realizacao },
                             React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
+                                'option',
+                                { value: '2020-01-01' },
+                                '2020'
                             )
-                        )
+                        ),
+                        React.createElement('br', null)
                     ),
                     React.createElement(
                         'div',
                         { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange, value: this.state.form.tx_link_estatuto_osc,
-                            placeholder: 'Se houver, insira o link que' }),
                         React.createElement(
-                            'label',
-                            { htmlFor: 'tx_link_estatuto_osc' },
-                            'Forma de participa\xE7\xE3o na confer\xEAncia'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info-off' },
+                            'select',
+                            { className: "form-control ",
+                                name: 'tx_nome_conselho', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_conselho },
                             React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
-                            )
-                        )
+                                'option',
+                                { value: '0' },
+                                'Selecione'
+                            ),
+                            listForma
+                        ),
+                        React.createElement('br', null)
                     ),
                     React.createElement(
                         'button',
