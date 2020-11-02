@@ -17,31 +17,30 @@ class Participacoes extends React.Component{
             },
 
             showFormConselho: false,
-            actionFormConselho: '',
-
             showFormConferencia: false,
-            actionFormConferencia: '',
-
             showFormOutro: false,
+
+            actionFormConselho: '',
+            actionFormConferencia: '',
             actionFormOutro: '',
 
-            remove: [],
+
             loadingRemove: [],
+
             conferencia: {},
             conselho: {},
             outro: {},
+
             editIdConselho: 0,
             editIdConferencia: 0,
             editIdOutro: 0,
 
             removeConselho: [],
+            removeConferencia: [],
+            removeOutro: [],
         };
 
         this.list = this.list.bind(this);
-        this.remove = this.remove.bind(this);
-
-
-
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
         this.showHideFormConferencia = this.showHideFormConferencia.bind(this);
@@ -57,7 +56,10 @@ class Participacoes extends React.Component{
 
         this.removeConselho = this.removeConselho.bind(this);
         this.removeConferencia = this.removeConferencia.bind(this);
-        this.removeConferencia = this.removeConferencia.bind(this);
+        this.removeOutro = this.removeOutro.bind(this);
+
+        this.callModal = this.callModal.bind(this);
+
     }
 
     componentDidMount(){
@@ -67,15 +69,56 @@ class Participacoes extends React.Component{
 
     editConselho(id){
        // this.setState({actionForm: 'edit'});
-        this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id});
+        this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id}, function(){
+            this.callModal();
+        });
     }
     editConferencia(id){
        // this.setState({actionForm: 'edit'});
-        this.setState({actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id});
+        this.setState({actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id}, function(){
+            this.callModal();
+        });
     }
     editOutro(id){
        // this.setState({actionForm: 'edit'});
-        this.setState({actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id});
+        this.setState({actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id}, function(){
+            this.callModal();
+        });
+    }
+
+
+    callModal(){
+        let modal = this.state.modal;
+        this.setState({modal: modal}, function(){
+            $('#modalForm').modal('show');
+        });
+    }
+
+
+    modal(){
+
+
+        return (
+
+            <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modalTitle}</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <FormParticipacaoConselho action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     cancelRemove(id){
@@ -84,40 +127,6 @@ class Participacoes extends React.Component{
         this.setState({remove: remove});
     }
 
-    remove(id){
-        let remove = this.state.remove;
-
-        if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({loadingRemove: loadingRemove});
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/governanca/'+id,
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                //console.log(data);
-                this.list();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({loadingRemove: loadingRemove});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-            }.bind(this)
-        });
-
-    }
 
     showHideFormConselho(action){
         let showFormConselho = !this.state.showFormConselho;
@@ -277,6 +286,11 @@ class Participacoes extends React.Component{
 
     render(){
 
+        /////////////////////////////
+        let modal = this.modal();
+
+        ////////////////////////////
+
         let conselhos = this.state.conselhos.map(function(item, index){
 
 
@@ -287,11 +301,11 @@ class Participacoes extends React.Component{
                         <div className="box-insert-item box-insert-list">
                             <br/>
                             <div className="float-right" style={{marginRight: '40px'}}>
-                                <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id_conselho)}><i className="fa fa-edit"/></a>&nbsp;
+                                <a className="box-itens-btn-edit" onClick={() => this.callModal(item.id_conselho)}><i className="fa fa-edit"/></a>&nbsp;
                                 <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselho)} style={{display: this.state.loadingRemove[item.id_conselho] ? 'none' : 'block'}}>
                                     <i className={"fa "+( this.state.removeConselho[item.id_conselho] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                                 </a>
-                                <a onClick={() => this.cancelRemove(item.id_conselho)} style={{display: this.state.remove[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none'}}>
+                                <a onClick={() => this.cancelRemove(item.id_conselho)} style={{display: this.state.removeConselho[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none'}}>
                                     <i className={"fa fa-undo"}/>
                                 </a>
                                 <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_conselho] ? '' : 'none'}}/>
@@ -331,6 +345,7 @@ class Participacoes extends React.Component{
                         </div>
                     </div>
                     <br/>
+                    {modal}
                 </div>
 
             );
@@ -355,17 +370,17 @@ class Participacoes extends React.Component{
                             <br/>
                             <div>
                                 <h3>Nome da Conferência:</h3>
-                                <p>{item.dc_conferencia.tx_nome_conferencia}{/*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*/}</p>
+                                <p>{item.dc_conferencia.tx_nome_conferencia}</p>
                             </div>
                             <hr/>
                             <div>
                                 <h3>Ano de realização da conferência:</h3>
-                                <p>{item.dt_ano_realizacao}{/*<input  value="1900"/>*/}</p>
+                                <p>{item.dt_ano_realizacao}</p>
                             </div>
                             <hr/>
                             <div>
                                 <h3>Forma de participação na conferência:</h3>
-                                <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}{/*<input  value="Membro de comissão organizadora nacional"/>*/}</p>
+                                <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}</p>
                             </div>
                         </div>
                     </div>
@@ -393,7 +408,7 @@ class Participacoes extends React.Component{
                             <br/>
                             <div>
                                 <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
-                                <p>{item.tx_nome_participacao_social_outra}{/*<input  value="Conferência Brasileira de Arranjos Produtivos Locais"/>*/}</p>
+                                <p>{item.tx_nome_participacao_social_outra}</p>
                             </div>
                         </div>
                     </div>

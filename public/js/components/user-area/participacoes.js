@@ -17,28 +17,29 @@ class Participacoes extends React.Component {
             },
 
             showFormConselho: false,
-            actionFormConselho: '',
-
             showFormConferencia: false,
-            actionFormConferencia: '',
-
             showFormOutro: false,
+
+            actionFormConselho: '',
+            actionFormConferencia: '',
             actionFormOutro: '',
 
-            remove: [],
             loadingRemove: [],
+
             conferencia: {},
             conselho: {},
             outro: {},
+
             editIdConselho: 0,
             editIdConferencia: 0,
             editIdOutro: 0,
 
-            removeConselho: []
+            removeConselho: [],
+            removeConferencia: [],
+            removeOutro: []
         };
 
         this.list = this.list.bind(this);
-        this.remove = this.remove.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
         this.showHideFormConferencia = this.showHideFormConferencia.bind(this);
@@ -54,7 +55,9 @@ class Participacoes extends React.Component {
 
         this.removeConselho = this.removeConselho.bind(this);
         this.removeConferencia = this.removeConferencia.bind(this);
-        this.removeConferencia = this.removeConferencia.bind(this);
+        this.removeOutro = this.removeOutro.bind(this);
+
+        this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount() {
@@ -63,53 +66,77 @@ class Participacoes extends React.Component {
 
     editConselho(id) {
         // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id });
+        this.setState({ actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id }, function () {
+            this.callModal();
+        });
     }
     editConferencia(id) {
         // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id });
+        this.setState({ actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id }, function () {
+            this.callModal();
+        });
     }
     editOutro(id) {
         // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id });
+        this.setState({ actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id }, function () {
+            this.callModal();
+        });
+    }
+
+    callModal() {
+        let modal = this.state.modal;
+        this.setState({ modal: modal }, function () {
+            $('#modalForm').modal('show');
+        });
+    }
+
+    modal() {
+
+        return React.createElement(
+            'div',
+            { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.modalTitle
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        React.createElement(FormParticipacaoConselho, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                    )
+                )
+            )
+        );
     }
 
     cancelRemove(id) {
         let remove = this.state.remove;
         remove[id] = false;
         this.setState({ remove: remove });
-    }
-
-    remove(id) {
-        let remove = this.state.remove;
-
-        if (!remove[id]) {
-            remove[id] = true;
-            this.setState({ remove: remove });
-            return;
-        }
-
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({ loadingRemove: loadingRemove });
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/governanca/' + id,
-            data: {},
-            cache: false,
-            success: function (data) {
-                //console.log(data);
-                this.list();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({ loadingRemove: loadingRemove });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-            }.bind(this)
-        });
     }
 
     showHideFormConselho(action) {
@@ -258,6 +285,11 @@ class Participacoes extends React.Component {
 
     render() {
 
+        /////////////////////////////
+        let modal = this.modal();
+
+        ////////////////////////////
+
         let conselhos = this.state.conselhos.map(function (item, index) {
 
             return React.createElement(
@@ -275,7 +307,7 @@ class Participacoes extends React.Component {
                             { className: 'float-right', style: { marginRight: '40px' } },
                             React.createElement(
                                 'a',
-                                { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id_conselho) },
+                                { className: 'box-itens-btn-edit', onClick: () => this.callModal(item.id_conselho) },
                                 React.createElement('i', { className: 'fa fa-edit' })
                             ),
                             '\xA0',
@@ -286,7 +318,7 @@ class Participacoes extends React.Component {
                             ),
                             React.createElement(
                                 'a',
-                                { onClick: () => this.cancelRemove(item.id_conselho), style: { display: this.state.remove[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none' } },
+                                { onClick: () => this.cancelRemove(item.id_conselho), style: { display: this.state.removeConselho[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none' } },
                                 React.createElement('i', { className: "fa fa-undo" })
                             ),
                             React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_conselho] ? '' : 'none' } })
@@ -383,7 +415,8 @@ class Participacoes extends React.Component {
                         )
                     )
                 ),
-                React.createElement('br', null)
+                React.createElement('br', null),
+                modal
             );
         }.bind(this));
 
