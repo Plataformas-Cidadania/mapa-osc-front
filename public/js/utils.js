@@ -156,3 +156,8 @@ function maskCnpj(cnpj) {
 function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
 }
+
+function getOptions(ammount = 50) {
+    return Array.from({ length: ammount })
+        .map((_, index) => new Date().getFullYear() - index);
+}

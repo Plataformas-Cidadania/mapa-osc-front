@@ -3,17 +3,17 @@ class FormParticipacaoConferencia extends React.Component{
         super(props);
         this.state = {
             form: {
-                tx_nome_conferencia: '',
+                cd_conferencia: '',
                 dt_ano_realizacao: '',
-                tx_nome_forma_participacao_conferencia: '',
+                cd_forma_participacao_conferencia: '',
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                tx_nome_conferencia: true,
+                cd_conferencia: true,
                 dt_ano_realizacao: true,
-                tx_nome_forma_participacao_conferencia: true,
+                cd_forma_participacao_conferencia: true,
             },
             showMsg: false,
             msg: '',
@@ -104,7 +104,7 @@ class FormParticipacaoConferencia extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
+        console.log('---', this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -132,60 +132,40 @@ class FormParticipacaoConferencia extends React.Component{
             return;
         }
 
-        let url = '/register-conferencia';
+        let url = 'osc/ps_conferencia';
         let id = null;
+        let method = 'POST';
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-conferencia';
+            url = 'osc/ps_conferencia/'+id;
+            method = 'PUT';
         }
 
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:'POST',
-                url: url,
-                //url: '/register-conferencia',
+                method:method,
+                url: getBaseUrl2 + url,
                 data:{
-                    tx_nome_conferencia: this.state.form.tx_nome_conferencia,
+                    cd_conferencia: this.state.form.cd_conferencia,
                     dt_ano_realizacao: this.state.form.dt_ano_realizacao,
-                    tx_nome_forma_participacao_conferencia: this.state.form.tx_nome_forma_participacao_conferencia,
+                    cd_forma_participacao_conferencia: this.state.form.cd_forma_participacao_conferencia,
+                    ft_conferencia: 'Representante de OSC',
+                    ft_ano_realizacao: 'Representante de OSC',
+                    ft_forma_participacao_conferencia: 'Representante de OSC',
                     bo_oficial: 0,
-                    id_osc: 455128,
+                    id_osc: 611720,
                     id: id,
                 },
                 cache: false,
                 success: function(data) {
                     console.log('reg', data);
 
-                    if(data.max){
-                        let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, conferencias: data.conferencias});
-                        return;
-                    }
-
-                    /*let button = true;
-                    if(data.conferencias.length >= data.maxConferencias){
-                        button = false;
-                    }*/
-
-                    let button = true;
-                    if(this.state.action==='new'){
-                        if(data.conferencias.length >= data.maxConferencias){
-                            button = false;
-                        }
-                    }
-
-                    let btnContinue = false;
-                    /*if(data.conferencias.length > 0){
-                        btnContinue = true;
-                    }*/
-
                     this.props.list();
-
                     this.cleanForm();
-                    this.props.closeForm();
+                    this.props.showHideFormConferencia();
 
-                    this.setState({conferencias: data.conferencias, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({conferencias: data.conferencias, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -256,6 +236,14 @@ class FormParticipacaoConferencia extends React.Component{
 
     render(){
 
+
+
+        let anosLista = getOptions().map(function(item, index){
+            return (
+                <option value={item+'-01-01'} key={'anosLista'+index}>{item}</option>
+            );
+        }.bind(this));
+
         let listConferencia = this.state.listConferencia.map(function(item, index){
             return (
                 <option value={item.cd_conferencia} key={'listReuniao'+index}>{item.tx_nome_conferencia}</option>
@@ -274,46 +262,29 @@ class FormParticipacaoConferencia extends React.Component{
                 <div className="col-md-12">
                     <form>
 
-
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="tx_nome_conselho" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_conferencia}>
+                                     name="cd_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listConferencia}
                             </select><br/>
-                            {/*<input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
-                                   placeholder="Se houver, insira o link que" />
-                            <label htmlFor="tx_link_estatuto_osc">Nome da Conferência</label>
-                            <div className="label-box-info-off">
-                                <p>&nbsp;</p>
-                            </div>*/}
                         </div>
                         <div className="label-float">
 
                             <select  className={"form-control "}
                                      name="dt_ano_realizacao" onChange={this.handleInputChange} defaultValue={this.state.form.dt_ano_realizacao}>
                                 <option value="2020-01-01">2020</option>
+                                {anosLista}
                             </select><br/>
-                            {/*<input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
-                                   placeholder="Se houver, insira o link que" />
-                            <label htmlFor="tx_link_estatuto_osc">Ano de realização da conferência</label>
-                            <div className="label-box-info-off">
-                                <p>&nbsp;</p>
-                            </div>*/}
                         </div>
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="tx_nome_conselho" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_conselho}>
+                                     name="cd_forma_participacao_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_forma_participacao_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listForma}
                             </select><br/>
-                            {/*<input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
-                                   placeholder="Se houver, insira o link que" />
-                            <label htmlFor="tx_link_estatuto_osc">Forma de participação na conferência</label>
-                            <div className="label-box-info-off">
-                                <p>&nbsp;</p>
-                            </div>*/}
                         </div>
+
 
                         <button className="btn btn-primary" onClick={this.register}>
                             Cadastrar

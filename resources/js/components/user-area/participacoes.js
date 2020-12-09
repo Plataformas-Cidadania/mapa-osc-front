@@ -60,6 +60,10 @@ class Participacoes extends React.Component{
 
         this.callModal = this.callModal.bind(this);
 
+        this.callModalExcluir = this.callModalExcluir.bind(this);
+
+
+
     }
 
     componentDidMount(){
@@ -86,18 +90,14 @@ class Participacoes extends React.Component{
         });
     }
 
-
-    callModal(){
+    callModal(id){
+        console.log(id)
         let modal = this.state.modal;
         this.setState({modal: modal}, function(){
             $('#modalForm').modal('show');
         });
     }
-
-
     modal(){
-
-
         return (
 
             <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -284,6 +284,39 @@ class Participacoes extends React.Component{
 
     }
 
+
+    callModalExcluir(id){
+        console.log(id)
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({modalExcluir: modalExcluir}, function(){
+            $('#modalFormExcluir').modal('show');
+            console.log('modalExcluir: ')
+        });
+    }
+    modalExcluir(){
+        return (
+            <div id="modalFormExcluir" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" ><strong>aa</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            bbb
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+
     render(){
 
         /////////////////////////////
@@ -365,8 +398,13 @@ class Participacoes extends React.Component{
                     <div className="box-insert-m">
                         <div className="box-insert-item box-insert-list">
                             <br/>
-                            <i className="far fa-trash-alt text-danger float-right" />
-                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <a onClick={() => this.callModalExcluir(item.id_conferencia)} style={{cursor: 'pointer'}}>
+                                <i className="far fa-trash-alt text-danger float-right"/>
+                            </a>
+                            <a onClick={() => this.callModal(item.id_conferencia)} style={{cursor: 'pointer'}}>
+                                <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
+                            </a>
+
                             <br/>
                             <div>
                                 <h3>Nome da Conferência:</h3>
@@ -404,7 +442,7 @@ class Participacoes extends React.Component{
                         <div className="box-insert-item box-insert-list">
                             <br/>
                             <i className="far fa-trash-alt text-danger float-right" />
-                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}  onClick={() => this.callModal(item.id_outra)}/>
                             <br/>
                             <div>
                                 <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
@@ -504,7 +542,11 @@ class Participacoes extends React.Component{
                                         <div className="col-md-12">
                                             <div style={{display: this.state.showFormConferencia ? 'block' : 'none'}}>
                                                 <a onClick={this.showHideFormConferencia}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
-                                                <FormParticipacaoConferencia action={this.state.actionFormConferencia} list={this.list} id={this.state.editId} showHideFormConferencia={this.showHideFormConferencia} closeFormConferencia={this.closeFormConferencia}/>
+                                                <FormParticipacaoConferencia
+                                                    action={this.state.actionFormConferencia}
+                                                    list={this.list} id={this.state.editId}
+                                                    showHideFormConferencia={this.showHideFormConferencia}
+                                                    closeFormConferencia={this.closeFormConferencia}/>
                                             </div>
                                             <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                                                 <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
@@ -545,7 +587,11 @@ class Participacoes extends React.Component{
                                         <div className="col-md-12">
                                             <div style={{display: this.state.showFormOutro ? 'block' : 'none'}}>
                                                 <a onClick={this.showHideFormOutro}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
-                                                <FormParticipacaoOutro action={this.state.actionFormOutro} list={this.list} id={this.state.editId} showHideFormOutro={this.showHideFormOutro} closeFormOutro={this.closeFormOutro}/>
+                                                <FormParticipacaoOutro
+                                                    action={this.state.actionFormOutro}
+                                                    list={this.list} id={this.state.editId}
+                                                    showHideFormOutro={this.showHideFormOutro}
+                                                    closeFormOutro={this.closeFormOutro}/>
                                             </div>
                                             <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                                                 <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
@@ -557,6 +603,7 @@ class Participacoes extends React.Component{
                         </div>
                     </div>
                 </div>
+
 
             </div>
         );

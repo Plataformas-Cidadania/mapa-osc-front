@@ -58,6 +58,8 @@ class Participacoes extends React.Component {
         this.removeOutro = this.removeOutro.bind(this);
 
         this.callModal = this.callModal.bind(this);
+
+        this.callModalExcluir = this.callModalExcluir.bind(this);
     }
 
     componentDidMount() {
@@ -83,15 +85,14 @@ class Participacoes extends React.Component {
         });
     }
 
-    callModal() {
+    callModal(id) {
+        console.log(id);
         let modal = this.state.modal;
         this.setState({ modal: modal }, function () {
             $('#modalForm').modal('show');
         });
     }
-
     modal() {
-
         return React.createElement(
             'div',
             { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
@@ -283,6 +284,56 @@ class Participacoes extends React.Component {
         });
     }
 
+    callModalExcluir(id) {
+        console.log(id);
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({ modalExcluir: modalExcluir }, function () {
+            $('#modalFormExcluir').modal('show');
+            console.log('modalExcluir: ');
+        });
+    }
+    modalExcluir() {
+        return React.createElement(
+            'div',
+            { id: 'modalFormExcluir', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'aa'
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        'bbb'
+                    )
+                )
+            )
+        );
+    }
+
     render() {
 
         /////////////////////////////
@@ -437,8 +488,16 @@ class Participacoes extends React.Component {
                         'div',
                         { className: 'box-insert-item box-insert-list' },
                         React.createElement('br', null),
-                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement(
+                            'a',
+                            { onClick: () => this.callModalExcluir(item.id_conferencia), style: { cursor: 'pointer' } },
+                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                        ),
+                        React.createElement(
+                            'a',
+                            { onClick: () => this.callModal(item.id_conferencia), style: { cursor: 'pointer' } },
+                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
+                        ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
@@ -508,7 +567,7 @@ class Participacoes extends React.Component {
                         { className: 'box-insert-item box-insert-list' },
                         React.createElement('br', null),
                         React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } }),
+                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' }, onClick: () => this.callModal(item.id_outra) }),
                         React.createElement('br', null),
                         React.createElement(
                             'div',
@@ -700,7 +759,11 @@ class Participacoes extends React.Component {
                                                 { onClick: this.showHideFormConferencia },
                                                 React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
                                             ),
-                                            React.createElement(FormParticipacaoConferencia, { action: this.state.actionFormConferencia, list: this.list, id: this.state.editId, showHideFormConferencia: this.showHideFormConferencia, closeFormConferencia: this.closeFormConferencia })
+                                            React.createElement(FormParticipacaoConferencia, {
+                                                action: this.state.actionFormConferencia,
+                                                list: this.list, id: this.state.editId,
+                                                showHideFormConferencia: this.showHideFormConferencia,
+                                                closeFormConferencia: this.closeFormConferencia })
                                         ),
                                         React.createElement(
                                             'div',
@@ -781,7 +844,11 @@ class Participacoes extends React.Component {
                                                 { onClick: this.showHideFormOutro },
                                                 React.createElement('i', { className: 'far fa-times-circle cursor text-warning', style: { margin: "-25px 0 0 0", float: "right" } })
                                             ),
-                                            React.createElement(FormParticipacaoOutro, { action: this.state.actionFormOutro, list: this.list, id: this.state.editId, showHideFormOutro: this.showHideFormOutro, closeFormOutro: this.closeFormOutro })
+                                            React.createElement(FormParticipacaoOutro, {
+                                                action: this.state.actionFormOutro,
+                                                list: this.list, id: this.state.editId,
+                                                showHideFormOutro: this.showHideFormOutro,
+                                                closeFormOutro: this.closeFormOutro })
                                         ),
                                         React.createElement(
                                             'div',

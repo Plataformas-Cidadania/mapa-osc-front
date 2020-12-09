@@ -124,7 +124,6 @@ class FormParticipacaoConselho extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -179,22 +178,12 @@ class FormParticipacaoConselho extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-
-                    if(data.max){
-                        let msg = data.msg;
-                        this.setState({loading: false, button: true, btnContinue:true, participacoes: data.participacoes});
-                        return;
-                    }
-
-                    let button = true;
-                    let btnContinue = false;
-
                     this.props.list();
 
                     this.cleanFormConselho();
-                    this.props.closeFormConselho();
+                    this.props.showHideFormConselho();
 
-                    this.setState({participacoes: data.participacoes, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({participacoes: data.participacoes, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -202,7 +191,6 @@ class FormParticipacaoConselho extends React.Component{
                 }.bind(this)
             });
         });
-
 
     }
 

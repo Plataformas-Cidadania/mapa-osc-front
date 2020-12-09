@@ -3,42 +3,17 @@ class FormParticipacaoOutro extends React.Component{
         super(props);
         this.state = {
             form: {
-                nome: '',
-                cep: '',
-                endereco: '',
-                numero: '',
-                complemento: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                obs: '',
+                tx_nome_participacao_social_outra: '',
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                nome: true,
-                cep: true,
-                endereco: true,
-                numero: true,
-                bairro: true,
-                cidade: true,
-                estado: true,
-                tipo: true,
-                principal: true,
+                tx_nome_participacao_social_outra: true,
             },
             showMsg: false,
             msg: '',
             participacoes: [],
-            maxAlert: false,
-            tipo:{
-                1: 'Residencial',
-                2: 'Comercial',
-            },
-            principal:{
-                1: 'Residencial',
-                2: 'Comercial',
-            },
             action: '',//new | edit
             editId: this.props.id,
         };
@@ -52,7 +27,6 @@ class FormParticipacaoOutro extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log(props);
         let lastEditId = this.state.editId;
         if(this.state.action != props.action || this.state.editId != props.id){
             this.setState({action: props.action, editId: props.id}, function(){
@@ -135,56 +109,36 @@ class FormParticipacaoOutro extends React.Component{
             return;
         }
 
-        let url = '/register-participacao';
+        let url = 'osc/ps_outra';
         let id = null;
+        let method = 'POST';
         if(this.state.action==='edit'){
             id = this.state.editId;
-            url = '/update-user-participacao';
+            url = 'osc/ps_outra/'+id;
+            method = 'PUT';
         }
 
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:'POST',
-                url: url,
-                //url: '/register-participacao',
+                method:method,
+                url: getBaseUrl2 + url,
                 data:{
-                    form: this.state.form,
+                    tx_nome_participacao_social_outra: this.state.form.tx_nome_participacao_social_outra,
+                    ft_participacao_social_outra: 'Representante de OSC',
+                    bo_oficial: 0,
+                    id_osc: 611720,
                     id: id,
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
-                    if(data.max){
-                        let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, participacoes: data.participacoes});
-                        return;
-                    }
-
-                    /*let button = true;
-                    if(data.participacoes.length >= data.maxParticipacoes){
-                        button = false;
-                    }*/
-
-                    let button = true;
-                    if(this.state.action==='new'){
-                        if(data.participacoes.length >= data.maxParticipacoes){
-                            button = false;
-                        }
-                    }
-
-                    let btnContinue = false;
-                    /*if(data.participacoes.length > 0){
-                        btnContinue = true;
-                    }*/
 
                     this.props.list();
 
                     this.cleanForm();
-                    this.props.closeForm();
+                    this.props.showHideFormOutro();
 
-                    this.setState({participacoes: data.participacoes, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({participacoes: data.participacoes, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -222,9 +176,9 @@ class FormParticipacaoOutro extends React.Component{
 
 
                         <div className="label-float">
-                            <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
+                            <input className={"form-control form-g "} type="text" name="tx_nome_participacao_social_outra" onChange={this.handleInputChange} value={this.state.form.tx_nome_participacao_social_outra}
                                    placeholder="Se houver, insira o link que" />
-                            <label htmlFor="tx_link_estatuto_osc">Nome da Conferência</label>
+                            <label htmlFor="tx_nome_participacao_social_outra-4273">Nome da Conferência</label>
                             <div className="label-box-info-off">
                                 <p>&nbsp;</p>
                             </div>
