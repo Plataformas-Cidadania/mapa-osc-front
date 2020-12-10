@@ -35,8 +35,12 @@ class Participacoes extends React.Component {
             editIdOutro: 0,
 
             removeConselho: [],
-            removeConferencia: [],
-            removeOutro: []
+            removeItem: [],
+            removeOutro: [],
+
+            removeItemConselho: null,
+            removeItemTx: '',
+            removeTipo: ''
         };
 
         this.list = this.list.bind(this);
@@ -53,9 +57,9 @@ class Participacoes extends React.Component {
         this.showHideConferencia = this.showHideConferencia.bind(this);
         this.showHideOutro = this.showHideOutro.bind(this);
 
-        this.removeConselho = this.removeConselho.bind(this);
-        this.removeConferencia = this.removeConferencia.bind(this);
-        this.removeOutro = this.removeOutro.bind(this);
+        //this.removeConselho = this.removeConselho.bind(this);
+        this.removeItem = this.removeItem.bind(this);
+        //this.removeOutro = this.removeOutro.bind(this);
 
         this.callModal = this.callModal.bind(this);
 
@@ -215,22 +219,39 @@ class Participacoes extends React.Component {
         });
     }
 
-    removeConselho(id) {
+    /*removeConselho(id){
         let remove = this.state.removeConselho;
-
-        if (!remove[id]) {
+         if(!remove[id]){
             remove[id] = true;
-            this.setState({ remove: remove });
+            this.setState({remove: remove});
             return;
         }
+         $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/ps_conselho/'+id,
+            data: {
+             },
+            cache: false,
+            success: function(data){
+                this.list();
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+     }*/
+
+    removeItem(id, tipo) {
+        let remove = this.state.removeConselho;
 
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
+            url: getBaseUrl2 + 'osc/ps_' + tipo + '/' + id,
             data: {},
             cache: false,
             success: function (data) {
                 this.list();
+                $('#modalFormExcluir').modal('hide');
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -238,64 +259,43 @@ class Participacoes extends React.Component {
         });
     }
 
-    removeConferencia(id) {
+    /*removeOutro(id){
         let remove = this.state.removeConselho;
-
-        if (!remove[id]) {
+         if(!remove[id]){
             remove[id] = true;
-            this.setState({ remove: remove });
+            this.setState({remove: remove});
             return;
         }
-
-        $.ajax({
+         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
-            data: {},
+            url: getBaseUrl2 + 'osc/ps_conselho/'+id,
+            data: {
+             },
             cache: false,
-            success: function (data) {
+            success: function(data){
                 this.list();
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
             }.bind(this)
         });
-    }
+     }*/
 
-    removeOutro(id) {
-        let remove = this.state.removeConselho;
-
-        if (!remove[id]) {
-            remove[id] = true;
-            this.setState({ remove: remove });
-            return;
-        }
-
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/' + id,
-            data: {},
-            cache: false,
-            success: function (data) {
-                this.list();
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-    }
-
-    callModalExcluir(id) {
-        console.log(id);
+    callModalExcluir(id, tx_nome_conferencia, tipo) {
         let modalExcluir = this.state.modalExcluir;
-        this.setState({ modalExcluir: modalExcluir }, function () {
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItemConferencia: id,
+            removeItemTx: tx_nome_conferencia,
+            removeTipo: tipo
+        }, function () {
             $('#modalFormExcluir').modal('show');
-            console.log('modalExcluir: ');
         });
     }
     modalExcluir() {
         return React.createElement(
             'div',
-            { id: 'modalFormExcluir', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            { id: 'modalFormExcluir', className: 'modal fade bd-example-modal-sm', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
             React.createElement(
                 'div',
                 { className: 'modal-dialog modal-lg' },
@@ -311,7 +311,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                'aa'
+                                'Excluir permanentemente'
                             )
                         ),
                         React.createElement(
@@ -327,7 +327,23 @@ class Participacoes extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'modal-body' },
-                        'bbb'
+                        'Tem certeza que quer excluir "',
+                        this.state.removeItemTx,
+                        '".'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                            'Cancelar'
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-danger', onClick: () => this.removeItem(this.state.removeItemConferencia, this.state.removeTipo) },
+                            'Excluir'
+                        )
                     )
                 )
             )
@@ -338,6 +354,7 @@ class Participacoes extends React.Component {
 
         /////////////////////////////
         let modal = this.modal();
+        let modalExcluir = this.modalExcluir();
 
         ////////////////////////////
 
@@ -355,24 +372,17 @@ class Participacoes extends React.Component {
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'float-right', style: { marginRight: '40px' } },
+                            { className: 'float-right' },
                             React.createElement(
                                 'a',
-                                { className: 'box-itens-btn-edit', onClick: () => this.callModal(item.id_conselho) },
-                                React.createElement('i', { className: 'fa fa-edit' })
-                            ),
-                            '\xA0',
-                            React.createElement(
-                                'a',
-                                { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id_conselho), style: { display: this.state.loadingRemove[item.id_conselho] ? 'none' : 'block' } },
-                                React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id_conselho] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
+                                { onClick: () => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho'), style: { cursor: 'pointer' } },
+                                React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                             ),
                             React.createElement(
                                 'a',
-                                { onClick: () => this.cancelRemove(item.id_conselho), style: { display: this.state.removeConselho[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none' } },
-                                React.createElement('i', { className: "fa fa-undo" })
-                            ),
-                            React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_conselho] ? '' : 'none' } })
+                                { onClick: () => this.callModal(item.id_conselho), style: { cursor: 'pointer' } },
+                                React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
+                            )
                         ),
                         React.createElement('br', null),
                         React.createElement(
@@ -490,7 +500,7 @@ class Participacoes extends React.Component {
                         React.createElement('br', null),
                         React.createElement(
                             'a',
-                            { onClick: () => this.callModalExcluir(item.id_conferencia), style: { cursor: 'pointer' } },
+                            { onClick: () => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
                             React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                         ),
                         React.createElement(
@@ -545,16 +555,12 @@ class Participacoes extends React.Component {
                         )
                     )
                 ),
-                React.createElement('br', null)
+                React.createElement('br', null),
+                modalExcluir
             );
         }.bind(this));
 
         let outros = this.state.outros.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.outros.length - 1) {
-                hr = React.createElement('hr', null);
-            }
 
             return React.createElement(
                 'div',
@@ -566,8 +572,12 @@ class Participacoes extends React.Component {
                         'div',
                         { className: 'box-insert-item box-insert-list' },
                         React.createElement('br', null),
-                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' }, onClick: () => this.callModal(item.id_outra) }),
+                        React.createElement(
+                            'a',
+                            { onClick: () => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
+                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                        ),
+                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' }, onClick: () => this.callModal(item.id_participacao_social_outra) }),
                         React.createElement('br', null),
                         React.createElement(
                             'div',

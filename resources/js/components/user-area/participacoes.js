@@ -36,8 +36,13 @@ class Participacoes extends React.Component{
             editIdOutro: 0,
 
             removeConselho: [],
-            removeConferencia: [],
+            removeItem: [],
             removeOutro: [],
+
+
+            removeItemConselho: null,
+            removeItemTx: '',
+            removeTipo: '',
         };
 
         this.list = this.list.bind(this);
@@ -54,9 +59,9 @@ class Participacoes extends React.Component{
         this.showHideConferencia = this.showHideConferencia.bind(this);
         this.showHideOutro = this.showHideOutro.bind(this);
 
-        this.removeConselho = this.removeConselho.bind(this);
-        this.removeConferencia = this.removeConferencia.bind(this);
-        this.removeOutro = this.removeOutro.bind(this);
+        //this.removeConselho = this.removeConselho.bind(this);
+        this.removeItem = this.removeItem.bind(this);
+        //this.removeOutro = this.removeOutro.bind(this);
 
         this.callModal = this.callModal.bind(this);
 
@@ -206,7 +211,7 @@ class Participacoes extends React.Component{
     }
 
 
-    removeConselho(id){
+    /*removeConselho(id){
         let remove = this.state.removeConselho;
 
         if(!remove[id]){
@@ -230,9 +235,30 @@ class Participacoes extends React.Component{
             }.bind(this)
         });
 
+    }*/
+
+    removeItem(id, tipo){
+        let remove = this.state.removeConselho;
+
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/ps_'+tipo+'/'+id,
+            data: {
+
+            },
+            cache: false,
+            success: function(data){
+                this.list();
+                $('#modalFormExcluir').modal('hide');
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+
     }
 
-    removeConferencia(id){
+    /*removeOutro(id){
         let remove = this.state.removeConselho;
 
         if(!remove[id]){
@@ -256,60 +282,39 @@ class Participacoes extends React.Component{
             }.bind(this)
         });
 
-    }
-
-    removeOutro(id){
-        let remove = this.state.removeConselho;
-
-        if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/'+id,
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                this.list();
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-
-    }
+    }*/
 
 
-    callModalExcluir(id){
-        console.log(id)
+    callModalExcluir(id, tx_nome_conferencia, tipo){
         let modalExcluir = this.state.modalExcluir;
-        this.setState({modalExcluir: modalExcluir}, function(){
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItemConferencia:id,
+            removeItemTx:tx_nome_conferencia,
+            removeTipo:tipo
+        }, function(){
             $('#modalFormExcluir').modal('show');
-            console.log('modalExcluir: ')
         });
     }
     modalExcluir(){
         return (
-            <div id="modalFormExcluir" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div id="modalFormExcluir" className="modal fade bd-example-modal-sm" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
 
                         <div className="modal-header">
-                            <h4 className="modal-title" ><strong>aa</strong></h4>
+                            <h4 className="modal-title" ><strong>Excluir permanentemente</strong></h4>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            bbb
+                            Tem certeza que quer excluir "{this.state.removeItemTx}".
                         </div>
-
-
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.removeItem(this.state.removeItemConferencia, this.state.removeTipo)}>Excluir</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -321,6 +326,7 @@ class Participacoes extends React.Component{
 
         /////////////////////////////
         let modal = this.modal();
+        let modalExcluir = this.modalExcluir();
 
         ////////////////////////////
 
@@ -333,18 +339,28 @@ class Participacoes extends React.Component{
                     <div className="box-insert-g text-left">
                         <div className="box-insert-item box-insert-list">
                             <br/>
-                            <div className="float-right" style={{marginRight: '40px'}}>
-                                <a className="box-itens-btn-edit" onClick={() => this.callModal(item.id_conselho)}><i className="fa fa-edit"/></a>&nbsp;
+                            <div className="float-right">
+
+
+                                <a onClick={() => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho')} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-trash-alt text-danger float-right"/>
+                                </a>
+
+                                <a onClick={() => this.callModal(item.id_conselho)} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
+                                </a>
+
+
+                                {/*<a className="box-itens-btn-edit" onClick={() => this.callModal(item.id_conselho)}><i className="fa fa-edit"/></a>&nbsp;
+
                                 <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselho)} style={{display: this.state.loadingRemove[item.id_conselho] ? 'none' : 'block'}}>
                                     <i className={"fa "+( this.state.removeConselho[item.id_conselho] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                                 </a>
                                 <a onClick={() => this.cancelRemove(item.id_conselho)} style={{display: this.state.removeConselho[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none'}}>
                                     <i className={"fa fa-undo"}/>
                                 </a>
-                                <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_conselho] ? '' : 'none'}}/>
+                                <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_conselho] ? '' : 'none'}}/>*/}
                             </div>
-                           {/* <i className="far fa-trash-alt text-danger float-right" />
-                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}/>*/}
                             <br/>
                             <div>
                                 <h3>Nome do Conselho:</h3>
@@ -358,22 +374,22 @@ class Participacoes extends React.Component{
                             </div>
                             <div>
                                 <h3>Nome de representante:</h3>
-                                <p>*For*{/*<input  value="Fernando Lima de Souza "/>*/}</p>
+                                <p>*For*</p>
                                 <hr/>
                             </div>
                             <div>
                                 <h3>Periodicidade da Reunião:</h3>
-                                <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}{/*<input  value="Mensal"/>*/}</p>
+                                <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}</p>
                                 <hr/>
                             </div>
                             <div>
                                 <h3>Data de início de vigência:</h3>
-                                <p>{item.dt_data_inicio_conselho}{/*<input  value="01/12/2019"/>*/}</p>
+                                <p>{item.dt_data_inicio_conselho}</p>
                                 <hr/>
                             </div>
                             <div>
                                 <h3>Data de fim de vigência:</h3>
-                                <p>{item.dt_data_fim_conselho}{/*<input  value="01/12/2019"/>*/}</p>
+                                <p>{item.dt_data_fim_conselho}</p>
                             </div>
                         </div>
                     </div>
@@ -398,7 +414,7 @@ class Participacoes extends React.Component{
                     <div className="box-insert-m">
                         <div className="box-insert-item box-insert-list">
                             <br/>
-                            <a onClick={() => this.callModalExcluir(item.id_conferencia)} style={{cursor: 'pointer'}}>
+                            <a onClick={() => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
                                 <i className="far fa-trash-alt text-danger float-right"/>
                             </a>
                             <a onClick={() => this.callModal(item.id_conferencia)} style={{cursor: 'pointer'}}>
@@ -423,6 +439,7 @@ class Participacoes extends React.Component{
                         </div>
                     </div>
                     <br/>
+                    {modalExcluir}
                 </div>
 
             );
@@ -430,19 +447,16 @@ class Participacoes extends React.Component{
 
         let outros = this.state.outros.map(function(item, index){
 
-            let hr = null;
-            if(index < this.state.outros.length-1){
-                hr = <hr/>;
-            }
-
             return (
 
                 <div className="col-md-6" style={{border: '0'}} key={"outros_"+index}>
                     <div className="box-insert-p">
                         <div className="box-insert-item box-insert-list">
                             <br/>
-                            <i className="far fa-trash-alt text-danger float-right" />
-                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}  onClick={() => this.callModal(item.id_outra)}/>
+                            <a onClick={() => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
+                                <i className="far fa-trash-alt text-danger float-right"/>
+                            </a>
+                            <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}}  onClick={() => this.callModal(item.id_participacao_social_outra)}/>
                             <br/>
                             <div>
                                 <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
