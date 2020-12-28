@@ -1,4 +1,4 @@
-class FormParticipacaoOutro extends React.Component{
+class FormEditParticipacaoOutro extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -14,37 +14,33 @@ class FormParticipacaoOutro extends React.Component{
             showMsg: false,
             msg: '',
             participacoes: [],
-            action: '',//new | edit
             editId: this.props.id,
         };
 
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        this.edit = this.edit.bind(this);
+        this.editOutro = this.editOutro.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
     }
 
+
+
     componentWillReceiveProps(props){
         let lastEditId = this.state.editId;
-        if(this.state.action != props.action || this.state.editId != props.id){
-            this.setState({action: props.action, editId: props.id}, function(){
-                if(lastEditId != props.id){
-                    //this.props.showHideForm(this.state.action);
-                    this.edit();
-                }
-                if(this.state.action=='new'){
-                    this.cleanForm();
-                }
+        if(props.id){
+            this.setState({editId: props.id}, function(){
+                    this.editOutro();
             });
         }
     }
 
-    edit(){
+    editOutro(){
+        console.log('6: ', this.state.editId);
         $.ajax({
             method: 'GET',
-            url: '/edit-user-participacao/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
             data: {
 
             },
@@ -109,26 +105,17 @@ class FormParticipacaoOutro extends React.Component{
             return;
         }
 
-        let url = 'osc/ps_outra';
-        let id = null;
-        let method = 'POST';
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = 'osc/ps_outra/'+id;
-            method = 'PUT';
-        }
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:method,
-                url: getBaseUrl2 + url,
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
                 data:{
                     tx_nome_participacao_social_outra: this.state.form.tx_nome_participacao_social_outra,
                     ft_participacao_social_outra: 'Representante de OSC',
                     bo_oficial: 0,
                     id_osc: 611720,
-                    id: id,
+                    id: this.state.editId,
                 },
                 cache: false,
                 success: function(data) {
@@ -136,7 +123,6 @@ class FormParticipacaoOutro extends React.Component{
                     this.props.list();
 
                     this.cleanForm();
-                    //this.props.showHideFormOutro();
 
                     this.setState({participacoes: data.participacoes, loading: false})
                 }.bind(this),
@@ -147,22 +133,6 @@ class FormParticipacaoOutro extends React.Component{
             });
         });
 
-
-    }
-
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
 
     }
 

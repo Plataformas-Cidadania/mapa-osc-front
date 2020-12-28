@@ -1,4 +1,4 @@
-class FormParticipacaoConferencia extends React.Component{
+class FormEditParticipacaoConferencia extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -38,7 +38,7 @@ class FormParticipacaoConferencia extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        this.edit = this.edit.bind(this);
+        this.editConferencia = this.editConferencia.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
     }
@@ -49,25 +49,18 @@ class FormParticipacaoConferencia extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log(props);
         let lastEditId = this.state.editId;
-        if(this.state.action != props.action || this.state.editId != props.id){
-            this.setState({action: props.action, editId: props.id}, function(){
-                if(lastEditId != props.id){
-                    //this.props.showHideForm(this.state.action);
-                    this.edit();
-                }
-                if(this.state.action=='new'){
-                    this.cleanForm();
-                }
+        if(props.id){
+            this.setState({editId: props.id}, function(){
+                this.editConferencia();
             });
         }
     }
 
-    edit(){
+    editConferencia(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-conferencia/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
             data: {
 
             },
@@ -132,20 +125,11 @@ class FormParticipacaoConferencia extends React.Component{
             return;
         }
 
-        let url = 'osc/ps_conferencia';
-        let id = null;
-        let method = 'POST';
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = 'osc/ps_conferencia/'+id;
-            method = 'PUT';
-        }
-
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:method,
-                url: getBaseUrl2 + url,
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
                 data:{
                     cd_conferencia: this.state.form.cd_conferencia,
                     dt_ano_realizacao: this.state.form.dt_ano_realizacao,
@@ -177,21 +161,6 @@ class FormParticipacaoConferencia extends React.Component{
 
     }
 
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
-
-    }
 
     listConferencia(){
         this.setState({loadingList: true});

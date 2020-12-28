@@ -33,6 +33,7 @@ class Participacoes extends React.Component {
             editIdConselho: 0,
             editIdConferencia: 0,
             editIdOutro: 0,
+            editId: 0,
 
             removeConselho: [],
             removeItem: [],
@@ -57,9 +58,7 @@ class Participacoes extends React.Component {
         this.showHideConferencia = this.showHideConferencia.bind(this);
         this.showHideOutro = this.showHideOutro.bind(this);
 
-        //this.removeConselho = this.removeConselho.bind(this);
         this.removeItem = this.removeItem.bind(this);
-        //this.removeOutro = this.removeOutro.bind(this);
 
         this.callModal = this.callModal.bind(this);
 
@@ -70,73 +69,23 @@ class Participacoes extends React.Component {
         this.list();
     }
 
-    editConselho(id) {
-        // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id }, function () {
+    /*editConselho(id){
+        this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id}, function(){
             this.callModal();
         });
     }
-    editConferencia(id) {
-        // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id }, function () {
+    editConferencia(id){
+       // this.setState({actionForm: 'edit'});
+        this.setState({actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id}, function(){
             this.callModal();
         });
-    }
-    editOutro(id) {
-        // this.setState({actionForm: 'edit'});
-        this.setState({ actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id }, function () {
+    }*/
+    /*editOutro(id){
+       // this.setState({actionForm: 'edit'});
+        this.setState({actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id}, function(){
             this.callModal();
         });
-    }
-
-    callModal(id) {
-        console.log(id);
-        let modal = this.state.modal;
-        this.setState({ modal: modal }, function () {
-            $('#modalForm').modal('show');
-        });
-    }
-    modal() {
-        return React.createElement(
-            'div',
-            { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
-            React.createElement(
-                'div',
-                { className: 'modal-dialog modal-lg' },
-                React.createElement(
-                    'div',
-                    { className: 'modal-content' },
-                    React.createElement(
-                        'div',
-                        { className: 'modal-header' },
-                        React.createElement(
-                            'h4',
-                            { className: 'modal-title', id: 'exampleModalLabel' },
-                            React.createElement(
-                                'strong',
-                                null,
-                                this.state.modalTitle
-                            )
-                        ),
-                        React.createElement(
-                            'button',
-                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
-                            React.createElement(
-                                'span',
-                                { 'aria-hidden': 'true' },
-                                '\xD7'
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'modal-body' },
-                        React.createElement(FormParticipacaoConselho, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
-                    )
-                )
-            )
-        );
-    }
+    }*/
 
     cancelRemove(id) {
         let remove = this.state.remove;
@@ -199,7 +148,6 @@ class Participacoes extends React.Component {
 
         $.ajax({
             method: 'GET',
-            //url: '/list-users-participacoes',
             url: getBaseUrl2 + 'osc/participacao_social/611720',
             //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {},
@@ -219,28 +167,6 @@ class Participacoes extends React.Component {
         });
     }
 
-    /*removeConselho(id){
-        let remove = this.state.removeConselho;
-         if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-         $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/'+id,
-            data: {
-             },
-            cache: false,
-            success: function(data){
-                this.list();
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-     }*/
-
     removeItem(id, tipo) {
         let remove = this.state.removeConselho;
 
@@ -259,28 +185,6 @@ class Participacoes extends React.Component {
         });
     }
 
-    /*removeOutro(id){
-        let remove = this.state.removeConselho;
-         if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-         $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/ps_conselho/'+id,
-            data: {
-             },
-            cache: false,
-            success: function(data){
-                this.list();
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-     }*/
-
     callModalExcluir(id, tx_nome_conferencia, tipo) {
         let modalExcluir = this.state.modalExcluir;
         this.setState({
@@ -292,6 +196,20 @@ class Participacoes extends React.Component {
             $('#modalFormExcluir').modal('show');
         });
     }
+
+    callModal(id, type) {
+        let modal = this.state.modal;
+        console.log('111');
+        this.setState({
+            modal: modal,
+            editId: id,
+            editTipo: type
+        }, function () {
+            $('#modalForm').modal('show');
+            //this.editOutro(id);
+        });
+    }
+
     modalExcluir() {
         return React.createElement(
             'div',
@@ -343,6 +261,70 @@ class Participacoes extends React.Component {
                             'button',
                             { type: 'button', className: 'btn btn-danger', onClick: () => this.removeItem(this.state.removeItemConferencia, this.state.removeTipo) },
                             'Excluir'
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    modal() {
+        return React.createElement(
+            'div',
+            { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.modalTitle
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        '*',
+                        this.state.editTipo,
+                        '*',
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.editTipo == 'outra' ? 'block' : 'none' } },
+                            React.createElement(FormEditParticipacaoOutro, {
+                                action: this.state.actionForm,
+                                list: this.list,
+                                id: this.state.editId
+                                /*showHideForm={this.showHideForm}*/
+                                , closeForm: this.closeForm })
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.editTipo == 'conferencia' ? 'block' : 'none' } },
+                            React.createElement(FormEditParticipacaoConferencia, {
+                                action: this.state.actionForm,
+                                list: this.list,
+                                id: this.state.editId
+                                /*showHideForm={this.showHideForm}*/
+                                , closeForm: this.closeForm })
                         )
                     )
                 )
@@ -421,21 +403,6 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'h3',
                                 null,
-                                'Nome de representante:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                '*For*'
-                            ),
-                            React.createElement('hr', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
                                 'Periodicidade da Reuni\xE3o:'
                             ),
                             React.createElement(
@@ -505,7 +472,7 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'a',
-                            { onClick: () => this.callModal(item.id_conferencia), style: { cursor: 'pointer' } },
+                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'conferencia'), style: { cursor: 'pointer' } },
                             React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
                         ),
                         React.createElement('br', null),
@@ -577,7 +544,11 @@ class Participacoes extends React.Component {
                             { onClick: () => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
                             React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                         ),
-                        React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' }, onClick: () => this.callModal(item.id_participacao_social_outra) }),
+                        React.createElement(
+                            'a',
+                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'outra') },
+                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
+                        ),
                         React.createElement('br', null),
                         React.createElement(
                             'div',

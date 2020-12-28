@@ -74,7 +74,7 @@ class FormParticipacaoConselho extends React.Component{
         if(this.state.action != props.action || this.state.editId != props.id){
             this.setState({action: props.action, editId: props.id}, function(){
                 if(lastEditId != props.id){
-                    this.props.showHideFormConselho(this.state.action);
+                    //this.props.showHideFormConselho(this.state.action);
                     this.edit();
                 }
                 if(this.state.action=='new'){
@@ -181,7 +181,7 @@ class FormParticipacaoConselho extends React.Component{
                     this.props.list();
 
                     this.cleanFormConselho();
-                    this.props.showHideFormConselho();
+                    //this.props.showHideFormConselho();
 
                     this.setState({participacoes: data.participacoes, loading: false})
                 }.bind(this),
