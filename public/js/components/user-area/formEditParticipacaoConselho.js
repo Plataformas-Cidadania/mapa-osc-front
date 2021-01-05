@@ -284,7 +284,7 @@ class FormEditParticipacaoConselho extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'cd_conselho', onChange: this.handleInputChange, defaultValue: this.state.form.cd_conselho },
+                                name: 'cd_conselho', onChange: this.handleInputChange, value: this.state.form.cd_conselho },
                             React.createElement(
                                 'option',
                                 { value: '0' },
@@ -300,7 +300,7 @@ class FormEditParticipacaoConselho extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'cd_tipo_participacao', onChange: this.handleInputChange, defaultValue: this.state.form.cd_tipo_participacao },
+                                name: 'cd_tipo_participacao', onChange: this.handleInputChange, value: this.state.form.cd_tipo_participacao },
                             React.createElement(
                                 'option',
                                 { value: '0' },
@@ -316,7 +316,7 @@ class FormEditParticipacaoConselho extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'cd_periodicidade_reuniao_conselho', onChange: this.handleInputChange, defaultValue: this.state.form.cd_periodicidade_reuniao_conselho },
+                                name: 'cd_periodicidade_reuniao_conselho', onChange: this.handleInputChange, value: this.state.form.cd_periodicidade_reuniao_conselho },
                             React.createElement(
                                 'option',
                                 { value: '0' },

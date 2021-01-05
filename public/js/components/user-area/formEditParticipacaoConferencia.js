@@ -232,7 +232,7 @@ class FormEditParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'cd_conferencia', onChange: this.handleInputChange, defaultValue: this.state.form.cd_conferencia },
+                                name: 'cd_conferencia', onChange: this.handleInputChange, value: this.state.form.cd_conferencia },
                             React.createElement(
                                 'option',
                                 { value: '0' },
@@ -248,11 +248,11 @@ class FormEditParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'dt_ano_realizacao', onChange: this.handleInputChange, defaultValue: this.state.form.dt_ano_realizacao },
+                                name: 'dt_ano_realizacao', onChange: this.handleInputChange, value: this.state.form.dt_ano_realizacao },
                             React.createElement(
                                 'option',
-                                { value: '2020-01-01' },
-                                '2020'
+                                { value: '0' },
+                                'Selecione'
                             ),
                             anosLista
                         ),
@@ -264,7 +264,7 @@ class FormEditParticipacaoConferencia extends React.Component {
                         React.createElement(
                             'select',
                             { className: "form-control ",
-                                name: 'cd_forma_participacao_conferencia', onChange: this.handleInputChange, defaultValue: this.state.form.cd_forma_participacao_conferencia },
+                                name: 'cd_forma_participacao_conferencia', onChange: this.handleInputChange, value: this.state.form.cd_forma_participacao_conferencia },
                             React.createElement(
                                 'option',
                                 { value: '0' },

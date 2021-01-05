@@ -292,7 +292,7 @@ class FormEditParticipacaoConselho extends React.Component{
 
                             {/*<label htmlFor="tx_nome_conselho">Nome do Conselho</label><br/>*/}
                             <select  className={"form-control "}
-                                name="cd_conselho" onChange={this.handleInputChange} defaultValue={this.state.form.cd_conselho}>
+                                name="cd_conselho" onChange={this.handleInputChange} value={this.state.form.cd_conselho}>
                                 <option value="0">Selecione</option>
                                 {listConselhos}
                             </select><br/>
@@ -300,7 +300,7 @@ class FormEditParticipacaoConselho extends React.Component{
                         </div>
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_tipo_participacao" onChange={this.handleInputChange} defaultValue={this.state.form.cd_tipo_participacao}>
+                                     name="cd_tipo_participacao" onChange={this.handleInputChange} value={this.state.form.cd_tipo_participacao}>
                                 <option value="0">Selecione</option>
                                 {listTipo}
                             </select><br/>
@@ -316,7 +316,7 @@ class FormEditParticipacaoConselho extends React.Component{
                         </div>*/}
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_periodicidade_reuniao_conselho" onChange={this.handleInputChange} defaultValue={this.state.form.cd_periodicidade_reuniao_conselho}>
+                                     name="cd_periodicidade_reuniao_conselho" onChange={this.handleInputChange} value={this.state.form.cd_periodicidade_reuniao_conselho}>
                                 <option value="0">Selecione</option>
                                 {listReuniao}
                             </select><br/>

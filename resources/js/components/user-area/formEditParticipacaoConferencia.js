@@ -232,7 +232,7 @@ class FormEditParticipacaoConferencia extends React.Component{
 
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_conferencia}>
+                                     name="cd_conferencia" onChange={this.handleInputChange} value={this.state.form.cd_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listConferencia}
                             </select><br/>
@@ -240,14 +240,14 @@ class FormEditParticipacaoConferencia extends React.Component{
                         <div className="label-float">
 
                             <select  className={"form-control "}
-                                     name="dt_ano_realizacao" onChange={this.handleInputChange} defaultValue={this.state.form.dt_ano_realizacao}>
-                                <option value="2020-01-01">2020</option>
+                                     name="dt_ano_realizacao" onChange={this.handleInputChange} value={this.state.form.dt_ano_realizacao}>
+                                <option value="0">Selecione</option>
                                 {anosLista}
                             </select><br/>
                         </div>
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_forma_participacao_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_forma_participacao_conferencia}>
+                                     name="cd_forma_participacao_conferencia" onChange={this.handleInputChange} value={this.state.form.cd_forma_participacao_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listForma}
                             </select><br/>
