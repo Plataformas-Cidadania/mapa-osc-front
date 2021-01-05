@@ -35,7 +35,6 @@ class FormEditParticipacaoConferencia extends React.Component{
             listForma: [],
         };
 
-
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.editConferencia = this.editConferencia.bind(this);
@@ -60,7 +59,7 @@ class FormEditParticipacaoConferencia extends React.Component{
     editConferencia(){
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/ps_conferencia/'+this.state.editId,
             data: {
 
             },
@@ -97,7 +96,6 @@ class FormEditParticipacaoConferencia extends React.Component{
     }
 
     validate(){
-        console.log('---', this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -124,12 +122,13 @@ class FormEditParticipacaoConferencia extends React.Component{
         if(!this.validate()){
             return;
         }
-
+        console.log('1111');
+        console.log(this.state.editId);
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method: 'PUT',
-                url: getBaseUrl2 + 'osc/ps_outra/'+this.state.editId,
+                url: getBaseUrl2 + 'osc/ps_conferencia/'+this.state.editId,
                 data:{
                     cd_conferencia: this.state.form.cd_conferencia,
                     dt_ano_realizacao: this.state.form.dt_ano_realizacao,
@@ -139,11 +138,11 @@ class FormEditParticipacaoConferencia extends React.Component{
                     ft_forma_participacao_conferencia: 'Representante de OSC',
                     bo_oficial: 0,
                     id_osc: 611720,
-                    id: id,
+                    id: this.state.editId,
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
+                    console.log('2222', data);
 
                     this.props.list();
                     this.cleanForm();
@@ -205,7 +204,7 @@ class FormEditParticipacaoConferencia extends React.Component{
 
     render(){
 
-
+        console.log(this.state.editId)
 
         let anosLista = getOptions().map(function(item, index){
             return (

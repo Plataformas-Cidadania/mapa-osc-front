@@ -199,7 +199,7 @@ class Participacoes extends React.Component {
 
     callModal(id, type) {
         let modal = this.state.modal;
-        console.log('111');
+        console.log('id 1:', id);
         this.setState({
             modal: modal,
             editId: id,
@@ -303,18 +303,14 @@ class Participacoes extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'modal-body' },
-                        '*',
-                        this.state.editTipo,
-                        '*',
                         React.createElement(
                             'div',
                             { style: { display: this.state.editTipo == 'outra' ? 'block' : 'none' } },
                             React.createElement(FormEditParticipacaoOutro, {
                                 action: this.state.actionForm,
                                 list: this.list,
-                                id: this.state.editId
-                                /*showHideForm={this.showHideForm}*/
-                                , closeForm: this.closeForm })
+                                id: this.state.editId,
+                                closeForm: this.closeForm })
                         ),
                         React.createElement(
                             'div',
@@ -322,9 +318,17 @@ class Participacoes extends React.Component {
                             React.createElement(FormEditParticipacaoConferencia, {
                                 action: this.state.actionForm,
                                 list: this.list,
-                                id: this.state.editId
-                                /*showHideForm={this.showHideForm}*/
-                                , closeForm: this.closeForm })
+                                id: this.state.editId,
+                                closeForm: this.closeForm })
+                        ),
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.editTipo == 'conselho' ? 'block' : 'none' } },
+                            React.createElement(FormEditParticipacaoConselho, {
+                                action: this.state.actionForm,
+                                list: this.list,
+                                id: this.state.editId,
+                                closeForm: this.cleanFormConselho })
                         )
                     )
                 )
@@ -362,7 +366,7 @@ class Participacoes extends React.Component {
                             ),
                             React.createElement(
                                 'a',
-                                { onClick: () => this.callModal(item.id_conselho), style: { cursor: 'pointer' } },
+                                { onClick: () => this.callModal(item.id_conselho, 'conselho'), style: { cursor: 'pointer' } },
                                 React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
                             )
                         ),
@@ -455,6 +459,8 @@ class Participacoes extends React.Component {
                 hr = React.createElement('hr', null);
             }
 
+            console.log('item: ', item);
+
             return React.createElement(
                 'div',
                 { className: 'col-md-6', style: { border: '0' }, key: "conferencia_" + index },
@@ -472,7 +478,7 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'a',
-                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'conferencia'), style: { cursor: 'pointer' } },
+                            { onClick: () => this.callModal(item.id_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
                             React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
                         ),
                         React.createElement('br', null),

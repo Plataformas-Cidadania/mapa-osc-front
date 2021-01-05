@@ -146,7 +146,7 @@ class FormEditParticipacaoOutro extends React.Component{
 
 
                         <div className="label-float">
-                            <input className={"form-control form-g "} type="text" name="tx_nome_participacao_social_outra" onChange={this.handleInputChange} value={this.state.form.tx_nome_participacao_social_outra}
+                            <input className={"form-control form-g "} type="text" name="tx_nome_participacao_social_outra" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_participacao_social_outra}
                                    placeholder="Se houver, insira o link que" />
                             <label htmlFor="tx_nome_participacao_social_outra-4273">Nome da Conferência</label>
                             <div className="label-box-info-off">

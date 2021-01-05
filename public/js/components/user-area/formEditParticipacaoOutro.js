@@ -142,7 +142,7 @@ class FormEditParticipacaoOutro extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_participacao_social_outra', onChange: this.handleInputChange, value: this.state.form.tx_nome_participacao_social_outra,
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_participacao_social_outra', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_participacao_social_outra,
                             placeholder: 'Se houver, insira o link que' }),
                         React.createElement(
                             'label',

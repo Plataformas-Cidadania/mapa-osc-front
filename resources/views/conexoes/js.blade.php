@@ -254,6 +254,7 @@
     <script src="/js/components/user-area/formParticipacaoOutro.js"></script>
     <script src="/js/components/user-area/formEditParticipacaoOutro.js"></script>
     <script src="/js/components/user-area/formEditParticipacaoConferencia.js"></script>
+    <script src="/js/components/user-area/formEditParticipacaoConselho.js"></script>
     <script src="/js/components/user-area/participacoes.js"></script>
 @endif
 @if($rota=="recursos-user")

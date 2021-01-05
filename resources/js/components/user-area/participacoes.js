@@ -214,7 +214,7 @@ class Participacoes extends React.Component{
 
     callModal(id, type){
         let modal = this.state.modal;
-        console.log('111');
+        console.log('id 1:', id);
         this.setState({
             modal: modal,
             editId:id,
@@ -264,13 +264,12 @@ class Participacoes extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            *{this.state.editTipo}*
+
                             <div style={{display: this.state.editTipo=='outra' ? 'block' : 'none'}}>
                                 <FormEditParticipacaoOutro
                                     action={this.state.actionForm}
                                     list={this.list}
                                     id={this.state.editId}
-                                    /*showHideForm={this.showHideForm}*/
                                     closeForm={this.closeForm}/>
                             </div>
                             <div style={{display: this.state.editTipo=='conferencia' ? 'block' : 'none'}}>
@@ -278,8 +277,14 @@ class Participacoes extends React.Component{
                                     action={this.state.actionForm}
                                     list={this.list}
                                     id={this.state.editId}
-                                    /*showHideForm={this.showHideForm}*/
                                     closeForm={this.closeForm}/>
+                            </div>
+                            <div style={{display: this.state.editTipo=='conselho' ? 'block' : 'none'}}>
+                                <FormEditParticipacaoConselho
+                                    action={this.state.actionForm}
+                                    list={this.list}
+                                    id={this.state.editId}
+                                    closeForm={this.cleanFormConselho}/>
                             </div>
                             {/*<FormParticipacaoConselho
                                 action={this.state.actionForm}
@@ -321,7 +326,7 @@ class Participacoes extends React.Component{
                                     <i className="far fa-trash-alt text-danger float-right"/>
                                 </a>
 
-                                <a onClick={() => this.callModal(item.id_conselho)} style={{cursor: 'pointer'}}>
+                                <a onClick={() => this.callModal(item.id_conselho, 'conselho')} style={{cursor: 'pointer'}}>
                                     <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
                                 </a>
 
@@ -383,6 +388,8 @@ class Participacoes extends React.Component{
                 hr = <hr/>;
             }
 
+            console.log('item: ',item);
+
             return (
 
                 <div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
@@ -393,7 +400,7 @@ class Participacoes extends React.Component{
                                 <i className="far fa-trash-alt text-danger float-right"/>
                             </a>
                             {/*<a onClick={() => this.callModal(item.id_conferencia)} style={{cursor: 'pointer'}}>*/}
-                            <a onClick={() => this.callModal(item.id_participacao_social_outra, 'conferencia')} style={{cursor: 'pointer'}}>
+                            <a onClick={() => this.callModal(item.id_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
                                 <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
                             </a>
 
@@ -422,6 +429,7 @@ class Participacoes extends React.Component{
         }.bind(this));
 
         let outros = this.state.outros.map(function(item, index){
+
 
             return (
 
