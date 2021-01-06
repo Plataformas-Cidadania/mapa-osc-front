@@ -5,7 +5,7 @@ class FormParticipacaoConselho extends React.Component {
             form: {
                 tx_nome_conselho: '',
                 tx_nome_tipo_participacao: '',
-                tx_nome_representante_conselho: '',
+                //tx_nome_representante_conselho: '',
                 tx_periodicidade_reuniao: '',
                 dt_data_inicio_conselho: '',
                 dt_data_fim_conselho: ''
@@ -16,7 +16,7 @@ class FormParticipacaoConselho extends React.Component {
             requireds: {
                 tx_nome_conselho: true,
                 tx_nome_tipo_participacao: true,
-                tx_nome_representante_conselho: true,
+                //tx_nome_representante_conselho: true,
                 tx_periodicidade_reuniao: true,
                 dt_data_inicio_conselho: true,
                 dt_data_fim_conselho: true
@@ -162,7 +162,7 @@ class FormParticipacaoConselho extends React.Component {
                 data: {
                     cd_conselho: this.state.form.tx_nome_conselho,
                     cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
-                    tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
+                    //tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
                     cd_periodicidade_reuniao_conselho: this.state.form.tx_periodicidade_reuniao,
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
@@ -319,26 +319,6 @@ class FormParticipacaoConselho extends React.Component {
                             listTipo
                         ),
                         React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'label-float' },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_representante_conselho', onChange: this.handleInputChange, value: this.state.form.tx_nome_representante_conselho,
-                            placeholder: 'Se houver, insira o link que' }),
-                        React.createElement(
-                            'label',
-                            { htmlFor: 'tx_nome_representante_conselho' },
-                            'Nome de representante'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info-off' },
-                            React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
-                            )
-                        )
                     ),
                     React.createElement(
                         'div',

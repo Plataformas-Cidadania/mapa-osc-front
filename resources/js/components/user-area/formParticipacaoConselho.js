@@ -5,7 +5,7 @@ class FormParticipacaoConselho extends React.Component{
             form: {
                 tx_nome_conselho: '',
                 tx_nome_tipo_participacao: '',
-                tx_nome_representante_conselho: '',
+                //tx_nome_representante_conselho: '',
                 tx_periodicidade_reuniao: '',
                 dt_data_inicio_conselho: '',
                 dt_data_fim_conselho: '',
@@ -16,7 +16,7 @@ class FormParticipacaoConselho extends React.Component{
             requireds: {
                 tx_nome_conselho: true,
                 tx_nome_tipo_participacao: true,
-                tx_nome_representante_conselho: true,
+                //tx_nome_representante_conselho: true,
                 tx_periodicidade_reuniao: true,
                 dt_data_inicio_conselho: true,
                 dt_data_fim_conselho: true,
@@ -168,7 +168,7 @@ class FormParticipacaoConselho extends React.Component{
                 data:{
                     cd_conselho: this.state.form.tx_nome_conselho,
                     cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
-                    tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
+                    //tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
                     cd_periodicidade_reuniao_conselho: this.state.form.tx_periodicidade_reuniao,
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
@@ -317,14 +317,14 @@ class FormParticipacaoConselho extends React.Component{
                             </select><br/>
 
                         </div>
-                        <div className="label-float">
+                        {/*<div className="label-float" style={{display: 'none'}}>
                             <input className={"form-control form-g "} type="text" name="tx_nome_representante_conselho" onChange={this.handleInputChange} value={this.state.form.tx_nome_representante_conselho}
                                    placeholder="Se houver, insira o link que" />
                             <label htmlFor="tx_nome_representante_conselho">Nome de representante</label>
                             <div className="label-box-info-off">
                                 <p>&nbsp;</p>
                             </div>
-                        </div>
+                        </div>*/}
                         <div className="label-float">
                             <select  className={"form-control "}
                                      name="tx_periodicidade_reuniao" onChange={this.handleInputChange} defaultValue={this.state.form.tx_periodicidade_reuniao}>

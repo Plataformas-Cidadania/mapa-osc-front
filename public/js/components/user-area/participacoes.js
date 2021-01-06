@@ -69,24 +69,6 @@ class Participacoes extends React.Component {
         this.list();
     }
 
-    /*editConselho(id){
-        this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id}, function(){
-            this.callModal();
-        });
-    }
-    editConferencia(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id}, function(){
-            this.callModal();
-        });
-    }*/
-    /*editOutro(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id}, function(){
-            this.callModal();
-        });
-    }*/
-
     cancelRemove(id) {
         let remove = this.state.remove;
         remove[id] = false;
@@ -269,6 +251,31 @@ class Participacoes extends React.Component {
     }
 
     modal() {
+
+        let form = null;
+
+        if (this.state.editTipo == 'outra') {
+            form = React.createElement(FormEditParticipacaoOutro, {
+                action: this.state.actionForm,
+                list: this.list,
+                id: this.state.editId,
+                closeForm: this.closeForm });
+        }
+        if (this.state.editTipo == 'conferencia') {
+            form = React.createElement(FormEditParticipacaoConferencia, {
+                action: this.state.actionForm,
+                list: this.list,
+                id: this.state.editId,
+                closeForm: this.closeForm });
+        }
+        if (this.state.editTipo == 'conselho') {
+            form = React.createElement(FormEditParticipacaoConselho, {
+                action: this.state.actionForm,
+                list: this.list,
+                id: this.state.editId,
+                closeForm: this.cleanFormConselho });
+        }
+
         return React.createElement(
             'div',
             { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
@@ -303,33 +310,7 @@ class Participacoes extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'modal-body' },
-                        React.createElement(
-                            'div',
-                            { style: { display: this.state.editTipo == 'outra' ? 'block' : 'none' } },
-                            React.createElement(FormEditParticipacaoOutro, {
-                                action: this.state.actionForm,
-                                list: this.list,
-                                id: this.state.editId,
-                                closeForm: this.closeForm })
-                        ),
-                        React.createElement(
-                            'div',
-                            { style: { display: this.state.editTipo == 'conferencia' ? 'block' : 'none' } },
-                            React.createElement(FormEditParticipacaoConferencia, {
-                                action: this.state.actionForm,
-                                list: this.list,
-                                id: this.state.editId,
-                                closeForm: this.closeForm })
-                        ),
-                        React.createElement(
-                            'div',
-                            { style: { display: this.state.editTipo == 'conselho' ? 'block' : 'none' } },
-                            React.createElement(FormEditParticipacaoConselho, {
-                                action: this.state.actionForm,
-                                list: this.list,
-                                id: this.state.editId,
-                                closeForm: this.cleanFormConselho })
-                        )
+                        form
                     )
                 )
             )
@@ -427,7 +408,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'p',
                                 null,
-                                item.dt_data_inicio_conselho
+                                formatDate(item.dt_data_inicio_conselho, 'pt-br')
                             ),
                             React.createElement('hr', null)
                         ),
@@ -442,7 +423,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'p',
                                 null,
-                                item.dt_data_fim_conselho
+                                formatDate(item.dt_data_fim_conselho, 'pt-br')
                             )
                         )
                     )
@@ -458,8 +439,6 @@ class Participacoes extends React.Component {
             if (index < this.state.conferencias.length - 1) {
                 hr = React.createElement('hr', null);
             }
-
-            console.log('item: ', item);
 
             return React.createElement(
                 'div',
@@ -508,7 +487,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'p',
                                 null,
-                                item.dt_ano_realizacao
+                                item.dt_ano_realizacao.replace('-01-01', '')
                             )
                         ),
                         React.createElement('hr', null),

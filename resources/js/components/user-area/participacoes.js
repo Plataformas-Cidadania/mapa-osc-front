@@ -74,28 +74,6 @@ class Participacoes extends React.Component{
         this.list();
     }
 
-
-    /*editConselho(id){
-        this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id}, function(){
-            this.callModal();
-        });
-    }
-    editConferencia(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionFormConferencia: 'edit', showFormConferencia: false, editIdConferencia: id}, function(){
-            this.callModal();
-        });
-    }*/
-    /*editOutro(id){
-       // this.setState({actionForm: 'edit'});
-        this.setState({actionFormOutro: 'edit', showFormOutro: false, editIdOutro: id}, function(){
-            this.callModal();
-        });
-    }*/
-
-
-
-
     cancelRemove(id){
         let remove = this.state.remove;
         remove[id] = false;
@@ -251,6 +229,37 @@ class Participacoes extends React.Component{
     }
 
     modal(){
+
+        let form = null;
+
+        if(this.state.editTipo=='outra'){
+            form = (
+                <FormEditParticipacaoOutro
+                    action={this.state.actionForm}
+                    list={this.list}
+                    id={this.state.editId}
+                    closeForm={this.closeForm}/>
+            );
+        }
+        if(this.state.editTipo=='conferencia'){
+            form = (
+                <FormEditParticipacaoConferencia
+                    action={this.state.actionForm}
+                    list={this.list}
+                    id={this.state.editId}
+                    closeForm={this.closeForm}/>
+            );
+        }
+        if(this.state.editTipo=='conselho'){
+            form = (
+                <FormEditParticipacaoConselho
+                    action={this.state.actionForm}
+                    list={this.list}
+                    id={this.state.editId}
+                    closeForm={this.cleanFormConselho}/>
+            );
+        }
+
         return (
 
             <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -264,34 +273,7 @@ class Participacoes extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-
-                            <div style={{display: this.state.editTipo=='outra' ? 'block' : 'none'}}>
-                                <FormEditParticipacaoOutro
-                                    action={this.state.actionForm}
-                                    list={this.list}
-                                    id={this.state.editId}
-                                    closeForm={this.closeForm}/>
-                            </div>
-                            <div style={{display: this.state.editTipo=='conferencia' ? 'block' : 'none'}}>
-                                <FormEditParticipacaoConferencia
-                                    action={this.state.actionForm}
-                                    list={this.list}
-                                    id={this.state.editId}
-                                    closeForm={this.closeForm}/>
-                            </div>
-                            <div style={{display: this.state.editTipo=='conselho' ? 'block' : 'none'}}>
-                                <FormEditParticipacaoConselho
-                                    action={this.state.actionForm}
-                                    list={this.list}
-                                    id={this.state.editId}
-                                    closeForm={this.cleanFormConselho}/>
-                            </div>
-                            {/*<FormParticipacaoConselho
-                                action={this.state.actionForm}
-                                list={this.list}
-                                id={this.state.editId}
-                                showHideForm={this.showHideForm}
-                                closeForm={this.closeForm}/>*/}
+                            {form}
                         </div>
 
 
@@ -330,16 +312,6 @@ class Participacoes extends React.Component{
                                     <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
                                 </a>
 
-
-                                {/*<a className="box-itens-btn-edit" onClick={() => this.callModal(item.id_conselho)}><i className="fa fa-edit"/></a>&nbsp;
-
-                                <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselho)} style={{display: this.state.loadingRemove[item.id_conselho] ? 'none' : 'block'}}>
-                                    <i className={"fa "+( this.state.removeConselho[item.id_conselho] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
-                                </a>
-                                <a onClick={() => this.cancelRemove(item.id_conselho)} style={{display: this.state.removeConselho[item.id_conselho] && !this.state.loadingRemove[item.id_conselho] ? 'block' : 'none'}}>
-                                    <i className={"fa fa-undo"}/>
-                                </a>
-                                <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_conselho] ? '' : 'none'}}/>*/}
                             </div>
                             <br/>
                             <div>
@@ -352,11 +324,7 @@ class Participacoes extends React.Component{
                                 <p>{item.dc_tipo_participacao.tx_nome_tipo_participacao}</p>
                                 <hr/>
                             </div>
-                            {/*<div>
-                                <h3>Nome de representante:</h3>
-                                <p>*For*</p>
-                                <hr/>
-                            </div>*/}
+
                             <div>
                                 <h3>Periodicidade da Reunião:</h3>
                                 <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}</p>
@@ -364,12 +332,12 @@ class Participacoes extends React.Component{
                             </div>
                             <div>
                                 <h3>Data de início de vigência:</h3>
-                                <p>{item.dt_data_inicio_conselho}</p>
+                                <p>{formatDate(item.dt_data_inicio_conselho, 'pt-br')}</p>
                                 <hr/>
                             </div>
                             <div>
                                 <h3>Data de fim de vigência:</h3>
-                                <p>{item.dt_data_fim_conselho}</p>
+                                <p>{formatDate(item.dt_data_fim_conselho, 'pt-br')}</p>
                             </div>
                         </div>
                     </div>
@@ -387,8 +355,6 @@ class Participacoes extends React.Component{
             if(index < this.state.conferencias.length-1){
                 hr = <hr/>;
             }
-
-            console.log('item: ',item);
 
             return (
 
@@ -412,7 +378,7 @@ class Participacoes extends React.Component{
                             <hr/>
                             <div>
                                 <h3>Ano de realização da conferência:</h3>
-                                <p>{item.dt_ano_realizacao}</p>
+                                <p>{item.dt_ano_realizacao.replace('-01-01', '') }</p>
                             </div>
                             <hr/>
                             <div>

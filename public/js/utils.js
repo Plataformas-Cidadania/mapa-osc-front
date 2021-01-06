@@ -161,3 +161,12 @@ function getOptions(ammount = 50) {
     return Array.from({ length: ammount })
         .map((_, index) => new Date().getFullYear() - index);
 }
+
+function formatDate(data, formato) {
+
+    if (formato == 'pt-br') {
+        return (data.substr(0, 10).split('-').reverse().join('/'));
+    } else {
+        return (data.substr(0, 10).split('/').reverse().join('-'));
+    }
+}
