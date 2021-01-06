@@ -319,11 +319,11 @@ class Participacoes extends React.Component{
                                 <p>{item.dc_conselho.tx_nome_conselho}</p>
                                 <hr/>
                             </div>
-                            <div>
+                            {/*<div>
                                 <h3>Titularidade:</h3>
                                 <p>{item.dc_tipo_participacao.tx_nome_tipo_participacao}</p>
                                 <hr/>
-                            </div>
+                            </div>*/}
 
                             <div>
                                 <h3>Periodicidade da Reunião:</h3>
@@ -406,7 +406,7 @@ class Participacoes extends React.Component{
                             <a onClick={() => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
                                 <i className="far fa-trash-alt text-danger float-right"/>
                             </a>
-                            <a onClick={() => this.callModal(item.id_participacao_social_outra, 'outra')}>
+                            <a onClick={() => this.callModal(item.id_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
                                 <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
                             </a>
 

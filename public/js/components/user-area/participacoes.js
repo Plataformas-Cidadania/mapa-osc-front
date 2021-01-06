@@ -373,21 +373,6 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'h3',
                                 null,
-                                'Titularidade:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                item.dc_tipo_participacao.tx_nome_tipo_participacao
-                            ),
-                            React.createElement('hr', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
                                 'Periodicidade da Reuni\xE3o:'
                             ),
                             React.createElement(
@@ -531,7 +516,7 @@ class Participacoes extends React.Component {
                         ),
                         React.createElement(
                             'a',
-                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'outra') },
+                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
                             React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
                         ),
                         React.createElement('br', null),

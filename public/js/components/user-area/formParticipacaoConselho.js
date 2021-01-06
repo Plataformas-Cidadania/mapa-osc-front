@@ -46,7 +46,7 @@ class FormParticipacaoConselho extends React.Component {
             editId: this.props.id,
 
             listConselhos: [],
-            listTipo: [],
+            //listTipo: [],
             listReuniao: []
         };
 
@@ -61,7 +61,7 @@ class FormParticipacaoConselho extends React.Component {
 
     componentDidMount() {
         this.listConselho();
-        this.listTipo();
+        //this.listTipo();
         this.listReuniao();
     }
 
@@ -161,7 +161,7 @@ class FormParticipacaoConselho extends React.Component {
                 url: getBaseUrl2 + url,
                 data: {
                     cd_conselho: this.state.form.tx_nome_conselho,
-                    cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
+                    //cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
                     //tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
                     cd_periodicidade_reuniao_conselho: this.state.form.tx_periodicidade_reuniao,
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
@@ -219,22 +219,23 @@ class FormParticipacaoConselho extends React.Component {
         });
     }
 
-    listTipo() {
-        this.setState({ loadingList: true });
+    /*listTipo(){
+        this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
             url: getBaseUrl + 'menu/osc/tipo_participacao',
-            data: {},
+            data: {
+             },
             cache: false,
-            success: function (data) {
-                this.setState({ listTipo: data, loadingList: false });
+            success: function(data){
+                this.setState({listTipo: data, loadingList: false});
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                this.setState({loadingList: false});
             }.bind(this)
         });
-    }
+    }*/
 
     listReuniao() {
         this.setState({ loadingList: true });
@@ -263,13 +264,11 @@ class FormParticipacaoConselho extends React.Component {
             );
         }.bind(this));
 
-        let listTipo = this.state.listTipo.map(function (item, index) {
-            return React.createElement(
-                'option',
-                { value: item.cd_tipo_participacao, key: 'listTipo' + index },
-                item.tx_nome_tipo_participacao
+        /*let listTipo = this.state.listTipo.map(function(item, index){
+            return (
+                <option value={item.cd_tipo_participacao} key={'listTipo'+index}>{item.tx_nome_tipo_participacao}</option>
             );
-        }.bind(this));
+        }.bind(this));*/
 
         let listReuniao = this.state.listReuniao.map(function (item, index) {
             return React.createElement(
@@ -301,22 +300,6 @@ class FormParticipacaoConselho extends React.Component {
                                 'Selecione'
                             ),
                             listConselhos
-                        ),
-                        React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'label-float' },
-                        React.createElement(
-                            'select',
-                            { className: "form-control ",
-                                name: 'tx_nome_tipo_participacao', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_tipo_participacao },
-                            React.createElement(
-                                'option',
-                                { value: '0' },
-                                'Selecione'
-                            ),
-                            listTipo
                         ),
                         React.createElement('br', null)
                     ),

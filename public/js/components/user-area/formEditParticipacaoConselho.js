@@ -4,7 +4,7 @@ class FormEditParticipacaoConselho extends React.Component {
         this.state = {
             form: {
                 cd_conselho: '',
-                cd_tipo_participacao: '',
+                //cd_tipo_participacao: '',
                 //tx_nome_representante_conselho: '',
                 cd_periodicidade_reuniao_conselho: '',
                 dt_data_inicio_conselho: '',
@@ -15,7 +15,7 @@ class FormEditParticipacaoConselho extends React.Component {
             loading: false,
             requireds: {
                 cd_conselho: true,
-                cd_tipo_participacao: true,
+                //cd_tipo_participacao: true,
                 //tx_nome_representante_conselho: true,
                 cd_periodicidade_reuniao_conselho: true,
                 dt_data_inicio_conselho: true,
@@ -150,7 +150,7 @@ class FormEditParticipacaoConselho extends React.Component {
                 url: getBaseUrl2 + 'osc/ps_conselho/' + this.state.editId,
                 data: {
                     cd_conselho: this.state.form.cd_conselho,
-                    cd_tipo_participacao: this.state.form.cd_tipo_participacao,
+                    //cd_tipo_participacao: this.state.form.cd_tipo_participacao,
                     //tx_nome_representante_conselho: this.state.form.tx_nome_representante_conselho,
                     cd_periodicidade_reuniao_conselho: this.state.form.cd_periodicidade_reuniao_conselho,
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
@@ -253,13 +253,11 @@ class FormEditParticipacaoConselho extends React.Component {
             );
         }.bind(this));
 
-        let listTipo = this.state.listTipo.map(function (item, index) {
-            return React.createElement(
-                'option',
-                { value: item.cd_tipo_participacao, key: 'listTipo' + index },
-                item.tx_nome_tipo_participacao
+        /*let listTipo = this.state.listTipo.map(function(item, index){
+            return (
+                <option value={item.cd_tipo_participacao} key={'listTipo'+index}>{item.tx_nome_tipo_participacao}</option>
             );
-        }.bind(this));
+        }.bind(this));*/
 
         let listReuniao = this.state.listReuniao.map(function (item, index) {
             return React.createElement(
@@ -291,22 +289,6 @@ class FormEditParticipacaoConselho extends React.Component {
                                 'Selecione'
                             ),
                             listConselhos
-                        ),
-                        React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'label-float' },
-                        React.createElement(
-                            'select',
-                            { className: "form-control ",
-                                name: 'cd_tipo_participacao', onChange: this.handleInputChange, value: this.state.form.cd_tipo_participacao },
-                            React.createElement(
-                                'option',
-                                { value: '0' },
-                                'Selecione'
-                            ),
-                            listTipo
                         ),
                         React.createElement('br', null)
                     ),
