@@ -26,7 +26,16 @@ class FormCertificate extends React.Component {
                 7: 'Utilidade Pública Estadual'
             },
             action: '', //new | edit
-            editId: this.props.id
+            editId: this.props.id,
+
+            filters: {
+                uf: null,
+                municipio: null
+            },
+            searchUf: null,
+            searchMunicipio: null,
+            listUf: null,
+            listMunicipio: null
 
         };
 
@@ -35,6 +44,18 @@ class FormCertificate extends React.Component {
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+
+        this.clickSearchUf = this.clickSearchUf.bind(this);
+        this.handleSearchUf = this.handleSearchUf.bind(this);
+        this.listUf = this.listUf.bind(this);
+        this.setUf = this.setUf.bind(this);
+        this.removeUf = this.removeUf.bind(this);
+
+        this.clickSearchMunicipio = this.clickSearchMunicipio.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.listMunicipio = this.listMunicipio.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
+        this.removeMunicipio = this.removeMunicipio.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -177,22 +198,138 @@ class FormCertificate extends React.Component {
         });
     }
 
-    getAge(dateString) {
+    /*UF*/
+    handleSearchUf(e) {
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ searchUf: search }, function () {
+            this.listUf(search);
+        });
+    }
+    clickSearchUf() {
+        let search = this.state.searchUf ? this.state.searchUf : ' ';
+        this.listUf(search);
+    }
+    listUf(search) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/estado/' + search,
+            cache: false,
+            success: function (data) {
+                this.setState({ listUf: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    setUf(item) {
+        let filters = this.state.filters;
+        filters.uf = item;
+        this.setState({ filters: filters });
+    }
+    removeUf() {
+        let filters = this.state.filters;
+        filters.uf = null;
+        this.setState({ filters: filters });
+    }
 
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        //console.log(age);
-
-        return age;
+    /*Municipio*/
+    handleSearchMunicipio(e) {
+        let search = e.target.value ? e.target.value : ' ';
+        this.setState({ searchMunicipio: search }, function () {
+            this.listMunicipio(search);
+        });
+    }
+    clickSearchMunicipio() {
+        let search = this.state.searchMunicipio ? this.state.searchMunicipio : ' ';
+        this.listMunicipio(search);
+    }
+    listMunicipio(search) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/' + search,
+            cache: false,
+            success: function (data) {
+                this.setState({ listMunicipio: data, loadingList: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+    setMunicipio(item) {
+        let filters = this.state.filters;
+        filters.municipio = item;
+        this.setState({ filters: filters });
+    }
+    removeMunicipio() {
+        let filters = this.state.filters;
+        filters.municipio = null;
+        this.setState({ filters: filters });
     }
 
     render() {
+
+        let ufs = null;
+        if (this.state.listUf) {
+            ufs = this.state.listUf.map(function (item, index) {
+
+                let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.eduf_nm_uf;
+
+                if (this.state.searchUf) {
+                    firstPiece = item.eduf_nm_uf.substr(0, sizeSearch);
+                    secondPiece = item.eduf_nm_uf.substr(sizeSearch);
+                }
+
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.eduf_cd_uf,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setUf(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
+
+        let municipios = null;
+        if (this.state.listMunicipio) {
+            municipios = this.state.listMunicipio.map(function (item, index) {
+
+                let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
+                let firstPiece = null;
+                let secondPiece = item.edmu_nm_municipio;
+
+                if (this.state.searchMunicipio) {
+                    firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
+                    secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
+                }
+                return React.createElement(
+                    'li',
+                    { key: 'cat_' + item.edmu_cd_municipio,
+                        className: 'list-group-item d-flex ',
+                        onClick: () => this.setMunicipio(item)
+                    },
+                    React.createElement(
+                        'u',
+                        null,
+                        firstPiece
+                    ),
+                    secondPiece
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
@@ -246,10 +383,72 @@ class FormCertificate extends React.Component {
                                 'Localidade*'
                             ),
                             React.createElement('br', null),
-                            React.createElement('input', { className: "form-control " + (this.state.requireds.cd_uf ? '' : 'invalid-field'),
-                                type: 'text', name: 'cd_uf', onChange: this.handleInputChange,
-                                defaultValue: this.state.form.cd_uf, placeholder: '' }),
-                            React.createElement('br', null)
+                            React.createElement(
+                                'div',
+                                { className: 'input-icon' },
+                                React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um estado', name: 'cd_uf',
+                                    style: { display: this.state.filters.uf ? 'none' : '' },
+                                    onClick: this.clickSearchUf, onChange: this.handleSearchUf }),
+                                React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_uf2',
+                                    style: { display: this.state.filters.uf ? '' : 'none' },
+                                    readOnly: this.state.filters.uf,
+                                    defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.filters.uf ? 'none' : '' } },
+                                    React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.filters.uf ? '' : 'none' }, onClick: this.removeUf },
+                                    React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        'ul',
+                                        { className: 'box-search-itens', style: { display: (this.state.searchUf || this.state.listUf) && !this.state.filters.uf ? '' : 'none' } },
+                                        ufs
+                                    )
+                                ),
+                                React.createElement('br', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'col-md-6' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'input-icon' },
+                                    React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um Munic\xEDpio', name: 'tx_nome_municipio',
+                                        style: { display: this.state.filters.municipio ? 'none' : '' },
+                                        onClick: this.clickSearchMunicipio, onChange: this.handleSearchMunicipio }),
+                                    React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_municipio2',
+                                        style: { display: this.state.filters.municipio ? '' : 'none' },
+                                        readOnly: this.state.filters.municipio,
+                                        defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.filters.municipio ? 'none' : '' } },
+                                        React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
+                                        React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        React.createElement(
+                                            'ul',
+                                            { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
+                                            municipios
+                                        )
+                                    ),
+                                    React.createElement('br', null)
+                                )
+                            )
                         )
                     ),
                     React.createElement(

@@ -16,7 +16,7 @@ class HomeController extends Controller
         $teasers = \App\Teaser::orderBy('teaser')->get();
         $text = \App\Text::where('slug', 'osc-proximas')->first();
 
-        $midiaSelect = ['noticia', 'noticias', 'Notícias', 'as notícias'];
+        $midiaSelect = ['artigo', 'artigos', 'Artigo', 'os artigos'];
         $midias = \App\Noticia::orderBy('id', 'desc')->take(3)->get();
 
 
