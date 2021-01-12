@@ -166,6 +166,11 @@ class Certificates extends React.Component{
         let modal = this.modal();
         let certificates = this.state.certificates.map(function(item, index){
 
+            let municipio = '';
+            if(item.municipio!=null){
+                municipio = item.municipio.edmu_nm_municipio + ' - '
+            }
+
             let hr = null;
             if(index < this.state.certificates.length-1){
                 hr = <hr/>;
@@ -174,9 +179,9 @@ class Certificates extends React.Component{
             return (
                 <tr key={"certificate_"+index}>
                     <td>{item.dc_certificado.tx_nome_certificado}</td>
-                    <td>{item.dt_inicio_certificado}</td>
-                    <td>{item.dt_fim_certificado}</td>
-                    <td>{item.edmu_nm_municipio}</td>
+                    <td>{formatDate(item.dt_inicio_certificado, 'pt-br')}</td>
+                    <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
+                    <td>{municipio}{item.uf.eduf_sg_uf}</td>
                     <td width="70">
                         <a onClick={() => this.edit(item.id_certificado)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.remove(item.id_certificado)} style={{display: this.state.loadingRemove[item.id_certificado] ? 'none' : ''}}>

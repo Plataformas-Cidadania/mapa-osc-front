@@ -176,6 +176,11 @@ class Certificates extends React.Component {
         let modal = this.modal();
         let certificates = this.state.certificates.map(function (item, index) {
 
+            let municipio = '';
+            if (item.municipio != null) {
+                municipio = item.municipio.edmu_nm_municipio + ' - ';
+            }
+
             let hr = null;
             if (index < this.state.certificates.length - 1) {
                 hr = React.createElement('hr', null);
@@ -192,17 +197,18 @@ class Certificates extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.dt_inicio_certificado
+                    formatDate(item.dt_inicio_certificado, 'pt-br')
                 ),
                 React.createElement(
                     'td',
                     null,
-                    item.dt_fim_certificado
+                    formatDate(item.dt_fim_certificado, 'pt-br')
                 ),
                 React.createElement(
                     'td',
                     null,
-                    item.edmu_nm_municipio
+                    municipio,
+                    item.uf.eduf_sg_uf
                 ),
                 React.createElement(
                     'td',

@@ -5,7 +5,9 @@ class FormCertificate extends React.Component {
             form: {
                 dt_inicio_certificado: '',
                 dt_fim_certificado: '',
-                cd_uf: ''
+                cd_uf: null,
+                cd_municipio: null,
+                cd_certificado: 0
             },
             button: true,
             btnContinue: false,
@@ -13,7 +15,6 @@ class FormCertificate extends React.Component {
             requireds: {
                 dt_inicio_certificado: true,
                 dt_fim_certificado: true,
-                cd_uf: true,
                 cd_certificado: true
             },
             showMsg: false,
@@ -143,7 +144,7 @@ class FormCertificate extends React.Component {
             return;
         }
 
-        let url = getBaseUrl2 + 'osc/certificados/455128';
+        let url = 'osc/certificados';
         let id = null;
         let method = 'POST';
         let msg = "Dados inserido com sucesso!";
@@ -151,18 +152,19 @@ class FormCertificate extends React.Component {
         if (this.state.action === 'edit') {
             id = this.state.editId;
             method = 'PUT';
-            url = getBaseUrl2 + 'osc/certificado/' + id;
+            url = 'osc/certificado/' + id;
             msg = "Dados alterados com sucesso!";
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: method,
-                url: url,
+                url: getBaseUrl2 + url,
                 data: {
                     dt_inicio_certificado: this.state.form.dt_inicio_certificado,
                     dt_fim_certificado: this.state.form.dt_fim_certificado,
                     cd_uf: this.state.form.cd_uf,
+                    cd_municipio: this.state.form.cd_municipio,
                     cd_certificado: this.state.form.cd_certificado,
                     id: id,
                     id_osc: '455128'
@@ -210,10 +212,18 @@ class FormCertificate extends React.Component {
         this.listUf(search);
     }
     listUf(search) {
+        let type = null;
+
+        if (this.state.form.cd_certificado == 8) {
+            type = 'municipio';
+        } else if (this.state.form.cd_certificado == 7) {
+            type = 'estado';
+        };
+
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/estado/' + search,
+            url: getBaseUrl + 'menu/geo/' + type + '/' + search,
             cache: false,
             success: function (data) {
                 this.setState({ listUf: data, loadingList: false });
@@ -226,8 +236,10 @@ class FormCertificate extends React.Component {
     }
     setUf(item) {
         let filters = this.state.filters;
+        let form = this.state.form;
         filters.uf = item;
-        this.setState({ filters: filters });
+        form.cd_uf = item.eduf_cd_uf;
+        this.setState({ filters: filters, form: form });
     }
     removeUf() {
         let filters = this.state.filters;
@@ -263,8 +275,10 @@ class FormCertificate extends React.Component {
     }
     setMunicipio(item) {
         let filters = this.state.filters;
+        let form = this.state.form;
         filters.municipio = item;
-        this.setState({ filters: filters });
+        form.cd_municipio = item.edmu_cd_municipio;
+        this.setState({ filters: filters, form: form });
     }
     removeMunicipio() {
         let filters = this.state.filters;
@@ -379,18 +393,55 @@ class FormCertificate extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'label',
-                                { htmlFor: 'cd_uf' },
+                                { htmlFor: 'cd_uf', style: { display: this.state.form.cd_certificado == 7 || this.state.form.cd_certificado == 8 ? '' : 'none' } },
                                 'Localidade*'
                             ),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
-                                { className: 'input-icon' },
+                                { className: 'input-icon', style: { display: this.state.form.cd_certificado == 7 || this.state.form.cd_certificado == 0 ? 'none' : '' } },
+                                React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um munic\xEDpio', name: 'cd_municipio',
+                                    style: { display: this.state.filters.municipio ? 'none' : '' },
+                                    autoComplete: 'off',
+                                    onClick: this.clickSearchMunicipio,
+                                    onChange: this.handleSearchMunicipio }),
+                                React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
+                                    style: { display: this.state.filters.municipio ? '' : 'none' },
+                                    autoComplete: 'off',
+                                    readOnly: this.state.filters.municipio,
+                                    defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.filters.municipio ? 'none' : '' } },
+                                    React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
+                                    React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        'ul',
+                                        { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
+                                        municipios
+                                    )
+                                ),
+                                React.createElement('br', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'input-icon', style: { display: this.state.form.cd_certificado == 8 || this.state.form.cd_certificado == 0 ? 'none' : '' } },
                                 React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um estado', name: 'cd_uf',
                                     style: { display: this.state.filters.uf ? 'none' : '' },
-                                    onClick: this.clickSearchUf, onChange: this.handleSearchUf }),
+                                    autoComplete: 'off',
+                                    onClick: this.clickSearchUf,
+                                    onChange: this.handleSearchUf }),
                                 React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_uf2',
                                     style: { display: this.state.filters.uf ? '' : 'none' },
+                                    autoComplete: 'off',
                                     readOnly: this.state.filters.uf,
                                     defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
                                 React.createElement(
@@ -413,41 +464,6 @@ class FormCertificate extends React.Component {
                                     )
                                 ),
                                 React.createElement('br', null)
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-6' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'input-icon' },
-                                    React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um Munic\xEDpio', name: 'tx_nome_municipio',
-                                        style: { display: this.state.filters.municipio ? 'none' : '' },
-                                        onClick: this.clickSearchMunicipio, onChange: this.handleSearchMunicipio }),
-                                    React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_municipio2',
-                                        style: { display: this.state.filters.municipio ? '' : 'none' },
-                                        readOnly: this.state.filters.municipio,
-                                        defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.filters.municipio ? 'none' : '' } },
-                                        React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
-                                        React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        React.createElement(
-                                            'ul',
-                                            { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
-                                            municipios
-                                        )
-                                    ),
-                                    React.createElement('br', null)
-                                )
                             )
                         )
                     ),
