@@ -144,7 +144,7 @@ class FormCertificate extends React.Component {
             return;
         }
 
-        let url = 'osc/certificados';
+        let url = 'osc/certificado';
         let id = null;
         let method = 'POST';
         let msg = "Dados inserido com sucesso!";
@@ -157,18 +157,27 @@ class FormCertificate extends React.Component {
         }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
+
+            let data = {
+                id_osc: '455128',
+                id: id,
+                dt_inicio_certificado: this.state.form.dt_inicio_certificado,
+                dt_fim_certificado: this.state.form.dt_fim_certificado,
+                cd_certificado: this.state.form.cd_certificado
+            };
+
+            if (this.state.form.cd_municipio) {
+                data.cd_municipio = this.state.form.cd_municipio;
+                data.cd_uf = this.state.form.cd_municipio.slice(3);
+                console.log('*********', this.state.form.cd_municipio.slice(3));
+            }
+            if (this.state.form.cd_uf) {
+                data.cd_uf = this.state.form.cd_uf;
+            }
             $.ajax({
                 method: method,
                 url: getBaseUrl2 + url,
-                data: {
-                    dt_inicio_certificado: this.state.form.dt_inicio_certificado,
-                    dt_fim_certificado: this.state.form.dt_fim_certificado,
-                    cd_uf: this.state.form.cd_uf,
-                    cd_municipio: this.state.form.cd_municipio,
-                    cd_certificado: this.state.form.cd_certificado,
-                    id: id,
-                    id_osc: '455128'
-                },
+                data: data,
                 cache: false,
                 success: function (data) {
                     if (data.max) {

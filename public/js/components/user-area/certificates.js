@@ -71,7 +71,7 @@ class Certificates extends React.Component {
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/certificados/' + id,
+            url: getBaseUrl2 + 'osc/certificado/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -178,7 +178,11 @@ class Certificates extends React.Component {
 
             let municipio = '';
             if (item.municipio != null) {
-                municipio = item.municipio.edmu_nm_municipio + ' - ';
+                municipio = item.municipio.edmu_nm_municipio + ' - ' + item.municipio.eduf_cd_uf;
+            }
+            let estado = '';
+            if (item.uf != null) {
+                estado = item.uf.eduf_sg_uf;
             }
 
             let hr = null;
@@ -208,7 +212,7 @@ class Certificates extends React.Component {
                     'td',
                     null,
                     municipio,
-                    item.uf.eduf_sg_uf
+                    estado
                 ),
                 React.createElement(
                     'td',
