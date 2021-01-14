@@ -82,6 +82,11 @@ class OscMap extends React.Component {
         this.changeTileLayer = this.changeTileLayer.bind(this);
         this.removeMarkersGroup = this.removeMarkersGroup.bind(this);
         this.addMarkersGroup = this.addMarkersGroup.bind(this);
+
+        this.highlightFeature = this.highlightFeature.bind(this);
+        //this.resetHighlight = this.resetHighlight.bind(this);
+        this.zoomToFeature = this.zoomToFeature.bind(this);
+        //this.onEachFeature = this.onEachFeature.bind(this);
     }
 
     componentDidMount() {
@@ -132,6 +137,7 @@ class OscMap extends React.Component {
     }
 
     makeInfo() {
+        //console.log('make info');
         let mapElements = this.state.mapElements;
 
         this.setState({ info: L.control() }, function () {
@@ -144,16 +150,9 @@ class OscMap extends React.Component {
             // method that we will use to update the control based on feature properties passed
             let _this = this;
             this.state.info.update = function (props) {
-                //console.log('info', props);
+                console.log('info', props);
 
-                let sigla = '';
-                if (props) {
-                    if (props.sigla !== props.nome) {
-                        sigla = props.sigla + ' - ';
-                    }
-                }
-
-                this._div.innerHTML = '<h6 style="margin: 3px 0; font-weight: bold">' + _this.state.serie + '</h6>' + (props ? '<b>' + sigla + props.nome + '</b><br />' + formatNumber(props.total, _this.props.decimais, ',', '.') : "Passe o mouse sobre na região");
+                this._div.innerHTML = props ? '<b>' + props.nm_uf + '</b><br />' + formatNumber(props.nr_valor, 2, ',', '.') : "Passe o mouse sobre na região";
             };
             this.state.info.addTo(mapElements.map);
             this.setState({ mapElements: mapElements });
@@ -340,6 +339,7 @@ class OscMap extends React.Component {
         mapElements.map.scrollWheelZoom.disable();
 
         this.setState({ mapElements: mapElements }, function () {
+            this.makeInfo();
             //this.loadMap();
         });
     }
@@ -709,7 +709,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -718,7 +718,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -970,7 +970,23 @@ class OscMap extends React.Component {
                     fillOpacity: 0.9
                 };
             }.bind(this),
-            onEachFeature: this.onEachFeature //listeners
+            onEachFeature: function (feature, layer) {
+                let _this2 = _this;
+                layer.on('mouseover', function () {
+                    this.setStyle({
+                        weight: 2,
+                        color: '#333',
+                        dashArray: '',
+                        fillOpacity: 1
+                    });
+                    this.bringToFront();
+                    _this2.state.info.update(layer.feature.properties);
+                });
+                layer.on('mouseout', function () {
+                    areaIdh.resetStyle(this);
+                });
+            }
+            //onEachFeature: this.onEachFeature //listeners
         });
 
         mapElements.areaIdhGroup.addLayer(areaIdh);
@@ -978,6 +994,43 @@ class OscMap extends React.Component {
             this.areaOscMap();
         }.bind(this));
     }
+
+    highlightFeature(e) {
+        console.log(e);
+        let layer = e.target;
+        layer.setStyle({
+            weight: 2,
+            color: '#333',
+            dashArray: '',
+            fillOpacity: 1
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+
+        this.state.info.update(layer.feature.properties);
+    }
+    /*resetHighlight(e) {
+        let layer = e.target;
+        this.state.mapElements.areaIdhGroup.resetStyle(e.target);
+        //this.state.geojson.resetStyle(e.target);
+        this.state.info.update();
+    }*/
+    zoomToFeature(e) {
+        console.log('zoom');
+        //this.state.mymap.fitBounds(e.target.getBounds());
+    }
+    /*onEachFeature(feature, layer) {
+        //console.log('feature', feature);
+        //console.log('layer', layer);
+        //console.log('this', this); //this do react. No constructor: this.onEachFeature = this.onEachFeature.bind(this);
+        layer.on({
+            mouseover: this.highlightFeature,
+            mouseout: this.resetHighlight,
+            click: this.zoomToFeature
+        });
+    }*/
 
     areaOscMap() {
         let _this = this;
@@ -992,8 +1045,8 @@ class OscMap extends React.Component {
                     dashArray: '3',
                     fillOpacity: 0.9
                 };
-            }.bind(this),
-            onEachFeature: this.onEachFeature //listeners
+            }.bind(this)
+            //onEachFeature: this.onEachFeature //listeners
         });
 
         mapElements.areaOscGroup.addLayer(areaOsc);
@@ -1143,6 +1196,8 @@ class OscMap extends React.Component {
     }
 
     render() {
+
+        console.log(this.state.mapElements.map);
 
         let tableOsc = null;
 
