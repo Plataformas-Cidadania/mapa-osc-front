@@ -237,6 +237,7 @@
 @endif
 @if($rota=="certificates-user")
     <script src="/js/components/user-area/formCertificate.js"></script>
+    <script src="/js/components/user-area/formEditCertificate.js"></script>
     <script src="/js/components/user-area/certificates.js"></script>
 @endif
 @if($rota=="projetos-user")

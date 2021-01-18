@@ -1,4 +1,4 @@
-class FormCertificate extends React.Component {
+class FormEditCertificate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +26,7 @@ class FormCertificate extends React.Component {
                 8: 'Utilidade Pública Municipal',
                 7: 'Utilidade Pública Estadual'
             },
-            action: '', //new | edit
+            editId: this.props.id,
 
             filters: {
                 uf: null,
@@ -41,8 +41,9 @@ class FormCertificate extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
+        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
+        //this.cleanForm = this.cleanForm.bind(this);
 
         this.clickSearchUf = this.clickSearchUf.bind(this);
         this.handleSearchUf = this.handleSearchUf.bind(this);
@@ -57,14 +58,43 @@ class FormCertificate extends React.Component {
         this.removeMunicipio = this.removeMunicipio.bind(this);
     }
 
-    componentWillReceiveProps(props) {
+    componentDidMount() {
+        this.setState({ editId: this.props.id }, function () {
+            this.edit();
+        });
+    }
 
-        if (this.state.action != props.action) {
-            this.setState({ action: props.action }, function () {
-                this.props.showHideForm(this.state.action);
-                this.cleanForm();
+    componentWillReceiveProps(props) {
+        if (this.state.editId !== props.id) {
+            this.setState({ editId: props.id }, function () {
+                this.edit();
             });
         }
+    }
+
+    edit() {
+        console.log('edit: ', this.state.editId);
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/certificado/' + this.state.editId,
+            data: {},
+            cache: false,
+            success: function (data) {
+                let filters = {
+                    uf: data.uf,
+                    municipio: data.municipio
+                };
+                this.setState({
+                    form: data,
+                    filters: filters
+                }, function () {
+                    //this.props.showHideForm();
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
     }
 
     handleInputChange(event) {
@@ -78,27 +108,13 @@ class FormCertificate extends React.Component {
         this.setState({ form: form });
     }
 
-    cleanForm() {
-        /*let form = this.state.form;
+    /*cleanForm(){
+        let form = this.state.form;
         for(let i in form){
             form[i] = '';
-        }*/
-        this.setState({
-            form: {
-                dt_inicio_certificado: '',
-                dt_fim_certificado: '',
-                cd_uf: null,
-                cd_municipio: null,
-                cd_certificado: 0
-            },
-            filters: {
-                uf: null,
-                municipio: null
-            },
-            searchUf: null,
-            searchMunicipio: null
-        });
-    }
+        }
+        this.setState({form: form});
+    }*/
 
     validate() {
         //console.log(this.state.form);
@@ -129,12 +145,13 @@ class FormCertificate extends React.Component {
             return;
         }
 
-        let msg = "Dados inserido com sucesso!";
+        let msg = "Dados alterados com sucesso!";
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
 
             let data = {
                 id_osc: '455128',
+                id: this.state.editId,
                 dt_inicio_certificado: this.state.form.dt_inicio_certificado,
                 dt_fim_certificado: this.state.form.dt_fim_certificado,
                 cd_certificado: this.state.form.cd_certificado
@@ -145,33 +162,21 @@ class FormCertificate extends React.Component {
                 data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
             if (this.state.form.cd_uf) {
+                data.cd_municipio = null;
                 data.cd_uf = this.state.form.cd_uf;
             }
             $.ajax({
-                method: 'POST',
-                url: getBaseUrl2 + 'osc/certificado',
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/certificado/' + this.state.editId,
                 data: data,
                 cache: false,
                 success: function (data) {
-                    if (data.max) {
-                        let msg = data.msg;
-                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, certificates: data.certificates, updateOk: true, showMsg: true });
-                        return;
-                    }
 
-                    let button = true;
-                    if (this.state.action === 'new') {
-                        if (data.certificates.length >= data.maxCertificates) {
-                            button = false;
-                        }
-                    }
-
-                    let btnContinue = false;
                     this.props.list();
-                    this.cleanForm();
-                    this.props.closeForm();
+                    //this.cleanForm();
+                    //this.props.closeForm();
 
-                    this.setState({ certificates: data.certificates, loading: false, button: button, btnContinue: btnContinue, updateOk: true, msg: msg, showMsg: true });
+                    this.setState({ certificates: data.certificates, loading: false, updateOk: true, msg: msg, showMsg: true });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -392,12 +397,11 @@ class FormCertificate extends React.Component {
                                     style: { display: this.state.filters.municipio ? 'none' : '' },
                                     autoComplete: 'off',
                                     onClick: this.clickSearchMunicipio,
-                                    onChange: this.handleSearchMunicipio,
-                                    value: this.state.searchMunicipio
-                                }),
+                                    onChange: this.handleSearchMunicipio }),
                                 React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
                                     style: { display: this.state.filters.municipio ? '' : 'none' },
                                     autoComplete: 'off',
+                                    readOnly: this.state.filters.municipio,
                                     defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
                                 React.createElement(
                                     'div',
@@ -427,12 +431,11 @@ class FormCertificate extends React.Component {
                                     style: { display: this.state.filters.uf ? 'none' : '' },
                                     autoComplete: 'off',
                                     onClick: this.clickSearchUf,
-                                    onChange: this.handleSearchUf,
-                                    value: this.state.searchUf
-                                }),
+                                    onChange: this.handleSearchUf }),
                                 React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_uf2',
                                     style: { display: this.state.filters.uf ? '' : 'none' },
                                     autoComplete: 'off',
+                                    readOnly: this.state.filters.uf,
                                     defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
                                 React.createElement(
                                     'div',
@@ -471,7 +474,7 @@ class FormCertificate extends React.Component {
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.dt_inicio_certificado ? '' : 'invalid-field'),
                                 type: 'date', name: 'dt_inicio_certificado', onChange: this.handleInputChange,
-                                value: this.state.form.dt_inicio_certificado, placeholder: '' }),
+                                defaultValue: this.state.form.dt_inicio_certificado, placeholder: '' }),
                             React.createElement('br', null)
                         ),
                         React.createElement(
@@ -485,7 +488,7 @@ class FormCertificate extends React.Component {
                             React.createElement('br', null),
                             React.createElement('input', { className: "form-control " + (this.state.requireds.dt_fim_certificado ? '' : 'invalid-field'),
                                 type: 'date', name: 'dt_fim_certificado', onChange: this.handleInputChange,
-                                value: this.state.form.dt_fim_certificado, placeholder: '' }),
+                                defaultValue: this.state.form.dt_fim_certificado, placeholder: '' }),
                             React.createElement('br', null)
                         )
                     ),
@@ -520,8 +523,8 @@ class FormCertificate extends React.Component {
                                 React.createElement(
                                     'span',
                                     null,
-                                    React.createElement('i', { className: 'fas fa-plus' }),
-                                    ' Adicionar'
+                                    React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
+                                    ' Salvar altera\xE7\xE3o'
                                 )
                             )
                         )

@@ -17,40 +17,33 @@ class Certificates extends React.Component{
             editId: 0,
             modal: {},
             modalTitle: 'Inserir título ou certificação',
+
+            removeItemCertificado: null,
+            removeItemTx: '',
+            removeTipo: '',
+
+            editTipo:null
         };
 
         this.list = this.list.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
-        this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.modal = this.modal.bind(this);
         this.callModal = this.callModal.bind(this);
-        this.edit = this.edit.bind(this);
+        //this.edit = this.edit.bind(this);
+        this.callModalExcluir = this.callModalExcluir.bind(this);
     }
 
     componentDidMount(){
         this.list();
     }
 
-    getAge(dateString){
 
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        return age;
-
-    }
-
-    edit(id){
+    /*edit(id){
         this.setState({actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação'}, function(){
             this.callModal();
         });
-    }
+    }*/
 
     cancelRemove(id){
         let remove = this.state.remove;
@@ -58,18 +51,7 @@ class Certificates extends React.Component{
         this.setState({remove: remove});
     }
 
-    remove(id){
-        let remove = this.state.remove;
-
-        if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({loadingRemove: loadingRemove});
+    removeItem(id){
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/certificado/'+id,
@@ -78,20 +60,13 @@ class Certificates extends React.Component{
             },
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.list();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({loadingRemove: loadingRemove});
+                $('#modalFormExcluir').modal('hide');
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
             }.bind(this)
         });
-
     }
 
     showHideForm(action){
@@ -116,7 +91,6 @@ class Certificates extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log("data: ",data);
                 this.setState({certificates: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -126,22 +100,59 @@ class Certificates extends React.Component{
         });
     }
 
-    callModal(){
+    callModal(id, type, txt){
         let modal = this.state.modal;
-        this.setState({modal: modal}, function(){
+        this.setState({
+            modal: modal,
+            editId:id,
+            editTipo:type,
+            modalTitle: txt +' título ou certificação'
+        }, function(){
             $('#modalForm').modal('show');
+        });
+    }
+
+    callModalExcluir(id, tx_nome_conferencia, tipo){
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItemCertificado:id,
+            removeItemTx:tx_nome_conferencia,
+            removeTipo:tipo
+        }, function(){
+            $('#modalFormExcluir').modal('show');
         });
     }
 
     modal(){
 
+        let form = null;
+
+        if(this.state.editTipo=='insert'){
+            form = (
+                <FormCertificate
+                    action={this.state.actionForm}
+                    list={this.list}
+                    showHideForm={this.showHideForm}
+                    closeForm={this.closeForm}/>
+            );
+        }
+        if(this.state.editTipo=='edit'){
+            form = (
+                <FormEditCertificate
+                    action={this.state.actionForm}
+                    list={this.list}
+                    id={this.state.editId}
+                    showHideForm={this.showHideForm}
+                    closeForm={this.closeForm}/>
+            );
+        }
 
         return (
 
             <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-
                         <div className="modal-header">
                             <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modalTitle}</strong></h4>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
@@ -149,12 +160,33 @@ class Certificates extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                                <FormCertificate action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                            {form}
                         </div>
-                        {/*<div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        </div>*/}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
+    modalExcluir(){
+        return (
+            <div id="modalFormExcluir" className="modal fade bd-example-modal-sm" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" ><strong>Excluir permanentemente</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            Tem certeza que quer excluir "{this.state.removeItemTx}".
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.removeItem(this.state.removeItemCertificado, this.state.removeTipo)}>Excluir</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,12 +195,14 @@ class Certificates extends React.Component{
 
     render(){
 
+        let modalExcluir = this.modalExcluir();
+
         let modal = this.modal();
         let certificates = this.state.certificates.map(function(item, index){
 
             let municipio = '';
             if(item.municipio!=null){
-                municipio = item.municipio.edmu_nm_municipio + ' - ' + item.municipio.eduf_cd_uf;
+                municipio = item.municipio.edmu_nm_municipio + ' - ';
             }
             let estado = '';
             if(item.uf!=null){
@@ -187,14 +221,13 @@ class Certificates extends React.Component{
                     <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
                     <td>{municipio}{estado}</td>
                     <td width="70">
-                        <a onClick={() => this.edit(item.id_certificado)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                        <a onClick={() => this.remove(item.id_certificado)} style={{display: this.state.loadingRemove[item.id_certificado] ? 'none' : ''}}>
-                            <i className={"fas "+( this.state.remove[item.id_certificado] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id_certificado)} style={{display: this.state.remove[item.id_certificado] && !this.state.loadingRemove[item.id_certificado] ? '' : 'none'}}>
-                            <i className="fas fa-undo"/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_certificado] ? '' : 'none'}}/>
+                        <div style={{display: (item.cd_certificado==7 || item.cd_certificado==8 ? '' : 'none')}}>
+                            {/*<a onClick={() => this.edit(item.id_certificado)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;*/}
+                            <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                            <a onClick={() => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado')} style={{cursor: 'pointer', top: '4px', position: 'relative'}}>
+                                <i className="far fa-trash-alt text-danger float-right"/>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             );
@@ -229,7 +262,7 @@ class Certificates extends React.Component{
                         </table>
 
                         <div style={{float: 'right', cursor: 'pointer'}}>
-                            <a onClick={this.callModal}  className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
+                            <a onClick={() => this.callModal(0, 'insert', 'Inserir')} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
                         </div>
 
                     </div>
@@ -237,6 +270,7 @@ class Certificates extends React.Component{
                 </div>
 
                 {modal}
+                {modalExcluir}
             </div>
         );
     }
