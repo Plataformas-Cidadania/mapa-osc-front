@@ -75,10 +75,124 @@ class Daschboard extends React.Component{
                     <div className="col-md-4">
                         <div className="box-border">
                             <br/>
-                            <p>Total de projetos</p>
+                            <p>Total de certificados</p>
                             <h2>30</h2>
                         </div>
                     </div>
+
+                    <div className="col-md-12">
+                        <br/>
+                        <div className="box-border">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">OSC</th>
+                                    <th scope="col">Últimos 30 dias</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>ASSOCIACAO CULTURAL PISADA DO SERTAO</td>
+                                    <td>825</td>
+                                    <td>3025</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>ASSOCIACAO CULTURAL PISADA DO SERTAO</td>
+                                    <td>825</td>
+                                    <td>3025</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Dados gerais</strong></p>
+                            <p>2 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Áreas de atuação</strong></p>
+                            <p>2 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Descrição</strong></p>
+                            <p>2 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Títulos e Certificados</strong></p>
+                            <p>2 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Trabalho e Governança</strong></p>
+                            <p>3 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Projetos</strong></p>
+                            <p>1 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <br/>
+                        <div className="box-border">
+                            <br/>
+                            <p><strong>Fontes de recursos</strong></p>
+                            <p>2 OSCs com dados incompletos </p>
+                            <button className="btn btn-outline-primary">Atualizar</button>
+                            <br/><br/>
+                        </div>
+                    </div>
+
+
+
                     {totais}
 
                 </div>
