@@ -165,19 +165,19 @@ class Projetos extends React.Component{
 
             return (
                 <tr key={"projeto_"+index}>
-                    <td>{item.tx_nome_projeto}</td>
-                    <td>{item.dt_data_inicio_projeto}</td>
-                    <td>{item.dt_data_fim_projeto}</td>
-                    <td>{item.nr_valor_total_projeto}</td>
+                    <td>{item.titulo}</td>
+                    <td>{formatDate(item.data_inicio, 'pt-br')}</td>
+                    {/*<td>{item.dt_data_fim_projeto}</td>*/}
+                    {/*<td>{item.nr_valor_total_projeto}</td>*/}
                     <td width="70">
                         <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                        <a onClick={() => this.remove(item.id_projeto)} style={{display: this.state.loadingRemove[item.id_projeto] ? 'none' : ''}}>
-                            <i className={"fas "+( this.state.remove[item.id_projeto] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
+                        <a onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : ''}}>
+                            <i className={"fas "+( this.state.remove[item.id] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
                         </a>
-                        <a onClick={() => this.cancelRemove(item.id_projeto)} style={{display: this.state.remove[item.id_projeto] && !this.state.loadingRemove[item.id_projeto] ? '' : 'none'}}>
+                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? '' : 'none'}}>
                             <i className="fas fa-undo"/>
                         </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_projeto] ? '' : 'none'}}/>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
                     </td>
                 </tr>
             );
@@ -201,8 +201,8 @@ class Projetos extends React.Component{
                             <tr>
                                 <th scope="col">Titulo / Projeto</th>
                                 <th scope="col">Início da validade</th>
-                                <th scope="col">Fim da validade</th>
-                                <th scope="col">Valor total projeto</th>
+                                {/*<th scope="col">Fim da validade</th>
+                                <th scope="col">Valor total projeto</th>*/}
                                 <th scope="col"/>
                             </tr>
                             </thead>

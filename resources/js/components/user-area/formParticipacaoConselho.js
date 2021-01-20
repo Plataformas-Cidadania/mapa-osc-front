@@ -15,7 +15,7 @@ class FormParticipacaoConselho extends React.Component{
             loading: false,
             requireds: {
                 tx_nome_conselho: true,
-                tx_nome_tipo_participacao: true,
+                //tx_nome_tipo_participacao: true,
                 //tx_nome_representante_conselho: true,
                 tx_periodicidade_reuniao: true,
                 dt_data_inicio_conselho: true,
@@ -58,30 +58,17 @@ class FormParticipacaoConselho extends React.Component{
         this.validate = this.validate.bind(this);
         this.cleanFormConselho = this.cleanFormConselho.bind(this);
 
-
-        //this.listConselho = this.listConselho.bind(this);
     }
 
     componentDidMount(){
+        console.log('1');
         this.listConselho();
-        //this.listTipo();
         this.listReuniao();
     }
 
-    componentWillReceiveProps(props){
-        console.log(props);
-        let lastEditId = this.state.editId;
-        if(this.state.action != props.action || this.state.editId != props.id){
-            this.setState({action: props.action, editId: props.id}, function(){
-                if(lastEditId != props.id){
-                    //this.props.showHideFormConselho(this.state.action);
-                    this.edit();
-                }
-                if(this.state.action=='new'){
-                    this.cleanFormConselho();
-                }
-            });
-        }
+    componentWillReceiveProps(){
+        console.log('2');
+        this.cleanFormConselho();
     }
 
     edit(){
@@ -145,26 +132,20 @@ class FormParticipacaoConselho extends React.Component{
     }
 
     register(e){
+
+        console.log('11111');
+
         e.preventDefault();
 
         if(!this.validate()){
             return;
         }
-
-        let url = 'osc/ps_conselho';
-        let id = null;
-        let method = 'POST';
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = 'osc/ps_conselho/'+id;
-            method = 'PUT';
-        }
-
+        console.log('22');
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:method,
-                url: getBaseUrl2 + url,
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/ps_conselho',
                 data:{
                     cd_conselho: this.state.form.tx_nome_conselho,
                     //cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
@@ -174,7 +155,6 @@ class FormParticipacaoConselho extends React.Component{
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
                     bo_oficial: 0,
                     id_osc: 611720,
-                    id: id,
                 },
                 cache: false,
                 success: function(data) {

@@ -25,23 +25,6 @@ class FormEditParticipacaoConselho extends React.Component{
             msg: '',
             participacoes: [],
 
-            /*cd_conselho:{
-                1: 'Residencial',
-                2: 'Comercial',
-            },
-            tx_nome_tipo_participacao:{
-                1: 'Titular',
-                2: 'Suplente',
-                3: 'Comercial',
-            },
-            tx_periodicidade_reuniao:{
-                1: 'Semanal',
-                2: 'Mensal',
-                3: 'Trimestral',
-                4: 'Semestral',
-                5: 'Anual',
-                6: 'Outra',
-            },*/
             action: '',//new | edit
             editId: this.props.id,
 
@@ -56,21 +39,19 @@ class FormEditParticipacaoConselho extends React.Component{
         this.updateConselho = this.updateConselho.bind(this);
         this.editConselho = this.editConselho.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanFormConselho = this.cleanFormConselho.bind(this);
-
-
-        //this.listConselho = this.listConselho.bind(this);
     }
 
     componentDidMount(){
+        this.setState({editId: this.props.id}, function(){
+            this.editConselho();
+        });
         this.listConselho();
         this.listTipo();
         this.listReuniao();
     }
 
     componentWillReceiveProps(props){
-        let lastEditId = this.state.editId;
-        if(props.id){
+        if(this.state.editId !== props.id){
             this.setState({editId: props.id}, function(){
                 this.editConselho();
             });
@@ -105,14 +86,6 @@ class FormEditParticipacaoConselho extends React.Component{
         let form = this.state.form;
         form[name] = value;
 
-        this.setState({form: form});
-    }
-
-    cleanFormConselho(){
-        let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }
         this.setState({form: form});
     }
 
@@ -169,7 +142,7 @@ class FormEditParticipacaoConselho extends React.Component{
                     this.props.list();
                     console.log('ddddd')
 
-                    this.cleanFormConselho();
+                    //this.cleanFormConselho();
                     //this.props.showHideFormConselho();
 
                     this.setState({participacoes: data.participacoes, loading: false})
@@ -267,12 +240,6 @@ class FormEditParticipacaoConselho extends React.Component{
             );
         }.bind(this));
 
-        /*let listTipo = this.state.listTipo.map(function(item, index){
-            return (
-                <option value={item.cd_tipo_participacao} key={'listTipo'+index}>{item.tx_nome_tipo_participacao}</option>
-            );
-        }.bind(this));*/
-
         let listReuniao = this.state.listReuniao.map(function(item, index){
             return (
                 <option value={item.cd_periodicidade_reuniao_conselho} key={'listReuniao'+index}>{item.tx_nome_periodicidade_reuniao_conselho}</option>
@@ -290,7 +257,6 @@ class FormEditParticipacaoConselho extends React.Component{
 
                         <div className="label-float">
 
-                            {/*<label htmlFor="tx_nome_conselho">Nome do Conselho</label><br/>*/}
                             <select  className={"form-control "}
                                 name="cd_conselho" onChange={this.handleInputChange} value={this.state.form.cd_conselho}>
                                 <option value="0">Selecione</option>
@@ -298,21 +264,7 @@ class FormEditParticipacaoConselho extends React.Component{
                             </select><br/>
 
                         </div>
-                        {/*<div className="label-float">
-                            <select  className={"form-control "}
-                                     name="cd_tipo_participacao" onChange={this.handleInputChange} value={this.state.form.cd_tipo_participacao}>
-                                <option value="0">Selecione</option>
-                                {listTipo}
-                            </select><br/>
-                        </div>*/}
-                        {/*<div className="label-float">
-                            <input className={"form-control form-g "} type="text" name="tx_nome_representante_conselho" onChange={this.handleInputChange} value={this.state.form.tx_nome_representante_conselho}
-                                   placeholder="Se houver, insira o link que" />
-                            <label htmlFor="tx_nome_representante_conselho">Nome de representante</label>
-                            <div className="label-box-info-off">
-                                <p>&nbsp;</p>
-                            </div>
-                        </div>*/}
+
                         <div className="label-float">
                             <select  className={"form-control "}
                                      name="cd_periodicidade_reuniao_conselho" onChange={this.handleInputChange} value={this.state.form.cd_periodicidade_reuniao_conselho}>

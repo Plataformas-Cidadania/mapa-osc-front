@@ -39,17 +39,18 @@ class FormEditParticipacaoConferencia extends React.Component{
         this.register = this.register.bind(this);
         this.editConferencia = this.editConferencia.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
     }
 
     componentDidMount(){
+        this.setState({editId: this.props.id}, function(){
+            this.editConferencia();
+        });
         this.listConferencia();
         this.listForma();
     }
 
     componentWillReceiveProps(props){
-        let lastEditId = this.state.editId;
-        if(props.id){
+        if(this.state.editId !== props.id){
             this.setState({editId: props.id}, function(){
                 this.editConferencia();
             });
@@ -87,14 +88,6 @@ class FormEditParticipacaoConferencia extends React.Component{
         this.setState({form: form});
     }
 
-    cleanForm(){
-        let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }
-        this.setState({form: form});
-    }
-
     validate(){
         let valid = true;
 
@@ -110,7 +103,7 @@ class FormEditParticipacaoConferencia extends React.Component{
             }
         }
 
-        //console.log(requireds);
+
 
         this.setState({requireds: requireds});
         return valid;
@@ -142,12 +135,7 @@ class FormEditParticipacaoConferencia extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('2222', data);
-
                     this.props.list();
-                    this.cleanForm();
-                    //this.props.showHideFormConferencia();
-
                     this.setState({conferencias: data.conferencias, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {

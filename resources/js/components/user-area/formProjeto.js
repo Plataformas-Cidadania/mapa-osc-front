@@ -71,7 +71,7 @@ class FormProjeto extends React.Component{
     edit(){
         $.ajax({
             method: 'GET',
-            url: '/edit-user-projeto/'+this.state.editId,
+            url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
             data: {
 
             },
@@ -361,14 +361,14 @@ class FormProjeto extends React.Component{
                             </div>
 
                             <div className="col-md-4">
-                                <select className={"form-control form-m "+(this.state.form.tx_nome_status_projeto ? '' : 'invalid-field')}
-                                        name="cd_certificado" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_status_projeto}>
+                                <select className={"form-control form-m "+(this.state.form.cd_status_projeto ? '' : 'invalid-field')}
+                                        name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}>
                                     <option value="-1">Selecione</option>
-                                    <option value="Arquivado, cancelado ou indeferido">Arquivado, cancelado ou indeferido</option>
-                                    <option value="Proposta">Proposta</option>
-                                    <option value="Projeto em andamento">Projeto em andamento</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                    <option value="Outro">Outro</option>
+                                    <option value="1">Arquivado, cancelado ou indeferido</option>
+                                    <option value="3">Proposta</option>
+                                    <option value="3">Projeto em andamento</option>
+                                    <option value="2">Finalizado</option>
+                                    <option value="5">Outro</option>
                                 </select><br/>
                             </div>
 

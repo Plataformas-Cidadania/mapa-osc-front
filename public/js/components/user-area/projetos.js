@@ -181,22 +181,12 @@ class Projetos extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.tx_nome_projeto
+                    item.titulo
                 ),
                 React.createElement(
                     'td',
                     null,
-                    item.dt_data_inicio_projeto
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.dt_data_fim_projeto
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    item.nr_valor_total_projeto
+                    formatDate(item.data_inicio, 'pt-br')
                 ),
                 React.createElement(
                     'td',
@@ -209,15 +199,15 @@ class Projetos extends React.Component {
                     '\xA0\xA0',
                     React.createElement(
                         'a',
-                        { onClick: () => this.remove(item.id_projeto), style: { display: this.state.loadingRemove[item.id_projeto] ? 'none' : '' } },
-                        React.createElement('i', { className: "fas " + (this.state.remove[item.id_projeto] ? "fa-times text-primary" : "fa-trash-alt text-danger") })
+                        { onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : '' } },
+                        React.createElement('i', { className: "fas " + (this.state.remove[item.id] ? "fa-times text-primary" : "fa-trash-alt text-danger") })
                     ),
                     React.createElement(
                         'a',
-                        { onClick: () => this.cancelRemove(item.id_projeto), style: { display: this.state.remove[item.id_projeto] && !this.state.loadingRemove[item.id_projeto] ? '' : 'none' } },
+                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? '' : 'none' } },
                         React.createElement('i', { className: 'fas fa-undo' })
                     ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_projeto] ? '' : 'none' } })
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
                 )
             );
         }.bind(this));
@@ -278,16 +268,6 @@ class Projetos extends React.Component {
                                     'th',
                                     { scope: 'col' },
                                     'In\xEDcio da validade'
-                                ),
-                                React.createElement(
-                                    'th',
-                                    { scope: 'col' },
-                                    'Fim da validade'
-                                ),
-                                React.createElement(
-                                    'th',
-                                    { scope: 'col' },
-                                    'Valor total projeto'
                                 ),
                                 React.createElement('th', { scope: 'col' })
                             )

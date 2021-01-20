@@ -70,7 +70,7 @@ class FormProjeto extends React.Component {
     edit() {
         $.ajax({
             method: 'GET',
-            url: '/edit-user-projeto/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
@@ -368,8 +368,8 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-4' },
                             React.createElement(
                                 'select',
-                                { className: "form-control form-m " + (this.state.form.tx_nome_status_projeto ? '' : 'invalid-field'),
-                                    name: 'cd_certificado', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_status_projeto },
+                                { className: "form-control form-m " + (this.state.form.cd_status_projeto ? '' : 'invalid-field'),
+                                    name: 'cd_status_projeto', onChange: this.handleInputChange, value: this.state.form.cd_status_projeto },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -377,27 +377,27 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Arquivado, cancelado ou indeferido' },
+                                    { value: '1' },
                                     'Arquivado, cancelado ou indeferido'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Proposta' },
+                                    { value: '3' },
                                     'Proposta'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Projeto em andamento' },
+                                    { value: '3' },
                                     'Projeto em andamento'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Finalizado' },
+                                    { value: '2' },
                                     'Finalizado'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Outro' },
+                                    { value: '5' },
                                     'Outro'
                                 )
                             ),

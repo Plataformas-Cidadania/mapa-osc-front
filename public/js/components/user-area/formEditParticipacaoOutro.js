@@ -21,12 +21,16 @@ class FormEditParticipacaoOutro extends React.Component {
         this.register = this.register.bind(this);
         this.editOutro = this.editOutro.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({ editId: this.props.id }, function () {
+            this.editOutro();
+        });
     }
 
     componentWillReceiveProps(props) {
-        let lastEditId = this.state.editId;
-        if (props.id) {
+        if (this.state.editId !== props.id) {
             this.setState({ editId: props.id }, function () {
                 this.editOutro();
             });
@@ -63,14 +67,6 @@ class FormEditParticipacaoOutro extends React.Component {
         this.setState({ form: form });
     }
 
-    cleanForm() {
-        let form = this.state.form;
-        for (let i in form) {
-            form[i] = '';
-        }
-        this.setState({ form: form });
-    }
-
     validate() {
         console.log(this.state.form);
         let valid = true;
@@ -86,8 +82,6 @@ class FormEditParticipacaoOutro extends React.Component {
                 requireds[index] = true;
             }
         }
-
-        //console.log(requireds);
 
         this.setState({ requireds: requireds });
         return valid;
@@ -115,8 +109,6 @@ class FormEditParticipacaoOutro extends React.Component {
                 success: function (data) {
 
                     this.props.list();
-
-                    this.cleanForm();
 
                     this.setState({ participacoes: data.participacoes, loading: false });
                 }.bind(this),
