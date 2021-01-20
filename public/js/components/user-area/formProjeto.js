@@ -906,7 +906,7 @@ class FormProjeto extends React.Component {
                                 { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-4' },
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'p',
                                         null,
@@ -946,7 +946,7 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-4' },
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'p',
                                         null,
@@ -960,7 +960,7 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-4' },
+                                    { className: 'col-md-12' },
                                     React.createElement(
                                         'p',
                                         null,

@@ -618,7 +618,7 @@ class FormProjeto extends React.Component{
 
                                 <br/>
                                 <div className="row">
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <p><strong>Público Beneficiado</strong></p>
                                         <hr/>
                                         <div className="label-float">
@@ -634,11 +634,11 @@ class FormProjeto extends React.Component{
                                             <i className="fas fa-minus"/>
                                         </button>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <p><strong>Local de execução</strong></p>
                                         <hr/>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <p><strong>Financiadores do Projeto</strong></p>
                                         <hr/>
                                     </div>

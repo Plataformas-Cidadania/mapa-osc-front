@@ -260,8 +260,11 @@
     <script src="/js/components/user-area/formEditParticipacaoConselho.js"></script>
     <script src="/js/components/user-area/participacoes.js"></script>
 @endif
-@if($rota=="recursos-user")
+{{--@if($rota=="recursos-user")
     <script src="/js/components/user-area/formRecurso.js"></script>
+    <script src="/js/components/user-area/recursos.js"></script>
+@endif--}}
+@if($rota=="recursos-user")
     <script src="/js/components/user-area/recursos.js"></script>
 @endif
 @if($rota=="areas-atuacao-user")
@@ -278,9 +281,7 @@
 @if($rota=="descricao-user")
     <script src="/js/components/user-area/descricao.js"></script>
 @endif
-@if($rota=="recursos-user")
-    <script src="/js/components/user-area/recursos.js"></script>
-@endif
+
 @if($rota=="selo-user")
     <script src="/js/components/user-area/seal.js"></script>
 @endif

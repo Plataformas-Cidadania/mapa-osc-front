@@ -148,7 +148,7 @@ class Recursos extends React.Component {
     }
 
     getRecursosProprios(ano) {
-        ano = ano + "-01-01";
+        //ano = ano+"-01-01";
         console.log('recursos:', this.state.recursos);
         let recursos_proprios = null;
         let recursos_publicos = null;
@@ -164,7 +164,13 @@ class Recursos extends React.Component {
                 break;
             }
         }
-        this.setState({ recursos_proprios: recursos_proprios, recursos_publicos: recursos_publicos, recursos_privados: recursos_privados, recursos_nao_financeiros: recursos_nao_financeiros, ano: ano });
+        this.setState({
+            recursos_proprios: recursos_proprios,
+            recursos_publicos: recursos_publicos,
+            recursos_privados: recursos_privados,
+            recursos_nao_financeiros: recursos_nao_financeiros,
+            ano: ano
+        });
     }
 
     callSubObjetivos() {
@@ -276,7 +282,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -301,7 +307,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -326,7 +332,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -351,7 +357,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.premios_recebidos ? this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.premios_recebidos ? this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -376,7 +382,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.venda_produtos ? this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.venda_produtos ? this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -401,7 +407,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.prestacao_servicos ? this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.prestacao_servicos ? this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -426,7 +432,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_proprios ? this.state.recursos_proprios.venda_bens_direitos ? this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.venda_bens_direitos ? this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -466,7 +472,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.parceria_governo_estadual ? this.state.recursos_publicos.parceria_governo_estadual.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.parceria_governo_estadual ? this.state.recursos_publicos.parceria_governo_estadual.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -491,7 +497,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.acordo_organismos_multilaterais ? this.state.recursos_publicos.acordo_organismos_multilaterais.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.acordo_organismos_multilaterais ? this.state.recursos_publicos.acordo_organismos_multilaterais.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -516,7 +522,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista ? this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista ? this.state.recursos_publicos.empresas_publicas_sociedades_economia_mista.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -541,7 +547,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.parceria_governo_municipal ? this.state.recursos_publicos.parceria_governo_municipal.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.parceria_governo_municipal ? this.state.recursos_publicos.parceria_governo_municipal.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -566,7 +572,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.acordo_governos_estrangeiros ? this.state.recursos_publicos.acordo_governos_estrangeiros.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.acordo_governos_estrangeiros ? this.state.recursos_publicos.acordo_governos_estrangeiros.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -591,7 +597,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_publicos ? this.state.recursos_publicos.transferências_federais_recebidas_osc ? this.state.recursos_publicos.transferências_federais_recebidas_osc.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_publicos ? this.state.recursos_publicos.transferências_federais_recebidas_osc ? this.state.recursos_publicos.transferências_federais_recebidas_osc.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -631,7 +637,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.parceria_oscs_brasileiras ? this.state.recursos_privados.parceria_oscs_brasileiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.parceria_oscs_brasileiras ? this.state.recursos_privados.parceria_oscs_brasileiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -656,7 +662,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras ? this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras ? this.state.recursos_privados.parcerias_organizacoes_religiosas_brasileiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -681,7 +687,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.empresas_privadas_brasileiras ? this.state.recursos_privados.empresas_privadas_brasileiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.empresas_privadas_brasileiras ? this.state.recursos_privados.empresas_privadas_brasileiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -706,7 +712,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.doacoes_pessoa_juridica ? this.state.recursos_privados.doacoes_pessoa_juridica.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.doacoes_pessoa_juridica ? this.state.recursos_privados.doacoes_pessoa_juridica.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -731,7 +737,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal ? this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal ? this.state.recursos_privados.doacoes_recebidas_forma_produtos_servicos_com_nota_fiscal.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -756,7 +762,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.parcerias_oscs_estrangeiras ? this.state.recursos_privados.parcerias_oscs_estrangeiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.parcerias_oscs_estrangeiras ? this.state.recursos_privados.parcerias_oscs_estrangeiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -781,7 +787,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras ? this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras ? this.state.recursos_privados.parcerias_organizacoes_religiosas_estrangeiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -806,7 +812,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.empresas_privadas_estrangeiras ? this.state.recursos_privados.empresas_privadas_estrangeiras.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.empresas_privadas_estrangeiras ? this.state.recursos_privados.empresas_privadas_estrangeiras.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -831,7 +837,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_privados ? this.state.recursos_privados.doacoes_pessoa_fisica ? this.state.recursos_privados.doacoes_pessoa_fisica.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_privados ? this.state.recursos_privados.doacoes_pessoa_fisica ? this.state.recursos_privados.doacoes_pessoa_fisica.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -871,7 +877,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.voluntariado ? this.state.recursos_nao_financeiros.voluntariado.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.voluntariado ? this.state.recursos_nao_financeiros.voluntariado.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -896,7 +902,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.imunidades ? this.state.recursos_nao_financeiros.imunidades.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.imunidades ? this.state.recursos_nao_financeiros.imunidades.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -921,7 +927,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal ? this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal ? this.state.recursos_nao_financeiros.doacoes_recebidas_forma_produtos_servicos_sem_nota_fiscal.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -946,7 +952,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.isencoes ? this.state.recursos_nao_financeiros.isencoes.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.isencoes ? this.state.recursos_nao_financeiros.isencoes.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
@@ -971,7 +977,7 @@ class Recursos extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            value: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.bens_recebidos_direito_uso ? this.state.recursos_nao_financeiros.bens_recebidos_direito_uso.nr_valor_recursos_osc : "" : "",
+                                            defaultValue: this.state.recursos_nao_financeiros ? this.state.recursos_nao_financeiros.bens_recebidos_direito_uso ? this.state.recursos_nao_financeiros.bens_recebidos_direito_uso.nr_valor_recursos_osc : "" : "",
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',

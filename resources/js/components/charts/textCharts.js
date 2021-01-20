@@ -37,13 +37,13 @@ class TextCharts extends React.Component{
         let charts = [];
 
         for(let chart in data){
-            //console.log("######"+i+"######");
-            console.log(data[chart].area_atuacao);
+            console.log("############");
+            console.log(data[chart].area_atuacao.tx_porcentagem_maior);
             let dataChart = data[chart].area_atuacao.series_1;
 
             let labels = [];
             let series = [];
-            let name = data[chart].titulo;
+            let name = data[chart].area_atuacao.tx_porcentagem_maior;
             let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
             /*let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];*/
