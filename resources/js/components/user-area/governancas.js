@@ -42,11 +42,17 @@ class Governancas extends React.Component{
 
             editIdOsc: 0,
 
+
+            removeItem: null,
+            removeItemTx: '',
+            removeTipo: '',
+
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.governanca = this.governanca.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
-        this.remove = this.remove.bind(this);
+        //this.remove = this.remove.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.closeForm = this.closeForm.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
@@ -54,6 +60,8 @@ class Governancas extends React.Component{
         this.closeFormConselho = this.closeFormConselho.bind(this);
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
+
+        this.callModalExcluir = this.callModalExcluir.bind(this);
     }
 
 
@@ -85,7 +93,28 @@ class Governancas extends React.Component{
         this.setState({remove: remove});
     }
 
-    remove(id){
+    removeItem(id, tipo){
+        let remove = this.state.remove;
+
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/'+id,
+            data: {
+
+            },
+            cache: false,
+            success: function(data){
+                this.governanca();
+                $('#modalFormExcluir').modal('hide');
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+
+    }
+
+    /*remove(id){
         let remove = this.state.remove;
 
         if(!remove[id]){
@@ -119,7 +148,7 @@ class Governancas extends React.Component{
             }.bind(this)
         });
 
-    }
+    }*/
 
     showHideForm(action){
         let showForm = !this.state.showForm;
@@ -251,8 +280,47 @@ class Governancas extends React.Component{
 
     }
 
+    callModalExcluir(id, tx_nome_conferencia, tipo){
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItem:id,
+            removeItemTx:tx_nome_conferencia,
+            removeTipo:tipo
+        }, function(){
+            $('#modalFormExcluir').modal('show');
+        });
+    }
+
+    modalExcluir(){
+        return (
+            <div id="modalFormExcluir" className="modal fade bd-example-modal-sm" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" ><strong>Excluir permanentemente</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            Tem certeza que quer excluir "{this.state.removeItemTx}".
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.removeItem(this.state.removeItem, this.state.removeTipo)}>Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
 
     render(){
+
+        let modalExcluir = this.modalExcluir();
 
 
         let governancas = this.state.governancas.map(function(item, index){
@@ -262,18 +330,23 @@ class Governancas extends React.Component{
                 <div className="box-insert-governanca" key={"governanca_"+index}>
                     {/*<i className="far fa-trash-alt text-danger float-right"/>*/}
                     <div className="float-right" style={{marginRight: '40px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.remove(item.id_dirigente)} style={{display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block'}}>
+                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)}><i className="fa fa-edit"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <a onClick={() => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'dirigente')} style={{cursor: 'pointer'}}>
+                            <i className="far fa-trash-alt text-danger float-right"/>
+                        </a>
+
+                        {/*<a className="box-itens-btn-del" onClick={() => this.remove(item.id_dirigente)} style={{display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block'}}>
                             <i className={"fa "+( this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                         </a>
                         <a onClick={() => this.cancelRemove(item.id_dirigente)} style={{display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none'}}>
                             <i className={"fa fa-undo"}/>
                         </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none'}}/>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none'}}/>*/}
                     </div>
                     <p>{item.tx_nome_dirigente}</p>
                     <p><strong>{item.tx_cargo_dirigente}</strong></p>
-
+                    {modalExcluir}
                 </div>
 
             );

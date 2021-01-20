@@ -40,13 +40,18 @@ class Governancas extends React.Component {
             //voluntarios: null,
             totalTrabalhadores: null,
 
-            editIdOsc: 0
+            editIdOsc: 0,
+
+            removeItem: null,
+            removeItemTx: '',
+            removeTipo: ''
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.governanca = this.governanca.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
-        this.remove = this.remove.bind(this);
+        //this.remove = this.remove.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.closeForm = this.closeForm.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
@@ -54,6 +59,8 @@ class Governancas extends React.Component {
         this.closeFormConselho = this.closeFormConselho.bind(this);
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
+
+        this.callModalExcluir = this.callModalExcluir.bind(this);
     }
 
     handleInputChange(event) {
@@ -84,38 +91,55 @@ class Governancas extends React.Component {
         this.setState({ remove: remove });
     }
 
-    remove(id) {
+    removeItem(id, tipo) {
         let remove = this.state.remove;
 
-        if (!remove[id]) {
-            remove[id] = true;
-            this.setState({ remove: remove });
-            return;
-        }
-
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({ loadingRemove: loadingRemove });
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/governanca/' + id,
             data: {},
             cache: false,
             success: function (data) {
+                this.governanca();
+                $('#modalFormExcluir').modal('hide');
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    /*remove(id){
+        let remove = this.state.remove;
+         if(!remove[id]){
+            remove[id] = true;
+            this.setState({remove: remove});
+            return;
+        }
+         let loadingRemove = this.state.loadingRemove;
+        loadingRemove[id] = true;
+        this.setState({loadingRemove: loadingRemove});
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/governanca/'+id,
+            data: {
+             },
+            cache: false,
+            success: function(data){
                 //console.log(data);
                 this.governanca();
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
-                this.setState({ loadingRemove: loadingRemove });
+                this.setState({loadingRemove: loadingRemove});
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
                 let loadingRemove = this.state.loadingRemove;
                 loadingRemove[id] = false;
                 //this.setState({loadingRemove: loadingRemove});
             }.bind(this)
         });
-    }
+     }*/
 
     showHideForm(action) {
         let showForm = !this.state.showForm;
@@ -241,7 +265,79 @@ class Governancas extends React.Component {
         });
     }
 
+    callModalExcluir(id, tx_nome_conferencia, tipo) {
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItem: id,
+            removeItemTx: tx_nome_conferencia,
+            removeTipo: tipo
+        }, function () {
+            $('#modalFormExcluir').modal('show');
+        });
+    }
+
+    modalExcluir() {
+        return React.createElement(
+            'div',
+            { id: 'modalFormExcluir', className: 'modal fade bd-example-modal-sm', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Excluir permanentemente'
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        'Tem certeza que quer excluir "',
+                        this.state.removeItemTx,
+                        '".'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                            'Cancelar'
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-danger', onClick: () => this.removeItem(this.state.removeItem, this.state.removeTipo) },
+                            'Excluir'
+                        )
+                    )
+                )
+            )
+        );
+    }
+
     render() {
+
+        let modalExcluir = this.modalExcluir();
 
         let governancas = this.state.governancas.map(function (item, index) {
 
@@ -256,18 +352,12 @@ class Governancas extends React.Component {
                         { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id_dirigente) },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
-                    '\xA0',
+                    '\xA0\xA0\xA0\xA0\xA0',
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.remove(item.id_dirigente), style: { display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id_dirigente), style: { display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none' } },
-                        React.createElement('i', { className: "fa fa-undo" })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none' } })
+                        { onClick: () => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'dirigente'), style: { cursor: 'pointer' } },
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                    )
                 ),
                 React.createElement(
                     'p',
@@ -282,7 +372,8 @@ class Governancas extends React.Component {
                         null,
                         item.tx_cargo_dirigente
                     )
-                )
+                ),
+                modalExcluir
             );
         }.bind(this));
 
