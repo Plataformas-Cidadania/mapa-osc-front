@@ -1,29 +1,58 @@
-class FormConselho extends React.Component {
+class FormEditGovernanca extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             form: {
-                tx_nome_conselheiro: ''
+                tx_nome_dirigente: '',
+                tx_cargo_dirigente: ''
             },
             button: true,
             btnContinue: false,
             loading: false,
             requireds: {
-                tx_nome_conselheiro: true
+                tx_nome_dirigente: true,
+                tx_cargo_dirigente: true
             },
             showMsg: false,
             msg: '',
-            conselhos: []
+            governancas: [],
+            editId: this.props.id
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
+        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
     }
 
-    componentWillReceiveProps() {
-        this.cleanForm();
+    componentDidMount() {
+        this.setState({ editId: this.props.id }, function () {
+            this.edit();
+        });
+    }
+
+    componentWillReceiveProps(props) {
+        if (this.state.editId !== props.id) {
+            this.setState({ editId: props.id }, function () {
+                this.edit();
+            });
+        }
+    }
+
+    edit() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/governanca/' + this.state.editId,
+            data: {},
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                this.setState({ form: data }, function () {});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
     }
 
     handleInputChange(event) {
@@ -37,16 +66,7 @@ class FormConselho extends React.Component {
         this.setState({ form: form });
     }
 
-    cleanForm() {
-        let form = this.state.form;
-        for (let i in form) {
-            form[i] = '';
-        }
-        this.setState({ form: form });
-    }
-
     validate() {
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -61,8 +81,6 @@ class FormConselho extends React.Component {
             }
         }
 
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -76,20 +94,20 @@ class FormConselho extends React.Component {
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: getBaseUrl2 + 'osc/conselho',
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/governanca/' + this.state.editId,
                 data: {
-                    tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
+                    tx_nome_dirigente: this.state.form.tx_nome_dirigente,
+                    tx_cargo_dirigente: this.state.form.tx_cargo_dirigente,
                     bo_oficial: 0,
-                    id_osc: 455128
+                    id_osc: 455128,
+                    id: this.state.editId
                 },
                 cache: false,
                 success: function (data) {
                     this.props.list();
-                    this.cleanForm();
-                    this.props.closeForm();
 
-                    this.setState({ conselhos: data.conselhos, loading: false });
+                    this.setState({ governancas: data.governancas, loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -110,9 +128,13 @@ class FormConselho extends React.Component {
                 React.createElement(
                     'form',
                     null,
-                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_nome_conselheiro ? '' : 'invalid-field'),
-                        type: 'text', name: 'tx_nome_conselheiro', onChange: this.handleInputChange,
-                        value: this.state.form.tx_nome_conselheiro, placeholder: 'Nome' }),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_nome_dirigente ? '' : 'invalid-field'),
+                        type: 'text', name: 'tx_nome_dirigente', onChange: this.handleInputChange,
+                        value: this.state.form.tx_nome_dirigente, placeholder: 'Nome' }),
+                    React.createElement('br', null),
+                    React.createElement('input', { className: "form-control " + (this.state.requireds.tx_cargo_dirigente ? '' : 'invalid-field'),
+                        type: 'text', name: 'tx_cargo_dirigente', onChange: this.handleInputChange,
+                        value: this.state.form.tx_cargo_dirigente, placeholder: 'Cargo do dirigente' }),
                     React.createElement('br', null),
                     React.createElement(
                         'button',
@@ -133,7 +155,7 @@ class FormConselho extends React.Component {
                     React.createElement(
                         'div',
                         { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
-                        'M\xE1ximo de Conselhoz Cadastrados'
+                        'M\xE1ximo de Governancaz Cadastrados'
                     )
                 )
             )

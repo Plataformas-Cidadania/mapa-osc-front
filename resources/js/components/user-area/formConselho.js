@@ -14,53 +14,17 @@ class FormConselho extends React.Component{
             showMsg: false,
             msg: '',
             conselhos: [],
-            maxAlert: false,
-            action: '',//new | edit
-            editId: this.props.id,
         };
 
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
     }
 
-    componentWillReceiveProps(props){
-        let lastEditId = this.state.editId;
-        if(this.state.action != props.action || this.state.editId != props.id){
-            this.setState({action: props.action, editId: props.id}, function(){
-                if(lastEditId != props.id){
-                    this.props.showHideFormConselho(this.state.action);
-                    this.edit();
-                }
-                if(this.state.action=='new'){
-                    this.cleanForm();
-                }
-            });
-        }
-    }
-
-    edit(){
-
-        $.ajax({
-            method: 'GET',
-            url: getBaseUrl2 + 'osc/conselho/'+this.state.editId,
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                console.log(data);
-                this.setState({form: data}, function(){
-                    //this.props.showHideForm();
-                });
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
+    componentWillReceiveProps(){
+        this.cleanForm();
     }
 
     handleInputChange(event) {
@@ -111,44 +75,22 @@ class FormConselho extends React.Component{
             return;
         }
 
-        let url = 'osc/conselho';
-        let id = null;
-        let method = 'POST';
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = 'osc/conselho/'+id;
-            method = 'PUT';
-        }
-
-
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:method,
-                url: getBaseUrl2 + url,
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/conselho',
                 data:{
                     tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
                     bo_oficial: 0,
                     id_osc: 455128,
-                    id: id,
                 },
                 cache: false,
                 success: function(data) {
-
-                    if(data.max){
-                        let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, conselhos: data.conselhos});
-                        return;
-                    }
-
-                    let button = true;
-                    let btnContinue = false;
-
                     this.props.list();
-
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({conselhos: data.conselhos, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({conselhos: data.conselhos, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -156,8 +98,6 @@ class FormConselho extends React.Component{
                 }.bind(this)
             });
         });
-
-
     }
 
     render(){

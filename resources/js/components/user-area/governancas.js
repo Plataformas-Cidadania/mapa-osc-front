@@ -37,7 +37,6 @@ class Governancas extends React.Component{
 
             deficiencia: null,
             empregados: null,
-            //voluntarios: null,
             totalTrabalhadores: null,
 
             editIdOsc: 0,
@@ -46,21 +45,21 @@ class Governancas extends React.Component{
             removeItem: null,
             removeItemTx: '',
             removeTipo: '',
+            modalTitle: '',
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.governanca = this.governanca.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
-        //this.remove = this.remove.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.closeForm = this.closeForm.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
-        //this.removeConselho = this.removeConselho.bind(this);
         this.closeFormConselho = this.closeFormConselho.bind(this);
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
 
+        this.callModal = this.callModal.bind(this);
         this.callModalExcluir = this.callModalExcluir.bind(this);
     }
 
@@ -83,15 +82,10 @@ class Governancas extends React.Component{
         this.governanca();
     }
 
-    edit(id){
+    /*edit(id){
         this.setState({actionForm: 'edit', showForm: false, editId: id});
-    }
+    }*/
 
-    cancelRemove(id){
-        let remove = this.state.remove;
-        remove[id] = false;
-        this.setState({remove: remove});
-    }
 
     removeItem(id, tipo){
         let remove = this.state.remove;
@@ -113,42 +107,6 @@ class Governancas extends React.Component{
         });
 
     }
-
-    /*remove(id){
-        let remove = this.state.remove;
-
-        if(!remove[id]){
-            remove[id] = true;
-            this.setState({remove: remove});
-            return;
-        }
-
-        let loadingRemove = this.state.loadingRemove;
-        loadingRemove[id] = true;
-        this.setState({loadingRemove: loadingRemove});
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/governanca/'+id,
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                //console.log(data);
-                this.governanca();
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                this.setState({loadingRemove: loadingRemove});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                let loadingRemove = this.state.loadingRemove;
-                loadingRemove[id] = false;
-                //this.setState({loadingRemove: loadingRemove});
-            }.bind(this)
-        });
-
-    }*/
 
     showHideForm(action){
         let showForm = !this.state.showForm;
@@ -192,9 +150,9 @@ class Governancas extends React.Component{
         });
     }
 
-    editConselho(id){
+    /*editConselho(id){
         this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id});
-    }
+    }*/
 
     showHideFormConselho(action){
         let showFormConselho = !this.state.showFormConselho;
@@ -204,40 +162,6 @@ class Governancas extends React.Component{
     closeFormConselho(){
         this.setState({showFormConselho: false});
     }
-
-    /*removeConselho(id){
-        let removeConselho = this.state.removeConselho;
-
-        if(!removeConselho[id]){
-            removeConselho[id] = true;
-            this.setState({removeConselho: removeConselho});
-            return;
-        }
-
-        let loadingRemoveConselho = this.state.loadingRemoveConselho;
-        loadingRemoveConselho[id] = true;
-        this.setState({loadingRemoveConselho: loadingRemoveConselho});
-        $.ajax({
-            method: 'DELETE',
-            url: getBaseUrl2 + 'osc/conselho/'+id,
-            data: {
-
-            },
-            cache: false,
-            success: function(data){
-                this.governanca();
-                let loadingRemoveConselho = this.state.loadingRemoveConselho;
-                loadingRemoveConselho[id] = false;
-                this.setState({loadingRemoveConselho: loadingRemoveConselho});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                let loadingRemoveConselho = this.state.loadingRemoveConselho;
-                loadingRemoveConselho[id] = false;
-            }.bind(this)
-        });
-
-    }*/
 
     validate(){
         let valid = true;
@@ -250,9 +174,6 @@ class Governancas extends React.Component{
     }
 
     updateVoluntario(e){
-
-        console.log('->', this.state);
-
         e.preventDefault();
 
         if(!this.validate()){
@@ -278,6 +199,19 @@ class Governancas extends React.Component{
             });
         });
 
+    }
+
+    callModal(id, type, txt){
+        console.log('3', id);
+        let modal = this.state.modal;
+        this.setState({
+            modal: modal,
+            editId:id,
+            editTipo:type,
+            modalTitle: txt
+        }, function(){
+            $('#modalForm').modal('show');
+        });
     }
 
     callModalExcluir(id, tx_nome_conferencia, tipo){
@@ -317,19 +251,66 @@ class Governancas extends React.Component{
         )
     }
 
+    modal(){
+
+        let form = null;
+
+        if(this.state.editTipo==='conselho'){
+            form = (
+                <FormEditConselho
+                    action={this.state.actionFormConselho}
+                    list={this.governanca}
+                    id={this.state.editId}
+                    showHideFormConselho={this.showHideFormConselho}
+                    closeForm={this.closeFormConselho}/>
+            );
+        }
+        if(this.state.editTipo==='governanca'){
+            form = (
+                <FormEditGovernanca
+                    action={this.state.actionForm}
+                    list={this.governanca}
+                    id={this.state.editId}
+                    showHideForm={this.showHideForm}
+                    closeForm={this.closeForm}/>
+            );
+        }
+
+        return (
+
+            <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>Alterar {this.state.modalTitle}</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            {form}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
 
     render(){
 
+        let modal = this.modal();
         let modalExcluir = this.modalExcluir();
 
-
         let governancas = this.state.governancas.map(function(item, index){
-
             return (
-
                 <div className="box-insert-governanca" key={"governanca_"+index}>
                     <div className="float-right">
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)} style={{cursor: 'pointer', float:'right'}}><i className="fa fa-edit"/></a>
+
+                        <a onClick={() => this.callModal(item.id_dirigente, 'governanca', 'governança')} className="box-itens-btn-edit"  style={{cursor: 'pointer', float:'right'}}>
+                            <i className="far fa-edit" />
+                        </a>
 
                         <a onClick={() => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'governanca')} style={{cursor: 'pointer', margin:'0 0 0 25px', top: '4px', position: 'relative'}}>
                             <i className="far fa-trash-alt text-danger float-right"/>
@@ -337,6 +318,7 @@ class Governancas extends React.Component{
                     </div>
                     <p>{item.tx_nome_dirigente}</p>
                     <p><strong>{item.tx_cargo_dirigente}</strong></p>
+                    {modal}
                 </div>
 
             );
@@ -347,20 +329,15 @@ class Governancas extends React.Component{
 
             return (
                 <div className="box-insert-governanca" key={"conselho_"+index}>
-                    <div className="float-right" style={{width: '50px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id_conselheiro)}><i className="fa fa-edit"/></a>
+                    <div className="float-right" >
+
+                        <a onClick={() => this.callModal(item.id_conselheiro, 'conselho', 'conselho')} className="box-itens-btn-edit"  style={{cursor: 'pointer', float:'right'}}>
+                            <i className="far fa-edit" />
+                        </a>
 
                         <a onClick={() => this.callModalExcluir(item.id_conselheiro, item.tx_nome_conselheiro, 'conselho')} style={{cursor: 'pointer', margin:'0 0 0 25px', top: '4px', position: 'relative'}}>
                             <i className="far fa-trash-alt text-danger float-right"/>
                         </a>
-
-                        {/*<a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselheiro)} style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemoveConselho(item.id_conselheiro)} style={{display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none'}}>
-                            <i className={"fa fa-undo"}/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none'}}/>*/}
                     </div>
                     <p>{item.tx_nome_conselheiro}</p>
                 </div>
@@ -374,7 +351,7 @@ class Governancas extends React.Component{
             <div>
                 <div className="title-user-area">
                     <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div> <h3>Relações de Trabalho e Governança</h3><br/>
-                    <p>Você tem {this.state.governancas.length} Trabalhos ou Governanças cadastrados</p>
+                    <p>Você tem {this.state.governancas.length} dirigentes e {this.state.conselhos.length} conselhos cadastrados</p>
                     <hr/>
                 </div>
 
@@ -388,13 +365,16 @@ class Governancas extends React.Component{
                             <h2>Quadro de Dirigentes</h2>
 
                             <div style={{float: 'right'}}>
-                                <a className="btn-add" onClick={this.showHideForm}><i className="fas fa-plus-circle fa-2x" style={{display: this.state.showForm ? "none" : "block"}}/></a>
-                                <a onClick={this.showHideForm}><i className="fa fa-times" style={{display: this.state.showForm ? "block" : "none"}}/></a>
+                                <a className="btn-add" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}}>
+                                    <i className={"fas fa-2x fa-plus-circle"}/>
+                                </a>
+                                <a className="btn-add btn-add-warning" onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}}>
+                                    <i className={"fas fa-2x fa-times-circle"}/>
+                                </a>
                             </div>
                             <div style={{display: this.state.showForm ? 'block' : 'none'}}>
                                 <FormGovernanca action={this.state.actionForm} list={this.governanca} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                             </div>
-
                             {governancas}
                         </div>
                         {modalExcluir}
@@ -405,8 +385,12 @@ class Governancas extends React.Component{
                             <h2>Conselho Fiscal</h2>
 
                             <div style={{float: 'right'}}>
-                                <a className="btn-add" onClick={this.showHideFormConselho}><i className="fas fa-plus-circle fa-2x" style={{display: this.state.showFormConselho ? "none" : "block"}}/></a>
-                                <a onClick={this.showHideFormConselho}><i className="fa fa-times" style={{display: this.state.showFormConselho ? "block" : "none"}}/></a>
+                                <a className="btn-add" onClick={this.showHideFormConselho} style={{display: this.state.showFormConselho ? "none" : "block"}}>
+                                    <i className={"fas fa-2x fa-plus-circle"}/>
+                                </a>
+                                <a className="btn-add btn-add-warning" onClick={this.showHideFormConselho} style={{display: this.state.showFormConselho ? "block" : "none"}}>
+                                    <i className={"fas fa-2x fa-times-circle"}/>
+                                </a>
                             </div>
                             <div style={{display: this.state.showFormConselho ? 'block' : 'none'}}>
                                 <FormConselho action={this.state.actionFormConselho} list={this.governanca} id={this.state.editIdConselho} showHideFormConselho={this.showHideFormConselho} closeForm={this.closeFormConselho}/>
@@ -454,12 +438,9 @@ class Governancas extends React.Component{
                                     <h3>Voluntários</h3>
                                     <div>
                                         <div style={{clear: 'both', height:'1px'}}/>
-                                        {/*<input type="number" value={this.state.voluntarios} className="input-lg" min="1" style={{float: 'left'}}/>*/}
-
 
                                         <input className="input-lg" type="number" min="1" name="nr_trabalhadores_voluntarios" onChange={this.handleInputChange} defaultValue={this.state.form.nr_trabalhadores_voluntarios}
                                                style={{float: 'left'}} placeholder="0" />
-
                                         <div>
                                             <button type="button" className="btn btn-success" onClick={this.updateVoluntario}><i
                                                 className="fas fa-cloud-download-alt"/> </button>
@@ -475,9 +456,6 @@ class Governancas extends React.Component{
                                         <p className='not-info'>Atualize suas informações sobre Voluntários</p>
 
                                     </div>
-
-
-
 
                                 </div>
                             </div>

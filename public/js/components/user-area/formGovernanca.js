@@ -23,43 +23,12 @@ class FormGovernanca extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        console.log(props);
-        let lastEditId = this.state.editId;
-        if (this.state.action != props.action || this.state.editId != props.id) {
-            this.setState({ action: props.action, editId: props.id }, function () {
-                if (lastEditId != props.id) {
-                    this.props.showHideForm(this.state.action);
-                    this.edit();
-                }
-                if (this.state.action == 'new') {
-                    this.cleanForm();
-                }
-            });
-        }
-    }
-
-    edit() {
-        $.ajax({
-            method: 'GET',
-            url: getBaseUrl2 + 'osc/governanca/' + this.state.editId,
-            data: {},
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                this.setState({ form: data }, function () {
-                    //this.props.showHideForm();
-                });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(status, err.toString());
-            }.bind(this)
-        });
+    componentWillReceiveProps() {
+        this.cleanForm();
     }
 
     handleInputChange(event) {
@@ -82,7 +51,6 @@ class FormGovernanca extends React.Component {
     }
 
     validate() {
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -108,45 +76,23 @@ class FormGovernanca extends React.Component {
             return;
         }
 
-        let url = 'osc/governanca';
-        let id = null;
-        let method = 'POST';
-        if (this.state.action === 'edit') {
-            id = this.state.editId;
-            url = 'osc/governanca/' + id;
-            method = 'PUT';
-        }
-
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: method,
-                url: getBaseUrl2 + url,
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/governanca',
                 data: {
                     tx_nome_dirigente: this.state.form.tx_nome_dirigente,
                     tx_cargo_dirigente: this.state.form.tx_cargo_dirigente,
                     bo_oficial: 0,
-                    id_osc: 455128,
-                    id: id
+                    id_osc: 455128
                 },
                 cache: false,
                 success: function (data) {
-
-                    if (data.max) {
-                        let msg = data.msg;
-                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, governancas: data.governancas });
-                        return;
-                    }
-
-                    let button = true;
-
-                    let btnContinue = false;
-
                     this.props.list();
-
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({ governancas: data.governancas, loading: false, button: button, btnContinue: btnContinue });
+                    this.setState({ governancas: data.governancas, loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());

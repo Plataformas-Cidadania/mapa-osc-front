@@ -247,6 +247,8 @@
 @if($rota=="governancas-user")
     <script src="/js/components/user-area/formGovernanca.js"></script>
     <script src="/js/components/user-area/formConselho.js"></script>
+    <script src="/js/components/user-area/formEditGovernanca.js"></script>
+    <script src="/js/components/user-area/formEditConselho.js"></script>
     <script src="/js/components/user-area/governancas.js"></script>
 @endif
 @if($rota=="participacoes-user")

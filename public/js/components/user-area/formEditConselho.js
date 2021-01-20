@@ -1,4 +1,4 @@
-class FormConselho extends React.Component {
+class FormEditConselho extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,17 +13,49 @@ class FormConselho extends React.Component {
             },
             showMsg: false,
             msg: '',
-            conselhos: []
+            conselhos: [],
+            editId: this.props.id
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
+        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
     }
 
-    componentWillReceiveProps() {
-        this.cleanForm();
+    componentDidMount() {
+        console.log('1', this.props.id);
+        this.setState({ editId: this.props.id }, function () {
+            this.edit();
+        });
+    }
+
+    componentWillReceiveProps(props) {
+        console.log('2', this.props.id);
+        if (this.state.editId !== props.id) {
+            this.setState({ editId: props.id }, function () {
+                this.edit();
+            });
+        }
+    }
+
+    edit() {
+
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/conselho/' + this.state.editId,
+            data: {},
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                this.setState({ form: data }, function () {
+                    //this.props.showHideForm();
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
     }
 
     handleInputChange(event) {
@@ -37,16 +69,7 @@ class FormConselho extends React.Component {
         this.setState({ form: form });
     }
 
-    cleanForm() {
-        let form = this.state.form;
-        for (let i in form) {
-            form[i] = '';
-        }
-        this.setState({ form: form });
-    }
-
     validate() {
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -61,8 +84,6 @@ class FormConselho extends React.Component {
             }
         }
 
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -76,18 +97,18 @@ class FormConselho extends React.Component {
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: getBaseUrl2 + 'osc/conselho',
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/conselho/' + this.state.editId,
                 data: {
                     tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
                     bo_oficial: 0,
-                    id_osc: 455128
+                    id_osc: 455128,
+                    id: this.state.editId
                 },
                 cache: false,
                 success: function (data) {
+
                     this.props.list();
-                    this.cleanForm();
-                    this.props.closeForm();
 
                     this.setState({ conselhos: data.conselhos, loading: false });
                 }.bind(this),

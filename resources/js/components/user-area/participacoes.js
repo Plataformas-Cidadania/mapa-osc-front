@@ -63,7 +63,6 @@ class Participacoes extends React.Component{
         this.removeItem = this.removeItem.bind(this);
 
         this.callModal = this.callModal.bind(this);
-
         this.callModalExcluir = this.callModalExcluir.bind(this);
 
 

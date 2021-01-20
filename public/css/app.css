@@ -13244,6 +13244,10 @@ label, input, .btn-number {
   color: #3A559B !important;
 }
 
+.btn-add-warning svg {
+  color: #DEA33B !important;
+}
+
 #chart {
   max-width: 100%;
   margin: 35px auto;
