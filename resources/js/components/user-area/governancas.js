@@ -56,7 +56,7 @@ class Governancas extends React.Component{
         this.closeForm = this.closeForm.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
-        this.removeConselho = this.removeConselho.bind(this);
+        //this.removeConselho = this.removeConselho.bind(this);
         this.closeFormConselho = this.closeFormConselho.bind(this);
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
@@ -98,7 +98,7 @@ class Governancas extends React.Component{
 
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/governanca/'+id,
+            url: getBaseUrl2 + 'osc/'+tipo+'/'+id,
             data: {
 
             },
@@ -205,7 +205,7 @@ class Governancas extends React.Component{
         this.setState({showFormConselho: false});
     }
 
-    removeConselho(id){
+    /*removeConselho(id){
         let removeConselho = this.state.removeConselho;
 
         if(!removeConselho[id]){
@@ -237,7 +237,7 @@ class Governancas extends React.Component{
             }.bind(this)
         });
 
-    }
+    }*/
 
     validate(){
         let valid = true;
@@ -328,25 +328,15 @@ class Governancas extends React.Component{
             return (
 
                 <div className="box-insert-governanca" key={"governanca_"+index}>
-                    {/*<i className="far fa-trash-alt text-danger float-right"/>*/}
-                    <div className="float-right" style={{marginRight: '40px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)}><i className="fa fa-edit"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div className="float-right">
+                        <a className="box-itens-btn-edit" onClick={() => this.edit(item.id_dirigente)} style={{cursor: 'pointer', float:'right'}}><i className="fa fa-edit"/></a>
 
-                        <a onClick={() => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'dirigente')} style={{cursor: 'pointer'}}>
+                        <a onClick={() => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'governanca')} style={{cursor: 'pointer', margin:'0 0 0 25px', top: '4px', position: 'relative'}}>
                             <i className="far fa-trash-alt text-danger float-right"/>
                         </a>
-
-                        {/*<a className="box-itens-btn-del" onClick={() => this.remove(item.id_dirigente)} style={{display: this.state.loadingRemove[item.id_dirigente] ? 'none' : 'block'}}>
-                            <i className={"fa "+( this.state.remove[item.id_dirigente] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
-                        </a>
-                        <a onClick={() => this.cancelRemove(item.id_dirigente)} style={{display: this.state.remove[item.id_dirigente] && !this.state.loadingRemove[item.id_dirigente] ? 'block' : 'none'}}>
-                            <i className={"fa fa-undo"}/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id_dirigente] ? '' : 'none'}}/>*/}
                     </div>
                     <p>{item.tx_nome_dirigente}</p>
                     <p><strong>{item.tx_cargo_dirigente}</strong></p>
-                    {modalExcluir}
                 </div>
 
             );
@@ -358,14 +348,19 @@ class Governancas extends React.Component{
             return (
                 <div className="box-insert-governanca" key={"conselho_"+index}>
                     <div className="float-right" style={{width: '50px'}}>
-                        <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id_conselheiro)}><i className="fa fa-edit"/></a>&nbsp;
-                        <a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselheiro)} style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block'}}>
+                        <a className="box-itens-btn-edit" onClick={() => this.editConselho(item.id_conselheiro)}><i className="fa fa-edit"/></a>
+
+                        <a onClick={() => this.callModalExcluir(item.id_conselheiro, item.tx_nome_conselheiro, 'conselho')} style={{cursor: 'pointer', margin:'0 0 0 25px', top: '4px', position: 'relative'}}>
+                            <i className="far fa-trash-alt text-danger float-right"/>
+                        </a>
+
+                        {/*<a className="box-itens-btn-del" onClick={() => this.removeConselho(item.id_conselheiro)} style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block'}}>
                             <i className={"fa "+( this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger")}/>
                         </a>
                         <a onClick={() => this.cancelRemoveConselho(item.id_conselheiro)} style={{display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none'}}>
                             <i className={"fa fa-undo"}/>
                         </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none'}}/>
+                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none'}}/>*/}
                     </div>
                     <p>{item.tx_nome_conselheiro}</p>
                 </div>
@@ -402,7 +397,7 @@ class Governancas extends React.Component{
 
                             {governancas}
                         </div>
-
+                        {modalExcluir}
                     </div>
 
                     <div className="col-md-6">

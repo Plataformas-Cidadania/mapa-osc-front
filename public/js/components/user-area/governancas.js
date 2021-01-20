@@ -55,7 +55,7 @@ class Governancas extends React.Component {
         this.closeForm = this.closeForm.bind(this);
 
         this.showHideFormConselho = this.showHideFormConselho.bind(this);
-        this.removeConselho = this.removeConselho.bind(this);
+        //this.removeConselho = this.removeConselho.bind(this);
         this.closeFormConselho = this.closeFormConselho.bind(this);
 
         this.updateVoluntario = this.updateVoluntario.bind(this);
@@ -96,7 +96,7 @@ class Governancas extends React.Component {
 
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/governanca/' + id,
+            url: getBaseUrl2 + 'osc/' + tipo + '/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -194,36 +194,35 @@ class Governancas extends React.Component {
         this.setState({ showFormConselho: false });
     }
 
-    removeConselho(id) {
+    /*removeConselho(id){
         let removeConselho = this.state.removeConselho;
-
-        if (!removeConselho[id]) {
+         if(!removeConselho[id]){
             removeConselho[id] = true;
-            this.setState({ removeConselho: removeConselho });
+            this.setState({removeConselho: removeConselho});
             return;
         }
-
-        let loadingRemoveConselho = this.state.loadingRemoveConselho;
+         let loadingRemoveConselho = this.state.loadingRemoveConselho;
         loadingRemoveConselho[id] = true;
-        this.setState({ loadingRemoveConselho: loadingRemoveConselho });
+        this.setState({loadingRemoveConselho: loadingRemoveConselho});
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/conselho/' + id,
-            data: {},
+            url: getBaseUrl2 + 'osc/conselho/'+id,
+            data: {
+             },
             cache: false,
-            success: function (data) {
+            success: function(data){
                 this.governanca();
                 let loadingRemoveConselho = this.state.loadingRemoveConselho;
                 loadingRemoveConselho[id] = false;
-                this.setState({ loadingRemoveConselho: loadingRemoveConselho });
+                this.setState({loadingRemoveConselho: loadingRemoveConselho});
             }.bind(this),
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err){
                 console.log(status, err.toString());
                 let loadingRemoveConselho = this.state.loadingRemoveConselho;
                 loadingRemoveConselho[id] = false;
             }.bind(this)
         });
-    }
+     }*/
 
     validate() {
         let valid = true;
@@ -346,16 +345,15 @@ class Governancas extends React.Component {
                 { className: 'box-insert-governanca', key: "governanca_" + index },
                 React.createElement(
                     'div',
-                    { className: 'float-right', style: { marginRight: '40px' } },
+                    { className: 'float-right' },
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id_dirigente) },
+                        { className: 'box-itens-btn-edit', onClick: () => this.edit(item.id_dirigente), style: { cursor: 'pointer', float: 'right' } },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
-                    '\xA0\xA0\xA0\xA0\xA0',
                     React.createElement(
                         'a',
-                        { onClick: () => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'dirigente'), style: { cursor: 'pointer' } },
+                        { onClick: () => this.callModalExcluir(item.id_dirigente, item.tx_nome_dirigente, 'governanca'), style: { cursor: 'pointer', margin: '0 0 0 25px', top: '4px', position: 'relative' } },
                         React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                     )
                 ),
@@ -372,8 +370,7 @@ class Governancas extends React.Component {
                         null,
                         item.tx_cargo_dirigente
                     )
-                ),
-                modalExcluir
+                )
             );
         }.bind(this));
 
@@ -390,18 +387,11 @@ class Governancas extends React.Component {
                         { className: 'box-itens-btn-edit', onClick: () => this.editConselho(item.id_conselheiro) },
                         React.createElement('i', { className: 'fa fa-edit' })
                     ),
-                    '\xA0',
                     React.createElement(
                         'a',
-                        { className: 'box-itens-btn-del', onClick: () => this.removeConselho(item.id_conselheiro), style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? 'none' : 'block' } },
-                        React.createElement('i', { className: "fa " + (this.state.removeConselho[item.id_conselheiro] ? "fa-times text-danger" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemoveConselho(item.id_conselheiro), style: { display: this.state.removeConselho[item.id_conselheiro] && !this.state.loadingRemoveConselho[item.id_conselheiro] ? 'block' : 'none' } },
-                        React.createElement('i', { className: "fa fa-undo" })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemoveConselho[item.id_conselheiro] ? '' : 'none' } })
+                        { onClick: () => this.callModalExcluir(item.id_conselheiro, item.tx_nome_conselheiro, 'conselho'), style: { cursor: 'pointer', margin: '0 0 0 25px', top: '4px', position: 'relative' } },
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                    )
                 ),
                 React.createElement(
                     'p',
@@ -478,7 +468,8 @@ class Governancas extends React.Component {
                             React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.governanca, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                         ),
                         governancas
-                    )
+                    ),
+                    modalExcluir
                 ),
                 React.createElement(
                     'div',
