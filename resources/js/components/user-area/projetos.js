@@ -227,7 +227,6 @@ class Projetos extends React.Component{
     }
 }
 
-
 ReactDOM.render(
     <Projetos/>,
     document.getElementById('projetos')
