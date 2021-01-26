@@ -609,7 +609,7 @@ class FormProjeto extends React.Component {
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field'),
-                                    name: 'tx_nome_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_abrangencia_projeto },
+                                    name: 'cd_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_abrangencia_projeto },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -617,22 +617,22 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Municipal' },
+                                    { value: '1' },
                                     'Municipal'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Estadual' },
+                                    { value: '2' },
                                     'Estadual'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Regional' },
+                                    { value: '3' },
                                     'Regional'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Nacional' },
+                                    { value: '4' },
                                     'Nacional'
                                 )
                             ),
@@ -644,7 +644,7 @@ class FormProjeto extends React.Component {
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field'),
-                                    name: 'tx_nome_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_zona_atuacao },
+                                    name: 'cd_zona_atuacao_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_zona_atuacao },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -652,12 +652,12 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Rural' },
+                                    { value: '1' },
                                     'Rural'
                                 ),
                                 React.createElement(
                                     'option',
-                                    { value: 'Urbana' },
+                                    { value: '2' },
                                     'Urbana'
                                 )
                             ),

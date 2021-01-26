@@ -474,22 +474,22 @@ class FormProjeto extends React.Component{
                             <div className="col-md-4">
                                 {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
                                 <select className={"form-control form-m "+(this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field')}
-                                        name="tx_nome_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_abrangencia_projeto}>
+                                        name="cd_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_abrangencia_projeto}>
                                     <option value="-1">Selecione</option>
-                                    <option value="Municipal">Municipal</option>
-                                    <option value="Estadual">Estadual</option>
-                                    <option value="Regional">Regional</option>
-                                    <option value="Nacional">Nacional</option>
+                                    <option value="1">Municipal</option>
+                                    <option value="2">Estadual</option>
+                                    <option value="3">Regional</option>
+                                    <option value="4">Nacional</option>
                                 </select><br/>
                             </div>
 
                             <div className="col-md-4">
                                 {/*<label htmlFor="tx_nome_zona_atuacao">Zona de Atuação*</label><br/>*/}
                                 <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
-                                        name="tx_nome_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_zona_atuacao}>
+                                        name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_zona_atuacao}>
                                     <option value="-1">Selecione</option>
-                                    <option value="Rural">Rural</option>
-                                    <option value="Urbana">Urbana</option>
+                                    <option value="1">Rural</option>
+                                    <option value="2">Urbana</option>
                                 </select><br/>
                             </div>
 
