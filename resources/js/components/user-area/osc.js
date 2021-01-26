@@ -236,14 +236,14 @@ class Osc extends React.Component{
 
                 let checkedMetas = false;
 
-                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if(item.metas){
                     metas.push(item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
                             checkedMetas = true;
                         }
-                        console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
                                 <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto)}>

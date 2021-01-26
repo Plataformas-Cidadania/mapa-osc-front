@@ -34,6 +34,8 @@ class FormProjeto extends React.Component{
             buttonObjetivos: 0,
 
             active: false,
+
+
         };
 
 
@@ -77,8 +79,50 @@ class FormProjeto extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log(data);
-                this.setState({form: data}, function(){
+                let ft_recursos_publico = '';
+                let ft_recursos_privado = '';
+                let ft_recursos_proprio = '';
+                let ft_recursos_nao_financeiro = '';
+
+                let tp_cooperacao_tecnica = '';
+                let tp_termo_fomento = '';
+                let tp_termo_colaboracao = '';
+                let tp_termo_parceria = '';
+                let tp_contrato_gestao = '';
+                let tp_convenio = '';
+                let tp_outro = '';
+
+
+                data.fontes_recursos_projeto.find(function(item){
+                    ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
+                    ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
+                    ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
+                    ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
+                });
+
+                data.tipo_parcerias_projeto.find(function(item){
+                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
+                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
+                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
+                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
+                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
+                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
+                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
+                });
+
+                this.setState({
+                    form: data,
+                    ft_recursos_publico: ft_recursos_publico,
+                    ft_recursos_privado: ft_recursos_privado,
+                    ft_recursos_proprio: ft_recursos_proprio,
+                    tp_cooperacao_tecnica: tp_cooperacao_tecnica,
+                    tp_termo_fomento: tp_termo_fomento,
+                    tp_termo_colaboracao: tp_termo_colaboracao,
+                    tp_termo_parceria: tp_termo_parceria,
+                    tp_contrato_gestao: tp_contrato_gestao,
+                    tp_convenio: tp_convenio,
+                    tp_outro: tp_outro,
+                }, function(){
                     //this.props.showHideForm();
                 });
             }.bind(this),
@@ -123,8 +167,6 @@ class FormProjeto extends React.Component{
             }
         }
 
-        //console.log(requireds);
-
         this.setState({requireds: requireds});
         return valid;
     }
@@ -143,7 +185,6 @@ class FormProjeto extends React.Component{
             url = '/update-user-projeto';
         }
 
-
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
@@ -154,29 +195,12 @@ class FormProjeto extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
-                    if(data.max){
-                        let msg = data.msg;
-                        this.setState({loading: false, button: true, maxAlert:true, btnContinue:true, projetos: data.projetos});
-                        return;
-                    }
-
-                    let button = true;
-                    if(this.state.action==='new'){
-                        if(data.projetos.length >= data.maxProjetos){
-                            button = false;
-                        }
-                    }
-
-                    let btnContinue = false;
-
                     this.props.list();
 
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({projetos: data.projetos, loading: false, button: button, btnContinue: btnContinue})
+                    this.setState({projetos: data.projetos, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -184,7 +208,6 @@ class FormProjeto extends React.Component{
                 }.bind(this)
             });
         });
-
 
     }
 
@@ -202,6 +225,7 @@ class FormProjeto extends React.Component{
                     item.checked = false;
                     item.metas = null;
                 });
+
                 this.setState({loading: false, objetivos: data, button:true})
             }.bind(this),
             error: function (xhr, status, err) {
@@ -229,8 +253,6 @@ class FormProjeto extends React.Component{
 
                 });
 
-
-                console.log(objetivos);
 
                 objetivos.find(function(item){
                     if(item.metas){
@@ -302,14 +324,14 @@ class FormProjeto extends React.Component{
 
                 let checkedMetas = false;
 
-                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if(item.metas){
                     metas.push(item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
                             checkedMetas = true;
                         }
-                        console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
                                 <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto)}>
@@ -474,7 +496,7 @@ class FormProjeto extends React.Component{
                             <div className="col-md-4">
                                 {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
                                 <select className={"form-control form-m "+(this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field')}
-                                        name="cd_abrangencia_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_abrangencia_projeto}>
+                                        name="cd_abrangencia_projeto" onChange={this.handleInputChange} value={this.state.form.cd_abrangencia_projeto}>
                                     <option value="-1">Selecione</option>
                                     <option value="1">Municipal</option>
                                     <option value="2">Estadual</option>
@@ -486,7 +508,7 @@ class FormProjeto extends React.Component{
                             <div className="col-md-4">
                                 {/*<label htmlFor="tx_nome_zona_atuacao">Zona de Atuação*</label><br/>*/}
                                 <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
-                                        name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_zona_atuacao}>
+                                        name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} value={this.state.form.cd_zona_atuacao_projeto}>
                                     <option value="-1">Selecione</option>
                                     <option value="1">Rural</option>
                                     <option value="2">Urbana</option>
@@ -496,91 +518,96 @@ class FormProjeto extends React.Component{
 
 
 
-                            <div className={this.state.active === false ? 'col-md-12' : 'col-md-6'}>
+                            {/*<div className={this.state.active === false ? 'col-md-12' : 'col-md-6'}>*/}
+                            {/* **************** ACERTAR QUANDO SEPARAR OS FORMULARIOS **************** */}
+                            <div className={this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6'}>
                                 <br/>
                                 <h3>Fontes de Recursos</h3>
                                 <hr/>
 
                                 <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"} required/>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"}  defaultChecked={this.state.ft_recursos_publico} onChange={this.handleInputChange}/>
                                         <label className="custom-control-label" htmlFor={"fontes_recursos_publico"} >Recursos públicos</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_privado"} required/>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_privado"}  defaultChecked={this.state.ft_recursos_privado} onChange={this.handleInputChange}/>
                                         <label className="custom-control-label" htmlFor={"fontes_recursos_privado"} >Recursos privados</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_proprio"} required/>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_proprio"} defaultChecked={this.state.ft_recursos_proprio} onChange={this.handleInputChange}/>
                                         <label className="custom-control-label" htmlFor={"fontes_recursos_proprio"} >Recursos próprios</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_nao_financeiro"} required/>
+                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_nao_financeiro"} defaultChecked={this.state.ft_recursos_nao_financeiro} onChange={this.handleInputChange}/>
                                         <label className="custom-control-label" htmlFor={"fontes_recursos_nao_financeiro"} >Recursos não financeiros</label>
                                     </div>
                                 </div>
 
 
                             </div>
-                            <div className="col-md-6" style={{display: this.state.active === false ? 'none' : ''}}>
+
+                            {/*<div className="col-md-6" style={{display: (this.state.active === false || this.state.ft_recursos_publico) === 'chkbox' ? 'none' : ''}}>*/}
+                            {/* **************** ACERTAR QUANDO SEPARAR OS FORMULARIOS **************** */}
+                            <div className="col-md-6" style={{display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : ''}}>
                                 <br/>
                                 <h3>Tipo de Parceria</h3>
                                 <hr/>
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_acordo"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_acordo"} >Acordo de cooperação técnica</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_cooperacao_tecnica"}  defaultChecked={this.state.tp_cooperacao_tecnica} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_cooperacao_tecnica"} >Acordo de cooperação técnica</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_fomento"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_fomento"} >Termo de fomento</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_fomento"}  defaultChecked={this.state.tp_termo_fomento} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_fomento"} >Termo de fomento</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_colaboracao"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_colaboracao"} >Termo de colaboração</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_colaboracao"}  defaultChecked={this.state.tp_termo_colaboracao} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_colaboracao"} >Termo de colaboração</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_parceria"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_parceria"} >Termo de parceria</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_parceria"}  defaultChecked={this.state.tp_termo_parceria} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_parceria"} >Termo de parceria</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_contrato"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_contrato"} >Contrato de gestão</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_contrato_gestao"}  defaultChecked={this.state.tp_contrato_gestao} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_contrato_gestao"} >Contrato de gestão</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_convenio"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_convenio"} >Convênio</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_convenio"}  defaultChecked={this.state.tp_convenio} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_convenio"} >Convênio</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tipo_parceria_outro"} required/>
-                                        <label className="custom-control-label" htmlFor={"tipo_parceria_outro"} >Outro</label>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_outro"}  defaultChecked={this.state.tp_outro} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_outro"} >Outro</label>
                                     </div>
                                 </div>
                             </div>
@@ -675,7 +702,7 @@ class FormProjeto extends React.Component{
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">
                             <div className="col-md-6">
-                                <button style={{display: this.state.action==='edit' ? 'block' : (this.state.projetos.length < maxProjetos ?  'block' : 'none')}}
+                                <button
                                         className="btn btn-success" onClick={this.register}>
                                     Adicionar
                                 </button>

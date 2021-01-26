@@ -34,6 +34,7 @@ class FormProjeto extends React.Component {
             buttonObjetivos: 0,
 
             active: false
+
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -74,8 +75,49 @@ class FormProjeto extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
-                this.setState({ form: data }, function () {
+                let ft_recursos_publico = '';
+                let ft_recursos_privado = '';
+                let ft_recursos_proprio = '';
+                let ft_recursos_nao_financeiro = '';
+
+                let tp_cooperacao_tecnica = '';
+                let tp_termo_fomento = '';
+                let tp_termo_colaboracao = '';
+                let tp_termo_parceria = '';
+                let tp_contrato_gestao = '';
+                let tp_convenio = '';
+                let tp_outro = '';
+
+                data.fontes_recursos_projeto.find(function (item) {
+                    ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
+                    ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
+                    ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
+                    ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
+                });
+
+                data.tipo_parcerias_projeto.find(function (item) {
+                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
+                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
+                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
+                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
+                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
+                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
+                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
+                });
+
+                this.setState({
+                    form: data,
+                    ft_recursos_publico: ft_recursos_publico,
+                    ft_recursos_privado: ft_recursos_privado,
+                    ft_recursos_proprio: ft_recursos_proprio,
+                    tp_cooperacao_tecnica: tp_cooperacao_tecnica,
+                    tp_termo_fomento: tp_termo_fomento,
+                    tp_termo_colaboracao: tp_termo_colaboracao,
+                    tp_termo_parceria: tp_termo_parceria,
+                    tp_contrato_gestao: tp_contrato_gestao,
+                    tp_convenio: tp_convenio,
+                    tp_outro: tp_outro
+                }, function () {
                     //this.props.showHideForm();
                 });
             }.bind(this),
@@ -120,8 +162,6 @@ class FormProjeto extends React.Component {
             }
         }
 
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
@@ -150,29 +190,12 @@ class FormProjeto extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
-
-                    if (data.max) {
-                        let msg = data.msg;
-                        this.setState({ loading: false, button: true, maxAlert: true, btnContinue: true, projetos: data.projetos });
-                        return;
-                    }
-
-                    let button = true;
-                    if (this.state.action === 'new') {
-                        if (data.projetos.length >= data.maxProjetos) {
-                            button = false;
-                        }
-                    }
-
-                    let btnContinue = false;
-
                     this.props.list();
 
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({ projetos: data.projetos, loading: false, button: button, btnContinue: btnContinue });
+                    this.setState({ projetos: data.projetos, loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -195,6 +218,7 @@ class FormProjeto extends React.Component {
                     item.checked = false;
                     item.metas = null;
                 });
+
                 this.setState({ loading: false, objetivos: data, button: true });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -219,8 +243,6 @@ class FormProjeto extends React.Component {
                     item.display = true;
                     item.checked = false;
                 });
-
-                console.log(objetivos);
 
                 objetivos.find(function (item) {
                     if (item.metas) {
@@ -287,14 +309,14 @@ class FormProjeto extends React.Component {
 
                 let checkedMetas = false;
 
-                console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
                         if (itemMeta.checked) {
                             checkedMetas = true;
                         }
-                        console.log('cd_objetivo_projeto: ' + item.cd_objetivo_projeto + ' cd_meta_projeto: ' + itemMeta.cd_meta_projeto + ' display: ' + itemMeta.display);
+                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
                         return React.createElement(
                             'div',
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
@@ -609,7 +631,7 @@ class FormProjeto extends React.Component {
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field'),
-                                    name: 'cd_abrangencia_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_abrangencia_projeto },
+                                    name: 'cd_abrangencia_projeto', onChange: this.handleInputChange, value: this.state.form.cd_abrangencia_projeto },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -644,7 +666,7 @@ class FormProjeto extends React.Component {
                             React.createElement(
                                 'select',
                                 { className: "form-control form-m " + (this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field'),
-                                    name: 'cd_zona_atuacao_projeto', onChange: this.handleInputChange, defaultValue: this.state.form.tx_nome_zona_atuacao },
+                                    name: 'cd_zona_atuacao_projeto', onChange: this.handleInputChange, value: this.state.form.cd_zona_atuacao_projeto },
                                 React.createElement(
                                     'option',
                                     { value: '-1' },
@@ -665,7 +687,7 @@ class FormProjeto extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: this.state.active === false ? 'col-md-12' : 'col-md-6' },
+                            { className: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6' },
                             React.createElement('br', null),
                             React.createElement(
                                 'h3',
@@ -679,7 +701,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_publico", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_publico", defaultChecked: this.state.ft_recursos_publico, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_publico" },
@@ -693,7 +715,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_privado", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_privado", defaultChecked: this.state.ft_recursos_privado, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_privado" },
@@ -707,7 +729,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_proprio", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_proprio", defaultChecked: this.state.ft_recursos_proprio, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_proprio" },
@@ -721,7 +743,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_nao_financeiro", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_nao_financeiro", defaultChecked: this.state.ft_recursos_nao_financeiro, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_nao_financeiro" },
@@ -732,7 +754,7 @@ class FormProjeto extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6', style: { display: this.state.active === false ? 'none' : '' } },
+                            { className: 'col-md-6', style: { display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : '' } },
                             React.createElement('br', null),
                             React.createElement(
                                 'h3',
@@ -746,10 +768,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_acordo", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_cooperacao_tecnica", defaultChecked: this.state.tp_cooperacao_tecnica, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_acordo" },
+                                        { className: 'custom-control-label', htmlFor: "tp_cooperacao_tecnica" },
                                         'Acordo de coopera\xE7\xE3o t\xE9cnica'
                                     )
                                 )
@@ -760,10 +782,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_fomento", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_fomento", defaultChecked: this.state.tp_termo_fomento, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_fomento" },
+                                        { className: 'custom-control-label', htmlFor: "tp_termo_fomento" },
                                         'Termo de fomento'
                                     )
                                 )
@@ -774,10 +796,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_colaboracao", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_colaboracao", defaultChecked: this.state.tp_termo_colaboracao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_colaboracao" },
+                                        { className: 'custom-control-label', htmlFor: "tp_termo_colaboracao" },
                                         'Termo de colabora\xE7\xE3o'
                                     )
                                 )
@@ -788,10 +810,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_parceria", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_parceria", defaultChecked: this.state.tp_termo_parceria, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_parceria" },
+                                        { className: 'custom-control-label', htmlFor: "tp_termo_parceria" },
                                         'Termo de parceria'
                                     )
                                 )
@@ -802,10 +824,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_contrato", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_contrato_gestao", defaultChecked: this.state.tp_contrato_gestao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_contrato" },
+                                        { className: 'custom-control-label', htmlFor: "tp_contrato_gestao" },
                                         'Contrato de gest\xE3o'
                                     )
                                 )
@@ -816,10 +838,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_convenio", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_convenio", defaultChecked: this.state.tp_convenio, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_convenio" },
+                                        { className: 'custom-control-label', htmlFor: "tp_convenio" },
                                         'Conv\xEAnio'
                                     )
                                 )
@@ -830,10 +852,10 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tipo_parceria_outro", required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_outro", defaultChecked: this.state.tp_outro, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
-                                        { className: 'custom-control-label', htmlFor: "tipo_parceria_outro" },
+                                        { className: 'custom-control-label', htmlFor: "tp_outro" },
                                         'Outro'
                                     )
                                 )
@@ -1035,7 +1057,7 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'button',
-                                { style: { display: this.state.action === 'edit' ? 'block' : this.state.projetos.length < maxProjetos ? 'block' : 'none' },
+                                {
                                     className: 'btn btn-success', onClick: this.register },
                                 'Adicionar'
                             )
