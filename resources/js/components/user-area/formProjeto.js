@@ -35,6 +35,7 @@ class FormProjeto extends React.Component{
 
             active: false,
 
+            financiador_projeto: [],
 
         };
 
@@ -122,6 +123,8 @@ class FormProjeto extends React.Component{
                     tp_contrato_gestao: tp_contrato_gestao,
                     tp_convenio: tp_convenio,
                     tp_outro: tp_outro,
+
+                    financiadores_projeto: data.financiadores_projeto,
                 }, function(){
                     //this.props.showHideForm();
                 });
@@ -310,6 +313,29 @@ class FormProjeto extends React.Component{
 
 
     render(){
+
+        let financiador_projeto = null;
+
+        console.log('financiador_projeto: ', this.state.financiador_projeto);
+
+        if(this.state.financiadores_projeto) {
+            financiador_projeto = this.state.financiadores_projeto.map(function (item, index) {
+
+                return (
+                    /*<div>{item.tx_nome_financiador}sss</div>*/
+                    <div className="label-float" key={"financiador_projeto_" + index}>
+                        <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange}
+                               defaultValue={item.tx_nome_financiador}
+                               placeholder="Insica o CNPJ da OSC Parceira" />
+                        <label htmlFor="tx_nome_financiador">Financiador do projeto</label>
+                        <div className="label-box-info-off">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                );
+            }.bind(this));
+        }
+
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -668,6 +694,7 @@ class FormProjeto extends React.Component{
                                     <div className="col-md-12">
                                         <p><strong>Financiadores do Projeto</strong></p>
                                         <hr/>
+                                        {financiador_projeto}
                                     </div>
                                 </div>
 

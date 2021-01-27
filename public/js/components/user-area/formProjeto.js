@@ -33,7 +33,9 @@ class FormProjeto extends React.Component {
             titleObjetivo: "",
             buttonObjetivos: 0,
 
-            active: false
+            active: false,
+
+            financiador_projeto: []
 
         };
 
@@ -116,7 +118,9 @@ class FormProjeto extends React.Component {
                     tp_termo_parceria: tp_termo_parceria,
                     tp_contrato_gestao: tp_contrato_gestao,
                     tp_convenio: tp_convenio,
-                    tp_outro: tp_outro
+                    tp_outro: tp_outro,
+
+                    financiadores_projeto: data.financiadores_projeto
                 }, function () {
                     //this.props.showHideForm();
                 });
@@ -295,6 +299,40 @@ class FormProjeto extends React.Component {
     }
 
     render() {
+
+        let financiador_projeto = null;
+
+        console.log('financiador_projeto: ', this.state.financiador_projeto);
+
+        if (this.state.financiadores_projeto) {
+            financiador_projeto = this.state.financiadores_projeto.map(function (item, index) {
+
+                return (
+                    /*<div>{item.tx_nome_financiador}sss</div>*/
+                    React.createElement(
+                        'div',
+                        { className: 'label-float', key: "financiador_projeto_" + index },
+                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange,
+                            defaultValue: item.tx_nome_financiador,
+                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'tx_nome_financiador' },
+                            'Financiador do projeto'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    )
+                );
+            }.bind(this));
+        }
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -992,7 +1030,8 @@ class FormProjeto extends React.Component {
                                             'Financiadores do Projeto'
                                         )
                                     ),
-                                    React.createElement('hr', null)
+                                    React.createElement('hr', null),
+                                    financiador_projeto
                                 )
                             ),
                             React.createElement(
