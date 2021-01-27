@@ -41,7 +41,10 @@ class Participacoes extends React.Component {
 
             removeItemConselho: null,
             removeItemTx: '',
-            removeTipo: ''
+            removeTipo: '',
+
+            nao_possui: null
+
         };
 
         this.list = this.list.bind(this);
@@ -62,10 +65,16 @@ class Participacoes extends React.Component {
 
         this.callModal = this.callModal.bind(this);
         this.callModalExcluir = this.callModalExcluir.bind(this);
+
+        this.naoPossui = this.naoPossui.bind(this);
+        this.updateNaoPossui = this.updateNaoPossui.bind(this);
+
+        this.validate = this.validate.bind(this);
     }
 
     componentDidMount() {
         this.list();
+        this.naoPossui();
     }
 
     cancelRemove(id) {
@@ -77,38 +86,39 @@ class Participacoes extends React.Component {
     showHideFormConselho(action) {
         let showFormConselho = !this.state.showFormConselho;
         let actionFormConselho = action;
-        console.log(showFormConselho);
+        //console.log(showFormConselho);
         this.setState({ showFormConselho: showFormConselho, actionFormConselho: actionFormConselho });
     }
     showHideFormConferencia(action) {
         let showFormConferencia = !this.state.showFormConferencia;
         let actionFormConferencia = action;
-        console.log(showFormConferencia);
+        //console.log(showFormConferencia);
         this.setState({ showFormConferencia: showFormConferencia, actionFormConferencia: actionFormConferencia });
     }
     showHideFormOutro(action) {
         let showFormOutro = !this.state.showFormOutro;
         let actionFormOutro = action;
-        console.log(showFormOutro);
+        //console.log(this.state.showFormOutro);
         this.setState({ showFormOutro: showFormOutro, actionFormOutro: actionFormOutro });
     }
 
-    showHideConselho(action) {
+    showHideConselho() /*action*/{
         let showConselho = !this.state.showConselho;
-        let actionConselho = action;
-        this.setState({ showConselho: showConselho, actionConselho: actionConselho });
+
+        this.setState({ showConselho: showConselho /*actionConselho: actionConselho*/ });
     }
 
     showHideConferencia(action) {
         let showConferencia = !this.state.showConferencia;
-        let actionConferencia = action;
-        this.setState({ showConferencia: showConferencia, actionConferencia: actionConferencia });
+        //let actionConferencia = action;
+        this.setState({ showConferencia: showConferencia /*, actionConferencia: actionConferencia*/ });
     }
 
     showHideOutro(action) {
         let showOutro = !this.state.showOutro;
-        let actionOutro = action;
-        this.setState({ showOutro: showOutro, actionOutro: actionOutro });
+        //let actionOutro = action;
+        //console.log('showOutro', this.state.showOutro);
+        this.setState({ showOutro: showOutro /*, actionOutro: actionOutro*/ });
     }
 
     closeFormConselho() {
@@ -130,11 +140,12 @@ class Participacoes extends React.Component {
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/participacao_social/611720',
+            //url: getBaseUrl2 + 'osc/participacao_social/1288121',
             //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 this.setState({
                     conferencias: data.conferencias_politicas_publicas,
                     conselhos: data.conselhos_politicas_publicas,
@@ -145,6 +156,77 @@ class Participacoes extends React.Component {
                 console.log(status, err.toString());
                 this.setState({ loadingList: false });
             }.bind(this)
+        });
+    }
+
+    naoPossui() {
+
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/611720',
+            //url: getBaseUrl2 + 'osc/1288121',
+            data: {},
+            cache: false,
+            success: function (data) {
+                //console.log(data);
+
+                this.setState({
+                    bo_nao_possui_ps_conferencias: data.bo_nao_possui_ps_conferencias,
+                    bo_nao_possui_ps_conselhos: data.bo_nao_possui_ps_conselhos,
+                    bo_nao_possui_ps_outros_espacos: data.bo_nao_possui_ps_outros_espacos,
+
+                    showConferencia: !data.bo_nao_possui_ps_conferencias,
+                    showConselho: !data.bo_nao_possui_ps_conselhos,
+                    showOutro: !data.bo_nao_possui_ps_outros_espacos
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    validate() {
+        let valid = true;
+
+        let requireds = this.state.requireds;
+        let form = this.state.form;
+
+        this.setState({ requireds: requireds });
+        return valid;
+    }
+
+    updateNaoPossui(e) {
+        e.preventDefault();
+
+        if (!this.validate()) {
+            return;
+        }
+
+        this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
+            $.ajax({
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/611720',
+                //data: this.state.form,
+
+                data: {
+                    bo_nao_possui_ps_conferencias: this.state.showConferencia ? false : true,
+                    bo_nao_possui_ps_conselhos: this.state.showConselho ? false : true,
+                    bo_nao_possui_ps_outros_espacos: this.state.showOutro ? false : true,
+                    id_osc: 611720
+                },
+                cache: false,
+                success: function (data) {
+                    let msg = "Dados alterados com sucesso!";
+                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    let msg = "Ocorreu um erro!";
+                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: false, button: true });
+                }.bind(this)
+            });
         });
     }
 
@@ -180,7 +262,7 @@ class Participacoes extends React.Component {
 
     callModal(id, type) {
         let modal = this.state.modal;
-        console.log('id 1:', id);
+        //console.log('id 1:', id);
         this.setState({
             modal: modal,
             editId: id,
@@ -318,6 +400,11 @@ class Participacoes extends React.Component {
 
     render() {
 
+        console.log('-----');
+        console.log(this.state.bo_nao_possui_ps_conferencias);
+        console.log(this.state.bo_nao_possui_ps_conselhos);
+        console.log(this.state.bo_nao_possui_ps_outros_espacos);
+        console.log('-----');
         /////////////////////////////
         let modal = this.modal();
         let modalExcluir = this.modalExcluir();
@@ -539,6 +626,9 @@ class Participacoes extends React.Component {
             );
         }.bind(this));
 
+        //console.log('bo_nao_possui_ps_conferencias', this.state.bo_nao_possui_ps_conferencias);
+        //console.log('showConselho', this.state.showConselho);
+
         return React.createElement(
             'div',
             null,
@@ -578,7 +668,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'custom-control custom-checkbox text-center' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho }),
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho, defaultChecked: this.state.bo_nao_possui_ps_conferencias, onChange: this.handleInputChange }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConselho' },
@@ -589,7 +679,7 @@ class Participacoes extends React.Component {
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row', style: { display: this.state.showConselho ? "none" : "" } },
+                            { className: 'row', style: { display: this.state.showConselho ? "" : "none" } },
                             conselhos,
                             React.createElement(
                                 'div',
@@ -664,7 +754,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'custom-control custom-checkbox text-center' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia }),
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia, defaultChecked: this.state.bo_nao_possui_ps_conselhos, onChange: this.bo_nao_possui_ps_conselhos }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConferencia' },
@@ -675,7 +765,7 @@ class Participacoes extends React.Component {
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row', style: { display: this.state.showConferencia ? "none" : "" } },
+                            { className: 'row', style: { display: this.state.showConferencia ? "" : "none" } },
                             conferencias,
                             React.createElement(
                                 'div',
@@ -749,7 +839,7 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'custom-control custom-checkbox text-center' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkOutro', required: true, onClick: this.showHideOutro }),
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkOutro', required: true, onClick: this.showHideOutro, defaultChecked: this.state.bo_nao_possui_ps_outros_espacos, onChange: this.bo_nao_possui_ps_outros_espacos }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkOutro' },
@@ -760,7 +850,7 @@ class Participacoes extends React.Component {
                         React.createElement('br', null),
                         React.createElement(
                             'div',
-                            { className: 'row', style: { display: this.state.showOutro ? "none" : "" } },
+                            { className: 'row', style: { display: this.state.showOutro ? "" : "none" } },
                             outros,
                             React.createElement(
                                 'div',
@@ -808,6 +898,13 @@ class Participacoes extends React.Component {
                                     )
                                 )
                             )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-success', onClick: this.updateNaoPossui },
+                            React.createElement('i', {
+                                className: 'fas fa-cloud-download-alt' }),
+                            ' Atualizar dados '
                         )
                     )
                 )
