@@ -36,6 +36,13 @@ class FormProjeto extends React.Component{
             active: false,
 
             financiador_projeto: [],
+            parceira_projeto: [],
+
+
+            showForm: false,
+            actionForm: '',
+
+            datalistParcerias: [],
 
         };
 
@@ -48,8 +55,11 @@ class FormProjeto extends React.Component{
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
+        this.listParcerias = this.listParcerias.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
+        this.showHideForm = this.showHideForm.bind(this);
+        this.remove = this.remove.bind(this);
     }
 
     componentDidMount(){
@@ -61,7 +71,7 @@ class FormProjeto extends React.Component{
         if(this.state.action != props.action || this.state.editId != props.id){
             this.setState({action: props.action, editId: props.id}, function(){
                 if(lastEditId != props.id){
-                    this.props.showHideForm(this.state.action);
+                    //this.props.showHideForm(this.state.action);
                     this.edit();
                 }
                 if(this.state.action=='new'){
@@ -72,6 +82,7 @@ class FormProjeto extends React.Component{
     }
 
     edit(){
+        this.listParcerias();
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
@@ -237,6 +248,28 @@ class FormProjeto extends React.Component{
         });
     }
 
+
+
+    listParcerias(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/parceiras/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({loading: false, datalistParcerias: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     callSubobjetivos(id){
         this.setState({button:false});
         $.ajax({
@@ -309,20 +342,38 @@ class FormProjeto extends React.Component{
         });
     }
 
+    showHideForm(action){
+        let showForm = !this.state.showForm;
+        this.setState({showForm: showForm, actionForm: action});
+    }
+
+
+    remove(id){
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2+'osc/projeto/parceira/'+id,
+            data: {
+
+            },
+            cache: false,
+            success: function(data){
+                this.listParcerias();
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+
+    }
 
 
 
     render(){
 
         let financiador_projeto = null;
-
-        console.log('financiador_projeto: ', this.state.financiador_projeto);
-
         if(this.state.financiadores_projeto) {
             financiador_projeto = this.state.financiadores_projeto.map(function (item, index) {
-
                 return (
-                    /*<div>{item.tx_nome_financiador}sss</div>*/
                     <div className="label-float" key={"financiador_projeto_" + index}>
                         <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange}
                                defaultValue={item.tx_nome_financiador}
@@ -331,6 +382,32 @@ class FormProjeto extends React.Component{
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
+                    </div>
+                );
+            }.bind(this));
+        }
+
+        let parceira_projeto = null;
+        if(this.state.datalistParcerias) {
+            parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
+                return (
+                    <div className="label-float listItemProject" key={"parceira_projeto_" + index}>
+                        {/*{item.tx_nome_parceira}*/}
+                        {item.id_osc_parceira_projeto}
+                        {/*<input className={"form-control form-g "} type="text" name="tx_nome_parceira" onChange={this.handleInputChange}
+                               defaultValue={item.tx_nome_parceira}
+                               defaultValue={item.id_osc_parceira_projeto}
+                               placeholder="Insica o CNPJ da OSC Parceira" />
+                        <label htmlFor="tx_nome_parceira">OSC Parceira</label>
+                        <div className="label-box-info-off">
+                            <p>&nbsp;</p>
+                        </div>*/}
+
+
+                        <div className="float-right " onClick={() => this.remove(item.id_osc_parceira_projeto)}>
+                            <i className="fas fa-trash-alt text-danger "/>
+                        </div>
+                        <hr/>
                     </div>
                 );
             }.bind(this));
@@ -531,7 +608,6 @@ class FormProjeto extends React.Component{
                             </div>
 
                             <div className="col-md-4">
-                                {/*<label htmlFor="tx_nome_zona_atuacao">Zona de Atuação*</label><br/>*/}
                                 <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
                                         name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} value={this.state.form.cd_zona_atuacao_projeto}>
                                     <option value="-1">Selecione</option>
@@ -542,9 +618,6 @@ class FormProjeto extends React.Component{
 
 
 
-
-                            {/*<div className={this.state.active === false ? 'col-md-12' : 'col-md-6'}>*/}
-                            {/* **************** ACERTAR QUANDO SEPARAR OS FORMULARIOS **************** */}
                             <div className={this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6'}>
                                 <br/>
                                 <h3>Fontes de Recursos</h3>
@@ -644,16 +717,45 @@ class FormProjeto extends React.Component{
                                         <h3>OSCs Parceiras</h3>
                                     </div>
                                     <div className="col-md-1 float-right">
-                                        <button className="btn btn-primary">
-                                            <i className="fas fa-plus"/>
-                                        </button>
+                                        <a className="btn-add" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block", marginTop: 0, marginLeft: 0}}>
+                                            <i className={"fas fa-2x fa-plus-circle"}/>
+                                        </a>
+                                        <a className="btn-add btn-add-warning" onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none", marginTop: 0, marginLeft: 0}}>
+                                            <i className={"fas fa-2x fa-times-circle"}/>
+                                        </a>
                                     </div>
                                     <div className="col-md-12">
                                         <hr/>
                                     </div>
 
+                                    <div  className="col-md-12" style={{display: this.state.showForm ? 'block' : 'none'}}>
+                                        <FormOscParceira
+                                            action={this.state.actionForm}
+                                            id={this.state.editId}
+                                            listParcerias={this.listParcerias}
+                                            showHideForm={this.showHideForm}
+                                            closeForm={this.closeForm}
+                                            id_projeto={this.state.editId}
+                                        />
+                                    </div>
+
                                     <div className="col-md-12">
-                                        <div className="label-float">
+                                        {parceira_projeto}
+
+                                        <div className="btn-group">
+                                            <button type="button" className="btn btn-secondary dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Menu alinhado a direita
+                                            </button>
+                                            <div className="dropdown-menu dropdown-menu-right">
+                                                <button className="dropdown-item" type="button">Ação</button>
+                                                <button className="dropdown-item" type="button">Another Ação</button>
+                                                <button className="dropdown-item" type="button">Algo mais aqui</button>
+                                            </div>
+                                        </div>
+
+
+                                        {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
                                                    value={this.state.form.tx_link_projeto}
                                                    placeholder="Insica o CNPJ da OSC Parceira" />
@@ -664,7 +766,7 @@ class FormProjeto extends React.Component{
                                         </div>
                                         <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
                                             <i className="fas fa-minus"/>
-                                        </button>
+                                        </button>*/}
                                     </div>
                                 </div>
 

@@ -35,7 +35,13 @@ class FormProjeto extends React.Component {
 
             active: false,
 
-            financiador_projeto: []
+            financiador_projeto: [],
+            parceira_projeto: [],
+
+            showForm: false,
+            actionForm: '',
+
+            datalistParcerias: []
 
         };
 
@@ -47,8 +53,11 @@ class FormProjeto extends React.Component {
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
+        this.listParcerias = this.listParcerias.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
+        this.showHideForm = this.showHideForm.bind(this);
+        this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
@@ -60,7 +69,7 @@ class FormProjeto extends React.Component {
         if (this.state.action != props.action || this.state.editId != props.id) {
             this.setState({ action: props.action, editId: props.id }, function () {
                 if (lastEditId != props.id) {
-                    this.props.showHideForm(this.state.action);
+                    //this.props.showHideForm(this.state.action);
                     this.edit();
                 }
                 if (this.state.action == 'new') {
@@ -71,6 +80,7 @@ class FormProjeto extends React.Component {
     }
 
     edit() {
+        this.listParcerias();
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
@@ -231,6 +241,26 @@ class FormProjeto extends React.Component {
         });
     }
 
+    listParcerias() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/projeto/parceiras/' + this.state.editId,
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({ loading: false, datalistParcerias: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     callSubobjetivos(id) {
         this.setState({ button: false });
         $.ajax({
@@ -298,38 +328,68 @@ class FormProjeto extends React.Component {
         });
     }
 
+    showHideForm(action) {
+        let showForm = !this.state.showForm;
+        this.setState({ showForm: showForm, actionForm: action });
+    }
+
+    remove(id) {
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/projeto/parceira/' + id,
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.listParcerias();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     render() {
 
         let financiador_projeto = null;
-
-        console.log('financiador_projeto: ', this.state.financiador_projeto);
-
         if (this.state.financiadores_projeto) {
             financiador_projeto = this.state.financiadores_projeto.map(function (item, index) {
-
-                return (
-                    /*<div>{item.tx_nome_financiador}sss</div>*/
+                return React.createElement(
+                    'div',
+                    { className: 'label-float', key: "financiador_projeto_" + index },
+                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange,
+                        defaultValue: item.tx_nome_financiador,
+                        placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: 'tx_nome_financiador' },
+                        'Financiador do projeto'
+                    ),
                     React.createElement(
                         'div',
-                        { className: 'label-float', key: "financiador_projeto_" + index },
-                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange,
-                            defaultValue: item.tx_nome_financiador,
-                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                        { className: 'label-box-info-off' },
                         React.createElement(
-                            'label',
-                            { htmlFor: 'tx_nome_financiador' },
-                            'Financiador do projeto'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'label-box-info-off' },
-                            React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
-                            )
+                            'p',
+                            null,
+                            '\xA0'
                         )
                     )
+                );
+            }.bind(this));
+        }
+
+        let parceira_projeto = null;
+        if (this.state.datalistParcerias) {
+            parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
+                return React.createElement(
+                    'div',
+                    { className: 'label-float listItemProject', key: "parceira_projeto_" + index },
+                    item.id_osc_parceira_projeto,
+                    React.createElement(
+                        'div',
+                        { className: 'float-right ', onClick: () => this.remove(item.id_osc_parceira_projeto) },
+                        React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                    ),
+                    React.createElement('hr', null)
                 );
             }.bind(this));
         }
@@ -919,9 +979,14 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'col-md-1 float-right' },
                                     React.createElement(
-                                        'button',
-                                        { className: 'btn btn-primary' },
-                                        React.createElement('i', { className: 'fas fa-plus' })
+                                        'a',
+                                        { className: 'btn-add', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block", marginTop: 0, marginLeft: 0 } },
+                                        React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                    ),
+                                    React.createElement(
+                                        'a',
+                                        { className: 'btn-add btn-add-warning', onClick: this.showHideForm, style: { display: this.state.showForm ? "block" : "none", marginTop: 0, marginLeft: 0 } },
+                                        React.createElement('i', { className: "fas fa-2x fa-times-circle" })
                                     )
                                 ),
                                 React.createElement(
@@ -931,32 +996,48 @@ class FormProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
+                                    { className: 'col-md-12', style: { display: this.state.showForm ? 'block' : 'none' } },
+                                    React.createElement(FormOscParceira, {
+                                        action: this.state.actionForm,
+                                        id: this.state.editId,
+                                        listParcerias: this.listParcerias,
+                                        showHideForm: this.showHideForm,
+                                        closeForm: this.closeForm,
+                                        id_projeto: this.state.editId
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
                                     { className: 'col-md-12' },
+                                    parceira_projeto,
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
-                                            value: this.state.form.tx_link_projeto,
-                                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                                        { className: 'btn-group' },
                                         React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_projeto' },
-                                            'OSCs Parceiras'
+                                            'button',
+                                            { type: 'button', className: 'btn btn-secondary dropdown-toggle',
+                                                'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                                            'Menu alinhado a direita'
                                         ),
                                         React.createElement(
                                             'div',
-                                            { className: 'label-box-info-off' },
+                                            { className: 'dropdown-menu dropdown-menu-right' },
                                             React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
+                                                'button',
+                                                { className: 'dropdown-item', type: 'button' },
+                                                'A\xE7\xE3o'
+                                            ),
+                                            React.createElement(
+                                                'button',
+                                                { className: 'dropdown-item', type: 'button' },
+                                                'Another A\xE7\xE3o'
+                                            ),
+                                            React.createElement(
+                                                'button',
+                                                { className: 'dropdown-item', type: 'button' },
+                                                'Algo mais aqui'
                                             )
                                         )
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
-                                        React.createElement('i', { className: 'fas fa-minus' })
                                     )
                                 )
                             ),

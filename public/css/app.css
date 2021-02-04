@@ -12677,6 +12677,13 @@ label, input, .btn-number {
   margin-right: 10px;
 }
 
+.delField svg {
+  margin-top: -49px;
+  position: absolute;
+  margin-left: -25px;
+  cursor: pointer;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;
@@ -13246,6 +13253,14 @@ label, input, .btn-number {
 
 .btn-add-warning svg {
   color: #DEA33B !important;
+}
+
+.listItemProject hr {
+  margin: 5px 0;
+}
+
+.listItemProject svg {
+  cursor: pointer;
 }
 
 #chart {
