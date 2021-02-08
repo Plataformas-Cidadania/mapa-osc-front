@@ -37,12 +37,18 @@ class FormProjeto extends React.Component{
 
             financiador_projeto: [],
             parceira_projeto: [],
+            localizacao_projeto: [],
 
 
             showForm: false,
             actionForm: '',
 
             datalistParcerias: [],
+            datalistFinanciadores: [],
+            datalistLocalizacoes: [],
+
+
+            removeItem: false,
 
         };
 
@@ -56,10 +62,14 @@ class FormProjeto extends React.Component{
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
         this.listParcerias = this.listParcerias.bind(this);
+        this.listFinanciadores = this.listFinanciadores.bind(this);
+        this.listLocalizacoes = this.listLocalizacoes.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
         this.remove = this.remove.bind(this);
+
+        this.removeList = this.removeList.bind(this);
     }
 
     componentDidMount(){
@@ -83,6 +93,8 @@ class FormProjeto extends React.Component{
 
     edit(){
         this.listParcerias();
+        this.listFinanciadores();
+        this.listLocalizacoes();
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
@@ -135,7 +147,7 @@ class FormProjeto extends React.Component{
                     tp_convenio: tp_convenio,
                     tp_outro: tp_outro,
 
-                    financiadores_projeto: data.financiadores_projeto,
+                    //financiadores_projeto: data.financiadores_projeto,
                 }, function(){
                     //this.props.showHideForm();
                 });
@@ -255,7 +267,7 @@ class FormProjeto extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/projeto/parceiras/'+this.state.editId,
+            url: getBaseUrl2+'osc/projeto/parcerias/'+this.state.editId,
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -263,6 +275,46 @@ class FormProjeto extends React.Component{
                 });
 
                 this.setState({loading: false, datalistParcerias: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listFinanciadores(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/financiadores/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({loading: false, datalistFinanciadores: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listLocalizacoes(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/localizacoes/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({loading: false, datalistLocalizacoes: data})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -366,13 +418,17 @@ class FormProjeto extends React.Component{
 
     }
 
-
+    removeList(id){
+        console.log('----->',id);
+        let removeItem = !this.state.removeItem;
+        this.setState({removeItem: removeItem});
+    }
 
     render(){
 
         let financiador_projeto = null;
-        if(this.state.financiadores_projeto) {
-            financiador_projeto = this.state.financiadores_projeto.map(function (item, index) {
+        if(this.state.datalistFinanciadores) {
+            financiador_projeto = this.state.datalistFinanciadores.map(function (item, index) {
                 return (
                     <div className="label-float" key={"financiador_projeto_" + index}>
                         <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange}
@@ -387,13 +443,31 @@ class FormProjeto extends React.Component{
             }.bind(this));
         }
 
+        let localizacao_projeto = null;
+        if(this.state.datalistLocalizacoes) {
+            localizacao_projeto = this.state.datalistLocalizacoes.map(function (item, index) {
+                return (
+                    <div className="col-md-6" key={"localizacao_projeto_" + index}>
+                        <div className="label-float">
+                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange}
+                                   defaultValue={item.tx_nome_regiao_localizacao_projeto}
+                                   placeholder="Insica o Local de execução" />
+                            <label htmlFor="tx_nome_financiador">Local de execução</label>
+                            <div className="label-box-info-off">
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }.bind(this));
+        }
+
         let parceira_projeto = null;
         if(this.state.datalistParcerias) {
             parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
                 return (
                     <div className="label-float listItemProject" key={"parceira_projeto_" + index}>
-                        {/*{item.tx_nome_parceira}*/}
-                        {item.id_osc_parceira_projeto}
+                        {item.dc_tipo_parceria.tx_nome_tipo_parceria}
                         {/*<input className={"form-control form-g "} type="text" name="tx_nome_parceira" onChange={this.handleInputChange}
                                defaultValue={item.tx_nome_parceira}
                                defaultValue={item.id_osc_parceira_projeto}
@@ -404,8 +478,14 @@ class FormProjeto extends React.Component{
                         </div>*/}
 
 
-                        <div className="float-right " onClick={() => this.remove(item.id_osc_parceira_projeto)}>
-                            <i className="fas fa-trash-alt text-danger "/>
+                        <div className="float-right ">
+                            <div style={{display: this.state.removeItem ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger" onClick={() => this.remove(item.id_osc_parceira_projeto)}>Excluir</div>
+                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar</div>
+                            </div>
+                            <div onClick={() => this.removeList(item.id_osc_parceira_projeto)}  style={{display: this.state.removeItem ? 'none' : ''}}>
+                                <i className="fas fa-trash-alt text-danger " />
+                            </div>
                         </div>
                         <hr/>
                     </div>
@@ -628,6 +708,9 @@ class FormProjeto extends React.Component{
                                         <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"}  defaultChecked={this.state.ft_recursos_publico} onChange={this.handleInputChange}/>
                                         <label className="custom-control-label" htmlFor={"fontes_recursos_publico"} >Recursos públicos</label>
                                     </div>
+                                    <div className="float-right" style={{display: this.state.active === false ? 'none' : '', margin: '8px -20px 0 0'}}>
+                                        <i className="fas fa-chevron-right " />
+                                    </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
@@ -742,19 +825,6 @@ class FormProjeto extends React.Component{
                                     <div className="col-md-12">
                                         {parceira_projeto}
 
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-secondary dropdown-toggle"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Menu alinhado a direita
-                                            </button>
-                                            <div className="dropdown-menu dropdown-menu-right">
-                                                <button className="dropdown-item" type="button">Ação</button>
-                                                <button className="dropdown-item" type="button">Another Ação</button>
-                                                <button className="dropdown-item" type="button">Algo mais aqui</button>
-                                            </div>
-                                        </div>
-
-
                                         {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
                                                    value={this.state.form.tx_link_projeto}
@@ -791,6 +861,9 @@ class FormProjeto extends React.Component{
                                     <div className="col-md-12">
                                         <p><strong>Local de execução</strong></p>
                                         <hr/>
+                                        <div className="row">
+                                            {localizacao_projeto}
+                                        </div>
                                     </div>
                                     <div className="col-md-12">
                                         <p><strong>Financiadores do Projeto</strong></p>

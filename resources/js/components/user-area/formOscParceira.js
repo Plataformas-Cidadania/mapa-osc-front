@@ -225,14 +225,14 @@ class FormOscParceira extends React.Component{
 
                     <div className="input-icon">
                         <input type="text"
-                               className="form-control"
-                               placeholder="Busque um OSC parceira"
+                               className="form-control float-left"
+                               placeholder="Busque uma OSC parceira"
                                name="cd_parceira"
-                               style={{display: (this.state.filters.parceira ? 'none' : '')}}
                                autoComplete="off"
                                onClick={this.clickSearchparceira}
                                onChange={this.handleSearchparceira}
                                defaultValue={this.state.searchparceira}
+                               style={{display: (this.state.filters.parceira ? 'none' : ''), }}
                         />
                         <input type="text" className="form-control" name="cd_parceira2"
                                style={{display: (this.state.filters.parceira ? '' : 'none')}}

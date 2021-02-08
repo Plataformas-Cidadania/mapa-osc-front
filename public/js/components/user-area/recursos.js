@@ -58,6 +58,10 @@ class Recursos extends React.Component {
         this.validate = this.validate.bind(this);
         this.getRecursos = this.getRecursos.bind(this);
         this.getRecursosProprios = this.getRecursosProprios.bind(this);
+
+        this.storeCampo = this.storeCampo.bind(this);
+        this.updateCampo = this.updateCampo.bind(this);
+        this.deleteCampo = this.deleteCampo.bind(this);
     }
 
     componentDidMount() {
@@ -194,6 +198,42 @@ class Recursos extends React.Component {
         });
     }
 
+    storeCampo(field, value) {
+        console.log('field: ', field);
+        console.log('value: ', value);
+        //e.preventDefault();
+
+        /*if(!this.validate()){
+            return;
+        }*/
+
+        this.setState({ loading: true, button: false }, function () {
+            $.ajax({
+                method: 'POST',
+                url: '/fonte_recursos',
+                data: {
+                    id_osc: '455128',
+                    dt_ano_recursos_osc: '2016-01-01',
+                    ft_ano_recursos_osc: "Representante de OSC",
+                    ft_valor_recursos_osc: "Representante de OSC",
+                    nr_valor_recursos_osc: value,
+                    cd_origem_fonte_recursos_projeto: field
+                },
+                cache: false,
+                success: function (data) {
+                    let msg = 'Dados alterados com sucesso!';
+                    this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                }.bind(this)
+            });
+        });
+    }
+    updateCampo() {}
+    deleteCampo() {}
+
     render() {
 
         let anosRecursos = null;
@@ -283,7 +323,9 @@ class Recursos extends React.Component {
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
                                             defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
+                                            placeholder: 'Informe o valor'
+
+                                        }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_link_estatuto_osc' },
@@ -333,6 +375,8 @@ class Recursos extends React.Component {
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
                                             defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
+                                            onBlur: () => this.storeCampo(3, 2222 /*this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc*/
+                                            ),
                                             placeholder: 'Informe o valor' }),
                                         React.createElement(
                                             'label',
