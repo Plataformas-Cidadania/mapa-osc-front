@@ -36,17 +36,21 @@ class FormProjeto extends React.Component {
             active: false,
 
             financiador_projeto: [],
+            publico_projeto: [],
             parceira_projeto: [],
             localizacao_projeto: [],
 
             showForm: false,
             actionForm: '',
-
             datalistParcerias: [],
-            datalistFinanciadores: [],
-            datalistLocalizacoes: [],
 
-            removeItem: false
+            datalistFinanciadores: [],
+            datalistPublicos: [],
+            datalistLocalizacoes: [],
+            removeItem: null,
+
+            showAdd: false,
+            saveLoading: ''
 
         };
 
@@ -60,6 +64,7 @@ class FormProjeto extends React.Component {
         this.listArea = this.listArea.bind(this);
         this.listParcerias = this.listParcerias.bind(this);
         this.listFinanciadores = this.listFinanciadores.bind(this);
+        this.listPublicos = this.listPublicos.bind(this);
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
@@ -67,6 +72,8 @@ class FormProjeto extends React.Component {
         this.remove = this.remove.bind(this);
 
         this.removeList = this.removeList.bind(this);
+        this.saveList = this.saveList.bind(this);
+        this.addList = this.addList.bind(this);
     }
 
     componentDidMount() {
@@ -91,6 +98,7 @@ class FormProjeto extends React.Component {
     edit() {
         this.listParcerias();
         this.listFinanciadores();
+        this.listPublicos();
         this.listLocalizacoes();
         $.ajax({
             method: 'GET',
@@ -292,6 +300,26 @@ class FormProjeto extends React.Component {
         });
     }
 
+    listPublicos() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/projeto/publicos/' + this.state.editId,
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({ loading: false, datalistPublicos: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     listLocalizacoes() {
 
         $.ajax({
@@ -384,14 +412,25 @@ class FormProjeto extends React.Component {
         this.setState({ showForm: showForm, actionForm: action });
     }
 
-    remove(id) {
+    remove(rota, id) {
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2 + 'osc/projeto/parceira/' + id,
+            url: getBaseUrl2 + 'osc/projeto/' + rota + '/' + id,
             data: {},
             cache: false,
             success: function (data) {
-                this.listParcerias();
+                if (rota === 'financiador') {
+                    this.listFinanciadores();
+                }
+                if (rota === 'publico') {
+                    this.listPublicos();
+                }
+                if (rota === 'parceria') {
+                    this.listParcerias();
+                }
+                if (rota === 'localizacao') {
+                    this.listLocalizacoes();
+                }
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -399,10 +438,46 @@ class FormProjeto extends React.Component {
         });
     }
 
-    removeList(id) {
-        console.log('----->', id);
-        let removeItem = !this.state.removeItem;
+    removeList(rota, id) {
+        let removeItem = rota + '_' + id;
         this.setState({ removeItem: removeItem });
+    }
+
+    saveList(rota, id) {
+        //console.log('Save id:',id);
+        this.setState({ saveLoading: rota + '_' + id });
+        let url = getBaseUrl2 + 'osc/projeto/' + rota + '/' + id;
+
+        let data = {};
+        if (rota === 'financiador') {
+            data = {
+                tx_nome_financiador: this.state.form.tx_nome_financiador,
+                id: id
+            };
+        }
+        if (rota === 'publico') {
+            data = {
+                tx_nome_publico_beneficiado: this.state.form.tx_nome_publico_beneficiado,
+                id: id
+            };
+        }
+
+        $.ajax({
+            method: 'PUT',
+            url: url,
+            data: data,
+            cache: false,
+            success: function (data) {
+                this.setState({ saveLoading: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    addList(rota) {
+        this.setState({ showAdd: rota });
     }
 
     render() {
@@ -429,6 +504,115 @@ class FormProjeto extends React.Component {
                             null,
                             '\xA0'
                         )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'float-right ', style: { margin: '-50px 10px 0 0' } },
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.removeItem == 'financiador_' + item.id_financiador_projeto ? '' : 'none' } },
+                            React.createElement(
+                                'div',
+                                { className: 'btn-xs btn-danger', onClick: () => this.remove('financiador', item.id_financiador_projeto) },
+                                'Excluir'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_financiador_projeto) },
+                                'Cancelar'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'float-right', style: { display: this.state.removeItem == 'financiador_' + item.id_financiador_projeto ? 'none' : '' } },
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.removeList('financiador', item.id_financiador_projeto) },
+                                React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.saveList('financiador', item.id_financiador_projeto), style: { margin: '0 10px' } },
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? 'none' : '' } },
+                                    React.createElement('i', { className: 'far fa-save' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? '' : 'none' } },
+                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                )
+                            )
+                        )
+                    )
+                );
+            }.bind(this));
+        }
+
+        let publico_projeto = null;
+        if (this.state.datalistPublicos) {
+            publico_projeto = this.state.datalistPublicos.map(function (item, index) {
+                return React.createElement(
+                    'div',
+                    { className: 'label-float', key: "publico_projeto_" + index },
+                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_publico_beneficiado', onChange: this.handleInputChange,
+                        defaultValue: item.tx_nome_publico_beneficiado,
+                        placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: 'tx_nome_publico_beneficiado' },
+                        'Publico do projeto'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'label-box-info-off' },
+                        React.createElement(
+                            'p',
+                            null,
+                            '\xA0'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'float-right ', style: { margin: '-50px 10px 0 0' } },
+                        React.createElement(
+                            'div',
+                            { style: { display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? '' : 'none' } },
+                            React.createElement(
+                                'div',
+                                { className: 'btn-xs btn-danger', onClick: () => this.remove('publico', item.id_publico_beneficiado_projeto) },
+                                'Excluir'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_publico_beneficiado_projeto) },
+                                'Cancelar'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'float-right', style: { display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.removeList('publico', item.id_publico_beneficiado_projeto) },
+                                React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.saveList('publico', item.id_publico_beneficiado_projeto), style: { margin: '0 10px' } },
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
+                                    React.createElement('i', { className: 'far fa-save' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? '' : 'none' } },
+                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                )
+                            )
+                        )
                     )
                 );
             }.bind(this));
@@ -448,7 +632,7 @@ class FormProjeto extends React.Component {
                             placeholder: 'Insica o Local de execu\xE7\xE3o' }),
                         React.createElement(
                             'label',
-                            { htmlFor: 'tx_nome_financiador' },
+                            { htmlFor: 'tx_nome_Localizacao' },
                             'Local de execu\xE7\xE3o'
                         ),
                         React.createElement(
@@ -458,6 +642,47 @@ class FormProjeto extends React.Component {
                                 'p',
                                 null,
                                 '\xA0'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'float-right ', style: { margin: '-50px 10px 0 0' } },
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.removeItem == 'localizacao_' + item.id_localizacao_projeto ? '' : 'none' } },
+                                React.createElement(
+                                    'div',
+                                    { className: 'btn-xs btn-danger', onClick: () => this.remove('localizacao', item.id_localizacao_projeto) },
+                                    'Excluir'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_localizacao_projeto) },
+                                    'Cancelar'
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', style: { display: this.state.removeItem == 'localizacao_' + item.id_localizacao_projeto ? 'none' : '' } },
+                                React.createElement(
+                                    'div',
+                                    { className: 'float-right', onClick: () => this.removeList('localizacao', item.id_localizacao_projeto) },
+                                    React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'float-right', onClick: () => this.saveList('localizacao', item.id_localizacao_projeto), style: { margin: '0 10px' } },
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.saveLoading === 'localizacao_' + item.id_localizacao_projeto ? 'none' : '' } },
+                                        React.createElement('i', { className: 'far fa-save' })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.saveLoading === 'localizacao_' + item.id_localizacao_projeto ? '' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                    )
+                                )
                             )
                         )
                     )
@@ -1130,6 +1355,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
+                                    React.createElement('br', null),
                                     React.createElement(
                                         'p',
                                         null,
@@ -1139,37 +1365,35 @@ class FormProjeto extends React.Component {
                                             'P\xFAblico Beneficiado'
                                         )
                                     ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-1 float-right', style: { marginTop: '15px', marginRight: '-40px' } },
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add', onClick: () => this.addList('publico'), style: { display: this.state.showAdd === 'publico' ? "none" : "block" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                        ),
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add btn-add-warning', onClick: () => this.addList('off'), style: { display: this.state.showAdd === 'publico' ? "block" : "none" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-times-circle" })
+                                        )
+                                    ),
                                     React.createElement('hr', null),
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
-                                            value: this.state.form.tx_link_projeto,
-                                            placeholder: 'Insica o CNPJ da OSC Parceira' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_projeto' },
-                                            'OSCs Parceiras'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
+                                        { className: 'col-md-12', style: { display: this.state.showAdd === 'publico' ? 'block' : 'none' } },
+                                        React.createElement(FormProjetoPublico, {
+                                            id_projeto: this.state.editId,
+                                            listPublicos: this.listPublicos
+                                        })
                                     ),
-                                    React.createElement(
-                                        'button',
-                                        { className: 'btn btn-danger', style: { marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative' } },
-                                        React.createElement('i', { className: 'fas fa-minus' })
-                                    )
+                                    publico_projeto
                                 ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
+                                    React.createElement('br', null),
                                     React.createElement(
                                         'p',
                                         null,
@@ -1179,7 +1403,29 @@ class FormProjeto extends React.Component {
                                             'Local de execu\xE7\xE3o'
                                         )
                                     ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-1 float-right', style: { marginTop: '15px', marginRight: '-40px' } },
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add', onClick: () => this.addList('localizacao'), style: { display: this.state.showAdd === 'localizacao' ? "none" : "block" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                        ),
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add btn-add-warning', onClick: () => this.addList('off'), style: { display: this.state.showAdd === 'localizacao' ? "block" : "none" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-times-circle" })
+                                        )
+                                    ),
                                     React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12', style: { display: this.state.showAdd === 'localizacao' ? 'block' : 'none' } },
+                                        React.createElement(FormProjetoLocalizacao, {
+                                            id_projeto: this.state.editId,
+                                            listLocalizacoes: this.listLocalizacoes
+                                        })
+                                    ),
                                     React.createElement(
                                         'div',
                                         { className: 'row' },
@@ -1189,6 +1435,7 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
+                                    React.createElement('br', null),
                                     React.createElement(
                                         'p',
                                         null,
@@ -1198,7 +1445,29 @@ class FormProjeto extends React.Component {
                                             'Financiadores do Projeto'
                                         )
                                     ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-1 float-right', style: { marginTop: '15px', marginRight: '-40px' } },
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add', onClick: () => this.addList('financiador'), style: { display: this.state.showAdd === 'financiador' ? "none" : "block" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                        ),
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add btn-add-warning', onClick: () => this.addList('off'), style: { display: this.state.showAdd === 'financiador' ? "block" : "none" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-times-circle" })
+                                        )
+                                    ),
                                     React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12', style: { display: this.state.showAdd === 'financiador' ? 'block' : 'none' } },
+                                        React.createElement(FormProjetoFinanciador, {
+                                            id_projeto: this.state.editId,
+                                            listFinanciadores: this.listFinanciadores
+                                        })
+                                    ),
                                     financiador_projeto
                                 )
                             ),
@@ -1264,9 +1533,8 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-6' },
                             React.createElement(
                                 'button',
-                                {
-                                    className: 'btn btn-success', onClick: this.register },
-                                'Adicionar'
+                                { className: 'btn btn-success', onClick: this.register },
+                                'Atualizar'
                             )
                         )
                     ),

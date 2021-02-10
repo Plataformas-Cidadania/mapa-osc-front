@@ -36,19 +36,23 @@ class FormProjeto extends React.Component{
             active: false,
 
             financiador_projeto: [],
+            publico_projeto: [],
             parceira_projeto: [],
             localizacao_projeto: [],
 
 
             showForm: false,
             actionForm: '',
-
             datalistParcerias: [],
+
             datalistFinanciadores: [],
+            datalistPublicos: [],
             datalistLocalizacoes: [],
+            removeItem: null,
 
 
-            removeItem: false,
+            showAdd: false,
+            saveLoading: '',
 
         };
 
@@ -63,6 +67,7 @@ class FormProjeto extends React.Component{
         this.listArea = this.listArea.bind(this);
         this.listParcerias = this.listParcerias.bind(this);
         this.listFinanciadores = this.listFinanciadores.bind(this);
+        this.listPublicos = this.listPublicos.bind(this);
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
@@ -70,6 +75,8 @@ class FormProjeto extends React.Component{
         this.remove = this.remove.bind(this);
 
         this.removeList = this.removeList.bind(this);
+        this.saveList = this.saveList.bind(this);
+        this.addList = this.addList.bind(this);
     }
 
     componentDidMount(){
@@ -94,6 +101,7 @@ class FormProjeto extends React.Component{
     edit(){
         this.listParcerias();
         this.listFinanciadores();
+        this.listPublicos();
         this.listLocalizacoes();
         $.ajax({
             method: 'GET',
@@ -302,6 +310,26 @@ class FormProjeto extends React.Component{
         });
     }
 
+    listPublicos(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/publicos/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({loading: false, datalistPublicos: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     listLocalizacoes(){
 
         $.ajax({
@@ -400,16 +428,27 @@ class FormProjeto extends React.Component{
     }
 
 
-    remove(id){
+    remove(rota, id){
         $.ajax({
             method: 'DELETE',
-            url: getBaseUrl2+'osc/projeto/parceira/'+id,
+            url: getBaseUrl2+'osc/projeto/'+rota+'/'+id,
             data: {
 
             },
             cache: false,
             success: function(data){
-                this.listParcerias();
+                if(rota==='financiador'){
+                    this.listFinanciadores();
+                }
+                if(rota==='publico'){
+                    this.listPublicos();
+                }
+                if(rota==='parceria'){
+                    this.listParcerias();
+                }
+                if(rota==='localizacao'){
+                    this.listLocalizacoes();
+                }
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -418,10 +457,46 @@ class FormProjeto extends React.Component{
 
     }
 
-    removeList(id){
-        console.log('----->',id);
-        let removeItem = !this.state.removeItem;
+    removeList(rota, id){
+        let removeItem = rota+'_'+id;
         this.setState({removeItem: removeItem});
+    }
+
+    saveList(rota, id){
+        //console.log('Save id:',id);
+        this.setState({saveLoading: rota+'_'+id});
+        let url = getBaseUrl2 + 'osc/projeto/'+rota+'/'+id;
+
+        let data = {};
+        if(rota==='financiador'){
+            data = {
+                tx_nome_financiador: this.state.form.tx_nome_financiador,
+                id: id,
+            }
+        }
+        if(rota==='publico'){
+            data = {
+                tx_nome_publico_beneficiado: this.state.form.tx_nome_publico_beneficiado,
+                id: id,
+            }
+        }
+
+        $.ajax({
+            method: 'PUT',
+            url: url,
+            data: data,
+            cache: false,
+            success: function(data) {
+                this.setState({saveLoading: false});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    addList(rota){
+        this.setState({showAdd: rota});
     }
 
     render(){
@@ -438,6 +513,56 @@ class FormProjeto extends React.Component{
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
+
+                        <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
+                            <div style={{display: this.state.removeItem == 'financiador_'+item.id_financiador_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger" onClick={() => this.remove('financiador', item.id_financiador_projeto)}>Excluir</div>
+                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_financiador_projeto)}>Cancelar</div>
+                            </div>
+                            <div className="float-right" style={{display: this.state.removeItem == 'financiador_'+item.id_financiador_projeto ? 'none' : ''}}>
+                                <div className="float-right" onClick={() => this.removeList('financiador', item.id_financiador_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger " />
+                                </div>
+                                <div className="float-right" onClick={() => this.saveList('financiador', item.id_financiador_projeto)}  style={{margin: '0 10px'}}>
+                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }.bind(this));
+        }
+
+
+        let publico_projeto = null;
+        if(this.state.datalistPublicos) {
+            publico_projeto = this.state.datalistPublicos.map(function (item, index) {
+                return (
+                    <div className="label-float" key={"publico_projeto_" + index}>
+                        <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange}
+                               defaultValue={item.tx_nome_publico_beneficiado}
+                               placeholder="Insica o CNPJ da OSC Parceira" />
+                        <label htmlFor="tx_nome_publico_beneficiado">Publico do projeto</label>
+                        <div className="label-box-info-off">
+                            <p>&nbsp;</p>
+                        </div>
+
+                        <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
+                            <div style={{display: this.state.removeItem == 'publico_'+item.id_publico_beneficiado_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger" onClick={() => this.remove('publico', item.id_publico_beneficiado_projeto)}>Excluir</div>
+                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_publico_beneficiado_projeto)}>Cancelar</div>
+                            </div>
+                            <div className="float-right" style={{display: this.state.removeItem == 'publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}>
+                                <div className="float-right" onClick={() => this.removeList('publico', item.id_publico_beneficiado_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger " />
+                                </div>
+                                <div className="float-right" onClick={() => this.saveList('publico', item.id_publico_beneficiado_projeto)}  style={{margin: '0 10px'}}>
+                                    <div style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 );
             }.bind(this));
@@ -452,10 +577,27 @@ class FormProjeto extends React.Component{
                             <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange}
                                    defaultValue={item.tx_nome_regiao_localizacao_projeto}
                                    placeholder="Insica o Local de execução" />
-                            <label htmlFor="tx_nome_financiador">Local de execução</label>
+                            <label htmlFor="tx_nome_Localizacao">Local de execução</label>
                             <div className="label-box-info-off">
                                 <p>&nbsp;</p>
                             </div>
+
+                            <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
+                                <div style={{display: this.state.removeItem == 'localizacao_'+item.id_localizacao_projeto ? '' : 'none'}}>
+                                    <div className="btn-xs btn-danger" onClick={() => this.remove('localizacao', item.id_localizacao_projeto)}>Excluir</div>
+                                    <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_localizacao_projeto)}>Cancelar</div>
+                                </div>
+                                <div className="float-right" style={{display: this.state.removeItem == 'localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}>
+                                    <div className="float-right" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
+                                        <i className="fas fa-trash-alt text-danger " />
+                                    </div>
+                                    <div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
+                                        <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                        <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 );
@@ -843,32 +985,72 @@ class FormProjeto extends React.Component{
                                 <br/>
                                 <div className="row">
                                     <div className="col-md-12">
+                                        {/*//////////////////////Financiadores//////////////////////*/}
+                                        <br/>
                                         <p><strong>Público Beneficiado</strong></p>
-                                        <hr/>
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
-                                                   value={this.state.form.tx_link_projeto}
-                                                   placeholder="Insica o CNPJ da OSC Parceira" />
-                                            <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
-                                            <div className="label-box-info-off">
-                                                <p>&nbsp;</p>
-                                            </div>
+                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('publico')} style={{display: this.state.showAdd==='publico' ? "none" : "block"}}>
+                                                <i className={"fas fa-2x fa-plus-circle"}/>
+                                            </a>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='publico' ? "block" : "none"}}>
+                                                <i className={"fas fa-2x fa-times-circle"}/>
+                                            </a>
                                         </div>
-                                        <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
-                                            <i className="fas fa-minus"/>
-                                        </button>
+                                        <hr/>
+                                        <div  className="col-md-12" style={{display: this.state.showAdd==='publico' ? 'block' : 'none'}}>
+                                            <FormProjetoPublico
+                                                id_projeto={this.state.editId}
+                                                listPublicos={this.listPublicos}
+                                            />
+                                        </div>
+                                        {publico_projeto}
+                                        {/*//////////////////////Financiadores//////////////////////*/}
                                     </div>
                                     <div className="col-md-12">
+                                        {/*//////////////////////Local de execução//////////////////////*/}
+                                        <br/>
                                         <p><strong>Local de execução</strong></p>
+                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('localizacao')} style={{display: this.state.showAdd==='localizacao' ? "none" : "block"}}>
+                                                <i className={"fas fa-2x fa-plus-circle"}/>
+                                            </a>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='localizacao' ? "block" : "none"}}>
+                                                <i className={"fas fa-2x fa-times-circle"}/>
+                                            </a>
+                                        </div>
                                         <hr/>
+                                        <div  className="col-md-12" style={{display: this.state.showAdd==='localizacao' ? 'block' : 'none'}}>
+                                            <FormProjetoLocalizacao
+                                                id_projeto={this.state.editId}
+                                                listLocalizacoes={this.listLocalizacoes}
+                                            />
+                                        </div>
                                         <div className="row">
                                             {localizacao_projeto}
                                         </div>
+                                        {/*//////////////////////Local de execução//////////////////////*/}
                                     </div>
                                     <div className="col-md-12">
+                                        {/*//////////////////////Financiadores//////////////////////*/}
+                                        <br/>
                                         <p><strong>Financiadores do Projeto</strong></p>
+                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('financiador')} style={{display: this.state.showAdd==='financiador' ? "none" : "block"}}>
+                                                <i className={"fas fa-2x fa-plus-circle"}/>
+                                            </a>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='financiador' ? "block" : "none"}}>
+                                                <i className={"fas fa-2x fa-times-circle"}/>
+                                            </a>
+                                        </div>
                                         <hr/>
+                                        <div  className="col-md-12" style={{display: this.state.showAdd==='financiador' ? 'block' : 'none'}}>
+                                            <FormProjetoFinanciador
+                                                id_projeto={this.state.editId}
+                                                listFinanciadores={this.listFinanciadores}
+                                            />
+                                        </div>
                                         {financiador_projeto}
+                                        {/*//////////////////////Financiadores//////////////////////*/}
                                     </div>
                                 </div>
 
@@ -903,9 +1085,8 @@ class FormProjeto extends React.Component{
                         <p><i>* campos obrigatórios</i></p>
                         <div className="row">
                             <div className="col-md-6">
-                                <button
-                                        className="btn btn-success" onClick={this.register}>
-                                    Adicionar
+                                <button className="btn btn-success" onClick={this.register}>
+                                    Atualizar
                                 </button>
                             </div>
                         </div>
