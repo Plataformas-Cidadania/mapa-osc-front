@@ -696,31 +696,65 @@ class FormProjeto extends React.Component {
                 return React.createElement(
                     'div',
                     { className: 'label-float listItemProject', key: "parceira_projeto_" + index },
-                    item.dc_tipo_parceria.tx_nome_tipo_parceria,
+                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_parceira', onChange: this.handleInputChange
+                        /*defaultValue={item.dc_tipo_parceria.tx_nome_tipo_parceria}*/
+                        , defaultValue: item.id_osc_parceira_projeto,
+                        placeholder: 'Insica o CNPJ da OSC Parceira' }),
+                    React.createElement(
+                        'label',
+                        { htmlFor: 'tx_nome_parceira' },
+                        'OSC Parceira'
+                    ),
                     React.createElement(
                         'div',
-                        { className: 'float-right ' },
+                        { className: 'label-box-info-off' },
+                        React.createElement(
+                            'p',
+                            null,
+                            '\xA0'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'float-right ', style: { margin: '-50px 10px 0 0' } },
                         React.createElement(
                             'div',
-                            { style: { display: this.state.removeItem ? '' : 'none' } },
+                            { style: { display: this.state.removeItem == 'parceria_' + item.id_parceria_projeto ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'btn-xs btn-danger', onClick: () => this.remove(item.id_osc_parceira_projeto) },
+                                { className: 'btn-xs btn-danger', onClick: () => this.remove('parceria', item.id_parceria_projeto) },
                                 'Excluir'
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_osc_parceira_projeto) },
+                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_parceria_projeto) },
                                 'Cancelar'
                             )
                         ),
                         React.createElement(
                             'div',
-                            { onClick: () => this.removeList(item.id_osc_parceira_projeto), style: { display: this.state.removeItem ? 'none' : '' } },
-                            React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                            { className: 'float-right', style: { display: this.state.removeItem == 'parceria_' + item.id_parceria_projeto ? 'none' : '' } },
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.removeList('parceria', item.id_parceria_projeto) },
+                                React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'float-right', onClick: () => this.saveList('parceria', item.id_parceria_projeto), style: { margin: '0 10px' } },
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'parceria_' + item.id_parceria_projeto ? 'none' : '' } },
+                                    React.createElement('i', { className: 'far fa-save' })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: this.state.saveLoading === 'parceria_' + item.id_parceria_projeto ? '' : 'none' } },
+                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                )
+                            )
                         )
-                    ),
-                    React.createElement('hr', null)
+                    )
                 );
             }.bind(this));
         }

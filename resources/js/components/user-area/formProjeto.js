@@ -77,6 +77,8 @@ class FormProjeto extends React.Component{
         this.removeList = this.removeList.bind(this);
         this.saveList = this.saveList.bind(this);
         this.addList = this.addList.bind(this);
+
+
     }
 
     componentDidMount(){
@@ -499,6 +501,9 @@ class FormProjeto extends React.Component{
         this.setState({showAdd: rota});
     }
 
+
+
+
     render(){
 
         let financiador_projeto = null;
@@ -609,27 +614,33 @@ class FormProjeto extends React.Component{
             parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
                 return (
                     <div className="label-float listItemProject" key={"parceira_projeto_" + index}>
-                        {item.dc_tipo_parceria.tx_nome_tipo_parceria}
-                        {/*<input className={"form-control form-g "} type="text" name="tx_nome_parceira" onChange={this.handleInputChange}
-                               defaultValue={item.tx_nome_parceira}
+                        {/*{item.dc_tipo_parceria.tx_nome_tipo_parceria}*/}
+                        <input className={"form-control form-g "} type="text" name="tx_nome_parceira" onChange={this.handleInputChange}
+                               /*defaultValue={item.dc_tipo_parceria.tx_nome_tipo_parceria}*/
                                defaultValue={item.id_osc_parceira_projeto}
                                placeholder="Insica o CNPJ da OSC Parceira" />
                         <label htmlFor="tx_nome_parceira">OSC Parceira</label>
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
-                        </div>*/}
+                        </div>
 
 
-                        <div className="float-right ">
-                            <div style={{display: this.state.removeItem ? '' : 'none'}}>
-                                <div className="btn-xs btn-danger" onClick={() => this.remove(item.id_osc_parceira_projeto)}>Excluir</div>
-                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar</div>
+                        <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
+                            <div style={{display: this.state.removeItem == 'parceria_'+item.id_parceria_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger" onClick={() => this.remove('parceria', item.id_parceria_projeto)}>Excluir</div>
+                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_parceria_projeto)}>Cancelar</div>
                             </div>
-                            <div onClick={() => this.removeList(item.id_osc_parceira_projeto)}  style={{display: this.state.removeItem ? 'none' : ''}}>
-                                <i className="fas fa-trash-alt text-danger " />
+                            <div className="float-right" style={{display: this.state.removeItem == 'parceria_'+item.id_parceria_projeto ? 'none' : ''}}>
+                                <div className="float-right" onClick={() => this.removeList('parceria', item.id_parceria_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger " />
+                                </div>
+                                <div className="float-right" onClick={() => this.saveList('parceria', item.id_parceria_projeto)}  style={{margin: '0 10px'}}>
+                                    <div style={{display: this.state.saveLoading==='parceria_'+item.id_parceria_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='parceria_'+item.id_parceria_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                </div>
                             </div>
                         </div>
-                        <hr/>
+
                     </div>
                 );
             }.bind(this));

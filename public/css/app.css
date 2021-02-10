@@ -12658,6 +12658,7 @@ label, input, .btn-number {
   padding: 0;
   margin-right: 20px;
   z-index: 99;
+  box-shadow: 0px 0px 3px #cccccc;
 }
 
 .box-search-itens li {
