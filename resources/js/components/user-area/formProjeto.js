@@ -277,7 +277,7 @@ class FormProjeto extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/projeto/parcerias/'+this.state.editId,
+            url: getBaseUrl2+'osc/projeto/parceiras/'+this.state.editId,
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -445,7 +445,7 @@ class FormProjeto extends React.Component{
                 if(rota==='publico'){
                     this.listPublicos();
                 }
-                if(rota==='parceria'){
+                if(rota==='parceira'){
                     this.listParcerias();
                 }
                 if(rota==='localizacao'){
@@ -479,6 +479,12 @@ class FormProjeto extends React.Component{
         if(rota==='publico'){
             data = {
                 tx_nome_publico_beneficiado: this.state.form.tx_nome_publico_beneficiado,
+                id: id,
+            }
+        }
+        if(rota==='parceira'){
+            data = {
+                tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
                 id: id,
             }
         }
@@ -614,29 +620,27 @@ class FormProjeto extends React.Component{
             parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
                 return (
                     <div className="label-float listItemProject" key={"parceira_projeto_" + index}>
-                        {/*{item.dc_tipo_parceria.tx_nome_tipo_parceria}*/}
-                        <input className={"form-control form-g "} type="text" name="tx_nome_parceira" onChange={this.handleInputChange}
-                               /*defaultValue={item.dc_tipo_parceria.tx_nome_tipo_parceria}*/
-                               defaultValue={item.id_osc_parceira_projeto}
+                        <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange}
+                               defaultValue={item.tx_nome_fantasia_osc}
                                placeholder="Insica o CNPJ da OSC Parceira" />
-                        <label htmlFor="tx_nome_parceira">OSC Parceira</label>
+                        <label htmlFor="tx_nome_fantasia_osc">OSC Parceira</label>
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
 
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
-                            <div style={{display: this.state.removeItem == 'parceria_'+item.id_parceria_projeto ? '' : 'none'}}>
-                                <div className="btn-xs btn-danger" onClick={() => this.remove('parceria', item.id_parceria_projeto)}>Excluir</div>
-                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_parceria_projeto)}>Cancelar</div>
+                            <div style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger" onClick={() => this.remove('parceira', item.id_osc_parceira_projeto)}>Excluir</div>
+                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar</div>
                             </div>
-                            <div className="float-right" style={{display: this.state.removeItem == 'parceria_'+item.id_parceria_projeto ? 'none' : ''}}>
-                                <div className="float-right" onClick={() => this.removeList('parceria', item.id_parceria_projeto)}>
+                            <div className="float-right" style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}>
+                                <div className="float-right" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
-                                <div className="float-right" onClick={() => this.saveList('parceria', item.id_parceria_projeto)}  style={{margin: '0 10px'}}>
-                                    <div style={{display: this.state.saveLoading==='parceria_'+item.id_parceria_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
-                                    <div style={{display: this.state.saveLoading==='parceria_'+item.id_parceria_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                <div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>
+                                    <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                 </div>
                             </div>
                         </div>
@@ -948,48 +952,31 @@ class FormProjeto extends React.Component{
                             <div className="col-md-12">
                                 <br/>
                                 <div className="row">
-
-                                    <div className="col-md-11">
-                                        <h3>OSCs Parceiras</h3>
-                                    </div>
-                                    <div className="col-md-1 float-right">
-                                        <a className="btn-add" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block", marginTop: 0, marginLeft: 0}}>
-                                            <i className={"fas fa-2x fa-plus-circle"}/>
-                                        </a>
-                                        <a className="btn-add btn-add-warning" onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none", marginTop: 0, marginLeft: 0}}>
-                                            <i className={"fas fa-2x fa-times-circle"}/>
-                                        </a>
-                                    </div>
                                     <div className="col-md-12">
-                                        <hr/>
-                                    </div>
-
-                                    <div  className="col-md-12" style={{display: this.state.showForm ? 'block' : 'none'}}>
-                                        <FormOscParceira
-                                            action={this.state.actionForm}
-                                            id={this.state.editId}
-                                            listParcerias={this.listParcerias}
-                                            showHideForm={this.showHideForm}
-                                            closeForm={this.closeForm}
-                                            id_projeto={this.state.editId}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-12">
-                                        {parceira_projeto}
-
-                                        {/*<div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
-                                                   value={this.state.form.tx_link_projeto}
-                                                   placeholder="Insica o CNPJ da OSC Parceira" />
-                                            <label htmlFor="tx_link_projeto">OSCs Parceiras</label>
-                                            <div className="label-box-info-off">
-                                                <p>&nbsp;</p>
-                                            </div>
+                                        {/*//////////////////////Financiadores//////////////////////*/}
+                                        <br/>
+                                        <p><strong>OSCs Parceiras</strong></p>
+                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('parceira')} style={{display: this.state.showAdd==='parceira' ? "none" : "block"}}>
+                                                <i className={"fas fa-2x fa-plus-circle"}/>
+                                            </a>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='parceira' ? "block" : "none"}}>
+                                                <i className={"fas fa-2x fa-times-circle"}/>
+                                            </a>
                                         </div>
-                                        <button className="btn btn-danger" style={{marginTop: '-59px', float: 'right', zIndex: '9999999', position: 'relative'}}>
-                                            <i className="fas fa-minus"/>
-                                        </button>*/}
+                                        <hr/>
+                                        <div  className="col-md-12" style={{display: this.state.showAdd==='parceira' ? 'block' : 'none'}}>
+                                            <FormOscParceira
+                                                action={this.state.actionForm}
+                                                id={this.state.editId}
+                                                listParcerias={this.listParcerias}
+                                                showHideForm={this.showHideForm}
+                                                closeForm={this.closeForm}
+                                                id_projeto={this.state.editId}
+                                            />
+                                        </div>
+                                        {parceira_projeto}
+                                        {/*//////////////////////Financiadores//////////////////////*/}
                                     </div>
                                 </div>
 

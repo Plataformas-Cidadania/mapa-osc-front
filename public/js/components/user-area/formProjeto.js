@@ -265,7 +265,7 @@ class FormProjeto extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2 + 'osc/projeto/parcerias/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/projeto/parceiras/' + this.state.editId,
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
@@ -425,7 +425,7 @@ class FormProjeto extends React.Component {
                 if (rota === 'publico') {
                     this.listPublicos();
                 }
-                if (rota === 'parceria') {
+                if (rota === 'parceira') {
                     this.listParcerias();
                 }
                 if (rota === 'localizacao') {
@@ -458,6 +458,12 @@ class FormProjeto extends React.Component {
         if (rota === 'publico') {
             data = {
                 tx_nome_publico_beneficiado: this.state.form.tx_nome_publico_beneficiado,
+                id: id
+            };
+        }
+        if (rota === 'parceira') {
+            data = {
+                tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
                 id: id
             };
         }
@@ -696,13 +702,12 @@ class FormProjeto extends React.Component {
                 return React.createElement(
                     'div',
                     { className: 'label-float listItemProject', key: "parceira_projeto_" + index },
-                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_parceira', onChange: this.handleInputChange
-                        /*defaultValue={item.dc_tipo_parceria.tx_nome_tipo_parceria}*/
-                        , defaultValue: item.id_osc_parceira_projeto,
+                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange,
+                        defaultValue: item.tx_nome_fantasia_osc,
                         placeholder: 'Insica o CNPJ da OSC Parceira' }),
                     React.createElement(
                         'label',
-                        { htmlFor: 'tx_nome_parceira' },
+                        { htmlFor: 'tx_nome_fantasia_osc' },
                         'OSC Parceira'
                     ),
                     React.createElement(
@@ -719,37 +724,37 @@ class FormProjeto extends React.Component {
                         { className: 'float-right ', style: { margin: '-50px 10px 0 0' } },
                         React.createElement(
                             'div',
-                            { style: { display: this.state.removeItem == 'parceria_' + item.id_parceria_projeto ? '' : 'none' } },
+                            { style: { display: this.state.removeItem == 'parceira_' + item.id_osc_parceira_projeto ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'btn-xs btn-danger', onClick: () => this.remove('parceria', item.id_parceria_projeto) },
+                                { className: 'btn-xs btn-danger', onClick: () => this.remove('parceira', item.id_osc_parceira_projeto) },
                                 'Excluir'
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_parceria_projeto) },
+                                { className: 'btn-xs btn-light', onClick: () => this.removeList(item.id_osc_parceira_projeto) },
                                 'Cancelar'
                             )
                         ),
                         React.createElement(
                             'div',
-                            { className: 'float-right', style: { display: this.state.removeItem == 'parceria_' + item.id_parceria_projeto ? 'none' : '' } },
+                            { className: 'float-right', style: { display: this.state.removeItem == 'parceira_' + item.id_osc_parceira_projeto ? 'none' : '' } },
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.removeList('parceria', item.id_parceria_projeto) },
+                                { className: 'float-right', onClick: () => this.removeList('parceira', item.id_osc_parceira_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.saveList('parceria', item.id_parceria_projeto), style: { margin: '0 10px' } },
+                                { className: 'float-right', onClick: () => this.saveList('parceira', item.id_osc_parceira_projeto), style: { margin: '0 10px' } },
                                 React.createElement(
                                     'div',
-                                    { style: { display: this.state.saveLoading === 'parceria_' + item.id_parceria_projeto ? 'none' : '' } },
+                                    { style: { display: this.state.saveLoading === 'parceira_' + item.id_osc_parceira_projeto ? 'none' : '' } },
                                     React.createElement('i', { className: 'far fa-save' })
                                 ),
                                 React.createElement(
                                     'div',
-                                    { style: { display: this.state.saveLoading === 'parceria_' + item.id_parceria_projeto ? '' : 'none' } },
+                                    { style: { display: this.state.saveLoading === 'parceira_' + item.id_osc_parceira_projeto ? '' : 'none' } },
                                     React.createElement('i', { className: 'fa fa-spin fa-spinner' })
                                 )
                             )
@@ -1338,47 +1343,44 @@ class FormProjeto extends React.Component {
                                 { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-11' },
+                                    { className: 'col-md-12' },
+                                    React.createElement('br', null),
                                     React.createElement(
-                                        'h3',
+                                        'p',
                                         null,
-                                        'OSCs Parceiras'
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-1 float-right' },
-                                    React.createElement(
-                                        'a',
-                                        { className: 'btn-add', onClick: this.showHideForm, style: { display: this.state.showForm ? "none" : "block", marginTop: 0, marginLeft: 0 } },
-                                        React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'OSCs Parceiras'
+                                        )
                                     ),
                                     React.createElement(
-                                        'a',
-                                        { className: 'btn-add btn-add-warning', onClick: this.showHideForm, style: { display: this.state.showForm ? "block" : "none", marginTop: 0, marginLeft: 0 } },
-                                        React.createElement('i', { className: "fas fa-2x fa-times-circle" })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement('hr', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12', style: { display: this.state.showForm ? 'block' : 'none' } },
-                                    React.createElement(FormOscParceira, {
-                                        action: this.state.actionForm,
-                                        id: this.state.editId,
-                                        listParcerias: this.listParcerias,
-                                        showHideForm: this.showHideForm,
-                                        closeForm: this.closeForm,
-                                        id_projeto: this.state.editId
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
+                                        'div',
+                                        { className: 'col-md-1 float-right', style: { marginTop: '15px', marginRight: '-40px' } },
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add', onClick: () => this.addList('parceira'), style: { display: this.state.showAdd === 'parceira' ? "none" : "block" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-plus-circle" })
+                                        ),
+                                        React.createElement(
+                                            'a',
+                                            { className: 'btn-add btn-add-warning', onClick: () => this.addList('off'), style: { display: this.state.showAdd === 'parceira' ? "block" : "none" } },
+                                            React.createElement('i', { className: "fas fa-2x fa-times-circle" })
+                                        )
+                                    ),
+                                    React.createElement('hr', null),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12', style: { display: this.state.showAdd === 'parceira' ? 'block' : 'none' } },
+                                        React.createElement(FormOscParceira, {
+                                            action: this.state.actionForm,
+                                            id: this.state.editId,
+                                            listParcerias: this.listParcerias,
+                                            showHideForm: this.showHideForm,
+                                            closeForm: this.closeForm,
+                                            id_projeto: this.state.editId
+                                        })
+                                    ),
                                     parceira_projeto
                                 )
                             ),
