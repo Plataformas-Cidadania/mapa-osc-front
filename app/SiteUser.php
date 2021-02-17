@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class SiteUser2 extends Authenticatable
+class SiteUser extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
