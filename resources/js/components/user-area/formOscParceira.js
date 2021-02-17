@@ -112,10 +112,10 @@ class FormOscParceira extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             let data = {
-                id_osc: '455128',
+                id_osc: this.state.filters.parceira.id_osc,
                 id_projeto: this.props.id_projeto,
                 ft_osc_parceira_projeto: 'Representante de OSC',
-                id_osc_parceira_projeto: this.state.filters.parceira.id_osc,
+                //id_osc_parceira_projeto: this.state.filters.parceira.id_osc,
             }
 
             $.ajax({
