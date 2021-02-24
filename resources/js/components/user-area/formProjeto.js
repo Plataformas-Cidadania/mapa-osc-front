@@ -11,15 +11,12 @@ class FormProjeto extends React.Component{
             btnContinue: false,
             loading: false,
             requireds: {
-                dt_inicio_projeto: true,
-                dt_fim_projeto: true,
-                cd_uf: true,
-                cd_projeto: true,
+
             },
             showMsg: false,
             msg: '',
             projetos: [],
-            maxAlert: false,
+
             cd_projeto:{
                 1: 'Utilidade Pública Municipal',
                 2: 'Utilidade Pública Estadual',
@@ -54,6 +51,10 @@ class FormProjeto extends React.Component{
             showAdd: false,
             saveLoading: '',
 
+            dataChkboxMetas: [],
+
+
+
         };
 
 
@@ -66,6 +67,8 @@ class FormProjeto extends React.Component{
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
         this.listParcerias = this.listParcerias.bind(this);
+        this.listObjetivos = this.listObjetivos.bind(this);
+        this.listChkboxMetas = this.listChkboxMetas.bind(this);
         this.listFinanciadores = this.listFinanciadores.bind(this);
         this.listPublicos = this.listPublicos.bind(this);
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
@@ -105,6 +108,9 @@ class FormProjeto extends React.Component{
         this.listFinanciadores();
         this.listPublicos();
         this.listLocalizacoes();
+        this.listObjetivos();
+        this.listChkboxMetas();
+
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
@@ -188,7 +194,6 @@ class FormProjeto extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -208,6 +213,49 @@ class FormProjeto extends React.Component{
     }
 
     register(e){
+        e.preventDefault();
+
+        if(!this.validate()){
+            return;
+        }
+
+        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+            $.ajax({
+                method:'PUT',
+                url: '/projeto/'+this.state.editId,
+                data:{
+                    tx_nome_projeto: this.state.form.tx_nome_projeto,
+                    cd_status_projeto: this.state.form.cd_status_projeto,
+                    dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
+                    dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
+                    tx_link_projeto: this.state.form.tx_link_projeto,
+                    nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
+                    nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
+                    nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
+                    tx_descricao_projeto: this.state.form.tx_descricao_projeto,
+                    tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
+                    cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
+                    cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
+                },
+                cache: false,
+                success: function(data) {
+                    this.props.list();
+
+                    this.cleanForm();
+                    this.props.closeForm();
+
+                    this.setState({projetos: data.projetos, loading: false})
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({loading: false, button: true});
+                }.bind(this)
+            });
+        });
+
+    }
+
+    /*register(e){
         e.preventDefault();
 
         if(!this.validate()){
@@ -245,7 +293,7 @@ class FormProjeto extends React.Component{
             });
         });
 
-    }
+    }*/
 
     /*Objetivos e metas*/
 
@@ -271,13 +319,32 @@ class FormProjeto extends React.Component{
     }
 
 
-
     listParcerias(){
 
         $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl2+'osc/projeto/parceiras/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({loading: false, datalistParcerias: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listObjetivos(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/objetivos/'+this.state.editId,
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -332,6 +399,7 @@ class FormProjeto extends React.Component{
         });
     }
 
+
     listLocalizacoes(){
 
         $.ajax({
@@ -361,8 +429,6 @@ class FormProjeto extends React.Component{
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
-
-
                 let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
 
                 data.find(function(item){
@@ -371,30 +437,30 @@ class FormProjeto extends React.Component{
 
                 });
 
-
                 objetivos.find(function(item){
                     if(item.metas){
                         item.metas.find(function(itemMeta){
                             itemMeta.display = false;
-                            console.log('display: '+itemMeta.display);
                         });
-
                         if(item.cd_objetivo_projeto === id){
                             item.metas.find(function(itemMeta){
                                 itemMeta.display = true;
-                                console.log('display2: '+itemMeta.display);
                             });
                         }
                     }
                     if(item.cd_objetivo_projeto === id && !item.metas){
                         item.metas = data;
-                        console.log('display3: ' + item.display)
                     }
-
-
                 });
 
-                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
+                this.setState({
+                    loading: false,
+                    objetivos: objetivos,
+                    id_area:id,
+                    buttonObjetivos:id,
+                    titleMeta:true,
+                    titleObjetivo:titleObjetivo
+                })
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -402,8 +468,32 @@ class FormProjeto extends React.Component{
         });
     }
 
-    checkMetas(cd_objetivo, cd_meta){
-        console.log(cd_objetivo, cd_meta);
+    listChkboxMetas(){
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/projeto/objetivos/'+this.state.editId,
+            success: function (data) {
+                data.find(function(item){
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({dataChkboxMetas: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+
+    checkMetas(cd_objetivo, cd_meta, delId, checkedMeta){
+
+        console.log('checkedMeta', checkedMeta);
+        console.log(cd_objetivo, cd_meta, delId, checkedMeta);
+
         let objetivos = this.state.objetivos;
         objetivos.find(function(item){
             if(item.cd_objetivo_projeto === cd_objetivo){
@@ -414,6 +504,47 @@ class FormProjeto extends React.Component{
                 });
             }
         });
+
+
+        if(checkedMeta===true){
+            console.log('Insert');
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2+'osc/projeto/objetivo',
+                data: {
+                    //id_objetivo_projeto: cd_meta,
+                    cd_meta_projeto: cd_meta,
+                    id_projeto: this.state.editId,
+                    ft_objetivo_projeto: 'Representante de OSC',
+                },
+                cache: false,
+                success: function(data){
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function(xhr, status, err){
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }else{
+            console.log('Delete');
+            console.log('delId', delId);
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2+'osc/projeto/objetivo/'+delId,
+                data: {
+
+                },
+                cache: false,
+                success: function(data){
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function(xhr, status, err){
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
+
         this.setState({objetivos: objetivos});
     }
     /*******************/
@@ -602,10 +733,10 @@ class FormProjeto extends React.Component{
                                     <div className="float-right" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
                                         <i className="fas fa-trash-alt text-danger " />
                                     </div>
-                                    <div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
+                                    {/*<div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
                                         <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
                                         <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
 
@@ -628,6 +759,14 @@ class FormProjeto extends React.Component{
                             <p>&nbsp;</p>
                         </div>
 
+                       {/* <FormOscParceira
+                            action={this.state.actionForm}
+                            id={this.state.editId}
+                            listParcerias={this.listParcerias}
+                            showHideForm={this.showHideForm}
+                            closeForm={this.closeForm}
+                            id_projeto={this.state.editId}
+                        />*/}
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
                             <div style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}>
@@ -638,10 +777,10 @@ class FormProjeto extends React.Component{
                                 <div className="float-right" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
-                                <div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>
+                                {/*<div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>
                                     <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
                                     <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
-                                </div>
+                                </div>*/}
                             </div>
                         </div>
 
@@ -656,25 +795,32 @@ class FormProjeto extends React.Component{
 
         let objetivos = null;
         let metas = [];
+
         if(this.state.objetivos){
             objetivos = this.state.objetivos.map(function (item) {
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
-
                 let checkedMetas = false;
-
-                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if(item.metas){
                     metas.push(item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
                             checkedMetas = true;
                         }
-                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+
+                        let checkedMeta = false;
+                        let id_objetivo_projeto = 0;
+                        this.state.dataChkboxMetas.find((itemChecked) => {
+                            if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto){
+                                checkedMeta = true;
+                                id_objetivo_projeto = itemChecked.id_objetivo_projeto;
+                            }
+                        });
+
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
-                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto)}>
-                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required/>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required defaultChecked={checkedMeta} onChange={this.handleInputChange}/>
                                     <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
                                 </div>
                                 <hr />
@@ -687,11 +833,7 @@ class FormProjeto extends React.Component{
                     <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
                         <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
-                            {/*<label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '-15px', marginRight: '5px', paddingBottom: 0, }}>*/}
-                            {/*<i className="fas fa-check-circle text-success" style={{position: 'relative', right: '-78px', top: '-28px', zIndex: '99999'}}/>*/}
                             <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="80" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
-                            {/*checkedMetas ? "" : "item-off" +*/}
-                            {/*(this.state.buttonObjetivos==item.cd_objetivo_projeto+1) ? "item-off " : "item-off item-focus"*/}
                         </label>
                     </div>
                 );
@@ -852,6 +994,20 @@ class FormProjeto extends React.Component{
                                     <option value="2">Urbana</option>
                                 </select><br/>
                             </div>
+
+
+
+
+                            <div className="col-md-12">
+                                <button className="btn btn-success" onClick={this.register}>
+                                    Atualizar
+                                </button>
+                                <br/>
+                                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
+                                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                            </div>
+
+
 
 
 
@@ -1080,19 +1236,7 @@ class FormProjeto extends React.Component{
                         </div>
 
 
-                        <p><i>* campos obrigatórios</i></p>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <button className="btn btn-success" onClick={this.register}>
-                                    Atualizar
-                                </button>
-                            </div>
-                        </div>
-                        <br/>
 
-                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
-                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                        <div style={{display: this.state.maxAlert ? 'block' : 'none'}} className=" alert alert-danger">Máximo de Certificatos Cadastrados</div>
 
                     </form>
                     <br/><br/>

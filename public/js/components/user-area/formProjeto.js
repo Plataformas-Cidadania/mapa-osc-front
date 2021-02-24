@@ -10,16 +10,11 @@ class FormProjeto extends React.Component {
             button: true,
             btnContinue: false,
             loading: false,
-            requireds: {
-                dt_inicio_projeto: true,
-                dt_fim_projeto: true,
-                cd_uf: true,
-                cd_projeto: true
-            },
+            requireds: {},
             showMsg: false,
             msg: '',
             projetos: [],
-            maxAlert: false,
+
             cd_projeto: {
                 1: 'Utilidade Pública Municipal',
                 2: 'Utilidade Pública Estadual'
@@ -50,7 +45,9 @@ class FormProjeto extends React.Component {
             removeItem: null,
 
             showAdd: false,
-            saveLoading: ''
+            saveLoading: '',
+
+            dataChkboxMetas: []
 
         };
 
@@ -63,6 +60,8 @@ class FormProjeto extends React.Component {
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
         this.listParcerias = this.listParcerias.bind(this);
+        this.listObjetivos = this.listObjetivos.bind(this);
+        this.listChkboxMetas = this.listChkboxMetas.bind(this);
         this.listFinanciadores = this.listFinanciadores.bind(this);
         this.listPublicos = this.listPublicos.bind(this);
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
@@ -100,6 +99,9 @@ class FormProjeto extends React.Component {
         this.listFinanciadores();
         this.listPublicos();
         this.listLocalizacoes();
+        this.listObjetivos();
+        this.listChkboxMetas();
+
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
@@ -180,7 +182,6 @@ class FormProjeto extends React.Component {
     }
 
     validate() {
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -206,20 +207,23 @@ class FormProjeto extends React.Component {
             return;
         }
 
-        let url = '/register-projeto';
-        let id = null;
-        if (this.state.action === 'edit') {
-            id = this.state.editId;
-            url = '/update-user-projeto';
-        }
-
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: url,
+                method: 'PUT',
+                url: '/projeto/' + this.state.editId,
                 data: {
-                    form: this.state.form,
-                    id: id
+                    tx_nome_projeto: this.state.form.tx_nome_projeto,
+                    cd_status_projeto: this.state.form.cd_status_projeto,
+                    dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
+                    dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
+                    tx_link_projeto: this.state.form.tx_link_projeto,
+                    nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
+                    nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
+                    nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
+                    tx_descricao_projeto: this.state.form.tx_descricao_projeto,
+                    tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
+                    cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
+                    cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto
                 },
                 cache: false,
                 success: function (data) {
@@ -237,6 +241,39 @@ class FormProjeto extends React.Component {
             });
         });
     }
+    /*register(e){
+        e.preventDefault();
+         if(!this.validate()){
+            return;
+        }
+         let url = '/register-projeto';
+        let id = null;
+        if(this.state.action==='edit'){
+            id = this.state.editId;
+            url = '/update-user-projeto';
+        }
+         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+            $.ajax({
+                method:'POST',
+                url: url,
+                data:{
+                    form: this.state.form,
+                    id: id,
+                },
+                cache: false,
+                success: function(data) {
+                    this.props.list();
+                     this.cleanForm();
+                    this.props.closeForm();
+                     this.setState({projetos: data.projetos, loading: false})
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({loading: false, button: true});
+                }.bind(this)
+            });
+        });
+     }*/
 
     /*Objetivos e metas*/
 
@@ -266,6 +303,26 @@ class FormProjeto extends React.Component {
             method: 'GET',
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/parceiras/' + this.state.editId,
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({ loading: false, datalistParcerias: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listObjetivos() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/projeto/objetivos/' + this.state.editId,
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
@@ -349,7 +406,6 @@ class FormProjeto extends React.Component {
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
-
                 let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
 
                 data.find(function (item) {
@@ -361,23 +417,26 @@ class FormProjeto extends React.Component {
                     if (item.metas) {
                         item.metas.find(function (itemMeta) {
                             itemMeta.display = false;
-                            console.log('display: ' + itemMeta.display);
                         });
-
                         if (item.cd_objetivo_projeto === id) {
                             item.metas.find(function (itemMeta) {
                                 itemMeta.display = true;
-                                console.log('display2: ' + itemMeta.display);
                             });
                         }
                     }
                     if (item.cd_objetivo_projeto === id && !item.metas) {
                         item.metas = data;
-                        console.log('display3: ' + item.display);
                     }
                 });
 
-                this.setState({ loading: false, objetivos: objetivos, id_area: id, buttonObjetivos: id, titleMeta: true, titleObjetivo: titleObjetivo });
+                this.setState({
+                    loading: false,
+                    objetivos: objetivos,
+                    id_area: id,
+                    buttonObjetivos: id,
+                    titleMeta: true,
+                    titleObjetivo: titleObjetivo
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -385,8 +444,31 @@ class FormProjeto extends React.Component {
         });
     }
 
-    checkMetas(cd_objetivo, cd_meta) {
-        console.log(cd_objetivo, cd_meta);
+    listChkboxMetas() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/projeto/objetivos/' + this.state.editId,
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = false;
+                    item.metas = null;
+                });
+
+                this.setState({ dataChkboxMetas: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    checkMetas(cd_objetivo, cd_meta, delId, checkedMeta) {
+
+        console.log('checkedMeta', checkedMeta);
+        console.log(cd_objetivo, cd_meta, delId, checkedMeta);
+
         let objetivos = this.state.objetivos;
         objetivos.find(function (item) {
             if (item.cd_objetivo_projeto === cd_objetivo) {
@@ -397,6 +479,43 @@ class FormProjeto extends React.Component {
                 });
             }
         });
+
+        if (checkedMeta === true) {
+            console.log('Insert');
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/projeto/objetivo',
+                data: {
+                    //id_objetivo_projeto: cd_meta,
+                    cd_meta_projeto: cd_meta,
+                    id_projeto: this.state.editId,
+                    ft_objetivo_projeto: 'Representante de OSC'
+                },
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        } else {
+            console.log('Delete');
+            console.log('delId', delId);
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2 + 'osc/projeto/objetivo/' + delId,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
         this.setState({ objetivos: objetivos });
     }
     /*******************/
@@ -674,20 +793,6 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'float-right', onClick: () => this.removeList('localizacao', item.id_localizacao_projeto) },
                                     React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'float-right', onClick: () => this.saveList('localizacao', item.id_localizacao_projeto), style: { margin: '0 10px' } },
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.saveLoading === 'localizacao_' + item.id_localizacao_projeto ? 'none' : '' } },
-                                        React.createElement('i', { className: 'far fa-save' })
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.saveLoading === 'localizacao_' + item.id_localizacao_projeto ? '' : 'none' } },
-                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' })
-                                    )
                                 )
                             )
                         )
@@ -743,20 +848,6 @@ class FormProjeto extends React.Component {
                                 'div',
                                 { className: 'float-right', onClick: () => this.removeList('parceira', item.id_osc_parceira_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'float-right', onClick: () => this.saveList('parceira', item.id_osc_parceira_projeto), style: { margin: '0 10px' } },
-                                React.createElement(
-                                    'div',
-                                    { style: { display: this.state.saveLoading === 'parceira_' + item.id_osc_parceira_projeto ? 'none' : '' } },
-                                    React.createElement('i', { className: 'far fa-save' })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { style: { display: this.state.saveLoading === 'parceira_' + item.id_osc_parceira_projeto ? '' : 'none' } },
-                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
-                                )
                             )
                         )
                     )
@@ -770,28 +861,35 @@ class FormProjeto extends React.Component {
 
         let objetivos = null;
         let metas = [];
+
         if (this.state.objetivos) {
             objetivos = this.state.objetivos.map(function (item) {
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
-
                 let checkedMetas = false;
-
-                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
                         if (itemMeta.checked) {
                             checkedMetas = true;
                         }
-                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+
+                        let checkedMeta = false;
+                        let id_objetivo_projeto = 0;
+                        this.state.dataChkboxMetas.find(itemChecked => {
+                            if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto) {
+                                checkedMeta = true;
+                                id_objetivo_projeto = itemChecked.id_objetivo_projeto;
+                            }
+                        });
+
                         return React.createElement(
                             'div',
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true }),
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta, onChange: this.handleInputChange }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
@@ -1152,6 +1250,27 @@ class FormProjeto extends React.Component {
                                 )
                             ),
                             React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement(
+                                'button',
+                                { className: 'btn btn-success', onClick: this.register },
+                                'Atualizar'
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },
+                                this.state.msg
+                            ),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.loading ? 'block' : 'none' } },
+                                React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                'Processando'
+                            )
                         ),
                         React.createElement(
                             'div',
@@ -1551,45 +1670,6 @@ class FormProjeto extends React.Component {
                                 )
                             )
                         )
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        React.createElement(
-                            'i',
-                            null,
-                            '* campos obrigat\xF3rios'
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-6' },
-                            React.createElement(
-                                'button',
-                                { className: 'btn btn-success', onClick: this.register },
-                                'Atualizar'
-                            )
-                        )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-danger' },
-                        this.state.msg
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.loading ? 'block' : 'none' } },
-                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                        'Processando'
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.maxAlert ? 'block' : 'none' }, className: ' alert alert-danger' },
-                        'M\xE1ximo de Certificatos Cadastrados'
                     )
                 ),
                 React.createElement('br', null),
