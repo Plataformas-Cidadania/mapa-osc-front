@@ -187,6 +187,7 @@ class Recursos extends React.Component{
             cache: false,
             //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
             url: getBaseUrl+'osc/no_project/789809',
+            //url: getBaseUrl2+'osc/fonte_recursos/789809',
             //url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
             success: function (data) {
 

@@ -210,7 +210,7 @@ class FormProjeto extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'PUT',
-                url: '/projeto/' + this.state.editId,
+                url: getBaseUrl + '/projeto/' + this.state.editId,
                 data: {
                     tx_nome_projeto: this.state.form.tx_nome_projeto,
                     cd_status_projeto: this.state.form.cd_status_projeto,
@@ -241,6 +241,7 @@ class FormProjeto extends React.Component {
             });
         });
     }
+
     /*register(e){
         e.preventDefault();
          if(!this.validate()){
