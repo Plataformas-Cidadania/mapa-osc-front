@@ -22,11 +22,65 @@ class Projetos extends React.Component{
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.modal = this.modal.bind(this);
+        this.callModalExcluir = this.callModalExcluir.bind(this);
         this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount(){
         this.list();
+    }
+
+    removeItem(id){
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/projeto/'+id,
+            data: {
+
+            },
+            cache: false,
+            success: function(data){
+                this.list();
+                $('#modalFormExcluir').modal('hide');
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+
+    }
+    callModalExcluir(id, title){
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItemConferencia:id,
+            removeItemTx:title,
+        }, function(){
+            $('#modalFormExcluir').modal('show');
+        });
+    }
+    modalExcluir(){
+        return (
+            <div id="modalFormExcluir" className="modal fade bd-example-modal-sm" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" ><strong>Excluir permanentemente</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            Tem certeza que quer excluir "<strong>{this.state.removeItemTx}</strong>"? Todas as informações cadastradas serão perdidas.
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.removeItem(this.state.removeItemConferencia, this.state.removeTipo)}>Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
 
@@ -137,12 +191,6 @@ class Projetos extends React.Component{
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
 
-                        <div className="modal-header">
-                            <h4 className="modal-title" id="exampleModalLabel"><strong>Título</strong></h4>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                         <div className="modal-body">
                             <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                         </div>
@@ -156,6 +204,8 @@ class Projetos extends React.Component{
     render(){
 
         let modal = this.modal();
+        let modalExcluir = this.modalExcluir();
+
         let projetos = this.state.projetos.map(function(item, index){
 
             let hr = null;
@@ -178,6 +228,13 @@ class Projetos extends React.Component{
                             <i className="fas fa-undo"/>
                         </a>
                         <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
+
+
+                        <a onClick={() => this.callModalExcluir(item.id, item.titulo)} style={{cursor: 'pointer'}}>
+                            <i className="far fa-trash-alt text-danger float-right"/>ssssssss
+                        </a>
+
+
                     </td>
                 </tr>
             );
@@ -221,6 +278,7 @@ class Projetos extends React.Component{
                         </div>*/}
                     </div>
                     {modal}
+                    {modalExcluir}
                 </div>
             </div>
         );

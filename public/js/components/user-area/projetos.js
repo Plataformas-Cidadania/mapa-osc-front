@@ -22,11 +22,99 @@ class Projetos extends React.Component {
         this.remove = this.remove.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.modal = this.modal.bind(this);
+        this.callModalExcluir = this.callModalExcluir.bind(this);
         this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount() {
         this.list();
+    }
+
+    removeItem(id) {
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/projeto/' + id,
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.list();
+                $('#modalFormExcluir').modal('hide');
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+    callModalExcluir(id, title) {
+        let modalExcluir = this.state.modalExcluir;
+        this.setState({
+            modalExcluir: modalExcluir,
+            removeItemConferencia: id,
+            removeItemTx: title
+        }, function () {
+            $('#modalFormExcluir').modal('show');
+        });
+    }
+    modalExcluir() {
+        return React.createElement(
+            'div',
+            { id: 'modalFormExcluir', className: 'modal fade bd-example-modal-sm', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Excluir permanentemente'
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        'Tem certeza que quer excluir "',
+                        React.createElement(
+                            'strong',
+                            null,
+                            this.state.removeItemTx
+                        ),
+                        '"? Todas as informa\xE7\xF5es cadastradas ser\xE3o perdidas.'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                            'Cancelar'
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-danger', onClick: () => this.removeItem(this.state.removeItemConferencia, this.state.removeTipo) },
+                            'Excluir'
+                        )
+                    )
+                )
+            )
+        );
     }
 
     edit(id) {
@@ -135,28 +223,6 @@ class Projetos extends React.Component {
                     { className: 'modal-content' },
                     React.createElement(
                         'div',
-                        { className: 'modal-header' },
-                        React.createElement(
-                            'h4',
-                            { className: 'modal-title', id: 'exampleModalLabel' },
-                            React.createElement(
-                                'strong',
-                                null,
-                                'T\xEDtulo'
-                            )
-                        ),
-                        React.createElement(
-                            'button',
-                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
-                            React.createElement(
-                                'span',
-                                { 'aria-hidden': 'true' },
-                                '\xD7'
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
                         { className: 'modal-body' },
                         React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
                     )
@@ -168,6 +234,8 @@ class Projetos extends React.Component {
     render() {
 
         let modal = this.modal();
+        let modalExcluir = this.modalExcluir();
+
         let projetos = this.state.projetos.map(function (item, index) {
 
             let hr = null;
@@ -207,7 +275,13 @@ class Projetos extends React.Component {
                         { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? '' : 'none' } },
                         React.createElement('i', { className: 'fas fa-undo' })
                     ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } })
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } }),
+                    React.createElement(
+                        'a',
+                        { onClick: () => this.callModalExcluir(item.id, item.titulo), style: { cursor: 'pointer' } },
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
+                        'ssssssss'
+                    )
                 )
             );
         }.bind(this));
@@ -289,7 +363,8 @@ class Projetos extends React.Component {
                         )
                     )
                 ),
-                modal
+                modal,
+                modalExcluir
             )
         );
     }
