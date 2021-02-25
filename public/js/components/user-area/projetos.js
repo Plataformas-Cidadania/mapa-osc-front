@@ -267,20 +267,8 @@ class Projetos extends React.Component {
                     '\xA0\xA0',
                     React.createElement(
                         'a',
-                        { onClick: () => this.remove(item.id), style: { display: this.state.loadingRemove[item.id] ? 'none' : '' } },
-                        React.createElement('i', { className: "fas " + (this.state.remove[item.id] ? "fa-times text-primary" : "fa-trash-alt text-danger") })
-                    ),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.cancelRemove(item.id), style: { display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? '' : 'none' } },
-                        React.createElement('i', { className: 'fas fa-undo' })
-                    ),
-                    React.createElement('i', { className: 'fa fa-spin fa-spinner', style: { display: this.state.loadingRemove[item.id] ? '' : 'none' } }),
-                    React.createElement(
-                        'a',
-                        { onClick: () => this.callModalExcluir(item.id, item.titulo), style: { cursor: 'pointer' } },
-                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' }),
-                        'ssssssss'
+                        { onClick: () => this.callModalExcluir(item.id, item.titulo), style: { cursor: 'pointer', position: 'relative', top: '4px' } },
+                        React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                     )
                 )
             );

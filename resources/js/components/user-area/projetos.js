@@ -217,24 +217,11 @@ class Projetos extends React.Component{
                 <tr key={"projeto_"+index}>
                     <td>{item.titulo}</td>
                     <td>{formatDate(item.data_inicio, 'pt-br')}</td>
-                    {/*<td>{item.dt_data_fim_projeto}</td>*/}
-                    {/*<td>{item.nr_valor_total_projeto}</td>*/}
                     <td width="70">
                         <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                        <a onClick={() => this.remove(item.id)} style={{display: this.state.loadingRemove[item.id] ? 'none' : ''}}>
-                            <i className={"fas "+( this.state.remove[item.id] ? "fa-times text-primary" : "fa-trash-alt text-danger")}/>
+                        <a onClick={() => this.callModalExcluir(item.id, item.titulo)} style={{cursor: 'pointer', position: 'relative', top: '4px'}}>
+                            <i className="far fa-trash-alt text-danger float-right"/>
                         </a>
-                        <a onClick={() => this.cancelRemove(item.id)} style={{display: this.state.remove[item.id] && !this.state.loadingRemove[item.id] ? '' : 'none'}}>
-                            <i className="fas fa-undo"/>
-                        </a>
-                        <i className="fa fa-spin fa-spinner" style={{display: this.state.loadingRemove[item.id] ? '' : 'none'}}/>
-
-
-                        <a onClick={() => this.callModalExcluir(item.id, item.titulo)} style={{cursor: 'pointer'}}>
-                            <i className="far fa-trash-alt text-danger float-right"/>ssssssss
-                        </a>
-
-
                     </td>
                 </tr>
             );
