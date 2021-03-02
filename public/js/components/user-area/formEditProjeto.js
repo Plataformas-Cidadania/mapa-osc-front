@@ -1,4 +1,4 @@
-class FormProjeto extends React.Component {
+class FormEditProjeto extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,15 +47,13 @@ class FormProjeto extends React.Component {
             showAdd: false,
             saveLoading: '',
 
-            dataChkboxMetas: [],
-
-            menuNavSelected: 0
+            dataChkboxMetas: []
 
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        //this.edit = this.edit.bind(this);
+        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
 
@@ -75,59 +73,63 @@ class FormProjeto extends React.Component {
         this.removeList = this.removeList.bind(this);
         this.saveList = this.saveList.bind(this);
         this.addList = this.addList.bind(this);
-
-        this.menuNav = this.menuNav.bind(this);
     }
 
     componentDidMount() {
+        this.edit();
         this.listArea();
-    }
-
-    componentWillReceiveProps(props) {
-
-        this.cleanForm();
-
-        /*if(this.state.action != props.action){
-            this.setState({action: props.action}, function(){
-                 if(this.state.action=='new'){
-                    this.cleanForm();
-                }
-            });
-        }*/
-    }
-
-    /*edit(){
         this.listParcerias();
         this.listFinanciadores();
         this.listPublicos();
         this.listLocalizacoes();
         this.listObjetivos();
         this.listChkboxMetas();
-         $.ajax({
+    }
+
+    componentWillReceiveProps(props) {
+        let lastEditId = this.state.editId;
+        if (this.state.action != props.action || this.state.editId != props.id) {
+            this.setState({ action: props.action, editId: props.id }, function () {
+                if (lastEditId != props.id) {
+                    //this.props.showHideForm(this.state.action);
+                    this.edit();
+                }
+                if (this.state.action == 'new') {
+                    this.cleanForm();
+                }
+            });
+        }
+    }
+
+    edit() {
+
+        $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
-            data: {
-             },
+            url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
+            data: {},
             cache: false,
-            success: function(data){
+            success: function (data) {
                 let ft_recursos_publico = '';
                 let ft_recursos_privado = '';
                 let ft_recursos_proprio = '';
                 let ft_recursos_nao_financeiro = '';
-                 let tp_cooperacao_tecnica = '';
+
+                let tp_cooperacao_tecnica = '';
                 let tp_termo_fomento = '';
                 let tp_termo_colaboracao = '';
                 let tp_termo_parceria = '';
                 let tp_contrato_gestao = '';
                 let tp_convenio = '';
                 let tp_outro = '';
-                  data.fontes_recursos_projeto.find(function(item){
+
+                data.fontes_recursos_projeto.find(function (item) {
                     ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
                     ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
                     ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
                     ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
                 });
-                 data.tipo_parcerias_projeto.find(function(item){
+
+                data.tipo_parcerias_projeto.find(function (item) {
                     tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
                     tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
                     tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
@@ -136,7 +138,8 @@ class FormProjeto extends React.Component {
                     tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
                     tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
                 });
-                 this.setState({
+
+                this.setState({
                     form: data,
                     ft_recursos_publico: ft_recursos_publico,
                     ft_recursos_privado: ft_recursos_privado,
@@ -147,17 +150,18 @@ class FormProjeto extends React.Component {
                     tp_termo_parceria: tp_termo_parceria,
                     tp_contrato_gestao: tp_contrato_gestao,
                     tp_convenio: tp_convenio,
-                    tp_outro: tp_outro,
-                     //financiadores_projeto: data.financiadores_projeto,
-                }, function(){
+                    tp_outro: tp_outro
+
+                    //financiadores_projeto: data.financiadores_projeto,
+                }, function () {
                     //this.props.showHideForm();
                 });
             }.bind(this),
-            error: function(xhr, status, err){
+            error: function (xhr, status, err) {
                 console.log(status, err.toString());
             }.bind(this)
         });
-    }*/
+    }
 
     handleInputChange(event) {
         const target = event.target;
@@ -206,10 +210,9 @@ class FormProjeto extends React.Component {
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: getBaseUrl2 + 'osc/projeto',
+                method: 'PUT',
+                url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
                 data: {
-                    id_osc: 455128,
                     tx_nome_projeto: this.state.form.tx_nome_projeto,
                     cd_status_projeto: this.state.form.cd_status_projeto,
                     dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
@@ -221,31 +224,14 @@ class FormProjeto extends React.Component {
                     tx_descricao_projeto: this.state.form.tx_descricao_projeto,
                     tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
                     cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
-                    cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
-
-                    ft_nome_projeto: 'Representante de OSC',
-                    ft_status_projeto: 'Representante de OSC',
-                    ft_data_inicio_projeto: 'Representante de OSC',
-                    ft_data_fim_projeto: 'Representante de OSC',
-                    ft_link_projeto: 'Representante de OSC',
-                    ft_total_beneficiarios: 'Representante de OSC',
-                    ft_valor_captado_projeto: 'Representante de OSC',
-                    ft_valor_total_projeto: 'Representante de OSC',
-                    ft_abrangencia_projeto: 'Representante de OSC',
-                    ft_zona_atuacao_projeto: 'Representante de OSC',
-                    ft_descricao_projeto: 'Representante de OSC',
-                    ft_metodologia_monitoramento: 'Representante de OSC',
-                    ft_identificador_projeto_externo: 'Representante de OSC',
-                    ft_municipio: 'Representante de OSC',
-                    ft_uf: 'Representante de OSC'
+                    cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto
                 },
                 cache: false,
                 success: function (data) {
-
                     this.props.list();
 
-                    this.cleanForm();
-                    this.props.closeForm();
+                    //this.cleanForm();
+                    //this.props.closeForm();
 
                     this.setState({ projetos: data.projetos, loading: false });
                 }.bind(this),
@@ -621,10 +607,6 @@ class FormProjeto extends React.Component {
         this.setState({ showAdd: rota });
     }
 
-    menuNav(id) {
-        this.setState({ menuNavSelected: id });
-    }
-
     render() {
 
         let financiador_projeto = null;
@@ -956,7 +938,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_nome_projeto,
+                                        value: this.state.form.tx_nome_projeto,
                                         placeholder: 'Nome do projeto, atividade ou programa' }),
                                     React.createElement(
                                         'label',
@@ -1021,7 +1003,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.dt_data_inicio_projeto,
+                                        value: this.state.form.dt_data_inicio_projeto,
                                         placeholder: 'Data de In\xEDcio' }),
                                     React.createElement(
                                         'label',
@@ -1046,7 +1028,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.dt_data_fim_projeto,
+                                        value: this.state.form.dt_data_fim_projeto,
                                         placeholder: 'Data de Fim' }),
                                     React.createElement(
                                         'label',
@@ -1071,7 +1053,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_link_projeto,
+                                        value: this.state.form.tx_link_projeto,
                                         placeholder: 'Link para o projeto' }),
                                     React.createElement(
                                         'label',
@@ -1096,7 +1078,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_total_beneficiarios', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_total_beneficiarios,
+                                        value: this.state.form.nr_total_beneficiarios,
                                         placeholder: 'Total de Benefici\xE1rios' }),
                                     React.createElement(
                                         'label',
@@ -1121,7 +1103,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_total_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_valor_total_projeto,
+                                        value: this.state.form.nr_valor_total_projeto,
                                         placeholder: 'Valor Total' }),
                                     React.createElement(
                                         'label',
@@ -1146,7 +1128,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_captado_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_valor_captado_projeto,
+                                        value: this.state.form.nr_valor_captado_projeto,
                                         placeholder: 'Valor Recebido' }),
                                     React.createElement(
                                         'label',
@@ -1171,7 +1153,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_descricao_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_descricao_projeto,
+                                        value: this.state.form.tx_descricao_projeto,
                                         placeholder: 'Descri\xE7\xE3o do Projeto, atividade e/ou programa' }),
                                     React.createElement(
                                         'label',
@@ -1196,7 +1178,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_metodologia_monitoramento', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_metodologia_monitoramento,
+                                        value: this.state.form.tx_metodologia_monitoramento,
                                         placeholder: 'Metodologia de Monitoramento e Avalia\xE7\xE3o do Projeto, atividade e/ou programa' }),
                                     React.createElement(
                                         'label',
@@ -1294,120 +1276,20 @@ class FormProjeto extends React.Component {
                                     React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
                                     'Processando'
                                 )
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('br', null),
-                            React.createElement('br', null)
+                            )
                         )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'row box-menu-nav' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(1) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 1 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'Fontes de Recursos'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(2) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 2 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'OSCs Parceiras'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(3) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 3 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'P\xFAblico Beneficiado'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(4) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 4 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'Local de execu\xE7\xE3o'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(5) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 5 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'Financiadores do Projeto'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-2 text-center', onClick: () => this.menuNav(6) },
-                            React.createElement(
-                                'div',
-                                { className: "box-menu-nav-selected " + (this.state.menuNavSelected === 6 ? 'box-menu-nav-selected-active' : '') },
-                                React.createElement('i', { className: 'fas fa-2x fa-circle' }),
-                                React.createElement(
-                                    'p',
-                                    null,
-                                    'ODS'
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement('div', { className: 'box-menu-line' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row', style: { display: this.state.menuNavSelected === 1 ? '' : 'none' } },
+                        { className: 'row' },
                         React.createElement(
                             'div',
                             { className: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6' },
                             React.createElement('br', null),
                             React.createElement(
-                                'p',
+                                'h3',
                                 null,
-                                React.createElement(
-                                    'strong',
-                                    null,
-                                    'Fontes de Recursos'
-                                )
+                                'Fontes de Recursos'
                             ),
                             React.createElement('hr', null),
                             React.createElement(
@@ -1477,13 +1359,9 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-6', style: { display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : '' } },
                             React.createElement('br', null),
                             React.createElement(
-                                'p',
+                                'h3',
                                 null,
-                                React.createElement(
-                                    'strong',
-                                    null,
-                                    'Tipo de Parceria'
-                                )
+                                'Tipo de Parceria'
                             ),
                             React.createElement('hr', null),
                             React.createElement(
@@ -1590,22 +1468,8 @@ class FormProjeto extends React.Component {
                             { className: 'col-md-12' },
                             React.createElement('br', null),
                             React.createElement(
-                                'button',
-                                { className: 'btn btn-success float-right', onClick: () => this.menuNav(2) },
-                                'Pr\xF3ximo'
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement('br', null),
-                            React.createElement(
                                 'div',
-                                { className: 'row', style: { display: this.state.menuNavSelected === 2 ? '' : 'none' } },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
@@ -1647,21 +1511,6 @@ class FormProjeto extends React.Component {
                                         })
                                     ),
                                     parceira_projeto
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement('br', null),
-                                    React.createElement(
-                                        'button',
-                                        { className: 'btn btn-success float-left', onClick: () => this.menuNav(1) },
-                                        'Anterior'
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { className: 'btn btn-success float-right', onClick: () => this.menuNav(3) },
-                                        'Pr\xF3ximo'
-                                    )
                                 )
                             ),
                             React.createElement('br', null),
@@ -1670,7 +1519,7 @@ class FormProjeto extends React.Component {
                                 { className: 'row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-12', style: { display: this.state.menuNavSelected === 3 ? '' : 'none' } },
+                                    { className: 'col-md-12' },
                                     React.createElement('br', null),
                                     React.createElement(
                                         'p',
@@ -1704,26 +1553,11 @@ class FormProjeto extends React.Component {
                                             listPublicos: this.listPublicos
                                         })
                                     ),
-                                    publico_projeto,
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-left', onClick: () => this.menuNav(2) },
-                                            'Anterior'
-                                        ),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-right', onClick: () => this.menuNav(4) },
-                                            'Pr\xF3ximo'
-                                        )
-                                    )
+                                    publico_projeto
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-12', style: { display: this.state.menuNavSelected === 4 ? '' : 'none' } },
+                                    { className: 'col-md-12' },
                                     React.createElement('br', null),
                                     React.createElement(
                                         'p',
@@ -1761,26 +1595,11 @@ class FormProjeto extends React.Component {
                                         'div',
                                         { className: 'row' },
                                         localizacao_projeto
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-left', onClick: () => this.menuNav(3) },
-                                            'Anterior'
-                                        ),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-right', onClick: () => this.menuNav(5) },
-                                            'Pr\xF3ximo'
-                                        )
                                     )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-12', style: { display: this.state.menuNavSelected === 5 ? '' : 'none' } },
+                                    { className: 'col-md-12' },
                                     React.createElement('br', null),
                                     React.createElement(
                                         'p',
@@ -1814,27 +1633,12 @@ class FormProjeto extends React.Component {
                                             listFinanciadores: this.listFinanciadores
                                         })
                                     ),
-                                    financiador_projeto,
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-left', onClick: () => this.menuNav(4) },
-                                            'Pr\xF3ximo'
-                                        ),
-                                        React.createElement(
-                                            'button',
-                                            { className: 'btn btn-success float-right', onClick: () => this.menuNav(6) },
-                                            'Pr\xF3ximo'
-                                        )
-                                    )
+                                    financiador_projeto
                                 )
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'row', style: { display: this.state.menuNavSelected === 6 ? '' : 'none' } },
+                                { className: 'row' },
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
@@ -1872,16 +1676,6 @@ class FormProjeto extends React.Component {
                                             React.createElement('br', null),
                                             metas
                                         )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement('br', null),
-                                    React.createElement(
-                                        'button',
-                                        { className: 'btn btn-success float-left', onClick: () => this.menuNav(5) },
-                                        'Anterior'
                                     )
                                 )
                             )

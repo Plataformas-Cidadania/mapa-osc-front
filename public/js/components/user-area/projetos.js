@@ -14,7 +14,8 @@ class Projetos extends React.Component {
             remove: [],
             loadingRemove: [],
             projeto: {},
-            editId: 0
+            editId: 0,
+            editTipo: ''
         };
 
         this.list = this.list.bind(this);
@@ -117,14 +118,11 @@ class Projetos extends React.Component {
         );
     }
 
-    edit(id) {
-        // this.setState({actionForm: 'edit'});
-        //this.setState({actionForm: 'edit', showForm: false, editId: id});
-
-        this.setState({ actionForm: 'edit', editId: id }, function () {
+    /*edit(id, type){
+        this.setState({actionForm: 'edit', editId: id, editTipo:type,}, function(){
             this.callModal();
         });
-    }
+    }*/
 
     cancelRemove(id) {
         let remove = this.state.remove;
@@ -194,7 +192,6 @@ class Projetos extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
                 this.setState({ projetos: data, loadingList: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -204,14 +201,36 @@ class Projetos extends React.Component {
         });
     }
 
-    callModal() {
+    /*callModal(){
         let modal = this.state.modal;
-        this.setState({ modal: modal }, function () {
+        this.setState({modal: modal}, function(){
+            $('#modalForm').modal('show');
+        });
+    }*/
+
+    callModal(id, type, txt) {
+        let modal = this.state.modal;
+        this.setState({
+            modal: modal,
+            editId: id,
+            editTipo: type,
+            modalTitle: txt
+        }, function () {
             $('#modalForm').modal('show');
         });
     }
 
     modal() {
+
+        let form = null;
+
+        if (this.state.editTipo == 'insert') {
+            form = React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm });
+        }
+        if (this.state.editTipo == 'edit') {
+            form = React.createElement(FormEditProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm });
+        }
+
         return React.createElement(
             'div',
             { id: 'modalForm', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
@@ -223,8 +242,30 @@ class Projetos extends React.Component {
                     { className: 'modal-content' },
                     React.createElement(
                         'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.modalTitle
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
                         { className: 'modal-body' },
-                        React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                        form
                     )
                 )
             )
@@ -261,7 +302,7 @@ class Projetos extends React.Component {
                     { width: '70' },
                     React.createElement(
                         'a',
-                        { onClick: () => this.edit(item.id) },
+                        { onClick: () => this.callModal(item.id, 'edit', 'Alterar projeto') },
                         React.createElement('i', { className: 'far fa-edit text-primary' })
                     ),
                     '\xA0\xA0',
@@ -345,7 +386,7 @@ class Projetos extends React.Component {
                         { style: { float: 'right', cursor: 'pointer' } },
                         React.createElement(
                             'a',
-                            { onClick: this.callModal, className: 'btn btn-warning' },
+                            { onClick: () => this.callModal(0, 'insert', 'Inserir projeto'), className: 'btn btn-warning' },
                             React.createElement('i', { className: 'fa fa-plus' }),
                             ' Adicionar novo projeto'
                         )

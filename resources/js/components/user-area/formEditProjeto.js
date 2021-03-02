@@ -1,4 +1,4 @@
-class FormProjeto extends React.Component{
+class FormEditProjeto extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -53,8 +53,6 @@ class FormProjeto extends React.Component{
 
             dataChkboxMetas: [],
 
-            menuNavSelected: 0,
-
 
 
         };
@@ -62,7 +60,7 @@ class FormProjeto extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
-        //this.edit = this.edit.bind(this);
+        this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
 
@@ -83,36 +81,36 @@ class FormProjeto extends React.Component{
         this.saveList = this.saveList.bind(this);
         this.addList = this.addList.bind(this);
 
-        this.menuNav = this.menuNav.bind(this);
-
 
     }
 
     componentDidMount(){
+        this.edit();
         this.listArea();
-    }
-
-    componentWillReceiveProps(props){
-
-        this.cleanForm();
-
-        /*if(this.state.action != props.action){
-            this.setState({action: props.action}, function(){
-
-                if(this.state.action=='new'){
-                    this.cleanForm();
-                }
-            });
-        }*/
-    }
-
-    /*edit(){
         this.listParcerias();
         this.listFinanciadores();
         this.listPublicos();
         this.listLocalizacoes();
         this.listObjetivos();
         this.listChkboxMetas();
+    }
+
+    componentWillReceiveProps(props){
+        let lastEditId = this.state.editId;
+        if(this.state.action != props.action || this.state.editId != props.id){
+            this.setState({action: props.action, editId: props.id}, function(){
+                if(lastEditId != props.id){
+                    //this.props.showHideForm(this.state.action);
+                    this.edit();
+                }
+                if(this.state.action=='new'){
+                    this.cleanForm();
+                }
+            });
+        }
+    }
+
+    edit(){
 
         $.ajax({
             method: 'GET',
@@ -175,7 +173,7 @@ class FormProjeto extends React.Component{
                 console.log(status, err.toString());
             }.bind(this)
         });
-    }*/
+    }
 
     handleInputChange(event) {
         const target = event.target;
@@ -224,10 +222,9 @@ class FormProjeto extends React.Component{
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:'POST',
-                url: getBaseUrl2+'osc/projeto',
+                method:'PUT',
+                url: getBaseUrl2+'osc/projeto/'+this.state.editId,
                 data:{
-                    id_osc: 455128,
                     tx_nome_projeto: this.state.form.tx_nome_projeto,
                     cd_status_projeto: this.state.form.cd_status_projeto,
                     dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
@@ -240,30 +237,13 @@ class FormProjeto extends React.Component{
                     tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
                     cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
                     cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
-
-                    ft_nome_projeto: 'Representante de OSC',
-                    ft_status_projeto: 'Representante de OSC',
-                    ft_data_inicio_projeto: 'Representante de OSC',
-                    ft_data_fim_projeto: 'Representante de OSC',
-                    ft_link_projeto: 'Representante de OSC',
-                    ft_total_beneficiarios: 'Representante de OSC',
-                    ft_valor_captado_projeto: 'Representante de OSC',
-                    ft_valor_total_projeto: 'Representante de OSC',
-                    ft_abrangencia_projeto: 'Representante de OSC',
-                    ft_zona_atuacao_projeto: 'Representante de OSC',
-                    ft_descricao_projeto: 'Representante de OSC',
-                    ft_metodologia_monitoramento: 'Representante de OSC',
-                    ft_identificador_projeto_externo: 'Representante de OSC',
-                    ft_municipio: 'Representante de OSC',
-                    ft_uf: 'Representante de OSC',
                 },
                 cache: false,
                 success: function(data) {
-
                     this.props.list();
 
-                    this.cleanForm();
-                    this.props.closeForm();
+                    //this.cleanForm();
+                    //this.props.closeForm();
 
                     this.setState({projetos: data.projetos, loading: false})
                 }.bind(this),
@@ -660,9 +640,6 @@ class FormProjeto extends React.Component{
     }
 
 
-    menuNav(id){
-        this.setState({menuNavSelected: id});
-    }
 
 
     render(){
@@ -757,6 +734,10 @@ class FormProjeto extends React.Component{
                                     <div className="float-right" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
                                         <i className="fas fa-trash-alt text-danger " />
                                     </div>
+                                    {/*<div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
+                                        <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                        <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                    </div>*/}
                                 </div>
                             </div>
 
@@ -779,6 +760,14 @@ class FormProjeto extends React.Component{
                             <p>&nbsp;</p>
                         </div>
 
+                       {/* <FormOscParceira
+                            action={this.state.actionForm}
+                            id={this.state.editId}
+                            listParcerias={this.listParcerias}
+                            showHideForm={this.showHideForm}
+                            closeForm={this.closeForm}
+                            id_projeto={this.state.editId}
+                        />*/}
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
                             <div style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}>
@@ -789,6 +778,10 @@ class FormProjeto extends React.Component{
                                 <div className="float-right" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
+                                {/*<div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>
+                                    <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                </div>*/}
                             </div>
                         </div>
 
@@ -851,6 +844,12 @@ class FormProjeto extends React.Component{
         return(
 
             <div>
+                {/*<div className="modal-header" style={{marginTop: '-15px', marginBottom: '15px'}}>
+                    <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.form.tx_nome_projeto}</strong></h4>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>*/}
 
                 <div className="row">
                     <div className="col-md-12">
@@ -859,7 +858,7 @@ class FormProjeto extends React.Component{
                                 <div className="col-md-12">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_nome_projeto}
+                                               value={this.state.form.tx_nome_projeto}
                                                placeholder="Nome do projeto, atividade ou programa" />
                                         <label htmlFor="tx_nome_projeto">Nome do projeto, atividade ou programa</label>
                                         <div className="label-box-info-off">
@@ -883,7 +882,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.dt_data_inicio_projeto}
+                                               value={this.state.form.dt_data_inicio_projeto}
                                                placeholder="Data de Início" />
                                         <label htmlFor="dt_data_inicio_projeto">Data de Início</label>
                                         <div className="label-box-info-off">
@@ -895,7 +894,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.dt_data_fim_projeto}
+                                               value={this.state.form.dt_data_fim_projeto}
                                                placeholder="Data de Fim" />
                                         <label htmlFor="dt_data_fim_projeto">Data de Fim</label>
                                         <div className="label-box-info-off">
@@ -907,7 +906,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-8">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_link_projeto}
+                                               value={this.state.form.tx_link_projeto}
                                                placeholder="Link para o projeto" />
                                         <label htmlFor="tx_link_projeto">Link para o projeto</label>
                                         <div className="label-box-info-off">
@@ -919,7 +918,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_total_beneficiarios" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_total_beneficiarios}
+                                               value={this.state.form.nr_total_beneficiarios}
                                                placeholder="Total de Beneficiários" />
                                         <label htmlFor="nr_total_beneficiarios">Total de Beneficiários</label>
                                         <div className="label-box-info-off">
@@ -931,7 +930,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_valor_total_projeto}
+                                               value={this.state.form.nr_valor_total_projeto}
                                                placeholder="Valor Total" />
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
@@ -943,7 +942,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_valor_captado_projeto}
+                                               value={this.state.form.nr_valor_captado_projeto}
                                                placeholder="Valor Recebido" />
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">
@@ -955,7 +954,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_descricao_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_descricao_projeto}
+                                               value={this.state.form.tx_descricao_projeto}
                                                placeholder="Descrição do Projeto, atividade e/ou programa" />
                                         <label htmlFor="tx_descricao_projeto">Descrição do Projeto, atividade e/ou programa</label>
                                         <div className="label-box-info-off">
@@ -967,7 +966,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_metodologia_monitoramento" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_metodologia_monitoramento}
+                                               value={this.state.form.tx_metodologia_monitoramento}
                                                placeholder="Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa" />
                                         <label htmlFor="tx_metodologia_monitoramento">Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa</label>
                                         <div className="label-box-info-off">
@@ -1005,59 +1004,14 @@ class FormProjeto extends React.Component{
                                     <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
                                     <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                                 </div>
-                                <br/><br/><br/>
+
                             </div>
                         </form>
 
-
-                        <div className="row box-menu-nav">
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(1)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 1 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>Fontes de Recursos</p>
-                                </div>
-                            </div>
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(2)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 2 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>OSCs Parceiras</p>
-                                </div>
-                            </div>
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(3)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 3 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>Público Beneficiado</p>
-                                </div>
-                            </div>
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(4)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 4 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>Local de execução</p>
-                                </div>
-                            </div>
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(5)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 5 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>Financiadores do Projeto</p>
-                                </div>
-                            </div>
-                            <div className="col-md-2 text-center" onClick={() => this.menuNav(6)}>
-                                <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 6 ? 'box-menu-nav-selected-active' : '')}>
-                                    <i className="fas fa-2x fa-circle"/>
-                                    <p>ODS</p>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="box-menu-line"/>
-                            </div>
-
-                        </div>
-
-
-                        <div className="row" style={{display: this.state.menuNavSelected === 1 ? '' : 'none'}}>
-                            <div className={this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6'} >
+                        <div className="row">
+                            <div className={this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6'}>
                                 <br/>
-                                <p><strong>Fontes de Recursos</strong></p>
+                                <h3>Fontes de Recursos</h3>
                                 <hr/>
 
                                 <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
@@ -1091,11 +1045,14 @@ class FormProjeto extends React.Component{
                                     </div>
                                 </div>
 
+
                             </div>
 
+                            {/*<div className="col-md-6" style={{display: (this.state.active === false || this.state.ft_recursos_publico) === 'chkbox' ? 'none' : ''}}>*/}
+                            {/* **************** ACERTAR QUANDO SEPARAR OS FORMULARIOS **************** */}
                             <div className="col-md-6" style={{display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : ''}}>
                                 <br/>
-                                <p><strong>Tipo de Parceria</strong></p>
+                                <h3>Tipo de Parceria</h3>
                                 <hr/>
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox">
@@ -1146,20 +1103,11 @@ class FormProjeto extends React.Component{
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col-md-12">
                                 <br/>
-                                <button className="btn btn-success float-right" onClick={() => this.menuNav(2)}>
-                                    Próximo
-                                </button>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <br/>
-                                <div className="row" style={{display: this.state.menuNavSelected === 2 ? '' : 'none'}}>
+                                <div className="row">
                                     <div className="col-md-12">
-                                        {/*//////////////////////OSCs Parceiras//////////////////////*/}
+                                        {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>OSCs Parceiras</strong></p>
                                         <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
@@ -1182,22 +1130,13 @@ class FormProjeto extends React.Component{
                                             />
                                         </div>
                                         {parceira_projeto}
-                                        {/*//////////////////////OSCs Parceiras//////////////////////*/}
-                                    </div>
-                                    <div className="col-md-12">
-                                        <br/>
-                                        <button className="btn btn-success float-left" onClick={() => this.menuNav(1)}>
-                                            Anterior
-                                        </button>
-                                        <button className="btn btn-success float-right" onClick={() => this.menuNav(3)}>
-                                            Próximo
-                                        </button>
+                                        {/*//////////////////////Financiadores//////////////////////*/}
                                     </div>
                                 </div>
 
                                 <br/>
                                 <div className="row">
-                                    <div className="col-md-12" style={{display: this.state.menuNavSelected === 3 ? '' : 'none'}}>
+                                    <div className="col-md-12">
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>Público Beneficiado</strong></p>
@@ -1218,17 +1157,8 @@ class FormProjeto extends React.Component{
                                         </div>
                                         {publico_projeto}
                                         {/*//////////////////////Financiadores//////////////////////*/}
-                                        <div>
-                                            <br/>
-                                            <button className="btn btn-success float-left" onClick={() => this.menuNav(2)}>
-                                                Anterior
-                                            </button>
-                                            <button className="btn btn-success float-right" onClick={() => this.menuNav(4)}>
-                                                Próximo
-                                            </button>
-                                        </div>
                                     </div>
-                                    <div className="col-md-12" style={{display: this.state.menuNavSelected === 4 ? '' : 'none'}}>
+                                    <div className="col-md-12">
                                         {/*//////////////////////Local de execução//////////////////////*/}
                                         <br/>
                                         <p><strong>Local de execução</strong></p>
@@ -1250,18 +1180,9 @@ class FormProjeto extends React.Component{
                                         <div className="row">
                                             {localizacao_projeto}
                                         </div>
-                                        <div>
-                                            <br/>
-                                            <button className="btn btn-success float-left" onClick={() => this.menuNav(3)}>
-                                                Anterior
-                                            </button>
-                                            <button className="btn btn-success float-right" onClick={() => this.menuNav(5)}>
-                                                Próximo
-                                            </button>
-                                        </div>
                                         {/*//////////////////////Local de execução//////////////////////*/}
                                     </div>
-                                    <div className="col-md-12" style={{display: this.state.menuNavSelected === 5 ? '' : 'none'}}>
+                                    <div className="col-md-12">
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>Financiadores do Projeto</strong></p>
@@ -1281,21 +1202,12 @@ class FormProjeto extends React.Component{
                                             />
                                         </div>
                                         {financiador_projeto}
-                                        <div>
-                                            <br/>
-                                            <button className="btn btn-success float-left" onClick={() => this.menuNav(4)}>
-                                                Próximo
-                                            </button>
-                                            <button className="btn btn-success float-right" onClick={() => this.menuNav(6)}>
-                                                Próximo
-                                            </button>
-                                        </div>
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                     </div>
                                 </div>
 
 
-                                <div className="row"  style={{display: this.state.menuNavSelected === 6 ? '' : 'none'}}>
+                                <div className="row">
                                     <div className="col-md-12">
                                         <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
                                         <div>
@@ -1310,12 +1222,6 @@ class FormProjeto extends React.Component{
                                                 {metas}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-12">
-                                        <br/>
-                                        <button className="btn btn-success float-left" onClick={() => this.menuNav(5)}>
-                                            Anterior
-                                        </button>
                                     </div>
                                 </div>
 

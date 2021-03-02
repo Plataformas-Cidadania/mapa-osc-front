@@ -242,6 +242,7 @@
 @endif
 @if($rota=="projetos-user")
     <script src="/js/components/user-area/formProjeto.js"></script>
+    <script src="/js/components/user-area/formEditProjeto.js"></script>
     <script src="/js/components/user-area/formOscParceira.js"></script>
     <script src="/js/components/user-area/formProjetoFinanciador.js"></script>
     <script src="/js/components/user-area/formProjetoLocalizacao.js"></script>

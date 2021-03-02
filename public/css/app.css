@@ -11971,6 +11971,52 @@ time {
   background-color: #3A559B;
 }
 
+.box-menu-nav {
+  font-size: 12px;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.box-menu-nav svg {
+  margin: 8px 0;
+  color: #CCCCCC;
+}
+
+.box-menu-nav p {
+  margin-bottom: 0;
+  min-height: 30px;
+}
+
+.box-menu-nav-selected {
+  background-color: #F1F1F1;
+  color: #333333;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.box-menu-nav-selected-active {
+  background-color: #3A559B;
+  color: #FFFFFF;
+}
+
+.box-menu-nav-selected-active svg {
+  color: #FFFFFF;
+}
+
+.box-menu-nav-active svg {
+  color: #FFFFFF;
+}
+
+.box-menu-line {
+  background-color: #F1F1F1;
+  height: 5px;
+  position: relative;
+  top: -48px;
+  z-index: 0;
+}
+
 body {
   background-color: #FFFFFF !important;
 }

@@ -15,6 +15,7 @@ class Projetos extends React.Component{
             loadingRemove: [],
             projeto: {},
             editId: 0,
+            editTipo: '',
         };
 
         this.list = this.list.bind(this);
@@ -84,14 +85,11 @@ class Projetos extends React.Component{
     }
 
 
-    edit(id){
-       // this.setState({actionForm: 'edit'});
-        //this.setState({actionForm: 'edit', showForm: false, editId: id});
-
-        this.setState({actionForm: 'edit', editId: id}, function(){
+    /*edit(id, type){
+        this.setState({actionForm: 'edit', editId: id, editTipo:type,}, function(){
             this.callModal();
         });
-    }
+    }*/
 
     cancelRemove(id){
         let remove = this.state.remove;
@@ -167,7 +165,6 @@ class Projetos extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log(data);
                 this.setState({projetos: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -177,24 +174,55 @@ class Projetos extends React.Component{
         });
     }
 
-    callModal(){
+    /*callModal(){
         let modal = this.state.modal;
         this.setState({modal: modal}, function(){
+            $('#modalForm').modal('show');
+        });
+    }*/
+
+
+
+    callModal(id, type, txt){
+        let modal = this.state.modal;
+        this.setState({
+            modal: modal,
+            editId:id,
+            editTipo:type,
+            modalTitle: txt,
+        }, function(){
             $('#modalForm').modal('show');
         });
     }
 
     modal(){
-        return (
 
+        let form = null;
+
+        if(this.state.editTipo=='insert'){
+            form = (
+                <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                );
+        }
+        if(this.state.editTipo=='edit'){
+            form = (
+                <FormEditProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                );
+        }
+
+        return (
             <div id="modalForm" className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-
-                        <div className="modal-body">
-                            <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="exampleModalLabel"><strong>{this.state.modalTitle}</strong></h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-
+                        <div className="modal-body">
+                            {form}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,7 +246,7 @@ class Projetos extends React.Component{
                     <td>{item.titulo}</td>
                     <td>{formatDate(item.data_inicio, 'pt-br')}</td>
                     <td width="70">
-                        <a onClick={() => this.edit(item.id)}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                        <a onClick={() => this.callModal(item.id, 'edit', 'Alterar projeto')}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.callModalExcluir(item.id, item.titulo)} style={{cursor: 'pointer', position: 'relative', top: '4px'}}>
                             <i className="far fa-trash-alt text-danger float-right"/>
                         </a>
@@ -256,7 +284,7 @@ class Projetos extends React.Component{
                         </table>
 
                         <div style={{float: 'right', cursor: 'pointer'}}>
-                            <a onClick={this.callModal} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
+                            <a onClick={() => this.callModal(0, 'insert', 'Inserir projeto')}  className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
                            {/* <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>*/}
                         </div>
 
