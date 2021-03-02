@@ -118,7 +118,24 @@ class Osc extends React.Component{
             $.ajax({
                 method:'PUT',
                 url: getBaseUrl2+'osc/dados_gerais/455128',
-                data: this.state.form,
+                //data: this.state.form,
+                data:{
+                    id_osc: 455128,
+                    tx_sigla_osc: this.state.form.tx_sigla_osc,
+                    tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
+                    tx_nome_situacao_imovel_osc: this.state.form.tx_nome_situacao_imovel_osc,
+                    dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
+                    dt_fundacao_osc: this.state.form.dt_fundacao_osc,
+                    tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
+                    tx_email: this.state.form.tx_email,
+                    tx_site: this.state.form.tx_site,
+                    tx_telefone: this.state.form.tx_telefone,
+                    tx_resumo_osc: this.state.form.tx_resumo_osc,
+
+
+                    /*ft_nome_projeto: 'Representante de OSC',*/
+
+                },
                 cache: false,
                 success: function(data) {
                     let msg = 'Dados alterados com sucesso!';
@@ -271,19 +288,7 @@ class Osc extends React.Component{
             }.bind(this));
         }
 
-        /*if(this.state.metas){
-            metas = this.state.metas.map(function (item) {
-                return(
-                    <div key={"subarea_"+item.cd_meta_projeto}>
-                        <div className="custom-control custom-checkbox" onChange={() => console.log(item.cd_meta_projeto)}>
-                            <input type="checkbox" className="custom-control-input" id={"subarea_"+item.cd_meta_projeto} required/>
-                            <label className="custom-control-label" htmlFor={"subarea_"+item.cd_meta_projeto} >{item.tx_nome_meta_projeto}</label>
-                        </div>
-                        <hr />
-                    </div>
-                );
-            }.bind(this));
-        }*/
+
 
         return (
             <div>
@@ -427,7 +432,7 @@ class Osc extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
+                                        {/*<div className="col-md-6">
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_telefone" onChange={this.handleInputChange} value={this.state.form.tx_telefone}
                                                        placeholder="Se houver, insira o celular" />
@@ -436,7 +441,7 @@ class Osc extends React.Component{
                                                     <p>&nbsp;</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*/}
 
                                         <div className="col-md-12">
                                             <div className="label-float-tx">
@@ -463,7 +468,6 @@ class Osc extends React.Component{
                                             </div>
                                             <div style={{display: this.state.titleMeta ? '' : 'none'}}>
                                                 <strong>Metas Relacionadas ao ODS definido</strong><hr/>
-                                               {/* <div className="card-columns">*/}
                                                 <div>
                                                     <strong>{this.state.titleObjetivo}</strong><br/><br/>
                                                     {metas}
