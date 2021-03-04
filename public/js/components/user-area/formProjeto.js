@@ -49,7 +49,9 @@ class FormProjeto extends React.Component {
 
             dataChkboxMetas: [],
 
-            menuNavSelected: 0
+            menuNavSelected: 0,
+
+            boxMenuNav: true
 
         };
 
@@ -242,12 +244,19 @@ class FormProjeto extends React.Component {
                 cache: false,
                 success: function (data) {
 
+                    console.log('data', data);
+
                     this.props.list();
 
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({ projetos: data.projetos, loading: false });
+                    this.setState({
+                        projetos: data.projetos,
+                        loading: false,
+                        editId: data.id_projeto,
+                        boxMenuNav: false
+                    });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -945,7 +954,7 @@ class FormProjeto extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'form',
-                        null,
+                        { style: { display: this.state.boxMenuNav ? '' : 'none' } },
                         React.createElement(
                             'div',
                             { className: 'row' },
@@ -1302,7 +1311,22 @@ class FormProjeto extends React.Component {
                     ),
                     React.createElement(
                         'div',
-                        { className: 'row box-menu-nav' },
+                        { className: 'row box-menu-nav', style: { display: this.state.boxMenuNav ? 'none' : '' } },
+                        React.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Parab\xE9ns!'
+                            ),
+                            React.createElement(
+                                'p',
+                                null,
+                                'Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens. '
+                            ),
+                            React.createElement('br', null)
+                        ),
                         React.createElement(
                             'div',
                             { className: 'col-md-2 text-center', onClick: () => this.menuNav(1) },

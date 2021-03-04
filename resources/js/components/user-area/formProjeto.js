@@ -55,7 +55,7 @@ class FormProjeto extends React.Component{
 
             menuNavSelected: 0,
 
-
+            boxMenuNav: true,
 
         };
 
@@ -260,12 +260,19 @@ class FormProjeto extends React.Component{
                 cache: false,
                 success: function(data) {
 
+                    console.log('data', data);
+
                     this.props.list();
 
                     this.cleanForm();
                     this.props.closeForm();
 
-                    this.setState({projetos: data.projetos, loading: false})
+                    this.setState({
+                        projetos: data.projetos,
+                        loading: false,
+                        editId: data.id_projeto,
+                        boxMenuNav: false,
+                    })
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -854,7 +861,7 @@ class FormProjeto extends React.Component{
 
                 <div className="row">
                     <div className="col-md-12">
-                        <form>
+                        <form  style={{display: this.state.boxMenuNav ? '': 'none'}}>
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="label-float">
@@ -1010,7 +1017,13 @@ class FormProjeto extends React.Component{
                         </form>
 
 
-                        <div className="row box-menu-nav">
+                        <div className="row box-menu-nav" style={{display: this.state.boxMenuNav ? 'none': ''}}>
+                            <div className="col-md-12">
+                                <strong>Parabéns!</strong>
+                                <p>Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens. </p>
+                                <br/>
+                            </div>
+
                             <div className="col-md-2 text-center" onClick={() => this.menuNav(1)}>
                                 <div className={"box-menu-nav-selected "+ (this.state.menuNavSelected === 1 ? 'box-menu-nav-selected-active' : '')}>
                                     <i className="fas fa-2x fa-circle"/>
