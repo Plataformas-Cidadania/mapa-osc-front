@@ -73,6 +73,8 @@ class FormEditProjeto extends React.Component {
         this.removeList = this.removeList.bind(this);
         this.saveList = this.saveList.bind(this);
         this.addList = this.addList.bind(this);
+
+        this.checkParceria = this.checkParceria.bind(this);
     }
 
     componentDidMount() {
@@ -521,6 +523,59 @@ class FormEditProjeto extends React.Component {
         this.setState({ objetivos: objetivos });
     }
     /*******************/
+    checkParceria(id_tipo, id_fonte, checkedParceria) {
+
+        console.log('checkedParceria', checkedParceria);
+        console.log(id_tipo, id_fonte, checkedParceria);
+
+        /*let objetivos = this.state.objetivos;
+        objetivos.find(function(item){
+            if(item.cd_objetivo_projeto === cd_objetivo){
+                item.parcerias.find(function (itemMeta) {
+                    if(itemMeta.cd_parceria_projeto === cd_parceria){
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });*/
+
+        if (checkedMeta === true) {
+            console.log('Insert');
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/projeto/parceria',
+                data: {
+                    cd_parceria_projeto: cd_parceria,
+                    id_projeto: this.state.editId,
+                    ft_objetivo_projeto: 'Representante de OSC'
+                },
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        } else {
+            console.log('Delete');
+            console.log('delId', delId);
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2 + 'osc/projeto/parceria/' + delId,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
+        this.setState({ objetivos: objetivos });
+    }
 
     clickFontRecurso() {
         this.setState({
@@ -1369,7 +1424,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(5, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_cooperacao_tecnica", defaultChecked: this.state.tp_cooperacao_tecnica, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1383,7 +1438,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(0, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_fomento", defaultChecked: this.state.tp_termo_fomento, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1397,7 +1452,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(1, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_colaboracao", defaultChecked: this.state.tp_termo_colaboracao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1411,7 +1466,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(2, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_parceria", defaultChecked: this.state.tp_termo_parceria, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1425,7 +1480,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(3, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_contrato_gestao", defaultChecked: this.state.tp_contrato_gestao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1439,7 +1494,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(4, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_convenio", defaultChecked: this.state.tp_convenio, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
@@ -1453,7 +1508,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(6, 0, !checkedParceria) },
                                     React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_outro", defaultChecked: this.state.tp_outro, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
