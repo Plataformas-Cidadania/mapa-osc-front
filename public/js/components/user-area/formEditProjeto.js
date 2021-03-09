@@ -47,7 +47,9 @@ class FormEditProjeto extends React.Component {
             showAdd: false,
             saveLoading: '',
 
-            dataChkboxMetas: []
+            dataChkboxMetas: [],
+
+            checkedRecurso: false
 
         };
 
@@ -65,6 +67,8 @@ class FormEditProjeto extends React.Component {
         this.listFinanciadores = this.listFinanciadores.bind(this);
         this.listPublicos = this.listPublicos.bind(this);
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
+        this.listRecursos = this.listRecursos.bind(this);
+        this.listTipoParcerias = this.listTipoParcerias.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
@@ -75,6 +79,7 @@ class FormEditProjeto extends React.Component {
         this.addList = this.addList.bind(this);
 
         this.checkParceria = this.checkParceria.bind(this);
+        this.checkRecurso = this.checkRecurso.bind(this);
     }
 
     componentDidMount() {
@@ -86,6 +91,8 @@ class FormEditProjeto extends React.Component {
         this.listLocalizacoes();
         this.listObjetivos();
         this.listChkboxMetas();
+        this.listRecursos();
+        this.listTipoParcerias();
     }
 
     componentWillReceiveProps(props) {
@@ -103,49 +110,137 @@ class FormEditProjeto extends React.Component {
         }
     }
 
-    edit() {
+    listRecursos() {
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
+            url: getBaseUrl2 + 'osc/projeto/recursos/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {
-                let ft_recursos_publico = '';
-                let ft_recursos_privado = '';
-                let ft_recursos_proprio = '';
-                let ft_recursos_nao_financeiro = '';
 
-                let tp_cooperacao_tecnica = '';
-                let tp_termo_fomento = '';
-                let tp_termo_colaboracao = '';
-                let tp_termo_parceria = '';
-                let tp_contrato_gestao = '';
-                let tp_convenio = '';
-                let tp_outro = '';
+                let id_recurso_publico = 0;
+                let id_recurso_privado = 0;
+                let id_recurso_proprio = 0;
+                let id_recurso_nao_financeiro = 0;
 
-                data.fontes_recursos_projeto.find(function (item) {
-                    ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
-                    ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
-                    ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
-                    ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
-                });
+                let ft_recursos_publico = false;
+                let ft_recursos_privado = false;
+                let ft_recursos_proprio = false;
+                let ft_recursos_nao_financeiro = false;
 
-                data.tipo_parcerias_projeto.find(function (item) {
-                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
-                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
-                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
-                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
-                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
-                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
-                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
+                data.find(function (item) {
+                    if (item.cd_origem_fonte_recursos_projeto === 1) {
+                        id_recurso_publico = item.id_fonte_recursos_projeto;
+                        ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? true : false;
+                    }
+                    if (item.cd_origem_fonte_recursos_projeto === 2) {
+                        id_recurso_privado = item.id_fonte_recursos_projeto;
+                        ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? true : false;
+                    }
+                    if (item.cd_origem_fonte_recursos_projeto === 4) {
+                        id_recurso_proprio = item.id_fonte_recursos_projeto;
+                        ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 4 ? true : false;
+                    }
+                    if (item.cd_origem_fonte_recursos_projeto === 3) {
+                        id_recurso_nao_financeiro = item.id_fonte_recursos_projeto;
+                        ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 3 ? true : false;
+                    }
                 });
 
                 this.setState({
-                    form: data,
+                    id_recurso_publico: id_recurso_publico,
+                    id_recurso_privado: id_recurso_privado,
+                    id_recurso_proprio: id_recurso_proprio,
+                    id_recurso_nao_financeiro: id_recurso_nao_financeiro,
                     ft_recursos_publico: ft_recursos_publico,
                     ft_recursos_privado: ft_recursos_privado,
                     ft_recursos_proprio: ft_recursos_proprio,
+                    ft_recursos_nao_financeiro: ft_recursos_nao_financeiro
+                }, function () {
+                    //this.props.showHideForm();
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listTipoParcerias() {
+
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/projeto/tipo_parcerias/' + this.state.editId,
+            data: {},
+            cache: false,
+            success: function (data) {
+
+                let id_tipo_parceria_cooperacao = 0;
+                let id_tipo_parceria_fomento = 0;
+                let id_tipo_parceria_colaboracao = 0;
+                let id_tipo_parceria_parceria = 0;
+                let id_tipo_parceria_gestao = 0;
+                let id_tipo_parceria_convenio = 0;
+                let id_tipo_parceria_outro = 0;
+
+                let tp_cooperacao_tecnica = false;
+                let tp_termo_fomento = false;
+                let tp_termo_colaboracao = false;
+                let tp_termo_parceria = false;
+                let tp_contrato_gestao = false;
+                let tp_convenio = false;
+                let tp_outro = false;
+
+                data.find(function (item) {
+
+                    console.log('-->', item.cd_tipo_parceria_projeto);
+                    if (item.cd_tipo_parceria_projeto === 5) {
+                        console.log('5');
+                        id_tipo_parceria_cooperacao = item.id_tipo_parceria_projeto;
+                        tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 5 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 0) {
+                        console.log('0');
+                        id_tipo_parceria_fomento = item.id_tipo_parceria_projeto;
+                        tp_termo_fomento = item.cd_tipo_parceria_projeto === 0 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 1) {
+                        console.log('1');
+                        id_tipo_parceria_colaboracao = item.id_tipo_parceria_projeto;
+                        tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 1 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 2) {
+                        console.log('2');
+                        id_tipo_parceria_parceria = item.id_tipo_parceria_projeto;
+                        tp_termo_parceria = item.cd_tipo_parceria_projeto === 2 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 3) {
+                        console.log('3');
+                        id_tipo_parceria_gestao = item.id_tipo_parceria_projeto;
+                        tp_contrato_gestao = item.cd_tipo_parceria_projeto === 3 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 4) {
+                        console.log('4');
+                        id_tipo_parceria_convenio = item.id_tipo_parceria_projeto;
+                        tp_convenio = item.cd_tipo_parceria_projeto === 4 ? true : false;
+                    }
+                    if (item.cd_tipo_parceria_projeto === 6) {
+                        console.log('6');
+                        id_tipo_parceria_outro = item.id_tipo_parceria_projeto;
+                        tp_outro = item.cd_tipo_parceria_projeto === 6 ? true : false;
+                    }
+                });
+
+                console.log("tp_cooperacao_tecnica:", tp_cooperacao_tecnica), console.log("tp_termo_fomento:", tp_termo_fomento), console.log("tp_termo_colaboracao:", tp_termo_colaboracao), console.log("tp_termo_parceria:", tp_termo_parceria), console.log("tp_contrato_gestao:", tp_contrato_gestao), console.log("tp_convenio:", tp_convenio), console.log("tp_outro:", tp_outro), this.setState({
+                    id_tipo_parceria_cooperacao: id_tipo_parceria_cooperacao,
+                    id_tipo_parceria_fomento: id_tipo_parceria_fomento,
+                    id_tipo_parceria_colaboracao: id_tipo_parceria_colaboracao,
+                    id_tipo_parceria_parceria: id_tipo_parceria_parceria,
+                    id_tipo_parceria_gestao: id_tipo_parceria_gestao,
+                    id_tipo_parceria_convenio: id_tipo_parceria_convenio,
+                    id_tipo_parceria_outro: id_tipo_parceria_outro,
+
                     tp_cooperacao_tecnica: tp_cooperacao_tecnica,
                     tp_termo_fomento: tp_termo_fomento,
                     tp_termo_colaboracao: tp_termo_colaboracao,
@@ -154,7 +249,52 @@ class FormEditProjeto extends React.Component {
                     tp_convenio: tp_convenio,
                     tp_outro: tp_outro
 
-                    //financiadores_projeto: data.financiadores_projeto,
+                }, function () {
+                    this.listTipoParcerias();
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    edit() {
+
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
+            data: {},
+            cache: false,
+            success: function (data) {
+
+                /*let tp_cooperacao_tecnica = '';
+                let tp_termo_fomento = '';
+                let tp_termo_colaboracao = '';
+                let tp_termo_parceria = '';
+                let tp_contrato_gestao = '';
+                let tp_convenio = '';
+                let tp_outro = '';
+                 data.tipo_parcerias_projeto.find(function(item){
+                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
+                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
+                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
+                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
+                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
+                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
+                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
+                });*/
+
+                this.setState({
+                    form: data
+                    /*tp_cooperacao_tecnica: tp_cooperacao_tecnica,
+                    tp_termo_fomento: tp_termo_fomento,
+                    tp_termo_colaboracao: tp_termo_colaboracao,
+                    tp_termo_parceria: tp_termo_parceria,
+                    tp_contrato_gestao: tp_contrato_gestao,
+                    tp_convenio: tp_convenio,
+                    tp_outro: tp_outro,*/
+
                 }, function () {
                     //this.props.showHideForm();
                 });
@@ -244,42 +384,6 @@ class FormEditProjeto extends React.Component {
             });
         });
     }
-
-    /*register(e){
-        e.preventDefault();
-         if(!this.validate()){
-            return;
-        }
-         let url = '/register-projeto';
-        let id = null;
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = '/update-user-projeto';
-        }
-         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
-            $.ajax({
-                method:'POST',
-                url: url,
-                data:{
-                    form: this.state.form,
-                    id: id,
-                },
-                cache: false,
-                success: function(data) {
-                    this.props.list();
-                     this.cleanForm();
-                    this.props.closeForm();
-                     this.setState({projetos: data.projetos, loading: false})
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(status, err.toString());
-                    this.setState({loading: false, button: true});
-                }.bind(this)
-            });
-        });
-     }*/
-
-    /*Objetivos e metas*/
 
     listArea() {
         this.setState({ button: false });
@@ -522,33 +626,63 @@ class FormEditProjeto extends React.Component {
 
         this.setState({ objetivos: objetivos });
     }
-    /*******************/
-    checkParceria(id_tipo, id_fonte, checkedParceria) {
+
+    checkRecurso(id_recurso, checkedRecurso, id) {
+
+        checkedRecurso = !checkedRecurso;
+
+        if (checkedRecurso === true) {
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/projeto/recurso',
+                data: {
+                    id_projeto: this.state.editId,
+                    //cd_fonte_recursos_projeto: id_recurso,
+                    ft_fonte_recursos_projeto: 'Representante de OSC',
+                    cd_origem_fonte_recursos_projeto: id_recurso,
+                    ft_orgao_concedente: 'Representante de OSC'
+                },
+                cache: false,
+                success: function (data) {
+                    this.listTipoParcerias();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        } else {
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2 + 'osc/projeto/recurso/' + id,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    this.listTipoParcerias();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+    }
+
+    checkParceria(id_tipo, checkedParceria, id) {
+
+        checkedParceria = !checkedParceria;
 
         console.log('checkedParceria', checkedParceria);
-        console.log(id_tipo, id_fonte, checkedParceria);
-
-        /*let objetivos = this.state.objetivos;
-        objetivos.find(function(item){
-            if(item.cd_objetivo_projeto === cd_objetivo){
-                item.parcerias.find(function (itemMeta) {
-                    if(itemMeta.cd_parceria_projeto === cd_parceria){
-                        itemMeta.checked = true;
-                    }
-                });
-            }
-        });*/
+        console.log(id_tipo, checkedParceria);
 
         if (checkedParceria === true) {
             console.log('Insert');
             $.ajax({
                 method: 'POST',
-                url: getBaseUrl2 + 'osc/projeto/parceria',
+                url: getBaseUrl2 + 'osc/projeto/tipo_parceria',
                 data: {
                     cd_tipo_parceria_projeto: id_tipo,
                     id_projeto: this.state.editId,
                     ft_tipo_parceria_projeto: 'Representante de OSC',
-                    id_fonte_recursos_projeto: id_fonte
+                    id_fonte_recursos_projeto: this.state.id_recurso_publico
                 },
                 cache: false,
                 success: function (data) {
@@ -562,7 +696,7 @@ class FormEditProjeto extends React.Component {
             console.log('Delete');
             $.ajax({
                 method: 'DELETE',
-                url: getBaseUrl2 + 'osc/projeto/parceria/' + id_tipo,
+                url: getBaseUrl2 + 'osc/projeto/tipo_parceria/' + id,
                 data: {},
                 cache: false,
                 success: function (data) {
@@ -1337,7 +1471,7 @@ class FormEditProjeto extends React.Component {
                         { className: 'row' },
                         React.createElement(
                             'div',
-                            { className: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6' },
+                            { className: this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6' },
                             React.createElement('br', null),
                             React.createElement(
                                 'h3',
@@ -1350,8 +1484,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox', onChange: this.clickFontRecurso },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_publico", defaultChecked: this.state.ft_recursos_publico, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkRecurso(1, this.state.ft_recursos_publico, this.state.id_recurso_publico) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_publico", checked: this.state.ft_recursos_publico, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_publico" },
@@ -1360,7 +1494,7 @@ class FormEditProjeto extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'float-right', style: { display: this.state.active === false ? 'none' : '', margin: '8px -20px 0 0' } },
+                                    { className: 'float-right', style: { display: this.state.ft_recursos_publico === false ? 'none' : '', margin: '8px -20px 0 0' } },
                                     React.createElement('i', { className: 'fas fa-chevron-right ' })
                                 )
                             ),
@@ -1369,8 +1503,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_privado", defaultChecked: this.state.ft_recursos_privado, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkRecurso(2, this.state.ft_recursos_privado, this.state.id_recurso_privado) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_privado", checked: this.state.ft_recursos_privado, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_privado" },
@@ -1383,8 +1517,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_proprio", defaultChecked: this.state.ft_recursos_proprio, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkRecurso(4, this.state.ft_recursos_proprio, this.state.id_recurso_proprio) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_proprio", checked: this.state.ft_recursos_proprio, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_proprio" },
@@ -1397,8 +1531,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_nao_financeiro", defaultChecked: this.state.ft_recursos_nao_financeiro, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkRecurso(3, this.state.ft_recursos_nao_financeiro, this.state.id_recurso_nao_financeiro) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "fontes_recursos_nao_financeiro", checked: this.state.ft_recursos_nao_financeiro, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "fontes_recursos_nao_financeiro" },
@@ -1409,7 +1543,7 @@ class FormEditProjeto extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'col-md-6', style: { display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : '' } },
+                            { className: this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6', style: { display: this.state.ft_recursos_publico === false ? 'none' : '' } },
                             React.createElement('br', null),
                             React.createElement(
                                 'h3',
@@ -1422,8 +1556,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(5, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_cooperacao_tecnica", defaultChecked: this.state.tp_cooperacao_tecnica, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(5, this.state.tp_cooperacao_tecnica, this.state.id_tipo_parceria_cooperacao) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_cooperacao_tecnica", checked: this.state.tp_cooperacao_tecnica, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_cooperacao_tecnica" },
@@ -1436,8 +1570,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(0, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_fomento", defaultChecked: this.state.tp_termo_fomento, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(0, this.state.tp_termo_fomento, this.state.id_tipo_parceria_fomento) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_fomento", checked: this.state.tp_termo_fomento, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_termo_fomento" },
@@ -1450,8 +1584,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(1, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_colaboracao", defaultChecked: this.state.tp_termo_colaboracao, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(1, this.state.tp_termo_colaboracao, this.state.id_tipo_parceria_colaboracao) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_colaboracao", checked: this.state.tp_termo_colaboracao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_termo_colaboracao" },
@@ -1464,8 +1598,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(2, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_parceria", defaultChecked: this.state.tp_termo_parceria, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(2, this.state.tp_termo_parceria, this.state.id_tipo_parceria_parceria) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_termo_parceria", checked: this.state.tp_termo_parceria, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_termo_parceria" },
@@ -1478,8 +1612,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(3, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_contrato_gestao", defaultChecked: this.state.tp_contrato_gestao, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(3, this.state.tp_contrato_gestao, this.state.id_tipo_parceria_gestao) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_contrato_gestao", checked: this.state.tp_contrato_gestao, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_contrato_gestao" },
@@ -1492,8 +1626,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(4, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_convenio", defaultChecked: this.state.tp_convenio, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(4, this.state.tp_convenio, this.state.id_tipo_parceria_convenio) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_convenio", checked: this.state.tp_convenio, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_convenio" },
@@ -1506,8 +1640,8 @@ class FormEditProjeto extends React.Component {
                                 { className: 'bg-lgt items-checkbox' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(6, 0, true) },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_outro", defaultChecked: this.state.tp_outro, onChange: this.handleInputChange }),
+                                    { className: 'custom-control custom-checkbox', onChange: () => this.checkParceria(6, this.state.tp_outro, this.state.id_tipo_parceria_outro) },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "tp_outro", checked: this.state.tp_outro, onChange: this.handleInputChange }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: "tp_outro" },
