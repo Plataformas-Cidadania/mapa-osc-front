@@ -25,9 +25,10 @@
 
 <script>
     function get_location() {
+        console.log('get_location');
         if(navigator.geolocation){
 
-            function showMap (position) {
+            function saveLocation (position) {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 localStorage.setItem('geo', JSON.stringify({lat: lat, lon: lon}));
@@ -49,7 +50,7 @@
                 });
             }
             // Solicitação de posição instantânea.
-            navigator.geolocation.getCurrentPosition (showMap);
+            navigator.geolocation.getCurrentPosition (saveLocation);
 
             //console.log(localStorage.getItem('aaa'));
 
