@@ -23,6 +23,44 @@
 <script src="/js/react/react.development.js" crossorigin></script>
 <script src="/js/react/react-dom.development.js" crossorigin></script>
 
+<script>
+    function get_location() {
+        if(navigator.geolocation){
+
+            function showMap (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                localStorage.setItem('geo', JSON.stringify({lat: lat, lon: lon}));
+                //console.log(localStorage.getItem('geo'));
+                $.ajax({
+                    url: "https://nominatim.openstreetmap.org/reverse?format=json&lat="+lat+"&lon="+lon,
+                    success: function(data){
+                        //console.log(data)
+                        if(data.address){
+                            localStorage.setItem('city', JSON.stringify({city: data.address.city}));
+                            localStorage.setItem('state', JSON.stringify({state: data.address.state}));
+                            localStorage.setItem('region', JSON.stringify({region: data.address.region}));
+                            localStorage.setItem('country', JSON.stringify({country: data.address.country}));
+                        }
+                    },
+                    error: function(xhr, status, err){
+                        console.error(status, err.toString());
+                    }
+                });
+            }
+            // Solicitação de posição instantânea.
+            navigator.geolocation.getCurrentPosition (showMap);
+
+            //console.log(localStorage.getItem('aaa'));
+
+            return;
+        }
+
+        console.log("O NAVEGADOR NÃO É COMPATÍVEL COM GEOLOCALIZAÇÃO");
+    }
+    get_location();
+</script>
+
 @if($rota=='detalhar/{id}/{title}')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
