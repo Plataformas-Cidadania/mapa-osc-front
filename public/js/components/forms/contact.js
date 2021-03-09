@@ -143,13 +143,29 @@ class Contact extends React.Component {
     }
 
     get_location() {
-        if (Modernizr.geolocation) {
+        //const geo = navigator.geolocation;
+        //console.log(geo);
+        if (navigator.geolocation) {
+
+            function showMap(position) {
+                console.log(position.coords);
+                // Mostra um mapa centralizado em (position.coords.latitude, position.coords.longitude).
+            }
+
+            // Solicitação de posição instantânea.
+            navigator.geolocation.getCurrentPosition(showMap);
+
+            return;
+        }
+
+        console.log("O NAVEGADOR NÃO É COMPATÍVEL COM GEOLOCALIZAÇÃO");
+        /*if (Modernizr.geolocation) {
             navigator.geolocation.getCurrentPosition(show_map);
             console.log('possui suporte a geolocalização');
         } else {
             // no native support; maybe try Gears?
             console.log('não possui suporte a geolocalização');
-        }
+        }*/
     }
 
     render() {
