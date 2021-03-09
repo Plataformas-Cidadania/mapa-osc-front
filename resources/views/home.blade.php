@@ -4,6 +4,17 @@
 
 
 <div class="container">
+    <script>
+        function get_location() {
+            if (Modernizr.geolocation) {
+                navigator.geolocation.getCurrentPosition(show_map);
+                console.log('possui suporte a geolocalização');
+            } else {
+                // no native support; maybe try Gears?
+                console.log('não possui suporte a geolocalização');
+            }
+        }
+    </script>
 
     <div class="row justify-content-md-center">
         <div class="col-md-5">

@@ -25,6 +25,7 @@ class Contact extends React.Component{
     }
 
     componentDidMount(){
+        this.get_location();
     }
 
     handleInputChange(event) {
@@ -139,6 +140,16 @@ class Contact extends React.Component{
                 }.bind(this)
             });
         });
+    }
+
+    get_location() {
+        if (Modernizr.geolocation) {
+            navigator.geolocation.getCurrentPosition(show_map);
+            console.log('possui suporte a geolocalização');
+        } else {
+            // no native support; maybe try Gears?
+            console.log('não possui suporte a geolocalização');
+        }
     }
 
 
