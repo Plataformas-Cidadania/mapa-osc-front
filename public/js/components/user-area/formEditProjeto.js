@@ -250,7 +250,7 @@ class FormEditProjeto extends React.Component {
                     tp_outro: tp_outro
 
                 }, function () {
-                    this.listTipoParcerias();
+                    //this.props.showHideForm();
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -670,11 +670,7 @@ class FormEditProjeto extends React.Component {
 
         checkedParceria = !checkedParceria;
 
-        console.log('checkedParceria', checkedParceria);
-        console.log(id_tipo, checkedParceria);
-
         if (checkedParceria === true) {
-            console.log('Insert');
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria',
@@ -686,7 +682,7 @@ class FormEditProjeto extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    this.listChkboxMetas();
+                    this.listTipoParcerias();
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
@@ -695,12 +691,11 @@ class FormEditProjeto extends React.Component {
         } else {
             console.log('Delete');
             $.ajax({
-                method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria/' + id,
                 data: {},
                 cache: false,
                 success: function (data) {
-                    this.listChkboxMetas();
+                    this.listTipoParcerias();
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
