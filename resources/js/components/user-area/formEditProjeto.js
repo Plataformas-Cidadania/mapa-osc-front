@@ -1149,13 +1149,11 @@ class FormEditProjeto extends React.Component{
                         </form>
 
                         <div className="row">
+                            {/*Fontes recursos*/}
                             <div className={this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6'}>
                                 <br/>
                                 <h3>Fontes de Recursos</h3>
                                 <hr/>
-
-
-
                                 <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
                                     <div className="custom-control custom-checkbox"  onChange={() => this.checkRecurso(1, this.state.ft_recursos_publico, this.state.id_recurso_publico)}>
                                         <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"}  checked={this.state.ft_recursos_publico} onChange={this.handleInputChange}/>
@@ -1187,7 +1185,6 @@ class FormEditProjeto extends React.Component{
                                     </div>
                                 </div>
                             </div>
-
                             {/* ******************************** */}
                             <div className={this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6'} style={{display: this.state.ft_recursos_publico === false ? 'none' : ''}}>
                                 <br/>
@@ -1244,6 +1241,7 @@ class FormEditProjeto extends React.Component{
                                     </div>
                                 </div>
                             </div>
+                            {/*Fontes recursos*/}
                             <div className="col-md-12">
                                 <br/>
                                 <div className="row">
