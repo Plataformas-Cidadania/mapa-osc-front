@@ -194,45 +194,37 @@ class FormEditProjeto extends React.Component {
 
                 data.find(function (item) {
 
-                    console.log('-->', item.cd_tipo_parceria_projeto);
                     if (item.cd_tipo_parceria_projeto === 5) {
-                        console.log('5');
                         id_tipo_parceria_cooperacao = item.id_tipo_parceria_projeto;
                         tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 5 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 0) {
-                        console.log('0');
                         id_tipo_parceria_fomento = item.id_tipo_parceria_projeto;
                         tp_termo_fomento = item.cd_tipo_parceria_projeto === 0 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 1) {
-                        console.log('1');
                         id_tipo_parceria_colaboracao = item.id_tipo_parceria_projeto;
                         tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 1 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 2) {
-                        console.log('2');
                         id_tipo_parceria_parceria = item.id_tipo_parceria_projeto;
                         tp_termo_parceria = item.cd_tipo_parceria_projeto === 2 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 3) {
-                        console.log('3');
                         id_tipo_parceria_gestao = item.id_tipo_parceria_projeto;
                         tp_contrato_gestao = item.cd_tipo_parceria_projeto === 3 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 4) {
-                        console.log('4');
                         id_tipo_parceria_convenio = item.id_tipo_parceria_projeto;
                         tp_convenio = item.cd_tipo_parceria_projeto === 4 ? true : false;
                     }
                     if (item.cd_tipo_parceria_projeto === 6) {
-                        console.log('6');
                         id_tipo_parceria_outro = item.id_tipo_parceria_projeto;
                         tp_outro = item.cd_tipo_parceria_projeto === 6 ? true : false;
                     }
                 });
 
-                console.log("tp_cooperacao_tecnica:", tp_cooperacao_tecnica), console.log("tp_termo_fomento:", tp_termo_fomento), console.log("tp_termo_colaboracao:", tp_termo_colaboracao), console.log("tp_termo_parceria:", tp_termo_parceria), console.log("tp_contrato_gestao:", tp_contrato_gestao), console.log("tp_convenio:", tp_convenio), console.log("tp_outro:", tp_outro), this.setState({
+                this.setState({
                     id_tipo_parceria_cooperacao: id_tipo_parceria_cooperacao,
                     id_tipo_parceria_fomento: id_tipo_parceria_fomento,
                     id_tipo_parceria_colaboracao: id_tipo_parceria_colaboracao,
@@ -267,33 +259,8 @@ class FormEditProjeto extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-
-                /*let tp_cooperacao_tecnica = '';
-                let tp_termo_fomento = '';
-                let tp_termo_colaboracao = '';
-                let tp_termo_parceria = '';
-                let tp_contrato_gestao = '';
-                let tp_convenio = '';
-                let tp_outro = '';
-                 data.tipo_parcerias_projeto.find(function(item){
-                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
-                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
-                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
-                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
-                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
-                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
-                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
-                });*/
-
                 this.setState({
                     form: data
-                    /*tp_cooperacao_tecnica: tp_cooperacao_tecnica,
-                    tp_termo_fomento: tp_termo_fomento,
-                    tp_termo_colaboracao: tp_termo_colaboracao,
-                    tp_termo_parceria: tp_termo_parceria,
-                    tp_contrato_gestao: tp_contrato_gestao,
-                    tp_convenio: tp_convenio,
-                    tp_outro: tp_outro,*/
 
                 }, function () {
                     //this.props.showHideForm();
@@ -432,12 +399,14 @@ class FormEditProjeto extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/objetivos/' + this.state.editId,
             success: function (data) {
+                let objetosSelected = [];
                 data.find(function (item) {
-                    item.checked = false;
-                    item.metas = null;
+                    objetosSelected.push(item.meta_projeto.cd_objetivo_projeto);
                 });
 
-                this.setState({ loading: false, datalistParcerias: data });
+                const arrUnique = [...new Set(objetosSelected)];
+
+                this.setState({ loading: false, datalistObjetivos: arrUnique });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -560,7 +529,7 @@ class FormEditProjeto extends React.Component {
             url: getBaseUrl2 + 'osc/projeto/objetivos/' + this.state.editId,
             success: function (data) {
                 data.find(function (item) {
-                    item.checked = false;
+                    item.checked = true;
                     item.metas = null;
                 });
 
@@ -574,9 +543,6 @@ class FormEditProjeto extends React.Component {
 
     checkMetas(cd_objetivo, cd_meta, delId, checkedMeta) {
 
-        console.log('checkedMeta', checkedMeta);
-        console.log(cd_objetivo, cd_meta, delId, checkedMeta);
-
         let objetivos = this.state.objetivos;
         objetivos.find(function (item) {
             if (item.cd_objetivo_projeto === cd_objetivo) {
@@ -589,7 +555,6 @@ class FormEditProjeto extends React.Component {
         });
 
         if (checkedMeta === true) {
-            console.log('Insert');
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/objetivo',
@@ -608,8 +573,6 @@ class FormEditProjeto extends React.Component {
                 }.bind(this)
             });
         } else {
-            console.log('Delete');
-            console.log('delId', delId);
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/objetivo/' + delId,
@@ -671,7 +634,6 @@ class FormEditProjeto extends React.Component {
         checkedParceria = !checkedParceria;
 
         if (checkedParceria === true) {
-            console.log('Insert');
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria',
@@ -690,7 +652,6 @@ class FormEditProjeto extends React.Component {
                 }.bind(this)
             });
         } else {
-            console.log('Delete');
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria/' + id,
@@ -749,7 +710,6 @@ class FormEditProjeto extends React.Component {
     }
 
     saveList(rota, id) {
-        //console.log('Save id:',id);
         this.setState({ saveLoading: rota + '_' + id });
         let url = getBaseUrl2 + 'osc/projeto/' + rota + '/' + id;
 
@@ -1050,9 +1010,15 @@ class FormEditProjeto extends React.Component {
 
         if (this.state.objetivos) {
             objetivos = this.state.objetivos.map(function (item) {
+                let checkedMetas = false;
+
+                if (this.state.datalistObjetivos) {
+                    if (this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1) {
+                        checkedMetas = true;
+                    }
+                }
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
-                let checkedMetas = false;
 
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
@@ -1871,5 +1837,4 @@ class FormEditProjeto extends React.Component {
             )
         );
     }
-
 }
