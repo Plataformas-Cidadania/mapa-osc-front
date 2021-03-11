@@ -27,6 +27,7 @@ class Atuacoes extends React.Component{
                 11: '',
                 12: '',
             },
+
         };
 
         this.listArea = this.listArea.bind(this);
@@ -60,14 +61,18 @@ class Atuacoes extends React.Component{
 
     callSubareaAtuacao(id){
 
-        //this.checkArea(id);
         let areas = this.state.areaAtuacao;
+
+
+
         if(areas[0].subareas){
+
             areas.find(function(item){
                 if(item.cd_area_atuacao === id){
                     item.checked = !item.checked;
                 }
             });
+
             this.setState({areaAtuacao: areas});
             return;
         }
@@ -84,6 +89,7 @@ class Atuacoes extends React.Component{
                 data.find(function(item){
                     item.checked = false;
                 });
+
 
                 this.state.areaAtuacao.find(function(item){
 
@@ -103,18 +109,64 @@ class Atuacoes extends React.Component{
                 console.error(status, err.toString());
             }.bind(this)
         });
-    }
 
-    /*checkArea(id){
-        console.log(id);
-        let areas = this.state.areaAtuacao;
+        /*//////////////////*/
+
+        let checkedAtuacao = false;
         areas.find(function(item){
             if(item.cd_area_atuacao === id){
                 item.checked = !item.checked;
+                checkedAtuacao = item.checked;
+                console.log('id: ', item.cd_area_atuacao, id, item.checked);
             }
         });
-        this.setState({areaAtuacao: areas});
-    }*/
+
+        console.log(areas);
+        if(checkedAtuacao===true){
+            console.log('INSERT');
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2+'osc/areas_atuacao',
+                data: {
+                    id_osc: 789809,
+                    cd_area_atuacao: id,
+                    ft_area_atuacao: 'Representante de OSC',
+                },
+                cache: false,
+                success: function(data){
+                    this.listTipoAtuacaos();
+                }.bind(this),
+                error: function(xhr, status, err){
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }else{
+            console.log('DELETE');
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2+'osc/areas_atuacao/'+id,
+                data: {
+
+                },
+                cache: false,
+                success: function(data){
+                    this.listTipoAtuacaos();
+                }.bind(this),
+                error: function(xhr, status, err){
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
+
+
+
+
+        /*//////////////////*/
+
+
+    }
+
 
     checkSubArea(area_id, subarea_id){
         console.log(area_id, subarea_id);
@@ -135,14 +187,14 @@ class Atuacoes extends React.Component{
         let checked = false;
         this.state.areaAtuacao.find(function(item){
             if(item.cd_area_atuacao === area_id){
-                console.log('cd_area_atuacao', item.cd_area_atuacao);
-                console.log(item.subareas);
+                //console.log('cd_area_atuacao', item.cd_area_atuacao);
+                //console.log(item.subareas);
                 if(item.subareas){
                     item.subareas.find(function(subitem){
                         if(subitem.tx_nome_subarea_atuacao === "Outros"){
-                            console.log("Outros");
+                            //console.log("Outros");
                             checked = subitem.checked;
-                            console.log('dentro do if', checked);
+                            //console.log('dentro do if', checked);
                         }
                     });
                 }
@@ -158,6 +210,7 @@ class Atuacoes extends React.Component{
     render(){
 
         //console.log(this.state.areaAtuacao);
+
 
         let areaAtuacao = null;
         let subareaAtuacao = [];
