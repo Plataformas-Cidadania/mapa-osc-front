@@ -17,7 +17,8 @@ class Page extends React.Component {
         $.ajax({
             type: 'GET',
             //url: 'get-home-chart',
-            url: 'http://localhost:8000/api/analises?id=9',
+            //url: 'http://localhost:8000/api/analises?id=9',
+            url: getBaseUrl + '/api/analises?id=9',
             data: {},
             cache: false,
             success: function (data) {
