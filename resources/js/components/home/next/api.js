@@ -24,6 +24,7 @@ class NextOsc extends React.Component {
             cache: false,
             success: function(data){
                 //console.log(data);
+                this.callMenu(data[0].cd_area_atuacao);//carregar as oscs da primeira área de atuação.
                 this.setState({data: data, loadingList: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -36,9 +37,16 @@ class NextOsc extends React.Component {
     callMenu(index){
         //console.log("2 ", index);
         this.setState({loadingList: true});
+        let geo = JSON.parse(localStorage.getItem('geo'));
+        let lat = geo.lat.toString();
+        let lon = geo.lon.toString();
+        lat = lat.replace(".", ",");
+        lon = lon.replace(".", ",");
+        let url = null;
         $.ajax({
             method: 'GET',
-            url: getBaseUrl+'osc/listaareaatuacao/'+index,
+            //url: getBaseUrl+'osc/listaareaatuacao/'+index,
+            url: getBaseUrl+'osc/listaareaatuacao/'+index+"/geolocalizacao/"+lat+'/'+lon,
             //url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {
             },
@@ -71,47 +79,123 @@ class NextOsc extends React.Component {
         console.log("1 ", nextOscTitle);
 
 
-
+        let owNextOsc = null;
         let menu = null;
-        if(this.state.data){
-           menu = this.state.data.map(function (item, index) {
+        if(this.state.data.length > 0){
+            owNextOsc = (
+                <ul className="menu-items owlNextOsc owl-carousel owl-theme">
+                    {
+                        this.state.data.map(function (item, index) {
+                            return (
+                                <li id={'menuArea'+index} className="item">
+                                    <a onClick={() => this.callMenu(item.cd_area_atuacao)}>
+                                        <i className={"fa fa-user theme-"+index}/>
+                                        <p>{item.tx_nome_area_atuacao}</p>
+                                    </a>
+                                </li>
+                            )
+                        }.bind(this))
+                    }
+                </ul>
+            );
+            let owl = $('.owlNextOsc');
+            owl.owlCarousel({
+                margin: 10,
+                nav: false,
+                loop: false,
+                autoplay: true,
+                navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+                autoplayTimeout: 5000,
+                responsive: {
+                    0: {
+                        items: 3,
+                        margin: 20,
+                        autoHeight: true,
+                    },
+                    780: {
+                        items: 8,
+                        margin: 20,
+                        autoHeight: true,
+                    },
+                    1200: {
+                        items: 12,
+                        margin: 30,
+                        autoHeight: true,
+                    }
+                }
+            });
+           /*menu = this.state.data.map(function (item, index) {
                 return (
-                    <li id={'menuArea'+index}>
+                    <li id={'menuArea'+index} className="item">
                         <a onClick={() => this.callMenu(item.cd_area_atuacao)}>
                             <i className={"fa fa-user theme-"+index}/>
                             <p>{item.tx_nome_area_atuacao}</p>
                         </a>
                     </li>
                 )
-            }.bind(this));
+            }.bind(this));*/
         }
 
-        let nextOsc = null;
+        let nextOsc1 = null;
+        let nextOsc2 = null;
         let nextOscTitulo = null;
         let totalnextsOsc =  this.state.nextsOsc.length
 
-
+        let rotations = [
+            [0,0],
+            [30,-30],
+            [60,-60],
+            [90, -90],
+            [120, -120],
+            [150, -150],
+            [180, -180],
+            [210, -210],
+            [240, -240],
+            [270, -270],
+            [300, -300],
+            [330, -330],
+        ]
 
         if(this.state.nextsOsc){
-            nextOsc = this.state.nextsOsc.map(function (item, index) {
-                return (
-                    <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)}>
-                        <div className="circle-item">
-                            <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
+            nextOsc1 = this.state.nextsOsc.map(function (item, index) {
+                if(index <= 2){
+                    const random = Math.floor(Math.random() * rotations.length);
+                    const rotation = rotations[random];
+                    rotations.splice(random, 1);//remove do array o ratation utilizado.
+                    return (
+                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}}>
+                            <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
+                                <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
+                            </div>
                         </div>
-                    </div>
-                )
+                    )
+                }
+            }.bind(this));
+
+            nextOsc2 = this.state.nextsOsc.map(function (item, index) {
+                if(index > 2){
+                    const random = Math.floor(Math.random() * rotations.length);
+                    const rotation = rotations[random];
+                    rotations.splice(random, 1);//remove do array o ratation utilizado.
+                    return (
+                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}}>
+                            <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
+                                <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
+                            </div>
+                        </div>
+                    )
+                }
             }.bind(this));
 
             nextOscTitulo = this.state.nextsOsc.map(function (item, index) {
-                return (
-                    <li id={'txt'+index}>
-                        <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc} className="circle-item">
-                            {index+1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
-                        </a>
-                        <hr/>
-                    </li>
-                )
+                    return (
+                        <li id={'txt' + index}>
+                            <a href={"detalhar/" + item.id_osc + "/" + item.tx_nome_osc} className="circle-item">
+                                {index + 1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
+                            </a>
+                            <hr/>
+                        </li>
+                    )
             }.bind(this));
         }
 
@@ -120,9 +204,10 @@ class NextOsc extends React.Component {
         return (
             <div className="col-md-12">
                 <div className="text-center">
-                    <ul className="menu-items">
+                    {owNextOsc}
+                    {/*<ul className="menu-items owlIcones owl-carousel owl-theme">
                         {menu}
-                    </ul>
+                    </ul>*/}
                 </div>
 
                 <div className="row">
@@ -131,10 +216,10 @@ class NextOsc extends React.Component {
                             <i className="fas fa-user"/>
                         </div>
                         <div className="circle">
-                            {nextOsc}
+                            {nextOsc1}
                         </div>
                         <div className="circle2">
-                            {nextOsc}
+                            {nextOsc2}
                         </div>
                     </div>
 

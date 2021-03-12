@@ -128,6 +128,12 @@
 .circle-item {
     cursor: pointer
 }
+.circle #icon0 {
+    transform: rotate(30deg);
+}
+.circle #icon0 div {
+    transform: rotate(-30deg);
+}
 .circle #icon1 {
     transform: rotate(0deg);
 }
@@ -135,34 +141,24 @@
     transform: rotate(-0deg);
 }
 .circle #icon2 {
-    transform: rotate(-180deg);/*Rotaciona no eixo*/
+    transform: rotate(-90deg);/*Rotaciona no eixo*/
 }
 .circle #icon2 div {
-    transform: rotate(180deg);/*Coloca virado para cima*/
+    transform: rotate(90deg);/*Coloca virado para cima*/
 }
-.circle #icon3 {
-    transform: rotate(300deg);
-}
-.circle #icon3 div {
-    transform: rotate(60deg);
-}
-.circle #icon4 {
-    transform: rotate(60deg);
-}
-.circle #icon4 div {
-    transform: rotate(-60deg);
-}
-.circle #icon0 {
-    transform: rotate(30deg);
-}
-.circle #icon0 div {
-    transform: rotate(-30deg);
-}
+
+
 .circle2 #icon0 {
     transform: rotate(65deg); /*Rotaciona no eixo*/
 }
 .circle2 #icon0 div {
     transform: rotate(-65deg); /*Coloca virado para cima*/
+}
+.circle #icon1 {
+    transform: rotate(180deg);
+}
+.circle #icon1 div {
+    transform: rotate(-180deg);
 }
 
 .img-upload img{
