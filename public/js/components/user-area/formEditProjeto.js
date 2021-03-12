@@ -379,10 +379,10 @@ class FormEditProjeto extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/parceiras/' + this.state.editId,
             success: function (data) {
-                data.find(function (item) {
+                /*data.find(function(item){
                     item.checked = false;
                     item.metas = null;
-                });
+                });*/
 
                 this.setState({ loading: false, datalistParcerias: data });
             }.bind(this),
@@ -400,6 +400,7 @@ class FormEditProjeto extends React.Component {
             url: getBaseUrl2 + 'osc/projeto/objetivos/' + this.state.editId,
             success: function (data) {
                 let objetosSelected = [];
+                console.log('-----data', data);
                 data.find(function (item) {
                     objetosSelected.push(item.meta_projeto.cd_objetivo_projeto);
                 });
@@ -421,10 +422,10 @@ class FormEditProjeto extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/financiadores/' + this.state.editId,
             success: function (data) {
-                data.find(function (item) {
+                /*data.find(function(item){
                     item.checked = false;
                     item.metas = null;
-                });
+                });*/
 
                 this.setState({ loading: false, datalistFinanciadores: data });
             }.bind(this),
@@ -441,10 +442,10 @@ class FormEditProjeto extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/publicos/' + this.state.editId,
             success: function (data) {
-                data.find(function (item) {
+                /*data.find(function(item){
                     item.checked = false;
                     item.metas = null;
-                });
+                });*/
 
                 this.setState({ loading: false, datalistPublicos: data });
             }.bind(this),
@@ -461,10 +462,10 @@ class FormEditProjeto extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/projeto/localizacoes/' + this.state.editId,
             success: function (data) {
-                data.find(function (item) {
+                /*data.find(function(item){
                     item.checked = false;
                     item.metas = null;
-                });
+                });*/
 
                 this.setState({ loading: false, datalistLocalizacoes: data });
             }.bind(this),

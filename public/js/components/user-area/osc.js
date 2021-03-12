@@ -32,7 +32,9 @@ class Osc extends React.Component {
             subobjetivos: null,
             titleMeta: null,
             titleObjetivo: "",
-            buttonObjetivos: 0
+            buttonObjetivos: 0,
+
+            dataChkboxMetas: []
 
         };
 
@@ -42,6 +44,10 @@ class Osc extends React.Component {
         this.getCabecalho = this.getCabecalho.bind(this);
         this.getOsc = this.getOsc.bind(this);
         this.checkMetas = this.checkMetas.bind(this);
+        this.listChkboxMetas = this.listChkboxMetas.bind(this);
+        this.checkMetas = this.checkMetas.bind(this);
+        this.listObjetivos = this.listObjetivos.bind(this);
+        this.listChkboxMetas = this.listChkboxMetas.bind(this);
 
         this.listArea = this.listArea.bind(this);
     }
@@ -50,6 +56,8 @@ class Osc extends React.Component {
         this.getCabecalho();
         this.getOsc();
         this.listArea();
+        this.listChkboxMetas();
+        this.listObjetivos();
     }
 
     getCabecalho() {
@@ -131,8 +139,6 @@ class Osc extends React.Component {
                     tx_telefone: this.state.form.tx_telefone,
                     tx_resumo_osc: this.state.form.tx_resumo_osc
 
-                    /*ft_nome_projeto: 'Representante de OSC',*/
-
                 },
                 cache: false,
                 success: function (data) {
@@ -166,6 +172,145 @@ class Osc extends React.Component {
             }.bind(this)
         });
     }
+    listObjetivos() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/objetivos/' + 455128,
+            success: function (data) {
+                console.log('-----data', data);
+                let objetosSelected = [];
+                data.find(function (item) {
+                    objetosSelected.push(item.meta_projeto.cd_meta_osc);
+                });
+
+                const arrUnique = [...new Set(objetosSelected)];
+
+                this.setState({ loading: false, datalistObjetivos: arrUnique });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    callSubobjetivos(id) {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            success: function (data) {
+
+                let objetivos = this.state.objetivos;
+                let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
+
+                data.find(function (item) {
+                    item.display = true;
+                    item.checked = false;
+                });
+
+                objetivos.find(function (item) {
+                    if (item.metas) {
+                        item.metas.find(function (itemMeta) {
+                            itemMeta.display = false;
+                        });
+                        if (item.cd_objetivo_projeto === id) {
+                            item.metas.find(function (itemMeta) {
+                                itemMeta.display = true;
+                            });
+                        }
+                    }
+                    if (item.cd_objetivo_projeto === id && !item.metas) {
+                        item.metas = data;
+                    }
+                });
+
+                this.setState({
+                    loading: false,
+                    objetivos: objetivos,
+                    id_area: id,
+                    buttonObjetivos: id,
+                    titleMeta: true,
+                    titleObjetivo: titleObjetivo
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listChkboxMetas() {
+
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2 + 'osc/objetivos/' + 455128,
+            success: function (data) {
+                data.find(function (item) {
+                    item.checked = true;
+                    item.metas = null;
+                });
+
+                this.setState({ dataChkboxMetas: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta) {
+        //console.log('cd_meta', cd_meta);
+
+        let objetivos = this.state.objetivos;
+        objetivos.find(function (item) {
+            if (item.cd_objetivo_projeto === cd_objetivo) {
+                item.metas.find(function (itemMeta) {
+                    if (itemMeta.cd_meta_osc === cd_meta) {
+                        itemMeta.checked = true;
+                    }
+                });
+            }
+        });
+
+        if (checkedMeta === true) {
+            $.ajax({
+                method: 'POST',
+                url: getBaseUrl2 + 'osc/objetivo',
+                data: {
+                    //id_objetivo_projeto: cd_meta,
+                    cd_meta_osc: cd_meta,
+                    id_osc: 455128,
+                    ft_objetivo_osc: 'Representante de OSC'
+                },
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        } else {
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2 + 'osc/objetivo/' + id_objetivo_osc,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    this.listChkboxMetas();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
+        this.setState({ objetivos: objetivos });
+    }
 
     callSubobjetivos(id) {
         this.setState({ button: false });
@@ -184,25 +329,25 @@ class Osc extends React.Component {
                     item.checked = false;
                 });
 
-                console.log(objetivos);
+                //console.log(objetivos);
 
                 objetivos.find(function (item) {
                     if (item.metas) {
                         item.metas.find(function (itemMeta) {
                             itemMeta.display = false;
-                            console.log('display: ' + itemMeta.display);
+                            //console.log('display: '+itemMeta.display);
                         });
 
                         if (item.cd_objetivo_projeto === id) {
                             item.metas.find(function (itemMeta) {
                                 itemMeta.display = true;
-                                console.log('display2: ' + itemMeta.display);
+                                //console.log('display2: '+itemMeta.display);
                             });
                         }
                     }
                     if (item.cd_objetivo_projeto === id && !item.metas) {
                         item.metas = data;
-                        console.log('display3: ' + item.display);
+                        //console.log('display3: ' + item.display)
                     }
                 });
 
@@ -214,20 +359,20 @@ class Osc extends React.Component {
         });
     }
 
-    checkMetas(cd_objetivo, cd_meta) {
+    /*checkMetas(cd_objetivo, cd_meta){
         console.log(cd_objetivo, cd_meta);
         let objetivos = this.state.objetivos;
-        objetivos.find(function (item) {
-            if (item.cd_objetivo_projeto === cd_objetivo) {
+        objetivos.find(function(item){
+            if(item.cd_objetivo_projeto === cd_objetivo){
                 item.metas.find(function (itemMeta) {
-                    if (itemMeta.cd_meta_projeto === cd_meta) {
+                    if(itemMeta.cd_meta_osc === cd_meta){
                         itemMeta.checked = true;
                     }
                 });
             }
         });
-        this.setState({ objetivos: objetivos });
-    }
+        this.setState({objetivos: objetivos});
+    }*/
 
     render() {
 
@@ -239,26 +384,45 @@ class Osc extends React.Component {
         let metas = [];
         if (this.state.objetivos) {
             objetivos = this.state.objetivos.map(function (item) {
+                let checkedMetas = false;
+
+                //console.log('item',item);
+                //console.log('datalistObjetivos',this.state.datalistObjetivos);
+
+                if (this.state.datalistObjetivos) {
+                    if (this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1) {
+                        checkedMetas = true;
+                    }
+                }
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
-                let checkedMetas = false;
-
-                //console.log('objetivos: ', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+                //let checkedMetas = false;
 
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
+                        //console.log('itemMeta', itemMeta);
                         if (itemMeta.checked) {
                             checkedMetas = true;
                         }
-                        //console.log('cd_objetivo_projeto: '+item.cd_objetivo_projeto+' cd_meta_projeto: '+itemMeta.cd_meta_projeto+' display: '+itemMeta.display);
+
+                        let checkedMeta = false;
+                        let id_objetivo_osc = 0;
+                        this.state.dataChkboxMetas.find(itemChecked => {
+                            // console.log('itemChecked', itemChecked);
+                            if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc) {
+                                checkedMeta = true;
+                                id_objetivo_osc = itemChecked.id_objetivo_osc;
+                            }
+                        });
+
                         return React.createElement(
                             'div',
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true }),
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta, onChange: this.handleInputChange }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
