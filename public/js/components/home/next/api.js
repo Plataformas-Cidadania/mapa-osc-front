@@ -2,19 +2,37 @@ class NextOsc extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loadingAreas: false,
+            loadingOscs: false,
+            areaAtuacao: 0,
             data: [],
-            nextsOsc: []
+            nextsOsc: [],
+            searchMunicipio: "",
+            cd_municipio: 0,
+            nome_municipio: "",
+            municipios: [],
+            loadingMunicipios: false,
+            geo: null
         };
 
         this.load = this.load.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.setAreaAtuacao = this.setAreaAtuacao.bind(this);
+        this.loadMunicipios = this.loadMunicipios.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
     }
 
     componentDidMount() {
         this.load();
+        this.setState({
+            geo: JSON.parse(localStorage.getItem('geo')),
+            cd_municipio: localStorage.getItem('cd_municipio'),
+            nome_municipio: localStorage.getItem('nome_municipio')
+        });
     }
 
     load() {
-        this.setState({ loadingList: true });
+        this.setState({ loadingAreas: true });
         $.ajax({
             method: 'GET',
             url: getBaseUrl + 'menu/osc/area_atuacao',
@@ -23,39 +41,50 @@ class NextOsc extends React.Component {
             cache: false,
             success: function (data) {
                 //console.log(data);
-                this.callMenu(data[0].cd_area_atuacao); //carregar as oscs da primeira área de atuação.
-                this.setState({ data: data, loadingList: false });
+                this.setState({ data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false }, function () {
+                    this.callMenu(); //carregar as oscs da primeira área de atuação.
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loading: false });
+                this.setState({ loadingAreas: false });
             }.bind(this)
         });
     }
 
-    callMenu(index) {
+    callMenu() {
         //console.log("2 ", index);
-        this.setState({ loadingList: true });
-        let geo = JSON.parse(localStorage.getItem('geo'));
-        let lat = geo.lat.toString();
-        let lon = geo.lon.toString();
-        lat = lat.replace(".", ",");
-        lon = lon.replace(".", ",");
-        let url = null;
+        this.setState({ loadingOscs: true });
+        //let cd_municipio = JSON.parse(localStorage.getItem('cd_municipio'));
+        //let geo = JSON.parse(localStorage.getItem('geo'));
+        let cd_municipio = this.state.cd_municipio;
+        let geo = this.state.geo;
+        let url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao;
+        if (cd_municipio) {
+            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + '/municipio/' + cd_municipio;
+        }
+        if (geo) {
+            let lat = geo.lat.toString();
+            let lon = geo.lon.toString();
+            lat = lat.replace(".", ",");
+            lon = lon.replace(".", ",");
+            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
+        }
+        console.log(url);
         $.ajax({
             method: 'GET',
             //url: getBaseUrl+'osc/listaareaatuacao/'+index,
-            url: getBaseUrl + 'osc/listaareaatuacao/' + index + "/geolocalizacao/" + lat + '/' + lon,
+            url: url,
             //url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {},
             cache: false,
             success: function (data) {
                 //console.log(data);
-                this.setState({ nextsOsc: data, loadingList: false });
+                this.setState({ nextsOsc: data, loadingOscs: false });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loading: false });
+                //this.setState({loadingList: false});
             }.bind(this)
         });
 
@@ -67,27 +96,77 @@ class NextOsc extends React.Component {
         $("#divMenuChart"+index).attr('class', "menu-left-active");*/
     }
 
+    loadMunicipios() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/' + this.state.searchMunicipio + '/10/0',
+            data: {},
+            cache: false,
+            success: function (data) {
+                //console.log(data);
+                this.setState({ municipios: data, loadingMunicipios: false });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loading: false });
+            }.bind(this)
+        });
+    }
+
+    setAreaAtuacao(areaAtuacao) {
+        this.setState({ areaAtuacao: areaAtuacao }, function () {
+            this.callMenu();
+        });
+    }
+
+    handleSearchMunicipio(e) {
+        this.setState({ searchMunicipio: e.target.value }, function () {
+            this.loadMunicipios();
+        });
+    }
+    setMunicipio(edmu_cd_municipio, edmu_nm_municipio, eduf_sg_uf) {
+        console.log(edmu_cd_municipio);
+        localStorage.setItem('cd_municipio', edmu_cd_municipio);
+        localStorage.setItem('nome_municipio', edmu_nm_municipio + ' - ' + eduf_sg_uf);
+        $("#modalLocalidade").modal('hide');
+        this.setState({ searchMunicipio: "", cd_municipio: edmu_cd_municipio, nome_municipio: edmu_nm_municipio + ' - ' + eduf_sg_uf }, function () {
+            this.callMenu();
+        });
+    }
+
     render() {
 
         //console.log("1 ", this.state.nextsOsc.length);
         console.log("1 ", nextOscTitle);
 
+        let geoCity = localStorage.getItem('city') + ' - ' + localStorage.getItem('state');
+
+        let municipios = this.state.municipios.map(item => {
+            return React.createElement(
+                "li",
+                { style: { cursor: 'pointer' }, onClick: () => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf) },
+                item.edmu_nm_municipio,
+                " - ",
+                item.eduf_sg_uf
+            );
+        });
+
         let owNextOsc = null;
         let menu = null;
         if (this.state.data.length > 0) {
             owNextOsc = React.createElement(
-                'ul',
-                { className: 'menu-items owlNextOsc owl-carousel owl-theme' },
+                "ul",
+                { className: "menu-items owlNextOsc owl-carousel owl-theme" },
                 this.state.data.map(function (item, index) {
                     return React.createElement(
-                        'li',
-                        { id: 'menuArea' + index, className: 'item' },
+                        "li",
+                        { id: 'menuArea' + index, className: "item" },
                         React.createElement(
-                            'a',
-                            { onClick: () => this.callMenu(item.cd_area_atuacao) },
-                            React.createElement('i', { className: "fa fa-user theme-" + index }),
+                            "a",
+                            { onClick: () => this.setAreaAtuacao(item.cd_area_atuacao) },
+                            React.createElement("i", { className: "fa fa-user theme-" + index }),
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
                                 item.tx_nome_area_atuacao
                             )
@@ -147,12 +226,12 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
-                        'div',
-                        { id: 'icon' + index, className: 'rotate', onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
+                        "div",
+                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
                         React.createElement(
-                            'div',
-                            { className: 'circle-item', style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement('img', { src: 'img/sem-imagem.png', alt: '{item.id_osc}', width: '65' })
+                            "div",
+                            { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
+                            React.createElement("img", { src: "img/sem-imagem.png", alt: "{item.id_osc}", width: "65" })
                         )
                     );
                 }
@@ -164,12 +243,12 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
-                        'div',
-                        { id: 'icon' + index, className: 'rotate', onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
+                        "div",
+                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
                         React.createElement(
-                            'div',
-                            { className: 'circle-item', style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement('img', { src: 'img/sem-imagem.png', alt: '{item.id_osc}', width: '65' })
+                            "div",
+                            { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
+                            React.createElement("img", { src: "img/sem-imagem.png", alt: "{item.id_osc}", width: "65" })
                         )
                     );
                 }
@@ -177,81 +256,169 @@ class NextOsc extends React.Component {
 
             nextOscTitulo = this.state.nextsOsc.map(function (item, index) {
                 return React.createElement(
-                    'li',
+                    "li",
                     { id: 'txt' + index },
                     React.createElement(
-                        'a',
-                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: 'circle-item' },
+                        "a",
+                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: "circle-item" },
                         index + 1,
-                        ' ',
+                        " ",
                         item.tx_nome_osc,
-                        ' ',
-                        React.createElement('i', { className: 'fas fa-file-import' })
+                        " ",
+                        React.createElement("i", { className: "fas fa-file-import" })
                     ),
-                    React.createElement('hr', null)
+                    React.createElement("hr", null)
                 );
             }.bind(this));
         }
 
         return React.createElement(
-            'div',
-            { className: 'col-md-12' },
+            "div",
+            { className: "col-md-12" },
             React.createElement(
-                'div',
-                { className: 'text-center' },
+                "div",
+                { className: "modal fade", id: "modalLocalidade", tabIndex: "-1", role: "dialog" },
+                React.createElement(
+                    "div",
+                    { className: "modal-dialog", role: "document" },
+                    React.createElement(
+                        "div",
+                        { className: "modal-content" },
+                        React.createElement(
+                            "div",
+                            { className: "modal-header" },
+                            React.createElement(
+                                "h5",
+                                { className: "modal-title" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    "Escolha seu Munic\xEDpio"
+                                )
+                            ),
+                            React.createElement(
+                                "button",
+                                { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                                React.createElement(
+                                    "span",
+                                    { "aria-hidden": "true" },
+                                    "\xD7"
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "modal-body" },
+                            React.createElement(
+                                "label",
+                                { htmlFor: "municipioHome" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    "Munic\xEDpio"
+                                )
+                            ),
+                            React.createElement("input", {
+                                type: "text",
+                                className: "form-control",
+                                name: "searchMunicipio",
+                                onChange: this.handleSearchMunicipio, placeholder: "Inserir o nome do seu Munic\xEDpio",
+                                value: this.state.searchMunicipio
+                            }),
+                            React.createElement(
+                                "ul",
+                                { className: "box-search-itens", style: { display: this.state.searchMunicipio ? '' : 'none' } },
+                                municipios
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "modal-footer" },
+                            React.createElement(
+                                "button",
+                                { type: "button", className: "btn btn-primary" },
+                                "Confirmar"
+                            ),
+                            React.createElement(
+                                "button",
+                                { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
+                                "Cancelar"
+                            )
+                        )
+                    )
+                )
+            ),
+            React.createElement(
+                "div",
+                { className: "text-right", style: { marginTop: '-40px' } },
+                this.state.geo ? geoCity : React.createElement(
+                    "a",
+                    { href: "#", "data-toggle": "modal", "data-target": "#modalLocalidade" },
+                    this.state.cd_municipio ? this.state.nome_municipio : "Escolha a localidade"
+                )
+            ),
+            React.createElement("br", null),
+            React.createElement(
+                "div",
+                { className: "text-center" },
                 owNextOsc
             ),
             React.createElement(
-                'div',
-                { className: 'row' },
+                "div",
+                { className: "text-center", style: { display: this.state.loadingOscs ? '' : 'none', minHeight: '400px' } },
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("i", { className: "fa fa-spin fa-spinner fa-5x" })
+            ),
+            React.createElement(
+                "div",
+                { className: "row" },
                 React.createElement(
-                    'div',
-                    { className: 'col-md-7 bg-map', style: { backgroundImage: "url(" + nextOscImg + ")" } },
+                    "div",
+                    { className: "col-md-7 bg-map", style: { backgroundImage: "url(" + nextOscImg + ")", display: this.state.loadingOscs ? 'none' : '' } },
                     React.createElement(
-                        'div',
-                        { className: 'icon-next' },
-                        React.createElement('i', { className: 'fas fa-user' })
+                        "div",
+                        { className: "icon-next" },
+                        React.createElement("i", { className: "fas fa-user" })
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'circle' },
+                        "div",
+                        { className: "circle" },
                         nextOsc1
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'circle2' },
+                        "div",
+                        { className: "circle2" },
                         nextOsc2
                     )
                 ),
                 React.createElement(
-                    'div',
-                    { className: 'col-md-5' },
-                    React.createElement('br', null),
-                    React.createElement('br', null),
-                    React.createElement('br', null),
+                    "div",
+                    { className: "col-md-5", style: { display: this.state.loadingOscs ? 'none' : '' } },
+                    React.createElement("br", null),
+                    React.createElement("br", null),
+                    React.createElement("br", null),
                     React.createElement(
-                        'h2',
+                        "h2",
                         null,
                         totalnextsOsc,
-                        ' ',
+                        " ",
                         nextOscTitle
                     ),
                     React.createElement(
-                        'ul',
-                        { className: 'menu-items-basic' },
+                        "ul",
+                        { className: "menu-items-basic" },
                         nextOscTitulo
                     ),
                     React.createElement(
-                        'p',
-                        { id: 'txtNext' },
-                        ' ',
+                        "p",
+                        { id: "txtNext" },
+                        " ",
                         nextOscDescription
                     )
                 )
-            ),
-            React.createElement('br', null),
-            React.createElement('br', null),
-            React.createElement('br', null)
+            )
         );
     }
 

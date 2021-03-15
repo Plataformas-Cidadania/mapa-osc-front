@@ -56,7 +56,10 @@
                 </div>
             </div>
             <br>
+            <div id="oscsRecentes"></div>
+            <?php /* ?>
             <div class="row">
+
 
                 @foreach($osc_recentes as $osc_recente)
                 <div class="col-md-4">
@@ -80,6 +83,7 @@
                 </div>
 
             </div>
+            <?php */ ?>
         </div>
     </div>
 

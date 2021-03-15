@@ -3,7 +3,23 @@
 <script src="js/app.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/rotas.js"></script>
+<script>
+    function titleize(text) {
+        var words = text.toLowerCase().split(" ");
+        for (var a = 0; a < words.length; a++) {
+            if(words[a] != "de" && words[a] != "da" && words[a] != "do" && words[a] != "dos" && words[a] != "das"){
+                var w = words[a];
+                words[a] = w[0].toUpperCase() + w.slice(1);
+            }
+        }
+        return words.join(" ");
+    }
 
+    function clean(text){
+        let words = text.toLowerCase().split(" ");
+        return words.join("-");
+    }
+</script>
 
 
 <script>
@@ -25,7 +41,7 @@
 
 <script>
     function get_location() {
-        console.log('get_location');
+        //console.log('get_location');
         if(navigator.geolocation){
 
             function saveLocation (position) {
@@ -36,12 +52,12 @@
                 $.ajax({
                     url: "https://nominatim.openstreetmap.org/reverse?format=json&lat="+lat+"&lon="+lon,
                     success: function(data){
-                        //console.log(data)
+                        console.log(data)
                         if(data.address){
-                            localStorage.setItem('city', JSON.stringify({city: data.address.city}));
-                            localStorage.setItem('state', JSON.stringify({state: data.address.state}));
-                            localStorage.setItem('region', JSON.stringify({region: data.address.region}));
-                            localStorage.setItem('country', JSON.stringify({country: data.address.country}));
+                            localStorage.setItem('city', data.address.city);
+                            localStorage.setItem('state', data.address.state);
+                            localStorage.setItem('region', data.address.region);
+                            localStorage.setItem('country', data.address.country);
                         }
                     },
                     error: function(xhr, status, err){
@@ -85,6 +101,7 @@
 <script src="js/components/charts/page/home.js"></script>
 
 <script src="js/components/home/next/api.js"></script>
+<script src="js/components/home/recentes/api.js"></script>
 
 
 @endif
