@@ -25,7 +25,7 @@
 
 <script>
     function get_location() {
-        console.log('get_location');
+        //console.log('get_location');
         if(navigator.geolocation){
 
             function saveLocation (position) {
@@ -36,12 +36,12 @@
                 $.ajax({
                     url: "https://nominatim.openstreetmap.org/reverse?format=json&lat="+lat+"&lon="+lon,
                     success: function(data){
-                        //console.log(data)
+                        console.log(data)
                         if(data.address){
-                            localStorage.setItem('city', JSON.stringify({city: data.address.city}));
-                            localStorage.setItem('state', JSON.stringify({state: data.address.state}));
-                            localStorage.setItem('region', JSON.stringify({region: data.address.region}));
-                            localStorage.setItem('country', JSON.stringify({country: data.address.country}));
+                            localStorage.setItem('city', data.address.city);
+                            localStorage.setItem('state', data.address.state);
+                            localStorage.setItem('region', data.address.region);
+                            localStorage.setItem('country', data.address.country);
                         }
                     },
                     error: function(xhr, status, err){

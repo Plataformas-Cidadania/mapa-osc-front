@@ -2,19 +2,38 @@ class NextOsc extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loadingAreas: false,
+            loadingOscs: false,
+            areaAtuacao: 0,
             data: [],
             nextsOsc: [],
+            searchMunicipio: "",
+            cd_municipio: 0,
+            nome_municipio: "",
+            municipios: [],
+            loadingMunicipios: false,
+            geo: null,
         };
 
         this.load = this.load.bind(this);
+        this.handleSearchMunicipio = this.handleSearchMunicipio.bind(this);
+        this.setAreaAtuacao = this.setAreaAtuacao.bind(this);
+        this.loadMunicipios = this.loadMunicipios.bind(this);
+        this.setMunicipio = this.setMunicipio.bind(this);
     }
+
 
     componentDidMount(){
         this.load();
+        this.setState({
+            geo: JSON.parse(localStorage.getItem('geo')),
+            cd_municipio: localStorage.getItem('cd_municipio'),
+            nome_municipio: localStorage.getItem('nome_municipio'),
+        });
     }
 
     load(){
-        this.setState({loadingList: true});
+        this.setState({loadingAreas: true});
         $.ajax({
             method: 'GET',
             url: getBaseUrl+'menu/osc/area_atuacao',
@@ -24,40 +43,51 @@ class NextOsc extends React.Component {
             cache: false,
             success: function(data){
                 //console.log(data);
-                this.callMenu(data[0].cd_area_atuacao);//carregar as oscs da primeira área de atuação.
-                this.setState({data: data, loadingList: false});
+                this.setState({data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false}, function(){
+                    this.callMenu();//carregar as oscs da primeira área de atuação.
+                });
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({loading: false});
+                this.setState({loadingAreas: false});
             }.bind(this)
         });
     }
 
-    callMenu(index){
+    callMenu(){
         //console.log("2 ", index);
-        this.setState({loadingList: true});
-        let geo = JSON.parse(localStorage.getItem('geo'));
-        let lat = geo.lat.toString();
-        let lon = geo.lon.toString();
-        lat = lat.replace(".", ",");
-        lon = lon.replace(".", ",");
-        let url = null;
+        this.setState({loadingOscs: true});
+        //let cd_municipio = JSON.parse(localStorage.getItem('cd_municipio'));
+        //let geo = JSON.parse(localStorage.getItem('geo'));
+        let cd_municipio = this.state.cd_municipio;
+        let geo = this.state.geo;
+        let url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao;
+        if(cd_municipio){
+            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + '/municipio/' + cd_municipio;
+        }
+        if(geo){
+            let lat = geo.lat.toString();
+            let lon = geo.lon.toString();
+            lat = lat.replace(".", ",");
+            lon = lon.replace(".", ",");
+            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
+        }
+        console.log(url);
         $.ajax({
             method: 'GET',
             //url: getBaseUrl+'osc/listaareaatuacao/'+index,
-            url: getBaseUrl+'osc/listaareaatuacao/'+index+"/geolocalizacao/"+lat+'/'+lon,
+            url: url,
             //url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {
             },
             cache: false,
             success: function(data){
                 //console.log(data);
-                this.setState({nextsOsc: data, loadingList: false});
+                this.setState({nextsOsc: data, loadingOscs: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({loading: false});
+                //this.setState({loadingList: false});
             }.bind(this)
         });
 
@@ -72,12 +102,59 @@ class NextOsc extends React.Component {
         $("#divMenuChart"+index).attr('class', "menu-left-active");*/
     }
 
+    loadMunicipios(){
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/geo/municipio/'+this.state.searchMunicipio+'/10/0',
+            data: {
+            },
+            cache: false,
+            success: function(data){
+                //console.log(data);
+                this.setState({municipios: data, loadingMunicipios: false});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loading: false});
+            }.bind(this)
+        });
+    }
+
+    setAreaAtuacao(areaAtuacao){
+        this.setState({areaAtuacao: areaAtuacao}, function (){
+            this.callMenu();
+        });
+    }
+
+    handleSearchMunicipio(e){
+        this.setState({searchMunicipio: e.target.value}, function(){
+            this.loadMunicipios();
+        });
+    }
+    setMunicipio(edmu_cd_municipio, edmu_nm_municipio, eduf_sg_uf){
+        console.log(edmu_cd_municipio);
+        localStorage.setItem('cd_municipio', edmu_cd_municipio);
+        localStorage.setItem('nome_municipio', edmu_nm_municipio+' - '+eduf_sg_uf);
+        $("#modalLocalidade").modal('hide');
+        this.setState({searchMunicipio: "", cd_municipio: edmu_cd_municipio, nome_municipio: edmu_nm_municipio+' - '+eduf_sg_uf}, function(){
+            this.callMenu();
+        });
+    }
 
     render(){
 
         //console.log("1 ", this.state.nextsOsc.length);
         console.log("1 ", nextOscTitle);
 
+        let geoCity = localStorage.getItem('city')+' - '+localStorage.getItem('state');
+
+        let municipios = this.state.municipios.map((item) => {
+            return (
+                <li style={{cursor: 'pointer'}} onClick={() => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf)}>
+                    {item.edmu_nm_municipio} - {item.eduf_sg_uf}
+                </li>
+            );
+        });
 
         let owNextOsc = null;
         let menu = null;
@@ -88,7 +165,7 @@ class NextOsc extends React.Component {
                         this.state.data.map(function (item, index) {
                             return (
                                 <li id={'menuArea'+index} className="item">
-                                    <a onClick={() => this.callMenu(item.cd_area_atuacao)}>
+                                    <a onClick={() => this.setAreaAtuacao(item.cd_area_atuacao)}>
                                         <i className={"fa fa-user theme-"+index}/>
                                         <p>{item.tx_nome_area_atuacao}</p>
                                     </a>
@@ -203,6 +280,47 @@ class NextOsc extends React.Component {
 
         return (
             <div className="col-md-12">
+                <div className="modal fade" id="modalLocalidade" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title"><strong>Escolha seu Município</strong></h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <label htmlFor="municipioHome"><strong>Município</strong></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="searchMunicipio"
+                                    onChange={this.handleSearchMunicipio} placeholder="Inserir o nome do seu Município"
+                                    value={this.state.searchMunicipio}
+                                />
+                                <ul className="box-search-itens" style={{display: this.state.searchMunicipio ? '' : 'none'}}>
+                                    {municipios}
+                                </ul>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-primary">Confirmar</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="text-right" style={{marginTop: '-40px'}} >
+                    {
+                        (this.state.geo ? geoCity :
+                            (
+                                <a href="#" data-toggle="modal" data-target="#modalLocalidade">
+                                    {this.state.cd_municipio ? this.state.nome_municipio : "Escolha a localidade"}
+                                </a>
+                            )
+                        )
+                    }
+                </div>
+                <br/>
                 <div className="text-center">
                     {owNextOsc}
                     {/*<ul className="menu-items owlIcones owl-carousel owl-theme">
@@ -210,8 +328,12 @@ class NextOsc extends React.Component {
                     </ul>*/}
                 </div>
 
+                <div className="text-center" style={{display: this.state.loadingOscs ? '' : 'none', minHeight: '400px'}}>
+                    <br/><br/><br/>
+                    <i className="fa fa-spin fa-spinner fa-5x"/>
+                </div>
                 <div className="row">
-                    <div className="col-md-7 bg-map" style={{backgroundImage: "url(" + nextOscImg + ")"}}>
+                    <div className="col-md-7 bg-map" style={{backgroundImage: "url(" + nextOscImg + ")", display: this.state.loadingOscs ? 'none' : ''}}>
                         <div className="icon-next">
                             <i className="fas fa-user"/>
                         </div>
@@ -225,7 +347,7 @@ class NextOsc extends React.Component {
 
 
 
-                    <div className="col-md-5">
+                    <div className="col-md-5" style={{display: this.state.loadingOscs ? 'none' : ''}}>
                         <br/><br/><br/>
                         <h2>{totalnextsOsc} {nextOscTitle}</h2>
                         <ul className="menu-items-basic">
@@ -236,7 +358,6 @@ class NextOsc extends React.Component {
                     </div>
                 </div>
 
-                <br/><br/><br/>
             </div>
 
         );
