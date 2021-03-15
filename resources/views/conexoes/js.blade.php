@@ -3,7 +3,23 @@
 <script src="js/app.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/rotas.js"></script>
+<script>
+    function titleize(text) {
+        var words = text.toLowerCase().split(" ");
+        for (var a = 0; a < words.length; a++) {
+            if(words[a] != "de" && words[a] != "da" && words[a] != "do" && words[a] != "dos" && words[a] != "das"){
+                var w = words[a];
+                words[a] = w[0].toUpperCase() + w.slice(1);
+            }
+        }
+        return words.join(" ");
+    }
 
+    function clean(text){
+        let words = text.toLowerCase().split(" ");
+        return words.join("-");
+    }
+</script>
 
 
 <script>
@@ -85,6 +101,7 @@
 <script src="js/components/charts/page/home.js"></script>
 
 <script src="js/components/home/next/api.js"></script>
+<script src="js/components/home/recentes/api.js"></script>
 
 
 @endif
