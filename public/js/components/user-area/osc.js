@@ -103,7 +103,6 @@ class Osc extends React.Component {
     }
 
     validate() {
-        //console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -179,10 +178,10 @@ class Osc extends React.Component {
             cache: false,
             url: getBaseUrl2 + 'osc/objetivos/' + 455128,
             success: function (data) {
-                console.log('-----data', data);
+                //console.log('-----data', data);
                 let objetosSelected = [];
                 data.find(function (item) {
-                    objetosSelected.push(item.meta_projeto.cd_meta_osc);
+                    objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
                 });
 
                 const arrUnique = [...new Set(objetosSelected)];
@@ -263,13 +262,11 @@ class Osc extends React.Component {
     }
 
     checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta) {
-        //console.log('cd_meta', cd_meta);
-
         let objetivos = this.state.objetivos;
         objetivos.find(function (item) {
             if (item.cd_objetivo_projeto === cd_objetivo) {
                 item.metas.find(function (itemMeta) {
-                    if (itemMeta.cd_meta_osc === cd_meta) {
+                    if (itemMeta.cd_meta_projeto === cd_meta) {
                         itemMeta.checked = true;
                     }
                 });
@@ -281,7 +278,6 @@ class Osc extends React.Component {
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/objetivo',
                 data: {
-                    //id_objetivo_projeto: cd_meta,
                     cd_meta_osc: cd_meta,
                     id_osc: 455128,
                     ft_objetivo_osc: 'Representante de OSC'
@@ -328,26 +324,20 @@ class Osc extends React.Component {
                     item.display = true;
                     item.checked = false;
                 });
-
-                //console.log(objetivos);
-
                 objetivos.find(function (item) {
                     if (item.metas) {
                         item.metas.find(function (itemMeta) {
                             itemMeta.display = false;
-                            //console.log('display: '+itemMeta.display);
                         });
 
                         if (item.cd_objetivo_projeto === id) {
                             item.metas.find(function (itemMeta) {
                                 itemMeta.display = true;
-                                //console.log('display2: '+itemMeta.display);
                             });
                         }
                     }
                     if (item.cd_objetivo_projeto === id && !item.metas) {
                         item.metas = data;
-                        //console.log('display3: ' + item.display)
                     }
                 });
 
@@ -386,8 +376,8 @@ class Osc extends React.Component {
             objetivos = this.state.objetivos.map(function (item) {
                 let checkedMetas = false;
 
-                //console.log('item',item);
-                //console.log('datalistObjetivos',this.state.datalistObjetivos);
+                //console.log('item',item.cd_objetivo_projeto);
+                //console.log('datalistObjetivos', this.state.datalistObjetivos);
 
                 if (this.state.datalistObjetivos) {
                     if (this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1) {
@@ -397,11 +387,8 @@ class Osc extends React.Component {
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
-                //let checkedMetas = false;
-
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
-                        //console.log('itemMeta', itemMeta);
                         if (itemMeta.checked) {
                             checkedMetas = true;
                         }
@@ -409,12 +396,14 @@ class Osc extends React.Component {
                         let checkedMeta = false;
                         let id_objetivo_osc = 0;
                         this.state.dataChkboxMetas.find(itemChecked => {
-                            // console.log('itemChecked', itemChecked);
+                            // console.log('ids', itemMeta.cd_meta_projeto,  itemChecked.cd_meta_osc);
                             if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc) {
                                 checkedMeta = true;
                                 id_objetivo_osc = itemChecked.id_objetivo_osc;
                             }
                         });
+
+                        //console.log('checkedMeta', checkedMeta);
 
                         return React.createElement(
                             'div',
