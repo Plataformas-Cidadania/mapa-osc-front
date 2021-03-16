@@ -24,6 +24,9 @@ class UserAreaController extends Controller
     public function osc($id){
         return view('user-area', ['pgUserArea' => 'osc', 'id' => $id]);
     }
+    public function objetivos(){
+        return view('user-area', ['pgUserArea' => 'objetivos']);
+    }
     public function data(){
         return view('user-area', ['pgUserArea' => 'data']);
     }

@@ -805,6 +805,42 @@ class Osc extends React.Component {
                                 )
                             ),
                             React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { style: { marginTop: '-10px' } },
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.loading ? 'block' : 'none' } },
+                                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                            ' Processando ',
+                                            React.createElement('br', null),
+                                            ' ',
+                                            React.createElement('br', null)
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                            React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                                            this.state.msg
+                                        ),
+                                        React.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn btn-success', onClick: this.updateOsc },
+                                            React.createElement('i', {
+                                                className: 'fas fa-cloud-download-alt' }),
+                                            ' Salvar descri\xE7\xE3o'
+                                        ),
+                                        React.createElement('br', null)
+                                    )
+                                )
+                            ),
+                            React.createElement('br', null),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
@@ -846,41 +882,6 @@ class Osc extends React.Component {
                                             React.createElement('br', null),
                                             metas
                                         )
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement(
-                                        'div',
-                                        { style: { marginTop: '-10px' } },
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.loading ? 'block' : 'none' } },
-                                            React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                            ' Processando ',
-                                            React.createElement('br', null),
-                                            ' ',
-                                            React.createElement('br', null)
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
-                                            React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
-                                            this.state.msg
-                                        ),
-                                        React.createElement(
-                                            'button',
-                                            { type: 'button', className: 'btn btn-success', onClick: this.updateOsc },
-                                            React.createElement('i', {
-                                                className: 'fas fa-cloud-download-alt' }),
-                                            ' Salvar descri\xE7\xE3o'
-                                        ),
-                                        React.createElement('br', null)
                                     )
                                 )
                             )

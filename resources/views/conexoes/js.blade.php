@@ -278,6 +278,7 @@
     $rota=="dados-arquivos" ||
     $rota=="oscs-user" ||
     $rota=="osc-user/{id}" ||
+    $rota=="objetivos-user" ||
     $rota=="dados-arquivo/{id}" ||
     $rota=="dados-user" ||
     $rota=="videos-privados" ||
@@ -365,6 +366,9 @@
         id = {{$id}};
     </script>
     <script src="/js/components/user-area/osc.js"></script>
+@endif
+@if($rota=="objetivos-user")
+    <script src="/js/components/user-area/objetivos.js"></script>
 @endif
 @if($rota=="register")
     <script src="/js/components/join/register.js"></script>

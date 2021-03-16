@@ -12731,6 +12731,24 @@ label, input, .btn-number {
   cursor: pointer;
 }
 
+.custom-checkbox-items:hover {
+  background-color: #3A559B !important;
+  color: #FFFFFF;
+}
+
+.custom-checkbox-items p {
+  width: 100%;
+  text-align: center;
+  min-height: 80px;
+  margin-top: 10px;
+  min-width: 125px;
+}
+
+.custom-checkbox-items svg {
+  text-align: center;
+  margin-top: 15px;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;

@@ -66,7 +66,7 @@ class Oscs extends React.Component {
                             'a',
                             { href: "/detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
-                            ' Detalhes'
+                            ' Visualizar'
                         )
                     ),
                     '\xA0',

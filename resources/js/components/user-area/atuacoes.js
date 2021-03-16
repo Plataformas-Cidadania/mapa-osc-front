@@ -14,21 +14,24 @@ class Atuacoes extends React.Component{
             titleSub: null,
             imputOutros: false,
             icons:{
-                1: 'fas fa-hotel fa-2x',
-                2: 'fas fa-briefcase-medical fa-2x',
-                3: 'fas fa-theater-masks fa-2x',
-                4: 'fas fa-graduation-cap fa-2x',
-                5: 'fas fa-hands-helping fa-2x',
-                6: 'fas fa-church fa-2x',
-                7: 'fas fa-users fa-2x',
-                8: 'fas fa-seedling fa-2x',
-                9: 'fas fa-balance-scale fa-2x',
-                10: '',
-                11: '',
+                1: 'fas fa-hotel ',
+                2: 'fas fa-briefcase-medical ',
+                3: 'fas fa-theater-masks ',
+                4: 'fas fa-graduation-cap ',
+                5: 'fas fa-hands-helping ',
+                6: 'fas fa-church ',
+                7: 'fas fa-users ',
+                8: 'fas fa-seedling ',
+                9: 'fas fa-balance-scale ',
+                10: 'fas fa-text-width ',
+                11: 'fas fa-ellipsis-h ',
                 12: '',
             },
             dataAtuacaoBd: [],
             dataAtuacaoSelected: [],
+            form: {
+                tx_nome_outra: '',
+            },
 
         };
 
@@ -39,6 +42,8 @@ class Atuacoes extends React.Component{
         this.checkedOutros = this.checkedOutros.bind(this);
         this.callSubareaAtuacao = this.callSubareaAtuacao.bind(this);
         this.loadSubareas = this.loadSubareas.bind(this);
+        this.saveOutrosSub = this.saveOutrosSub.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
 
 
     }
@@ -47,6 +52,17 @@ class Atuacoes extends React.Component{
         this.listArea();
         this.listAreaSelected();
 
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        let form = this.state.form;
+        form[name] = value;
+
+        this.setState({form: form});
     }
 
     listArea(){
@@ -119,19 +135,11 @@ class Atuacoes extends React.Component{
                 });
 
                 this.state.areaAtuacao.find(function(item){
-
-                    /*if(item.cd_area_atuacao === id){
-                        item.checked = !item.checked;
-                        if(id===10){
-                            imputOutros = !imputOutros;
-                        }
-                    }*/
-
                     item.subareas = data.filter(function(subitem){
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-                //this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, titleSub:true, imputOutros:imputOutros})
+
                 this.setState({loading: false, areaAtuacao: areaAtuacao, titleSub:true, imputOutros:imputOutros})
             }.bind(this),
             error: function (xhr, status, err) {
@@ -140,13 +148,9 @@ class Atuacoes extends React.Component{
         });
     }
 
-    //callSubareaAtuacao(id){
     callSubareaAtuacao(e){
 
         let id = e.target.id.split("_")[1];
-        console.log("ID >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", id);
-        console.log(e.target.value);
-
         let areas = this.state.areaAtuacao;
 
         areas.find((item) => {
@@ -156,18 +160,13 @@ class Atuacoes extends React.Component{
             }
         });
 
-        //console.log("Areas", areas);
         if(areas[0].subareas){
             let checkedAtuacao = false;
             areas.find(function(item){
                 if(item.cd_area_atuacao === id){
-                    //item.checkedAtuacaoArea = !item.checkedAtuacaoArea;
-
                     item.checked = !item.checked;
                     checkedAtuacao = !item.checked;
                 }
-
-
             });
 
             this.setState({areaAtuacao: areas});
@@ -175,13 +174,11 @@ class Atuacoes extends React.Component{
         }
 
         this.setState({button:false});
-        //this.loadSubareas();
 
     }
 
 
     checkSubArea(area_id, subarea_id, checkedAtuacao, idSelectedSub){
-        console.log('-------', area_id, subarea_id, checkedAtuacao, idSelectedSub);
         let areas = this.state.areaAtuacao;
         areas.find(function(item){
             if(item.cd_area_atuacao === area_id){
@@ -258,47 +255,31 @@ class Atuacoes extends React.Component{
 
         return checked;
     }
-    /*checkedOutros(area_id){
-        let checked = false;
-        this.state.areaAtuacao.find(function(item){
-            if(item.cd_area_atuacao === area_id){
-                if(item.subareas){
-                    item.subareas.find(function(subitem){
-                        console.log(area_id, subitem.tx_nome_subarea_atuacao, subitem.checked);
-                        if(subitem.tx_nome_subarea_atuacao === "Outros"){
-                            checked = subitem.checked;
-                        }
-                    });
-                }
-            }
+    saveOutrosSub(id){
+        this.setState({saveLoading: id});
+        $.ajax({
+            method: 'PUT',
+            url: getBaseUrl2+'osc/area_atuacao/'+id,
+            data: {
+                tx_nome_outra: this.state.form.tx_nome_outra,
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({saveLoading: false});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
         });
-
-
-
-        return checked;
-    }*/
+    }
 
 
     render(){
-
-
-
 
         let areaAtuacao = null;
         let subareaAtuacao = [];
         if(this.state.areaAtuacao){
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
-
-                //console.log('--', this.state.dataAtuacaoSelected);
-                /*item.checkedAtuacaoArea = false;
-
-                if(this.state.dataAtuacaoSelected.indexOf(item.cd_area_atuacao)>=0){
-                    item.checkedAtuacaoArea = true;
-                    /!*this.state.dataAtuacaoSelected.find(function(itemArea){
-                        //console.log('--', item.cd_area_atuacao);
-                        item.checkedAtuacaoArea = true;
-                    });*!/
-                }*/
 
                 let subarea = null;
 
@@ -308,19 +289,14 @@ class Atuacoes extends React.Component{
                         subitem.checkedSubarea = false;
                         subitem.idSelectedSub = 0;
 
-                        //console.log('subitem',item.cd_area_atuacao ,subitem);
-
-
                         this.state.dataAtuacaoBd.find(function(itemSelectSub){
                             if(itemSelectSub.cd_subarea_atuacao===subitem.cd_subarea_atuacao){
                                 subitem.idSelectedSub = itemSelectSub.id_area_atuacao;
                                 subitem.checkedSubarea = true;
-                                //item.checkedAtuacaoArea = true;
+                                item.tx_nome_outra = itemSelectSub.tx_nome_outra;
+                                item.idSelectedSub = itemSelectSub.id_area_atuacao;
                             }
                         });
-
-                        //console.log('--->item', item);
-
 
                         return(
                             <div key={"subarea_"+subitem.cd_subarea_atuacao}>
@@ -337,23 +313,32 @@ class Atuacoes extends React.Component{
                 subareaAtuacao.push(
                     <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checkedAtuacaoArea ? '' : 'none'}}>
                         <div className="bg-lgt p-2">
-                            <strong><i className={this.state.icons[item.cd_area_atuacao]}/> {item.tx_nome_area_atuacao}</strong><br/>
+                            <strong><i className={(this.state.icons[item.cd_area_atuacao])+" fa-1x"}/> {item.tx_nome_area_atuacao}</strong><br/>
                             <hr/>
                             {subarea}
-                            <input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" " style={{display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none'}}/>
-                            {/*<input className={"form-control form-g "} type="text" name="tx_nome_uf"  placeholder=" " style={{display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none'}}/>*/}
+                            <div style={{display: this.checkedOutros(item.cd_area_atuacao) ? '' : 'none'}}>
+                                <input className={"form-control form-g "} type="text" name="tx_nome_outra"  placeholder=" " onChange={this.handleInputChange} defaultValue={item.tx_nome_outra}/>
+
+                                <div className="float-right" onClick={() => this.saveOutrosSub(item.idSelectedSub)}  style={{margin: '-30px 10px 0 0'}}>
+                                    <div style={{display: this.state.saveLoading===item.idSelectedSub ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading===item.idSelectedSub ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 );
 
                 return (
-                    <div className="col-md-6" key={"area_"+item.cd_area_atuacao} /*onChange={() => this.callSubareaAtuacao(item.cd_area_atuacao)}*/>
-                        <div className="bg-lgt items-checkbox">
-                            <div className="custom-control custom-checkbox">
+                    <div className="col-md-3" key={"area_"+item.cd_area_atuacao}>
+                        <div className="bg-lgt items-checkbox custom-checkbox-items">
+                            <div className="custom-control custom-chetckbox text-center">
                                 <input type="checkbox" className="custom-control-input" onChange={this.callSubareaAtuacao} id={"area_"+item.cd_area_atuacao} required checked={item.checkedAtuacaoArea}/>
-                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} ><i className={this.state.icons[item.cd_area_atuacao]}/>  {item.tx_nome_area_atuacao}</label>
+                                <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} ><i className={(this.state.icons[item.cd_area_atuacao])+" fa-2x"}/>
+                                    <p>{item.tx_nome_area_atuacao}</p>
+                                </label>
                             </div>
                         </div>
+                        <br/>
                     </div>
                 );
             }.bind(this));

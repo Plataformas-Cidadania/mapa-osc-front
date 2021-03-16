@@ -98,6 +98,16 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
+                        { href: "/objetivos-user" },
+                        React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
+                        " ODS"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
                         { href: "/areas-atuacao-user" },
                         React.createElement("i", { className: "fa fa-share-alt", "aria-hidden": "true" }),
                         " \xC1reas de atua\xE7\xE3o"

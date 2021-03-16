@@ -321,3 +321,20 @@ label, input, .btn-number {
     margin-left: -25px;
     cursor: pointer;
 }
+.custom-checkbox-items:hover{
+    background-color: $color-pri!important;
+    color: #FFFFFF;
+}
+.custom-checkbox-items p{
+    width: 100%;
+    text-align: center;
+    min-height: 80px;
+    margin-top: 10px;
+    min-width: 125px;
+
+}
+.custom-checkbox-items svg{
+    text-align: center;
+    margin-top: 15px;
+}
+

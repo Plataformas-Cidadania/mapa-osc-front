@@ -53,11 +53,11 @@ class Oscs extends React.Component{
                         </td>
                         <td width="230">
                             <div className="btn btn-primary">
-                                <a href={"/detalhar/"+item.id_osc+"/"+item.tx_nome_osc}><i className="fas fa-binoculars"></i> Detalhes</a>
+                                <a href={"/detalhar/"+item.id_osc+"/"+item.tx_nome_osc}><i className="fas fa-binoculars"/> Visualizar</a>
                             </div>
                             &nbsp;
                             <div className="btn btn-success">
-                                <a href={"/osc-user/"+item.id_osc}><i className="far fa-edit"></i> Editar</a>
+                                <a href={"/osc-user/"+item.id_osc}><i className="far fa-edit"/> Editar</a>
                             </div>
                         </td>
                     </tr>
