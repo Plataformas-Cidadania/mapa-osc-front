@@ -37,6 +37,8 @@ class Atuacoes extends React.Component {
         //this.checkArea = this.checkArea.bind(this);
         this.checkSubArea = this.checkSubArea.bind(this);
         this.checkedOutros = this.checkedOutros.bind(this);
+        this.callSubareaAtuacao = this.callSubareaAtuacao.bind(this);
+        this.loadSubareas = this.loadSubareas.bind(this);
     }
 
     componentDidMount() {
@@ -69,15 +71,28 @@ class Atuacoes extends React.Component {
             url: getBaseUrl2 + 'osc/areas_atuacao/' + 789809,
             success: function (data) {
                 let itensAreas = [];
+                let areasAtuacao = this.state.areaAtuacao;
+
+                areasAtuacao.find(item => {
+                    item.checkedAtuacaoArea = false;
+                });
 
                 data.find(function (item) {
                     itensAreas.push(item.cd_area_atuacao);
+                    areasAtuacao.find(area => {
+                        if (item.cd_area_atuacao === area.cd_area_atuacao) {
+                            area.checkedAtuacaoArea = true;
+                        }
+                    });
                 });
                 //this.checkSubArea(0, 0, true, 0)
 
                 this.setState({
                     dataAtuacaoSelected: itensAreas,
-                    dataAtuacaoBd: data
+                    dataAtuacaoBd: data,
+                    areasAtuacao: areasAtuacao
+                }, function () {
+                    this.loadSubareas();
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -86,23 +101,7 @@ class Atuacoes extends React.Component {
         });
     }
 
-    callSubareaAtuacao(id) {
-
-        let areas = this.state.areaAtuacao;
-        if (areas[0].subareas) {
-            let checkedAtuacao = false;
-            areas.find(function (item) {
-                if (item.cd_area_atuacao === id) {
-                    item.checked = !item.checked;
-                    checkedAtuacao = !item.checked;
-                }
-            });
-
-            this.setState({ areaAtuacao: areas });
-            return;
-        }
-
-        this.setState({ button: false });
+    loadSubareas() {
         $.ajax({
             method: 'GET',
             cache: false,
@@ -117,22 +116,60 @@ class Atuacoes extends React.Component {
 
                 this.state.areaAtuacao.find(function (item) {
 
-                    if (item.cd_area_atuacao === id) {
+                    /*if(item.cd_area_atuacao === id){
                         item.checked = !item.checked;
-                        if (id === 10) {
+                        if(id===10){
                             imputOutros = !imputOutros;
                         }
-                    }
+                    }*/
+
                     item.subareas = data.filter(function (subitem) {
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-                this.setState({ loading: false, areaAtuacao: areaAtuacao, id_area: id, titleSub: true, imputOutros: imputOutros });
+                //this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, titleSub:true, imputOutros:imputOutros})
+                this.setState({ loading: false, areaAtuacao: areaAtuacao, titleSub: true, imputOutros: imputOutros });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
+    }
+
+    //callSubareaAtuacao(id){
+    callSubareaAtuacao(e) {
+
+        let id = e.target.id.split("_")[1];
+        console.log("ID >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", id);
+        console.log(e.target.value);
+
+        let areas = this.state.areaAtuacao;
+
+        areas.find(item => {
+            if (item.cd_area_atuacao == id) {
+                console.log('entrou');
+                item.checkedAtuacaoArea = !item.checkedAtuacaoArea;
+            }
+        });
+
+        //console.log("Areas", areas);
+        if (areas[0].subareas) {
+            let checkedAtuacao = false;
+            areas.find(function (item) {
+                if (item.cd_area_atuacao === id) {
+                    //item.checkedAtuacaoArea = !item.checkedAtuacaoArea;
+
+                    item.checked = !item.checked;
+                    checkedAtuacao = !item.checked;
+                }
+            });
+
+            this.setState({ areaAtuacao: areas });
+            return;
+        }
+
+        this.setState({ button: false });
+        //this.loadSubareas();
     }
 
     checkSubArea(area_id, subarea_id, checkedAtuacao, idSelectedSub) {
@@ -196,16 +233,37 @@ class Atuacoes extends React.Component {
             if (item.cd_area_atuacao === area_id) {
                 if (item.subareas) {
                     item.subareas.find(function (subitem) {
-                        if (subitem.tx_nome_subarea_atuacao === "Outros") {
+                        this.state.dataAtuacaoBd.find(function (itemSelectSub) {
+                            if (itemSelectSub.cd_subarea_atuacao === subitem.cd_subarea_atuacao) {
+                                subitem.idSelectedSub = itemSelectSub.id_area_atuacao;
+                                if (subitem.tx_nome_subarea_atuacao === "Outros") {
+                                    checked = true;
+                                }
+                            }
+                        }.bind(this));
+                    }.bind(this));
+                }
+            }
+        }.bind(this));
+
+        return checked;
+    }
+    /*checkedOutros(area_id){
+        let checked = false;
+        this.state.areaAtuacao.find(function(item){
+            if(item.cd_area_atuacao === area_id){
+                if(item.subareas){
+                    item.subareas.find(function(subitem){
+                        console.log(area_id, subitem.tx_nome_subarea_atuacao, subitem.checked);
+                        if(subitem.tx_nome_subarea_atuacao === "Outros"){
                             checked = subitem.checked;
                         }
                     });
                 }
             }
         });
-
-        return checked;
-    }
+           return checked;
+    }*/
 
     render() {
 
@@ -215,40 +273,44 @@ class Atuacoes extends React.Component {
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
 
                 //console.log('--', this.state.dataAtuacaoSelected);
-                item.checkedAtuacaoArea = false;
-
-                if (this.state.dataAtuacaoSelected.indexOf(item.cd_area_atuacao) >= 0) {
-                    this.state.dataAtuacaoSelected.find(function (itemArea) {
+                /*item.checkedAtuacaoArea = false;
+                 if(this.state.dataAtuacaoSelected.indexOf(item.cd_area_atuacao)>=0){
+                    item.checkedAtuacaoArea = true;
+                    /!*this.state.dataAtuacaoSelected.find(function(itemArea){
                         //console.log('--', item.cd_area_atuacao);
                         item.checkedAtuacaoArea = true;
-                    });
-                }
+                    });*!/
+                }*/
 
                 let subarea = null;
 
                 if (item.subareas) {
                     subarea = item.subareas.map(function (subitem) {
 
-                        subitem.checkedAtuacao = false;
+                        subitem.checkedSubarea = false;
                         subitem.idSelectedSub = 0;
+
+                        //console.log('subitem',item.cd_area_atuacao ,subitem);
+
 
                         this.state.dataAtuacaoBd.find(function (itemSelectSub) {
                             if (itemSelectSub.cd_subarea_atuacao === subitem.cd_subarea_atuacao) {
                                 subitem.idSelectedSub = itemSelectSub.id_area_atuacao;
-                                subitem.checkedAtuacao = true;
+                                subitem.checkedSubarea = true;
                                 //item.checkedAtuacaoArea = true;
                             }
                         });
 
-                        console.log('--->item', item);
+                        //console.log('--->item', item);
+
 
                         return React.createElement(
                             'div',
                             { key: "subarea_" + subitem.cd_subarea_atuacao },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkSubArea(item.cd_area_atuacao, subitem.cd_subarea_atuacao, subitem.checkedAtuacao, subitem.idSelectedSub) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true, checked: subitem.checkedAtuacao }),
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkSubArea(item.cd_area_atuacao, subitem.cd_subarea_atuacao, subitem.checkedSubarea, subitem.idSelectedSub) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_subarea_atuacao, required: true, defaultChecked: subitem.checkedSubarea }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_subarea_atuacao },
@@ -262,7 +324,7 @@ class Atuacoes extends React.Component {
 
                 subareaAtuacao.push(React.createElement(
                     'div',
-                    { key: "divArea_" + item.cd_area_atuacao, className: 'card', style: { display: this.state.dataAtuacaoSelected.indexOf(item.cd_area_atuacao) ? '' : 'none' } },
+                    { key: "divArea_" + item.cd_area_atuacao, className: 'card', style: { display: item.checkedAtuacaoArea ? '' : 'none' } },
                     React.createElement(
                         'div',
                         { className: 'bg-lgt p-2' },
@@ -282,14 +344,14 @@ class Atuacoes extends React.Component {
 
                 return React.createElement(
                     'div',
-                    { className: 'col-md-6', key: "area_" + item.cd_area_atuacao, onChange: () => this.callSubareaAtuacao(item.cd_area_atuacao) },
+                    { className: 'col-md-6', key: "area_" + item.cd_area_atuacao /*onChange={() => this.callSubareaAtuacao(item.cd_area_atuacao)}*/ },
                     React.createElement(
                         'div',
                         { className: 'bg-lgt items-checkbox' },
                         React.createElement(
                             'div',
                             { className: 'custom-control custom-checkbox' },
-                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_area_atuacao, required: true, checked: item.checkedAtuacaoArea }),
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', onChange: this.callSubareaAtuacao, id: "area_" + item.cd_area_atuacao, required: true, checked: item.checkedAtuacaoArea }),
                             React.createElement(
                                 'label',
                                 { className: 'custom-control-label', htmlFor: "area_" + item.cd_area_atuacao },
