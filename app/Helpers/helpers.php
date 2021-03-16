@@ -68,6 +68,8 @@ if ( ! function_exists('clean') ) {
 
         $string = strtolower($string);
 
+
+
         $string = preg_replace("/[áàâãä]/u", "a", $string);// a flag "u" serve para resolver problemas de enconding
         $string = preg_replace("/[éèê]/u", "e", $string);
         $string = preg_replace("/[íì]/u", "i", $string);
@@ -77,6 +79,7 @@ if ( ! function_exists('clean') ) {
 
         $string = preg_replace("/[^A-Za-z0-9\-.$permitir]/", '', $string); // remove caracteres especiais.
 
+        //$string = preg_replace('/', '-', $string);
         $string = preg_replace('/-+/', '-', $string); // trocas multiplos hífens por apenas um.
 
         return $string;
