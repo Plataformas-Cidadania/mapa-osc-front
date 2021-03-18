@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class UserAreaController extends Controller
 {
@@ -175,11 +177,24 @@ class UserAreaController extends Controller
         return ['user' => $osc];
     }
 
+    public function saveLogoOsc(Request $request){
+        $file = $request->file('logo');
+        if($file!=null){
+            $filenameFile = rand(1000000000,9999000000)."-".clean($file->getClientOriginalName());
+            $this->successFile = Storage::putFileAs("/osc/", $file, $filenameFile);
+        }
+        //return Storage::get("/osc/".$filenameFile);
+        return response()->file(storage_path('app/osc/'.$filenameFile));
+    }
+
+    public function getLogoOsc($filename){
+        return Storage::get("/osc/".$filename);
+
+    }
+
     public function getData(){
         return \App\SiteUser::find(auth()->user()->id);
     }
-
-
 
 
 

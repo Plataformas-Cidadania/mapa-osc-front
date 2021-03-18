@@ -2,6 +2,7 @@ class Osc extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            logo: null,
             form: {
                 email: '',
                 name: '',
@@ -50,6 +51,8 @@ class Osc extends React.Component {
         this.listChkboxMetas = this.listChkboxMetas.bind(this);
 
         this.listArea = this.listArea.bind(this);
+
+        this.saveLogo = this.saveLogo.bind(this);
     }
 
     componentDidMount() {
@@ -364,6 +367,34 @@ class Osc extends React.Component {
         this.setState({objetivos: objetivos});
     }*/
 
+    setLogo() {
+        document.getElementById('logoOsc').value = "";
+        document.getElementById('logoOsc').click();
+    }
+
+    saveLogo(e) {
+        let file = e.target.files[0];
+        let formData = new FormData();
+        formData.append("logo", file, file.name);
+
+        $.ajax({
+            method: 'POST',
+            //url: getBaseUrl+'save-logo-osc/'+id,
+            url: '/save-logo-osc',
+            data: formData,
+            processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                this.setState({ logo: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     render() {
 
         function padDigits(number, digits) {
@@ -480,16 +511,17 @@ class Osc extends React.Component {
                                 { className: 'col-md-3' },
                                 React.createElement(
                                     'div',
-                                    { className: 'img-upload' },
+                                    { className: 'img-upload', onClick: this.setLogo, style: { cursor: 'pointer' } },
                                     React.createElement('img', {
-                                        src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
+                                        src: `data:image/png;base64,${this.state.logo}`,
                                         alt: '' }),
                                     React.createElement(
                                         'div',
                                         { className: 'img-upload-i' },
                                         React.createElement('i', { className: 'fas fa-image tx-pri' })
                                     )
-                                )
+                                ),
+                                React.createElement('input', { type: 'file', id: 'logoOsc', onChange: this.saveLogo, style: { display: 'none' } })
                             ),
                             React.createElement(
                                 'div',
