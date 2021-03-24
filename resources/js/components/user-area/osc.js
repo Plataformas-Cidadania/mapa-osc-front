@@ -43,21 +43,21 @@ class Osc extends React.Component{
         this.validate = this.validate.bind(this);
         this.getCabecalho = this.getCabecalho.bind(this);
         this.getOsc = this.getOsc.bind(this);
-        this.checkMetas = this.checkMetas.bind(this);
-        this.listChkboxMetas = this.listChkboxMetas.bind(this);
-        this.checkMetas = this.checkMetas.bind(this);
-        this.listObjetivos = this.listObjetivos.bind(this);
-        this.listChkboxMetas = this.listChkboxMetas.bind(this);
+        //this.checkMetas = this.checkMetas.bind(this);
+        //this.listChkboxMetas = this.listChkboxMetas.bind(this);
+        //this.checkMetas = this.checkMetas.bind(this);
+        //this.listObjetivos = this.listObjetivos.bind(this);
+        //this.listChkboxMetas = this.listChkboxMetas.bind(this);
 
-        this.listArea = this.listArea.bind(this);
+        //this.listArea = this.listArea.bind(this);
     }
 
     componentDidMount(){
         this.getCabecalho();
         this.getOsc();
-        this.listArea();
-        this.listChkboxMetas();
-        this.listObjetivos();
+        //this.listArea();
+        //this.listChkboxMetas();
+        //this.listObjetivos();
     }
 
     getCabecalho(){
@@ -155,7 +155,7 @@ class Osc extends React.Component{
         });
     }
 
-    listArea(){
+    /*listArea(){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
@@ -172,8 +172,8 @@ class Osc extends React.Component{
                 console.error(status, err.toString());
             }.bind(this)
         });
-    }
-    listObjetivos(){
+    }*/
+    /*listObjetivos(){
 
         $.ajax({
             method: 'GET',
@@ -194,9 +194,9 @@ class Osc extends React.Component{
                 console.error(status, err.toString());
             }.bind(this)
         });
-    }
+    }*/
 
-    callSubobjetivos(id){
+    /*callSubobjetivos(id){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
@@ -243,9 +243,9 @@ class Osc extends React.Component{
                 console.error(status, err.toString());
             }.bind(this)
         });
-    }
+    }*/
 
-    listChkboxMetas(){
+    /*listChkboxMetas(){
 
         $.ajax({
             method: 'GET',
@@ -356,39 +356,22 @@ class Osc extends React.Component{
                 console.error(status, err.toString());
             }.bind(this)
         });
-    }
-
-    /*checkMetas(cd_objetivo, cd_meta){
-        console.log(cd_objetivo, cd_meta);
-        let objetivos = this.state.objetivos;
-        objetivos.find(function(item){
-            if(item.cd_objetivo_projeto === cd_objetivo){
-                item.metas.find(function (itemMeta) {
-                    if(itemMeta.cd_meta_osc === cd_meta){
-                        itemMeta.checked = true;
-                    }
-                });
-            }
-        });
-        this.setState({objetivos: objetivos});
     }*/
+
 
     render(){
 
 
 
-        function padDigits(number, digits) {
+        /*function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
-        }
+        }*/
 
-        let objetivos = null;
+        /*let objetivos = null;
         let metas = [];
         if(this.state.objetivos){
             objetivos = this.state.objetivos.map(function (item) {
                 let checkedMetas = false;
-
-                //console.log('item',item.cd_objetivo_projeto);
-                //console.log('datalistObjetivos', this.state.datalistObjetivos);
 
                 if(this.state.datalistObjetivos){
                     if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
@@ -407,15 +390,11 @@ class Osc extends React.Component{
                         let checkedMeta = false;
                         let id_objetivo_osc = 0;
                         this.state.dataChkboxMetas.find((itemChecked) => {
-                           // console.log('ids', itemMeta.cd_meta_projeto,  itemChecked.cd_meta_osc);
                             if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc){
                                 checkedMeta = true;
                                 id_objetivo_osc = itemChecked.id_objetivo_osc;
                             }
                         });
-
-                        //console.log('checkedMeta', checkedMeta);
-
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
                                 <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta)}>
@@ -437,7 +416,7 @@ class Osc extends React.Component{
                     </div>
                 );
             }.bind(this));
-        }
+        }*/
 
 
 
@@ -626,7 +605,7 @@ class Osc extends React.Component{
 
                                     <br/><br/>
 
-                                    <div className="row">
+                                    {/*<div className="row">
                                         <div className="col-md-12">
                                             <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
                                             <div>
@@ -641,7 +620,7 @@ class Osc extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*/}
 
 
 

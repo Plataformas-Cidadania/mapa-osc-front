@@ -3,25 +3,22 @@ class Objetivos extends React.Component {
         super(props);
         this.state = {
             showIcon: false,
-            objetivos: null,
+            objetivos: [],
             subobjetivos: null,
             titleMeta: null,
             titleObjetivo: "",
             buttonObjetivos: 0,
-
             dataChkboxMetas: []
 
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-
         this.validate = this.validate.bind(this);
         this.checkMetas = this.checkMetas.bind(this);
         this.listChkboxMetas = this.listChkboxMetas.bind(this);
         this.checkMetas = this.checkMetas.bind(this);
         this.listObjetivos = this.listObjetivos.bind(this);
         this.listChkboxMetas = this.listChkboxMetas.bind(this);
-
         this.listArea = this.listArea.bind(this);
     }
 
@@ -33,22 +30,22 @@ class Objetivos extends React.Component {
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        //const value = target.type === 'checkbox' ? target.checked : target.value;
+        //const name = target.name;
 
-        let form = this.state.form;
-        let txt = this.state.txt;
-        form[name] = value;
+        //let form = this.state.form;
+        //let txt = this.state.txt;
+        //form[name] = value;
 
-        this.setState({ form: form, txt: txt });
+        //this.setState({form: form, txt: txt});
     }
 
     validate() {
         let valid = true;
 
         let requireds = this.state.requireds;
-        let form = this.state.form;
-        let txt = this.state.txt;
+        //let form = this.state.form;
+        //let txt = this.state.txt;
 
         this.setState({ requireds: requireds });
         return valid;
@@ -251,6 +248,25 @@ class Objetivos extends React.Component {
         });
     }
 
+    chekedMetasObjetivo(cd_objetivo_projeto) {
+        this.state.objetivos.find(item => {
+            if (item.cd_objetivo_projeto === cd_objetivo_projeto) {
+                if (item.metas) {
+                    item.metas.find(meta => {
+                        console.log(meta);
+                        this.state.dataChkboxMetas.find(itemChecked => {
+                            if (meta.cd_meta_projeto === itemChecked.cd_meta_osc) {
+                                return true;
+                            }
+                        });
+                    });
+                }
+            }
+        });
+
+        return false;
+    }
+
     render() {
 
         function padDigits(number, digits) {
@@ -261,27 +277,33 @@ class Objetivos extends React.Component {
         let metas = [];
         if (this.state.objetivos) {
             objetivos = this.state.objetivos.map(function (item) {
+
                 let checkedMetas = false;
 
                 if (this.state.datalistObjetivos) {
+                    //console.log('datalistObjetivos: ', this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto));
                     if (this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1) {
                         checkedMetas = true;
+                        //console.log('-------->', checkedMetas);
                     }
                 }
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
                 if (item.metas) {
+
+                    //console.log('->', this.state.buttonObjetivos, item.cd_objetivo_projeto);
+
                     metas.push(item.metas.map(function (itemMeta) {
                         if (itemMeta.checked) {
                             checkedMetas = true;
                         }
 
-                        let checkedMeta = false;
+                        let checkedMeta2 = false;
                         let id_objetivo_osc = 0;
                         this.state.dataChkboxMetas.find(itemChecked => {
                             if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc) {
-                                checkedMeta = true;
+                                checkedMeta2 = true;
                                 id_objetivo_osc = itemChecked.id_objetivo_osc;
                             }
                         });
@@ -291,8 +313,8 @@ class Objetivos extends React.Component {
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta, onChange: this.handleInputChange }),
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta2) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta2, onChange: this.handleInputChange }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
@@ -311,7 +333,7 @@ class Objetivos extends React.Component {
                     React.createElement(
                         'label',
                         { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
-                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: (checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
+                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: (this.chekedMetasObjetivo(item.cd_objetivo_projeto) || checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
                     )
                 );
             }.bind(this));
