@@ -31,7 +31,8 @@ class Atuacoes extends React.Component {
             dataAtuacaoSelected: [],
             form: {
                 tx_nome_outra: ''
-            }
+            },
+            boxInfo: false
 
         };
 
@@ -149,9 +150,23 @@ class Atuacoes extends React.Component {
         let id = e.target.id.split("_")[1];
         let areas = this.state.areaAtuacao;
 
+        /////////////////////////
+        /*let arrayAreas = [];
+         this.state.dataAtuacaoBd.find(function(itemSelectSub){
+            arrayAreas.push(itemSelectSub.cd_area_atuacao);
+        });
+        const arrUnique = [...new Set(arrayAreas)];
+         console.log(arrUnique);
+        console.log(arrUnique.indexOf(id));
+        if(arrUnique.indexOf(id) != -1){
+            console.log('222');
+            this.setState({boxInfo: true});
+            return;
+        }*/
+        /////////////////////////
+
         areas.find(item => {
             if (item.cd_area_atuacao == id) {
-                console.log('entrou');
                 item.checkedAtuacaoArea = !item.checkedAtuacaoArea;
             }
         });
@@ -267,12 +282,23 @@ class Atuacoes extends React.Component {
 
     render() {
 
+        /*console.log('dataAtuacaoSelected', this.state.dataAtuacaoBd);
+        console.log('dataAtuacaoBd', this.state.dataAtuacaoBd);
+        console.log('areasAtuacao', this.state.areasAtuacao);*/
+
+        //console.log('areaAtuacao', this.state.areaAtuacao);
+
+
         let areaAtuacao = null;
         let subareaAtuacao = [];
         if (this.state.areaAtuacao) {
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
 
                 let subarea = null;
+
+                //console.log('subareas', item.subareas);
+
+                //let arrayAreas = []
 
                 if (item.subareas) {
                     subarea = item.subareas.map(function (subitem) {
@@ -287,7 +313,15 @@ class Atuacoes extends React.Component {
                                 item.tx_nome_outra = itemSelectSub.tx_nome_outra;
                                 item.idSelectedSub = itemSelectSub.id_area_atuacao;
                             }
+                            //arrayAreas.push(itemSelectSub.cd_area_atuacao);
                         });
+
+                        //const arrUnique = [...new Set(arrayAreas)];
+
+                        //this.setState({arrUnique: arrUnique})
+
+
+                        //console.log(arrUnique);
 
                         return React.createElement(
                             'div',
@@ -419,8 +453,12 @@ class Atuacoes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'row' },
+                            React.createElement(
+                                'div',
+                                { className: 'alert alert-danger', role: 'alert', style: { position: 'fixed', zIndex: '999', display: this.state.boxInfo ? '' : 'none' } },
+                                '\xC9 preciso excluir as Sub\xE1rea de Atua\xE7\xE3o, para excluir uma \xE1rea!'
+                            ),
                             areaAtuacao,
-                            React.createElement('br', null),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
