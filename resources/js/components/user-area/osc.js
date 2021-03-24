@@ -390,10 +390,13 @@ class Osc extends React.Component{
             file.name
         );
 
+
         $.ajax({
             method: 'POST',
+            //method: 'POST',
             //url: getBaseUrl+'save-logo-osc/'+id,
-            url: '/save-logo-osc',
+            //url: '/save-logo-osc',
+            url: getBaseUrl2+'osc/logo/455128',
             data: formData,
             processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
@@ -401,6 +404,7 @@ class Osc extends React.Component{
             success: function(data){
                 console.log(data);
                 this.setState({logo: data});
+                //this.setState({logo: data});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -495,7 +499,8 @@ class Osc extends React.Component{
                                 <div className="col-md-3">
                                     <div className="img-upload" onClick={this.setLogo} style={{cursor: 'pointer'}}>
                                         <img
-                                            src={`data:image/png;base64,${this.state.logo}`}
+                                            /*src={`data:image/png;base64,${this.state.logo}`}*/
+                                            src={this.state.logo}
                                             alt=""/>
                                         <div className="img-upload-i"><i className="fas fa-image tx-pri"/></div>
                                     </div>

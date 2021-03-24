@@ -179,12 +179,14 @@ class UserAreaController extends Controller
 
     public function saveLogoOsc(Request $request){
         $file = $request->file('logo');
+
         if($file!=null){
             $filenameFile = rand(1000000000,9999000000)."-".clean($file->getClientOriginalName());
             $this->successFile = Storage::putFileAs("/osc/", $file, $filenameFile);
         }
-        //return Storage::get("/osc/".$filenameFile);
-        return response()->file(storage_path('app/osc/'.$filenameFile));
+
+        return 'data:image/png;base64,'.base64_encode(file_get_contents(storage_path('app/osc/'.$filenameFile)));
+
     }
 
     public function getLogoOsc($filename){
