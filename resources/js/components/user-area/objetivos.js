@@ -77,15 +77,12 @@ class Objetivos extends React.Component{
             cache: false,
             url: getBaseUrl2+'osc/objetivos/'+455128,
             success: function (data) {
-                console.log('-----data', data);
                 let objetosSelected = [];
                 data.find(function(item){
                     objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
                 });
-                console.log('objetosSelected', objetosSelected);
 
                 const arrUnique = [...new Set(objetosSelected)];
-                console.log('arrUnique', arrUnique);
 
                 this.setState({loading: false, datalistObjetivos: arrUnique})
             }.bind(this),
@@ -260,28 +257,8 @@ class Objetivos extends React.Component{
         });
     }
 
-    c/*hekedMetasObjetivo(cd_objetivo_projeto){
-        this.state.objetivos.find((item) => {
-            if(item.cd_objetivo_projeto === cd_objetivo_projeto){
-                if(item.metas){
-                    item.metas.find((meta) => {
-                        console.log(meta);
-                        this.state.dataChkboxMetas.find((itemChecked) => {
-                            if(meta.cd_meta_projeto === itemChecked.cd_meta_osc){
-                                return true;
-                            }
-                        });
-                    });
-                }
-            }
-        });
-
-        return false;
-    }*/
 
     render(){
-
-        console.log('dataListObjetivos', this.state.datalistObjetivos);
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -297,22 +274,16 @@ class Objetivos extends React.Component{
 
 
                 if(this.state.datalistObjetivos){
-                    //console.log('datalistObjetivos: ', this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto));
                     if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
                         checkedMetas = true;
-                        //console.log('-------->', checkedMetas);
                     }
                 }
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
                 if(item.metas){
-                    //console.log('->', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                     metas.push(item.metas.map(function (itemMeta) {
-                        /*if(itemMeta.checked){
-                            checkedMetas = true;
-                        }*/
 
                         let checkedMeta2 = false;
                         let id_objetivo_osc = 0;

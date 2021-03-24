@@ -1,9 +1,20 @@
 <?php $rota = Route::getCurrentRoute()->uri();?>
 
+
+
+
 <script src="js/app.js"></script>
 <script src="js/utils.js"></script>
-<script src="js/rotas.js"></script>
+<!--<script src="js/rotas.js"></script>-->
+
 <script>
+    getBaseUrl = "{{env('APP_API_ROUTE_OLD')}}";
+    getBaseUrl2 = "{{env('APP_API_ROUTE')}}";
+</script>
+<script>
+
+
+
     function titleize(text) {
         var words = text.toLowerCase().split(" ");
         for (var a = 0; a < words.length; a++) {
@@ -35,6 +46,8 @@
         pageRoute = true;
     <?php }?>
 </script>
+
+
 
 <script src="/js/react/react.development.js" crossorigin></script>
 <script src="/js/react/react-dom.development.js" crossorigin></script>
