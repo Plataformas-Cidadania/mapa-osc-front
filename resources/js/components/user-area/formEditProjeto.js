@@ -585,6 +585,7 @@ class FormEditProjeto extends React.Component{
                 },
                 cache: false,
                 success: function(data){
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -600,6 +601,7 @@ class FormEditProjeto extends React.Component{
                 },
                 cache: false,
                 success: function(data){
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -950,23 +952,24 @@ class FormEditProjeto extends React.Component{
 
                 if(item.metas){
                     metas.push(item.metas.map(function (itemMeta) {
-                        if(itemMeta.checked){
+                        /*if(itemMeta.checked){
                             checkedMetas = true;
-                        }
+                        }*/
 
-                        let checkedMeta = false;
+                        let checkedMeta2 = false;
                         let id_objetivo_projeto = 0;
                         this.state.dataChkboxMetas.find((itemChecked) => {
                             if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto){
-                                checkedMeta = true;
+                                checkedMetas = true;
+                                checkedMeta2 = true;
                                 id_objetivo_projeto = itemChecked.id_objetivo_projeto;
                             }
                         });
 
                         return(
                             <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
-                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta)}>
-                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required defaultChecked={checkedMeta} onChange={this.handleInputChange}/>
+                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta2)}>
+                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required defaultChecked={checkedMeta2} onChange={this.handleInputChange}/>
                                     <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
                                 </div>
                                 <hr />

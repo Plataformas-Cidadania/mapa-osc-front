@@ -567,6 +567,7 @@ class FormEditProjeto extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -580,6 +581,7 @@ class FormEditProjeto extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -1023,15 +1025,16 @@ class FormEditProjeto extends React.Component {
 
                 if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
-                        if (itemMeta.checked) {
+                        /*if(itemMeta.checked){
                             checkedMetas = true;
-                        }
+                        }*/
 
-                        let checkedMeta = false;
+                        let checkedMeta2 = false;
                         let id_objetivo_projeto = 0;
                         this.state.dataChkboxMetas.find(itemChecked => {
                             if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto) {
-                                checkedMeta = true;
+                                checkedMetas = true;
+                                checkedMeta2 = true;
                                 id_objetivo_projeto = itemChecked.id_objetivo_projeto;
                             }
                         });
@@ -1041,8 +1044,8 @@ class FormEditProjeto extends React.Component {
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta, onChange: this.handleInputChange }),
+                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta2) },
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta2, onChange: this.handleInputChange }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },

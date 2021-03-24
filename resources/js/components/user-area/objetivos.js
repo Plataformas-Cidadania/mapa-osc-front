@@ -77,13 +77,15 @@ class Objetivos extends React.Component{
             cache: false,
             url: getBaseUrl2+'osc/objetivos/'+455128,
             success: function (data) {
-                //console.log('-----data', data);
+                console.log('-----data', data);
                 let objetosSelected = [];
                 data.find(function(item){
                     objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
                 });
+                console.log('objetosSelected', objetosSelected);
 
                 const arrUnique = [...new Set(objetosSelected)];
+                console.log('arrUnique', arrUnique);
 
                 this.setState({loading: false, datalistObjetivos: arrUnique})
             }.bind(this),
@@ -163,6 +165,7 @@ class Objetivos extends React.Component{
     }
 
     checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta){
+
         let objetivos = this.state.objetivos;
         objetivos.find(function(item){
             if(item.cd_objetivo_projeto === cd_objetivo){
@@ -185,6 +188,7 @@ class Objetivos extends React.Component{
                 },
                 cache: false,
                 success: function(data){
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -200,6 +204,7 @@ class Objetivos extends React.Component{
                 },
                 cache: false,
                 success: function(data){
+                    this.listObjetivos();
                     this.listChkboxMetas();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -255,7 +260,7 @@ class Objetivos extends React.Component{
         });
     }
 
-    chekedMetasObjetivo(cd_objetivo_projeto){
+    c/*hekedMetasObjetivo(cd_objetivo_projeto){
         this.state.objetivos.find((item) => {
             if(item.cd_objetivo_projeto === cd_objetivo_projeto){
                 if(item.metas){
@@ -272,9 +277,11 @@ class Objetivos extends React.Component{
         });
 
         return false;
-    }
+    }*/
 
     render(){
+
+        console.log('dataListObjetivos', this.state.datalistObjetivos);
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -300,18 +307,18 @@ class Objetivos extends React.Component{
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
                 if(item.metas){
-
                     //console.log('->', this.state.buttonObjetivos, item.cd_objetivo_projeto);
 
                     metas.push(item.metas.map(function (itemMeta) {
-                        if(itemMeta.checked){
+                        /*if(itemMeta.checked){
                             checkedMetas = true;
-                        }
+                        }*/
 
                         let checkedMeta2 = false;
                         let id_objetivo_osc = 0;
                         this.state.dataChkboxMetas.find((itemChecked) => {
                             if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc){
+                                checkedMetas = true;
                                 checkedMeta2 = true;
                                 id_objetivo_osc = itemChecked.id_objetivo_osc;
                             }
@@ -329,11 +336,12 @@ class Objetivos extends React.Component{
                     }.bind(this)));
                 }
 
+
                 return (
                     <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
                         <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
-                            <img src={"img/ods/" + png + ".png"} alt="" className={(this.chekedMetasObjetivo(item.cd_objetivo_projeto) || checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                            <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
                         </label>
                     </div>
                 );
