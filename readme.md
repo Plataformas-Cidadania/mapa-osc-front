@@ -1,4 +1,4 @@
-<p align="center"><img src="https://mapaosc.ipea.gov.br/img/logo.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Plataformas-Cidadania/mapa-osc-client/master/img/logo_grande.png" width="100%"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
