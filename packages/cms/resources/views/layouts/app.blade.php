@@ -17,7 +17,7 @@
     <meta name="author" content="">
 
     <title>CMS - Nome do site</title>
-    <base href="http://{{$base_href}}">
+    <base href="{{$base_href}}">
 
     <!-- Bootstrap Core CSS -->
     <link href="assets-cms/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
