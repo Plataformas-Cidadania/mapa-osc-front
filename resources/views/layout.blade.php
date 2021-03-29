@@ -3,6 +3,7 @@
 <?php
     $setting = DB::table('settings')->orderBy('id', 'desc')->first();
     $base_href = config('app.url');
+    $protocol = env('APP_PROTOCOL', 'http://');
     $barra = "";
 ?>
 
@@ -13,7 +14,7 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Nome site - @yield('title')</title>
-        <base href="http://{{$base_href}}{{$barra}}">
+        <base href="{{$protocol}}{{$base_href}}{{$barra}}">
         {{--@include('layouts.metas')
         @include('layouts.richCards')
         @include('layouts.links')--}}
