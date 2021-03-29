@@ -10,14 +10,15 @@
     color: #FFFFFF;
 }
 .list-lgt h4{
-    padding: 15px 40px 0px 40px;
-    line-height: 25px;
+    /*padding: 15px 40px 0px 40px;
+    line-height: 25px;*/
+    min-height: 65px;
 }
 .list-lgt img{
-    margin: 25px 15px 20px 0;
+    /*margin: 25px 15px 20px 0;*/
 }
 .list-icon{
-    margin-right: -20px;
+    /*margin-right: -20px;*/
 }
 .list-lgt hr{
     border-bottom: solid 1px rgba(255, 255, 255, 0.1);
@@ -181,4 +182,6 @@
     margin-top: -50px;
     margin-left: 100px;
 }
-
+.login-img{
+    margin: auto;
+}

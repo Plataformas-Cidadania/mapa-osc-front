@@ -57,33 +57,6 @@
             </div>
             <br>
             <div id="oscsRecentes"></div>
-            <?php /* ?>
-            <div class="row">
-
-
-                @foreach($osc_recentes as $osc_recente)
-                <div class="col-md-4">
-                    <a href="detalhar/{{$osc_recente->id_osc}}/{{clean($osc_recente->tx_nome_osc)}}">
-                        <div class="list-user list-lgt">
-                            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle float-left" width="50">
-                            <h4 class="capitalize">{{captz($osc_recente->tx_nome_osc)}} <i class="fas fa-angle-right float-right list-icon"></i></h4>
-                            <p>Saúde</p>
-                            <hr>
-                        </div>
-                    </a>
-                </div>
-                @endforeach
-
-                <div class="col-md-12 text-center">
-                    <br><br>
-                    <a href="mapa/">
-                        <button type="button" class="btn btn-outline-light">Visualize todas as OSCs</button>
-                    </a>
-                    <br><br><br>
-                </div>
-
-            </div>
-            <?php */ ?>
         </div>
     </div>
 
@@ -239,6 +212,9 @@
             margin: 0;
             padding: 3px 0;
         }
+        .owl-height{
+            height: 150px!important;
+        }
     </style>
 
 
@@ -252,6 +228,7 @@
             nav: true,
             loop: true,
             autoplay:true,
+            dots: true,
             navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
             autoplayTimeout:5000,
             responsive: {

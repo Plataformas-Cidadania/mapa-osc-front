@@ -15,15 +15,22 @@
 
 
 
-    function titleize(text) {
+    function titleize(text, qtd) {
+        let qtdString = qtd;
+        let qtdTxt = text.length;
+
         var words = text.toLowerCase().split(" ");
+
         for (var a = 0; a < words.length; a++) {
             if(words[a] != "de" && words[a] != "da" && words[a] != "do" && words[a] != "dos" && words[a] != "das"){
                 var w = words[a];
                 words[a] = w[0].toUpperCase() + w.slice(1);
             }
         }
-        return words.join(" ");
+        words = words.join(" ");
+        words = words.substr(0, qtdString)
+        words = words + (qtdString > qtdTxt ? '' : '...');
+        return words;
     }
 
     function clean(text){

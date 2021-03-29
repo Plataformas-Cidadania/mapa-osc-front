@@ -11,7 +11,6 @@ class OscsRecentes extends React.Component {
     }
 
     componentDidMount() {
-        console.log('oscs-recentes');
         this.load();
     }
 
@@ -19,7 +18,7 @@ class OscsRecentes extends React.Component {
         this.setState({ loading: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'osc/listaatualizadas/9',
+            url: getBaseUrl2 + 'osc/lista_atualizada/9',
             data: {},
             cache: false,
             success: function (data) {
@@ -33,20 +32,7 @@ class OscsRecentes extends React.Component {
         });
     }
 
-    /*titleize(text) {
-        var words = text.toLowerCase().split(" ");
-        for (var a = 0; a < words.length; a++) {
-            if(words[a] != "de" && words[a] != "da" && words[a] != "do" && words[a] != "dos" && words[a] != "das"){
-                var w = words[a];
-                words[a] = w[0].toUpperCase() + w.slice(1);
-            }
-        }
-        return words.join(" ");
-    }*/
-
     render() {
-
-        console.log('oscs-recentes render');
 
         let oscs = null;
         if (this.state.oscs) {
@@ -65,13 +51,8 @@ class OscsRecentes extends React.Component {
                             React.createElement(
                                 'h4',
                                 { className: 'capitalize' },
-                                titleize(item.tx_nome_osc),
+                                titleize(item.tx_nome_osc, 50),
                                 React.createElement('i', { className: 'fas fa-angle-right float-right list-icon' })
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                '\xA0'
                             ),
                             React.createElement('hr', null)
                         )
@@ -83,6 +64,11 @@ class OscsRecentes extends React.Component {
         return React.createElement(
             'div',
             { className: 'row' },
+            React.createElement(
+                'div',
+                { className: 'col-md-12 text-center' },
+                React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loading ? '' : 'none' } })
+            ),
             oscs,
             React.createElement(
                 'div',

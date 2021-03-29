@@ -92,7 +92,7 @@ class NextOsc extends React.Component {
 
         /*$(".divOff").hide(1000);
         $("#divChart"+index).first().slideDown("slow");
-          $(".menu-left-active").attr('class', "list-group-item-theme");
+         $(".menu-left-active").attr('class', "list-group-item-theme");
         $("#divMenuChart"+index).attr('class', "menu-left-active");*/
     }
 
@@ -178,7 +178,7 @@ class NextOsc extends React.Component {
             owl.owlCarousel({
                 margin: 10,
                 nav: false,
-                loop: false,
+                loop: true,
                 autoplay: true,
                 navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
                 autoplayTimeout: 5000,
@@ -194,22 +194,12 @@ class NextOsc extends React.Component {
                         autoHeight: true
                     },
                     1200: {
-                        items: 12,
+                        items: 9,
                         margin: 30,
                         autoHeight: true
                     }
                 }
             });
-            /*menu = this.state.data.map(function (item, index) {
-                 return (
-                     <li id={'menuArea'+index} className="item">
-                         <a onClick={() => this.callMenu(item.cd_area_atuacao)}>
-                             <i className={"fa fa-user theme-"+index}/>
-                             <p>{item.tx_nome_area_atuacao}</p>
-                         </a>
-                     </li>
-                 )
-             }.bind(this));*/
         }
 
         let nextOsc1 = null;
@@ -377,6 +367,8 @@ class NextOsc extends React.Component {
                 React.createElement(
                     "div",
                     { className: "col-md-7 bg-map", style: { backgroundImage: "url(" + nextOscImg + ")", display: this.state.loadingOscs ? 'none' : '' } },
+                    React.createElement("br", null),
+                    React.createElement("br", null),
                     React.createElement(
                         "div",
                         { className: "icon-next" },

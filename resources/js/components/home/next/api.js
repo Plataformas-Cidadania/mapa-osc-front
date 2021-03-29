@@ -179,8 +179,8 @@ class NextOsc extends React.Component {
             owl.owlCarousel({
                 margin: 10,
                 nav: false,
-                loop: false,
-                autoplay: true,
+                loop: true,
+                autoplay:true,
                 navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
                 autoplayTimeout: 5000,
                 responsive: {
@@ -195,22 +195,12 @@ class NextOsc extends React.Component {
                         autoHeight: true,
                     },
                     1200: {
-                        items: 12,
+                        items: 9,
                         margin: 30,
                         autoHeight: true,
                     }
                 }
             });
-           /*menu = this.state.data.map(function (item, index) {
-                return (
-                    <li id={'menuArea'+index} className="item">
-                        <a onClick={() => this.callMenu(item.cd_area_atuacao)}>
-                            <i className={"fa fa-user theme-"+index}/>
-                            <p>{item.tx_nome_area_atuacao}</p>
-                        </a>
-                    </li>
-                )
-            }.bind(this));*/
         }
 
         let nextOsc1 = null;
@@ -323,9 +313,6 @@ class NextOsc extends React.Component {
                 <br/>
                 <div className="text-center">
                     {owNextOsc}
-                    {/*<ul className="menu-items owlIcones owl-carousel owl-theme">
-                        {menu}
-                    </ul>*/}
                 </div>
 
                 <div className="text-center" style={{display: this.state.loadingOscs ? '' : 'none', minHeight: '400px'}}>
@@ -334,6 +321,7 @@ class NextOsc extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-md-7 bg-map" style={{backgroundImage: "url(" + nextOscImg + ")", display: this.state.loadingOscs ? 'none' : ''}}>
+                        <br/><br/>
                         <div className="icon-next">
                             <i className="fas fa-user"/>
                         </div>

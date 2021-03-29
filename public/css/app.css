@@ -11896,15 +11896,15 @@ time {
   width: 60px;
   margin: 10px;
   vertical-align: top;
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
+  -webkit-transform: scale(1);
+  transform: scale(1);
   -webkit-transition: 1s;
   transition: 1s;
 }
 
 .menu-items li:hover {
-  -webkit-transform: translateY(-20px);
-  transform: translateY(-20px);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
   -webkit-transition: 1s;
   transition: 1s;
 }
@@ -12786,16 +12786,17 @@ label, input, .btn-number {
 }
 
 .list-lgt h4 {
-  padding: 15px 40px 0px 40px;
-  line-height: 25px;
+  /*padding: 15px 40px 0px 40px;
+  line-height: 25px;*/
+  min-height: 65px;
 }
 
 .list-lgt img {
-  margin: 25px 15px 20px 0;
+  /*margin: 25px 15px 20px 0;*/
 }
 
 .list-icon {
-  margin-right: -20px;
+  /*margin-right: -20px;*/
 }
 
 .list-lgt hr {
@@ -13027,6 +13028,10 @@ label, input, .btn-number {
   background-color: #FFFFFF;
   margin-top: -50px;
   margin-left: 100px;
+}
+
+.login-img {
+  margin: auto;
 }
 
 /*Edit*/
