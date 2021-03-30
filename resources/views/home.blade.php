@@ -213,7 +213,7 @@
             padding: 3px 0;
         }
         .owl-height{
-            height: 150px!important;
+            height: 122px !important;
         }
     </style>
 

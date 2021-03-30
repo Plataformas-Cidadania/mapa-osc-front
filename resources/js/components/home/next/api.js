@@ -12,7 +12,21 @@ class NextOsc extends React.Component {
             nome_municipio: "",
             municipios: [],
             loadingMunicipios: false,
+            txtAreaAtuacao: 'Habitação',
             geo: null,
+            icon: {
+                1: "fas fa-home",
+                2: "fas fa-hospital",
+                3: "fas fa-theater-masks",
+                4: "fas fa-graduation-cap",
+                5: "fas fa-users",
+                6: "fas fa-church",
+                7: "fas fa-network-wired",
+                8: "fas fa-leaf",
+                9: "fas fa-balance-scale",
+                10: "fas fa-boxes",
+                11: "fas fa-cogs",
+            }
         };
 
         this.load = this.load.bind(this);
@@ -120,8 +134,8 @@ class NextOsc extends React.Component {
         });
     }
 
-    setAreaAtuacao(areaAtuacao){
-        this.setState({areaAtuacao: areaAtuacao}, function (){
+    setAreaAtuacao(areaAtuacao, txt){
+        this.setState({areaAtuacao: areaAtuacao, txtAreaAtuacao: txt}, function (){
             this.callMenu();
         });
     }
@@ -163,11 +177,14 @@ class NextOsc extends React.Component {
                 <ul className="menu-items owlNextOsc owl-carousel owl-theme">
                     {
                         this.state.data.map(function (item, index) {
+
+                            let tx_nome_area_atuacao = item.tx_nome_area_atuacao== 'Associações patronais, profissionais e de produtores rurais' ? 'Associações' : item.tx_nome_area_atuacao;
+                            //item.push(item.tx_nome_area_atuacao== 'Associações patronais, profissionais e de produtores rurais' ? 'Associações' : item.tx_nome_area_atuacao)
                             return (
                                 <li id={'menuArea'+index} className="item">
-                                    <a onClick={() => this.setAreaAtuacao(item.cd_area_atuacao)}>
-                                        <i className={"fa fa-user theme-"+index}/>
-                                        <p>{item.tx_nome_area_atuacao}</p>
+                                    <a onClick={() => this.setAreaAtuacao(item.cd_area_atuacao, item.tx_nome_area_atuacao)}>
+                                        <i className={this.state.icon[item.cd_area_atuacao]+" theme-"+index}/>
+                                        <p>{tx_nome_area_atuacao}</p>
                                     </a>
                                 </li>
                             )
@@ -180,7 +197,7 @@ class NextOsc extends React.Component {
                 margin: 10,
                 nav: false,
                 loop: true,
-                autoplay:true,
+                autoplay:false,
                 navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
                 autoplayTimeout: 5000,
                 responsive: {
@@ -195,7 +212,7 @@ class NextOsc extends React.Component {
                         autoHeight: true,
                     },
                     1200: {
-                        items: 9,
+                        items: 10,
                         margin: 30,
                         autoHeight: true,
                     }
@@ -304,7 +321,7 @@ class NextOsc extends React.Component {
                         (this.state.geo ? geoCity :
                             (
                                 <a href="#" data-toggle="modal" data-target="#modalLocalidade">
-                                    {this.state.cd_municipio ? this.state.nome_municipio : "Escolha a localidade"}
+                                    <i className="fas fa-map-marker-alt"/> {this.state.cd_municipio ? this.state.nome_municipio : "Escolha a localidade"}
                                 </a>
                             )
                         )
@@ -315,10 +332,10 @@ class NextOsc extends React.Component {
                     {owNextOsc}
                 </div>
 
-                <div className="text-center" style={{display: this.state.loadingOscs ? '' : 'none', minHeight: '400px'}}>
-                    <br/><br/><br/>
-                    <i className="fa fa-spin fa-spinner fa-5x"/>
+                <div className="text-center">
+                    <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingOscs ? '' : 'none'}}/>
                 </div>
+
                 <div className="row">
                     <div className="col-md-7 bg-map" style={{backgroundImage: "url(" + nextOscImg + ")", display: this.state.loadingOscs ? 'none' : ''}}>
                         <br/><br/>
@@ -337,7 +354,7 @@ class NextOsc extends React.Component {
 
                     <div className="col-md-5" style={{display: this.state.loadingOscs ? 'none' : ''}}>
                         <br/><br/><br/>
-                        <h2>{totalnextsOsc} {nextOscTitle}</h2>
+                        <h2>{totalnextsOsc} OSCs de {this.state.txtAreaAtuacao} {nextOscTitle}</h2>
                         <ul className="menu-items-basic">
                             {nextOscTitulo}
                         </ul>

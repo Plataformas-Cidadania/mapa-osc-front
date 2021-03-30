@@ -1,6 +1,7 @@
 var owl = $('.owl-carousel');
 owl.owlCarousel({
     lazyLoad:true,
+    dots: false,
     loop: true,
     margin: 10,
     nav: true,

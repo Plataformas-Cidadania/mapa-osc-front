@@ -11891,6 +11891,11 @@ time {
 
 /**/
 
+.menu-items {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .menu-items li {
   display: inline-block;
   width: 60px;
@@ -12359,6 +12364,14 @@ figcaption {
   min-height: 120px;
   border: solid 1px #CCCCCC;
   border-radius: 5px;
+}
+
+.owl-dot {
+  height: 7px !important;
+  width: 7px !important;
+  background-color: #3A559B !important;
+  margin: 3px !important;
+  border-radius: 50% !important;
 }
 
 .btn-plus {

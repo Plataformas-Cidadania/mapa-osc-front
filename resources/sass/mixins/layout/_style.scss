@@ -293,3 +293,11 @@ figcaption{
     border: solid 1px #CCCCCC;
     border-radius: 5px;
 }
+
+.owl-dot{
+    height: 7px !important;
+    width: 7px !important;
+    background-color: $color-pri !important;
+    margin: 3px !important;
+    border-radius: 50% !important;
+}

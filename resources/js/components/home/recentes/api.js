@@ -43,8 +43,8 @@ class OscsRecentes extends React.Component {
                     <div key={"recente"+index} className="col-md-4">
                         <a href={"detalhar/"+item.id_osc+"/"+clean(item.tx_nome_osc)}>
                             <div className="list-user list-lgt">
-                                <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt=""
-                                     className="rounded-circle float-left" width="50"/>
+                                <img src="img/sem-imagem.png" alt=""
+                                     className="rounded-circle float-left" width="50" style={{backgroundColor: '#FFFFFF'}}/>
                                     <h4 className="capitalize">
                                         {titleize(item.tx_nome_osc, 50)}
                                         {/*{item.tx_nome_osc.substr(1, 150)}*/}

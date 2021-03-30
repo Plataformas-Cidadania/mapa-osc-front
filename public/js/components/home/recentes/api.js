@@ -46,8 +46,8 @@ class OscsRecentes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'list-user list-lgt' },
-                            React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
-                                className: 'rounded-circle float-left', width: '50' }),
+                            React.createElement('img', { src: 'img/sem-imagem.png', alt: '',
+                                className: 'rounded-circle float-left', width: '50', style: { backgroundColor: '#FFFFFF' } }),
                             React.createElement(
                                 'h4',
                                 { className: 'capitalize' },
