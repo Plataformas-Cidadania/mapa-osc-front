@@ -97,7 +97,7 @@ class FormProjeto extends React.Component {
 
         /*if(this.state.action != props.action){
             this.setState({action: props.action}, function(){
-                  if(this.state.action=='new'){
+                 if(this.state.action=='new'){
                     this.cleanForm();
                 }
             });
@@ -111,31 +111,31 @@ class FormProjeto extends React.Component {
         this.listLocalizacoes();
         this.listObjetivos();
         this.listChkboxMetas();
-          $.ajax({
+         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
             data: {
-              },
+             },
             cache: false,
             success: function(data){
                 let ft_recursos_publico = '';
                 let ft_recursos_privado = '';
                 let ft_recursos_proprio = '';
                 let ft_recursos_nao_financeiro = '';
-                  let tp_cooperacao_tecnica = '';
+                 let tp_cooperacao_tecnica = '';
                 let tp_termo_fomento = '';
                 let tp_termo_colaboracao = '';
                 let tp_termo_parceria = '';
                 let tp_contrato_gestao = '';
                 let tp_convenio = '';
                 let tp_outro = '';
-                    data.fontes_recursos_projeto.find(function(item){
+                  data.fontes_recursos_projeto.find(function(item){
                     ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
                     ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
                     ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
                     ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
                 });
-                  data.tipo_parcerias_projeto.find(function(item){
+                 data.tipo_parcerias_projeto.find(function(item){
                     tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
                     tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
                     tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
@@ -144,7 +144,7 @@ class FormProjeto extends React.Component {
                     tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
                     tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
                 });
-                  this.setState({
+                 this.setState({
                     form: data,
                     ft_recursos_publico: ft_recursos_publico,
                     ft_recursos_privado: ft_recursos_privado,
@@ -156,7 +156,7 @@ class FormProjeto extends React.Component {
                     tp_contrato_gestao: tp_contrato_gestao,
                     tp_convenio: tp_convenio,
                     tp_outro: tp_outro,
-                      //financiadores_projeto: data.financiadores_projeto,
+                     //financiadores_projeto: data.financiadores_projeto,
                 }, function(){
                     //this.props.showHideForm();
                 });
@@ -274,16 +274,16 @@ class FormProjeto extends React.Component {
 
     /*register(e){
         e.preventDefault();
-          if(!this.validate()){
+         if(!this.validate()){
             return;
         }
-          let url = '/register-projeto';
+         let url = '/register-projeto';
         let id = null;
         if(this.state.action==='edit'){
             id = this.state.editId;
             url = '/update-user-projeto';
         }
-          this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
                 url: url,
@@ -294,9 +294,9 @@ class FormProjeto extends React.Component {
                 cache: false,
                 success: function(data) {
                     this.props.list();
-                      this.cleanForm();
+                     this.cleanForm();
                     this.props.closeForm();
-                      this.setState({projetos: data.projetos, loading: false})
+                     this.setState({projetos: data.projetos, loading: false})
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -304,7 +304,7 @@ class FormProjeto extends React.Component {
                 }.bind(this)
             });
         });
-      }*/
+     }*/
 
     listRecursos() {
 

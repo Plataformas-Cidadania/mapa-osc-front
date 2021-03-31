@@ -2,6 +2,7 @@ class Osc extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            logo: null,
             form: {
                 email: '',
                 name: '',
@@ -49,7 +50,11 @@ class Osc extends React.Component{
         //this.listObjetivos = this.listObjetivos.bind(this);
         //this.listChkboxMetas = this.listChkboxMetas.bind(this);
 
+
         //this.listArea = this.listArea.bind(this);
+
+        this.saveLogo = this.saveLogo.bind(this);
+
     }
 
     componentDidMount(){
@@ -358,9 +363,44 @@ class Osc extends React.Component{
         });
     }*/
 
+    setLogo(){
+        document.getElementById('logoOsc').value = "";
+        document.getElementById('logoOsc').click();
+    }
+
+
+    saveLogo(e){
+        let file = e.target.files[0];
+        let formData = new FormData();
+        formData.append(
+            "logo",
+            file,
+            file.name
+        );
+
+
+        $.ajax({
+            method: 'POST',
+            //method: 'POST',
+            //url: getBaseUrl+'save-logo-osc/'+id,
+            //url: '/save-logo-osc',
+            url: getBaseUrl2+'osc/logo/455128',
+            data: formData,
+            processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            cache: false,
+            success: function(data){
+                console.log(data);
+                this.setState({logo: data});
+                //this.setState({logo: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
 
     render(){
-
 
 
         /*function padDigits(number, digits) {
@@ -419,7 +459,6 @@ class Osc extends React.Component{
         }*/
 
 
-
         return (
             <div>
 
@@ -439,12 +478,14 @@ class Osc extends React.Component{
 
                             <div className="row">
                                 <div className="col-md-3">
-                                    <div className="img-upload">
+                                    <div className="img-upload" onClick={this.setLogo} style={{cursor: 'pointer'}}>
                                         <img
-                                            src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
+                                            /*src={`data:image/png;base64,${this.state.logo}`}*/
+                                            src={this.state.logo}
                                             alt=""/>
-                                            <div className="img-upload-i"><i className="fas fa-image tx-pri"/></div>
+                                        <div className="img-upload-i"><i className="fas fa-image tx-pri"/></div>
                                     </div>
+                                    <input type="file" id="logoOsc" onChange={this.saveLogo} style={{display: 'none'}}/>
                                 </div>
                                 <div className="col-md-9">
                                     <br/>
