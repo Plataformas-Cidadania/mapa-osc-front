@@ -100,7 +100,7 @@ class FormProjetoFinanciador extends React.Component{
                 <form autoComplete="off">
                     <div className="row box-search">
                         <div className="col-md-8">
-                            <div className="label-float" >
+                            <div className="label-float">
                                 <input type="text" className="form-control mx-sm-3" name="tx_nome_financiador"   onChange={this.handleInputChange} placeholder="Inserir o financiador do projeto"/>
                                 <label htmlFor="tx_nome_financiador"  style={{margin: '4px 0 0 12px'}}>Inserir o financiador do projeto</label>
                                 <br/>

@@ -100,12 +100,12 @@ class FormProjetoPublico extends React.Component{
                         <div className="col-md-8">
                             <div className="label-float">
                                 <input type="text" className="form-control mx-sm-3" name="tx_nome_publico_beneficiado"   onChange={this.handleInputChange} placeholder="Inserir o publico beneficiado"/>
-                                <label htmlFor="tx_nome_publico_beneficiado" >Inserir o público beneficiado</label>
+                                <label htmlFor="tx_nome_publico_beneficiado" style={{margin: '4px 0 0 12px'}}>Inserir o público beneficiado</label>
+                                <br/>
                             </div>
-                            <br/>
                         </div>
                         <div className="col-md-4">
-                            <button className="btn btn-success" onClick={this.register} style={{margin: '5px 0 0 0'}}>
+                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '5px'}}>
                                 <span>Adicionar</span>
                             </button>
                         </div>

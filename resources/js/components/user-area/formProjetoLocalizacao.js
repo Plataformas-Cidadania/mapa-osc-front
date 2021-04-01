@@ -179,30 +179,29 @@ class FormProjetoLocalizacao extends React.Component{
                     <div className="row box-search">
                         <div className="col-md-8">
                             <div className="input-icon" style={{display: (this.state.form.cd_certificado==7 || this.state.form.cd_certificado==0 ? 'none' : '')}}>
-                                <div className="label-float" >
-                                    <input type="text" className="form-control" placeholder="Busque um município" name="cd_municipio"
-                                           style={{display: (this.state.filters.municipio ? 'none' : '')}}
-                                           autoComplete="off"
-                                           onClick={this.clickSearchMunicipio}
-                                           onChange={this.handleSearchMunicipio}/>
-                                    <label htmlFor="cd_municipio"  style={{margin: '4px 0 0 0'}}>Inserir o financiador do projeto</label>
-                                    <br/>
-                                </div>
 
-                                <input type="text" className="form-control" name="cd_municipio2"
+                                <input type="text" className="form-control mx-sm-3"
+                                       placeholder="Busque um município" name="cd_municipio"
+                                       autoComplete="off"
+                                       onClick={this.clickSearchMunicipio}
+                                       onChange={this.handleSearchMunicipio}
+                                       style={{display: (this.state.filters.municipio ? 'none' : '')}}/>
+
+
+                                <input type="text" className="form-control mx-sm-3" name="cd_municipio2"
                                        style={{display: (this.state.filters.municipio ? '' : 'none')}}
                                        autoComplete="off"
                                        readOnly={this.state.filters.municipio}
                                        defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
 
-                                <div style={{display: (this.state.filters.municipio ? 'none' : ''), position: 'relative', margin: '-23px 0 23px 0'}}>
+                                <div style={{display: (this.state.filters.municipio ? 'none' : ''), position: 'relative', margin: '0 -12px 0 0'}}>
                                     <i className="fas fa-search"/>
                                 </div>
 
                                 <div style={{display: (this.state.filters.municipio ? '' : 'none'), position: 'relative'}} onClick={this.removeMunicipio}>
                                     <i className="fas fa-times" style={{cursor:'pointer'}}/>
                                 </div>
-
+                                <br/>
 
                                 <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}} >
                                     <div className="col-md-12 text-center">
@@ -213,12 +212,11 @@ class FormProjetoLocalizacao extends React.Component{
                             </div>
                         </div>
                         <div className="col-md-4">
-                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '5px'}}>
+                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '-2px'}}>
                                 <span>Adicionar</span>
                             </button>
                         </div>
                     </div>
-
 
 
                     <div style={{display: this.state.loading ? 'block' : 'none'}}>

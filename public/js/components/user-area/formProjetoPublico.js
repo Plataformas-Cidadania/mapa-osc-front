@@ -109,18 +109,18 @@ class FormProjetoPublico extends React.Component {
                             React.createElement('input', { type: 'text', className: 'form-control mx-sm-3', name: 'tx_nome_publico_beneficiado', onChange: this.handleInputChange, placeholder: 'Inserir o publico beneficiado' }),
                             React.createElement(
                                 'label',
-                                { htmlFor: 'tx_nome_publico_beneficiado' },
+                                { htmlFor: 'tx_nome_publico_beneficiado', style: { margin: '4px 0 0 12px' } },
                                 'Inserir o p\xFAblico beneficiado'
-                            )
-                        ),
-                        React.createElement('br', null)
+                            ),
+                            React.createElement('br', null)
+                        )
                     ),
                     React.createElement(
                         'div',
                         { className: 'col-md-4' },
                         React.createElement(
                             'button',
-                            { className: 'btn btn-success', onClick: this.register, style: { margin: '5px 0 0 0' } },
+                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '5px' } },
                             React.createElement(
                                 'span',
                                 null,

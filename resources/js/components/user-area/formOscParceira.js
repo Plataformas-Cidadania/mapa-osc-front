@@ -225,27 +225,29 @@ class FormOscParceira extends React.Component{
                     <div className="row box-search">
                         <div className="col-md-8">
                             <div className="input-icon">
+
                                 <input type="text"
-                                       className="form-control float-left"
+                                       className="form-control float-left mx-sm-3"
                                        placeholder="Digite o CNPJ da OSC parceira"
                                        name="cd_parceira"
                                        autoComplete="off"
                                        onClick={this.clickSearchparceira}
                                        onChange={this.handleSearchparceira}
                                        defaultValue={this.state.searchparceira}
-                                       style={{display: (this.state.filters.parceira ? 'none' : ''), }}
-                                />
-                                <input type="text" className="form-control" name="cd_parceira2"
+                                       style={{display: (this.state.filters.parceira ? 'none' : '')}}/>
+
+
+                                <input type="text" className="form-control  mx-sm-3" name="cd_parceira2"
                                        style={{display: (this.state.filters.parceira ? '' : 'none')}}
                                        autoComplete="off"
                                        readOnly={this.state.filters.parceira}
                                        defaultValue={this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : ''}/>
 
-                                <div style={{display: (this.state.filters.parceira ? 'none' : '')}}>
-                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                <div style={{display: (this.state.filters.parceira ? 'none' : ''), position: 'relative', margin: '-25px -12px 23px 0'}}>
+                                    <i className="fas fa-search"/>
                                 </div>
-                                <div style={{display: (this.state.filters.parceira ? '' : 'none')}} onClick={this.removeparceira}>
-                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                <div style={{display: (this.state.filters.parceira ? '' : 'none')}} onClick={this.removeparceira} className="cursor">
+                                    <i className="fas fa-times"/>
                                 </div>
 
                                 <br/>
@@ -255,11 +257,11 @@ class FormOscParceira extends React.Component{
                                     </div>
                                     {parceiras}
                                 </ul>
-                                <br/>
+
                             </div>
                         </div>
                         <div className="col-md-4">
-                            <button className="btn btn-success" onClick={this.register}>
+                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '-2px'}}>
                                 <span>Adicionar</span>
                             </button>
                         </div>

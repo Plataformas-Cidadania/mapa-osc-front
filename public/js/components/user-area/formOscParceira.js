@@ -228,29 +228,28 @@ class FormOscParceira extends React.Component {
                             'div',
                             { className: 'input-icon' },
                             React.createElement('input', { type: 'text',
-                                className: 'form-control float-left',
+                                className: 'form-control float-left mx-sm-3',
                                 placeholder: 'Digite o CNPJ da OSC parceira',
                                 name: 'cd_parceira',
                                 autoComplete: 'off',
                                 onClick: this.clickSearchparceira,
                                 onChange: this.handleSearchparceira,
                                 defaultValue: this.state.searchparceira,
-                                style: { display: this.state.filters.parceira ? 'none' : '' }
-                            }),
-                            React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_parceira2',
+                                style: { display: this.state.filters.parceira ? 'none' : '' } }),
+                            React.createElement('input', { type: 'text', className: 'form-control  mx-sm-3', name: 'cd_parceira2',
                                 style: { display: this.state.filters.parceira ? '' : 'none' },
                                 autoComplete: 'off',
                                 readOnly: this.state.filters.parceira,
                                 defaultValue: this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : '' }),
                             React.createElement(
                                 'div',
-                                { style: { display: this.state.filters.parceira ? 'none' : '' } },
-                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                { style: { display: this.state.filters.parceira ? 'none' : '', position: 'relative', margin: '-25px -12px 23px 0' } },
+                                React.createElement('i', { className: 'fas fa-search' })
                             ),
                             React.createElement(
                                 'div',
-                                { style: { display: this.state.filters.parceira ? '' : 'none' }, onClick: this.removeparceira },
-                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                { style: { display: this.state.filters.parceira ? '' : 'none' }, onClick: this.removeparceira, className: 'cursor' },
+                                React.createElement('i', { className: 'fas fa-times' })
                             ),
                             React.createElement('br', null),
                             React.createElement(
@@ -262,8 +261,7 @@ class FormOscParceira extends React.Component {
                                     React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingOscParceira ? '' : 'none' } })
                                 ),
                                 parceiras
-                            ),
-                            React.createElement('br', null)
+                            )
                         )
                     ),
                     React.createElement(
@@ -271,7 +269,7 @@ class FormOscParceira extends React.Component {
                         { className: 'col-md-4' },
                         React.createElement(
                             'button',
-                            { className: 'btn btn-success', onClick: this.register },
+                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '-2px' } },
                             React.createElement(
                                 'span',
                                 null,

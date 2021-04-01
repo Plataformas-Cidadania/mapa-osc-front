@@ -190,29 +190,20 @@ class FormProjetoLocalizacao extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'input-icon', style: { display: this.state.form.cd_certificado == 7 || this.state.form.cd_certificado == 0 ? 'none' : '' } },
-                            React.createElement(
-                                'div',
-                                { className: 'label-float' },
-                                React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um munic\xEDpio', name: 'cd_municipio',
-                                    style: { display: this.state.filters.municipio ? 'none' : '' },
-                                    autoComplete: 'off',
-                                    onClick: this.clickSearchMunicipio,
-                                    onChange: this.handleSearchMunicipio }),
-                                React.createElement(
-                                    'label',
-                                    { htmlFor: 'cd_municipio', style: { margin: '4px 0 0 0' } },
-                                    'Inserir o financiador do projeto'
-                                ),
-                                React.createElement('br', null)
-                            ),
-                            React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
+                            React.createElement('input', { type: 'text', className: 'form-control mx-sm-3',
+                                placeholder: 'Busque um munic\xEDpio', name: 'cd_municipio',
+                                autoComplete: 'off',
+                                onClick: this.clickSearchMunicipio,
+                                onChange: this.handleSearchMunicipio,
+                                style: { display: this.state.filters.municipio ? 'none' : '' } }),
+                            React.createElement('input', { type: 'text', className: 'form-control mx-sm-3', name: 'cd_municipio2',
                                 style: { display: this.state.filters.municipio ? '' : 'none' },
                                 autoComplete: 'off',
                                 readOnly: this.state.filters.municipio,
                                 defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
                             React.createElement(
                                 'div',
-                                { style: { display: this.state.filters.municipio ? 'none' : '', position: 'relative', margin: '-23px 0 23px 0' } },
+                                { style: { display: this.state.filters.municipio ? 'none' : '', position: 'relative', margin: '0 -12px 0 0' } },
                                 React.createElement('i', { className: 'fas fa-search' })
                             ),
                             React.createElement(
@@ -220,6 +211,7 @@ class FormProjetoLocalizacao extends React.Component {
                                 { style: { display: this.state.filters.municipio ? '' : 'none', position: 'relative' }, onClick: this.removeMunicipio },
                                 React.createElement('i', { className: 'fas fa-times', style: { cursor: 'pointer' } })
                             ),
+                            React.createElement('br', null),
                             React.createElement(
                                 'ul',
                                 { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
@@ -237,7 +229,7 @@ class FormProjetoLocalizacao extends React.Component {
                         { className: 'col-md-4' },
                         React.createElement(
                             'button',
-                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '5px' } },
+                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '-2px' } },
                             React.createElement(
                                 'span',
                                 null,
