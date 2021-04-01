@@ -151,19 +151,21 @@ class Atuacoes extends React.Component {
         let areas = this.state.areaAtuacao;
 
         /////////////////////////
-        /*let arrayAreas = [];
-         this.state.dataAtuacaoBd.find(function(itemSelectSub){
+        this.setState({ boxInfo: false });
+        let arrayAreas = [];
+
+        this.state.dataAtuacaoBd.find(function (itemSelectSub) {
             arrayAreas.push(itemSelectSub.cd_area_atuacao);
         });
         const arrUnique = [...new Set(arrayAreas)];
-         console.log(arrUnique);
-        console.log(arrUnique.indexOf(id));
-        if(arrUnique.indexOf(id) != -1){
-            console.log('222');
-            this.setState({boxInfo: true});
+
+        if (arrUnique.indexOf(parseInt(id)) != -1) {
+            this.setState({ boxInfo: true });
             return;
-        }*/
+        }
+
         /////////////////////////
+
 
         areas.find(item => {
             if (item.cd_area_atuacao == id) {
@@ -201,7 +203,6 @@ class Atuacoes extends React.Component {
 
         /*//////////////////*/
         if (checkedAtuacao !== true) {
-            console.log('POST');
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/area_atuacao',
@@ -221,7 +222,6 @@ class Atuacoes extends React.Component {
                 }.bind(this)
             });
         } else {
-            console.log('DELETE');
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/area_atuacao/' + idSelectedSub,
@@ -282,23 +282,12 @@ class Atuacoes extends React.Component {
 
     render() {
 
-        /*console.log('dataAtuacaoSelected', this.state.dataAtuacaoBd);
-        console.log('dataAtuacaoBd', this.state.dataAtuacaoBd);
-        console.log('areasAtuacao', this.state.areasAtuacao);*/
-
-        //console.log('areaAtuacao', this.state.areaAtuacao);
-
-
         let areaAtuacao = null;
         let subareaAtuacao = [];
         if (this.state.areaAtuacao) {
             areaAtuacao = this.state.areaAtuacao.map(function (item) {
 
                 let subarea = null;
-
-                //console.log('subareas', item.subareas);
-
-                //let arrayAreas = []
 
                 if (item.subareas) {
                     subarea = item.subareas.map(function (subitem) {
@@ -313,15 +302,7 @@ class Atuacoes extends React.Component {
                                 item.tx_nome_outra = itemSelectSub.tx_nome_outra;
                                 item.idSelectedSub = itemSelectSub.id_area_atuacao;
                             }
-                            //arrayAreas.push(itemSelectSub.cd_area_atuacao);
                         });
-
-                        //const arrUnique = [...new Set(arrayAreas)];
-
-                        //this.setState({arrUnique: arrUnique})
-
-
-                        //console.log(arrUnique);
 
                         return React.createElement(
                             'div',
@@ -456,7 +437,12 @@ class Atuacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'alert alert-danger', role: 'alert', style: { position: 'fixed', zIndex: '999', display: this.state.boxInfo ? '' : 'none' } },
-                                '\xC9 preciso excluir as Sub\xE1rea de Atua\xE7\xE3o, para excluir uma \xE1rea!'
+                                '\xC9 preciso excluir as Sub\xE1rea de Atua\xE7\xE3o, para desativar uma \xE1rea!  ',
+                                React.createElement(
+                                    'button',
+                                    { className: 'btn btn-danger', onClick: this.callSubareaAtuacao },
+                                    'X'
+                                )
                             ),
                             areaAtuacao,
                             React.createElement('br', null),

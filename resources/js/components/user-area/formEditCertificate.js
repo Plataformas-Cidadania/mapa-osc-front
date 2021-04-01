@@ -111,13 +111,6 @@ class FormEditCertificate extends React.Component{
         this.setState({form: form});
     }
 
-    /*cleanForm(){
-        let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }
-        this.setState({form: form});
-    }*/
 
     validate(){
         //console.log(this.state.form);
@@ -126,16 +119,6 @@ class FormEditCertificate extends React.Component{
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                valid = false;
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        //console.log(requireds);
 
         this.setState({requireds: requireds});
         return valid;
@@ -161,13 +144,16 @@ class FormEditCertificate extends React.Component{
             }
 
 
+            console.log('--->', this.state.form.cd_certificado);
+            if(this.state.form.cd_certificado===8){
+                console.log('Municipal');
 
-            if(this.state.form.cd_municipio){
                 data.cd_municipio = this.state.form.cd_municipio;
                 data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
-            if(this.state.form.cd_uf){
-                data.cd_municipio = null;
+            if(this.state.form.cd_certificado===7){
+                console.log('Estadual');
+                //data.cd_municipio = '';
                 data.cd_uf = this.state.form.cd_uf;
             }
             $.ajax({

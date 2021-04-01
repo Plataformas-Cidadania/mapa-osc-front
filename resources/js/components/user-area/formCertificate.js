@@ -279,6 +279,7 @@ class FormCertificate extends React.Component{
 
     render(){
 
+
         let ufs = null
         if(this.state.listUf) {
             ufs = this.state.listUf.map(function (item, index) {

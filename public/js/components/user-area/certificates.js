@@ -384,6 +384,11 @@ class Certificates extends React.Component {
                     ),
                     React.createElement(
                         'div',
+                        { className: 'text-center' },
+                        React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingList ? '' : 'none' } })
+                    ),
+                    React.createElement(
+                        'div',
                         { style: { float: 'right', cursor: 'pointer' } },
                         React.createElement(
                             'a',

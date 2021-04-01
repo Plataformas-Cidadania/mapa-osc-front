@@ -660,9 +660,23 @@ class Participacoes extends React.Component{
                                 </div>
                             </div>
 
+                            <br/>
 
-                            <button type="button" className="btn btn-success" onClick={this.updateNaoPossui}><i
-                                className="fas fa-cloud-download-alt"/> Atualizar dados </button>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div style={{marginTop: '-10px'}}>
+                                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                            <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                            {this.state.msg}
+                                        </div>
+                                        <button type="button" className="btn btn-success" onClick={this.updateNaoPossui}><i
+                                            className="fas fa-cloud-download-alt"/> Atualizar dados de "não possui" </button>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

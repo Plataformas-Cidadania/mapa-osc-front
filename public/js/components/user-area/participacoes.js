@@ -899,12 +899,41 @@ class Participacoes extends React.Component {
                                 )
                             )
                         ),
+                        React.createElement('br', null),
                         React.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-success', onClick: this.updateNaoPossui },
-                            React.createElement('i', {
-                                className: 'fas fa-cloud-download-alt' }),
-                            ' Atualizar dados '
+                            'div',
+                            { className: 'row' },
+                            React.createElement(
+                                'div',
+                                { className: 'col-md-12' },
+                                React.createElement(
+                                    'div',
+                                    { style: { marginTop: '-10px' } },
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loading ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success', onClick: this.updateNaoPossui },
+                                        React.createElement('i', {
+                                            className: 'fas fa-cloud-download-alt' }),
+                                        ' Atualizar dados de "n\xE3o possui" '
+                                    ),
+                                    React.createElement('br', null)
+                                )
+                            )
                         )
                     )
                 )

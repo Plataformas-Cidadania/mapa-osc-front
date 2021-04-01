@@ -261,6 +261,10 @@ class Certificates extends React.Component{
                             </tbody>
                         </table>
 
+                        <div className="text-center">
+                            <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingList ? '' : 'none'}}/>
+                        </div>
+
                         <div style={{float: 'right', cursor: 'pointer'}}>
                             <a onClick={() => this.callModal(0, 'insert', 'Inserir')} className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo título</a>
                         </div>
