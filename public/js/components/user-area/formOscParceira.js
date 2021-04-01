@@ -28,7 +28,9 @@ class FormOscParceira extends React.Component {
             },
 
             searchparceira: null,
-            listparceira: null
+            listparceira: null,
+
+            loadingOscParceira: null
 
         };
 
@@ -152,17 +154,17 @@ class FormOscParceira extends React.Component {
     }
     listparceira(search) {
         if (search.length > 3) {
-            this.setState({ loadingList: true });
+            this.setState({ loadingOscParceira: true });
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl + 'search/cnpj/autocomplete/' + search,
                 cache: false,
                 success: function (data) {
-                    this.setState({ listparceira: data, loadingList: false });
+                    this.setState({ listparceira: data, loadingOscParceira: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
-                    this.setState({ loadingList: false });
+                    this.setState({ loadingOscParceira: false });
                 }.bind(this)
             });
         }
@@ -218,50 +220,65 @@ class FormOscParceira extends React.Component {
                 { autoComplete: 'off' },
                 React.createElement(
                     'div',
-                    { className: 'input-icon' },
-                    React.createElement('input', { type: 'text',
-                        className: 'form-control float-left',
-                        placeholder: 'Busque uma OSC parceira',
-                        name: 'cd_parceira',
-                        autoComplete: 'off',
-                        onClick: this.clickSearchparceira,
-                        onChange: this.handleSearchparceira,
-                        defaultValue: this.state.searchparceira,
-                        style: { display: this.state.filters.parceira ? 'none' : '' }
-                    }),
-                    React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_parceira2',
-                        style: { display: this.state.filters.parceira ? '' : 'none' },
-                        autoComplete: 'off',
-                        defaultValue: this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : '' }),
+                    { className: 'row box-search' },
                     React.createElement(
                         'div',
-                        { style: { display: this.state.filters.parceira ? 'none' : '' } },
-                        React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
-                    ),
-                    React.createElement(
-                        'div',
-                        { style: { display: this.state.filters.parceira ? '' : 'none' }, onClick: this.removeparceira },
-                        React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
-                    ),
-                    React.createElement(
-                        'button',
-                        { className: 'btn btn-success', onClick: this.register },
+                        { className: 'col-md-8' },
                         React.createElement(
-                            'span',
-                            null,
-                            ' Adicionar'
+                            'div',
+                            { className: 'input-icon' },
+                            React.createElement('input', { type: 'text',
+                                className: 'form-control float-left',
+                                placeholder: 'Digite o CNPJ da OSC parceira',
+                                name: 'cd_parceira',
+                                autoComplete: 'off',
+                                onClick: this.clickSearchparceira,
+                                onChange: this.handleSearchparceira,
+                                defaultValue: this.state.searchparceira,
+                                style: { display: this.state.filters.parceira ? 'none' : '' }
+                            }),
+                            React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_parceira2',
+                                style: { display: this.state.filters.parceira ? '' : 'none' },
+                                autoComplete: 'off',
+                                readOnly: this.state.filters.parceira,
+                                defaultValue: this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : '' }),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.filters.parceira ? 'none' : '' } },
+                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                            ),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.filters.parceira ? '' : 'none' }, onClick: this.removeparceira },
+                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'ul',
+                                { className: 'box-search-itens', style: { display: (this.state.searchparceira || this.state.listparceira) && !this.state.filters.parceira ? '' : 'none' } },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12 text-center' },
+                                    React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingOscParceira ? '' : 'none' } })
+                                ),
+                                parceiras
+                            ),
+                            React.createElement('br', null)
                         )
                     ),
                     React.createElement(
                         'div',
-                        null,
+                        { className: 'col-md-4' },
                         React.createElement(
-                            'ul',
-                            { className: 'box-search-itens', style: { display: (this.state.searchparceira || this.state.listparceira) && !this.state.filters.parceira ? '' : 'none' } },
-                            parceiras
+                            'button',
+                            { className: 'btn btn-success', onClick: this.register },
+                            React.createElement(
+                                'span',
+                                null,
+                                'Adicionar'
+                            )
                         )
-                    ),
-                    React.createElement('br', null)
+                    )
                 ),
                 React.createElement(
                     'div',

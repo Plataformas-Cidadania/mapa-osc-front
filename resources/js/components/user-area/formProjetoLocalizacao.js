@@ -17,6 +17,7 @@ class FormProjetoLocalizacao extends React.Component{
             filters: {
                 municipio: null,
             },
+            loadingLocal: false,
 
         };
 
@@ -116,17 +117,17 @@ class FormProjetoLocalizacao extends React.Component{
     }
     listMunicipio(search){
         if (search.length>3) {
-            this.setState({loadingList: true});
+            this.setState({loadingLocal: true});
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl + 'menu/geo/municipio/' + search,
                 cache: false,
                 success: function (data) {
-                    this.setState({listMunicipio: data, loadingList: false});
+                    this.setState({listMunicipio: data, loadingLocal: false});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
-                    this.setState({loadingList: false});
+                    this.setState({loadingLocal: false});
                 }.bind(this)
             });
         }
@@ -173,52 +174,52 @@ class FormProjetoLocalizacao extends React.Component{
 
         return(
             <div>
-                <form className="form-inline" autoComplete="off">
-                    <div style={{width: '100%', margin: '0 0 0 -30px'}} >
+                <form  autoComplete="off">
+
+                    <div className="row box-search">
+                        <div className="col-md-8">
+                            <div className="input-icon" style={{display: (this.state.form.cd_certificado==7 || this.state.form.cd_certificado==0 ? 'none' : '')}}>
+                                <div className="label-float" >
+                                    <input type="text" className="form-control" placeholder="Busque um município" name="cd_municipio"
+                                           style={{display: (this.state.filters.municipio ? 'none' : '')}}
+                                           autoComplete="off"
+                                           onClick={this.clickSearchMunicipio}
+                                           onChange={this.handleSearchMunicipio}/>
+                                    <label htmlFor="cd_municipio"  style={{margin: '4px 0 0 0'}}>Inserir o financiador do projeto</label>
+                                    <br/>
+                                </div>
+
+                                <input type="text" className="form-control" name="cd_municipio2"
+                                       style={{display: (this.state.filters.municipio ? '' : 'none')}}
+                                       autoComplete="off"
+                                       readOnly={this.state.filters.municipio}
+                                       defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
+
+                                <div style={{display: (this.state.filters.municipio ? 'none' : ''), position: 'relative', margin: '-23px 0 23px 0'}}>
+                                    <i className="fas fa-search"/>
+                                </div>
+
+                                <div style={{display: (this.state.filters.municipio ? '' : 'none'), position: 'relative'}} onClick={this.removeMunicipio}>
+                                    <i className="fas fa-times" style={{cursor:'pointer'}}/>
+                                </div>
 
 
-                        {/*--------------------*/}
-                        <div className="input-icon" style={{display: (this.state.form.cd_certificado==7 || this.state.form.cd_certificado==0 ? 'none' : ''), width: '65%', float: 'left'}}>
-                            <input type="text" className="form-control" placeholder="Busque um município" name="cd_municipio"
-                                   style={{display: (this.state.filters.municipio ? 'none' : ''), width: '90%', marginLeft: '16px'}}
-                                   autoComplete="off"
-                                   onClick={this.clickSearchMunicipio}
-                                   onChange={this.handleSearchMunicipio}/>
-                            <input type="text" className="form-control" name="cd_municipio2"
-                                   style={{display: (this.state.filters.municipio ? '' : 'none'), width: '90%', marginLeft: '16px'}}
-                                   autoComplete="off"
-                                   readOnly={this.state.filters.municipio}
-                                   defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
-
-
-                            <div style={{display: (this.state.filters.municipio ? 'none' : ''), position: 'relative', left: '-30px'}}>
-                                <i className="fas fa-search" />
-                            </div>
-                            <div style={{display: (this.state.filters.municipio ? '' : 'none'), position: 'relative', left: '-30px'}} onClick={this.removeMunicipio}>
-                                <i className="fas fa-times" style={{cursor:'pointer'}}/>
-                            </div>
-
-                            <div>
-                                <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
+                                <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}} >
+                                    <div className="col-md-12 text-center">
+                                        <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingLocal ? '' : 'none'}}/>
+                                    </div>
                                     {municipios}
                                 </ul>
                             </div>
-                            <br/>
                         </div>
-                        {/*--------------------*/}
-
-
-                        {/*<div className="label-float" style={{width: '65%', float: 'left'}}>
-                            <input type="text" className="form-control mx-sm-3" name="tx_nome_localizacao"  style={{width: '90%', margin: '-5px 0 0 0'}}  onChange={this.handleInputChange} placeholder="Inserir o localizacao do projeto"/>
-                            <label htmlFor="tx_nome_localizacao"  style={{margin: '-2px 0 0 12px'}}>Inserir o localizacao do projeto</label>
-                        </div>*/}
-
-                        <button className="btn btn-success" onClick={this.register}>
-                            <span>Adicionar</span>
-                        </button>
-                        <br/>
-                        <br/>
+                        <div className="col-md-4">
+                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '5px'}}>
+                                <span>Adicionar</span>
+                            </button>
+                        </div>
                     </div>
+
+
 
                     <div style={{display: this.state.loading ? 'block' : 'none'}}>
                         <div><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>

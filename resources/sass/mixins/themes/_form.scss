@@ -295,7 +295,7 @@ label, input, .btn-number {
     overflow: auto;
     width: 95%;
     height: 200px;
-    margin: 0;
+    margin: 0 0 0 0;
     padding: 0;
     margin-right: 20px;
     z-index: 99;
@@ -337,4 +337,8 @@ label, input, .btn-number {
     text-align: center;
     margin-top: 15px;
 }
-
+.box-search{
+    background: #F1F1F1;
+    padding-top: 20px;
+    margin-bottom: 15px;
+}

@@ -99,31 +99,38 @@ class FormProjetoFinanciador extends React.Component {
             null,
             React.createElement(
                 'form',
-                { className: 'form-inline', autoComplete: 'off' },
+                { autoComplete: 'off' },
                 React.createElement(
                     'div',
-                    { style: { width: '100%', margin: '0 0 0 -30px' } },
+                    { className: 'row box-search' },
                     React.createElement(
                         'div',
-                        { className: 'label-float', style: { width: '65%', float: 'left' } },
-                        React.createElement('input', { type: 'text', className: 'form-control mx-sm-3', name: 'tx_nome_financiador', style: { width: '90%', margin: '-5px 0 0 0' }, onChange: this.handleInputChange, placeholder: 'Inserir o financiador do projeto' }),
+                        { className: 'col-md-8' },
                         React.createElement(
-                            'label',
-                            { htmlFor: 'tx_nome_financiador', style: { margin: '-2px 0 0 12px' } },
-                            'Inserir o financiador do projeto'
+                            'div',
+                            { className: 'label-float' },
+                            React.createElement('input', { type: 'text', className: 'form-control mx-sm-3', name: 'tx_nome_financiador', onChange: this.handleInputChange, placeholder: 'Inserir o financiador do projeto' }),
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'tx_nome_financiador', style: { margin: '4px 0 0 12px' } },
+                                'Inserir o financiador do projeto'
+                            ),
+                            React.createElement('br', null)
                         )
                     ),
                     React.createElement(
-                        'button',
-                        { className: 'btn btn-success', onClick: this.register },
+                        'div',
+                        { className: 'col-md-4' },
                         React.createElement(
-                            'span',
-                            null,
-                            'Adicionar'
+                            'button',
+                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '5px' } },
+                            React.createElement(
+                                'span',
+                                null,
+                                'Adicionar'
+                            )
                         )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('br', null)
+                    )
                 ),
                 React.createElement(
                     'div',

@@ -92,25 +92,25 @@ class FormProjetoFinanciador extends React.Component{
                 }.bind(this)
             });
         });
-
     }
 
     render(){
         return(
             <div>
-                <form className="form-inline" autoComplete="off">
-                    <div style={{width: '100%', margin: '0 0 0 -30px'}}>
-
-                        <div className="label-float" style={{width: '65%', float: 'left'}}>
-                            <input type="text" className="form-control mx-sm-3" name="tx_nome_financiador"  style={{width: '90%', margin: '-5px 0 0 0'}}  onChange={this.handleInputChange} placeholder="Inserir o financiador do projeto"/>
-                            <label htmlFor="tx_nome_financiador"  style={{margin: '-2px 0 0 12px'}}>Inserir o financiador do projeto</label>
+                <form autoComplete="off">
+                    <div className="row box-search">
+                        <div className="col-md-8">
+                            <div className="label-float" >
+                                <input type="text" className="form-control mx-sm-3" name="tx_nome_financiador"   onChange={this.handleInputChange} placeholder="Inserir o financiador do projeto"/>
+                                <label htmlFor="tx_nome_financiador"  style={{margin: '4px 0 0 12px'}}>Inserir o financiador do projeto</label>
+                                <br/>
+                            </div>
                         </div>
-
-                        <button className="btn btn-success" onClick={this.register}>
-                            <span>Adicionar</span>
-                        </button>
-                        <br/>
-                        <br/>
+                        <div className="col-md-4">
+                            <button className="btn btn-success" onClick={this.register} style={{marginTop: '5px'}}>
+                                <span>Adicionar</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div style={{display: this.state.loading ? 'block' : 'none'}}>

@@ -158,7 +158,6 @@ class Projetos extends React.Component{
 
         $.ajax({
             method: 'GET',
-            //url: '/list-users-projetos',
             url: getBaseUrl2 + 'osc/projetos/455128',
             data: {
 
@@ -173,13 +172,6 @@ class Projetos extends React.Component{
             }.bind(this)
         });
     }
-
-    /*callModal(){
-        let modal = this.state.modal;
-        this.setState({modal: modal}, function(){
-            $('#modalForm').modal('show');
-        });
-    }*/
 
 
 
@@ -197,7 +189,7 @@ class Projetos extends React.Component{
 
     modal(){
 
-        let form = null;
+        let form = '';
 
         if(this.state.editTipo=='insert'){
             form = (
@@ -236,17 +228,12 @@ class Projetos extends React.Component{
 
         let projetos = this.state.projetos.map(function(item, index){
 
-            let hr = null;
-            if(index < this.state.projetos.length-1){
-                hr = <hr/>;
-            }
-
             return (
                 <tr key={"projeto_"+index}>
                     <td>{item.titulo}</td>
                     <td>{formatDate(item.data_inicio, 'pt-br')}</td>
                     <td width="70">
-                        <a onClick={() => this.callModal(item.id, 'edit', 'Alterar projeto')}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                        <a onClick={() => this.callModal(item.id, 'edit', 'Alterar projeto')} className="cursor"><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
                         <a onClick={() => this.callModalExcluir(item.id, item.titulo)} style={{cursor: 'pointer', position: 'relative', top: '4px'}}>
                             <i className="far fa-trash-alt text-danger float-right"/>
                         </a>
@@ -273,8 +260,6 @@ class Projetos extends React.Component{
                             <tr>
                                 <th scope="col">Titulo / Projeto</th>
                                 <th scope="col">Início da validade</th>
-                                {/*<th scope="col">Fim da validade</th>
-                                <th scope="col">Valor total projeto</th>*/}
                                 <th scope="col"/>
                             </tr>
                             </thead>
@@ -285,12 +270,7 @@ class Projetos extends React.Component{
 
                         <div style={{float: 'right', cursor: 'pointer'}}>
                             <a onClick={() => this.callModal(0, 'insert', 'Inserir projeto')}  className="btn btn-warning"><i className="fa fa-plus"/> Adicionar novo projeto</a>
-                           {/* <a onClick={this.showHideForm} style={{display: this.state.showForm ? "block" : "none"}} className="btn btn-warning"><i className="fa fa-times"/> Cancelar</a>*/}
                         </div>
-
-                        {/*<div style={{clear: 'both', display: this.state.showForm ? 'block' : 'none'}}>
-                            <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
-                        </div>*/}
                     </div>
                     {modal}
                     {modalExcluir}

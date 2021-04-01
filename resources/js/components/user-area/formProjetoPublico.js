@@ -36,11 +36,11 @@ class FormProjetoPublico extends React.Component{
     }
 
     cleanForm(){
+        console.log('11111111111');
         this.setState({
             form: {
                 tx_nome_publico_beneficiado: '',
             },
-
         });
     }
 
@@ -95,19 +95,20 @@ class FormProjetoPublico extends React.Component{
     render(){
         return(
             <div>
-                <form className="form-inline" autoComplete="off">
-                    <div style={{width: '100%', margin: '0 0 0 -30px'}}>
-
-                        <div className="label-float" style={{width: '65%', float: 'left'}}>
-                            <input type="text" className="form-control mx-sm-3" name="tx_nome_publico_beneficiado"  style={{width: '90%', margin: '-5px 0 0 0'}}  onChange={this.handleInputChange} placeholder="Inserir o publico beneficiado"/>
-                            <label htmlFor="tx_nome_publico_beneficiado"  style={{margin: '-2px 0 0 12px'}}>Inserir o publico beneficiado</label>
+                <form autoComplete="off">
+                    <div className="row box-search">
+                        <div className="col-md-8">
+                            <div className="label-float">
+                                <input type="text" className="form-control mx-sm-3" name="tx_nome_publico_beneficiado"   onChange={this.handleInputChange} placeholder="Inserir o publico beneficiado"/>
+                                <label htmlFor="tx_nome_publico_beneficiado" >Inserir o público beneficiado</label>
+                            </div>
+                            <br/>
                         </div>
-
-                        <button className="btn btn-success" onClick={this.register}>
-                            <span>Adicionar</span>
-                        </button>
-                        <br/>
-                        <br/>
+                        <div className="col-md-4">
+                            <button className="btn btn-success" onClick={this.register} style={{margin: '5px 0 0 0'}}>
+                                <span>Adicionar</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div style={{display: this.state.loading ? 'block' : 'none'}}>

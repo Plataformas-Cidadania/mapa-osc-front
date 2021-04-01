@@ -801,7 +801,7 @@ class FormEditProjeto extends React.Component {
                             { className: 'float-right', style: { display: this.state.removeItem == 'financiador_' + item.id_financiador_projeto ? 'none' : '' } },
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.removeList('financiador', item.id_financiador_projeto) },
+                                { className: 'float-right cursor', onClick: () => this.removeList('financiador', item.id_financiador_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                             ),
                             React.createElement(
@@ -809,7 +809,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'float-right', onClick: () => this.saveList('financiador', item.id_financiador_projeto), style: { margin: '0 10px' } },
                                 React.createElement(
                                     'div',
-                                    { style: { display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? 'none' : '' } },
+                                    { style: { display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? 'none' : '' }, className: 'cursor' },
                                     React.createElement('i', { className: 'far fa-save' })
                                 ),
                                 React.createElement(
@@ -869,7 +869,7 @@ class FormEditProjeto extends React.Component {
                             { className: 'float-right', style: { display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.removeList('publico', item.id_publico_beneficiado_projeto) },
+                                { className: 'float-right cursor', onClick: () => this.removeList('publico', item.id_publico_beneficiado_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                             ),
                             React.createElement(
@@ -877,7 +877,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'float-right', onClick: () => this.saveList('publico', item.id_publico_beneficiado_projeto), style: { margin: '0 10px' } },
                                 React.createElement(
                                     'div',
-                                    { style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
+                                    { className: 'cursor', style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
                                     React.createElement('i', { className: 'far fa-save' })
                                 ),
                                 React.createElement(
@@ -940,7 +940,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'float-right', style: { display: this.state.removeItem == 'localizacao_' + item.id_localizacao_projeto ? 'none' : '' } },
                                 React.createElement(
                                     'div',
-                                    { className: 'float-right', onClick: () => this.removeList('localizacao', item.id_localizacao_projeto) },
+                                    { className: 'float-right cursor', onClick: () => this.removeList('localizacao', item.id_localizacao_projeto) },
                                     React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                                 )
                             )
@@ -995,7 +995,7 @@ class FormEditProjeto extends React.Component {
                             { className: 'float-right', style: { display: this.state.removeItem == 'parceira_' + item.id_osc_parceira_projeto ? 'none' : '' } },
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.removeList('parceira', item.id_osc_parceira_projeto) },
+                                { className: 'float-right cursor', onClick: () => this.removeList('parceira', item.id_osc_parceira_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                             )
                         )

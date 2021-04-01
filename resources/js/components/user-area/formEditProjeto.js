@@ -803,11 +803,11 @@ class FormEditProjeto extends React.Component{
                                 <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_financiador_projeto)}>Cancelar</div>
                             </div>
                             <div className="float-right" style={{display: this.state.removeItem == 'financiador_'+item.id_financiador_projeto ? 'none' : ''}}>
-                                <div className="float-right" onClick={() => this.removeList('financiador', item.id_financiador_projeto)}>
+                                <div className="float-right cursor" onClick={() => this.removeList('financiador', item.id_financiador_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
                                 <div className="float-right" onClick={() => this.saveList('financiador', item.id_financiador_projeto)}  style={{margin: '0 10px'}}>
-                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? 'none' : ''}} className="cursor"><i className="far fa-save"/></div>
                                     <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                 </div>
                             </div>
@@ -837,11 +837,11 @@ class FormEditProjeto extends React.Component{
                                 <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_publico_beneficiado_projeto)}>Cancelar</div>
                             </div>
                             <div className="float-right" style={{display: this.state.removeItem == 'publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}>
-                                <div className="float-right" onClick={() => this.removeList('publico', item.id_publico_beneficiado_projeto)}>
+                                <div className="float-right cursor" onClick={() => this.removeList('publico', item.id_publico_beneficiado_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
                                 <div className="float-right" onClick={() => this.saveList('publico', item.id_publico_beneficiado_projeto)}  style={{margin: '0 10px'}}>
-                                    <div style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
+                                    <div className="cursor" style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
                                     <div style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                 </div>
                             </div>
@@ -872,7 +872,7 @@ class FormEditProjeto extends React.Component{
                                     <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_localizacao_projeto)}>Cancelar</div>
                                 </div>
                                 <div className="float-right" style={{display: this.state.removeItem == 'localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}>
-                                    <div className="float-right" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
+                                    <div className="float-right cursor" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
                                         <i className="fas fa-trash-alt text-danger " />
                                     </div>
                                     {/*<div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
@@ -916,7 +916,7 @@ class FormEditProjeto extends React.Component{
                                 <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar</div>
                             </div>
                             <div className="float-right" style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}>
-                                <div className="float-right" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
+                                <div className="float-right cursor" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
                                     <i className="fas fa-trash-alt text-danger " />
                                 </div>
                                 {/*<div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>

@@ -31,6 +31,8 @@ class FormOscParceira extends React.Component{
             searchparceira: null,
             listparceira:null,
 
+            loadingOscParceira: null,
+
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -159,17 +161,17 @@ class FormOscParceira extends React.Component{
     }
     listparceira(search){
         if (search.length>3) {
-            this.setState({loadingList: true});
+            this.setState({loadingOscParceira: true});
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl + 'search/cnpj/autocomplete/' + search,
                 cache: false,
                 success: function (data) {
-                    this.setState({listparceira: data, loadingList: false});
+                    this.setState({listparceira: data, loadingOscParceira: false});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
-                    this.setState({loadingList: false});
+                    this.setState({loadingOscParceira: false});
                 }.bind(this)
             });
         }
@@ -220,43 +222,51 @@ class FormOscParceira extends React.Component{
 
                 <form autoComplete="off">
 
+                    <div className="row box-search">
+                        <div className="col-md-8">
+                            <div className="input-icon">
+                                <input type="text"
+                                       className="form-control float-left"
+                                       placeholder="Digite o CNPJ da OSC parceira"
+                                       name="cd_parceira"
+                                       autoComplete="off"
+                                       onClick={this.clickSearchparceira}
+                                       onChange={this.handleSearchparceira}
+                                       defaultValue={this.state.searchparceira}
+                                       style={{display: (this.state.filters.parceira ? 'none' : ''), }}
+                                />
+                                <input type="text" className="form-control" name="cd_parceira2"
+                                       style={{display: (this.state.filters.parceira ? '' : 'none')}}
+                                       autoComplete="off"
+                                       readOnly={this.state.filters.parceira}
+                                       defaultValue={this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : ''}/>
 
-                    {/*<label htmlFor="" >*</label><br/>*/}
+                                <div style={{display: (this.state.filters.parceira ? 'none' : '')}}>
+                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                </div>
+                                <div style={{display: (this.state.filters.parceira ? '' : 'none')}} onClick={this.removeparceira}>
+                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                </div>
 
-                    <div className="input-icon">
-                        <input type="text"
-                               className="form-control float-left"
-                               placeholder="Busque uma OSC parceira"
-                               name="cd_parceira"
-                               autoComplete="off"
-                               onClick={this.clickSearchparceira}
-                               onChange={this.handleSearchparceira}
-                               defaultValue={this.state.searchparceira}
-                               style={{display: (this.state.filters.parceira ? 'none' : ''), }}
-                        />
-                        <input type="text" className="form-control" name="cd_parceira2"
-                               style={{display: (this.state.filters.parceira ? '' : 'none')}}
-                               autoComplete="off"
-                               defaultValue={this.state.filters.parceira ? this.state.filters.parceira.tx_nome_osc : ''}/>
-
-                        <div style={{display: (this.state.filters.parceira ? 'none' : '')}}>
-                            <i className="fas fa-search" style={{top: '-28px'}}/>
+                                <br/>
+                                <ul className="box-search-itens" style={{display: ((this.state.searchparceira || this.state.listparceira) && !this.state.filters.parceira) ? '' : 'none'}}>
+                                    <div className="col-md-12 text-center">
+                                        <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingOscParceira ? '' : 'none'}}/>
+                                    </div>
+                                    {parceiras}
+                                </ul>
+                                <br/>
+                            </div>
                         </div>
-                        <div style={{display: (this.state.filters.parceira ? '' : 'none')}} onClick={this.removeparceira}>
-                            <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                        <div className="col-md-4">
+                            <button className="btn btn-success" onClick={this.register}>
+                                <span>Adicionar</span>
+                            </button>
                         </div>
-
-                        <button className="btn btn-success" onClick={this.register}>
-                            <span>{/*<i className="fas fa-plus"/>*/} Adicionar</span>
-                        </button>
-
-                        <div>
-                            <ul className="box-search-itens" style={{display: ((this.state.searchparceira || this.state.listparceira) && !this.state.filters.parceira) ? '' : 'none'}}>
-                                {parceiras}
-                            </ul>
-                        </div>
-                        <br/>
                     </div>
+
+
+
 
                     <div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>

@@ -92,80 +92,8 @@ class FormProjeto extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-
         this.cleanForm();
-
-        /*if(this.state.action != props.action){
-            this.setState({action: props.action}, function(){
-                  if(this.state.action=='new'){
-                    this.cleanForm();
-                }
-            });
-        }*/
     }
-
-    /*edit(){
-        this.listParcerias();
-        this.listFinanciadores();
-        this.listPublicos();
-        this.listLocalizacoes();
-        this.listObjetivos();
-        this.listChkboxMetas();
-          $.ajax({
-            method: 'GET',
-            url: getBaseUrl2 + 'osc/projeto/'+this.state.editId,
-            data: {
-              },
-            cache: false,
-            success: function(data){
-                let ft_recursos_publico = '';
-                let ft_recursos_privado = '';
-                let ft_recursos_proprio = '';
-                let ft_recursos_nao_financeiro = '';
-                  let tp_cooperacao_tecnica = '';
-                let tp_termo_fomento = '';
-                let tp_termo_colaboracao = '';
-                let tp_termo_parceria = '';
-                let tp_contrato_gestao = '';
-                let tp_convenio = '';
-                let tp_outro = '';
-                    data.fontes_recursos_projeto.find(function(item){
-                    ft_recursos_publico = item.cd_origem_fonte_recursos_projeto === 1 ? 'chkbox' : '';
-                    ft_recursos_privado = item.cd_origem_fonte_recursos_projeto === 2 ? 'chkbox' : '';
-                    ft_recursos_proprio = item.cd_origem_fonte_recursos_projeto === 3 ? 'chkbox' : '';
-                    ft_recursos_nao_financeiro = item.cd_origem_fonte_recursos_projeto === 4 ? 'chkbox' : '';
-                });
-                  data.tipo_parcerias_projeto.find(function(item){
-                    tp_cooperacao_tecnica = item.cd_tipo_parceria_projeto === 1 ? 'chkbox' : '';
-                    tp_termo_fomento = item.cd_tipo_parceria_projeto === 2 ? 'chkbox' : '';
-                    tp_termo_colaboracao = item.cd_tipo_parceria_projeto === 3 ? 'chkbox' : '';
-                    tp_termo_parceria = item.cd_tipo_parceria_projeto === 4 ? 'chkbox' : '';
-                    tp_contrato_gestao = item.cd_tipo_parceria_projeto === 5 ? 'chkbox' : '';
-                    tp_convenio = item.cd_tipo_parceria_projeto === 6 ? 'chkbox' : '';
-                    tp_outro = item.cd_tipo_parceria_projeto === 7 ? 'chkbox' : '';
-                });
-                  this.setState({
-                    form: data,
-                    ft_recursos_publico: ft_recursos_publico,
-                    ft_recursos_privado: ft_recursos_privado,
-                    ft_recursos_proprio: ft_recursos_proprio,
-                    tp_cooperacao_tecnica: tp_cooperacao_tecnica,
-                    tp_termo_fomento: tp_termo_fomento,
-                    tp_termo_colaboracao: tp_termo_colaboracao,
-                    tp_termo_parceria: tp_termo_parceria,
-                    tp_contrato_gestao: tp_contrato_gestao,
-                    tp_convenio: tp_convenio,
-                    tp_outro: tp_outro,
-                      //financiadores_projeto: data.financiadores_projeto,
-                }, function(){
-                    //this.props.showHideForm();
-                });
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-    }*/
 
     handleInputChange(event) {
         const target = event.target;
@@ -271,40 +199,6 @@ class FormProjeto extends React.Component {
             });
         });
     }
-
-    /*register(e){
-        e.preventDefault();
-          if(!this.validate()){
-            return;
-        }
-          let url = '/register-projeto';
-        let id = null;
-        if(this.state.action==='edit'){
-            id = this.state.editId;
-            url = '/update-user-projeto';
-        }
-          this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
-            $.ajax({
-                method:'POST',
-                url: url,
-                data:{
-                    form: this.state.form,
-                    id: id,
-                },
-                cache: false,
-                success: function(data) {
-                    this.props.list();
-                      this.cleanForm();
-                    this.props.closeForm();
-                      this.setState({projetos: data.projetos, loading: false})
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(status, err.toString());
-                    this.setState({loading: false, button: true});
-                }.bind(this)
-            });
-        });
-      }*/
 
     listRecursos() {
 
@@ -971,7 +865,7 @@ class FormProjeto extends React.Component {
                             { className: 'float-right', style: { display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
                             React.createElement(
                                 'div',
-                                { className: 'float-right', onClick: () => this.removeList('publico', item.id_publico_beneficiado_projeto) },
+                                { className: 'float-right cursor', onClick: () => this.removeList('publico', item.id_publico_beneficiado_projeto) },
                                 React.createElement('i', { className: 'fas fa-trash-alt text-danger ' })
                             ),
                             React.createElement(
@@ -979,7 +873,7 @@ class FormProjeto extends React.Component {
                                 { className: 'float-right', onClick: () => this.saveList('publico', item.id_publico_beneficiado_projeto), style: { margin: '0 10px' } },
                                 React.createElement(
                                     'div',
-                                    { style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' } },
+                                    { style: { display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : '' }, className: 'cursor' },
                                     React.createElement('i', { className: 'far fa-save' })
                                 ),
                                 React.createElement(

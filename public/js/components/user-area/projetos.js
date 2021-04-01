@@ -170,7 +170,7 @@ class Projetos extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -187,7 +187,6 @@ class Projetos extends React.Component {
 
         $.ajax({
             method: 'GET',
-            //url: '/list-users-projetos',
             url: getBaseUrl2 + 'osc/projetos/455128',
             data: {},
             cache: false,
@@ -200,13 +199,6 @@ class Projetos extends React.Component {
             }.bind(this)
         });
     }
-
-    /*callModal(){
-        let modal = this.state.modal;
-        this.setState({modal: modal}, function(){
-            $('#modalForm').modal('show');
-        });
-    }*/
 
     callModal(id, type, txt) {
         let modal = this.state.modal;
@@ -222,7 +214,7 @@ class Projetos extends React.Component {
 
     modal() {
 
-        let form = null;
+        let form = '';
 
         if (this.state.editTipo == 'insert') {
             form = React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm });
@@ -279,11 +271,6 @@ class Projetos extends React.Component {
 
         let projetos = this.state.projetos.map(function (item, index) {
 
-            let hr = null;
-            if (index < this.state.projetos.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
             return React.createElement(
                 'tr',
                 { key: "projeto_" + index },
@@ -302,7 +289,7 @@ class Projetos extends React.Component {
                     { width: '70' },
                     React.createElement(
                         'a',
-                        { onClick: () => this.callModal(item.id, 'edit', 'Alterar projeto') },
+                        { onClick: () => this.callModal(item.id, 'edit', 'Alterar projeto'), className: 'cursor' },
                         React.createElement('i', { className: 'far fa-edit text-primary' })
                     ),
                     '\xA0\xA0',

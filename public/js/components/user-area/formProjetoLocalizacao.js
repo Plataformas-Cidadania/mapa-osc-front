@@ -16,7 +16,8 @@ class FormProjetoLocalizacao extends React.Component {
             msg: '',
             filters: {
                 municipio: null
-            }
+            },
+            loadingLocal: false
 
         };
 
@@ -114,17 +115,17 @@ class FormProjetoLocalizacao extends React.Component {
     }
     listMunicipio(search) {
         if (search.length > 3) {
-            this.setState({ loadingList: true });
+            this.setState({ loadingLocal: true });
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl + 'menu/geo/municipio/' + search,
                 cache: false,
                 success: function (data) {
-                    this.setState({ listMunicipio: data, loadingList: false });
+                    this.setState({ listMunicipio: data, loadingLocal: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
-                    this.setState({ loadingList: false });
+                    this.setState({ loadingLocal: false });
                 }.bind(this)
             });
         }
@@ -179,55 +180,71 @@ class FormProjetoLocalizacao extends React.Component {
             null,
             React.createElement(
                 'form',
-                { className: 'form-inline', autoComplete: 'off' },
+                { autoComplete: 'off' },
                 React.createElement(
                     'div',
-                    { style: { width: '100%', margin: '0 0 0 -30px' } },
+                    { className: 'row box-search' },
                     React.createElement(
                         'div',
-                        { className: 'input-icon', style: { display: this.state.form.cd_certificado == 7 || this.state.form.cd_certificado == 0 ? 'none' : '', width: '65%', float: 'left' } },
-                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um munic\xEDpio', name: 'cd_municipio',
-                            style: { display: this.state.filters.municipio ? 'none' : '', width: '90%', marginLeft: '16px' },
-                            autoComplete: 'off',
-                            onClick: this.clickSearchMunicipio,
-                            onChange: this.handleSearchMunicipio }),
-                        React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
-                            style: { display: this.state.filters.municipio ? '' : 'none', width: '90%', marginLeft: '16px' },
-                            autoComplete: 'off',
-                            readOnly: this.state.filters.municipio,
-                            defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                        { className: 'col-md-8' },
                         React.createElement(
                             'div',
-                            { style: { display: this.state.filters.municipio ? 'none' : '', position: 'relative', left: '-30px' } },
-                            React.createElement('i', { className: 'fas fa-search' })
-                        ),
-                        React.createElement(
-                            'div',
-                            { style: { display: this.state.filters.municipio ? '' : 'none', position: 'relative', left: '-30px' }, onClick: this.removeMunicipio },
-                            React.createElement('i', { className: 'fas fa-times', style: { cursor: 'pointer' } })
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
+                            { className: 'input-icon', style: { display: this.state.form.cd_certificado == 7 || this.state.form.cd_certificado == 0 ? 'none' : '' } },
+                            React.createElement(
+                                'div',
+                                { className: 'label-float' },
+                                React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um munic\xEDpio', name: 'cd_municipio',
+                                    style: { display: this.state.filters.municipio ? 'none' : '' },
+                                    autoComplete: 'off',
+                                    onClick: this.clickSearchMunicipio,
+                                    onChange: this.handleSearchMunicipio }),
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'cd_municipio', style: { margin: '4px 0 0 0' } },
+                                    'Inserir o financiador do projeto'
+                                ),
+                                React.createElement('br', null)
+                            ),
+                            React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
+                                style: { display: this.state.filters.municipio ? '' : 'none' },
+                                autoComplete: 'off',
+                                readOnly: this.state.filters.municipio,
+                                defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.filters.municipio ? 'none' : '', position: 'relative', margin: '-23px 0 23px 0' } },
+                                React.createElement('i', { className: 'fas fa-search' })
+                            ),
+                            React.createElement(
+                                'div',
+                                { style: { display: this.state.filters.municipio ? '' : 'none', position: 'relative' }, onClick: this.removeMunicipio },
+                                React.createElement('i', { className: 'fas fa-times', style: { cursor: 'pointer' } })
+                            ),
                             React.createElement(
                                 'ul',
                                 { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12 text-center' },
+                                    React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingLocal ? '' : 'none' } })
+                                ),
                                 municipios
                             )
-                        ),
-                        React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'button',
-                        { className: 'btn btn-success', onClick: this.register },
-                        React.createElement(
-                            'span',
-                            null,
-                            'Adicionar'
                         )
                     ),
-                    React.createElement('br', null),
-                    React.createElement('br', null)
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-4' },
+                        React.createElement(
+                            'button',
+                            { className: 'btn btn-success', onClick: this.register, style: { marginTop: '5px' } },
+                            React.createElement(
+                                'span',
+                                null,
+                                'Adicionar'
+                            )
+                        )
+                    )
                 ),
                 React.createElement(
                     'div',
