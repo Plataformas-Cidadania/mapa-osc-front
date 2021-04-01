@@ -228,7 +228,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('.fa-chevron-left').hide();
+        $('.fa-chevron-right').hide();
 
         $('.btn-right').click(function() {
             $('.box-floating').hide();

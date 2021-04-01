@@ -2,7 +2,7 @@
     <div  id="progress" class="progress-bar bg-success" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
-<div class="bg-lgt" id="acessibilidade" >
+<div class="bg-lgt d-print-none" id="acessibilidade" >
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -26,16 +26,12 @@
     </div>
 </div>
 
-{{--<span class="btnSetItem"><i class="fas fa-adjust"></i></span>
-<span class="btnGetItem">Pegar Item</span>
-<span class="btnRemoveItem">Remover Item</span>--}}
+
 <script>
     (function (){
         'use strict';
 
         var btnSetItem = document.querySelector('.btn-constrat')
-        //var btnGetItem = document.querySelector('.btn-constrat')
-        //var btnRemoveItem = document.querySelector('.btnRemoveItem')
 
         function setLocalStorage(){
 
@@ -53,26 +49,12 @@
                     localStorage.setItem('contrast', true);
                     document.getElementById('contrast').className = 'contrast';
                 }
-                //console.log(localStorage.getItem('contrast'));
             })
 
-            //console.log(localStorage.getItem('contrast'));
-           }
-
-        /*function getLocalStorage(){
-            btnGetItem.addEventListener('click', () => {
-                console.log( localStorage.getItem('contrast') )
-            })
         }
 
-        function removeLocalStorage(){
-            btnRemoveItem.addEventListener('click', () => {
-                localStorage.removeItem('contrast')
-            })
-        }*/
         setLocalStorage();
-        /*getLocalStorage();
-        removeLocalStorage();*/
+
 
     }());
 </script>

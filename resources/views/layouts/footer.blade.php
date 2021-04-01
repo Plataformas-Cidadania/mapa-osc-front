@@ -1,4 +1,4 @@
-<footer id="iniciodorodape" role="contentinfo" class="cel-footer">
+<footer id="iniciodorodape" role="contentinfo" class="cel-footer d-print-none" >
 
     {{--CEL--}}
     <div class="menu-cel-footer bg-lgt menu-cel-login-hide" style="display: none;">
