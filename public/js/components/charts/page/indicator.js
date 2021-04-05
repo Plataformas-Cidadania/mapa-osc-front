@@ -14,24 +14,6 @@ class Indicator extends React.Component {
     load() {
         let _this = this;
 
-        /*$.ajax({
-            method:'GET',
-            url: 'get-indicador',
-            //url: 'http://localhost:8000/api/analises?id=2',
-            //url: 'http://172.22.0.3/api/indicadores',
-            data:{
-              },
-            cache: false,
-            success: function(data) {
-                console.log(data);
-                _this.setState({data: data});
-              },
-            error: function(xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({loading: false});
-            }
-        });*/
-
         let charts = [1, 2, 3, 4, 5, 6, 7, 8];
 
         let data = _this.state.data;
@@ -44,7 +26,7 @@ class Indicator extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'analises?id=' + charts[i],
+            url: getBaseUrl2 + 'osc/grafico/' + charts[i],
             data: {},
             cache: false,
             async: false,

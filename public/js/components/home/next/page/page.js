@@ -46,13 +46,11 @@ class Page extends React.Component {
             console.log('data'+k, data[k]);
         }*/
         //console.log("=============================================")
-
         let _this = this;
         $.ajax({
             method: 'GET',
-            //url: 'get-indicador',
-            //url: 'http://172.22.0.3/api/analises?id='+indicators[i],
-            url: 'http://localhost:8000/api/analises?id=' + indicators[i],
+
+            url: getBaseUrl2+'osc/grafico/'+indicators[i],
             data: {},
             cache: false,
             async: false,
