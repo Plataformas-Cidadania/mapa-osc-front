@@ -101,6 +101,3 @@ ReactDOM.render(
     <Page/>,
     document.getElementById('page')
 );
-
-
-
