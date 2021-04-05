@@ -4,7 +4,8 @@
 
 
 <div class="container">
-    <div class="row justify-content-md-center">
+    <div id="search"></div>
+<!--    <div class="row justify-content-md-center">
         <div class="col-md-5">
             <br><br>
             <div class="input-icon">
@@ -20,7 +21,7 @@
             </ul>
             <br><br><br>
         </div>
-    </div>
+    </div>-->
 
     <section>
         <div class="row">

@@ -40,7 +40,8 @@ class Filter extends React.Component {
             listRegiao: null,
             listUf: null,
             listMunicipio: null,
-            listCnae: null
+            listCnae: null,
+            dataObjetivos: []
         };
 
         this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
@@ -109,9 +110,13 @@ class Filter extends React.Component {
         this.setImunidades = this.setImunidades.bind(this);
         this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
+
+        this.objetivos = this.objetivos.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.objetivos();
+    }
 
     componentDidUpdate(props) {
         if (this.state.certificados != props.certificados || this.state.areaAtuacao != props.areaAtuacao || this.state.subAreaAtuacao != props.subAreaAtuacao) {
@@ -565,7 +570,26 @@ class Filter extends React.Component {
         this.setState({ filters: filters });
     }
 
+    objetivos() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            cache: false,
+            success: function (data) {
+                console.log('data', data);
+                this.setState({ dataObjetivos: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     render() {
+
+        console.log('dataObjetivos', this.state.dataObjetivos);
 
         let certificados = null;
         if (this.state.certificados) {
@@ -636,38 +660,6 @@ class Filter extends React.Component {
                     React.createElement('br', null)
                 );
             });
-
-            /*const map = new Map();
-            for (const item of this.props.ipeaData) {
-                 let subThema = null;
-                if(item.cd_indice){
-                     for(const i of this.props.ipeaData){
-                        console.log('i', i.cd_indice);
-                    }
-                     subThema = this.props.ipeaData.map(function(subitem){
-                        return(
-                        <div key={"subarea_"+subitem.cd_indice}>
-                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
-                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
-                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
-                            </div>
-                            <br />
-                        </div>
-                        );
-                    });
-                }
-                if(!map.has(item.tx_tema)){
-                    map.set(item.tx_tema, true);
-                    ipeaData.push(
-                        <div key={"ipeaData_"+item.cd_indice}>
-                            <strong>{item.tx_tema}</strong>
-                            <hr />
-                            {subThema}
-                            <br/>
-                        </div>
-                    );
-                }
-            }*/
         }
 
         let areaAtuacao = null;
@@ -840,7 +832,16 @@ class Filter extends React.Component {
             }.bind(this));
         }
 
-        console.log(this.state.filters.uf);
+        let objetivos = null;
+        if (this.state.dataObjetivos) {
+            objetivos = this.state.dataObjetivos.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { key: "cert_" + item.cd_objetivo_projeto },
+                    item.tx_nome_objetivo_projeto
+                );
+            });
+        }
 
         return React.createElement(
             'form',
@@ -1142,8 +1143,52 @@ class Filter extends React.Component {
                                     React.createElement('br', null),
                                     React.createElement('br', null)
                                 ),
-                                React.createElement('div', { className: 'col-md-6' }),
-                                React.createElement('div', { className: 'col-md-6' })
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                        ),
+                                        objetivos
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Metas Relacionadas ao ODS'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '1' },
+                                            'One'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '2' },
+                                            'Two'
+                                        ),
+                                        React.createElement(
+                                            'option',
+                                            { value: '3' },
+                                            'Three'
+                                        )
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
+                                )
                             )
                         )
                     )

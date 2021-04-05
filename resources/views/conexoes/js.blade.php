@@ -122,6 +122,7 @@
 
 <script src="js/components/home/next/api.js"></script>
 <script src="js/components/home/recentes/api.js"></script>
+<script src="js/components/forms/search.js"></script>
 
 
 @endif

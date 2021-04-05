@@ -41,6 +41,7 @@ class Filter extends React.Component{
             listUf:null,
             listMunicipio:null,
             listCnae:null,
+            dataObjetivos:[],
         };
 
         this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
@@ -111,11 +112,14 @@ class Filter extends React.Component{
         this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
 
+        this.objetivos = this.objetivos.bind(this);
+
 
     }
 
 
     componentDidMount(){
+        this.objetivos();
     }
 
     componentDidUpdate(props){
@@ -583,7 +587,27 @@ class Filter extends React.Component{
     }
 
 
+    objetivos(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataObjetivos: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+
     render(){
+
+        console.log('dataObjetivos', this.state.dataObjetivos)
 
         let certificados = null;
         if(this.state.certificados){
@@ -645,41 +669,6 @@ class Filter extends React.Component{
 
 
 
-
-            /*const map = new Map();
-            for (const item of this.props.ipeaData) {
-
-                let subThema = null;
-                if(item.cd_indice){
-
-                    for(const i of this.props.ipeaData){
-                        console.log('i', i.cd_indice);
-                    }
-
-                    subThema = this.props.ipeaData.map(function(subitem){
-                        return(
-                        <div key={"subarea_"+subitem.cd_indice}>
-                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
-                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
-                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
-                            </div>
-                            <br />
-                        </div>
-                        );
-                    });
-                }
-                if(!map.has(item.tx_tema)){
-                    map.set(item.tx_tema, true);
-                    ipeaData.push(
-                        <div key={"ipeaData_"+item.cd_indice}>
-                            <strong>{item.tx_tema}</strong>
-                            <hr />
-                            {subThema}
-                            <br/>
-                        </div>
-                    );
-                }
-            }*/
         }
 
 
@@ -819,7 +808,14 @@ class Filter extends React.Component{
             }.bind(this));
         }
 
-        console.log(this.state.filters.uf);
+        let objetivos = null;
+        if(this.state.dataObjetivos){
+            objetivos = this.state.dataObjetivos.map(function (item) {
+                return (
+                    <option  key={"cert_"+item.cd_objetivo_projeto}>{item.tx_nome_objetivo_projeto}</option>
+                );
+            });
+        }
 
 
         return (
@@ -1008,20 +1004,20 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-6">
-                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>*/}
+                                            {objetivos}
+                                        </select>
+                                        <br/><br/>
                                     </div>
                                     <div className="col-md-6">
-                                        {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Metas Relacionadas ao ODS</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
-                                        </select>*/}
+                                        </select>
+                                        <br/><br/>
                                     </div>
 
                                 </div>
