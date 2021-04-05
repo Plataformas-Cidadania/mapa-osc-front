@@ -10,33 +10,37 @@ class MixedChart extends React.Component {
                     toolbar: {
                         tools: {
                             download: '<i class="fas fa-image chart-custom-icon"/>',
-                            reset: '<i class="fas fa-undo-alt chart-custom-icon-reset"/>',
-                            customIcons: [{
-                                icon: '<i class="fas fa-chart-line"/>',
-                                index: 0,
-                                title: '',
-                                class: 'chart-custom-icon',
-                                click: () => {
-                                    console.log('chart line');
+                            reset: '<i class="fas fa-undo-alt chart-custom-icon-reset"/>'
+                            /*customIcons: [
+                                {
+                                    icon: '<i class="fas fa-chart-line"/>',
+                                    index: 0,
+                                    title: '',
+                                    class: 'chart-custom-icon',
+                                    click: () => {
+                                        console.log('chart line');
+                                    }
+                                },
+                                {
+                                    icon: '<i class="fas fa-chart-bar"/>',
+                                    index: 0,
+                                    title: '',
+                                    class: 'chart-custom-icon',
+                                    click: () => {
+                                        console.log('chart bar');
+                                    }
+                                },
+                                {
+                                    icon: '<i class="fas fa-chart-area"/>',
+                                    index: 0,
+                                    title: '',
+                                    class: 'chart-custom-icon',
+                                    click: () => {
+                                        console.log('chart area');
+                                        this.state.typeChart = 'area';
+                                    }
                                 }
-                            }, {
-                                icon: '<i class="fas fa-chart-bar"/>',
-                                index: 0,
-                                title: '',
-                                class: 'chart-custom-icon',
-                                click: () => {
-                                    console.log('chart bar');
-                                }
-                            }, {
-                                icon: '<i class="fas fa-chart-area"/>',
-                                index: 0,
-                                title: '',
-                                class: 'chart-custom-icon',
-                                click: () => {
-                                    console.log('chart area');
-                                    this.state.typeChart = 'area';
-                                }
-                            }]
+                            ]*/
                         }
                     }
                 },

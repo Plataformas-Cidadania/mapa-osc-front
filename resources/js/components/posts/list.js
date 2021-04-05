@@ -201,9 +201,7 @@ class List extends React.Component{
                         <a href={"/artigo/"+item.id+"/"+cleanReplace(item.titulo)}>
                             <div>
                                 <br/>
-                                <img data-src="holder.js/200x200" className="img-fluid" alt="200x200"
-                                     src="https://www.w3schools.com/html/pic_trulli.jpg" data-holder-rendered="true"
-                                     width="100%"/>
+                                <img data-src="holder.js/200x200" className="img-fluid" alt={item.titulo} title={item.titulo} src={"/imagens/posts/"+item.image} data-holder-rendered="true" width="100%"/>
                                 <br/><br/>
                                 <div className="row">
                                     <div className="col-md-6 item-calendar">

@@ -44,8 +44,8 @@ class Home extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'analises?id=' + charts[i],
-            //url: getBaseUrl2+'osc/grafico/'+charts[i],
+            //url: getBaseUrl + 'analises?id=' + charts[i],
+            url: getBaseUrl2+'osc/grafico/'+charts[i],
             data: {},
             cache: false,
             async: false,

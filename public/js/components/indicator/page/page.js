@@ -20,12 +20,12 @@ class Page extends React.Component {
             //url: 'http://localhost:8000/api/analises?id=2',
             //url: 'http://172.22.0.3/api/indicadores',
             data:{
-              },
+             },
             cache: false,
             success: function(data) {
                 console.log(data);
                 _this.setState({data: data});
-              },
+             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
@@ -51,7 +51,8 @@ class Page extends React.Component {
         $.ajax({
             method: 'GET',
             //url: 'get-indicador',
-            url: 'http://172.22.0.3/api/analises?id=' + indicators[i],
+            //url: 'http://172.22.0.3/api/analises?id='+indicators[i],
+            url: getBaseUrl2 + 'osc/grafico/' + indicators[i],
             //url: 'http://localhost:8000/api/analises?id='+indicators[i],
             data: {},
             cache: false,

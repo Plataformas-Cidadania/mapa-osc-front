@@ -634,7 +634,7 @@ class Filter extends React.Component{
                 });
 
                 return (
-                    <div key={"ipeaData_"+index}>
+                    <div key={"ipeaData_"+index} className="col-md-6">
                         <strong>{item.tema}</strong>
                         <hr />
                         {indices}
@@ -1689,7 +1689,7 @@ class Filter extends React.Component{
                         <div id="collapse9" className="collapse" aria-labelledby="heading9"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                <div>
+                                <div className="row">
                                     {indicadores}
                                 </div>
                             </div>

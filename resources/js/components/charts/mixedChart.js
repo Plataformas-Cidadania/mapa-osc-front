@@ -11,7 +11,7 @@ class MixedChart extends React.Component {
                         tools: {
                             download: '<i class="fas fa-image chart-custom-icon"/>',
                             reset: '<i class="fas fa-undo-alt chart-custom-icon-reset"/>',
-                            customIcons: [
+                            /*customIcons: [
                                 {
                                     icon: '<i class="fas fa-chart-line"/>',
                                     index: 0,
@@ -40,7 +40,7 @@ class MixedChart extends React.Component {
                                         this.state.typeChart = 'area';
                                     }
                                 }
-                            ]
+                            ]*/
                         }
                     }
                 },

@@ -194,9 +194,7 @@ class List extends React.Component {
                                 'div',
                                 null,
                                 React.createElement('br', null),
-                                React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: '200x200',
-                                    src: 'https://www.w3schools.com/html/pic_trulli.jpg', 'data-holder-rendered': 'true',
-                                    width: '100%' }),
+                                React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: item.titulo, title: item.titulo, src: "/imagens/posts/" + item.image, 'data-holder-rendered': 'true', width: '100%' }),
                                 React.createElement('br', null),
                                 React.createElement('br', null),
                                 React.createElement(

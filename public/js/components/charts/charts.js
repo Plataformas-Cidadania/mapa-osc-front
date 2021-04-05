@@ -44,8 +44,8 @@ class Charts extends React.Component {
             let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];
 
-            //let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" ? "column" : data[chart].tipo_grafico;
-            let tipoGrafico = data[chart].tipo_grafico === "MultiBarChart" || data[chart].tipo_grafico === "BarChart" ? "column" : data[chart].tipo_grafico === "LinePlusBarChart" || data[chart].tipo_grafico === "LineChart" ? "line" : data[chart].tipo_grafico === "DonutChart" ? "pie" : data[chart].tipo_grafico;
+            //let tipoGrafico = data[chart].nome_tipo_grafico === "MultiBarChart" ? "column" : data[chart].nome_tipo_grafico;
+            let tipoGrafico = data[chart].nome_tipo_grafico === "MultiBarChart" || data[chart].nome_tipo_grafico === "BarChart" ? "column" : data[chart].nome_tipo_grafico === "LinePlusBarChart" || data[chart].nome_tipo_grafico === "LineChart" ? "line" : data[chart].nome_tipo_grafico === "DonutChart" ? "pie" : data[chart].nome_tipo_grafico;
 
             for (let j in dataChart) {
 
@@ -57,7 +57,7 @@ class Charts extends React.Component {
                 }
 
                 //Quando tiver o key///////////////////////////////
-                if (dataChart[j].hasOwnProperty('key') && data[chart].tipo_grafico === "MultiBarChart") {
+                if (dataChart[j].hasOwnProperty('key') && data[chart].nome_tipo_grafico === "MultiBarChart") {
 
                     labels.push(dataChart[j].key);
                     let values = dataChart[j].values;
@@ -80,10 +80,10 @@ class Charts extends React.Component {
                 ///////////////////////////////////////////////////
 
                 //Quando tiver o key///////////////////////////////
-                if (dataChart[j].hasOwnProperty('key') && (data[chart].tipo_grafico === "LineChart" || data[chart].tipo_grafico === "LinePlusBarChart")) {
+                if (dataChart[j].hasOwnProperty('key') && (data[chart].nome_tipo_grafico === "LineChart" || data[chart].nome_tipo_grafico === "LinePlusBarChart")) {
 
-                    let colLabel = data[chart].tipo_grafico === "LineChart" ? 'x' : 'label';
-                    let colValue = data[chart].tipo_grafico === "LineChart" ? 'y' : 'value';
+                    let colLabel = data[chart].nome_tipo_grafico === "LineChart" ? 'x' : 'label';
+                    let colValue = data[chart].nome_tipo_grafico === "LineChart" ? 'y' : 'value';
 
                     let values = dataChart[j].values;
 

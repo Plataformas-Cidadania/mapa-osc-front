@@ -25,7 +25,7 @@ class Contact extends React.Component {
     }
 
     componentDidMount() {
-        this.get_location();
+        //this.get_location();
     }
 
     handleInputChange(event) {
