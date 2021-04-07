@@ -48,7 +48,10 @@ class Search extends React.Component {
             searchOscQtd: qtd,
             searchNameCampo: campo,
         }, function(){
-            this.load(this.state.searchOsc)
+            if(this.state.searchOsc.length > 2){
+                this.load(this.state.searchOsc)
+            }
+
         });
     }
 
