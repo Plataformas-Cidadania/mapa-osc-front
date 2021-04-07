@@ -12778,6 +12778,10 @@ label, input, .btn-number {
   margin-bottom: 15px;
 }
 
+.box-busca {
+  display: none;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;

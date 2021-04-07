@@ -4,24 +4,8 @@
 
 
 <div class="container">
+
     <div id="search"></div>
-<!--    <div class="row justify-content-md-center">
-        <div class="col-md-5">
-            <br><br>
-            <div class="input-icon">
-                <input type="text" class="form-control" placeholder="Encontre uma OSC, digite o nome ou CNPJ...">
-                <i class="fas fa-search"></i>
-            </div>
-            <ul class="menu-small">
-                <li>Organização</li>
-                <li>Município</li>
-                <li>Estado </li>
-                <li>Região</li>
-                <li class="float-right"><a href="filtro"><i class="fas fa-filter"></i> Filtro</a></li>
-            </ul>
-            <br><br><br>
-        </div>
-    </div>-->
 
     <section>
         <div class="row">

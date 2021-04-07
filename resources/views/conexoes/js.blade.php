@@ -37,6 +37,7 @@
         let words = text.toLowerCase().split(" ");
         return words.join("-");
     }
+
 </script>
 
 
@@ -395,3 +396,11 @@
     <script src="/js/components/join/register.js"></script>
 @endif
 
+<script>
+    $('#ativarBox').click(function(){
+        $('.box-busca').toggle();
+    });
+    $('.box-busca').mouseleave(function(){
+        $('.box-busca').toggle();
+    });
+</script>
