@@ -1,3 +1,6 @@
+<?php
+$base_href = config('app.url');
+?>
 @extends('cms::layouts.app')
 
 @section('content')
@@ -12,7 +15,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/cms/login') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ $base_href.'cms/login' }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
