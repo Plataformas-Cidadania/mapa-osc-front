@@ -20,12 +20,12 @@ class Home extends React.Component {
             //url: 'http://localhost:8000/api/analises?id=2',
             //url: 'http://172.22.0.3/api/indicadores',
             data:{
-              },
+             },
             cache: false,
             success: function(data) {
                 console.log(data);
                 _this.setState({data: data});
-              },
+             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
@@ -44,8 +44,8 @@ class Home extends React.Component {
         let _this = this;
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'analises?id=' + charts[i],
-            url: getBaseUrl2+'osc/grafico/'+charts[i],
+            url: getBaseUrl + 'analises?id=' + charts[i],
+            //url: getBaseUrl2+'osc/grafico/'+charts[i],
             data: {},
             cache: false,
             async: false,
