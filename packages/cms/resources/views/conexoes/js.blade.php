@@ -2,30 +2,30 @@
 $base_href = config('app.url');
 ?>
 <!-- jQuery -->
-{!! $base_href.Html::script('assets-cms/lib/jquery/jquery.min.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/jquery/jquery.min.js') !!}
 <!-- Angular -->
-{!! $base_href.Html::script('assets-cms/lib/angular/angular.min.js') !!}
-{{--{!! Html::script('/cms/angular/animate.min.js') !!}--}}
-{{--{!! Html::script('/cms/angular/messages.min.js') !!}--}}
-{!! $base_href.Html::script('assets-cms/lib/angular/pagination.js') !!}
-{!! $base_href.Html::script('assets-cms/lib/angular/ui-bootstrap-tpls-1.1.2.min.js') !!}
-{!! $base_href.Html::script('assets-cms/lib/angular/ng-file-upload.min.js') !!}
-{!! $base_href.Html::script('assets-cms/lib/angular/ng-file-upload-shim.min.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/angular/angular.min.js') !!}
+{{--{!! Html::script($base_href.'/cms/angular/animate.min.js') !!}--}}
+{{--{!! Html::script($base_href.'/cms/angular/messages.min.js') !!}--}}
+{!! Html::script($base_href.'assets-cms/lib/angular/pagination.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/angular/ui-bootstrap-tpls-1.1.2.min.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/angular/ng-file-upload.min.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/angular/ng-file-upload-shim.min.js') !!}
 
 <!-- CMS -->
-{!! $base_href.Html::script('assets-cms/js/cms.js') !!}
-{!! $base_href.Html::script('assets-cms/js/directives/initModel.js') !!}
-{!! $base_href.Html::script('assets-cms/js/utils.js') !!}
+{!! Html::script($base_href.'assets-cms/js/cms.js') !!}
+{!! Html::script($base_href.'assets-cms/js/directives/initModel.js') !!}
+{!! Html::script($base_href.'assets-cms/js/utils.js') !!}
 
-{{-- {!! Html::script('assets-cms/tinymce/js/tinymce/tinymce.min.js') !!}--}}
-{!! $base_href.Html::script('assets-cms/lib/angular/tinymce.min.js') !!}
-{!! $base_href.Html::script('assets-cms/js/tiny.js') !!}
-{!! $base_href.Html::script('assets-cms/lib/angular/ui-tinymce.min.js') !!}
+{{-- {!! Html::script($base_href.'assets-cms/tinymce/js/tinymce/tinymce.min.js') !!}--}}
+{!! Html::script($base_href.'assets-cms/lib/angular/tinymce.min.js') !!}
+{!! Html::script($base_href.'assets-cms/js/tiny.js') !!}
+{!! Html::script($base_href.'assets-cms/lib/angular/ui-tinymce.min.js') !!}
 
 
 
 <!-- Bootstrap Core JavaScript -->
-{!! Html::script('/assets-cms/lib/bootstrap/js/bootstrap.min.js') !!}
+{!! Html::script($base_href.'/assets-cms/lib/bootstrap/js/bootstrap.min.js') !!}
 
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
