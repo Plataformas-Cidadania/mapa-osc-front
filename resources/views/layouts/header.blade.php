@@ -132,7 +132,7 @@
                         <br>
                         <div class="btn-group">
                             <ul id="menu-desk">
-                                <li role="presentation"><a href="/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
+                                <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
                                 <li role="presentation"><a href="" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
