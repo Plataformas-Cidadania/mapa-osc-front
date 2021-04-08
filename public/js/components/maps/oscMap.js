@@ -709,7 +709,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -718,7 +718,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{

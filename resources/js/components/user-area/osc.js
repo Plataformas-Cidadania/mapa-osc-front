@@ -60,6 +60,7 @@ class Osc extends React.Component{
     componentDidMount(){
         this.getCabecalho();
         this.getOsc();
+        this.getLogo();
         //this.listArea();
         //this.listChkboxMetas();
         //this.listObjetivos();
@@ -386,6 +387,27 @@ class Osc extends React.Component{
             //url: '/save-logo-osc',
             url: getBaseUrl2+'osc/logo/455128',
             data: formData,
+            processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+            cache: false,
+            success: function(data){
+                console.log(data);
+                this.setState({logo: data});
+                //this.setState({logo: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    getLogo(){
+        $.ajax({
+            method: 'GET',
+            //method: 'POST',
+            //url: getBaseUrl+'save-logo-osc/'+id,
+            //url: '/save-logo-osc',
+            url: getBaseUrl2+'osc/logo/455128',
             processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             cache: false,
