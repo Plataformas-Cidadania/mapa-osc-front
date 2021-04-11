@@ -21,7 +21,7 @@ class Document extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: '/detalhar-users-document/'+this.props.id,
+            url: 'detalhar-users-document/'+this.props.id,
             cache: false,
         success: function(data){
             //console.log("1: "+this.props.id);

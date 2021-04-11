@@ -66,7 +66,7 @@ class ResetPassword extends React.Component {
         this.setState({ loading: true, button: false, msgShow: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: '/change-forget-password',
+                url: 'change-forget-password',
                 data: {
                     form: this.state.form,
                     token: this.props.token

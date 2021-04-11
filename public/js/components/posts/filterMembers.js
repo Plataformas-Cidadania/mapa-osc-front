@@ -25,7 +25,7 @@ class MembersFilter extends React.Component {
     load() {
         $.ajax({
             method: 'POST',
-            url: '/members',
+            url: 'members',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

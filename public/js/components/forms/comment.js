@@ -83,7 +83,7 @@ class Comment extends React.Component {
 
             $.ajax({
                 method: 'POST',
-                url: '/comment',
+                url: 'comment',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

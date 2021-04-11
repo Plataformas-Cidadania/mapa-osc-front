@@ -21,7 +21,7 @@ class Documents extends React.Component{
 
         $.ajax({
             method: 'POST',
-            url: '/list-users-documents',
+            url: 'list-users-documents',
             data: {
             },
             cache: false,

@@ -27,7 +27,7 @@ class ForgetPassword extends React.Component{
 
         $.ajax({
             method: 'POST',
-            url: '/forget-password',
+            url: 'forget-password',
             data:{
                 email: this.state.email,
             },

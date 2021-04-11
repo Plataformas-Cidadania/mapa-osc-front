@@ -120,7 +120,7 @@ class Recursos extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: '', showIcon: false, showIconErro: false}, function(){
             $.ajax({
                 method:'POST',
-                url: '/update-recursos',
+                url: 'update-recursos',
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id
@@ -214,7 +214,7 @@ class Recursos extends React.Component{
         this.setState({loading: true, button: false}, function(){
             $.ajax({
                 method:'POST',
-                url: '/fonte_recursos',
+                url: 'fonte_recursos',
                 data:{
                     id_osc: '455128',
                     dt_ano_recursos_osc: '2016-01-01',

@@ -122,7 +122,7 @@ class Contact extends React.Component{
 
             $.ajax({
                 method:'POST',
-                url: '/contact',
+                url: 'contact',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

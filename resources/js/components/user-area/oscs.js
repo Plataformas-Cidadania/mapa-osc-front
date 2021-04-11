@@ -21,7 +21,7 @@ class Oscs extends React.Component{
 
         $.ajax({
             method: 'POST',
-            url: '/list-users-oscs',
+            url: 'list-users-oscs',
             data: {
             },
             cache: false,

@@ -319,7 +319,7 @@ class Filter extends React.Component {
 
             $.ajax({
                 method: 'POST',
-                url: '/filter',
+                url: 'filter',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

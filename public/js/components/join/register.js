@@ -114,7 +114,7 @@ class Register extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '', form: form }, function () {
             $.ajax({
                 method: 'POST',
-                url: '/register',
+                url: 'register',
                 data: {
                     form: this.state.form
                 },
