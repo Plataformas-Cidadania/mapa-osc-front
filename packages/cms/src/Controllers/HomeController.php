@@ -11,11 +11,15 @@ use Illuminate\Support\Facades\Log;
 class HomeController extends Controller
 {
 
+    private $appUrl;
+
     public function __construct()
     {
+        $this->appUrl = config('app.url');
+
         //$this->middleware('auth');
-    }    
-    
+    }
+
     public function index()
     {
         return view('cms::home');
@@ -36,7 +40,7 @@ class HomeController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/cms/login')
+            return redirect($this->appUrl.'cms/login')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -44,9 +48,9 @@ class HomeController extends Controller
         $dadosUsuario = ['email' => $request->get('email'), 'password' => $request->get('password')];
 
         if(auth()->guard('cms')->attempt($dadosUsuario)){
-            return redirect('/cms');
+            return redirect($this->appUrl.'cms');
         }else{
-            return redirect('/cms/login')
+            return redirect($this->appUrl.'cms/login')
                 ->withErrors(['errors'=>'Usuário ou senha inválidos'])
                 ->withInput();
         }
@@ -54,7 +58,7 @@ class HomeController extends Controller
 
     public function logout(){
         auth()->guard('cms')->logout();
-        return redirect('/cms/login');
+        return redirect($this->appUrl.'cms/login');
 
     }
 }
