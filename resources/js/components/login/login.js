@@ -20,7 +20,7 @@ class Login extends React.Component{
 
     componentDidMount(){
         if(!this.props.target){
-            this.setState({target: '/area-user'});
+            this.setState({target: 'area-user'});
         }
     }
 
