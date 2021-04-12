@@ -15,7 +15,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dashboard-user" },
+                        { href: "dashboard-user" },
                         React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
                         " Minha \xE1rea"
                     )
@@ -25,7 +25,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/oscs-user" },
+                        { href: "oscs-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Minhas OSCs"
                     )
@@ -35,7 +35,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dados-user" },
+                        { href: "dados-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Meus Dados"
                     )
@@ -45,7 +45,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/declaracao", target: "_blank" },
+                        { href: "declaracao", target: "_blank" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Declara\xE7\xE3o"
                     )
@@ -55,7 +55,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/selo-user" },
+                        { href: "selo-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Selo Site"
                     )
@@ -65,7 +65,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/logout-user" },
+                        { href: "logout-user" },
                         React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
                         " Sair"
                     )

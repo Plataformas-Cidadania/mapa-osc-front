@@ -47,7 +47,7 @@ class Page extends React.Component {
         this.setState({processingOscIdhUfs: true}, function() {
             $.ajax({
                 method: 'GET',
-                url: 'get-osc-all-ufs/',
+                url: 'get-osc-all-ufs',
                 data: {},
                 cache: false,
                 success: function (data) {
