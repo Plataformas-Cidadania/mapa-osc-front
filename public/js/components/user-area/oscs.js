@@ -64,7 +64,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-primary' },
                         React.createElement(
                             'a',
-                            { href: "/detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
+                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
                             ' Visualizar'
                         )
@@ -75,7 +75,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-success' },
                         React.createElement(
                             'a',
-                            { href: "/osc-user/" + item.id_osc },
+                            { href: "osc-user/" + item.id_osc },
                             React.createElement('i', { className: 'far fa-edit' }),
                             ' Editar'
                         )
