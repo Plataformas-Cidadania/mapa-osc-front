@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarIdiomaCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarIdiomaCtrl.js') !!}
     <div ng-controller="alterarIdiomaCtrl">
         <div class="box-padrao">
             <h1><a href="cms/idiomas"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Idiomas</h1>

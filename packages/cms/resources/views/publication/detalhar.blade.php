@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarPublicationCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarPublicationCtrl.js') !!}
     <div ng-controller="alterarPublicationCtrl">
         <div class="box-padrao">
             <h1><a href="javascript:history.back();"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Publications</h1>

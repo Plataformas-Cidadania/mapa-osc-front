@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarVideoCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarVideoCtrl.js') !!}
     <div ng-controller="alterarVideoCtrl">
         <div class="box-padrao">
             <h1><a href="cms/videos"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Videos</h1>

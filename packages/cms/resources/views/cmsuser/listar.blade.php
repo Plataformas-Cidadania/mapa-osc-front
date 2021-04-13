@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('/assets-cms/js/controllers/cmsUserCtrl.js') !!}
+    {!! Html::script(config('app.url').'/assets-cms/js/controllers/cmsUserCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()
@@ -16,7 +16,7 @@
             <div ng-show="mostrarForm">
                 <span class="texto-obrigatorio" ng-show="form.$invalid">* campos obrigatórios</span><br><br>
                 {!! Form::open(['name' =>'form']) !!}
-                
+
                 @include('cms::cmsuser._form')
 
                 <label for="password">Senha *</label><br>
