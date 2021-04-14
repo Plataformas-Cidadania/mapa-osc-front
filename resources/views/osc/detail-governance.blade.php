@@ -45,7 +45,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
-                            @if($relacoes_trabalho_governanca->nr_trabalhadores != null)
+                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores))
                                 <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
@@ -57,7 +57,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
-                            @if($relacoes_trabalho_governanca->nr_trabalhadores_vinculo != null)
+                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_vinculo))
                                 <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_vinculo}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
@@ -69,7 +69,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
-                            @if($relacoes_trabalho_governanca->nr_trabalhadores_deficiencia != null)
+                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_deficiencia))
                                 <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_deficiencia}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
@@ -81,7 +81,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
-                            @if($relacoes_trabalho_governanca->nr_trabalhadores_voluntarios != null)
+                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_voluntarios))
                                 <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_voluntarios}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
