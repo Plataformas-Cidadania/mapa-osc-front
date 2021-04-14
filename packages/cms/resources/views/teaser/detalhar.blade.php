@@ -10,14 +10,14 @@
                 <span class="texto-obrigatorio">* campos obrigatórios</span><br><br>
                 {!! Form::model($teaser, ['name' =>'form']) !!}
                 <div class="container-thumb">
-                    <div class="box-thumb" name="fileDrop" ngf-dimensions="$width == 600 && $height == 220" ngf-drag-over-class="'box-thumb-hover'" ngf-drop ngf-select ng-model="picFile"
+                    <div class="box-thumb" name="fileDrop" ngf-drag-over-class="'box-thumb-hover'" ngf-drop ngf-select ng-model="picFile"
                          ng-show="!picFile && !imagemBD" accept="image/*" ngf-max-size="2MB">Solte uma imagem aqui!</div>
                     <img ng-show="picFile" ngf-thumbnail="picFile" class="thumb">
                     <img ng-show="imagemBD" class="thumb" ng-src="<% imagemBD %>">
                 </div>
                 <br>
                 <span class="btn btn-primary btn-file" ng-show="!picFile && !imagemBD">
-                    Escolher imagem <input  type="file" ngf-dimensions="$width == 600 && $height == 220" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+                    Escolher imagem <input  type="file"  ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
                 </span>
                 <button class="btn btn-danger" ng-click="limparImagem()" ng-show="picFile || imagemBD" type="button">Remover Imagem</button>
                 <i ng-show="form.file.$error.maxSize" style="margin-left: 10px;">Arquivo muito grande <% errorFile.size / 1000000|number:1 %>MB: máximo 2MB</i>
