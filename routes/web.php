@@ -123,7 +123,7 @@ Route::get('reset-password/{token}/{email}', 'UserLoginController@resetPassword'
 Route::post('change-forget-password', 'UserLoginController@changeForgetPassword');
 ///////////////////////////////////////////////////////////////////////////////////////
 Route::post('/register', 'RegisterUserController@index');
-//Route::get('/register', 'RegisterUserController@index2');
+Route::get('/register', 'RegisterUserController@index2');
 Route::get('/register-login', 'RegisterUserController@register');
 
 /// //AREA USER///////////////////////////////////////////////////////////////////////////////////

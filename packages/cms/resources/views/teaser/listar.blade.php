@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('/assets-cms/js/controllers/teaserCtrl.js') !!}
+    {!! Html::script(config('app.url').'/assets-cms/js/controllers/teaserCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()

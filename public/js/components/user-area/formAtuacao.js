@@ -54,7 +54,7 @@ class FormAtuacao extends React.Component {
     edit() {
         $.ajax({
             method: 'GET',
-            url: '/edit-user-atuacao/' + this.state.editId,
+            url: 'edit-user-atuacao/' + this.state.editId,
             data: {},
             cache: false,
             success: function (data) {

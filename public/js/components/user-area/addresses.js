@@ -71,7 +71,7 @@ class Addresses extends React.Component {
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
             method: 'GET',
-            url: '/remove-user-address/' + id,
+            url: 'remove-user-address/' + id,
             data: {},
             cache: false,
             success: function (data) {
@@ -97,7 +97,7 @@ class Addresses extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -114,7 +114,7 @@ class Addresses extends React.Component {
 
         $.ajax({
             method: 'POST',
-            url: '/list-users-addresses',
+            url: 'list-users-addresses',
             data: {},
             cache: false,
             success: function (data) {

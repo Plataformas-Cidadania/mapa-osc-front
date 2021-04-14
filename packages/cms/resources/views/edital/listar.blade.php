@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/editalCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/editalCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()

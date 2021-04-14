@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarTeaserCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarTeaserCtrl.js') !!}
     <div ng-controller="alterarTeaserCtrl">
         <div class="box-padrao">
             <h1><a href="../teasers"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Teaser</h1>

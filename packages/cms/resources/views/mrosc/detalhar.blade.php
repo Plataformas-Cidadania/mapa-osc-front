@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarMroscCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarMroscCtrl.js') !!}
     <div ng-controller="alterarMroscCtrl">
         <div class="box-padrao">
             <h1><a href="javascript:history.back();"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Mroscs</h1>

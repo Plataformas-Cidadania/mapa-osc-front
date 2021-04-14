@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarTipoGraficoCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarTipoGraficoCtrl.js') !!}
     <div ng-controller="alterarTipoGraficoCtrl">
         <div class="box-padrao">
             <h1><a href="javascript:history.back();"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Tipos de Gráficos</h1>

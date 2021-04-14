@@ -20,7 +20,7 @@ class Login extends React.Component{
 
     componentDidMount(){
         if(!this.props.target){
-            this.setState({target: '/area-user'});
+            this.setState({target: 'area-user'});
         }
     }
 
@@ -69,7 +69,7 @@ class Login extends React.Component{
 
         $.ajax({
             method: 'POST',
-            url: '/login',
+            url: 'login',
             data:{
                 form: this.state.form,
                 target: this.state.target,

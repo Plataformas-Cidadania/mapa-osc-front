@@ -206,7 +206,7 @@ class FormParticipacaoConselho extends React.Component {
             method: 'GET',
             url: getBaseUrl + 'menu/osc/tipo_participacao',
             data: {
-              },
+             },
             cache: false,
             success: function(data){
                 this.setState({listTipo: data, loadingList: false});

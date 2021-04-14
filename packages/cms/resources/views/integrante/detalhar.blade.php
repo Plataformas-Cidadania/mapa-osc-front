@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarIntegranteCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarIntegranteCtrl.js') !!}
     <div ng-controller="alterarIntegranteCtrl">
         <div class="box-padrao">
             <h1><i class="fa fa-user"></i>&nbsp;&nbsp;Integrante  </h1>

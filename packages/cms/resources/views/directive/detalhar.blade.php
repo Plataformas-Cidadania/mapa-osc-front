@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarDirectiveCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarDirectiveCtrl.js') !!}
     <div ng-controller="alterarDirectiveCtrl">
         <div class="box-padrao">
             <h1><a href="cms/directives"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Directives</h1>

@@ -38,7 +38,7 @@ class Data extends React.Component{
         this.setState({loadingCep: true});
         $.ajax({
             method: 'GET',
-            url: '/get-address/'+this.state.form.cep,
+            url: 'get-address/'+this.state.form.cep,
             cache: false,
             success: function (data) {
                 console.log(data);
@@ -63,7 +63,7 @@ class Data extends React.Component{
             this.setState({loadingCep: true, button:false});
             $.ajax({
                 method: 'GET',
-                url: '/get-data',
+                url: 'get-data',
                 cache: false,
                 success: function (data) {
                     this.setState({loading: false, form: data, button:true})
@@ -132,7 +132,7 @@ class Data extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
-                url: '/update-data',
+                url: 'update-data',
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id

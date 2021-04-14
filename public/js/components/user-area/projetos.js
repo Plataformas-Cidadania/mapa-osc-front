@@ -144,7 +144,7 @@ class Projetos extends React.Component {
         this.setState({ loadingRemove: loadingRemove });
         $.ajax({
             method: 'GET',
-            url: '/remove-user-projeto/' + id,
+            url: 'remove-user-projeto/' + id,
             data: {},
             cache: false,
             success: function (data) {

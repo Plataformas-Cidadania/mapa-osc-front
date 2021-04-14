@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarArtworkCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarArtworkCtrl.js') !!}
     <div ng-controller="alterarArtworkCtrl">
         <div class="box-padrao">
             <h1><a href="cms/artworks"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Artworks</h1>

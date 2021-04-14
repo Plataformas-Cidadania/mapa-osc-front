@@ -132,7 +132,7 @@
                         <br>
                         <div class="btn-group">
                             <ul id="menu-desk">
-                                <li role="presentation"><a href="/" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
+                                <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
                                 <li role="presentation"><a href="" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
@@ -160,11 +160,11 @@
                                 <p>Olá, faça seu login ou se cadastre-se</p>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="/login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
-                                <a href="/register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
-                                <a href="/register"><button class="dropdown-item" type="button">Estado e Município</button></a>
-                                <a href="/oscs-user"><button class="dropdown-item" type="button">Minha OSCs</button></a>
-                                <a href="/oscs-user"><button class="dropdown-item " type="button">Editar</button></a>
+                                <a href="login"><button class="btn btn-primary btn-login-menu" type="button">Entrar</button></a>
+                                <a href="register"><button class="dropdown-item" type="button">Cadastre-se</button></a>
+                                <a href="register"><button class="dropdown-item" type="button">Estado e Município</button></a>
+                                <a href="oscs-user"><button class="dropdown-item" type="button">Minha OSCs</button></a>
+                                <a href="oscs-user"><button class="dropdown-item " type="button">Editar</button></a>
                                 <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
                             </div>
                         </div>

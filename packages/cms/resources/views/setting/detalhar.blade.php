@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarSettingCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarSettingCtrl.js') !!}
     <div ng-controller="alterarSettingCtrl">
         <div class="box-padrao">
             <h1>{{--<a href="/cms"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;--}}<i class="fa fa-fw fa-cog"></i>&nbsp;Settings</h1>

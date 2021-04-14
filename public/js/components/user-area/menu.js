@@ -15,7 +15,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dashboard-user" },
+                        { href: "dashboard-user" },
                         React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
                         " Minha \xE1rea"
                     )
@@ -25,7 +25,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/oscs-user" },
+                        { href: "oscs-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Minhas OSCs"
                     )
@@ -35,7 +35,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/dados-user" },
+                        { href: "dados-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Meus Dados"
                     )
@@ -45,7 +45,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/declaracao", target: "_blank" },
+                        { href: "declaracao", target: "_blank" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Declara\xE7\xE3o"
                     )
@@ -55,7 +55,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/selo-user" },
+                        { href: "selo-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Selo Site"
                     )
@@ -65,7 +65,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/logout-user" },
+                        { href: "logout-user" },
                         React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
                         " Sair"
                     )
@@ -88,7 +88,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/osc-user/789809" },
+                        { href: "osc-user/789809" },
                         React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
                         " Dados gerais"
                     )
@@ -98,7 +98,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/objetivos-user" },
+                        { href: "objetivos-user" },
                         React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
                         " ODS"
                     )
@@ -108,7 +108,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/areas-atuacao-user" },
+                        { href: "areas-atuacao-user" },
                         React.createElement("i", { className: "fa fa-share-alt", "aria-hidden": "true" }),
                         " \xC1reas de atua\xE7\xE3o"
                     )
@@ -118,7 +118,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/descricao-user" },
+                        { href: "descricao-user" },
                         React.createElement("i", { className: "fas fa-align-justify", "aria-hidden": "true" }),
                         " Descri\xE7\xE3o"
                     )
@@ -128,7 +128,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/certificates-user" },
+                        { href: "certificates-user" },
                         React.createElement("i", { className: "fas fa-certificate", "aria-hidden": "true" }),
                         " T\xEDtulos e Certificados"
                     )
@@ -138,7 +138,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/governancas-user" },
+                        { href: "governancas-user" },
                         React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
                         " Trabalho e Governan\xE7a"
                     )
@@ -148,7 +148,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/participacoes-user" },
+                        { href: "participacoes-user" },
                         React.createElement("i", { className: "fas fa-users", "aria-hidden": "true" }),
                         " Participa\xE7\xE3o Social"
                     )
@@ -158,7 +158,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/projetos-user" },
+                        { href: "projetos-user" },
                         React.createElement("i", { className: "fas fa-project-diagram", "aria-hidden": "true" }),
                         " Projetos"
                     )
@@ -168,7 +168,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "/recursos-user" },
+                        { href: "recursos-user" },
                         React.createElement("i", { className: "fas fa-boxes", "aria-hidden": "true" }),
                         " Fontes de recursos"
                     )

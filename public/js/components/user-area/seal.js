@@ -18,7 +18,7 @@ class Seal extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: '/dashboard-status',
+            url: 'dashboard-status',
             data: {},
             cache: false,
             success: function (data) {

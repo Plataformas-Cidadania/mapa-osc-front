@@ -57,8 +57,8 @@
 
 
 
-<script src="/js/react/react.development.js" crossorigin></script>
-<script src="/js/react/react-dom.development.js" crossorigin></script>
+<script src="js/react/react.development.js" crossorigin></script>
+<script src="js/react/react-dom.development.js" crossorigin></script>
 
 <script>
     function get_location() {
@@ -103,8 +103,8 @@
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
-    <script src="/js/components/charts/polarChart.js"></script>
-    <script src="/js/components/osc/preenchimento.js"></script>
+    <script src="js/components/charts/polarChart.js"></script>
+    <script src="js/components/osc/preenchimento.js"></script>
 @endif
 @if($rota=='/')
 <script src="js/home.js" ></script>
@@ -257,42 +257,42 @@
 
 <!--///////////////////////////////REACT////////////////////////////-->
 @if($rota=="contato")
-    <script src="/js/components/forms/contact.js"></script>
-    <script src="/js/utils.js"></script>
-    <script src="/js/leaflet.js"></script>
-    <script src="/js/components/maps/address.js"></script>
+    <script src="js/components/forms/contact.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/components/maps/address.js"></script>
 @endif
 @if($rota=="filtro")
-    <script src="/js/components/forms/range.js"></script>
-    <script src="/js/components/forms/filter.js"></script>
-    <script src="/js/components/forms/page/api.js"></script>
-    <script src="/js/utils.js"></script>
+    <script src="js/components/forms/range.js"></script>
+    <script src="js/components/forms/filter.js"></script>
+    <script src="js/components/forms/page/api.js"></script>
+    <script src="js/utils.js"></script>
 @endif
 
 @if($rota=="artigo/{id}/{titulo}")
-    <script src="/js/components/forms/comment.js"></script>
-    <script src="/js/utils.js"></script>
+    <script src="js/components/forms/comment.js"></script>
+    <script src="js/utils.js"></script>
 @endif
 
 {{--@if($rota=="artigos" || $rota=="artigos/{id_segment}" || $rota=="artigos/{titulo}" || $rota=="artigos/{parameters}")--}}
 @if($rota=="posts" || $rota=="posts/{type}")
-    <script src="/js/components/posts/search.js"></script>
-    <script src="/js/components/posts/filterCategories.js"></script>
-    <script src="/js/components/posts/filterMembers.js"></script>
-    <script src="/js/components/posts/filterArchives.js"></script>
-    <script src="/js/components/posts/filters.js"></script>
-    <script src="/js/components/posts/list.js"></script>
-    <script src="/js/utils.js"></script>
+    <script src="js/components/posts/search.js"></script>
+    <script src="js/components/posts/filterCategories.js"></script>
+    <script src="js/components/posts/filterMembers.js"></script>
+    <script src="js/components/posts/filterArchives.js"></script>
+    <script src="js/components/posts/filters.js"></script>
+    <script src="js/components/posts/list.js"></script>
+    <script src="js/utils.js"></script>
 @endif
 
 {{--Área Restrita--}}
 @if($rota=="login/{carrinho}" || $rota=="login")
-    <script src="/js/components/login/preRegister.js"></script>
-    <script src="/js/components/login/forgetPassword.js"></script>
-    <script src="/js/components/login/login.js"></script>
+    <script src="js/components/login/preRegister.js"></script>
+    <script src="js/components/login/forgetPassword.js"></script>
+    <script src="js/components/login/login.js"></script>
 @endif
 @if($rota=="reset-password/{token}/{email}")
-    <script src="/js/components/login/resetPassword.js"></script>
+    <script src="js/components/login/resetPassword.js"></script>
 @endif
 @if(
     $rota=="area-user" ||
@@ -313,87 +313,87 @@
     $rota=="recursos-user" ||
     $rota=="selo-user"
     )
-    <script src="/js/components/user-area/headerUser.js"></script>
-    <script src="/js/components/user-area/menu.js"></script>
+    <script src="js/components/user-area/headerUser.js"></script>
+    <script src="js/components/user-area/menu.js"></script>
 @endif
 @if($rota=="certificates-user")
-    <script src="/js/components/user-area/formCertificate.js"></script>
-    <script src="/js/components/user-area/formEditCertificate.js"></script>
-    <script src="/js/components/user-area/certificates.js"></script>
+    <script src="js/components/user-area/formCertificate.js"></script>
+    <script src="js/components/user-area/formEditCertificate.js"></script>
+    <script src="js/components/user-area/certificates.js"></script>
 @endif
 @if($rota=="projetos-user")
-    <script src="/js/components/user-area/formProjeto.js"></script>
-    <script src="/js/components/user-area/formEditProjeto.js"></script>
-    <script src="/js/components/user-area/formOscParceira.js"></script>
-    <script src="/js/components/user-area/formProjetoFinanciador.js"></script>
-    <script src="/js/components/user-area/formProjetoLocalizacao.js"></script>
-    <script src="/js/components/user-area/formProjetoPublico.js"></script>
-    <script src="/js/components/user-area/projetos.js"></script>
+    <script src="js/components/user-area/formProjeto.js"></script>
+    <script src="js/components/user-area/formEditProjeto.js"></script>
+    <script src="js/components/user-area/formOscParceira.js"></script>
+    <script src="js/components/user-area/formProjetoFinanciador.js"></script>
+    <script src="js/components/user-area/formProjetoLocalizacao.js"></script>
+    <script src="js/components/user-area/formProjetoPublico.js"></script>
+    <script src="js/components/user-area/projetos.js"></script>
 @endif
 @if($rota=="governancas-user")
-    <script src="/js/components/user-area/formGovernanca.js"></script>
-    <script src="/js/components/user-area/formConselho.js"></script>
-    <script src="/js/components/user-area/formEditGovernanca.js"></script>
-    <script src="/js/components/user-area/formEditConselho.js"></script>
-    <script src="/js/components/user-area/governancas.js"></script>
+    <script src="js/components/user-area/formGovernanca.js"></script>
+    <script src="js/components/user-area/formConselho.js"></script>
+    <script src="js/components/user-area/formEditGovernanca.js"></script>
+    <script src="js/components/user-area/formEditConselho.js"></script>
+    <script src="js/components/user-area/governancas.js"></script>
 @endif
 @if($rota=="participacoes-user")
-    <script src="/js/components/user-area/formParticipacaoConselho.js"></script>
-    <script src="/js/components/user-area/formParticipacaoConferencia.js"></script>
-    <script src="/js/components/user-area/formParticipacaoOutro.js"></script>
-    <script src="/js/components/user-area/formEditParticipacaoOutro.js"></script>
-    <script src="/js/components/user-area/formEditParticipacaoConferencia.js"></script>
-    <script src="/js/components/user-area/formEditParticipacaoConselho.js"></script>
-    <script src="/js/components/user-area/participacoes.js"></script>
+    <script src="js/components/user-area/formParticipacaoConselho.js"></script>
+    <script src="js/components/user-area/formParticipacaoConferencia.js"></script>
+    <script src="js/components/user-area/formParticipacaoOutro.js"></script>
+    <script src="js/components/user-area/formEditParticipacaoOutro.js"></script>
+    <script src="js/components/user-area/formEditParticipacaoConferencia.js"></script>
+    <script src="js/components/user-area/formEditParticipacaoConselho.js"></script>
+    <script src="js/components/user-area/participacoes.js"></script>
 @endif
 {{--@if($rota=="recursos-user")
-    <script src="/js/components/user-area/formRecurso.js"></script>
-    <script src="/js/components/user-area/recursos.js"></script>
+    <script src="js/components/user-area/formRecurso.js"></script>
+    <script src="js/components/user-area/recursos.js"></script>
 @endif--}}
 @if($rota=="recursos-user")
-    <script src="/js/components/user-area/recursos.js"></script>
+    <script src="js/components/user-area/recursos.js"></script>
 @endif
 @if($rota=="areas-atuacao-user")
-    <script src="/js/components/user-area/formAtuacao.js"></script>
-    <script src="/js/components/user-area/atuacoes.js"></script>
+    <script src="js/components/user-area/formAtuacao.js"></script>
+    <script src="js/components/user-area/atuacoes.js"></script>
 @endif
 
 @if($rota=="area-user" || $rota=="dashboard-user" )
-    <script src="/js/components/user-area/dashboard.js"></script>
+    <script src="js/components/user-area/dashboard.js"></script>
 @endif
 @if($rota=="dados-user")
-    <script src="/js/components/user-area/data.js"></script>
+    <script src="js/components/user-area/data.js"></script>
 @endif
 @if($rota=="descricao-user")
-    <script src="/js/components/user-area/descricao.js"></script>
+    <script src="js/components/user-area/descricao.js"></script>
 @endif
 
 @if($rota=="selo-user")
-    <script src="/js/components/user-area/seal.js"></script>
+    <script src="js/components/user-area/seal.js"></script>
 @endif
 @if($rota=="dados-arquivos")
-    <script src="/js/components/user-area/documents.js"></script>
+    <script src="js/components/user-area/documents.js"></script>
 @endif
 @if($rota=="dados-arquivo/{id}")
     <script>
         id = {{$id}};
     </script>
-    <script src="/js/components/user-area/document.js"></script>
+    <script src="js/components/user-area/document.js"></script>
 @endif
 @if($rota=="oscs-user")
-    <script src="/js/components/user-area/oscs.js"></script>
+    <script src="js/components/user-area/oscs.js"></script>
 @endif
 @if($rota=="osc-user/{id}")
     <script>
         id = {{$id}};
     </script>
-    <script src="/js/components/user-area/osc.js"></script>
+    <script src="js/components/user-area/osc.js"></script>
 @endif
 @if($rota=="objetivos-user")
-    <script src="/js/components/user-area/objetivos.js"></script>
+    <script src="js/components/user-area/objetivos.js"></script>
 @endif
 @if($rota=="register")
-    <script src="/js/components/join/register.js"></script>
+    <script src="js/components/join/register.js"></script>
 @endif
 
 <script>

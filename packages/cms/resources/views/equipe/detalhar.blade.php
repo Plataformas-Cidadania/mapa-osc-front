@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/alterarEquipeCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarEquipeCtrl.js') !!}
     <div ng-controller="alterarEquipeCtrl">
         <div class="box-padrao">
             <h1><i class="fa fa-user"></i>&nbsp;&nbsp;Equipe  </h1>

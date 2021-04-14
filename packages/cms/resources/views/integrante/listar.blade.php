@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script('assets-cms/js/controllers/integranteCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/integranteCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()
