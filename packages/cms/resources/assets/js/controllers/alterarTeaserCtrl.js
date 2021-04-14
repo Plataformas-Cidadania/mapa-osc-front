@@ -43,7 +43,7 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
                 $scope.picFile = null;//limpa o form
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = '/imagens/teasers/'+response.data;
+                $scope.imagemBD = 'imagens/teasers/'+response.data;
                 console.log($scope.imagemDB);
             }, function (response) {
                 if (response.status > 0){

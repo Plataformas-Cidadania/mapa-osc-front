@@ -95,11 +95,11 @@
                         <tbody>
                         <tr ng-repeat="text in texts">
                             <td><% text.id %></td>
-                            <td><img ng-show="text.imagem" ng-src="/imagens/texts/xs-<% text.imagem %>" width="60"></td>
-                            <td><a href="/cms/text/<% text.id %>"><% text.titulo %></a></td>
+                            <td><img ng-show="text.imagem" ng-src="imagens/texts/xs-<% text.imagem %>" width="60"></td>
+                            <td><a href="cms/text/<% text.id %>"><% text.titulo %></a></td>
                             <td class="text-right">
                                 <div>
-                                    <a href="/cms/text/<% text.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a href="cms/text/<% text.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(text.id, text.titulo, text.imagem)"></i></a>
                                 </div>
                             </td>

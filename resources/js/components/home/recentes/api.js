@@ -62,13 +62,13 @@ class OscsRecentes extends React.Component {
         return (
             <div className="row">
                 <div className="col-md-12 text-center">
-                    <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loading ? '' : 'none'}}/>
+                    <img src="img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loading ? '' : 'none'}}/>
                 </div>
                 {oscs}
 
                 <div className="col-md-12 text-center">
                     <br/><br/>
-                        <a href="mapa/">
+                        <a href="mapa">
                             <button type="button" className="btn btn-outline-light">Visualize todas as OSCs</button>
                         </a>
                         <br/><br/><br/>

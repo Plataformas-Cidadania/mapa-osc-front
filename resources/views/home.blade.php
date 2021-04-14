@@ -142,7 +142,7 @@
                 <br>
                 <br>
                 <a href="posts/{{$midiaSelect[1]}}">
-                    <button type="button" class="btn btn-outline-primary">Visualize todas {{$midiaSelect[3]}}</button>
+                    <button type="button" class="btn btn-outline-primary">Visualize todos {{$midiaSelect[3]}}</button>
                 </a>
             </div>
         </div>

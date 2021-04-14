@@ -35,7 +35,7 @@ cmsApp.controller('textCtrl', ['$scope', '$http', 'Upload', '$timeout', function
     var listarTexts = function(){
         $scope.processandoListagem = true;
         $http({
-            url: '/cms/listar-texts/',
+            url: 'cms/listar-texts',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
@@ -118,7 +118,7 @@ cmsApp.controller('textCtrl', ['$scope', '$http', 'Upload', '$timeout', function
             $scope.processandoInserir = true;
 
             //console.log($scope.text);
-            $http.post("/cms/inserir-text", {text: $scope.text}).success(function (data){
+            $http.post("cms/inserir-text", {text: $scope.text}).success(function (data){
                  listarTexts();
                  delete $scope.text;//limpa o form
                 $scope.mensagemInserir =  "Gravado com sucesso!";
@@ -129,7 +129,7 @@ cmsApp.controller('textCtrl', ['$scope', '$http', 'Upload', '$timeout', function
              });
         }else{
             file.upload = Upload.upload({
-                url: '/cms/inserir-text',
+                url: 'cms/inserir-text',
                 data: {text: $scope.text, file: file},
             });
 
@@ -180,7 +180,7 @@ cmsApp.controller('textCtrl', ['$scope', '$http', 'Upload', '$timeout', function
     $scope.excluir = function(id){
         $scope.processandoExcluir = true;
         $http({
-            url: '/cms/excluir-text/'+id,
+            url: 'cms/excluir-text/'+id,
             method: 'GET'
         }).success(function(data, status, headers, config){
             console.log(data);
