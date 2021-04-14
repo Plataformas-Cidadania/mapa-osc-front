@@ -11,16 +11,18 @@
         <div class="row">
             @foreach($teasers as $teaser)
             <div class="col-md-3 col-sm-6 col- items text-center">
-                <picture>
-                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 468px)">
-                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 768px)">
-                    <source srcset="imagens/teasers/md-{{$teaser->imagem}}" class="img-responsive">
-                    <img src="img/loading.gif" data-src="imagens/teasers/lg-{{$teaser->imagem}}" alt="Imagem sobre {{$teaser->titulo}}" title="Imagem sobre {{$teaser->titulo}}"  class=" rounded-circle lazyload items-hover">
-                </picture>
-                <div class="items-text">
-                    <h2>{{$teaser->titulo}}</h2>
-                    <p>{{$teaser->teaser}}</p>
-                </div>
+                <a href="">
+                    <picture>
+                        <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 468px)">
+                        <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 768px)">
+                        <source srcset="imagens/teasers/md-{{$teaser->imagem}}" class="img-responsive">
+                        <img src="img/loading.gif" data-src="imagens/teasers/lg-{{$teaser->imagem}}" alt="Imagem sobre {{$teaser->titulo}}" title="Imagem sobre {{$teaser->titulo}}"  class=" rounded-circle lazyload items-hover">
+                    </picture>
+                    <div class="items-text">
+                        <h2>{{$teaser->titulo}}</h2>
+                        <p>{{$teaser->teaser}}</p>
+                    </div>
+                </a>
             </div>
             @endforeach
 

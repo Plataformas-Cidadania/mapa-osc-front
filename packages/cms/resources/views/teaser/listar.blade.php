@@ -100,9 +100,9 @@
                         <tbody>
                         <tr ng-repeat="teaser in teasers">
                             <td><% teaser.id %></td>
-                            <td><img ng-show="teaser.imagem" ng-src="/imagens/teasers/xs-<% teaser.imagem %>" width="60"></td>
-                            <td><a href="/cms/teaser/<% teaser.id %>"><% teaser.titulo %></a></td>
-                            <td><a href="cms/teaser/<% versao.id %>"><% teaser.posicao %></a></td>
+                            <td><img ng-show="teaser.imagem" ng-src="imagens/teasers/xs-<% teaser.imagem %>" width="60"></td>
+                            <td><a href="cms/teaser/<% teaser.id %>"><% teaser.titulo %></a></td>
+                            <td><a href="cms/teaser/<% teaser.id %>"><% teaser.posicao %></a></td>
                             <td class="text-right">
                                 <div>
                                     <a><i class="fa fa-arrow-circle-up fa-2x" title="Posição" ng-click="positionUp(teaser.id);" style="cursor: pointer;" ng-hide="<% $first %>"></i></a>
@@ -111,7 +111,7 @@
                                     <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(teaser.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $last %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
 
-                                    <a href="/cms/teaser/<% teaser.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a href="cms/teaser/<% teaser.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(teaser.id, teaser.titulo, teaser.imagem)"></i></a>
                                 </div>
                             </td>
