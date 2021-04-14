@@ -35,7 +35,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     var listarTeasers = function(){
         $scope.processandoListagem = true;
         $http({
-            url: 'cms/listar-teasers/',
+            url: 'cms/listar-teasers',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
