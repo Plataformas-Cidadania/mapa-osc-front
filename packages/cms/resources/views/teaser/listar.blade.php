@@ -110,7 +110,7 @@
 
                                     <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(teaser.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $last %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
-                                    
+
                                     <a href="/cms/teaser/<% teaser.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(teaser.id, teaser.titulo, teaser.imagem)"></i></a>
                                 </div>
