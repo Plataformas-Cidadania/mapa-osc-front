@@ -1,5 +1,5 @@
 cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
-    
+
 
     $scope.teasers = [];
     $scope.currentPage = 1;
@@ -35,7 +35,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     var listarTeasers = function(){
         $scope.processandoListagem = true;
         $http({
-            url: '/cms/listar-teasers/',
+            url: 'cms/listar-teasers/',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
@@ -81,7 +81,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
 
      });
      };*/
-    
+
 
     $scope.ordernarPor = function(ordem){
         $scope.ordem = ordem;
@@ -98,13 +98,13 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     $scope.validar = function(){
 
     };
-    
+
 
     listarTeasers();
 
     //INSERIR/////////////////////////////
 
-    $scope.tinymceOptions = tinymceOptions;    
+    $scope.tinymceOptions = tinymceOptions;
 
     $scope.mostrarForm = false;
 
@@ -118,7 +118,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
             $scope.processandoInserir = true;
 
             //console.log($scope.teaser);
-            $http.post("/cms/inserir-teaser", {teaser: $scope.teaser}).success(function (data){
+            $http.post("cms/inserir-teaser", {teaser: $scope.teaser}).success(function (data){
                  listarTeasers();
                  delete $scope.teaser;//limpa o form
                 $scope.mensagemInserir =  "Gravado com sucesso!";
@@ -129,7 +129,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
              });
         }else{
             file.upload = Upload.upload({
-                url: '/cms/inserir-teaser',
+                url: 'cms/inserir-teaser',
                 data: {teaser: $scope.teaser, file: file},
             });
 
@@ -180,7 +180,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     $scope.excluir = function(id){
         $scope.processandoExcluir = true;
         $http({
-            url: '/cms/excluir-teaser/'+id,
+            url: 'cms/excluir-teaser/'+id,
             method: 'GET'
         }).success(function(data, status, headers, config){
             console.log(data);
@@ -199,7 +199,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     $scope.positionUp = function(id){
         $scope.idPositionUp = '';
         $http({
-            url: '/cms/positionUp-teaser/'+id,
+            url: 'cms/positionUp-teaser/'+id,
             method: 'GET'
         }).success(function(data, positionUp, headers, config){
             $scope.idPositionUp = id;
@@ -209,7 +209,7 @@ cmsApp.controller('teaserCtrl', ['$scope', '$http', 'Upload', '$timeout', functi
     $scope.positionDown = function(id){
         $scope.idPositionDown = '';
         $http({
-            url: '/cms/positionDown-teaser/'+id,
+            url: 'cms/positionDown-teaser/'+id,
             method: 'GET'
         }).success(function(data, positionDown, headers, config){
             $scope.idPositionDown = id;

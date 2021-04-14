@@ -18,7 +18,7 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
 
             $scope.processandoSalvar = true;
             //console.log($scope.teaser);
-            $http.post("/cms/alterar-teaser/"+$scope.id, {'teaser': $scope.teaser, 'removerImagem': $scope.removerImagem}).success(function (data){
+            $http.post("cms/alterar-teaser/"+$scope.id, {'teaser': $scope.teaser, 'removerImagem': $scope.removerImagem}).success(function (data){
                 //console.log(data);
                 $scope.processandoSalvar = false;
                 $scope.mensagemSalvar = data;
@@ -32,7 +32,7 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
         }else{
 
             file.upload = Upload.upload({
-                url: '/cms/alterar-teaser/'+$scope.id,
+                url: 'cms/alterar-teaser/'+$scope.id,
                 data: {teaser: $scope.teaser, file: file},
             });
 
@@ -67,7 +67,7 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
 
     $scope.carregaImagem  = function(img) {
         if(img!=''){
-            $scope.imagemBD = '/imagens/teasers/xs-'+img;
+            $scope.imagemBD = 'imagens/teasers/xs-'+img;
             //console.log($scope.imagemBD);
         }
     };
@@ -79,7 +79,7 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
         return "";
     };
     /////////////////////////////////
-    
+
 
 
 }]);
