@@ -11,7 +11,7 @@
         <div class="row">
             @foreach($teasers as $teaser)
             <div class="col-md-3 col-sm-6 col- items text-center">
-                <a href="">
+                <a href="{{$teaser->url}}">
                     <picture>
                         <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 468px)">
                         <source srcset="imagens/teasers/md-{{$teaser->imagem}}" media="(max-width: 768px)">
