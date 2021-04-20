@@ -2,8 +2,6 @@ cmsApp.controller('alterarTeaserCtrl', ['$scope', '$http', 'Upload', '$timeout',
 
     $scope.processandoSalvar = false;
 
-
-
     //ALTERAR/////////////////////////////
 
     $scope.tinymceOptions = tinymceOptions;

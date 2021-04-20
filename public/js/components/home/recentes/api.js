@@ -67,7 +67,7 @@ class OscsRecentes extends React.Component {
             React.createElement(
                 'div',
                 { className: 'col-md-12 text-center' },
-                React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loading ? '' : 'none' } })
+                React.createElement('img', { src: 'img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loading ? '' : 'none' } })
             ),
             oscs,
             React.createElement(
@@ -77,7 +77,7 @@ class OscsRecentes extends React.Component {
                 React.createElement('br', null),
                 React.createElement(
                     'a',
-                    { href: 'mapa/' },
+                    { href: 'mapa' },
                     React.createElement(
                         'button',
                         { type: 'button', className: 'btn btn-outline-light' },
