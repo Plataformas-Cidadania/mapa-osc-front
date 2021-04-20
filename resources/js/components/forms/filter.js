@@ -122,6 +122,10 @@ class Filter extends React.Component{
         this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
 
+        this.setTotalBeneficiarios = this.setTotalBeneficiarios.bind(this);
+        this.setValorTotal = this.setValorTotal.bind(this);
+        this.setValorRecebido = this.setValorRecebido.bind(this);
+
         this.objetivos = this.objetivos.bind(this);
 
 
@@ -611,6 +615,27 @@ class Filter extends React.Component{
         this.setState({filters: filters});
     }
     setDoacoesRecebidasFormaProdutosServicos(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
+    setTotalBeneficiarios(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
+    setValorTotal(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
+    setValorRecebido(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
@@ -1463,7 +1488,149 @@ class Filter extends React.Component{
                         <div id="collapse6" className="collapse" aria-labelledby="heading6"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                666
+
+                                {/*/////*/}
+                                <div className="row">
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_projeto">Nome do Projeto</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        Situação do projeto
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+
+                                    <div className="col-md-2">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="dt_data_inicio_projeto">Data de início</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="dt_data_fim_projeto">Data de fim</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        Abrangência de atuação
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-2">
+                                        Zona de Atuação
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-3">
+                                        Fontes de Recursos
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_financiador">Financiadores do Projeto</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de Execução</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_publico_beneficiado">Público Beneficiado</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_osc_parceira_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_osc_parceira_projeto">OSC Parceiras</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalBeneficiarios}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        Objetivos do Desenvolvimento Sustentável - ODS
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setValorTotal}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        Metas Relacionadas ao ODS
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setValorRecebido}
+                                        />
+                                    </div>
+
+                                </div>
+                                {/*/////*/}
+
                             </div>
                         </div>
                     </div>

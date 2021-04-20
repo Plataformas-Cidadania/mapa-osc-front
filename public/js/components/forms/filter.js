@@ -119,6 +119,10 @@ class Filter extends React.Component {
         this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
 
+        this.setTotalBeneficiarios = this.setTotalBeneficiarios.bind(this);
+        this.setValorTotal = this.setValorTotal.bind(this);
+        this.setValorRecebido = this.setValorRecebido.bind(this);
+
         this.objetivos = this.objetivos.bind(this);
 
         this.conselhos = this.conselhos.bind(this);
@@ -592,6 +596,27 @@ class Filter extends React.Component {
         this.setState({ filters: filters });
     }
     setDoacoesRecebidasFormaProdutosServicos(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+
+    setTotalBeneficiarios(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+
+    setValorTotal(start, end) {
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({ filters: filters });
+    }
+
+    setValorRecebido(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
@@ -1786,7 +1811,184 @@ class Filter extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'card-body' },
-                            '666'
+                            React.createElement(
+                                'div',
+                                { className: 'row' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_projeto' },
+                                            'Nome do Projeto'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    'Situa\xE7\xE3o do projeto'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-2' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'dt_data_inicio_projeto' },
+                                            'Data de in\xEDcio'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-2' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'dt_data_fim_projeto' },
+                                            'Data de fim'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    'Abrang\xEAncia de atua\xE7\xE3o'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-2' },
+                                    'Zona de Atua\xE7\xE3o'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    'Fontes de Recursos'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-6' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_financiador' },
+                                            'Financiadores do Projeto'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_regiao_localizacao_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_regiao_localizacao_projeto' },
+                                            'Local de Execu\xE7\xE3o'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_publico_beneficiado', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_publico_beneficiado' },
+                                            'P\xFAblico Beneficiado'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_osc_parceira_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement(
+                                            'label',
+                                            { htmlFor: 'tx_nome_osc_parceira_projeto' },
+                                            'OSC Parceiras'
+                                        ),
+                                        React.createElement('div', { className: 'label-box-info-off' })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Ano',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setTotalBeneficiarios
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Ano',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setValorTotal
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-9' },
+                                    'Metas Relacionadas ao ODS'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-3' },
+                                    React.createElement(Range, {
+                                        title: 'Ano',
+                                        min: '0',
+                                        max: '100',
+                                        step: '1',
+                                        defaultValueStart: '0',
+                                        defaultValueEnd: '100',
+                                        setValue: this.setValorRecebido
+                                    })
+                                )
+                            )
                         )
                     )
                 ),
