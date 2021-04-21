@@ -17,3 +17,11 @@ function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
 }
 
+function numberDecimalPtBR(number, decimals){
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+    }).format(number);
+}
+
+
