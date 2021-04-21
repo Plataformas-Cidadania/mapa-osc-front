@@ -142,7 +142,6 @@ class Osc extends React.Component {
                     tx_site: this.state.form.tx_site,
                     tx_telefone: this.state.form.tx_telefone,
                     tx_resumo_osc: this.state.form.tx_resumo_osc
-
                 },
                 cache: false,
                 success: function (data) {
