@@ -1,7 +1,7 @@
 cmsApp.controller('alterarNoticiaCtrl', ['$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
 
     $scope.processandoSalvar = false;
-    
+
     //ALTERAR/////////////////////////////
 
     $scope.tinymceOptions = tinymceOptions;
@@ -61,7 +61,7 @@ cmsApp.controller('alterarNoticiaCtrl', ['$scope', '$http', 'Upload', '$timeout'
                 //$scope.fileArquivo = null;//limpa o file
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = '/imagens/noticias/'+response.data;
+                $scope.imagemBD = 'imagens/noticias/'+response.data;
                 $scope.processandoSalvar = false;
 
             }, function (response) {
@@ -109,8 +109,8 @@ cmsApp.controller('alterarNoticiaCtrl', ['$scope', '$http', 'Upload', '$timeout'
         return "";
     };
     /////////////////////////////////
-    
 
-    
+
+
 
 }]);

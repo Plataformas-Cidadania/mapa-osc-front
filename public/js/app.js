@@ -20358,3 +20358,14 @@ function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
 }
 
+<<<<<<< HEAD
+=======
+function numberDecimalPtBR(number, decimals){
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+    }).format(number);
+}
+
+
+>>>>>>> mapas

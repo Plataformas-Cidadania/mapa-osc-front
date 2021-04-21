@@ -28,11 +28,11 @@
                     <br>
 
                     <picture>
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 468px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" media="(max-width: 768px)">
-                        <source srcset="https://www.w3schools.com/html/pic_trulli.jpg" class="img-responsive">
-                        <img src="img/loading.gif" data-src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload" data-message="Imagem sobre " tabindex="0">
-                        <figcaption data-message="Fig.1 - Trulli, Puglia, Italy." tabindex="0">Fig.1 - Trulli, Puglia, Italy.</figcaption>
+                        <source srcset="imagens/posts/{{$detail->image}}" media="(max-width: 468px)">
+                        <source srcset="imagens/posts/{{$detail->image}}" media="(max-width: 768px)">
+                        <source srcset="imagens/posts/{{$detail->image}}" class="img-responsive">
+                        <img src="img/loading.gif" data-src="imagens/posts/{{$detail->image}}" alt="Imagem sobre " title="Imagem sobre " width="100%" class="img-fluid lazyload" data-message="Imagem sobre " tabindex="0">
+                        <!--<figcaption data-message="Fig.1 - Trulli, Puglia, Italy." tabindex="0">Fig.1 - Trulli, Puglia, Italy.</figcaption>-->
                     </picture>
 
                     <div class="row">

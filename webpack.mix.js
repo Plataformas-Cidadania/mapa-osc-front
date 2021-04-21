@@ -19,7 +19,7 @@ mix.scripts([
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/lazysizes/lazysizes.js',
     'node_modules/pace-js/pace.min.js',
-    'resorces/js/utils.js',
+    'resources/js/utils.js',
     ], 'public/js/app.js');
 
 mix.scripts([

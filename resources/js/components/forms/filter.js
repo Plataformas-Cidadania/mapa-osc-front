@@ -41,7 +41,14 @@ class Filter extends React.Component{
             listUf:null,
             listMunicipio:null,
             listCnae:null,
+
+
             dataObjetivos:[],
+            dataObjetivosMetas:[],
+            dataConselhos:[],
+            dataParticipacoes:[],
+            dataConferencias:[],
+            dataFormaParticipacoes:[],
         };
 
         this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
@@ -73,6 +80,9 @@ class Filter extends React.Component{
 
         this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
+
+        this.setAnoRealizacao = this.setAnoRealizacao.bind(this);
+
 
         this.setAnoFundacao = this.setAnoFundacao.bind(this);
         this.setTotalTrabalhadores = this.setTotalTrabalhadores.bind(this);
@@ -112,7 +122,17 @@ class Filter extends React.Component{
         this.setBensRecebidosDireito = this.setBensRecebidosDireito.bind(this);
         this.setDoacoesRecebidasFormaProdutosServicos = this.setDoacoesRecebidasFormaProdutosServicos.bind(this);
 
+        this.setTotalBeneficiarios = this.setTotalBeneficiarios.bind(this);
+        this.setValorTotal = this.setValorTotal.bind(this);
+        this.setValorRecebido = this.setValorRecebido.bind(this);
+
         this.objetivos = this.objetivos.bind(this);
+
+
+        this.conselhos = this.conselhos.bind(this);
+        this.participacoes = this.participacoes.bind(this);
+        this.conferencias = this.conferencias.bind(this);
+        this.formaParticipacoes = this.formaParticipacoes.bind(this);
 
 
     }
@@ -120,6 +140,10 @@ class Filter extends React.Component{
 
     componentDidMount(){
         this.objetivos();
+        this.conselhos();
+        this.participacoes();
+        this.conferencias();
+        this.formaParticipacoes();
     }
 
     componentDidUpdate(props){
@@ -139,6 +163,10 @@ class Filter extends React.Component{
         const target = event.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
+        if(target.name == 'cd_objetivo_oscSelectBoxItText'){
+            this.objetivosMetas(target.value);
+        }
 
         /*if(target.name==='cel'){
             value = maskCel(value);
@@ -387,6 +415,13 @@ class Filter extends React.Component{
         });
     }
 
+    setAnoRealizacao(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
     setAnoFundacao(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
@@ -586,6 +621,27 @@ class Filter extends React.Component{
         this.setState({filters: filters});
     }
 
+    setTotalBeneficiarios(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
+    setValorTotal(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
+    setValorRecebido(start, end){
+        let filters = this.state.filters;
+        filters.ano_fundacao.start = start;
+        filters.ano_fundacao.end = end;
+        this.setState({filters: filters});
+    }
+
 
     objetivos(){
         this.setState({loadingList: true});
@@ -605,9 +661,101 @@ class Filter extends React.Component{
     }
 
 
+    objetivosMetas(id){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataObjetivosMetas: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    ////////////////////////////////////////
+
+    conselhos(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/conselho',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataConselhos: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    participacoes(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/tipo_participacao',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataParticipacoes: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    conferencias(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/conferencia',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataConferencias: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    formaParticipacoes(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/forma_participacao_conferencia',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataFormaParticipacoes: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    ////////////////////////////////////////
+
+
+
+
     render(){
 
-        console.log('dataObjetivos', this.state.dataObjetivos)
+        console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes)
 
         let certificados = null;
         if(this.state.certificados){
@@ -812,10 +960,56 @@ class Filter extends React.Component{
         if(this.state.dataObjetivos){
             objetivos = this.state.dataObjetivos.map(function (item) {
                 return (
-                    <option  key={"cert_"+item.cd_objetivo_projeto}>{item.tx_nome_objetivo_projeto}</option>
+                    <option value={item.cd_objetivo_projeto} key={"cert_"+item.cd_objetivo_projeto}>{item.tx_nome_objetivo_projeto}</option>
                 );
             });
         }
+
+        let objetivosMetas = null;
+        if(this.state.dataObjetivosMetas){
+            objetivosMetas = this.state.dataObjetivosMetas.map(function (item) {
+                return (
+                    <option value={item.cd_meta_projeto} key={"cert_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
+                );
+            });
+        }
+
+
+
+        ////////////////////////////////////////////////////
+        let conselhos = null;
+        if(this.state.dataConselhos){
+            conselhos = this.state.dataConselhos.map(function (item) {
+                return (
+                    <option value={item.cd_conselho} key={"conselho_"+item.cd_conselho}>{item.tx_nome_conselho}</option>
+                );
+            });
+        }
+        let participacoes = null;
+        if(this.state.dataParticipacoes){
+            participacoes = this.state.dataParticipacoes.map(function (item) {
+                return (
+                    <option value={item.cd_tipo_participacao} key={"articipacao_"+item.cd_tipo_participacao}>{item.tx_nome_tipo_participacao}</option>
+                );
+            });
+        }
+        let conferencias = null;
+        if(this.state.dataConferencias){
+            conferencias = this.state.dataConferencias.map(function (item) {
+                return (
+                    <option value={item.cd_conferencia} key={"conferencia_"+item.cd_conferencia}>{item.tx_nome_conferencia}</option>
+                );
+            });
+        }
+        let formaParticipacoes = null;
+        if(this.state.dataFormaParticipacoes){
+            formaParticipacoes = this.state.dataFormaParticipacoes.map(function (item) {
+                return (
+                    <option value={item.cd_forma_participacao_conferencia} key={"forma_"+item.cd_forma_participacao_conferencia}>{item.tx_nome_forma_participacao_conferencia}</option>
+                );
+            });
+        }
+        ////////////////////////////////////////////////////
 
 
         return (
@@ -1004,18 +1198,16 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                        <select className="custom-select" name="cd_objetivo_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
                                             {objetivos}
                                         </select>
                                         <br/><br/>
                                     </div>
                                     <div className="col-md-6">
-                                        <select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                        <select className="custom-select" name="cd_meta_oscSelectBoxItText" onChange={this.handleInputChange}>
                                             <option selected>Metas Relacionadas ao ODS</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            {objetivosMetas}
                                         </select>
                                         <br/><br/>
                                     </div>
@@ -1214,11 +1406,11 @@ class Filter extends React.Component{
                                 <div className="row">
 
                                     <div className="col-md-9">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome do Conselho</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
+                                        <select className="custom-select" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange}>
+                                            {/*<option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>*/}
+                                            {conselhos}
+                                        </select>
+                                        <br/><br/>
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">
@@ -1237,15 +1429,11 @@ class Filter extends React.Component{
                                     </div>
                                     <div className="col-md-3">
                                         <div className="label-float">
-                                            <select className="custom-select" name="cd_conselhoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
                                                 <option value="0">Situação do Imóvel</option>
-                                                <option value="1">Próprio</option>
-                                                <option value="2">Alugado</option>
-                                                <option value="3">Cedido</option>
-                                                <option value="4">Comodato</option>
+                                                {participacoes}
                                             </select>
-                                            <label htmlFor="name"/>
-                                            <div className="label-box-info-off"/>
+                                            <br/><br/>
                                         </div>
 
                                     </div>
@@ -1255,6 +1443,32 @@ class Filter extends React.Component{
                                             <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
                                             <div className="label-box-info-off"/>
                                         </div>
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        <select className="custom-select" name="cd_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                            {conferencias}
+                                        </select>
+                                        <br/><br/>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <select className="custom-select" name="cd_forma_participacao_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                            {formaParticipacoes}
+                                        </select>
+                                        <br/><br/>
+                                    </div>
+
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano de Realização da Conferência"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setAnoRealizacao}
+                                        />
                                     </div>
 
 
@@ -1274,7 +1488,149 @@ class Filter extends React.Component{
                         <div id="collapse6" className="collapse" aria-labelledby="heading6"
                              data-parent="#accordionExample">
                             <div className="card-body">
-                                666
+
+                                {/*/////*/}
+                                <div className="row">
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_projeto">Nome do Projeto</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        Situação do projeto
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+
+                                    <div className="col-md-2">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="dt_data_inicio_projeto">Data de início</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="label-float">
+                                            <input className={"form-control"} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="dt_data_fim_projeto">Data de fim</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        Abrangência de atuação
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-2">
+                                        Zona de Atuação
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-3">
+                                        Fontes de Recursos
+                                        {/*<div className="label-float">
+                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do Imóvel</option>
+                                                {participacoes}
+                                            </select>
+                                            <br/><br/>
+                                        </div>*/}
+
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_financiador">Financiadores do Projeto</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de Execução</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_publico_beneficiado">Público Beneficiado</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        <div className="label-float">
+                                            <input className={"form-control form-g "} type="text" name="tx_nome_osc_parceira_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                            <label htmlFor="tx_nome_osc_parceira_projeto">OSC Parceiras</label>
+                                            <div className="label-box-info-off"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setTotalBeneficiarios}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        Objetivos do Desenvolvimento Sustentável - ODS
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setValorTotal}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-9">
+                                        Metas Relacionadas ao ODS
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Range
+                                            title="Ano"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            defaultValueStart="0"
+                                            defaultValueEnd="100"
+                                            setValue={this.setValorRecebido}
+                                        />
+                                    </div>
+
+                                </div>
+                                {/*/////*/}
+
                             </div>
                         </div>
                     </div>
