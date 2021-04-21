@@ -9,14 +9,24 @@ use Mockery\Exception;
 
 class PostController extends Controller
 {
+    //protected $tbName;
 
-    public function __construct(){
-        $this->obj = new \App\Noticia();
-        $this->module = 'noticias';
+    public function __construct($tbName='publicacoes'){
+        //parent::__construct($tbName);
+        //Log::info($tbName);
+        //$this->obj = new \App\Publication();
+        if($tbName=='publicacoes'){
+            $this->obj = new \App\Publication();
+        }else if($tbName=='noticias'){
+            $this->obj = new \App\Noticia();
+        }else if($tbName=='analizes'){
+            $this->obj = new \App\Analise();
+        }
 
     }
 
     public function post($type){
+        new PostController($type);
         return view('post.list', ['type' => $type]);
     }
 
@@ -25,6 +35,7 @@ class PostController extends Controller
     }
 
     public function listing($parameters = null){
+
 
         if($parameters!=null){
             $array = explode('=', $parameters);
@@ -73,6 +84,7 @@ class PostController extends Controller
 
     public function archives(Request $request){
 
+
         $archives = $this->obj
             ->select(
                 DB::Raw("
@@ -90,6 +102,7 @@ class PostController extends Controller
     }
 
     public function getList(Request $request){
+
 
         $search = '';
         if (is_array($request->filters) && array_key_exists('search', $request->filters)) {
