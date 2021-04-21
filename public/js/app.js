@@ -20358,8 +20358,6 @@ function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
 }
 
-<<<<<<< HEAD
-=======
 function numberDecimalPtBR(number, decimals){
     return new Intl.NumberFormat('pt-BR', {
         minimumFractionDigits: decimals,
@@ -20368,4 +20366,3 @@ function numberDecimalPtBR(number, decimals){
 }
 
 
->>>>>>> mapas
