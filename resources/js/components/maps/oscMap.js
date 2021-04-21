@@ -75,6 +75,7 @@ class OscMap extends React.Component{
         this.populateMap = this.populateMap.bind(this);
         this.areaOscMap = this.areaOscMap.bind(this);
         this.areaIdhMap = this.areaIdhMap.bind(this);
+        this.idhLegend = this.idhLegend.bind(this);
         this.populateMapCluster = this.populateMapCluster.bind(this);
         this.heatMap = this.heatMap.bind(this);
         this.removeHeatMap = this.removeHeatMap.bind(this);
@@ -158,11 +159,11 @@ class OscMap extends React.Component{
 
             // method that we will use to update the control based on feature properties passed
             let _this = this;
-            this.state.info.update = function (props) {
-                console.log('info', props);
+            this.state.info.update = function (props, tipo) {
+                //console.log('info', props);
 
                 this._div.innerHTML =
-                    (props ? '<b>' + props.nm_uf + '</b><br />' + formatNumber(props.nr_valor, 2, ',', '.')
+                    (props ? '<b>' + props.nm_uf + '</b><br />' + tipo + ': ' + formatNumber(props.nr_valor, 2, ',', '.')
                     : "Passe o mouse sobre na região");
             };
             this.state.info.addTo(mapElements.map);
@@ -1013,9 +1014,10 @@ class OscMap extends React.Component{
                         fillOpacity: 1
                     });
                     this.bringToFront();
-                    _this2.state.info.update(layer.feature.properties);
+                    _this2.state.info.update(layer.feature.properties, 'IDH');
                 });
                 layer.on('mouseout', function () {
+                    _this2.state.info.update(null);
                     areaIdh.resetStyle(this);
                 });
             }
@@ -1024,8 +1026,85 @@ class OscMap extends React.Component{
 
         mapElements.areaIdhGroup.addLayer(areaIdh);
         this.setState({mapElements: mapElements}, function(){
-            this.areaOscMap();
+            //this.areaOscMap();
+            this.idhLegend();
         }.bind(this));
+    }
+
+    idhLegend(){
+
+        let mapElements = this.state.mapElements;
+        let legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (mymap) {
+            //console.log('map - intervalos:', this.state.intervalos);
+            let div = L.DomUtil.create('div', 'info legend'),
+                //grades = [0, 1000, 15000, 30000, 45000, 60000],
+                grades = [0, 0.499, 0.599, 0.699, 0.799],
+                //grades = intervalos,
+                //grades = this.state.intervalos,
+                labels = [];
+            div.id = 'idhLegend';
+            div.style.display = 'none';
+            div.innerHTML += "<div><strong>Escala de IDH</strong></div><br>";
+            for (let i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<div style="clear: both; float:left; width: 20px; height:20px; background:' + this.getColorIDH(grades[i] + 0.001) + '"></div> ' +
+                    '<div style="float:left; margin-left: 5px;">' +
+                    numberDecimalPtBR((grades[i]+0.001), 3) +
+                    //(grades[i + 1] ? '&nbsp;&ndash;&nbsp;' + numberDecimalPtBR(grades[i + 1], 3) + '<br>' : '+');
+                    (grades[i + 1] ? '&nbsp;&ndash;&nbsp;' + numberDecimalPtBR(grades[i + 1], 3) + '<br>' : '&nbsp;&ndash;&nbsp; 1') +
+                    '</div>';
+            }
+            return div;
+        }.bind(this);
+
+        /*if(lastIndexLegend!=0){
+            this.state.mymap.removeControl(legend[lastIndexLegend]);
+        }*/
+
+        //legend.addTo(mapElements.map);
+        legend.addTo(mapElements.map);
+        this.setState({mapaElements: mapElements}, function(){
+            this.areaOscMap();
+        });
+    }
+
+    oscLegend(){
+
+        let mapElements = this.state.mapElements;
+        let legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (mymap) {
+            //console.log('map - intervalos:', this.state.intervalos);
+            let div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 1000, 15000, 30000, 45000, 60000],
+                //grades = intervalos,
+                //grades = this.state.intervalos,
+                labels = [];
+            div.id = 'oscLegend';
+            div.style.display = '';
+            div.innerHTML += "<div><strong>Escala de OSCs</strong></div><br>";
+            for (let i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<div style="clear: both; float:left; width: 20px; height:20px; background:' + this.getColorOsc(grades[i] + 1) + '"></div> ' +
+                    '<div style="float:left; margin-left: 5px;">' +
+                    (grades[i] + 1) +
+                    //(grades[i + 1] ? '&nbsp;&ndash;&nbsp;' + numberDecimalPtBR(grades[i + 1], 3) + '<br>' : '+');
+                    (grades[i + 1] ? '&nbsp;&ndash;&nbsp;' + numberDecimalPtBR(grades[i + 1], 3) + '<br>' : '+') +
+                    '</div>';
+            }
+            return div;
+        }.bind(this);
+
+        /*if(lastIndexLegend!=0){
+            this.state.mymap.removeControl(legend[lastIndexLegend]);
+        }*/
+
+        legend.addTo(mapElements.map);
+        this.setState({mapaElements: mapElements}, function(){
+
+        });
     }
 
     highlightFeature(e) {
@@ -1084,7 +1163,9 @@ class OscMap extends React.Component{
         });
 
         mapElements.areaOscGroup.addLayer(areaOsc);
-        this.setState({mapElements: mapElements});
+        this.setState({mapElements: mapElements}, function(){
+            this.oscLegend();
+        });
     }
 
     dataOSC(id, marker){
