@@ -141,14 +141,15 @@
 
 
 @if($rota=='localidade/{id}')
-    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+    <script src="js/lib/apexcharts/prop-types.min.js"></script>
+    <script src="js/lib/apexcharts/apexcharts.js"></script>
+    <script src="js/lib/apexcharts/react-apexcharts.iife.min.js"></script>
 
 <script src="js/components/charts/mixedChart.js"></script>
-<script src="js/components/charts/pieChart.js"></script>
-<script src="js/components/charts/textCharts.js"></script>
-<script src="js/components/charts/page/textChart.js"></script>
+    <!--<script src="js/components/charts/pieChart.js"></script>
+    <script src="js/components/charts/textCharts.js"></script>
+    <script src="js/components/charts/page/textChart.js"></script>-->
+<script src="js/components/localidade/perfil.js"></script>
 @endif
 
 

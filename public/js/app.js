@@ -15055,7 +15055,7 @@ return jQuery;
 /*!
 * jQuery Smoove v0.2.11 (http://smoove.js.org/)
 * Copyright (c) 2017 Adam Bouqdib
-* Licensed under GPL-2.0 (http://abemedia.co.uk/license)
+* Licensed under GPL-2.0 (http://abemedia.co.uk/license) 
 */
 
 
@@ -20364,3 +20364,5 @@ function numberDecimalPtBR(number, decimals){
         maximumFractionDigits: decimals
     }).format(number);
 }
+
+

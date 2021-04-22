@@ -88,12 +88,16 @@ class MixedChart extends React.Component {
                     }
                 }
             },
+            /*series: [{
+                name: 'series1',
+                data: [31, 40, 28, 51, 42, 109, 100]
+            }]*/
             series: props.series
         };
     }
 
     componentDidMount() {
-        console.log('aaaa');
+        //console.log('aaaa');
     }
 
     render() {

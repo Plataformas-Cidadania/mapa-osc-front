@@ -21,28 +21,24 @@
     </div>
     <br>
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3">
-                <h3>Quantidade OSCs</h3>
-                <h2>64.445</h2>
-            </div>
-            <div class="col-md-3">
-                <h3>Quantidade OSCs</h3>
-                <h2>64.445</h2>
-            </div>
-            <div class="col-md-3">
-                <h3>Quantidade OSCs</h3>
-                <h2>R$ 29.376.046.578,49</h2>
-            </div>
-            <div class="col-md-3">
-                <h3>Quantidade OSCs</h3>
-                <h2>64.445</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div id="textChart"></div>
-        </div>
+        <div id="perfil"></div>
     </div>
 
+    <style>
+        .box-itens-hover{
+            background-color: #EEEEEE;
+        }
+        .box-itens-hover:hover{
+            background-color: #3A559B;
+            color: #FFFFFF;
+        }
+        .box-itens-hover h2{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .box-itens-hover h3{
+            font-size: 17px;
+        }
+    </style>
 
 @endsection
