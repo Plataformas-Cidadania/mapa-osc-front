@@ -2185,8 +2185,6 @@ class Filter extends React.Component{
                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
             </form>
 
-
-
         );
     }
 }

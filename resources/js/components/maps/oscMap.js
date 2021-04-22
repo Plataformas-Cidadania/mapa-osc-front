@@ -1237,24 +1237,31 @@ class OscMap extends React.Component{
     removeAreaOscGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.areaOscGroup);
+        document.getElementById('oscLegend').style.display = 'none';
+        console.log('removeAreaOscGrup');
         this.setState({mapElements: mapElements});
     }
 
     addAreaOscGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaOscGroup);
+        console.log('addAreaOscGroup');
+        document.getElementById('oscLegend').style.display = '';
         this.setState({mapElements: mapElements});
     }
 
     removeAreaIdhGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.areaIdhGroup);
+        document.getElementById('idhLegend').style.display = 'none';
         this.setState({mapElements: mapElements});
     }
 
     addAreaIdhGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaIdhGroup);
+        console.log('addAreaIdhGroup');
+        document.getElementById('idhLegend').style.display = '';
         this.setState({mapElements: mapElements});
     }
 
