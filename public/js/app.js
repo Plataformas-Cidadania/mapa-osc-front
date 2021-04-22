@@ -20358,18 +20358,10 @@ function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> acbc2aeb816b7a8f131c89da92b56f711c708d69
 function numberDecimalPtBR(number, decimals){
     return new Intl.NumberFormat('pt-BR', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
     }).format(number);
 }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> acbc2aeb816b7a8f131c89da92b56f711c708d69
