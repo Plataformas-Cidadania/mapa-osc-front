@@ -2188,5 +2188,3 @@ class Filter extends React.Component{
         );
     }
 }
-
-
