@@ -129,6 +129,11 @@ class Filter extends React.Component {
         this.participacoes = this.participacoes.bind(this);
         this.conferencias = this.conferencias.bind(this);
         this.formaParticipacoes = this.formaParticipacoes.bind(this);
+
+        this.fonteRecursosProjeto = this.fonteRecursosProjeto.bind(this);
+        this.statusProjeto = this.statusProjeto.bind(this);
+        this.zonaAtuacaoProjeto = this.zonaAtuacaoProjeto.bind(this);
+        this.abrangenciaProjeto = this.abrangenciaProjeto.bind(this);
     }
 
     componentDidMount() {
@@ -137,6 +142,11 @@ class Filter extends React.Component {
         this.participacoes();
         this.conferencias();
         this.formaParticipacoes();
+
+        this.fonteRecursosProjeto();
+        this.statusProjeto();
+        this.zonaAtuacaoProjeto();
+        this.abrangenciaProjeto();
     }
 
     componentDidUpdate(props) {
@@ -154,7 +164,7 @@ class Filter extends React.Component {
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if (target.name == 'cd_objetivo_oscSelectBoxItText') {
+        if (target.name == 'cd_objetivo_oscSelectBoxItText' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
             this.objetivosMetas(target.value);
         }
 
@@ -728,6 +738,77 @@ class Filter extends React.Component {
     }
 
     ////////////////////////////////////////
+    ////////////////////PROJETOS////////////////////
+
+    fonteRecursosProjeto() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            cache: false,
+            success: function (data) {
+                console.log('data', data);
+                this.setState({ dataFonteRecursosProjeto: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    statusProjeto() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/status_projeto',
+            cache: false,
+            success: function (data) {
+                console.log('data', data);
+                this.setState({ dataStatusProjeto: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    zonaAtuacaoProjeto() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            cache: false,
+            success: function (data) {
+                console.log('data', data);
+                this.setState({ dataZonaAtuacaoProjeto: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    abrangenciaProjeto() {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            cache: false,
+            success: function (data) {
+                console.log('data', data);
+                this.setState({ dataAbrangenciaProjeto: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
+    ////////////////////////////////////////
 
 
     render() {
@@ -1035,6 +1116,48 @@ class Filter extends React.Component {
                     'option',
                     { value: item.cd_forma_participacao_conferencia, key: "forma_" + item.cd_forma_participacao_conferencia },
                     item.tx_nome_forma_participacao_conferencia
+                );
+            });
+        }
+        ////////////////////////////////////////////////////
+        //////////////////////Projetos//////////////////////////////
+        let listFonteRecursosProjeto = null;
+        if (this.state.dataFonteRecursosProjeto) {
+            listFonteRecursosProjeto = this.state.dataFonteRecursosProjeto.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_origem_fonte_recursos_projeto, key: "forma_" + item.cd_origem_fonte_recursos_projeto },
+                    item.tx_nome_origem_fonte_recursos_projeto
+                );
+            });
+        }
+        let listStatusProjeto = null;
+        if (this.state.dataStatusProjeto) {
+            listStatusProjeto = this.state.dataStatusProjeto.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_status_projeto, key: "forma_" + item.cd_status_projeto },
+                    item.tx_nome_status_projeto
+                );
+            });
+        }
+        let listZonaAtuacaoProjeto = null;
+        if (this.state.dataZonaAtuacaoProjeto) {
+            listZonaAtuacaoProjeto = this.state.dataZonaAtuacaoProjeto.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_zona_atuacao_projeto, key: "forma_" + item.cd_zona_atuacao_projeto },
+                    item.tx_nome_zona_atuacao
+                );
+            });
+        }
+        let listAbrangenciaProjeto = null;
+        if (this.state.dataAbrangenciaProjeto) {
+            listAbrangenciaProjeto = this.state.dataAbrangenciaProjeto.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_abrangencia_projeto, key: "forma_" + item.cd_abrangencia_projeto },
+                    item.tx_nome_abrangencia_projeto
                 );
             });
         }
@@ -1832,7 +1955,22 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    'Situa\xE7\xE3o do projeto'
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_status_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Situa\xE7\xE3o do projeto'
+                                            ),
+                                            listStatusProjeto
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
@@ -1867,17 +2005,62 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    'Abrang\xEAncia de atua\xE7\xE3o'
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_abrangencia_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Abrang\xEAncia de atua\xE7\xE3o'
+                                            ),
+                                            listAbrangenciaProjeto
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-2' },
-                                    'Zona de Atua\xE7\xE3o'
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_zona_atuacao_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Zona de Atua\xE7\xE3o'
+                                            ),
+                                            listZonaAtuacaoProjeto
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-3' },
-                                    'Fontes de Recursos'
+                                    React.createElement(
+                                        'div',
+                                        { className: 'label-float' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_origem_fonte_recursos_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0' },
+                                                'Fontes de Recursos'
+                                            ),
+                                            listFonteRecursosProjeto
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
@@ -1955,7 +2138,18 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-9' },
-                                    'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_objetivo_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                        ),
+                                        objetivos
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
                                 ),
                                 React.createElement(
                                     'div',
@@ -1973,7 +2167,18 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-9' },
-                                    'Metas Relacionadas ao ODS'
+                                    React.createElement(
+                                        'select',
+                                        { className: 'custom-select', name: 'cd_meta_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                        React.createElement(
+                                            'option',
+                                            { selected: true },
+                                            'Metas Relacionadas ao ODS'
+                                        ),
+                                        objetivosMetas
+                                    ),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
                                 ),
                                 React.createElement(
                                     'div',

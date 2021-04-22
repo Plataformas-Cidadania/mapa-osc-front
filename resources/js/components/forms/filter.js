@@ -134,6 +134,11 @@ class Filter extends React.Component{
         this.conferencias = this.conferencias.bind(this);
         this.formaParticipacoes = this.formaParticipacoes.bind(this);
 
+        this.fonteRecursosProjeto = this.fonteRecursosProjeto.bind(this);
+        this.statusProjeto = this.statusProjeto.bind(this);
+        this.zonaAtuacaoProjeto = this.zonaAtuacaoProjeto.bind(this);
+        this.abrangenciaProjeto = this.abrangenciaProjeto.bind(this);
+
 
     }
 
@@ -144,6 +149,12 @@ class Filter extends React.Component{
         this.participacoes();
         this.conferencias();
         this.formaParticipacoes();
+
+        this.fonteRecursosProjeto();
+        this.statusProjeto();
+        this.zonaAtuacaoProjeto();
+        this.abrangenciaProjeto();
+
     }
 
     componentDidUpdate(props){
@@ -164,9 +175,11 @@ class Filter extends React.Component{
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if(target.name == 'cd_objetivo_oscSelectBoxItText'){
+        if(target.name == 'cd_objetivo_oscSelectBoxItText' || target.name == 'cd_objetivo_projetoSelectBoxItText'){
             this.objetivosMetas(target.value);
         }
+
+
 
         /*if(target.name==='cel'){
             value = maskCel(value);
@@ -749,6 +762,77 @@ class Filter extends React.Component{
     }
 
     ////////////////////////////////////////
+    ////////////////////PROJETOS////////////////////
+
+    fonteRecursosProjeto(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataFonteRecursosProjeto: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    statusProjeto(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/status_projeto',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataStatusProjeto: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    zonaAtuacaoProjeto(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataZonaAtuacaoProjeto: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    abrangenciaProjeto(){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            cache: false,
+            success: function(data){
+                console.log('data', data);
+                this.setState({dataAbrangenciaProjeto: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
+    ////////////////////////////////////////
 
 
 
@@ -1006,6 +1090,40 @@ class Filter extends React.Component{
             formaParticipacoes = this.state.dataFormaParticipacoes.map(function (item) {
                 return (
                     <option value={item.cd_forma_participacao_conferencia} key={"forma_"+item.cd_forma_participacao_conferencia}>{item.tx_nome_forma_participacao_conferencia}</option>
+                );
+            });
+        }
+        ////////////////////////////////////////////////////
+        //////////////////////Projetos//////////////////////////////
+        let listFonteRecursosProjeto = null;
+        if(this.state.dataFonteRecursosProjeto){
+            listFonteRecursosProjeto = this.state.dataFonteRecursosProjeto.map(function (item) {
+                return (
+                    <option value={item.cd_origem_fonte_recursos_projeto} key={"forma_"+item.cd_origem_fonte_recursos_projeto}>{item.tx_nome_origem_fonte_recursos_projeto}</option>
+                );
+            });
+        }
+        let listStatusProjeto = null;
+        if(this.state.dataStatusProjeto){
+            listStatusProjeto = this.state.dataStatusProjeto.map(function (item) {
+                return (
+                    <option value={item.cd_status_projeto} key={"forma_"+item.cd_status_projeto}>{item.tx_nome_status_projeto}</option>
+                );
+            });
+        }
+        let listZonaAtuacaoProjeto = null;
+        if(this.state.dataZonaAtuacaoProjeto){
+            listZonaAtuacaoProjeto = this.state.dataZonaAtuacaoProjeto.map(function (item) {
+                return (
+                    <option value={item.cd_zona_atuacao_projeto} key={"forma_"+item.cd_zona_atuacao_projeto}>{item.tx_nome_zona_atuacao}</option>
+                );
+            });
+        }
+        let listAbrangenciaProjeto = null;
+        if(this.state.dataAbrangenciaProjeto){
+            listAbrangenciaProjeto = this.state.dataAbrangenciaProjeto.map(function (item) {
+                return (
+                    <option value={item.cd_abrangencia_projeto} key={"forma_"+item.cd_abrangencia_projeto}>{item.tx_nome_abrangencia_projeto}</option>
                 );
             });
         }
@@ -1499,14 +1617,13 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        Situação do projeto
-                                        {/*<div className="label-float">
-                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                {participacoes}
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_status_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Situação do projeto</option>
+                                                {listStatusProjeto}
                                             </select>
                                             <br/><br/>
-                                        </div>*/}
+                                        </div>
 
                                     </div>
 
@@ -1525,36 +1642,34 @@ class Filter extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        Abrangência de atuação
-                                        {/*<div className="label-float">
-                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                {participacoes}
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_abrangencia_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Abrangência de atuação</option>
+                                                {listAbrangenciaProjeto}
                                             </select>
                                             <br/><br/>
-                                        </div>*/}
-
+                                        </div>
                                     </div>
                                     <div className="col-md-2">
-                                        Zona de Atuação
-                                        {/*<div className="label-float">
-                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                {participacoes}
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_zona_atuacao_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Zona de Atuação</option>
+                                                {listZonaAtuacaoProjeto}
                                             </select>
                                             <br/><br/>
-                                        </div>*/}
+                                        </div>
 
                                     </div>
                                     <div className="col-md-3">
-                                        Fontes de Recursos
-                                        {/*<div className="label-float">
-                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                {participacoes}
+                                        <div className="label-float">
+                                            <select className="custom-select" name="cd_origem_fonte_recursos_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <option value="0">Fontes de Recursos</option>
+                                                {listFonteRecursosProjeto}
                                             </select>
                                             <br/><br/>
-                                        </div>*/}
+                                        </div>
+
+
 
                                     </div>
                                     <div className="col-md-6">
@@ -1599,7 +1714,11 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-9">
-                                        Objetivos do Desenvolvimento Sustentável - ODS
+                                        <select className="custom-select" name="cd_objetivo_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                            {objetivos}
+                                        </select>
+                                        <br/><br/>
                                     </div>
                                     <div className="col-md-3">
                                         <Range
@@ -1614,7 +1733,11 @@ class Filter extends React.Component{
                                     </div>
 
                                     <div className="col-md-9">
-                                        Metas Relacionadas ao ODS
+                                        <select className="custom-select" name="cd_meta_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                            <option selected>Metas Relacionadas ao ODS</option>
+                                            {objetivosMetas}
+                                        </select>
+                                        <br/><br/>
                                     </div>
                                     <div className="col-md-3">
                                         <Range
@@ -2050,61 +2173,13 @@ class Filter extends React.Component{
                 </div>
 
 
-                {/* <div >
-                    <label htmlFor="name">Como podemos ajudar?</label>
-                    <select className="form-control" id="assunto">
-                        <option value="">Selecione o assunto</option>
-                        <option value="1">Cadastro Município-Estado</option>
-                        <option value="2">Cadastro Representante</option>
-                        <option value="3">Dúvidas</option>
-                        <option value="4">Inserção/Edição de dados</option>
-                        <option value="5">Pedidos de dados</option>
-                        <option value="6">Relatar Problemas</option>
-                        <option value="7">Sugestão</option>
-                        <option value="8">Outros</option>
-                    </select><br/>
-                </div>*/}
-
-
-
-                {/*<div className="label-float">
-                    <input className={"form-control form-g"+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder=" " required={this.state.requireds.email ? '' : 'required'}/>
-                    <label htmlFor="email">E-mail</label>
-                    <div className="label-box-info">
-                        <p style={{display: this.state.requireds.email ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Escolha um endereço de e-mail valido</p>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="label-float">
-                            <input className={"form-control form-g"} type="text" name="cel" onChange={this.handleInputChange} value={this.state.form.cel} placeholder=" " maxLength="15" required={this.state.requireds.cel ? '' : 'required'} />
-                            <label htmlFor="cel">Celular</label>
-                            <div className="label-box-info">
-                                <p style={{display: this.state.requireds.name ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"></i> Digite um número de celular</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-6">
-                        <div className="label-float">
-                            <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
-                            <label htmlFor="name">Whatsapp<span className={"label-float-optional"}> - Opicional</span></label>
-                            <div className="label-box-info"></div>
-                        </div>
-                    </div>
-                </div>*/}
-
-
-
                 <div className="clear-float"/>
                 <br/>
-                {/*<p><i>* campos obrigatórios</i></p>*/}
 
 
                 <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.filter}>Filtrar</button>
                 <br/>
-                {/*{this.state.form.cel}*/}
+
 
                 <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
