@@ -145,6 +145,34 @@ class OscMap extends React.Component{
         }*/
     }
 
+    makeInfoOsc(){
+        //console.log('make info');
+        let mapElements = this.state.mapElements;
+
+
+        this.setState({infoOsc: L.control()}, function(){
+            this.state.infoOsc.onAdd = function () {
+                this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                this.update();
+                this._div.id = 'infoOsc';
+                this._div.style.display = 'block';
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            let _this = this;
+            this.state.infoOsc.update = function (props, tipo) {
+                //console.log('info', props);
+
+                this._div.innerHTML =
+                    (props ? '<b>' + props.nome + '</b><br />' + tipo + ': ' + props.total
+                    : "Passe o mouse sobre na região.");
+            };
+            this.state.infoOsc.addTo(mapElements.map);
+            this.setState({mapElements: mapElements});
+        });
+    }
+
     makeInfo(){
         //console.log('make info');
         let mapElements = this.state.mapElements;
@@ -154,6 +182,8 @@ class OscMap extends React.Component{
             this.state.info.onAdd = function () {
                 this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
                 this.update();
+                this._div.id = 'infoIdh';
+                this._div.style.display = 'none';
                 return this._div;
             };
 
@@ -353,6 +383,7 @@ class OscMap extends React.Component{
 
 
         this.setState({mapElements: mapElements}, function(){
+            this.makeInfoOsc();
             this.makeInfo();
             //this.loadMap();
         });
@@ -1159,6 +1190,23 @@ class OscMap extends React.Component{
                     fillOpacity: 0.9
                 };
             }.bind(this),
+            onEachFeature: function (feature, layer) {
+                let _this2 = _this;
+                layer.on('mouseover', function () {
+                    this.setStyle({
+                        weight: 2,
+                        color: '#333',
+                        dashArray: '',
+                        fillOpacity: 1
+                    });
+                    this.bringToFront();
+                    _this2.state.infoOsc.update(layer.feature.properties, 'OSCs');
+                });
+                layer.on('mouseout', function () {
+                    _this2.state.infoOsc.update(null);
+                    areaOsc.resetStyle(this);
+                });
+            }
             //onEachFeature: this.onEachFeature //listeners
         });
 
@@ -1238,6 +1286,7 @@ class OscMap extends React.Component{
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.areaOscGroup);
         document.getElementById('oscLegend').style.display = 'none';
+        document.getElementById('infoOsc').style.display = 'none';
         console.log('removeAreaOscGrup');
         this.setState({mapElements: mapElements});
     }
@@ -1247,6 +1296,7 @@ class OscMap extends React.Component{
         mapElements.map.addLayer(this.state.mapElements.areaOscGroup);
         console.log('addAreaOscGroup');
         document.getElementById('oscLegend').style.display = '';
+        document.getElementById('infoOsc').style.display = '';
         this.setState({mapElements: mapElements});
     }
 
@@ -1254,6 +1304,7 @@ class OscMap extends React.Component{
         let mapElements = this.state.mapElements;
         mapElements.map.removeLayer(this.state.mapElements.areaIdhGroup);
         document.getElementById('idhLegend').style.display = 'none';
+        document.getElementById('infoIdh').style.display = 'none';
         this.setState({mapElements: mapElements});
     }
 
@@ -1262,6 +1313,7 @@ class OscMap extends React.Component{
         mapElements.map.addLayer(this.state.mapElements.areaIdhGroup);
         console.log('addAreaIdhGroup');
         document.getElementById('idhLegend').style.display = '';
+        document.getElementById('infoIdh').style.display = '';
         this.setState({mapElements: mapElements});
     }
 
