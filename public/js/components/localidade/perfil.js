@@ -9,7 +9,9 @@ class Perfil extends React.Component {
             evolucao_quantidade_osc_ano: [],
             natureza_juridica: [],
             trabalhadores: [],
-            area_atuacao: []
+            area_atuacao: [],
+            orcamento: [],
+            repasse_recursos: []
 
         };
         this.load = this.load.bind(this);
@@ -78,7 +80,8 @@ class Perfil extends React.Component {
 
                     natureza_juridica: data.natureza_juridica,
                     trabalhadores: data.trabalhadores,
-                    area_atuacao: data.area_atuacao,
+                    repasse_recursos: data.repasse_recursos,
+                    orcamento: data.orcamento,
 
                     natureza_juridica_chart: natureza_juridica_chart,
                     trabalhadores_chart: trabalhadores_chart,
@@ -254,6 +257,31 @@ class Perfil extends React.Component {
                 width: 500,
                 series: this.state.area_atuacao_chart.series,
                 labels: this.state.area_atuacao_chart.labels
+            });
+        }
+
+        //////////////////////////////////Repasse de Recursos///////////////////////////////////////////
+        let ft_repasse_recursos = null;
+        if (this.state.repasse_recursos.fontes) {
+            ft_repasse_recursos = this.state.repasse_recursos.fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_qp_" + key },
+                    item,
+                    ', '
+                );
+            });
+        }
+        //////////////////////////////////Transferências Federais///////////////////////////////////////////
+        let ft_orcamento = null;
+        if (this.state.orcamento.fontes) {
+            ft_orcamento = this.state.orcamento.fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_qp_" + key },
+                    item,
+                    ', '
+                );
             });
         }
 
@@ -566,15 +594,16 @@ class Perfil extends React.Component {
                     React.createElement(
                         'p',
                         null,
-                        'Na popula\xE7\xE3o de OSCs do estado, ',
-                        this.state.natureza_juridica.nr_porcentagem_maior,
-                        '% s\xE3o classificadas como ',
-                        tx_porcentagem_maior,
-                        '. A m\xE9dia nacional \xE9 de ',
-                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
-                        '% de OSCs identificadas como ',
-                        tx_porcentagem_maior_media_nacional,
-                        '.'
+                        this.state.localidade,
+                        ' \xE9 o ',
+                        this.state.repasse_recursos.nr_colocacao_nacional,
+                        '\xBA\xA0 em rela\xE7\xE3o aos repasses de recursos para OSCs, com m\xE9dia de R$ ',
+                        this.state.repasse_recursos.nr_repasse_media,
+                        '\xA0 por ano. A m\xE9dia nacional por estado de repasse de recursos \xE9 de R$ ',
+                        this.state.repasse_recursos.nr_repasse_media_nacional,
+                        '\xA0 . Al\xE9m dos repasses federais, a categoria de recursos mais declarada foi Recursos p\xFAblicos com ',
+                        this.state.repasse_recursos.nr_colocacao_nacional,
+                        '%\xA0 do total.'
                     ),
                     React.createElement(
                         'p',
@@ -585,7 +614,7 @@ class Perfil extends React.Component {
                             'Fonte quantidade OSCs:'
                         ),
                         '  ',
-                        ft_natureza_juridica,
+                        ft_repasse_recursos,
                         ' ',
                         React.createElement('br', null)
                     ),
@@ -635,14 +664,8 @@ class Perfil extends React.Component {
                     React.createElement(
                         'p',
                         null,
-                        'Na popula\xE7\xE3o de OSCs do estado, ',
-                        this.state.natureza_juridica.nr_porcentagem_maior,
-                        '% s\xE3o classificadas como ',
-                        tx_porcentagem_maior,
-                        '. A m\xE9dia nacional \xE9 de ',
-                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
-                        '% de OSCs identificadas como ',
-                        tx_porcentagem_maior_media_nacional,
+                        'A m\xE9dia por estado de transfer\xEAncias Federais \xE9 de R$ ',
+                        this.state.orcamento.media,
                         '.'
                     ),
                     React.createElement(
@@ -654,7 +677,7 @@ class Perfil extends React.Component {
                             'Fonte quantidade OSCs:'
                         ),
                         '  ',
-                        ft_natureza_juridica,
+                        ft_orcamento,
                         ' ',
                         React.createElement('br', null)
                     ),

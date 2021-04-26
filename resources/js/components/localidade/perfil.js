@@ -10,12 +10,13 @@ class Perfil extends React.Component {
             natureza_juridica: [],
             trabalhadores: [],
             area_atuacao: [],
+            orcamento: [],
+            repasse_recursos: [],
 
 
         };
         this.load = this.load.bind(this);
         //this.load();
-
     }
 
     componentDidMount(){
@@ -75,7 +76,6 @@ class Perfil extends React.Component {
                     'series': area_atuacao_series,
                 }
 
-
                 this.setState({
                     loading: false,
                     caracteristicas: data.caracteristicas,
@@ -83,7 +83,9 @@ class Perfil extends React.Component {
 
                     natureza_juridica: data.natureza_juridica,
                     trabalhadores: data.trabalhadores,
-                    area_atuacao: data.area_atuacao,
+                    repasse_recursos: data.repasse_recursos,
+                    orcamento: data.orcamento,
+
 
                     natureza_juridica_chart: natureza_juridica_chart,
                     trabalhadores_chart: trabalhadores_chart,
@@ -138,7 +140,6 @@ class Perfil extends React.Component {
                 );
             });
         }
-
 
         /////////////////////////////////////////////////////////////////////////////
         let tx_primeiro_colocado_estado = '';
@@ -251,13 +252,26 @@ class Perfil extends React.Component {
             );
         }
 
-
-
+        //////////////////////////////////Repasse de Recursos///////////////////////////////////////////
+        let ft_repasse_recursos = null;
+        if(this.state.repasse_recursos.fontes){
+            ft_repasse_recursos = this.state.repasse_recursos.fontes.map(function (item, key) {
+                return (
+                    <span key={"ft_qp_" + key}>{item}, </span>
+                );
+            });
+        }
+        //////////////////////////////////Transferências Federais///////////////////////////////////////////
+        let ft_orcamento = null;
+        if(this.state.orcamento.fontes){
+            ft_orcamento = this.state.orcamento.fontes.map(function (item, key) {
+                return (
+                    <span key={"ft_qp_" + key}>{item}, </span>
+                );
+            });
+        }
 
         return (
-
-
-
             <div>
 
                 <div className="row">
@@ -380,13 +394,14 @@ class Perfil extends React.Component {
                     <div className="col-md-6">
                         <br/>
                         <p>
-                            Na população de OSCs do estado, {this.state.natureza_juridica.nr_porcentagem_maior}%
-                            são classificadas como {tx_porcentagem_maior}.
-                            A média nacional é de {this.state.natureza_juridica.nr_porcentagem_maior_media_nacional}%
-                            de OSCs identificadas como {tx_porcentagem_maior_media_nacional}.
+                            {this.state.localidade} é o {this.state.repasse_recursos.nr_colocacao_nacional}º&nbsp;
+                            em relação aos repasses de recursos para OSCs, com média de R$ {this.state.repasse_recursos.nr_repasse_media}&nbsp;
+                            por ano. A média nacional por estado de repasse de recursos é de R$ {this.state.repasse_recursos.nr_repasse_media_nacional}&nbsp;
+                            . Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com {this.state.repasse_recursos.nr_colocacao_nacional}%&nbsp;
+                            do total.
                         </p>
                         <p className="box-chart-font bg-lgt">
-                            <strong>Fonte quantidade OSCs:</strong>  {ft_natureza_juridica} <br/>
+                            <strong>Fonte quantidade OSCs:</strong>  {ft_repasse_recursos} <br/>
                         </p>
                         <div className="btn btn-outline-primary">Visualize os dados em tabela.</div>
                     </div>
@@ -417,13 +432,10 @@ class Perfil extends React.Component {
                     <div className="col-md-6">
                         <br/>
                         <p>
-                            Na população de OSCs do estado, {this.state.natureza_juridica.nr_porcentagem_maior}%
-                            são classificadas como {tx_porcentagem_maior}.
-                            A média nacional é de {this.state.natureza_juridica.nr_porcentagem_maior_media_nacional}%
-                            de OSCs identificadas como {tx_porcentagem_maior_media_nacional}.
+                            A média por estado de transferências Federais é de R$ {this.state.orcamento.media}.
                         </p>
                         <p className="box-chart-font bg-lgt">
-                            <strong>Fonte quantidade OSCs:</strong>  {ft_natureza_juridica} <br/>
+                            <strong>Fonte quantidade OSCs:</strong>  {ft_orcamento} <br/>
                         </p>
                         <div className="btn btn-outline-primary">Visualize os dados em tabela.</div>
                     </div>
