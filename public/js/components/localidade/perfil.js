@@ -6,7 +6,10 @@ class Perfil extends React.Component {
             tipo: '',
             data: [],
             caracteristicas: [],
-            evolucao_quantidade_osc_ano: []
+            evolucao_quantidade_osc_ano: [],
+            natureza_juridica: [],
+            trabalhadores: [],
+            area_atuacao: []
 
         };
         this.load = this.load.bind(this);
@@ -24,10 +27,63 @@ class Perfil extends React.Component {
             url: getBaseUrl + 'analises/localidade/33',
             cache: false,
             success: function (data) {
+
+                /*////////////natureza_juridica////////////*/
+                let series = [{
+                    name: 'Quantidade OSCs',
+                    type: 'column',
+                    data: []
+                }];
+                let labels = [];
+                data.natureza_juridica.series_1.find(function (item) {
+                    series[0].data.push(item.value);
+                    labels.push(item.label);
+                });
+                let natureza_juridica_chart = {
+                    'labels': labels,
+                    'series': series
+
+                    /*////////////Trabalhadores////////////*/
+                };let trabalhadores_series = [{
+                    name: 'Número de Trabalhadores',
+                    type: 'column',
+                    data: []
+                }];
+                let trabalhadores_labels = [];
+                data.trabalhadores.series_1.find(function (item) {
+                    trabalhadores_series[0].data.push(item.value);
+                    trabalhadores_labels.push(item.label);
+                });
+                let trabalhadores_chart = {
+                    'labels': trabalhadores_labels,
+                    'series': trabalhadores_series
+
+                    /*////////////Área de Atuação////////////*/
+
+                };let area_atuacao_series = [];
+                let area_atuacao_labels = [];
+                data.area_atuacao.series_1.find(function (item) {
+                    area_atuacao_series.push(item.value);
+                    area_atuacao_labels.push(item.label);
+                });
+                let area_atuacao_chart = {
+                    'labels': area_atuacao_labels,
+                    'series': area_atuacao_series
+                };
+
                 this.setState({
                     loading: false,
                     caracteristicas: data.caracteristicas,
                     evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
+
+                    natureza_juridica: data.natureza_juridica,
+                    trabalhadores: data.trabalhadores,
+                    area_atuacao: data.area_atuacao,
+
+                    natureza_juridica_chart: natureza_juridica_chart,
+                    trabalhadores_chart: trabalhadores_chart,
+                    area_atuacao_chart: area_atuacao_chart,
+
                     localidade: data.tx_localidade,
                     tipo: data.tx_tipo_localidade
                 });
@@ -105,6 +161,100 @@ class Perfil extends React.Component {
         let tx_ultimo_colocado_municipio = '';
         if (this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_municipio) {
             tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_municipio[0];
+        }
+        /////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////Natureza Juridica///////////////////////////////////////////
+        let ft_natureza_juridica = null;
+        if (this.state.natureza_juridica.fontes) {
+            ft_natureza_juridica = this.state.natureza_juridica.fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_qp_" + key },
+                    item,
+                    ', '
+                );
+            });
+        }
+
+        let tx_porcentagem_maior = '';
+        if (this.state.natureza_juridica.tx_porcentagem_maior) {
+            tx_porcentagem_maior = this.state.natureza_juridica.tx_porcentagem_maior[0];
+        }
+        let tx_porcentagem_maior_media_nacional = '';
+        if (this.state.natureza_juridica.tx_porcentagem_maior_media_nacional) {
+            tx_porcentagem_maior_media_nacional = this.state.natureza_juridica.tx_porcentagem_maior_media_nacional[0];
+        }
+
+        let natureza_juridica_chart = null;
+        if (this.state.natureza_juridica_chart) {
+            natureza_juridica_chart = React.createElement(ColumnChart, {
+                id: 'natureza-chart',
+                series: this.state.natureza_juridica_chart.series,
+                labels: this.state.natureza_juridica_chart.labels
+            });
+        }
+        //////////////////////////////////Trabalhadores///////////////////////////////////////////
+        let ft_trabalhadores = null;
+        if (this.state.trabalhadores.fontes) {
+            ft_trabalhadores = this.state.natureza_juridica.fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_qp_" + key },
+                    item,
+                    ', '
+                );
+            });
+        }
+
+        let trabalhadores_chart = null;
+        if (this.state.trabalhadores_chart) {
+            trabalhadores_chart = React.createElement(ColumnChart, {
+                id: 'natureza-chart',
+                series: this.state.trabalhadores_chart.series,
+                labels: this.state.trabalhadores_chart.labels
+            });
+        }
+
+        let vinculos_deficiencia = "";
+        let voluntarios = "";
+        let vinculos_formais = "";
+        if (this.state.trabalhadores.series_1) {
+            vinculos_deficiencia = this.state.trabalhadores.series_1[0].value;
+            voluntarios = this.state.trabalhadores.series_1[1].value;
+            vinculos_formais = this.state.trabalhadores.series_1[2].value;
+        }
+
+        //////////////////////////////////Trabalhadores///////////////////////////////////////////
+        let ft_area_atuacao = null;
+        if (this.state.area_atuacao.fontes) {
+            ft_area_atuacao = this.state.area_atuacao.fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_qp_" + key },
+                    item,
+                    ', '
+                );
+            });
+        }
+
+        let nr_area_atuacao = '';
+        if (this.state.area_atuacao.media_nacional) {
+            nr_area_atuacao = this.state.area_atuacao.media_nacional[0].nr_area_atuacao;
+        }
+
+        let tx_area_atuacao = '';
+        if (this.state.area_atuacao.media_nacional) {
+            tx_area_atuacao = this.state.area_atuacao.media_nacional[0].tx_area_atuacao;
+        }
+
+        let area_atuacao_chart = null;
+        if (this.state.area_atuacao_chart) {
+            area_atuacao_chart = React.createElement(PieChart, {
+                id: 'area-atuacao-chart',
+                width: 500,
+                series: this.state.area_atuacao_chart.series,
+                labels: this.state.area_atuacao_chart.labels
+            });
         }
 
         return React.createElement(
@@ -348,6 +498,303 @@ class Perfil extends React.Component {
                         React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
                         React.createElement('hr', null)
                     )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement('br', null),
+                    React.createElement(
+                        'p',
+                        null,
+                        'Na popula\xE7\xE3o de OSCs do estado, ',
+                        this.state.natureza_juridica.nr_porcentagem_maior,
+                        '% s\xE3o classificadas como ',
+                        tx_porcentagem_maior,
+                        '. A m\xE9dia nacional \xE9 de ',
+                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
+                        '% de OSCs identificadas como ',
+                        tx_porcentagem_maior_media_nacional,
+                        '.'
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            'Fonte quantidade OSCs:'
+                        ),
+                        '  ',
+                        ft_natureza_juridica,
+                        ' ',
+                        React.createElement('br', null)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-outline-primary' },
+                        'Visualize os dados em tabela.'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    natureza_juridica_chart
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'title-style' },
+                        React.createElement(
+                            'h2',
+                            null,
+                            'Repasse de Recursos'
+                        ),
+                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                        React.createElement('hr', null)
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement('br', null),
+                    React.createElement(
+                        'p',
+                        null,
+                        'Na popula\xE7\xE3o de OSCs do estado, ',
+                        this.state.natureza_juridica.nr_porcentagem_maior,
+                        '% s\xE3o classificadas como ',
+                        tx_porcentagem_maior,
+                        '. A m\xE9dia nacional \xE9 de ',
+                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
+                        '% de OSCs identificadas como ',
+                        tx_porcentagem_maior_media_nacional,
+                        '.'
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            'Fonte quantidade OSCs:'
+                        ),
+                        '  ',
+                        ft_natureza_juridica,
+                        ' ',
+                        React.createElement('br', null)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-outline-primary' },
+                        'Visualize os dados em tabela.'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement(ColumnChart, {
+                        id: 'mix-chart',
+                        yaxis: ['Teste'],
+                        series: [{
+                            name: 'Quantidade OSCs',
+                            type: 'column',
+                            data: [31, 40, 28, 51, 42, 109]
+                        }],
+                        labels: ['1922', '1930', '1940', '1950', '1960', '1970']
+                    })
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'title-style' },
+                        React.createElement(
+                            'h2',
+                            null,
+                            'Transfer\xEAncias Federais'
+                        ),
+                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                        React.createElement('hr', null)
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement('br', null),
+                    React.createElement(
+                        'p',
+                        null,
+                        'Na popula\xE7\xE3o de OSCs do estado, ',
+                        this.state.natureza_juridica.nr_porcentagem_maior,
+                        '% s\xE3o classificadas como ',
+                        tx_porcentagem_maior,
+                        '. A m\xE9dia nacional \xE9 de ',
+                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
+                        '% de OSCs identificadas como ',
+                        tx_porcentagem_maior_media_nacional,
+                        '.'
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            'Fonte quantidade OSCs:'
+                        ),
+                        '  ',
+                        ft_natureza_juridica,
+                        ' ',
+                        React.createElement('br', null)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-outline-primary' },
+                        'Visualize os dados em tabela.'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement(ColumnChart, {
+                        id: 'mix-chart',
+                        yaxis: ['Teste'],
+                        series: [{
+                            name: 'Quantidade OSCs',
+                            type: 'column',
+                            data: [31, 40, 28, 51, 42, 109]
+                        }],
+                        labels: ['1922', '1930', '1940', '1950', '1960', '1970']
+                    })
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'title-style' },
+                        React.createElement(
+                            'h2',
+                            null,
+                            '\xC1rea de Atua\xE7\xE3o'
+                        ),
+                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                        React.createElement('hr', null)
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement('br', null),
+                    React.createElement(
+                        'p',
+                        null,
+                        this.state.localidade,
+                        ' possui ',
+                        this.state.area_atuacao.nr_porcentagem_maior,
+                        '% das OSCs atuando em ',
+                        tx_area_atuacao,
+                        ', enquanto o percentual m\xE9dio nacional de OSCs nesta categoria \xE9 de ',
+                        nr_area_atuacao,
+                        '%.'
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            'Fonte quantidade OSCs:'
+                        ),
+                        '  ',
+                        ft_area_atuacao,
+                        ' ',
+                        React.createElement('br', null)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-outline-primary' },
+                        'Visualize os dados em tabela.'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    area_atuacao_chart
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'title-style' },
+                        React.createElement(
+                            'h2',
+                            null,
+                            'Trabalhadores'
+                        ),
+                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                        React.createElement('hr', null)
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    React.createElement('br', null),
+                    React.createElement(
+                        'p',
+                        null,
+                        this.state.localidade,
+                        ' foram identificados ',
+                        vinculos_deficiencia,
+                        '\xA0 V\xEDnculos formais de pessoas com defici\xEAncia. Alem desses, as OSCS declararam ',
+                        voluntarios,
+                        '\xA0 Trabalhadores volunt\xE1rios e ',
+                        vinculos_formais,
+                        '\xA0 V\xEDnculos formais.'
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
+                        React.createElement(
+                            'strong',
+                            null,
+                            'Fonte quantidade OSCs:'
+                        ),
+                        '  ',
+                        ft_trabalhadores,
+                        ' ',
+                        React.createElement('br', null)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-outline-primary' },
+                        'Visualize os dados em tabela.'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    trabalhadores_chart
                 )
             )
         );

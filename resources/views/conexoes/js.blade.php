@@ -146,7 +146,9 @@
     <script src="js/lib/apexcharts/react-apexcharts.iife.min.js"></script>
 
 <script src="js/components/charts/mixedChart.js"></script>
-    <!--<script src="js/components/charts/pieChart.js"></script>
+<script src="js/components/charts/columnChart.js"></script>
+<script src="js/components/charts/pieChart.js"></script>
+    <!--
     <script src="js/components/charts/textCharts.js"></script>
     <script src="js/components/charts/page/textChart.js"></script>-->
 <script src="js/components/localidade/perfil.js"></script>
