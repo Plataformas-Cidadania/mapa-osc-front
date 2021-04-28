@@ -71,9 +71,47 @@ class Perfil extends React.Component {
                 let area_atuacao_chart = {
                     'labels': area_atuacao_labels,
                     'series': area_atuacao_series
-                };
+                    /*//////////////////////////////////////////////*/
+                };let repasse_recursos_labels = [];
+                let repasse_recursos_series = [];
 
-                this.setState({
+                if (data.repasse_recursos) {
+
+                    let groupSerie = [];
+                    for (let serie in data.repasse_recursos.series_1) {
+
+                        let serieName = data.repasse_recursos.series_1[serie].key;
+
+                        let serieTeste = {
+                            name: serieName,
+                            type: 'line',
+                            data: []
+                        };
+
+                        groupSerie.push(serieTeste);
+
+                        for (let k in data.repasse_recursos.series_1[serie].values) {
+                            repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
+
+                            serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
+                        }
+                    }
+
+                    repasse_recursos_series.push(groupSerie);
+                }
+
+                let chart_repasse_recursos_series = repasse_recursos_series[0];
+
+                let unique_repasse_recursos_labels = [...new Set(repasse_recursos_labels)];
+                unique_repasse_recursos_labels = unique_repasse_recursos_labels.sort();
+
+                let repasse_recursos_chart = {
+                    'labels': unique_repasse_recursos_labels,
+                    'series': chart_repasse_recursos_series
+
+                    /*//////////////////////////////////////////////*/
+
+                };this.setState({
                     loading: false,
                     caracteristicas: data.caracteristicas,
                     evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
@@ -86,6 +124,7 @@ class Perfil extends React.Component {
                     natureza_juridica_chart: natureza_juridica_chart,
                     trabalhadores_chart: trabalhadores_chart,
                     area_atuacao_chart: area_atuacao_chart,
+                    repasse_recursos_chart: repasse_recursos_chart,
 
                     localidade: data.tx_localidade,
                     tipo: data.tx_tipo_localidade
@@ -285,6 +324,44 @@ class Perfil extends React.Component {
             });
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        /*let repasse_recursos_labels = [];
+        let repasse_recursos_series = [];
+         let callChart = false;
+         if(this.state.repasse_recursos){
+             let groupSerie = [];
+            for(let serie in this.state.repasse_recursos.series_1){
+                 let serieName = this.state.repasse_recursos.series_1[serie].key;
+                 let serieTeste = {
+                    name: serieName,
+                    type: 'line',
+                    data: []
+                };
+                 groupSerie.push(serieTeste);
+                 for(let k in this.state.repasse_recursos.series_1[serie].values) {
+                    repasse_recursos_labels.push(this.state.repasse_recursos.series_1[serie].values[k].x);
+                     serieTeste.data.push(this.state.repasse_recursos.series_1[serie].values[k].y);
+                }
+             }
+             repasse_recursos_series.push(groupSerie);
+            callChart = true;
+        }
+         */
+
+        let repasse_recursos_chart = null;
+        if (this.state.repasse_recursos_chart) {
+
+            repasse_recursos_chart = React.createElement(MixedChart, {
+                id: 'mix-chart-repasse_recursos',
+                series: this.state.repasse_recursos_chart.series,
+                labels: this.state.repasse_recursos_chart.labels
+            });
+        }
+
+        ///////////////////////////////////////////////////
+
+
         return React.createElement(
             'div',
             null,
@@ -326,7 +403,7 @@ class Perfil extends React.Component {
                             type: 'area',
                             data: [50, 40, 80, 51, 200, 50, 80]
                         }],
-                        labels: ['1922', '1930', '1940', '1950', '1960', '1970']
+                        labels: [1922, 1930, 1940, 1950, 1960, 1970]
                         /*id={'mix-chart'+item.chart}
                         yaxis={['Teste']}
                         series={item.series}
@@ -627,16 +704,7 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    React.createElement(ColumnChart, {
-                        id: 'mix-chart',
-                        yaxis: ['Teste'],
-                        series: [{
-                            name: 'Quantidade OSCs',
-                            type: 'column',
-                            data: [31, 40, 28, 51, 42, 109]
-                        }],
-                        labels: ['1922', '1930', '1940', '1950', '1960', '1970']
-                    })
+                    repasse_recursos_chart
                 )
             ),
             React.createElement(
