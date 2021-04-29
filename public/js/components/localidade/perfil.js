@@ -39,8 +39,9 @@ class Perfil extends React.Component {
                 let labels = [];
                 data.natureza_juridica.series_1.find(function (item) {
                     series[0].data.push(item.value);
-                    labels.push(item.label);
+                    labels.push(item.label.split(' '));
                 });
+
                 let natureza_juridica_chart = {
                     'labels': labels,
                     'series': series
@@ -54,7 +55,7 @@ class Perfil extends React.Component {
                 let trabalhadores_labels = [];
                 data.trabalhadores.series_1.find(function (item) {
                     trabalhadores_series[0].data.push(item.value);
-                    trabalhadores_labels.push(item.label);
+                    trabalhadores_labels.push(item.label.split(' '));
                 });
                 let trabalhadores_chart = {
                     'labels': trabalhadores_labels,
@@ -467,6 +468,8 @@ class Perfil extends React.Component {
                         'Evolu\xE7\xE3o quantidade de OSCs por ano de funda\xE7\xE3o'
                     ),
                     evolucao_quantidade_osc_ano_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null),
                     React.createElement(
                         'div',
                         { className: 'btn btn-outline-primary float-right' },
@@ -701,7 +704,9 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    natureza_juridica_chart
+                    natureza_juridica_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 )
             ),
             React.createElement(
@@ -762,7 +767,9 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    repasse_recursos_chart
+                    repasse_recursos_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 )
             ),
             React.createElement(
@@ -816,7 +823,9 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    orcamento_chart
+                    orcamento_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 )
             ),
             React.createElement(
@@ -875,7 +884,9 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    area_atuacao_chart
+                    area_atuacao_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 )
             ),
             React.createElement(
@@ -934,7 +945,9 @@ class Perfil extends React.Component {
                 React.createElement(
                     'div',
                     { className: 'col-md-6' },
-                    trabalhadores_chart
+                    trabalhadores_chart,
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 )
             )
         );

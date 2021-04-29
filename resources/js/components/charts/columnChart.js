@@ -25,6 +25,11 @@ class ColumnChart extends React.Component {
                 },
                 xaxis: {
                     categories: props.labels,
+                    tickAmount: 10,
+                    labels: {
+                        rotate: 0,
+                        trim: false,
+                    }
                 },
                 yaxis: {
                     title: {

@@ -40,8 +40,10 @@ class Perfil extends React.Component {
                 let labels = [];
                 data.natureza_juridica.series_1.find(function(item){
                     series[0].data.push(item.value);
-                    labels.push(item.label);
+                    labels.push(item.label.split(' '));
                 });
+
+
                 let natureza_juridica_chart = {
                     'labels': labels,
                     'series': series,
@@ -56,7 +58,7 @@ class Perfil extends React.Component {
                 let trabalhadores_labels = [];
                 data.trabalhadores.series_1.find(function(item){
                     trabalhadores_series[0].data.push(item.value);
-                    trabalhadores_labels.push(item.label);
+                    trabalhadores_labels.push(item.label.split(' '));
                 });
                 let trabalhadores_chart = {
                     'labels': trabalhadores_labels,
@@ -450,20 +452,7 @@ class Perfil extends React.Component {
                     <div className="col-md-12 text-center">
                         <h3>Evolução quantidade de OSCs por ano de fundação</h3>
                         {evolucao_quantidade_osc_ano_chart}
-                        {/*<MixedChart
-                            id={'mix-chart'}
-                            yaxis={['Teste']}
-                            series={[{
-                                name: 'Quantidade OSCs',
-                                type: 'line',
-                                data: [31, 40, 28, 51, 42, 109, 100]
-                            },{
-                                name: 'Quantidade OSCs Acumuladas',
-                                type: 'area',
-                                data: [50, 40, 80, 51, 200, 50, 80]
-                            }]}
-                            labels={[1922, 1930, 1940, 1950, 1960, 1970]}
-                        />*/}
+                        <br/><br/>
                         <div className="btn btn-outline-primary float-right">Visualize os dados em tabela.</div><br/><br/><br/>
                     </div>
                 </div>
@@ -542,8 +531,12 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-6">
                         {natureza_juridica_chart}
+                        <br/><br/>
                     </div>
+
                 </div>
+
+
                 {/*///////Repasse de Recursos/////*/}
                 <div className="row">
                     <div className="col-md-12">
@@ -569,6 +562,7 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-6">
                         {repasse_recursos_chart}
+                        <br/><br/>
                     </div>
                 </div>
                 {/*////////////*/}
@@ -593,6 +587,7 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-6">
                         {orcamento_chart}
+                        <br/><br/>
                     </div>
                 </div>
                 {/*////////////*/}
@@ -618,6 +613,7 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-6">
                         {area_atuacao_chart}
+                        <br/><br/>
                     </div>
                 </div>
                 {/*////////////*/}
@@ -645,6 +641,7 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-6">
                         {trabalhadores_chart}
+                        <br/><br/>
                     </div>
                 </div>
                 {/*////////////*/}

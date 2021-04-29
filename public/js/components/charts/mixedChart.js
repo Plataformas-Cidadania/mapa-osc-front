@@ -70,9 +70,15 @@ class MixedChart extends React.Component {
                 },
                 xaxis: {
                     type: 'number',
-                    categories: props.labels
-                    //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
-                },
+                    categories: props.labels,
+                    tickAmount: 10,
+                    labels: {
+                        rotate: 0,
+                        rotateAlways: true,
+                        offsetX: 0,
+                        offsetY: 10
+                        //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
+                    } },
                 yaxis: [props.yaxis],
                 tooltip: {
                     shared: true,
