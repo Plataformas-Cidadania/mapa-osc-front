@@ -197,6 +197,7 @@ class Perfil extends React.Component {
                     caracteristicas: data.caracteristicas,
                     evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
 
+                    area_atuacao: data.area_atuacao,
                     natureza_juridica: data.natureza_juridica,
                     trabalhadores: data.trabalhadores,
                     repasse_recursos: data.repasse_recursos,
@@ -357,7 +358,8 @@ class Perfil extends React.Component {
             vinculos_formais = this.state.trabalhadores.series_1[2].value;
         }
 
-        //////////////////////////////////Trabalhadores///////////////////////////////////////////
+        //////////////////////////////////Área de atuação///////////////////////////////////////////
+        console.log('--*-', this.state.area_atuacao);
         let ft_area_atuacao = null;
         if (this.state.area_atuacao.fontes) {
             ft_area_atuacao = this.state.area_atuacao.fontes.map(function (item, key) {
@@ -443,511 +445,553 @@ class Perfil extends React.Component {
             null,
             React.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'bg-lgt' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-12' },
+                    { className: 'container' },
                     React.createElement(
                         'div',
-                        { className: 'title-style' },
+                        { className: 'row' },
                         React.createElement(
-                            'h2',
-                            null,
-                            'Caracter\xEDsticas'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
+                            'div',
+                            { className: 'col-md-12' },
+                            React.createElement(
+                                'header',
+                                null,
+                                React.createElement('br', null),
+                                React.createElement(
+                                    'h1',
+                                    null,
+                                    'Rio de Janeiro'
+                                ),
+                                React.createElement(
+                                    'h5',
+                                    null,
+                                    React.createElement(
+                                        'a',
+                                        { href: '/' },
+                                        'Home'
+                                    )
+                                ),
+                                React.createElement('br', null)
+                            )
+                        )
                     )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12 text-center' },
-                    React.createElement(
-                        'h3',
-                        null,
-                        'Evolu\xE7\xE3o quantidade de OSCs por ano de funda\xE7\xE3o'
-                    ),
-                    evolucao_quantidade_osc_ano_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary float-right' },
-                        'Visualize os dados em tabela.'
-                    ),
-                    React.createElement('br', null),
-                    React.createElement('br', null),
-                    React.createElement('br', null)
                 )
             ),
             React.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'container' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-3 text-center' },
+                    { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'box-itens-hover p-2' },
-                        React.createElement(
-                            'h3',
-                            null,
-                            'Quantidade OSCs'
-                        ),
-                        React.createElement(
-                            'h2',
-                            null,
-                            this.state.caracteristicas.nr_quantidade_osc
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-3 text-center' },
-                    React.createElement(
-                        'div',
-                        { className: 'box-itens-hover p-2' },
-                        React.createElement(
-                            'h3',
-                            null,
-                            'Quantidade Trabalhadores'
-                        ),
-                        React.createElement(
-                            'h2',
-                            null,
-                            this.state.caracteristicas.nr_quantidade_trabalhadores
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-3 text-center' },
-                    React.createElement(
-                        'div',
-                        { className: 'box-itens-hover p-2' },
-                        React.createElement(
-                            'h3',
-                            null,
-                            'Transfer\xEAncias federais'
-                        ),
-                        React.createElement(
-                            'h2',
-                            null,
-                            this.state.caracteristicas.nr_quantidade_recursos
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-3 text-center' },
-                    React.createElement(
-                        'div',
-                        { className: 'box-itens-hover p-2' },
-                        React.createElement(
-                            'h3',
-                            null,
-                            'Quantidade Projetos'
-                        ),
-                        React.createElement(
-                            'h2',
-                            null,
-                            this.state.caracteristicas.nr_quantidade_projetos
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement('br', null),
-                    React.createElement(
-                        'p',
-                        null,
-                        this.state.localidade,
-                        ' \xE9 o\xA0',
-                        React.createElement(
-                            'strong',
-                            null,
-                            this.state.evolucao_quantidade_osc_ano.nr_colocacao_nacional,
-                            '\xBA'
-                        ),
-                        ' em rela\xE7\xE3o a quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o estado\xA0 (',
-                        tx_primeiro_colocado_estado,
-                        ', ',
-                        React.createElement(
-                            'strong',
-                            null,
-                            this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_estado
-                        ),
-                        ') e o munic\xEDpio\xA0 (',
-                        tx_primeiro_colocado_municipio,
-                        ',\xA0',
-                        React.createElement(
-                            'strong',
-                            null,
-                            this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_municipio
-                        ),
-                        ' OSCs) s\xE3o os que cont\xEAm mais OSCs. O estado\xA0 (',
-                        tx_ultimo_colocado_estado,
-                        ') e o munic\xEDpio\xA0 (',
-                        tx_ultimo_colocado_municipio,
-                        ') s\xE3o os que cont\xEAm menos OSCs,\xA0',
-                        React.createElement(
-                            'strong',
-                            null,
-                            this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_estado
-                        ),
-                        ' e\xA0',
-                        React.createElement(
-                            'strong',
-                            null,
-                            this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_municipio
-                        ),
-                        ' respectivamente.'
-                    ),
-                    React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
-                        React.createElement(
-                            'strong',
-                            null,
-                            'Fonte quantidade OSCs:'
-                        ),
-                        '  ',
-                        ft_quantidade_osc,
-                        ' ',
+                        { className: 'col-md-12' },
+                        React.createElement('br', null),
                         React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Caracter\xEDsticas'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-12 text-center' },
+                        React.createElement(
+                            'h3',
                             null,
-                            'Fonte quantidade trabalhadores:'
+                            'Evolu\xE7\xE3o quantidade de OSCs por ano de funda\xE7\xE3o'
                         ),
-                        ' ',
-                        ft_quantidade_trabalhadores,
-                        ' ',
+                        evolucao_quantidade_osc_ano_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null),
                         React.createElement(
-                            'strong',
-                            null,
-                            'Fonte valores de recursos:'
+                            'div',
+                            { className: 'btn btn-outline-primary float-right' },
+                            'Visualize os dados em tabela.'
                         ),
-                        ' ',
-                        ft_quantidade_recursos,
-                        ' ',
+                        React.createElement('br', null),
+                        React.createElement('br', null),
+                        React.createElement('br', null)
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'row' },
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-3 text-center' },
+                        React.createElement(
+                            'div',
+                            { className: 'box-itens-hover p-2' },
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Quantidade OSCs'
+                            ),
+                            React.createElement(
+                                'h2',
+                                null,
+                                this.state.caracteristicas.nr_quantidade_osc
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-3 text-center' },
+                        React.createElement(
+                            'div',
+                            { className: 'box-itens-hover p-2' },
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Quantidade Trabalhadores'
+                            ),
+                            React.createElement(
+                                'h2',
+                                null,
+                                this.state.caracteristicas.nr_quantidade_trabalhadores
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-3 text-center' },
+                        React.createElement(
+                            'div',
+                            { className: 'box-itens-hover p-2' },
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Transfer\xEAncias federais'
+                            ),
+                            React.createElement(
+                                'h2',
+                                null,
+                                this.state.caracteristicas.nr_quantidade_recursos
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-3 text-center' },
+                        React.createElement(
+                            'div',
+                            { className: 'box-itens-hover p-2' },
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Quantidade Projetos'
+                            ),
+                            React.createElement(
+                                'h2',
+                                null,
+                                this.state.caracteristicas.nr_quantidade_projetos
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-12' },
                         React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'p',
                             null,
-                            'Fonte quantidade projetos:'
+                            this.state.localidade,
+                            ' \xE9 o\xA0',
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.evolucao_quantidade_osc_ano.nr_colocacao_nacional,
+                                '\xBA'
+                            ),
+                            ' em rela\xE7\xE3o a quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o estado\xA0 (',
+                            tx_primeiro_colocado_estado,
+                            ', ',
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_estado
+                            ),
+                            ') e o munic\xEDpio\xA0 (',
+                            tx_primeiro_colocado_municipio,
+                            ',\xA0',
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_municipio
+                            ),
+                            ' OSCs) s\xE3o os que cont\xEAm mais OSCs. O estado\xA0 (',
+                            tx_ultimo_colocado_estado,
+                            ') e o munic\xEDpio\xA0 (',
+                            tx_ultimo_colocado_municipio,
+                            ') s\xE3o os que cont\xEAm menos OSCs,\xA0',
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_estado
+                            ),
+                            ' e\xA0',
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_municipio
+                            ),
+                            ' respectivamente.'
                         ),
-                        ' ',
-                        ft_quantidade_projetos,
-                        ' ',
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_quantidade_osc,
+                            ' ',
+                            React.createElement('br', null),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade trabalhadores:'
+                            ),
+                            ' ',
+                            ft_quantidade_trabalhadores,
+                            ' ',
+                            React.createElement('br', null),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte valores de recursos:'
+                            ),
+                            ' ',
+                            ft_quantidade_recursos,
+                            ' ',
+                            React.createElement('br', null),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade projetos:'
+                            ),
+                            ' ',
+                            ft_quantidade_projetos,
+                            ' ',
+                            React.createElement('br', null)
+                        )
+                    )
+                ),
+                React.createElement('div', { className: 'space' }),
+                React.createElement(
+                    'div',
+                    { className: 'row' },
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-12' },
+                        React.createElement(
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Natureza Juridica'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        React.createElement('br', null),
+                        React.createElement(
+                            'p',
+                            null,
+                            'Na popula\xE7\xE3o de OSCs do estado, ',
+                            this.state.natureza_juridica.nr_porcentagem_maior,
+                            '% s\xE3o classificadas como ',
+                            tx_porcentagem_maior,
+                            '. A m\xE9dia nacional \xE9 de ',
+                            this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
+                            '% de OSCs identificadas como ',
+                            tx_porcentagem_maior_media_nacional,
+                            '.'
+                        ),
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_natureza_juridica,
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary' },
+                            'Visualize os dados em tabela.'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        natureza_juridica_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null)
                     )
-                )
-            ),
-            React.createElement('div', { className: 'space' }),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement(
-                        'div',
-                        { className: 'title-style' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            'Natureza Juridica'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
-                    )
                 ),
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
-                    React.createElement('br', null),
+                    { className: 'row' },
                     React.createElement(
-                        'p',
-                        null,
-                        'Na popula\xE7\xE3o de OSCs do estado, ',
-                        this.state.natureza_juridica.nr_porcentagem_maior,
-                        '% s\xE3o classificadas como ',
-                        tx_porcentagem_maior,
-                        '. A m\xE9dia nacional \xE9 de ',
-                        this.state.natureza_juridica.nr_porcentagem_maior_media_nacional,
-                        '% de OSCs identificadas como ',
-                        tx_porcentagem_maior_media_nacional,
-                        '.'
+                        'div',
+                        { className: 'col-md-12' },
+                        React.createElement(
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Repasse de Recursos'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
                     ),
                     React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
+                        'div',
+                        { className: 'col-md-6' },
+                        React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'p',
                             null,
-                            'Fonte quantidade OSCs:'
+                            this.state.localidade,
+                            ' \xE9 o ',
+                            this.state.repasse_recursos.nr_colocacao_nacional,
+                            '\xBA\xA0 em rela\xE7\xE3o aos repasses de recursos para OSCs, com m\xE9dia de R$ ',
+                            this.state.repasse_recursos.nr_repasse_media,
+                            '\xA0 por ano. A m\xE9dia nacional por estado de repasse de recursos \xE9 de R$ ',
+                            this.state.repasse_recursos.nr_repasse_media_nacional,
+                            '\xA0 . Al\xE9m dos repasses federais, a categoria de recursos mais declarada foi Recursos p\xFAblicos com ',
+                            this.state.repasse_recursos.nr_colocacao_nacional,
+                            '%\xA0 do total.'
                         ),
-                        '  ',
-                        ft_natureza_juridica,
-                        ' ',
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_repasse_recursos,
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary' },
+                            'Visualize os dados em tabela.'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        repasse_recursos_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary' },
-                        'Visualize os dados em tabela.'
                     )
                 ),
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
-                    natureza_juridica_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null)
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
+                    { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'title-style' },
+                        { className: 'col-md-12' },
                         React.createElement(
-                            'h2',
-                            null,
-                            'Repasse de Recursos'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement('br', null),
-                    React.createElement(
-                        'p',
-                        null,
-                        this.state.localidade,
-                        ' \xE9 o ',
-                        this.state.repasse_recursos.nr_colocacao_nacional,
-                        '\xBA\xA0 em rela\xE7\xE3o aos repasses de recursos para OSCs, com m\xE9dia de R$ ',
-                        this.state.repasse_recursos.nr_repasse_media,
-                        '\xA0 por ano. A m\xE9dia nacional por estado de repasse de recursos \xE9 de R$ ',
-                        this.state.repasse_recursos.nr_repasse_media_nacional,
-                        '\xA0 . Al\xE9m dos repasses federais, a categoria de recursos mais declarada foi Recursos p\xFAblicos com ',
-                        this.state.repasse_recursos.nr_colocacao_nacional,
-                        '%\xA0 do total.'
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Transfer\xEAncias Federais'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
                     ),
                     React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
+                        'div',
+                        { className: 'col-md-6' },
+                        React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'p',
                             null,
-                            'Fonte quantidade OSCs:'
+                            'A m\xE9dia por estado de transfer\xEAncias Federais \xE9 de R$ ',
+                            this.state.orcamento.media,
+                            '.'
                         ),
-                        '  ',
-                        ft_repasse_recursos,
-                        ' ',
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_orcamento,
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary' },
+                            'Visualize os dados em tabela.'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        orcamento_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary' },
-                        'Visualize os dados em tabela.'
                     )
                 ),
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
-                    repasse_recursos_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null)
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
+                    { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'title-style' },
+                        { className: 'col-md-12' },
                         React.createElement(
-                            'h2',
-                            null,
-                            'Transfer\xEAncias Federais'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement('br', null),
-                    React.createElement(
-                        'p',
-                        null,
-                        'A m\xE9dia por estado de transfer\xEAncias Federais \xE9 de R$ ',
-                        this.state.orcamento.media,
-                        '.'
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                '\xC1rea de Atua\xE7\xE3o'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
                     ),
                     React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
+                        'div',
+                        { className: 'col-md-6' },
+                        React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'p',
                             null,
-                            'Fonte quantidade OSCs:'
+                            this.state.localidade,
+                            ' possui ',
+                            this.state.area_atuacao.nr_porcentagem_maior,
+                            '% das OSCs atuando em ',
+                            tx_area_atuacao,
+                            ', enquanto o percentual m\xE9dio nacional de OSCs nesta categoria \xE9 de ',
+                            nr_area_atuacao,
+                            '%.'
                         ),
-                        '  ',
-                        ft_orcamento,
-                        ' ',
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_area_atuacao,
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary' },
+                            'Visualize os dados em tabela.'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        area_atuacao_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary' },
-                        'Visualize os dados em tabela.'
                     )
                 ),
                 React.createElement(
                     'div',
-                    { className: 'col-md-6' },
-                    orcamento_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null)
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
+                    { className: 'row' },
                     React.createElement(
                         'div',
-                        { className: 'title-style' },
+                        { className: 'col-md-12' },
                         React.createElement(
-                            'h2',
-                            null,
-                            '\xC1rea de Atua\xE7\xE3o'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement('br', null),
-                    React.createElement(
-                        'p',
-                        null,
-                        this.state.localidade,
-                        ' possui ',
-                        this.state.area_atuacao.nr_porcentagem_maior,
-                        '% das OSCs atuando em ',
-                        tx_area_atuacao,
-                        ', enquanto o percentual m\xE9dio nacional de OSCs nesta categoria \xE9 de ',
-                        nr_area_atuacao,
-                        '%.'
+                            'div',
+                            { className: 'title-style' },
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Trabalhadores'
+                            ),
+                            React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
+                            React.createElement('hr', null)
+                        )
                     ),
                     React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
+                        'div',
+                        { className: 'col-md-6' },
+                        React.createElement('br', null),
                         React.createElement(
-                            'strong',
+                            'p',
                             null,
-                            'Fonte quantidade OSCs:'
+                            this.state.localidade,
+                            ' foram identificados ',
+                            vinculos_deficiencia,
+                            '\xA0 V\xEDnculos formais de pessoas com defici\xEAncia. Alem desses, as OSCS declararam ',
+                            voluntarios,
+                            '\xA0 Trabalhadores volunt\xE1rios e ',
+                            vinculos_formais,
+                            '\xA0 V\xEDnculos formais.'
                         ),
-                        '  ',
-                        ft_area_atuacao,
-                        ' ',
+                        React.createElement(
+                            'p',
+                            { className: 'box-chart-font bg-lgt' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Fonte quantidade OSCs:'
+                            ),
+                            '  ',
+                            ft_trabalhadores,
+                            ' ',
+                            React.createElement('br', null)
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary' },
+                            'Visualize os dados em tabela.'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'col-md-6' },
+                        trabalhadores_chart,
+                        React.createElement('br', null),
                         React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary' },
-                        'Visualize os dados em tabela.'
                     )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    area_atuacao_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null)
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'row' },
-                React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
-                    React.createElement(
-                        'div',
-                        { className: 'title-style' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            'Trabalhadores'
-                        ),
-                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px' }),
-                        React.createElement('hr', null)
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    React.createElement('br', null),
-                    React.createElement(
-                        'p',
-                        null,
-                        this.state.localidade,
-                        ' foram identificados ',
-                        vinculos_deficiencia,
-                        '\xA0 V\xEDnculos formais de pessoas com defici\xEAncia. Alem desses, as OSCS declararam ',
-                        voluntarios,
-                        '\xA0 Trabalhadores volunt\xE1rios e ',
-                        vinculos_formais,
-                        '\xA0 V\xEDnculos formais.'
-                    ),
-                    React.createElement(
-                        'p',
-                        { className: 'box-chart-font bg-lgt' },
-                        React.createElement(
-                            'strong',
-                            null,
-                            'Fonte quantidade OSCs:'
-                        ),
-                        '  ',
-                        ft_trabalhadores,
-                        ' ',
-                        React.createElement('br', null)
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'btn btn-outline-primary' },
-                        'Visualize os dados em tabela.'
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'col-md-6' },
-                    trabalhadores_chart,
-                    React.createElement('br', null),
-                    React.createElement('br', null)
                 )
             )
         );

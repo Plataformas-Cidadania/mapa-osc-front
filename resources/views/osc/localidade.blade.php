@@ -5,7 +5,7 @@
 @section('image', '')
 @section('content')
 
-    <div class="bg-lgt">
+<!--    <div class="bg-lgt">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -20,9 +20,11 @@
         </div>
     </div>
     <br>
-    <div class="container">
-        <div id="perfil"></div>
-    </div>
+-->
+
+
+   <div id="perfil"></div>
+
 
     <style>
         .box-itens-hover{
