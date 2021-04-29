@@ -11,11 +11,34 @@ class Perfil extends React.Component {
             trabalhadores: [],
             area_atuacao: [],
             orcamento: [],
-            repasse_recursos: []
+            repasse_recursos: [],
+            modal: {
+                name: null,
+                fontes: null,
+                head: [],
+                rows: []
+            },
+            head: {
+                evolucao_quantidade_osc_ano: ['Evolução', 'Ano', 'Quantidade'],
+                natureza_juridica: ['Natureza Jurídica', 'Quantidade OSC'],
+                repasse_recursos: ['Repasse', 'Ano', 'Recursos'],
+                orcamento: ['Transferências Federais', 'Ano', 'Quantidade'],
+                area_atuacao: ['Atividade Econômica', 'Quantidade OSC'],
+                trabalhadores: ['Tipo', 'Número de trabalhadores']
+            },
+            name: {
+                evolucao_quantidade_osc_ano: 'Evolucao da quantidade OSCs por ano',
+                natureza_juridica: 'Número de OSCs por natureza jurídica',
+                repasse_recursos: 'Evolução de recursos transferidos para OSCs',
+                orcamento: 'Transferências Federais para OSCs por ano',
+                area_atuacao: 'Distribuição de OSCs por área de atuação',
+                trabalhadores: 'Distribuição de trabalhodores'
+            },
+            loading: false
 
         };
         this.load = this.load.bind(this);
-        //this.load();
+        this.callModal = this.callModal.bind(this);
     }
 
     componentDidMount() {
@@ -23,12 +46,14 @@ class Perfil extends React.Component {
     }
 
     load() {
-        this.setState({ button: false });
+        this.setState({ button: false, loading: true });
         $.ajax({
             method: 'GET',
             url: getBaseUrl + 'analises/localidade/33',
             cache: false,
             success: function (data) {
+
+                let repasse_recursos_table = data.repasse_recursos;
 
                 /*////////////natureza_juridica////////////*/
                 let series = [{
@@ -73,6 +98,23 @@ class Perfil extends React.Component {
                     'labels': area_atuacao_labels,
                     'series': area_atuacao_series
                     /*////////////////////Repasse Recursosos//////////////////////////*/
+
+                    ///////////////////////////////////////////////
+                    ///////////////////////////////////////////////
+                    /*let teste = [];
+                     if(data.repasse_recursos){
+                        for(let index in data.repasse_recursos.series_1[3].values){
+                            teste.push(data.repasse_recursos.series_1[3].values[index].x)
+                         }
+                    }
+                    for(let index in teste){
+                        console.log(teste[index]);
+                    }
+                     console.log(teste);*/
+
+                    ///////////////////////////////////////////////
+                    ///////////////////////////////////////////////
+
                 };let repasse_recursos_labels = [];
                 let repasse_recursos_series = [];
 
@@ -91,14 +133,11 @@ class Perfil extends React.Component {
 
                         groupSerie.push(serieTeste);
 
+                        //console.log(data.repasse_recursos.series_1[serie].values);
                         for (let k in data.repasse_recursos.series_1[serie].values) {
+
                             repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
 
-                            /*console.log(repasse_recursos_labels.indexOf(parseInt(data.repasse_recursos.series_1[serie].values[k].x)));
-                            console.log(data.repasse_recursos.series_1[serie].values[k].x);
-                            if(repasse_recursos_labels.indexOf(parseInt(data.repasse_recursos.series_1[serie].values[k].x))!=-1){
-                                serieTeste.data.push(null);
-                            }*/
                             serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
                         }
                     }
@@ -107,7 +146,7 @@ class Perfil extends React.Component {
                 }
 
                 //console.log(repasse_recursos_labels);
-
+                //console.log(repasse_recursos_series);
 
                 let chart_repasse_recursos_series = repasse_recursos_series[0];
 
@@ -210,6 +249,8 @@ class Perfil extends React.Component {
                     repasse_recursos_chart: repasse_recursos_chart,
                     orcamento_chart: orcamento_chart,
 
+                    repasse_recursos_table: repasse_recursos_table,
+
                     localidade: data.tx_localidade,
                     tipo: data.tx_tipo_localidade
                 });
@@ -220,7 +261,302 @@ class Perfil extends React.Component {
         });
     }
 
+    //////////////////////////////////////////MODAL TABELA///////////////////////////////////////////////////
+
+    callModal(type, chart, col) {
+
+        let ft_table = null;
+        if (this.state[type].fontes) {
+            ft_table = this.state[type].fontes.map(function (item, key) {
+                return React.createElement(
+                    'span',
+                    { key: "ft_tb_" + key },
+                    item,
+                    ', '
+                );
+            });
+        }
+
+        let modal = this.state.modal;
+        let table = this.state[chart];
+
+        //////////////////////////
+        if (col === 3) {
+
+            let grupeRows = {
+                0: [],
+                1: table.labels,
+                2: []
+            };
+
+            for (let key in table.series) {
+                for (let key2 in table.series[key].data) {
+                    grupeRows[0].push(table.series[key].name);
+                    grupeRows[2].push(table.series[key].data[key2]);
+                }
+            }
+
+            modal.name = this.state.name[type];
+            modal.fontes = ft_table;
+
+            modal.head = this.state.head[type].map(function (item, index) {
+                return React.createElement(
+                    'th',
+                    { key: 'thModal' + index },
+                    item
+                );
+            });
+
+            let gurpeCol = [];
+            for (let key in grupeRows[0]) {
+                gurpeCol.push(React.createElement(
+                    'tr',
+                    { key: 'trModal' + key },
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[0][key]
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[1][key]
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[2][key]
+                    )
+                ));
+            }
+            modal.rows = gurpeCol;
+        } else if (col === 4) {
+            let table = this.state.repasse_recursos_table.series_1;
+            //console.log('table', this.state.repasse_recursos_table);
+
+            let grupeRows = {
+                0: [],
+                1: [],
+                2: []
+            };
+
+            for (let key in this.state.repasse_recursos_table.series_1) {
+                for (let key2 in table[3].values) {
+                    grupeRows[0].push(table[key].key);
+                    grupeRows[1].push(table[key].values[key2].x);
+                    grupeRows[2].push(table[key].values[key2].y);
+                }
+            }
+
+            modal.name = this.state.name[type];
+            modal.fontes = ft_table;
+
+            modal.head = this.state.head[type].map(function (item, index) {
+                return React.createElement(
+                    'th',
+                    { key: 'thModal' + index },
+                    item
+                );
+            });
+
+            let gurpeCol = [];
+            for (let key in grupeRows[0]) {
+                gurpeCol.push(React.createElement(
+                    'tr',
+                    { key: 'trModal' + key },
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[0][key]
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[1][key]
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[2][key]
+                    )
+                ));
+            }
+            modal.rows = gurpeCol;
+        } else if (col === 2) {
+
+            let grupeRows = {
+                0: table.labels,
+                1: []
+            };
+
+            for (let key in table.series) {
+                for (let key2 in table.series[key].data) {
+                    grupeRows[1].push(table.series[key].data[key2]);
+                }
+            }
+
+            modal.name = this.state.name[type];
+            modal.fontes = ft_table;
+
+            modal.head = this.state.head[type].map(function (item, index) {
+                return React.createElement(
+                    'th',
+                    { key: 'thModal' + index },
+                    item
+                );
+            });
+
+            let gurpeCol = [];
+            for (let key in grupeRows[0]) {
+                gurpeCol.push(React.createElement(
+                    'tr',
+                    { key: 'trModal' + key },
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[0][key].join(' ')
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[1][key]
+                    )
+                ));
+            }
+            modal.rows = gurpeCol;
+        } else {
+            let grupeRows = {
+                0: table.labels,
+                1: table.series
+            };
+
+            modal.name = this.state.name[type];
+            modal.fontes = ft_table;
+
+            modal.head = this.state.head[type].map(function (item, index) {
+                return React.createElement(
+                    'th',
+                    { key: 'thModal' + index },
+                    item
+                );
+            });
+
+            let gurpeCol = [];
+            for (let key in grupeRows[0]) {
+                gurpeCol.push(React.createElement(
+                    'tr',
+                    { key: 'trModal' + key },
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[0][key]
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        grupeRows[1][key]
+                    )
+                ));
+            }
+            modal.rows = gurpeCol;
+        }
+
+        ////////////////////////////////
+
+
+        this.setState({ modal: modal }, function () {
+            $('#modalTable').modal('show');
+        });
+    }
+
+    modal() {
+
+        return React.createElement(
+            'div',
+            { id: 'modalTable', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog modal-lg' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement(
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
+                            React.createElement(
+                                'strong',
+                                null,
+                                this.state.modal.name
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
+                            React.createElement(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        React.createElement(
+                            'table',
+                            { className: 'table table-hover' },
+                            React.createElement(
+                                'thead',
+                                { className: 'thead-light' },
+                                React.createElement(
+                                    'tr',
+                                    null,
+                                    this.state.modal.head
+                                )
+                            ),
+                            React.createElement(
+                                'tbody',
+                                null,
+                                this.state.modal.rows
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'bd-callout bd-callout-warning' },
+                            React.createElement(
+                                'h5',
+                                { id: 'incompatibilidade-jquery' },
+                                'Fonte:'
+                            ),
+                            React.createElement(
+                                'p',
+                                { className: 'box-chart-model-font' },
+                                this.state.modal.fontes
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        React.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                            'Fechar'
+                        )
+                    )
+                )
+            )
+        );
+    }
+    ///////////////////////////////////////////////////
+
+
     render() {
+
+        let modal = this.modal();
 
         /////////////////////////////////////////////////////////////////////////////
         let ft_quantidade_projetos = null;
@@ -359,7 +695,6 @@ class Perfil extends React.Component {
         }
 
         //////////////////////////////////Área de atuação///////////////////////////////////////////
-        console.log('--*-', this.state.area_atuacao);
         let ft_area_atuacao = null;
         if (this.state.area_atuacao.fontes) {
             ft_area_atuacao = this.state.area_atuacao.fontes.map(function (item, key) {
@@ -434,11 +769,6 @@ class Perfil extends React.Component {
                 labels: this.state.orcamento_chart.labels
             });
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        ///////////////////////////////////////////////////
-
 
         return React.createElement(
             'div',
@@ -481,7 +811,12 @@ class Perfil extends React.Component {
             ),
             React.createElement(
                 'div',
-                { className: 'container' },
+                { className: 'text-center' },
+                React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loading ? '' : 'none' } })
+            ),
+            React.createElement(
+                'div',
+                { className: 'container', style: { display: this.state.loading ? 'none' : '' } },
                 React.createElement(
                     'div',
                     { className: 'row' },
@@ -511,14 +846,6 @@ class Perfil extends React.Component {
                             'Evolu\xE7\xE3o quantidade de OSCs por ano de funda\xE7\xE3o'
                         ),
                         evolucao_quantidade_osc_ano_chart,
-                        React.createElement('br', null),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'div',
-                            { className: 'btn btn-outline-primary float-right' },
-                            'Visualize os dados em tabela.'
-                        ),
-                        React.createElement('br', null),
                         React.createElement('br', null),
                         React.createElement('br', null)
                     )
@@ -686,7 +1013,15 @@ class Perfil extends React.Component {
                             ft_quantidade_projetos,
                             ' ',
                             React.createElement('br', null)
-                        )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('evolucao_quantidade_osc_ano', 'evolucao_quantidade_osc_ano_chart', 3) },
+                            'Visualize os dados em tabela.'
+                        ),
+                        React.createElement('br', null),
+                        React.createElement('br', null),
+                        React.createElement('br', null)
                     )
                 ),
                 React.createElement('div', { className: 'space' }),
@@ -740,7 +1075,7 @@ class Perfil extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'btn btn-outline-primary' },
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('natureza_juridica', 'natureza_juridica_chart', 2) },
                             'Visualize os dados em tabela.'
                         )
                     ),
@@ -803,7 +1138,7 @@ class Perfil extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'btn btn-outline-primary' },
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('repasse_recursos', 'repasse_recursos_chart', 4) },
                             'Visualize os dados em tabela.'
                         )
                     ),
@@ -859,7 +1194,7 @@ class Perfil extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'btn btn-outline-primary' },
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('orcamento', 'orcamento_chart', 3) },
                             'Visualize os dados em tabela.'
                         )
                     ),
@@ -920,7 +1255,7 @@ class Perfil extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'btn btn-outline-primary' },
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('area_atuacao', 'area_atuacao_chart', 0) },
                             'Visualize os dados em tabela.'
                         )
                     ),
@@ -981,7 +1316,7 @@ class Perfil extends React.Component {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'btn btn-outline-primary' },
+                            { className: 'btn btn-outline-primary', onClick: () => this.callModal('trabalhadores', 'trabalhadores_chart', 2) },
                             'Visualize os dados em tabela.'
                         )
                     ),
@@ -993,7 +1328,8 @@ class Perfil extends React.Component {
                         React.createElement('br', null)
                     )
                 )
-            )
+            ),
+            modal
         );
     }
 }
