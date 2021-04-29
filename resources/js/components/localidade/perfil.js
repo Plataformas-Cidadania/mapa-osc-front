@@ -75,11 +75,9 @@ class Perfil extends React.Component {
                     'labels': area_atuacao_labels,
                     'series': area_atuacao_series,
                 }
-                /*//////////////////////////////////////////////*/
+                /*////////////////////Repasse Recursosos//////////////////////////*/
                 let repasse_recursos_labels = [];
                 let repasse_recursos_series = [];
-
-
 
                 if(data.repasse_recursos){
 
@@ -99,6 +97,11 @@ class Perfil extends React.Component {
                         for(let k in data.repasse_recursos.series_1[serie].values) {
                             repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
 
+                            /*console.log(repasse_recursos_labels.indexOf(parseInt(data.repasse_recursos.series_1[serie].values[k].x)));
+                            console.log(data.repasse_recursos.series_1[serie].values[k].x);
+                            if(repasse_recursos_labels.indexOf(parseInt(data.repasse_recursos.series_1[serie].values[k].x))!=-1){
+                                serieTeste.data.push(null);
+                            }*/
                             serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
                         }
 
@@ -107,6 +110,9 @@ class Perfil extends React.Component {
                     repasse_recursos_series.push(groupSerie);
 
                 }
+
+                //console.log(repasse_recursos_labels);
+
 
                 let chart_repasse_recursos_series = repasse_recursos_series[0]
 
@@ -119,7 +125,79 @@ class Perfil extends React.Component {
                 }
 
 
+                /*//////////////////////////////////////////////*/
+                /*////////////////////Orçamento//////////////////////////*/
+                let orcamento_labels = [];
+                let orcamento_series = [];
 
+                if(data.orcamento){
+                    let groupSerie = [];
+                    for(let serie in data.orcamento.series_1){
+
+                        let serieName = data.orcamento.series_1[serie].key;
+
+                        let serieTeste = {
+                            name: serieName,
+                            type: 'line',
+                            data: []
+                        };
+
+                        groupSerie.push(serieTeste);
+
+                        for(let k in data.orcamento.series_1[serie].values) {
+                            orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
+                            serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
+                        }
+                    }
+                    orcamento_series.push(groupSerie);
+                }
+
+                let chart_orcamento_series = orcamento_series[0]
+
+                let unique_orcamento_labels = [...new Set(orcamento_labels)];
+                unique_orcamento_labels = unique_orcamento_labels.sort()
+
+                let orcamento_chart = {
+                    'labels': unique_orcamento_labels,
+                    'series': chart_orcamento_series,
+                }
+
+                /*//////////////////////////////////////////////*/
+                /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
+                let evolucao_quantidade_osc_ano_labels = [];
+                let evolucao_quantidade_osc_ano_series = [];
+
+                if(data.evolucao_quantidade_osc_ano){
+                    let groupSerie = [];
+                    for(let serie in data.evolucao_quantidade_osc_ano.series_1){
+
+                        let serieName = data.evolucao_quantidade_osc_ano.series_1[serie].key;
+
+                        let serieTeste = {
+                            name: serieName,
+                            type: 'line',
+                            data: []
+                        };
+
+                        groupSerie.push(serieTeste);
+
+                        for(let k in data.evolucao_quantidade_osc_ano.series_1[serie].values) {
+                            evolucao_quantidade_osc_ano_labels.push(data.evolucao_quantidade_osc_ano.series_1[serie].values[k].x);
+                            serieTeste.data.push(data.evolucao_quantidade_osc_ano.series_1[serie].values[k].y);
+                        }
+                    }
+                    evolucao_quantidade_osc_ano_series.push(groupSerie);
+                }
+
+                let chart_evolucao_quantidade_osc_ano_series = evolucao_quantidade_osc_ano_series[0]
+
+                let unique_evolucao_quantidade_osc_ano_labels = [...new Set(evolucao_quantidade_osc_ano_labels)];
+                unique_evolucao_quantidade_osc_ano_labels = unique_evolucao_quantidade_osc_ano_labels.sort()
+
+                let evolucao_quantidade_osc_ano_chart = {
+                    'labels': unique_evolucao_quantidade_osc_ano_labels,
+                    'series': chart_evolucao_quantidade_osc_ano_series,
+                }
 
                 /*//////////////////////////////////////////////*/
 
@@ -134,10 +212,12 @@ class Perfil extends React.Component {
                     orcamento: data.orcamento,
 
 
+                    evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
                     natureza_juridica_chart: natureza_juridica_chart,
                     trabalhadores_chart: trabalhadores_chart,
                     area_atuacao_chart: area_atuacao_chart,
                     repasse_recursos_chart: repasse_recursos_chart,
+                    orcamento_chart: orcamento_chart,
 
                     localidade: data.tx_localidade,
                     tipo: data.tx_tipo_localidade,
@@ -188,7 +268,17 @@ class Perfil extends React.Component {
                 );
             });
         }
+        let evolucao_quantidade_osc_ano_chart = null;
+        if(this.state.evolucao_quantidade_osc_ano_chart){
 
+            evolucao_quantidade_osc_ano_chart = (
+                <MixedChart
+                    id={'mix-chart-evolucao_quantidade_osc_ano_chart'}
+                    series={this.state.evolucao_quantidade_osc_ano_chart.series}
+                    labels={this.state.evolucao_quantidade_osc_ano_chart.labels}
+                />
+            );
+        }
         /////////////////////////////////////////////////////////////////////////////
         let tx_primeiro_colocado_estado = '';
         if(this.state.evolucao_quantidade_osc_ano.tx_primeiro_colocado_estado){
@@ -309,52 +399,6 @@ class Perfil extends React.Component {
                 );
             });
         }
-        //////////////////////////////////Transferências Federais///////////////////////////////////////////
-        let ft_orcamento = null;
-        if(this.state.orcamento.fontes){
-            ft_orcamento = this.state.orcamento.fontes.map(function (item, key) {
-                return (
-                    <span key={"ft_qp_" + key}>{item}, </span>
-                );
-            });
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        /*let repasse_recursos_labels = [];
-        let repasse_recursos_series = [];
-
-        let callChart = false;
-
-        if(this.state.repasse_recursos){
-
-            let groupSerie = [];
-            for(let serie in this.state.repasse_recursos.series_1){
-
-                let serieName = this.state.repasse_recursos.series_1[serie].key;
-
-                let serieTeste = {
-                    name: serieName,
-                    type: 'line',
-                    data: []
-                };
-
-                groupSerie.push(serieTeste);
-
-                for(let k in this.state.repasse_recursos.series_1[serie].values) {
-                    repasse_recursos_labels.push(this.state.repasse_recursos.series_1[serie].values[k].x);
-
-                    serieTeste.data.push(this.state.repasse_recursos.series_1[serie].values[k].y);
-                }
-
-            }
-
-            repasse_recursos_series.push(groupSerie);
-            callChart = true;
-        }
-
-        */
-
         let repasse_recursos_chart = null;
         if(this.state.repasse_recursos_chart){
 
@@ -366,7 +410,27 @@ class Perfil extends React.Component {
                 />
             );
         }
+        //////////////////////////////////Transferências Federais///////////////////////////////////////////
+        let ft_orcamento = null;
+        if(this.state.orcamento.fontes){
+            ft_orcamento = this.state.orcamento.fontes.map(function (item, key) {
+                return (
+                    <span key={"ft_qp_" + key}>{item}, </span>
+                );
+            });
+        }
+        let orcamento_chart = null;
+        if(this.state.orcamento_chart){
 
+            orcamento_chart = (
+                <MixedChart
+                    id={'mix-chart-orcamento'}
+                    series={this.state.orcamento_chart.series}
+                    labels={this.state.orcamento_chart.labels}
+                />
+            );
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
 
         ///////////////////////////////////////////////////
@@ -385,7 +449,8 @@ class Perfil extends React.Component {
                     </div>
                     <div className="col-md-12 text-center">
                         <h3>Evolução quantidade de OSCs por ano de fundação</h3>
-                        <MixedChart
+                        {evolucao_quantidade_osc_ano_chart}
+                        {/*<MixedChart
                             id={'mix-chart'}
                             yaxis={['Teste']}
                             series={[{
@@ -398,11 +463,7 @@ class Perfil extends React.Component {
                                 data: [50, 40, 80, 51, 200, 50, 80]
                             }]}
                             labels={[1922, 1930, 1940, 1950, 1960, 1970]}
-                            /*id={'mix-chart'+item.chart}
-                            yaxis={['Teste']}
-                            series={item.series}
-                            labels={item.labels}*/
-                        />
+                        />*/}
                         <div className="btn btn-outline-primary float-right">Visualize os dados em tabela.</div><br/><br/><br/>
                     </div>
                 </div>
@@ -507,26 +568,7 @@ class Perfil extends React.Component {
                         <div className="btn btn-outline-primary">Visualize os dados em tabela.</div>
                     </div>
                     <div className="col-md-6">
-
                         {repasse_recursos_chart}
-                        {/*<MixedChart
-                            id={'mix-chart'}
-                            yaxis={['Teste']}
-                            series={repasse_recursos_series[0]}
-                            labels={repasse_recursos_labels}
-
-                        />*/}
-
-                        {/*<ColumnChart
-                            id={'mix-chart'}
-                            yaxis={['Teste']}
-                            series={[{
-                                name: 'Quantidade OSCs',
-                                type: 'column',
-                                data: [31, 40, 28, 51, 42, 109]
-                            }]}
-                            labels={['1922', '1930', '1940', '1950', '1960', '1970']}
-                        />*/}
                     </div>
                 </div>
                 {/*////////////*/}
@@ -550,17 +592,7 @@ class Perfil extends React.Component {
                         <div className="btn btn-outline-primary">Visualize os dados em tabela.</div>
                     </div>
                     <div className="col-md-6">
-
-                        <ColumnChart
-                            id={'mix-chart'}
-                            yaxis={['Teste']}
-                            series={[{
-                                name: 'Quantidade OSCs',
-                                type: 'column',
-                                data: [31, 40, 28, 51, 42, 109]
-                            }]}
-                            labels={['1922', '1930', '1940', '1950', '1960', '1970']}
-                        />
+                        {orcamento_chart}
                     </div>
                 </div>
                 {/*////////////*/}
