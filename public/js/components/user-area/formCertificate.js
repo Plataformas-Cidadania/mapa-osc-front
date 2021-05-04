@@ -79,10 +79,7 @@ class FormCertificate extends React.Component {
     }
 
     cleanForm() {
-        /*let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }*/
+
         this.setState({
             form: {
                 dt_inicio_certificado: '',
@@ -101,22 +98,10 @@ class FormCertificate extends React.Component {
     }
 
     validate() {
-        //console.log(this.state.form);
+
         let valid = true;
 
         let requireds = this.state.requireds;
-        let form = this.state.form;
-
-        /*for(let index in requireds){
-            if(!form[index] || form[index]==''){
-                requireds[index] = false;
-                valid = false;
-            }else{
-                requireds[index] = true;
-            }
-        }*/
-
-        //console.log(requireds);
 
         this.setState({ requireds: requireds });
         return valid;
@@ -142,7 +127,6 @@ class FormCertificate extends React.Component {
 
             if (this.state.form.cd_municipio) {
                 data.cd_municipio = this.state.form.cd_municipio;
-                data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
             if (this.state.form.cd_uf) {
                 data.cd_uf = this.state.form.cd_uf;

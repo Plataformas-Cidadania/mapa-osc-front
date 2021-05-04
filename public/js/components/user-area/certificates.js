@@ -22,7 +22,37 @@ class Certificates extends React.Component {
             removeItemTx: '',
             removeTipo: '',
 
-            editTipo: null
+            editTipo: null,
+
+            uf: {
+                12: 'AC',
+                27: 'AL',
+                16: 'AP',
+                13: 'AM',
+                29: 'BA',
+                23: 'CE',
+                53: 'DF',
+                32: 'ES',
+                52: 'GO',
+                21: 'MA',
+                51: 'MT',
+                50: 'MS',
+                31: 'MG',
+                15: 'PA',
+                25: 'PB',
+                41: 'PR',
+                26: 'PE',
+                22: 'PI',
+                24: 'RN',
+                43: 'RS',
+                33: 'RJ',
+                11: 'RO',
+                14: 'RR',
+                42: 'SC',
+                35: 'SP',
+                28: 'SE',
+                17: 'TO'
+            }
         };
 
         this.list = this.list.bind(this);
@@ -37,12 +67,6 @@ class Certificates extends React.Component {
     componentDidMount() {
         this.list();
     }
-
-    /*edit(id){
-        this.setState({actionForm: 'edit', editId: id, modalTitle: 'Alterar título ou certificação'}, function(){
-            this.callModal();
-        });
-    }*/
 
     cancelRemove(id) {
         let remove = this.state.remove;
@@ -248,16 +272,11 @@ class Certificates extends React.Component {
 
             let municipio = '';
             if (item.municipio != null) {
-                municipio = item.municipio.edmu_nm_municipio + ' - ';
+                municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
             }
             let estado = '';
             if (item.uf != null) {
                 estado = item.uf.eduf_sg_uf;
-            }
-
-            let hr = null;
-            if (index < this.state.certificates.length - 1) {
-                hr = React.createElement('hr', null);
             }
 
             return React.createElement(

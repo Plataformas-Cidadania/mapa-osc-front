@@ -43,7 +43,8 @@ class Participacoes extends React.Component {
             removeItemTx: '',
             removeTipo: '',
 
-            nao_possui: null
+            nao_possui: null,
+            type: ''
 
         };
 
@@ -197,34 +198,41 @@ class Participacoes extends React.Component {
         return valid;
     }
 
-    updateNaoPossui(e) {
-        e.preventDefault();
+    updateNaoPossui(type) {
+        //e.preventDefault();
 
         if (!this.validate()) {
             return;
         }
+        let data = {
+            id_osc: '455128'
+        };
+        if (type === 'conferencias') {
+            data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
+        }
+        if (type === 'conselhos') {
+            data.bo_nao_possui_ps_conselhos = this.state.showConselho ? false : true;
+        }
+        if (type === 'outros') {
+            data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
+        }
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
+
                 method: 'PUT',
                 url: getBaseUrl2 + 'osc/611720',
-                //data: this.state.form,
 
-                data: {
-                    bo_nao_possui_ps_conferencias: this.state.showConferencia ? false : true,
-                    bo_nao_possui_ps_conselhos: this.state.showConselho ? false : true,
-                    bo_nao_possui_ps_outros_espacos: this.state.showOutro ? false : true,
-                    id_osc: 611720
-                },
+                data: data,
                 cache: false,
                 success: function (data) {
                     let msg = "Dados alterados com sucesso!";
-                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true });
+                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true, type: type });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
                     let msg = "Ocorreu um erro!";
-                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: false, button: true });
+                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: false, button: true, type: type });
                 }.bind(this)
             });
         });
@@ -673,6 +681,32 @@ class Participacoes extends React.Component {
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConselho' },
                                     'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { marginTop: '10px', float: 'right' } },
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loading && this.state.type === 'conselhos' ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsg && this.state.type === 'conselhos' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('conselhos') },
+                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
+                                        ' Salvar "N\xE3o possui"'
+                                    ),
+                                    React.createElement('br', null)
                                 )
                             )
                         ),
@@ -759,6 +793,32 @@ class Participacoes extends React.Component {
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConferencia' },
                                     'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { marginTop: '10px', float: 'right' } },
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loading && this.state.type === 'conferencias' ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsg && this.state.type === 'conferencias' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('conferencias') },
+                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
+                                        ' Salvar "N\xE3o possui"'
+                                    ),
+                                    React.createElement('br', null)
                                 )
                             )
                         ),
@@ -844,6 +904,32 @@ class Participacoes extends React.Component {
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkOutro' },
                                     'N\xE3o possui outros espa\xE7os de participa\xE7\xE3o social'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { style: { marginTop: '10px', float: 'right' } },
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.loading && this.state.type === 'outros' ? 'block' : 'none' } },
+                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                                        ' Processando ',
+                                        React.createElement('br', null),
+                                        ' ',
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.showMsg && this.state.type === 'outros' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
+                                        this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('outros') },
+                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
+                                        ' Salvar "N\xE3o possui"'
+                                    ),
+                                    React.createElement('br', null)
                                 )
                             )
                         ),
@@ -899,42 +985,7 @@ class Participacoes extends React.Component {
                                 )
                             )
                         ),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'div',
-                            { className: 'row' },
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-12' },
-                                React.createElement(
-                                    'div',
-                                    { style: { marginTop: '-10px' } },
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.loading ? 'block' : 'none' } },
-                                        React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                        ' Processando ',
-                                        React.createElement('br', null),
-                                        ' ',
-                                        React.createElement('br', null)
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
-                                        React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
-                                        this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-success', onClick: this.updateNaoPossui },
-                                        React.createElement('i', {
-                                            className: 'fas fa-cloud-download-alt' }),
-                                        ' Atualizar dados de "n\xE3o possui" '
-                                    ),
-                                    React.createElement('br', null)
-                                )
-                            )
-                        )
+                        React.createElement('br', null)
                     )
                 )
             )

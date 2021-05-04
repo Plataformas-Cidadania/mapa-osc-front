@@ -33,12 +33,16 @@ class Atuacoes extends React.Component{
                 tx_nome_outra: '',
             },
             boxInfo: false,
-
+            dataCnae: '',
+            dataCnaeArea: '',
+            dataCnaeSubArea: [],
 
         };
 
         this.listArea = this.listArea.bind(this);
         this.listAreaSelected = this.listAreaSelected.bind(this);
+        this.listCnae = this.listCnae.bind(this);
+        this.listCnaeArea = this.listCnaeArea.bind(this);
         //this.checkArea = this.checkArea.bind(this);
         this.checkSubArea = this.checkSubArea.bind(this);
         this.checkedOutros = this.checkedOutros.bind(this);
@@ -53,7 +57,8 @@ class Atuacoes extends React.Component{
     componentDidMount(){
         this.listArea();
         this.listAreaSelected();
-
+        this.listCnae();
+        this.listCnaeArea();
     }
 
     handleInputChange(event) {
@@ -85,11 +90,47 @@ class Atuacoes extends React.Component{
         });
     }
 
+    listCnae(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl+'osc/dados_gerais/'+702542,
+            success: function (data) {
+                this.setState({loading: false, dataCnae: data.tx_nome_atividade_economica_osc})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    listCnaeArea(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'osc/areas_atuacao/'+597188,//789809
+            success: function (data) {
+                let dataArea = '';
+                data.find(function(item){
+                    dataArea = item.dc_area_atuacao.tx_nome_area_atuacao;
+                });
+
+
+                this.setState({loading: false, dataCnaeArea: dataArea, dataCnaeSubArea: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     listAreaSelected(){
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/areas_atuacao/'+789809,
+            url: getBaseUrl2+'osc/areas_atuacao_rep/'+789809,
             success: function (data) {
                 let itensAreas = [];
                 let areasAtuacao = this.state.areaAtuacao;
@@ -106,7 +147,6 @@ class Atuacoes extends React.Component{
                         }
                     });
                 });
-                //this.checkSubArea(0, 0, true, 0)
 
                 this.setState({
                     dataAtuacaoSelected: itensAreas,
@@ -211,7 +251,7 @@ class Atuacoes extends React.Component{
         if(checkedAtuacao!==true){
             $.ajax({
                 method: 'POST',
-                url: getBaseUrl2+'osc/area_atuacao',
+                url: getBaseUrl2+'osc/area_atuacao_rep',
                 data: {
                     id_osc: 789809,
                     cd_area_atuacao: area_id,
@@ -220,7 +260,6 @@ class Atuacoes extends React.Component{
                 },
                 cache: false,
                 success: function(data){
-                    //this.listArea();
                     this.listAreaSelected();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -230,13 +269,12 @@ class Atuacoes extends React.Component{
         }else{
             $.ajax({
                 method: 'DELETE',
-                url: getBaseUrl2+'osc/area_atuacao/'+idSelectedSub,
+                url: getBaseUrl2+'osc/area_atuacao_rep/'+idSelectedSub,
                 data: {
 
                 },
                 cache: false,
                 success: function(data){
-                    //this.listArea();
                     this.listAreaSelected();
                 }.bind(this),
                 error: function(xhr, status, err){
@@ -274,7 +312,7 @@ class Atuacoes extends React.Component{
         this.setState({saveLoading: id});
         $.ajax({
             method: 'PUT',
-            url: getBaseUrl2+'osc/area_atuacao/'+id,
+            url: getBaseUrl2+'osc/area_atuacao_rep/'+id,
             data: {
                 tx_nome_outra: this.state.form.tx_nome_outra,
             },
@@ -361,6 +399,29 @@ class Atuacoes extends React.Component{
             }.bind(this));
         }
 
+
+        /////////////////////////////////////////
+        let areaAtuacaoCnae = null;
+        if(this.state.dataCnaeSubArea){
+            areaAtuacaoCnae = this.state.dataCnaeSubArea.map(function (item) {
+
+                let teste = '';
+                if(item.dc_subarea_atuacao===null){
+                    teste = 'Não informado';
+                }else{
+                    teste = item.dc_subarea_atuacao.tx_nome_subarea_atuacao;
+                }
+
+                return (
+                    <div key={"area_"+item.cd_area_atuacao}>
+                        <strong>Subárea: </strong>{teste}
+                    </div>
+                );
+            }.bind(this));
+        }
+        /////////////////////////////////////////
+
+
         return(
 
             <div className="row">
@@ -370,7 +431,18 @@ class Atuacoes extends React.Component{
                         <h3>Áreas e Subáreas de atuação da OSC</h3>
                         <hr/><br/>
                     </div>
-                    <div className="text-center">Atividade econômica (CNAE)</div>
+                    <div className="text-center">
+                        <strong><i className="fas fa-database tx-pri"/> Atividade econômica (CNAE): </strong> {this.state.dataCnae}
+                    </div>
+                    <br/>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <div className="alert alert-secondary">
+                                <i className="fas fa-database float-right tx-pri"/>
+                                <strong>Área de Atuação: {this.state.dataCnaeArea}</strong>{areaAtuacaoCnae}
+                            </div>
+                        </div>
+                    </div>
                     <br/>
                 </div>
 
@@ -382,6 +454,7 @@ class Atuacoes extends React.Component{
                                 <div className="alert alert-danger" role="alert" style={{position: 'fixed', zIndex: '999', display: this.state.boxInfo ? '' : 'none'}}>
                                      É preciso excluir as Subárea de Atuação, para desativar uma área!  <button className="btn btn-danger" onClick={this.callSubareaAtuacao} >X</button>
                                 </div>
+
                                 {areaAtuacao}
                                 <br/>
                                 <div className="col-md-12"  style={{display: this.state.imputOutros ? '' : 'none'}}>
@@ -389,7 +462,8 @@ class Atuacoes extends React.Component{
                                 </div>
 
                             </div>
-                            <div style={{display: this.state.dataAtuacaoBd.length>0 ? '' : 'none'}}>
+                            <div>
+                                <div className="text-center" style={{display: this.state.dataAtuacaoBd.length>0 ? 'none' : ''}}>Selecione uma área e subárea de atuação!</div>
                                 <strong>Subárea de Atuação</strong><hr/>
                                 <div className="card-columns">
                                     {subareaAtuacao}

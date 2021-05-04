@@ -46,6 +46,7 @@ class Participacoes extends React.Component{
             removeTipo: '',
 
             nao_possui:null,
+            type: '',
 
         };
 
@@ -207,36 +208,42 @@ class Participacoes extends React.Component{
         return valid;
     }
 
-    updateNaoPossui(e){
-        e.preventDefault();
+    updateNaoPossui(type){
+        //e.preventDefault();
 
         if(!this.validate()){
             return;
         }
-
+        let data = {
+            id_osc: '455128',
+        };
+        if(type==='conferencias'){
+            data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
+        }
+        if(type==='conselhos'){
+            data.bo_nao_possui_ps_conselhos = this.state.showConselho ? false : true;
+        }
+        if(type==='outros'){
+            data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
+        }
 
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
+
                 method:'PUT',
                 url: getBaseUrl2 + 'osc/611720',
-                //data: this.state.form,
 
-                data:{
-                    bo_nao_possui_ps_conferencias: this.state.showConferencia ? false : true,
-                    bo_nao_possui_ps_conselhos: this.state.showConselho ? false : true,
-                    bo_nao_possui_ps_outros_espacos: this.state.showOutro ? false : true,
-                    id_osc: 611720,
-                },
+                data : data,
                 cache: false,
                 success: function(data) {
                     let msg = "Dados alterados com sucesso!";
-                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true});
+                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true, type: type});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
                     let msg = "Ocorreu um erro!";
-                    this.setState({loading: false,  msg: msg, showMsg: true, updateOk: false, button: true});
+                    this.setState({loading: false,  msg: msg, showMsg: true, updateOk: false, button: true, type: type});
                 }.bind(this)
             });
         });
@@ -536,6 +543,17 @@ class Participacoes extends React.Component{
                                 <div className="custom-control custom-checkbox text-center">
                                     <input type="checkbox" className="custom-control-input" id="checkConselho" required onClick={this.showHideConselho}  defaultChecked={this.state.bo_nao_possui_ps_conferencias} onChange={this.handleInputChange}/>
                                     <label className="custom-control-label" htmlFor="checkConselho" >Não possui conselhos de políticas públicas</label>
+                                    <div style={{marginTop: '10px', float: 'right'}}>
+                                        <div style={{display: this.state.loading && this.state.type === 'conselhos' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                        <div style={{display: this.state.showMsg && this.state.type === 'conselhos' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                            <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                            {this.state.msg}
+                                        </div>
+                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('conselhos')}>
+                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
+                                        </button>
+                                        <br/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -583,6 +601,17 @@ class Participacoes extends React.Component{
                                 <div className="custom-control custom-checkbox text-center">
                                     <input type="checkbox" className="custom-control-input" id="checkConferencia" required onClick={this.showHideConferencia}  defaultChecked={this.state.bo_nao_possui_ps_conselhos} onChange={this.bo_nao_possui_ps_conselhos}/>
                                     <label className="custom-control-label" htmlFor="checkConferencia" >Não possui conferências de políticas públicas</label>
+                                    <div style={{marginTop: '10px', float: 'right'}}>
+                                        <div style={{display: this.state.loading && this.state.type === 'conferencias' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                        <div style={{display: this.state.showMsg && this.state.type === 'conferencias' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                            <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                            {this.state.msg}
+                                        </div>
+                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('conferencias')}>
+                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
+                                        </button>
+                                        <br/>
+                                    </div>
                                 </div>
                             </div>
                             <br/>
@@ -622,12 +651,23 @@ class Participacoes extends React.Component{
                         <div className="box-groups">
                             <br/><br/>
                             <h2>Outros espaços de participação social</h2>
-
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
                                     <input type="checkbox" className="custom-control-input" id="checkOutro" required onClick={this.showHideOutro}  defaultChecked={this.state.bo_nao_possui_ps_outros_espacos} onChange={this.bo_nao_possui_ps_outros_espacos}/>
                                     <label className="custom-control-label" htmlFor="checkOutro" >Não possui outros espaços de participação social</label>
+                                    <div style={{marginTop: '10px', float: 'right'}}>
+                                        <div style={{display: this.state.loading && this.state.type === 'outros' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
+                                        <div style={{display: this.state.showMsg && this.state.type === 'outros' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                            <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
+                                            {this.state.msg}
+                                        </div>
+                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('outros')}>
+                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
+                                        </button>
+                                        <br/>
+                                    </div>
                                 </div>
+
                             </div>
 
                             <br/>
@@ -662,20 +702,6 @@ class Participacoes extends React.Component{
 
                             <br/>
 
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div style={{marginTop: '-10px'}}>
-                                        <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
-                                            <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
-                                            {this.state.msg}
-                                        </div>
-                                        <button type="button" className="btn btn-success" onClick={this.updateNaoPossui}><i
-                                            className="fas fa-cloud-download-alt"/> Atualizar dados de "não possui" </button>
-                                        <br/>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
