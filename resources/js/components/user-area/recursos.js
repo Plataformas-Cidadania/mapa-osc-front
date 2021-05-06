@@ -76,7 +76,7 @@ class Recursos extends React.Component{
             method: 'GET',
             //url: '/get-recursos',
             //url: getBaseUrl+'osc/no_project/789809',
-            url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
+            url: getBaseUrl2+'osc/anos_recursos/789809',
             cache: false,
             success: function (data) {
                 console.log('data: ', data);

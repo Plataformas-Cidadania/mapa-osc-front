@@ -205,7 +205,7 @@ class Participacoes extends React.Component {
             return;
         }
         let data = {
-            id_osc: '455128'
+            //id_osc: '789809',
         };
         if (type === 'conferencias') {
             data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
@@ -217,11 +217,13 @@ class Participacoes extends React.Component {
             data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
         }
 
+        console.log('--->', this.state.showConferencia, this.state.showConselho, this.state.showOutro);
+
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
 
                 method: 'PUT',
-                url: getBaseUrl2 + 'osc/611720',
+                url: getBaseUrl2 + 'osc/789809',
 
                 data: data,
                 cache: false,
