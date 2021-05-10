@@ -154,9 +154,11 @@ class Recursos extends React.Component{
 
     }
 
+
     getRecursosProprios(ano){
         //ano = ano+"-01-01";
         console.log('recursos:', this.state.recursos);
+        console.log('recursos ano:', ano);
         let recursos_proprios = null;
         let recursos_publicos = null;
         let recursos_privados = null;
@@ -186,15 +188,17 @@ class Recursos extends React.Component{
             method: 'GET',
             cache: false,
             //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
-            url: getBaseUrl+'osc/no_project/789809',
-            //url: getBaseUrl2+'osc/fonte_recursos/789809',
-            //url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
+            //url: getBaseUrl+'osc/no_project/789809',
+            url: getBaseUrl2+'osc/recursos/789809',
+
             success: function (data) {
+
+                consoloe.log('--*', data);
 
                 let anosRecursos = this.state.anosRecursos;
 
                 this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data.recursos.recursos})
-                //this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data})
+
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -202,38 +206,65 @@ class Recursos extends React.Component{
         });
     }
 
-    storeCampo(field, value){
-        console.log('field: ',field);
-        console.log('value: ',value);
+    storeCampo(field, value, id_recursos_osc){
+        console.log('valores: ',field, value, id_recursos_osc);
         //e.preventDefault();
 
         /*if(!this.validate()){
             return;
         }*/
 
-        this.setState({loading: true, button: false}, function(){
-            $.ajax({
-                method:'POST',
-                url: 'fonte_recursos',
-                data:{
-                    id_osc: '455128',
-                    dt_ano_recursos_osc: '2016-01-01',
-                    ft_ano_recursos_osc: "Representante de OSC",
-                    ft_valor_recursos_osc: "Representante de OSC",
-                    nr_valor_recursos_osc: value,
-                    cd_origem_fonte_recursos_projeto: field,
-                },
-                cache: false,
-                success: function(data) {
-                    let msg = 'Dados alterados com sucesso!';
-                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.error(status, err.toString());
-                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
-                }.bind(this)
+        if(id_recursos_osc===0){
+
+            console.log('Update')
+            this.setState({loading: true, button: false}, function(){
+                $.ajax({
+                    method:'PUT',
+                    url: getBaseUrl2+'osc/recursos',
+                    data:{
+                        id_osc: '789809',
+                        dt_ano_recursos_osc: '2016-01-01',
+                        nr_valor_recursos_osc: value,
+                        cd_fonte_recursos_osc: field,
+                    },
+                    cache: false,
+                    success: function(data) {
+                        let msg = 'Dados alterados com sucesso!';
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.error(status, err.toString());
+                        this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+                    }.bind(this)
+                });
             });
-        });
+
+        }else{
+            console.log('Insert')
+            this.setState({loading: true, button: false}, function(){
+                $.ajax({
+                    method:'POST',
+                    url: getBaseUrl2+'osc/recursos',
+                    data:{
+                        id_osc: '789809',
+                        dt_ano_recursos_osc: '2016-01-01',
+                        nr_valor_recursos_osc: value,
+                        cd_fonte_recursos_osc: field,
+                    },
+                    cache: false,
+                    success: function(data) {
+                        let msg = 'Dados alterados com sucesso!';
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.error(status, err.toString());
+                        this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+                    }.bind(this)
+                });
+            });
+        }
+
+
     }
     updateCampo(){
 
@@ -283,23 +314,6 @@ class Recursos extends React.Component{
                                     <br/>
                                     <br/>
 
-                                    {/*<div className="custom-control custom-checkbox" key="11" id="11">
-                                        <input type="checkbox" className="custom-control-input" id="11" required/>
-                                        <label className="custom-control-label" htmlFor="">Não possui recursos para este ano.</label>
-                                        <div className="invalid-feedback">Não possui recursos para este ano.</div>
-                                    </div>
-
-
-
-
-                                    <div className="box-itens-g">
-                                        <h2>Recursos próprios</h2>
-                                        <div className="custom-control custom-checkbox" key="22" id="22">
-                                            <input type="checkbox" className="custom-control-input" id="22" required/>
-                                            <label className="custom-control-label" htmlFor="">Não possui recursos próprios para este ano.</label>
-                                            <div className="invalid-feedback">Não possui recursos próprios para este ano.</div>
-                                        </div>
-                                    </div>*/}
 
                                     <div className="row">
 
@@ -340,22 +354,24 @@ class Recursos extends React.Component{
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange}
+                                                *<input className={"form-control form-g "} type="text" name="cp174" onChange={this.handleInputChange}
                                                        defaultValue={this.state.recursos_proprios ?
                                                            (this.state.recursos_proprios.mensalidades_contribuicoes_associados ?
                                                            this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "") : ""}
-                                                       onBlur={() => this.storeCampo(
-                                                           3, 2222/*this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc*/
-                                                       )}
-                                                       placeholder="Informe o valor" />
-                                                <label htmlFor="tx_link_estatuto_osc">Mensalidades ou contribuições de associados</label>
+                                                       onBlur={() => this.storeCampo(174, this.state.form.cp174, this.state.recursos_proprios ?
+                                                           (this.state.recursos_proprios.mensalidades_contribuicoes_associados ?
+                                                               this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "") : "")}
+                                                       placeholder="Informe o valor" />*{this.state.form.cp174}*
+                                                {this.state.recursos_proprios ?
+                                                    (this.state.recursos_proprios.mensalidades_contribuicoes_associados ?
+                                                        this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "") : "0"}
+                                                ***
+                                                <label htmlFor="cp174">Mensalidades ou contribuições de associados</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
                                                 </div>
                                             </div>
-                                            {/*<div className="btn btn-primary" onClick={() => this.storeCampo(
-                                                3, 222
-                                            )}>+</div>*/}
+
                                         </div>
 
                                         <div className="col-md-6">
@@ -742,15 +758,6 @@ class Recursos extends React.Component{
                                         </div>
                                     </div>
 
-
-                                    {/*<div className="col-md-12">
-                                        <div>
-                                            <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
-                                            <br/>
-                                            <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
-                                            <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-                                        </div>
-                                    </div>*/}
 
 
                                 </form>

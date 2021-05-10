@@ -154,6 +154,7 @@ class Recursos extends React.Component {
     getRecursosProprios(ano) {
         //ano = ano+"-01-01";
         console.log('recursos:', this.state.recursos);
+        console.log('recursos ano:', ano);
         let recursos_proprios = null;
         let recursos_publicos = null;
         let recursos_privados = null;
@@ -183,15 +184,16 @@ class Recursos extends React.Component {
             method: 'GET',
             cache: false,
             //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
-            url: getBaseUrl + 'osc/no_project/789809',
-            //url: getBaseUrl2+'osc/fonte_recursos/789809',
-            //url: getBaseUrl2+'osc/anos_fonte_recursos/789809',
+            //url: getBaseUrl+'osc/no_project/789809',
+            url: getBaseUrl2 + 'osc/recursos/789809',
+
             success: function (data) {
+
+                consoloe.log('--*', data);
 
                 let anosRecursos = this.state.anosRecursos;
 
                 this.setState({ loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta: true, recursos: data.recursos.recursos });
-                //this.setState({loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta:true, recursos:data})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -199,38 +201,62 @@ class Recursos extends React.Component {
         });
     }
 
-    storeCampo(field, value) {
-        console.log('field: ', field);
-        console.log('value: ', value);
+    storeCampo(field, value, id_recursos_osc) {
+        console.log('valores: ', field, value, id_recursos_osc);
         //e.preventDefault();
 
         /*if(!this.validate()){
             return;
         }*/
 
-        this.setState({ loading: true, button: false }, function () {
-            $.ajax({
-                method: 'POST',
-                url: 'fonte_recursos',
-                data: {
-                    id_osc: '455128',
-                    dt_ano_recursos_osc: '2016-01-01',
-                    ft_ano_recursos_osc: "Representante de OSC",
-                    ft_valor_recursos_osc: "Representante de OSC",
-                    nr_valor_recursos_osc: value,
-                    cd_origem_fonte_recursos_projeto: field
-                },
-                cache: false,
-                success: function (data) {
-                    let msg = 'Dados alterados com sucesso!';
-                    this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                    this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
-                }.bind(this)
+        if (id_recursos_osc === 0) {
+
+            console.log('Update');
+            this.setState({ loading: true, button: false }, function () {
+                $.ajax({
+                    method: 'PUT',
+                    url: getBaseUrl2 + 'osc/recursos',
+                    data: {
+                        id_osc: '789809',
+                        dt_ano_recursos_osc: '2016-01-01',
+                        nr_valor_recursos_osc: value,
+                        cd_fonte_recursos_osc: field
+                    },
+                    cache: false,
+                    success: function (data) {
+                        let msg = 'Dados alterados com sucesso!';
+                        this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                    }.bind(this),
+                    error: function (xhr, status, err) {
+                        console.error(status, err.toString());
+                        this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                    }.bind(this)
+                });
             });
-        });
+        } else {
+            console.log('Insert');
+            this.setState({ loading: true, button: false }, function () {
+                $.ajax({
+                    method: 'POST',
+                    url: getBaseUrl2 + 'osc/recursos',
+                    data: {
+                        id_osc: '789809',
+                        dt_ano_recursos_osc: '2016-01-01',
+                        nr_valor_recursos_osc: value,
+                        cd_fonte_recursos_osc: field
+                    },
+                    cache: false,
+                    success: function (data) {
+                        let msg = 'Dados alterados com sucesso!';
+                        this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                    }.bind(this),
+                    error: function (xhr, status, err) {
+                        console.error(status, err.toString());
+                        this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                    }.bind(this)
+                });
+            });
+        }
     }
     updateCampo() {}
     deleteCampo() {}
@@ -374,14 +400,19 @@ class Recursos extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
+                                        '*',
+                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cp174', onChange: this.handleInputChange,
                                             defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
-                                            onBlur: () => this.storeCampo(3, 2222 /*this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc*/
-                                            ),
+                                            onBlur: () => this.storeCampo(174, this.state.form.cp174, this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "" : ""),
                                             placeholder: 'Informe o valor' }),
+                                        '*',
+                                        this.state.form.cp174,
+                                        '*',
+                                        this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "" : "0",
+                                        '***',
                                         React.createElement(
                                             'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
+                                            { htmlFor: 'cp174' },
                                             'Mensalidades ou contribui\xE7\xF5es de associados'
                                         ),
                                         React.createElement(
