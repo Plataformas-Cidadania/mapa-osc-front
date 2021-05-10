@@ -58,13 +58,11 @@ class FormParticipacaoConselho extends React.Component {
     }
 
     componentDidMount() {
-        console.log('1');
         this.listConselho();
         this.listReuniao();
     }
 
     componentWillReceiveProps() {
-        console.log('2');
         this.cleanFormConselho();
     }
 
@@ -75,7 +73,6 @@ class FormParticipacaoConselho extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
                 this.setState({ form: data }, function () {
                     //this.props.showHideForm();
                 });
@@ -120,22 +117,17 @@ class FormParticipacaoConselho extends React.Component {
             }
         }
 
-        //console.log(requireds);
-
         this.setState({ requireds: requireds });
         return valid;
     }
 
     register(e) {
 
-        console.log('11111');
-
         e.preventDefault();
 
         if (!this.validate()) {
             return;
         }
-        console.log('22');
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
@@ -168,21 +160,6 @@ class FormParticipacaoConselho extends React.Component {
         });
     }
 
-    getAge(dateString) {
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
-    }
-
     listConselho() {
         this.setState({ loadingList: true });
         $.ajax({
@@ -199,24 +176,6 @@ class FormParticipacaoConselho extends React.Component {
             }.bind(this)
         });
     }
-
-    /*listTipo(){
-        this.setState({loadingList: true});
-        $.ajax({
-            method: 'GET',
-            url: getBaseUrl + 'menu/osc/tipo_participacao',
-            data: {
-              },
-            cache: false,
-            success: function(data){
-                this.setState({listTipo: data, loadingList: false});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                this.setState({loadingList: false});
-            }.bind(this)
-        });
-    }*/
 
     listReuniao() {
         this.setState({ loadingList: true });
@@ -244,12 +203,6 @@ class FormParticipacaoConselho extends React.Component {
                 item.tx_nome_conselho
             );
         }.bind(this));
-
-        /*let listTipo = this.state.listTipo.map(function(item, index){
-            return (
-                <option value={item.cd_tipo_participacao} key={'listTipo'+index}>{item.tx_nome_tipo_participacao}</option>
-            );
-        }.bind(this));*/
 
         let listReuniao = this.state.listReuniao.map(function (item, index) {
             return React.createElement(

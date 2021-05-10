@@ -50,7 +50,6 @@ class FormParticipacaoOutro extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log(data);
                 this.setState({form: data}, function(){
                     //this.props.showHideForm();
                 });
@@ -81,7 +80,6 @@ class FormParticipacaoOutro extends React.Component{
     }
 
     validate(){
-        console.log(this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -96,7 +94,7 @@ class FormParticipacaoOutro extends React.Component{
             }
         }
 
-        //console.log(requireds);
+
 
         this.setState({requireds: requireds});
         return valid;
@@ -147,22 +145,6 @@ class FormParticipacaoOutro extends React.Component{
             });
         });
 
-
-    }
-
-    getAge(dateString){
-
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
 
     }
 

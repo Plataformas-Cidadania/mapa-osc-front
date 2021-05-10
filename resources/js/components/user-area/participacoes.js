@@ -48,6 +48,11 @@ class Participacoes extends React.Component{
             nao_possui:null,
             type: '',
 
+            msgEspacos: 'Caso queira continuar com essa solicitação todos os dados serão apagados, esse processo apenas será validado após a confirmação.',
+            showConselhoInfo: false,
+            showConferenciaInfo: false,
+            showOutroInfo: false,
+
         };
 
         this.list = this.list.bind(this);
@@ -93,39 +98,59 @@ class Participacoes extends React.Component{
     showHideFormConselho(action){
         let showFormConselho = !this.state.showFormConselho;
         let actionFormConselho = action;
-        //console.log(showFormConselho);
+
         this.setState({showFormConselho: showFormConselho, actionFormConselho: actionFormConselho});
     }
     showHideFormConferencia(action){
         let showFormConferencia = !this.state.showFormConferencia;
         let actionFormConferencia = action;
-        //console.log(showFormConferencia);
+
         this.setState({showFormConferencia: showFormConferencia, actionFormConferencia: actionFormConferencia});
     }
     showHideFormOutro(action){
         let showFormOutro = !this.state.showFormOutro;
         let actionFormOutro = action;
-        //console.log(this.state.showFormOutro);
+
         this.setState({showFormOutro: showFormOutro, actionFormOutro: actionFormOutro});
     }
 
-    showHideConselho(/*action*/){
+    showHideConselho(){
         let showConselho = !this.state.showConselho;
 
-        this.setState({showConselho: showConselho, /*actionConselho: actionConselho*/});
+        if(showConselho===true){
+            this.updateNaoPossui('conselhos');
+            this.setState({showConselhoInfo: false});
+        }else{
+            this.setState({showConselhoInfo: true});
+        }
+
+        this.setState({showConselho: showConselho});
     }
 
-    showHideConferencia(action){
+    showHideConferencia(){
         let showConferencia = !this.state.showConferencia;
-        //let actionConferencia = action;
-        this.setState({showConferencia: showConferencia/*, actionConferencia: actionConferencia*/});
+
+        if(showConferencia===true){
+            this.updateNaoPossui('conferencias');
+            this.setState({showConferenciaInfo: false});
+        }else{
+            this.setState({showConferenciaInfo: true});
+        }
+
+        this.setState({showConferencia: showConferencia});
     }
 
-    showHideOutro(action){
+    showHideOutro(){
         let showOutro = !this.state.showOutro;
-        //let actionOutro = action;
-        //console.log('showOutro', this.state.showOutro);
-        this.setState({showOutro: showOutro/*, actionOutro: actionOutro*/});
+
+        if(showOutro===true){
+            this.updateNaoPossui('outros');
+            this.setState({showOutroInfo: false});
+        }else{
+            this.setState({showOutroInfo: true});
+        }
+
+        this.setState({showOutro: showOutro});
     }
 
     closeFormConselho(){
@@ -147,14 +172,11 @@ class Participacoes extends React.Component{
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/participacao_social/611720',
-            //url: getBaseUrl2 + 'osc/participacao_social/1288121',
-            //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {
 
             },
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.setState({
                     conferencias: data.conferencias_politicas_publicas,
                     conselhos: data.conselhos_politicas_publicas,
@@ -173,21 +195,18 @@ class Participacoes extends React.Component{
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/611720',
-            //url: getBaseUrl2 + 'osc/1288121',
             data: {
 
             },
             cache: false,
             success: function(data){
-                //console.log(data);
-
                 this.setState({
-                    bo_nao_possui_ps_conferencias: data.bo_nao_possui_ps_conferencias,
                     bo_nao_possui_ps_conselhos: data.bo_nao_possui_ps_conselhos,
+                    bo_nao_possui_ps_conferencias: data.bo_nao_possui_ps_conferencias,
                     bo_nao_possui_ps_outros_espacos: data.bo_nao_possui_ps_outros_espacos,
 
-                    showConferencia: !data.bo_nao_possui_ps_conferencias,
                     showConselho: !data.bo_nao_possui_ps_conselhos,
+                    showConferencia: !data.bo_nao_possui_ps_conferencias,
                     showOutro: !data.bo_nao_possui_ps_outros_espacos,
                 });
             }.bind(this),
@@ -208,39 +227,48 @@ class Participacoes extends React.Component{
         return valid;
     }
 
-    updateNaoPossui(type){
-        //e.preventDefault();
+    updateNaoPossui(type, origin){
 
         if(!this.validate()){
             return;
         }
-        let data = {
-            //id_osc: '789809',
-        };
-        if(type==='conferencias'){
-            data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
-        }
-        if(type==='conselhos'){
-            data.bo_nao_possui_ps_conselhos = this.state.showConselho ? false : true;
-        }
-        if(type==='outros'){
-            data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
+        let data = {};
+        if(origin==='btn'){
+            if(type==='conselhos'){
+                data.bo_nao_possui_ps_conselhos = this.state.showConselho ?  false : true;
+            }
+            if(type==='conferencias'){
+                data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
+            }
+            if(type==='outros'){
+                data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
+            }
+        }else{
+            if(type==='conselhos'){
+                data.bo_nao_possui_ps_conselhos = this.state.showConselho ?  true : false;
+            }
+            if(type==='conferencias'){
+                data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? true : false;
+            }
+            if(type==='outros'){
+                data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? true : false;
+            }
+
         }
 
-        console.log('--->', this.state.showConferencia, this.state.showConselho, this.state.showOutro);
 
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
 
                 method:'PUT',
-                url: getBaseUrl2 + 'osc/789809',
+                url: getBaseUrl2 + 'osc/611720',
 
                 data : data,
                 cache: false,
                 success: function(data) {
                     let msg = "Dados alterados com sucesso!";
-                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true, type: type});
+                    this.setState({loading: false, msg: msg, showMsg: true,  updateOk: true, button: true, type: type, origin: origin});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -288,14 +316,12 @@ class Participacoes extends React.Component{
 
     callModal(id, type){
         let modal = this.state.modal;
-        //console.log('id 1:', id);
         this.setState({
             modal: modal,
             editId:id,
             editTipo:type
         }, function(){
             $('#modalForm').modal('show');
-            //this.editOutro(id);
         });
     }
 
@@ -382,151 +408,139 @@ class Participacoes extends React.Component{
 
     render(){
 
-        console.log('-----');
-        console.log(this.state.bo_nao_possui_ps_conferencias);
-        console.log(this.state.bo_nao_possui_ps_conselhos);
-        console.log(this.state.bo_nao_possui_ps_outros_espacos);
-        console.log('-----');
         /////////////////////////////
         let modal = this.modal();
         let modalExcluir = this.modalExcluir();
+        let conselhos = null;
 
         ////////////////////////////
+        if(this.state.conselhos){
+            conselhos = this.state.conselhos.map(function(item, index){
 
-        let conselhos = this.state.conselhos.map(function(item, index){
+                return (
+
+                    <div className="col-md-6" style={{border: '0'}} key={"conselho_"+index}>
+                        <div className="box-insert-g text-left">
+                            <div className="box-insert-item box-insert-list">
+                                <br/>
+                                <div className="float-right">
 
 
-            return (
+                                    <a onClick={() => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho')} style={{cursor: 'pointer'}}>
+                                        <i className="far fa-trash-alt text-danger float-right"/>
+                                    </a>
 
-                <div className="col-md-6" style={{border: '0'}} key={"conselho_"+index}>
-                    <div className="box-insert-g text-left">
-                        <div className="box-insert-item box-insert-list">
-                            <br/>
-                            <div className="float-right">
+                                    <a onClick={() => this.callModal(item.id_conselho, 'conselho')} style={{cursor: 'pointer'}}>
+                                        <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
+                                    </a>
 
-
-                                <a onClick={() => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho')} style={{cursor: 'pointer'}}>
-                                    <i className="far fa-trash-alt text-danger float-right"/>
-                                </a>
-
-                                <a onClick={() => this.callModal(item.id_conselho, 'conselho')} style={{cursor: 'pointer'}}>
-                                    <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
-                                </a>
-
-                            </div>
-                            <br/>
-                            <div>
-                                <h3>Nome do Conselho:</h3>
-                                <p>{item.dc_conselho.tx_nome_conselho}</p>
-                                <hr/>
-                            </div>
-                            {/*<div>
+                                </div>
+                                <br/>
+                                <div>
+                                    <h3>Nome do Conselho:</h3>
+                                    <p>{item.dc_conselho.tx_nome_conselho}</p>
+                                    <hr/>
+                                </div>
+                                {/*<div>
                                 <h3>Titularidade:</h3>
                                 <p>{item.dc_tipo_participacao.tx_nome_tipo_participacao}</p>
                                 <hr/>
                             </div>*/}
 
-                            <div>
-                                <h3>Periodicidade da Reunião:</h3>
-                                <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}</p>
+                                <div>
+                                    <h3>Periodicidade da Reunião:</h3>
+                                    <p>{item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho}</p>
+                                    <hr/>
+                                </div>
+                                <div>
+                                    <h3>Data de início de vigência:</h3>
+                                    <p>{formatDate(item.dt_data_inicio_conselho, 'pt-br')}</p>
+                                    <hr/>
+                                </div>
+                                <div>
+                                    <h3>Data de fim de vigência:</h3>
+                                    <p>{formatDate(item.dt_data_fim_conselho, 'pt-br')}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        {modal}
+                    </div>
+
+                );
+            }.bind(this));
+        }
+
+        let conferencias = null;
+        if(this.state.conferencias){
+            conferencias = this.state.conferencias.map(function(item, index){
+                return (
+                    <div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
+                        <div className="box-insert-m">
+                            <div className="box-insert-item box-insert-list">
+                                <br/>
+                                <a onClick={() => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-trash-alt text-danger float-right"/>
+                                </a>
+                                {/*<a onClick={() => this.callModal(item.id_conferencia)} style={{cursor: 'pointer'}}>*/}
+                                <a onClick={() => this.callModal(item.id_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
+                                </a>
+
+                                <br/>
+                                <div>
+                                    <h3>Nome da Conferência:</h3>
+                                    <p>{item.dc_conferencia.tx_nome_conferencia}</p>
+                                </div>
                                 <hr/>
-                            </div>
-                            <div>
-                                <h3>Data de início de vigência:</h3>
-                                <p>{formatDate(item.dt_data_inicio_conselho, 'pt-br')}</p>
+                                <div>
+                                    <h3>Ano de realização da conferência:</h3>
+                                    <p>{item.dt_ano_realizacao.replace('-01-01', '') }</p>
+                                </div>
                                 <hr/>
-                            </div>
-                            <div>
-                                <h3>Data de fim de vigência:</h3>
-                                <p>{formatDate(item.dt_data_fim_conselho, 'pt-br')}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    {modal}
-                </div>
-
-            );
-        }.bind(this));
-
-
-        let conferencias = this.state.conferencias.map(function(item, index){
-
-            let hr = null;
-            if(index < this.state.conferencias.length-1){
-                hr = <hr/>;
-            }
-
-            return (
-
-                <div className="col-md-6" style={{border: '0'}} key={"conferencia_"+index}>
-                    <div className="box-insert-m">
-                        <div className="box-insert-item box-insert-list">
-                            <br/>
-                            <a onClick={() => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
-                                <i className="far fa-trash-alt text-danger float-right"/>
-                            </a>
-                            {/*<a onClick={() => this.callModal(item.id_conferencia)} style={{cursor: 'pointer'}}>*/}
-                            <a onClick={() => this.callModal(item.id_conferencia, 'conferencia')} style={{cursor: 'pointer'}}>
-                                <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
-                            </a>
-
-                            <br/>
-                            <div>
-                                <h3>Nome da Conferência:</h3>
-                                <p>{item.dc_conferencia.tx_nome_conferencia}</p>
-                            </div>
-                            <hr/>
-                            <div>
-                                <h3>Ano de realização da conferência:</h3>
-                                <p>{item.dt_ano_realizacao.replace('-01-01', '') }</p>
-                            </div>
-                            <hr/>
-                            <div>
-                                <h3>Forma de participação na conferência:</h3>
-                                <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}</p>
+                                <div>
+                                    <h3>Forma de participação na conferência:</h3>
+                                    <p>{item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia}</p>
+                                </div>
                             </div>
                         </div>
+                        <br/>
+                        {modalExcluir}
                     </div>
-                    <br/>
-                    {modalExcluir}
-                </div>
 
-            );
-        }.bind(this));
+                );
+            }.bind(this));
+        }
 
-        let outros = this.state.outros.map(function(item, index){
+        let outros = null;
+        if(this.state.outros){
+            outros = this.state.outros.map(function(item, index){
+                return (
 
+                    <div className="col-md-6" style={{border: '0'}} key={"outros_"+index}>
+                        <div className="box-insert-p">
+                            <div className="box-insert-item box-insert-list">
+                                <br/>
+                                <a onClick={() => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-trash-alt text-danger float-right"/>
+                                </a>
+                                <a onClick={() => this.callModal(item.id_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
+                                    <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
+                                </a>
 
-            return (
-
-                <div className="col-md-6" style={{border: '0'}} key={"outros_"+index}>
-                    <div className="box-insert-p">
-                        <div className="box-insert-item box-insert-list">
-                            <br/>
-                            <a onClick={() => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
-                                <i className="far fa-trash-alt text-danger float-right"/>
-                            </a>
-                            <a onClick={() => this.callModal(item.id_participacao_social_outra, 'outra')} style={{cursor: 'pointer'}}>
-                                <i className="far fa-edit text-primary float-right" style={{marginRight: '20px'}} />
-                            </a>
-
-                            <br/>
-                            <div>
-                                <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
-                                <p>{item.tx_nome_participacao_social_outra}</p>
+                                <br/>
+                                <div>
+                                    <h3>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</h3>
+                                    <p>{item.tx_nome_participacao_social_outra}</p>
+                                </div>
                             </div>
                         </div>
+                        <br/>
                     </div>
-                    <br/>
-                </div>
+                );
+            }.bind(this));
+        }
 
-
-            );
-        }.bind(this));
-
-        //console.log('bo_nao_possui_ps_conferencias', this.state.bo_nao_possui_ps_conferencias);
-        //console.log('showConselho', this.state.showConselho);
 
         return(
             <div>
@@ -543,17 +557,21 @@ class Participacoes extends React.Component{
 
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
-                                    <input type="checkbox" className="custom-control-input" id="checkConselho" required onClick={this.showHideConselho}  defaultChecked={this.state.bo_nao_possui_ps_conferencias} onChange={this.handleInputChange}/>
+                                    <input type="checkbox" className="custom-control-input" id="checkConselho" required onClick={this.showHideConselho}  defaultChecked={this.state.bo_nao_possui_ps_conselhos} onChange={this.bo_nao_possui_ps_conselhos}/>
                                     <label className="custom-control-label" htmlFor="checkConselho" >Não possui conselhos de políticas públicas</label>
+
+                                    <div className="alert alert-danger" style={{display: !this.state.showConselhoInfo ? 'none' : ''}}>
+                                        {this.state.msgEspacos} <br/>
+                                        <a type="button" className="btn-primary btn-xs float-right" onClick={() => this.updateNaoPossui('conselhos', 'btn')}>
+                                            Confirmar
+                                        </a>
+                                    </div>
                                     <div style={{marginTop: '10px', float: 'right'}}>
                                         <div style={{display: this.state.loading && this.state.type === 'conselhos' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                        <div style={{display: this.state.showMsg && this.state.type === 'conselhos' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                        <div style={{display: (this.state.showMsg && this.state.type === 'conselhos') && this.state.origin==='btn' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
                                             <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
                                             {this.state.msg}
                                         </div>
-                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('conselhos')}>
-                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
-                                        </button>
                                         <br/>
                                     </div>
                                 </div>
@@ -601,17 +619,22 @@ class Participacoes extends React.Component{
 
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
-                                    <input type="checkbox" className="custom-control-input" id="checkConferencia" required onClick={this.showHideConferencia}  defaultChecked={this.state.bo_nao_possui_ps_conselhos} onChange={this.bo_nao_possui_ps_conselhos}/>
+                                    <input type="checkbox" className="custom-control-input" id="checkConferencia" required onClick={this.showHideConferencia}  defaultChecked={this.state.bo_nao_possui_ps_conferencias} onChange={this.bo_nao_possui_ps_conselhos}/>
                                     <label className="custom-control-label" htmlFor="checkConferencia" >Não possui conferências de políticas públicas</label>
+
+                                    <div className="alert alert-danger" style={{display: !this.state.showConferenciaInfo ? 'none' : ''}}>
+                                        {this.state.msgEspacos} <br/>
+                                        <a type="button" className="btn-primary btn-xs float-right" onClick={() => this.updateNaoPossui('conferencias', 'btn')}>
+                                            Confirmar
+                                        </a>
+                                    </div>
+
                                     <div style={{marginTop: '10px', float: 'right'}}>
                                         <div style={{display: this.state.loading && this.state.type === 'conferencias' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                        <div style={{display: this.state.showMsg && this.state.type === 'conferencias' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                        <div style={{display: (this.state.showMsg && this.state.type === 'conferencias') && this.state.origin==='btn' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
                                             <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
                                             {this.state.msg}
                                         </div>
-                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('conferencias')}>
-                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
-                                        </button>
                                         <br/>
                                     </div>
                                 </div>
@@ -657,15 +680,21 @@ class Participacoes extends React.Component{
                                 <div className="custom-control custom-checkbox text-center">
                                     <input type="checkbox" className="custom-control-input" id="checkOutro" required onClick={this.showHideOutro}  defaultChecked={this.state.bo_nao_possui_ps_outros_espacos} onChange={this.bo_nao_possui_ps_outros_espacos}/>
                                     <label className="custom-control-label" htmlFor="checkOutro" >Não possui outros espaços de participação social</label>
+
+                                    <div className="alert alert-danger" style={{display: !this.state.showOutroInfo ? 'none' : ''}}>
+                                        {this.state.msgEspacos} <br/>
+                                        <a type="button" className="btn-primary btn-xs float-right" onClick={() => this.updateNaoPossui('outros', 'btn')}>
+                                            Confirmar
+                                        </a>
+                                    </div>
+
                                     <div style={{marginTop: '10px', float: 'right'}}>
+
                                         <div style={{display: this.state.loading && this.state.type === 'outros' ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                        <div style={{display: this.state.showMsg && this.state.type === 'outros' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
+                                        <div style={{display: (this.state.showMsg && this.state.type === 'outros') && this.state.origin==='btn' ? 'block' : 'none'}} className={'alert alert-'+(this.state.updateOk ? "success" : "danger")}>
                                             <i className={"far "+(this.state.updateOk ? "fa-check-circle" : "fa-times-circle")} />
                                             {this.state.msg}
                                         </div>
-                                        <button type="button" className="btn btn-success btn-xs" onClick={() => this.updateNaoPossui('outros')}>
-                                            <i className="fas fa-cloud-download-alt"/> Salvar "Não possui"
-                                        </button>
                                         <br/>
                                     </div>
                                 </div>

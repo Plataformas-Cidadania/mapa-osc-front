@@ -49,7 +49,6 @@ class FormParticipacaoConferencia extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log(props);
         let lastEditId = this.state.editId;
         if(this.state.action != props.action || this.state.editId != props.id){
             this.setState({action: props.action, editId: props.id}, function(){
@@ -73,7 +72,6 @@ class FormParticipacaoConferencia extends React.Component{
             },
             cache: false,
             success: function(data){
-                console.log(data);
                 this.setState({form: data}, function(){
                     //this.props.showHideForm();
                 });
@@ -104,7 +102,6 @@ class FormParticipacaoConferencia extends React.Component{
     }
 
     validate(){
-        console.log('---', this.state.form);
         let valid = true;
 
         let requireds = this.state.requireds;
@@ -119,7 +116,6 @@ class FormParticipacaoConferencia extends React.Component{
             }
         }
 
-        //console.log(requireds);
 
         this.setState({requireds: requireds});
         return valid;
@@ -159,11 +155,9 @@ class FormParticipacaoConferencia extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
-
                     this.props.list();
                     this.cleanForm();
-                    //this.props.showHideFormConferencia();
+
 
                     this.setState({conferencias: data.conferencias, loading: false})
                 }.bind(this),
@@ -177,21 +171,7 @@ class FormParticipacaoConferencia extends React.Component{
 
     }
 
-    getAge(dateString){
 
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))        {
-            age--;
-        }
-
-        console.log(age);
-
-        return age;
-
-    }
 
     listConferencia(){
         this.setState({loadingList: true});

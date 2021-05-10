@@ -44,7 +44,12 @@ class Participacoes extends React.Component {
             removeTipo: '',
 
             nao_possui: null,
-            type: ''
+            type: '',
+
+            msgEspacos: 'Caso queira continuar com essa solicitação todos os dados serão apagados, esse processo apenas será validado após a confirmação.',
+            showConselhoInfo: false,
+            showConferenciaInfo: false,
+            showOutroInfo: false
 
         };
 
@@ -87,39 +92,59 @@ class Participacoes extends React.Component {
     showHideFormConselho(action) {
         let showFormConselho = !this.state.showFormConselho;
         let actionFormConselho = action;
-        //console.log(showFormConselho);
+
         this.setState({ showFormConselho: showFormConselho, actionFormConselho: actionFormConselho });
     }
     showHideFormConferencia(action) {
         let showFormConferencia = !this.state.showFormConferencia;
         let actionFormConferencia = action;
-        //console.log(showFormConferencia);
+
         this.setState({ showFormConferencia: showFormConferencia, actionFormConferencia: actionFormConferencia });
     }
     showHideFormOutro(action) {
         let showFormOutro = !this.state.showFormOutro;
         let actionFormOutro = action;
-        //console.log(this.state.showFormOutro);
+
         this.setState({ showFormOutro: showFormOutro, actionFormOutro: actionFormOutro });
     }
 
-    showHideConselho() /*action*/{
+    showHideConselho() {
         let showConselho = !this.state.showConselho;
 
-        this.setState({ showConselho: showConselho /*actionConselho: actionConselho*/ });
+        if (showConselho === true) {
+            this.updateNaoPossui('conselhos');
+            this.setState({ showConselhoInfo: false });
+        } else {
+            this.setState({ showConselhoInfo: true });
+        }
+
+        this.setState({ showConselho: showConselho });
     }
 
-    showHideConferencia(action) {
+    showHideConferencia() {
         let showConferencia = !this.state.showConferencia;
-        //let actionConferencia = action;
-        this.setState({ showConferencia: showConferencia /*, actionConferencia: actionConferencia*/ });
+
+        if (showConferencia === true) {
+            this.updateNaoPossui('conferencias');
+            this.setState({ showConferenciaInfo: false });
+        } else {
+            this.setState({ showConferenciaInfo: true });
+        }
+
+        this.setState({ showConferencia: showConferencia });
     }
 
-    showHideOutro(action) {
+    showHideOutro() {
         let showOutro = !this.state.showOutro;
-        //let actionOutro = action;
-        //console.log('showOutro', this.state.showOutro);
-        this.setState({ showOutro: showOutro /*, actionOutro: actionOutro*/ });
+
+        if (showOutro === true) {
+            this.updateNaoPossui('outros');
+            this.setState({ showOutroInfo: false });
+        } else {
+            this.setState({ showOutroInfo: true });
+        }
+
+        this.setState({ showOutro: showOutro });
     }
 
     closeFormConselho() {
@@ -141,12 +166,9 @@ class Participacoes extends React.Component {
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/participacao_social/611720',
-            //url: getBaseUrl2 + 'osc/participacao_social/1288121',
-            //url: getBaseUrl2 + 'osc/participacao_social/785239',
             data: {},
             cache: false,
             success: function (data) {
-                //console.log(data);
                 this.setState({
                     conferencias: data.conferencias_politicas_publicas,
                     conselhos: data.conselhos_politicas_publicas,
@@ -165,19 +187,16 @@ class Participacoes extends React.Component {
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/611720',
-            //url: getBaseUrl2 + 'osc/1288121',
             data: {},
             cache: false,
             success: function (data) {
-                //console.log(data);
-
                 this.setState({
-                    bo_nao_possui_ps_conferencias: data.bo_nao_possui_ps_conferencias,
                     bo_nao_possui_ps_conselhos: data.bo_nao_possui_ps_conselhos,
+                    bo_nao_possui_ps_conferencias: data.bo_nao_possui_ps_conferencias,
                     bo_nao_possui_ps_outros_espacos: data.bo_nao_possui_ps_outros_espacos,
 
-                    showConferencia: !data.bo_nao_possui_ps_conferencias,
                     showConselho: !data.bo_nao_possui_ps_conselhos,
+                    showConferencia: !data.bo_nao_possui_ps_conferencias,
                     showOutro: !data.bo_nao_possui_ps_outros_espacos
                 });
             }.bind(this),
@@ -198,38 +217,45 @@ class Participacoes extends React.Component {
         return valid;
     }
 
-    updateNaoPossui(type) {
-        //e.preventDefault();
+    updateNaoPossui(type, origin) {
 
         if (!this.validate()) {
             return;
         }
-        let data = {
-            //id_osc: '789809',
-        };
-        if (type === 'conferencias') {
-            data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
+        let data = {};
+        if (origin === 'btn') {
+            if (type === 'conselhos') {
+                data.bo_nao_possui_ps_conselhos = this.state.showConselho ? false : true;
+            }
+            if (type === 'conferencias') {
+                data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? false : true;
+            }
+            if (type === 'outros') {
+                data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
+            }
+        } else {
+            if (type === 'conselhos') {
+                data.bo_nao_possui_ps_conselhos = this.state.showConselho ? true : false;
+            }
+            if (type === 'conferencias') {
+                data.bo_nao_possui_ps_conferencias = this.state.showConferencia ? true : false;
+            }
+            if (type === 'outros') {
+                data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? true : false;
+            }
         }
-        if (type === 'conselhos') {
-            data.bo_nao_possui_ps_conselhos = this.state.showConselho ? false : true;
-        }
-        if (type === 'outros') {
-            data.bo_nao_possui_ps_outros_espacos = this.state.showOutro ? false : true;
-        }
-
-        console.log('--->', this.state.showConferencia, this.state.showConselho, this.state.showOutro);
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
 
                 method: 'PUT',
-                url: getBaseUrl2 + 'osc/789809',
+                url: getBaseUrl2 + 'osc/611720',
 
                 data: data,
                 cache: false,
                 success: function (data) {
                     let msg = "Dados alterados com sucesso!";
-                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true, type: type });
+                    this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true, type: type, origin: origin });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -272,14 +298,12 @@ class Participacoes extends React.Component {
 
     callModal(id, type) {
         let modal = this.state.modal;
-        //console.log('id 1:', id);
         this.setState({
             modal: modal,
             editId: id,
             editTipo: type
         }, function () {
             $('#modalForm').modal('show');
-            //this.editOutro(id);
         });
     }
 
@@ -410,234 +434,227 @@ class Participacoes extends React.Component {
 
     render() {
 
-        console.log('-----');
-        console.log(this.state.bo_nao_possui_ps_conferencias);
-        console.log(this.state.bo_nao_possui_ps_conselhos);
-        console.log(this.state.bo_nao_possui_ps_outros_espacos);
-        console.log('-----');
         /////////////////////////////
         let modal = this.modal();
         let modalExcluir = this.modalExcluir();
+        let conselhos = null;
 
         ////////////////////////////
+        if (this.state.conselhos) {
+            conselhos = this.state.conselhos.map(function (item, index) {
 
-        let conselhos = this.state.conselhos.map(function (item, index) {
-
-            return React.createElement(
-                'div',
-                { className: 'col-md-6', style: { border: '0' }, key: "conselho_" + index },
-                React.createElement(
+                return React.createElement(
                     'div',
-                    { className: 'box-insert-g text-left' },
+                    { className: 'col-md-6', style: { border: '0' }, key: "conselho_" + index },
                     React.createElement(
                         'div',
-                        { className: 'box-insert-item box-insert-list' },
-                        React.createElement('br', null),
+                        { className: 'box-insert-g text-left' },
                         React.createElement(
                             'div',
-                            { className: 'float-right' },
+                            { className: 'box-insert-item box-insert-list' },
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                { className: 'float-right' },
+                                React.createElement(
+                                    'a',
+                                    { onClick: () => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho'), style: { cursor: 'pointer' } },
+                                    React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                                ),
+                                React.createElement(
+                                    'a',
+                                    { onClick: () => this.callModal(item.id_conselho, 'conselho'), style: { cursor: 'pointer' } },
+                                    React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
+                                )
+                            ),
+                            React.createElement('br', null),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Nome do Conselho:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.dc_conselho.tx_nome_conselho
+                                ),
+                                React.createElement('hr', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Periodicidade da Reuni\xE3o:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho
+                                ),
+                                React.createElement('hr', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Data de in\xEDcio de vig\xEAncia:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    formatDate(item.dt_data_inicio_conselho, 'pt-br')
+                                ),
+                                React.createElement('hr', null)
+                            ),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Data de fim de vig\xEAncia:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    formatDate(item.dt_data_fim_conselho, 'pt-br')
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement('br', null),
+                    modal
+                );
+            }.bind(this));
+        }
+
+        let conferencias = null;
+        if (this.state.conferencias) {
+            conferencias = this.state.conferencias.map(function (item, index) {
+                return React.createElement(
+                    'div',
+                    { className: 'col-md-6', style: { border: '0' }, key: "conferencia_" + index },
+                    React.createElement(
+                        'div',
+                        { className: 'box-insert-m' },
+                        React.createElement(
+                            'div',
+                            { className: 'box-insert-item box-insert-list' },
+                            React.createElement('br', null),
                             React.createElement(
                                 'a',
-                                { onClick: () => this.callModalExcluir(item.id_conselho, item.dc_conselho.tx_nome_conselho, 'conselho'), style: { cursor: 'pointer' } },
+                                { onClick: () => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
                                 React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                             ),
                             React.createElement(
                                 'a',
-                                { onClick: () => this.callModal(item.id_conselho, 'conselho'), style: { cursor: 'pointer' } },
+                                { onClick: () => this.callModal(item.id_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
                                 React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
-                            )
-                        ),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Nome do Conselho:'
                             ),
+                            React.createElement('br', null),
                             React.createElement(
-                                'p',
+                                'div',
                                 null,
-                                item.dc_conselho.tx_nome_conselho
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Nome da Confer\xEAncia:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.dc_conferencia.tx_nome_conferencia
+                                )
                             ),
-                            React.createElement('hr', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
+                            React.createElement('hr', null),
                             React.createElement(
-                                'h3',
+                                'div',
                                 null,
-                                'Periodicidade da Reuni\xE3o:'
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.dt_ano_realizacao.replace('-01-01', '')
+                                )
                             ),
+                            React.createElement('hr', null),
                             React.createElement(
-                                'p',
+                                'div',
                                 null,
-                                item.dc_periodicidade_reuniao_conselho.tx_nome_periodicidade_reuniao_conselho
-                            ),
-                            React.createElement('hr', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Data de in\xEDcio de vig\xEAncia:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                formatDate(item.dt_data_inicio_conselho, 'pt-br')
-                            ),
-                            React.createElement('hr', null)
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Data de fim de vig\xEAncia:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                formatDate(item.dt_data_fim_conselho, 'pt-br')
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Forma de participa\xE7\xE3o na confer\xEAncia:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia
+                                )
                             )
                         )
-                    )
-                ),
-                React.createElement('br', null),
-                modal
-            );
-        }.bind(this));
+                    ),
+                    React.createElement('br', null),
+                    modalExcluir
+                );
+            }.bind(this));
+        }
 
-        let conferencias = this.state.conferencias.map(function (item, index) {
-
-            let hr = null;
-            if (index < this.state.conferencias.length - 1) {
-                hr = React.createElement('hr', null);
-            }
-
-            return React.createElement(
-                'div',
-                { className: 'col-md-6', style: { border: '0' }, key: "conferencia_" + index },
-                React.createElement(
+        let outros = null;
+        if (this.state.outros) {
+            outros = this.state.outros.map(function (item, index) {
+                return React.createElement(
                     'div',
-                    { className: 'box-insert-m' },
+                    { className: 'col-md-6', style: { border: '0' }, key: "outros_" + index },
                     React.createElement(
                         'div',
-                        { className: 'box-insert-item box-insert-list' },
-                        React.createElement('br', null),
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.callModalExcluir(item.id_conferencia, item.dc_conferencia.tx_nome_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
-                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
-                        ),
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.callModal(item.id_conferencia, 'conferencia'), style: { cursor: 'pointer' } },
-                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
-                        ),
-                        React.createElement('br', null),
+                        { className: 'box-insert-p' },
                         React.createElement(
                             'div',
-                            null,
+                            { className: 'box-insert-item box-insert-list' },
+                            React.createElement('br', null),
                             React.createElement(
-                                'h3',
-                                null,
-                                'Nome da Confer\xEAncia:'
+                                'a',
+                                { onClick: () => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
+                                React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
                             ),
                             React.createElement(
-                                'p',
-                                null,
-                                item.dc_conferencia.tx_nome_conferencia
-                            )
-                        ),
-                        React.createElement('hr', null),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Ano de realiza\xE7\xE3o da confer\xEAncia:'
+                                'a',
+                                { onClick: () => this.callModal(item.id_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
+                                React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
                             ),
+                            React.createElement('br', null),
                             React.createElement(
-                                'p',
+                                'div',
                                 null,
-                                item.dt_ano_realizacao.replace('-01-01', '')
-                            )
-                        ),
-                        React.createElement('hr', null),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Forma de participa\xE7\xE3o na confer\xEAncia:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                item.dc_forma_participacao_conferencia.tx_nome_forma_participacao_conferencia
+                                React.createElement(
+                                    'h3',
+                                    null,
+                                    'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    item.tx_nome_participacao_social_outra
+                                )
                             )
                         )
-                    )
-                ),
-                React.createElement('br', null),
-                modalExcluir
-            );
-        }.bind(this));
-
-        let outros = this.state.outros.map(function (item, index) {
-
-            return React.createElement(
-                'div',
-                { className: 'col-md-6', style: { border: '0' }, key: "outros_" + index },
-                React.createElement(
-                    'div',
-                    { className: 'box-insert-p' },
-                    React.createElement(
-                        'div',
-                        { className: 'box-insert-item box-insert-list' },
-                        React.createElement('br', null),
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.callModalExcluir(item.id_participacao_social_outra, item.tx_nome_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
-                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
-                        ),
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.callModal(item.id_participacao_social_outra, 'outra'), style: { cursor: 'pointer' } },
-                            React.createElement('i', { className: 'far fa-edit text-primary float-right', style: { marginRight: '20px' } })
-                        ),
-                        React.createElement('br', null),
-                        React.createElement(
-                            'div',
-                            null,
-                            React.createElement(
-                                'h3',
-                                null,
-                                'Atua\xE7\xE3o em F\xF3runs, Articula\xE7\xF5es, Coletivos e Redes de OSCs:'
-                            ),
-                            React.createElement(
-                                'p',
-                                null,
-                                item.tx_nome_participacao_social_outra
-                            )
-                        )
-                    )
-                ),
-                React.createElement('br', null)
-            );
-        }.bind(this));
-
-        //console.log('bo_nao_possui_ps_conferencias', this.state.bo_nao_possui_ps_conferencias);
-        //console.log('showConselho', this.state.showConselho);
+                    ),
+                    React.createElement('br', null)
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',
@@ -678,11 +695,23 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'custom-control custom-checkbox text-center' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho, defaultChecked: this.state.bo_nao_possui_ps_conferencias, onChange: this.handleInputChange }),
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConselho', required: true, onClick: this.showHideConselho, defaultChecked: this.state.bo_nao_possui_ps_conselhos, onChange: this.bo_nao_possui_ps_conselhos }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConselho' },
                                     'N\xE3o possui conselhos de pol\xEDticas p\xFAblicas'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'alert alert-danger', style: { display: !this.state.showConselhoInfo ? 'none' : '' } },
+                                    this.state.msgEspacos,
+                                    ' ',
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'a',
+                                        { type: 'button', className: 'btn-primary btn-xs float-right', onClick: () => this.updateNaoPossui('conselhos', 'btn') },
+                                        'Confirmar'
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
@@ -698,15 +727,9 @@ class Participacoes extends React.Component {
                                     ),
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.showMsg && this.state.type === 'conselhos' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        { style: { display: this.state.showMsg && this.state.type === 'conselhos' && this.state.origin === 'btn' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
                                         React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
                                         this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('conselhos') },
-                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
-                                        ' Salvar "N\xE3o possui"'
                                     ),
                                     React.createElement('br', null)
                                 )
@@ -790,11 +813,23 @@ class Participacoes extends React.Component {
                             React.createElement(
                                 'div',
                                 { className: 'custom-control custom-checkbox text-center' },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia, defaultChecked: this.state.bo_nao_possui_ps_conselhos, onChange: this.bo_nao_possui_ps_conselhos }),
+                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'checkConferencia', required: true, onClick: this.showHideConferencia, defaultChecked: this.state.bo_nao_possui_ps_conferencias, onChange: this.bo_nao_possui_ps_conselhos }),
                                 React.createElement(
                                     'label',
                                     { className: 'custom-control-label', htmlFor: 'checkConferencia' },
                                     'N\xE3o possui confer\xEAncias de pol\xEDticas p\xFAblicas'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'alert alert-danger', style: { display: !this.state.showConferenciaInfo ? 'none' : '' } },
+                                    this.state.msgEspacos,
+                                    ' ',
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'a',
+                                        { type: 'button', className: 'btn-primary btn-xs float-right', onClick: () => this.updateNaoPossui('conferencias', 'btn') },
+                                        'Confirmar'
+                                    )
                                 ),
                                 React.createElement(
                                     'div',
@@ -810,15 +845,9 @@ class Participacoes extends React.Component {
                                     ),
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.showMsg && this.state.type === 'conferencias' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        { style: { display: this.state.showMsg && this.state.type === 'conferencias' && this.state.origin === 'btn' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
                                         React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
                                         this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('conferencias') },
-                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
-                                        ' Salvar "N\xE3o possui"'
                                     ),
                                     React.createElement('br', null)
                                 )
@@ -909,6 +938,18 @@ class Participacoes extends React.Component {
                                 ),
                                 React.createElement(
                                     'div',
+                                    { className: 'alert alert-danger', style: { display: !this.state.showOutroInfo ? 'none' : '' } },
+                                    this.state.msgEspacos,
+                                    ' ',
+                                    React.createElement('br', null),
+                                    React.createElement(
+                                        'a',
+                                        { type: 'button', className: 'btn-primary btn-xs float-right', onClick: () => this.updateNaoPossui('outros', 'btn') },
+                                        'Confirmar'
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
                                     { style: { marginTop: '10px', float: 'right' } },
                                     React.createElement(
                                         'div',
@@ -921,15 +962,9 @@ class Participacoes extends React.Component {
                                     ),
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.showMsg && this.state.type === 'outros' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
+                                        { style: { display: this.state.showMsg && this.state.type === 'outros' && this.state.origin === 'btn' ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
                                         React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
                                         this.state.msg
-                                    ),
-                                    React.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-success btn-xs', onClick: () => this.updateNaoPossui('outros') },
-                                        React.createElement('i', { className: 'fas fa-cloud-download-alt' }),
-                                        ' Salvar "N\xE3o possui"'
                                     ),
                                     React.createElement('br', null)
                                 )
