@@ -1,49 +1,41 @@
-cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
+cmsApp.controller('midiaCtrl', ['$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
 
-    $scope.categorias = [];
+    $scope.midias = [];
     $scope.currentPage = 1;
     $scope.lastPage = 0;
     $scope.totalItens = 0;
     $scope.maxSize = 5;
     $scope.itensPerPage = 10;
     $scope.dadoPesquisa = '';
-    $scope.campos = "id, titulo, imagem";
+    $scope.campos = "id, titulo, imagem, status";
     $scope.campoPesquisa = "titulo";
     $scope.processandoListagem = false;
     $scope.processandoExcluir = false;
     $scope.ordem = "titulo";
     $scope.sentidoOrdem = "asc";
-    $scope.midia_id = 0;
-
     var $listar = false;//para impedir de carregar o conteúdo dos watchs no carregamento da página.
 
     $scope.$watch('currentPage', function(){
         if($listar){
-            listarCategorias();
+            listarMidias();
         }
     });
     $scope.$watch('itensPerPage', function(){
         if($listar){
-            listarCategorias();
+            listarMidias();
         }
     });
-    $scope.$watch('dadoCategoria', function(){
+    $scope.$watch('dadoPesquisa', function(){
         if($listar){
-            listarCategorias();
+            listarMidias();
         }
     });
-    $scope.midia_id = function(midia_id){
-        $scope.midia_id = midia_id;
-        listarCategorias();
-    };
 
-    var listarCategorias = function(){
 
-        console.log('-->', $scope.midia_id);
-
+    var listarMidias = function(){
         $scope.processandoListagem = true;
         $http({
-            url: '/cms/listar-categorias/',
+            url: 'cms/listar-midias',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
@@ -52,11 +44,10 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
                 campos: $scope.campos,
                 campoPesquisa: $scope.campoPesquisa,
                 ordem: $scope.ordem,
-                midia_id: $scope.midia_id,
                 sentido: $scope.sentidoOrdem
             }
         }).success(function(data, status, headers, config){
-            $scope.categorias = data.data;
+            $scope.midias = data.data;
             $scope.lastPage = data.last_page;
             $scope.totalItens = data.total;
             $scope.primeiroDaPagina = data.from;
@@ -70,28 +61,6 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
         });
     };
 
-    /*$scope.loadMore = function() {
-     $scope.currentPage +=1;
-     $http({
-     url: '/api/categorias/'+$scope.itensPerPage,
-     method: 'GET',
-     params: {page:  $scope.currentPage}
-     }).success(function (data, status, headers, config) {
-     $scope.lastPage = data.last_page;
-     $scope.totalItens = data.total;
-
-     console.log("total: "+$scope.totalItens);
-     console.log("lastpage: "+$scope.lastPage);
-     console.log("currentpage: "+$scope.currentPage);
-
-     $scope.categorias = data.data;
-
-     //$scope.categorias = $scope.categorias.concat(data.data);
-
-     });
-     };*/
-
-
     $scope.ordernarPor = function(ordem){
         $scope.ordem = ordem;
         //console.log($scope.ordem);
@@ -101,7 +70,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
             $scope.sentidoOrdem = "asc";
         }
 
-        listarCategorias();
+        listarMidias();
     };
 
     $scope.validar = function(){
@@ -109,28 +78,25 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
     };
 
 
-    listarCategorias();
+    listarMidias();
 
     //INSERIR/////////////////////////////
 
     $scope.tinymceOptions = tinymceOptions;
-
     $scope.mostrarForm = false;
-
     $scope.processandoInserir = false;
 
-    $scope.inserir = function (file){
+    $scope.inserir = function (file, arquivo){
 
         $scope.mensagemInserir = "";
 
-        if(file==null){
+        if(file==null && arquivo==null){
             $scope.processandoInserir = true;
 
-            //console.log($scope.categoria);
-            $http.post("/cms/inserir-categoria", {categoria: $scope.categoria, group_categoria: $scope.group_categoria}).success(function (data){
-                console.log(data);
-                listarCategorias();
-                //delete $scope.categoria;//limpa o form
+            //console.log($scope.midia);
+            $http.post("cms/inserir-midia", {midia: $scope.midia}).success(function (data){
+                 listarMidias();
+                 delete $scope.midia;//limpa o form
                 $scope.mensagemInserir =  "Gravado com sucesso!";
                 $scope.processandoInserir = false;
              }).error(function(data){
@@ -138,27 +104,30 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
                 $scope.processandoInserir = false;
              });
         }else{
-            file.upload = Upload.upload({
-                url: '/cms/inserir-categoria',
-                data: {categoria: $scope.categoria, group_categoria: $scope.group_categoria, file: file},
-            });
 
-            file.upload.then(function (response) {
+
+            Upload.upload({
+                url: 'cms/inserir-midia',
+                data: {midia: $scope.midia, file: file, arquivo: arquivo},
+            }).then(function (response) {
                 $timeout(function () {
-                    file.result = response.data;
+                    $scope.result = response.data;
                 });
-                delete $scope.categoria;//limpa o form
+                console.log(response.data);
+                delete $scope.midia;//limpa o form
                 $scope.picFile = null;//limpa o file
-                listarCategorias();
+                $scope.fileArquivo = null;//limpa o file
+                listarMidias();
                 $scope.mensagemInserir =  "Gravado com sucesso!";
             }, function (response) {
+                console.log(response.data);
                 if (response.status > 0){
                     $scope.errorMsg = response.status + ': ' + response.data;
                 }
             }, function (evt) {
                 //console.log(evt);
                 // Math.min is to fix IE which reports 200% sometimes
-                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                $scope.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         }
 
@@ -190,18 +159,40 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
     $scope.excluir = function(id){
         $scope.processandoExcluir = true;
         $http({
-            url: '/cms/excluir-categoria/'+id,
+            url: 'cms/excluir-midia/'+id,
             method: 'GET'
         }).success(function(data, status, headers, config){
             console.log(data);
             $scope.processandoExcluir = false;
             $scope.excluido = true;
             $scope.mensagemExcluido = "Excluído com sucesso!";
-            listarCategorias();
+            listarMidias();
         }).error(function(data){
             $scope.message = "Ocorreu um erro: "+data;
             $scope.processandoExcluir = false;
             $scope.mensagemExcluido = "Erro ao tentar excluir!";
+        });
+    };
+
+    $scope.status = function(id){
+        //console.log(id);
+        $scope.mensagemStatus = '';
+        $scope.idStatus = '';
+        $scope.processandoStatus = true;
+        $http({
+            url: 'cms/status-midia/'+id,
+            method: 'GET'
+        }).success(function(data, status, headers, config){
+            //console.log(data);
+            $scope.processandoStatus = false;
+            //$scope.excluido = true;
+            $scope.mensagemStatus = 'color-success';
+            $scope.idStatus = id;
+            listarMidias();
+        }).error(function(data){
+            $scope.message = "Ocorreu um erro: "+data;
+            $scope.processandoStatus = false;
+            $scope.mensagemStatus = "Erro ao tentar status!";
         });
     };
     //////////////////////////////////

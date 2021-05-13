@@ -13,6 +13,8 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
     $scope.processandoExcluir = false;
     $scope.ordem = "titulo";
     $scope.sentidoOrdem = "asc";
+    $scope.midia_id = 0;
+
     var $listar = false;//para impedir de carregar o conteúdo dos watchs no carregamento da página.
 
     $scope.$watch('currentPage', function(){
@@ -30,11 +32,18 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
             listarCategorias();
         }
     });
+    $scope.midia_id = function(midia_id){
+        $scope.midia_id = midia_id;
+        listarCategorias();
+    };
 
     var listarCategorias = function(){
+
+        console.log('-->', $scope.midia_id);
+
         $scope.processandoListagem = true;
         $http({
-            url: 'cms/listar-categorias',
+            url: '/cms/listar-categorias/',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
@@ -43,6 +52,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
                 campos: $scope.campos,
                 campoPesquisa: $scope.campoPesquisa,
                 ordem: $scope.ordem,
+                midia_id: $scope.midia_id,
                 sentido: $scope.sentidoOrdem
             }
         }).success(function(data, status, headers, config){
@@ -117,7 +127,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
             $scope.processandoInserir = true;
 
             //console.log($scope.categoria);
-            $http.post("cms/inserir-categoria", {categoria: $scope.categoria, group_categoria: $scope.group_categoria}).success(function (data){
+            $http.post("/cms/inserir-categoria", {categoria: $scope.categoria, group_categoria: $scope.group_categoria}).success(function (data){
                 console.log(data);
                 listarCategorias();
                 //delete $scope.categoria;//limpa o form
@@ -129,7 +139,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
              });
         }else{
             file.upload = Upload.upload({
-                url: 'cms/inserir-categoria',
+                url: '/cms/inserir-categoria',
                 data: {categoria: $scope.categoria, group_categoria: $scope.group_categoria, file: file},
             });
 
@@ -180,7 +190,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
     $scope.excluir = function(id){
         $scope.processandoExcluir = true;
         $http({
-            url: 'cms/excluir-categoria/'+id,
+            url: '/cms/excluir-categoria/'+id,
             method: 'GET'
         }).success(function(data, status, headers, config){
             console.log(data);

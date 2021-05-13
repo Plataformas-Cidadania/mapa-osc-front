@@ -13,7 +13,7 @@ class Search extends React.Component {
         return React.createElement(
             "div",
             { className: "input-icon" },
-            React.createElement("input", { type: "text", className: "form-control", placeholder: "Busque um artigo...", onChange: this.handleSearch }),
+            React.createElement("input", { type: "text", className: "form-control", placeholder: "Busque...", onChange: this.handleSearch }),
             React.createElement("i", { className: "fas fa-search" })
         );
     }

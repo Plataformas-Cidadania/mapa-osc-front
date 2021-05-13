@@ -23,7 +23,7 @@ class ArchivesFilter extends React.Component{
     load(){
         $.ajax({
             method:'POST',
-            url: 'archives',
+            url: '/archives',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

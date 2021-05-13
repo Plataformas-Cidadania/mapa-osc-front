@@ -20,7 +20,7 @@ class CategoriaController extends Controller
     {
         $this->categoria = new \App\Categoria;
         $this->campos = [
-            'imagem', 'titulo', 'origin', 'cmsuser_id',
+            'imagem', 'titulo', 'origin', 'cmsuser_id', 'midia_id',
         ];
         $this->pathImagem = public_path().'/imagens/categorias';
         $this->sizesImagem = [
@@ -32,21 +32,17 @@ class CategoriaController extends Controller
         $this->widthOriginal = true;
     }
 
-    function index()
+    function index($midia_id)
     {
-
+        $midia = \App\Midia::where('id', $midia_id)->first();
         $categorias = \App\Categoria::all();
 
 
-        return view('cms::categoria.listar', ['categorias' => $categorias]);
+        return view('cms::categoria.listar', ['midia_id' => $midia->id, 'categorias' => $categorias]);
     }
 
     public function listar(Request $request)
     {
-
-        //Log::info('CAMPOS: '.$request->campos);
-
-        //Auth::loginUsingId(2);
 
         $campos = explode(", ", $request->campos);
 
@@ -54,6 +50,7 @@ class CategoriaController extends Controller
             ->select($campos)
             ->where([
                 [$request->campoPesquisa, 'like', "%$request->dadoPesquisa%"],
+                ['midia_id', $request->midia_id],
             ])
             ->orderBy($request->ordem, $request->sentido)
             ->paginate($request->itensPorPagina);

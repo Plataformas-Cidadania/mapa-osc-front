@@ -9,33 +9,36 @@ use Mockery\Exception;
 
 class PostController extends Controller
 {
-    //protected $tbName;
 
-    public function __construct($tbName='publicacoes'){
-        //parent::__construct($tbName);
-        //Log::info($tbName);
-        //$this->obj = new \App\Publication();
-        if($tbName=='publicacoes'){
-            $this->obj = new \App\Publication();
-        }else if($tbName=='noticias'){
-            $this->obj = new \App\Noticia();
-        }else if($tbName=='analizes'){
-            $this->obj = new \App\Analise();
-        }
 
-    }
-
-    public function post($type){
-        new PostController($type);
-        return view('post.list', ['type' => $type]);
+    public function post($midia_id=0){
+        return view('post.list', ['midia_id' => $midia_id]);
     }
 
     public function details($id, $titulo = null){
-        return view('ad.details', ['id' => $id]);
+        $detail = \App\Post::find($id);
+
+        $lasts = \App\Post::
+            where('id', '!=', $detail->id)
+            ->orderBy('id', 'desc')
+            ->take(4)
+            ->get();
+
+        $members = \App\Integrante::where('conteudo', 1)
+            ->select('integrantes.titulo', 'integrantes.imagem')
+            ->join('integrantes_posts', 'integrantes_posts.integrante_id', 'integrantes.id')
+            ->join('posts', 'integrantes_posts.post_id', 'posts.id')
+            ->where('posts.id', '!=', $id)
+            ->get();
+
+        return view('post.detail', [
+            'detail' => $detail,
+            'lasts' => $lasts,
+            'members' => $members
+        ]);
     }
 
     public function listing($parameters = null){
-
 
         if($parameters!=null){
             $array = explode('=', $parameters);
@@ -53,8 +56,10 @@ class PostController extends Controller
                 categorias.titulo,
                 count(categorias.id) as qtd
             "))
-            ->join('noticias', 'categorias.id', '=', 'noticias.categoria_id')
-            ->where('noticias.titulo', 'ilike', $request->search.'%')
+            ->join('midias', 'midias.id', '=', 'categorias.midia_id')
+            ->join('posts', 'categorias.id', '=', 'posts.categoria_id')
+            ->where('posts.titulo', 'ilike', $request->search.'%')
+            ->where('midias.id', $request->midia_id)
             ->groupBy('categorias.id', 'categorias.titulo')
             ->distinct()
             ->get();
@@ -66,17 +71,31 @@ class PostController extends Controller
 
         $members = \App\Integrante::
             select(
+            /*DB::Raw("integrantes.*,
+                integrantes.id,
+                integrantes.titulo,
+                count(integrantes.id) as qtd,
+                max(integrantes.imagem) as imagem,
+                midias.id as midia_id,
+                categorias.id as categorias_id
+            ")*/
             DB::Raw("
-                id,
-                titulo,
-                count(id) as qtd
+                integrantes.id,
+                integrantes.titulo,
+                count(integrantes.id) as qtd,
+                max(integrantes.imagem) as imagem
             ")
         )
+            ->join('integrantes_posts', 'integrantes_posts.integrante_id', 'integrantes.id')
+            ->join('posts', 'integrantes_posts.post_id', 'posts.id')
+            ->join('categorias', 'posts.categoria_id', 'categorias.id')
+            ->join('midias', 'categorias.midia_id', 'midias.id')
             ->where([
-                ['titulo', 'ilike', $request->search.'%'],
-                ['conteudo', 1]
+                ['integrantes.titulo', 'ilike', $request->search.'%'],
+                ['integrantes.conteudo', 1]
             ])
-            ->groupBy('id', 'titulo')
+            ->where('midias.id', $request->midia_id)
+            ->groupBy('integrantes.id', 'integrantes.titulo', 'midias.id', 'categorias.id')
             ->get();
 
         return $members;
@@ -84,9 +103,8 @@ class PostController extends Controller
 
     public function archives(Request $request){
 
-
-        $archives = $this->obj
-            ->select(
+        $archives = \App\Post::
+            select(
                 DB::Raw("
                 to_char(data, 'YYYY-MM') as date_menu,
                 count(data) as qtd,
@@ -102,7 +120,6 @@ class PostController extends Controller
     }
 
     public function getList(Request $request){
-
 
         $search = '';
         if (is_array($request->filters) && array_key_exists('search', $request->filters)) {
@@ -124,8 +141,7 @@ class PostController extends Controller
             $archives = $request->filters['archives'];
         }
 
-        $total = $this->obj
-            ->select('*')
+        $total = \App\Post::select('*')
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('categoria_id', $categories);
             })
@@ -133,19 +149,20 @@ class PostController extends Controller
 
         $total = count($total);
 
-        $result = $this->obj
-            ->select(
+        $result = \App\Post::select(
                 DB::Raw("
-                *,
-                to_char(data, 'HH12:MI:SS') as hour,
-                to_char(data, 'DD') as date,
-                to_char(data, 'TMMonth') as month,
-                to_char(data, 'YYYY') as year,
-                titulo,
-                resumida,
-                descricao
+                posts.*,
+                to_char(posts.data, 'HH12:MI:SS') as hour,
+                to_char(posts.data, 'DD') as date,
+                to_char(posts.data, 'TMMonth') as month,
+                to_char(posts.data, 'YYYY') as year,
+                posts.titulo,
+                posts.resumida,
+                posts.descricao
                 ")
             )
+            ->join('categorias', 'categorias.id', 'posts.categoria_id')
+            ->join('midias', 'midias.id', 'categorias.midia_id')
             ->when(count($categories) > 0, function($query) use ($categories){
                 return $query->whereIn('categoria_id', $categories);
             })
@@ -153,17 +170,16 @@ class PostController extends Controller
                 return $query->whereIn('member_id', $members);
             })
             ->when(count($archives) > 0, function($query) use ($archives){
-                return $query->whereIn(DB::Raw("to_char(date, 'YYYY-MM')"), $archives);
+                return $query->whereIn(DB::Raw("to_char(posts.date, 'YYYY-MM')"), $archives);
             })
-            ->where('titulo', 'ilike', '%'.$search.'%')
+            ->where('posts.titulo', 'ilike', '%'.$search.'%')
+            ->where('posts.titulo', 'ilike', '%'.$search.'%')
+            ->where('midias.id', $request->midia_id)
             ->orderby($request->order, $request->directionOrder)
-            ->distinct('id')
+            ->distinct('posts.id')
             ->take($request->qtdItemsLoad)
             ->get();
 
-        /*foreach ($result as $item) {
-            $item->qtd_comments = \App\PubComment::where('origin_id', $item->id)->count();
-        }*/
 
         $ads['total'] = $total;
         $ads['data'] = $result;
@@ -172,6 +188,7 @@ class PostController extends Controller
         foreach($ads['data'] as $index => $ad){
             $categories = DB::table('categorias')
                 ->select('categorias.*')
+                ->join('midias', 'midias.id', 'categorias.midia_id')
                 ->where('categorias.id', $ad->id)
                 ->get();
             $ads['data'][$index]->categories = $categories;

@@ -72,7 +72,9 @@ Route::get('localidade/{id}', 'LocalidadeController@localidade');
 Route::post('contact', 'ContactController@send');
 Route::post('comment', 'CommentController@send');
 
-Route::get('posts/{type}', 'PostController@post');
+Route::get('posts/{midia}', 'PostController@post');
+Route::get('posts/{midia_id}/{midia}', 'PostController@post');
+Route::get('post/{id}/{titulo}', 'PostController@details');
 
 Route::post('/list-posts', 'PostController@getList');
 Route::post('/categories', 'PostController@categories');

@@ -21,7 +21,7 @@ class Filters extends React.Component {
     load() {
         $.ajax({
             method: 'GET',
-            url: 'filters',
+            url: '/filters',
             data: {
                 filters: {
                     teste: 1

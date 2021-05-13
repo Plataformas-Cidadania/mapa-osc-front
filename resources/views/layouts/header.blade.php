@@ -1,3 +1,4 @@
+<?php $midias = DB::table('midias')->orderBy('titulo')->get();?>
 <div class="progress">
     <div  id="progress" class="progress-bar bg-success" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -143,9 +144,12 @@
                                 </li>
                                 <li role="presentation"><a href="" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
                                     <ul class="noJS menu-desk-sub">
-                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
+                                        @foreach($midias as $midia)
+                                            <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
+                                        @endforeach
+<!--                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
                                         <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
-                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>
+                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>-->
                                         <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>

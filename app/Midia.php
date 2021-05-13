@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class Midia extends Model
 {
     protected $fillable = [
-        'imagem', 'titulo', 'origin', 'midia_id', 'cmsuser_id',
+        'imagem', 'titulo', 'arquivo', 'cmsuser_id',
     ];
 }

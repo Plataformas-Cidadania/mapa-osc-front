@@ -12,7 +12,7 @@ class Search extends React.Component {
     render(){
         return (
             <div className="input-icon">
-                <input type="text" className="form-control" placeholder="Busque um artigo..." onChange={this.handleSearch} />
+                <input type="text" className="form-control" placeholder="Busque..." onChange={this.handleSearch} />
                 <i className="fas fa-search"/>
             </div>
             );

@@ -1,7 +1,7 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script(config('app.url').'assets-cms/js/controllers/alterarCategoriaCtrl.js') !!}
+    {!! Html::script('assets-cms/js/controllers/alterarCategoriaCtrl.js') !!}
     <div ng-controller="alterarCategoriaCtrl">
         <div class="box-padrao">
             <h1><a href="../categorias"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;&nbsp;Categoria</h1>

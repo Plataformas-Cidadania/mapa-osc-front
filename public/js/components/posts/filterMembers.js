@@ -18,20 +18,20 @@ class MembersFilter extends React.Component {
 
     componentDidMount() {
         //this.setState({membersSelected: this.props.membersUrl});
-
         this.load();
     }
 
     load() {
         $.ajax({
             method: 'POST',
-            url: 'members',
+            url: '/members',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
                 city: this.props.city,
-                search: this.state.search
+                search: this.state.search,
+                midia_id: midia_id
             },
             cache: false,
             success: function (data) {
@@ -59,6 +59,7 @@ class MembersFilter extends React.Component {
                 //console.log('membersSelected', membersSelected);
                 //console.log('membersUrl', this.props.membersUrl);
                 ////////////////////////////////////////////////////
+                console.log('data', data);
 
                 this.setState({ members: data, membersSelected: membersSelected, loading: false });
                 //this.setState({loading: false, ads:data})
@@ -142,7 +143,7 @@ class MembersFilter extends React.Component {
                     'div',
                     { key: 'memb_' + item.id, className: 'list-user', style: { cursor: 'pointer', color: color },
                         onClick: () => this.addMember(item) },
-                    React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
+                    React.createElement('img', { src: "imagens/integrantes/" + item.imagem, alt: '',
                         className: 'rounded-circle float-left', width: '40' }),
                     React.createElement(
                         'h4',
@@ -184,7 +185,7 @@ class MembersFilter extends React.Component {
                     { key: 'memb_' + item.id, className: 'list-user',
                         style: { cursor: 'pointer', color: color, display: this.state.showOtherItems ? '' : 'none' },
                         onClick: () => this.addMember(item) },
-                    React.createElement('img', { src: 'http://www.jardindemeriem.com/images/temoin/2.jpg', alt: '',
+                    React.createElement('img', { src: "imagens/integrantes/" + item.imagem, alt: '',
                         className: 'rounded-circle float-left', width: '40' }),
                     React.createElement(
                         'h4',

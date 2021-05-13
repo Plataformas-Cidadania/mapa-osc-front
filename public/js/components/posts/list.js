@@ -55,9 +55,11 @@ class List extends React.Component {
 
     load() {
 
+        console.log('midia_id', midia_id);
+
         $.ajax({
             method: 'POST',
-            url: 'list-posts',
+            url: '/list-posts',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -71,7 +73,8 @@ class List extends React.Component {
                 },
                 order: this.state.order,
                 directionOrder: this.state.directionOrder,
-                qtdItemsLoad: this.state.qtdItemsLoad
+                qtdItemsLoad: this.state.qtdItemsLoad,
+                midia_id: midia_id
             },
             cache: false,
             success: function (ads) {
@@ -178,9 +181,9 @@ class List extends React.Component {
                                     <h2 data-message="{{$list->title}}" tabIndex="0">{item.title}</h2>
                                     <p data-message="{{$list->tease}}" tabIndex="0">{item.teaser}</p>
                                     <h4 className="btn-plus">Continue lendo</h4>
-                                      </div>
+                                   </div>
                                 <div className="col-md-12"><hr/></div>
-                              </div>
+                             </div>
                         </a>
                     </div>*/
                     /*OPCAO 2 UTILIZAR NA TROCA*/
@@ -189,14 +192,18 @@ class List extends React.Component {
                         { key: "ads_" + item.id },
                         React.createElement(
                             'a',
-                            { href: "/artigo/" + item.id + "/" + cleanReplace(item.titulo) },
+                            { href: "/post/" + item.id + "/" + cleanReplace(item.titulo) },
                             React.createElement(
                                 'div',
                                 null,
                                 React.createElement('br', null),
-                                React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: item.titulo, title: item.titulo, src: "/imagens/posts/" + item.image, 'data-holder-rendered': 'true', width: '100%' }),
-                                React.createElement('br', null),
-                                React.createElement('br', null),
+                                React.createElement(
+                                    'div',
+                                    { style: { display: item.imagem == '' ? 'none' : '' } },
+                                    React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: item.titulo, title: item.titulo, src: "/imagens/posts/" + item.imagem, 'data-holder-rendered': 'true', width: '100%' }),
+                                    React.createElement('br', null),
+                                    React.createElement('br', null)
+                                ),
                                 React.createElement(
                                     'div',
                                     { className: 'row' },

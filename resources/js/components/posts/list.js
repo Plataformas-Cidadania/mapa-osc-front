@@ -62,11 +62,11 @@ class List extends React.Component{
 
     load(){
 
-
+        console.log('midia_id', midia_id);
 
         $.ajax({
             method:'POST',
-            url: 'list-posts',
+            url: '/list-posts',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -81,6 +81,7 @@ class List extends React.Component{
                 order: this.state.order,
                 directionOrder: this.state.directionOrder,
                 qtdItemsLoad: this.state.qtdItemsLoad,
+                midia_id: midia_id,
             },
             cache: false,
             success: function(ads) {
@@ -198,11 +199,13 @@ class List extends React.Component{
                     </div>*/
                      /*OPCAO 2 UTILIZAR NA TROCA*/
                     <div key={"ads_"+item.id}>
-                        <a href={"/artigo/"+item.id+"/"+cleanReplace(item.titulo)}>
+                        <a href={"/post/"+item.id+"/"+cleanReplace(item.titulo)}>
                             <div>
                                 <br/>
-                                <img data-src="holder.js/200x200" className="img-fluid" alt={item.titulo} title={item.titulo} src={"/imagens/posts/"+item.image} data-holder-rendered="true" width="100%"/>
-                                <br/><br/>
+                                <div style={{display: item.imagem == '' ? 'none' : ''}}>
+                                    <img data-src="holder.js/200x200" className="img-fluid" alt={item.titulo} title={item.titulo} src={"/imagens/posts/"+item.imagem} data-holder-rendered="true" width="100%"/>
+                                    <br/><br/>
+                                </div>
                                 <div className="row">
                                     <div className="col-md-6 item-calendar">
                                         <time className="item-calendar"><i
@@ -223,13 +226,8 @@ class List extends React.Component{
             }.bind(this));
         }
 
-
-
-
         return(
             <div>
-
-
                 <div className="container">
 
                     <div className="row">

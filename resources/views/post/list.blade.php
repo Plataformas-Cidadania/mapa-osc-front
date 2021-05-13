@@ -5,11 +5,11 @@
 @section('image', '')
 @section('content')
 
-
+    <?php $midia = DB::table('midias')->where('id', $midia_id)->first();?>
 
     <script>
             filtros = null;
-            type = '{{$type}}';
+            midia_id = '{{$midia_id}}';
     </script>
 
     <div class="bg-lgt">
@@ -18,8 +18,8 @@
                 <div class="col-md-12">
                     <header>
                         <br>
-                        <h1>{{captz($type)}}</h1>
-                        <h5><a href="/">Home</a>/ {{$type}}</h5>
+                        <h1>{{$midia->titulo}}</h1>
+                        <h5><a href="/">Home</a>/ {{$midia->titulo}}</h5>
                         <br>
                     </header>
                 </div>
@@ -47,8 +47,8 @@
         font-size: 10px;
     }
     .filter-input-icon svg{
-        font-size: 15px;
-        margin-top: -35px;
+        font-size: 15px!important;
+        margin-top: -35px!important;
     }
     .btn-remove{
         padding: 5px;

@@ -1,7 +1,7 @@
 cmsApp.controller('alterarCategoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
 
     $scope.processandoSalvar = false;
-
+    
     //ALTERAR/////////////////////////////
 
     $scope.tinymceOptions = tinymceOptions;
@@ -16,7 +16,7 @@ cmsApp.controller('alterarCategoriaCtrl', ['$scope', '$http', 'Upload', '$timeou
 
             $scope.processandoSalvar = true;
             //console.log($scope.categoria);
-            $http.post("cms/alterar-categoria/"+$scope.id, {'categoria': $scope.categoria, group_categoria: $scope.group_categoria, 'removerImagem': $scope.removerImagem}).success(function (data){
+            $http.post("/cms/alterar-categoria/"+$scope.id, {'categoria': $scope.categoria, group_categoria: $scope.group_categoria, 'removerImagem': $scope.removerImagem}).success(function (data){
                 //console.log(data);
                 $scope.processandoSalvar = false;
                 $scope.mensagemSalvar = data;
@@ -30,7 +30,7 @@ cmsApp.controller('alterarCategoriaCtrl', ['$scope', '$http', 'Upload', '$timeou
         }else{
 
             file.upload = Upload.upload({
-                url: 'cms/alterar-categoria/'+$scope.id,
+                url: '/cms/alterar-categoria/'+$scope.id,
                 data: {categoria: $scope.categoria, group_categoria: $scope.group_categoria, file: file},
             });
 
@@ -41,7 +41,7 @@ cmsApp.controller('alterarCategoriaCtrl', ['$scope', '$http', 'Upload', '$timeou
                 $scope.picFile = null;//limpa o form
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = 'imagens/categorias/'+response.data;
+                $scope.imagemBD = '/imagens/categorias/'+response.data;
                 console.log($scope.imagemDB);
             }, function (response) {
                 if (response.status > 0){
@@ -65,7 +65,7 @@ cmsApp.controller('alterarCategoriaCtrl', ['$scope', '$http', 'Upload', '$timeou
 
     $scope.carregaImagem  = function(img) {
         if(img!=''){
-            $scope.imagemBD = 'imagens/categorias/xs-'+img;
+            $scope.imagemBD = '/imagens/categorias/xs-'+img;
             //console.log($scope.imagemBD);
         }
     };

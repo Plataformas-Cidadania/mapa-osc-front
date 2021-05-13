@@ -97,13 +97,33 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/status-noticia/{id}', 'Cms\Controllers\NoticiaController@status');
 
 
+        //MIDIAS
+        Route::get('/cms/midias', 'Cms\Controllers\MidiaController@index');
+        Route::get('/cms/listar-midias', 'Cms\Controllers\MidiaController@listar');
+        Route::post('/cms/inserir-midia', 'Cms\Controllers\MidiaController@inserir');
+        Route::get('/cms/midia/{id}', 'Cms\Controllers\MidiaController@detalhar');
+        Route::post('/cms/alterar-midia/{id}', 'Cms\Controllers\MidiaController@alterar');
+        Route::get('/cms/excluir-midia/{id}', 'Cms\Controllers\MidiaController@excluir');
+        Route::get('/cms/status-midia/{id}', 'Cms\Controllers\MidiaController@status');
+
         //CATEGORIAS
         Route::get('/cms/categorias', 'Cms\Controllers\CategoriaController@index');
+        Route::get('/cms/categorias/{midia_id}', 'Cms\Controllers\CategoriaController@index');
         Route::get('/cms/listar-categorias', 'Cms\Controllers\CategoriaController@listar');
         Route::post('/cms/inserir-categoria', 'Cms\Controllers\CategoriaController@inserir');
         Route::get('/cms/categoria/{id}', 'Cms\Controllers\CategoriaController@detalhar');
         Route::post('/cms/alterar-categoria/{id}', 'Cms\Controllers\CategoriaController@alterar');
         Route::get('/cms/excluir-categoria/{id}', 'Cms\Controllers\CategoriaController@excluir');
+
+        //POSTS
+        Route::get('/cms/posts', 'Cms\Controllers\PostController@index');
+        Route::get('/cms/posts/{categoria_id}', 'Cms\Controllers\PostController@index');
+        Route::get('/cms/listar-posts', 'Cms\Controllers\PostController@listar');
+        Route::post('/cms/inserir-post', 'Cms\Controllers\PostController@inserir');
+        Route::get('/cms/post/{id}', 'Cms\Controllers\PostController@detalhar');
+        Route::post('/cms/alterar-post/{id}', 'Cms\Controllers\PostController@alterar');
+        Route::get('/cms/excluir-post/{id}', 'Cms\Controllers\PostController@excluir');
+        Route::get('/cms/status-post/{id}', 'Cms\Controllers\PostController@status');
 
         //PUBLICATIONS
         Route::get('/cms/publications', 'Cms\Controllers\PublicationController@index');

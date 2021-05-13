@@ -103,9 +103,18 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarTipoGraficoCtrl
 mix.scripts('packages/cms/resources/assets/js/controllers/noticiaCtrl.js', 'public/assets-cms/js/controllers/noticiaCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarNoticiaCtrl.js', 'public/assets-cms/js/controllers/alterarNoticiaCtrl.js');
 
+
+//Midias
+mix.scripts('packages/cms/resources/assets/js/controllers/midiaCtrl.js', 'public/assets-cms/js/controllers/midiaCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarMidiaCtrl.js', 'public/assets-cms/js/controllers/alterarMidiaCtrl.js');
+
 //Categorias
 mix.scripts('packages/cms/resources/assets/js/controllers/categoriaCtrl.js', 'public/assets-cms/js/controllers/categoriaCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarCategoriaCtrl.js', 'public/assets-cms/js/controllers/alterarCategoriaCtrl.js');
+
+//Posts
+mix.scripts('packages/cms/resources/assets/js/controllers/postCtrl.js', 'public/assets-cms/js/controllers/postCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarPostCtrl.js', 'public/assets-cms/js/controllers/alterarPostCtrl.js');
 
 //Publications
 mix.scripts('packages/cms/resources/assets/js/controllers/publicationCtrl.js', 'public/assets-cms/js/controllers/publicationCtrl.js');
