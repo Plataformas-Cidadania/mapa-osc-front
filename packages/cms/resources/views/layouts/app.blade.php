@@ -90,9 +90,9 @@
                 <li>
                     <a href="cms/webdoors"><i class="fa fa-fw fa-desktop"></i> Webdoor</a>
                 </li>
-                <li>
+<!--                <li>
                     <a href="cms/noticias"><i class="fa fa-fw fa-newspaper-o"></i> Notícias</a>
-                </li>
+                </li>-->
                 <li>
                     <a href="cms/editais"><i class="fa fa-fw fa-file"></i> Editais</a>
                 </li>
@@ -114,9 +114,9 @@
                 <li>
                     <a href="cms/midias"><i class="fa fa-fw fa-file-text-o"></i> Mídias</a>
                 </li>
-                <li>
+<!--                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
-                </li>
+                </li>-->
 
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Analise <i class="fa fa-fw fa-caret-down"></i></a>
