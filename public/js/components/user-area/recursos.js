@@ -20,7 +20,7 @@ class Recursos extends React.Component {
 
                 cnpj: true
             },
-            ano: 0,
+            ano: 2010,
             showMsg: false,
             msg: '',
             juridica: false,
@@ -49,7 +49,45 @@ class Recursos extends React.Component {
                     nr_valor_recursos_osc: '',
                 }
             },*/
-            loadingAnos: true
+            loadingAnos: true,
+
+            recursos_proprios: {
+                0: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                1: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                2: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                3: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                4: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                5: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                },
+                6: {
+                    'cd_fonte_recurso_osc': null,
+                    'nr_valor_recursos_osc': null,
+                    'tx_nome_fonte_recursos_osc': null
+                }
+            }
 
         };
 
@@ -59,7 +97,7 @@ class Recursos extends React.Component {
         this.getRecursos = this.getRecursos.bind(this);
         this.getRecursosProprios = this.getRecursosProprios.bind(this);
 
-        this.storeCampo = this.storeCampo.bind(this);
+        //this.storeCampo = this.storeCampo.bind(this);
         this.updateCampo = this.updateCampo.bind(this);
         this.deleteCampo = this.deleteCampo.bind(this);
     }
@@ -78,8 +116,9 @@ class Recursos extends React.Component {
             url: getBaseUrl2 + 'osc/anos_recursos/789809',
             cache: false,
             success: function (data) {
-                console.log('data: ', data);
+                //console.log('--------',data);
                 this.setState({ loading: false, anosRecursos: data, button: true });
+                //this.callSubObjetivos();
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -125,7 +164,6 @@ class Recursos extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    //console.log('reg', data);
 
                     let msg = 'Já existe outro cadastro com esse';
 
@@ -151,49 +189,24 @@ class Recursos extends React.Component {
         });
     }
 
-    getRecursosProprios(ano) {
-        //ano = ano+"-01-01";
-        console.log('recursos:', this.state.recursos);
-        console.log('recursos ano:', ano);
-        let recursos_proprios = null;
-        let recursos_publicos = null;
-        let recursos_privados = null;
-        let recursos_nao_financeiros = null;
-        let recursos = this.state.recursos;
-        for (let i in recursos) {
-            if (recursos[i].dt_ano_recursos_osc == ano) {
-                recursos_proprios = recursos[i].recursos_proprios;
-                recursos_publicos = recursos[i].recursos_publicos;
-                recursos_privados = recursos[i].recursos_privados;
-                recursos_nao_financeiros = recursos[i].recursos_nao_financeiros;
-                break;
-            }
-        }
-        this.setState({
-            recursos_proprios: recursos_proprios,
-            recursos_publicos: recursos_publicos,
-            recursos_privados: recursos_privados,
-            recursos_nao_financeiros: recursos_nao_financeiros,
-            ano: ano
-        });
-    }
-
     callSubObjetivos() {
         this.setState({ button: false, loadingAnos: true });
         $.ajax({
             method: 'GET',
             cache: false,
-            //BECK DA API NOVA ESTÁ TRAZENDO ERRADO
+
             //url: getBaseUrl+'osc/no_project/789809',
             url: getBaseUrl2 + 'osc/recursos/789809',
 
             success: function (data) {
 
-                consoloe.log('--*', data);
+                /*console.log('data--------',data);
+                console.log('--------',this.state.ano);*/
+                console.log('data', data[this.state.ano]);
 
                 let anosRecursos = this.state.anosRecursos;
 
-                this.setState({ loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta: true, recursos: data.recursos.recursos });
+                this.setState({ loadingAnos: false, loading: false, anosRecursos: anosRecursos, titleMeta: true, recursos: data[this.state.ano] });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -201,67 +214,118 @@ class Recursos extends React.Component {
         });
     }
 
-    storeCampo(field, value, id_recursos_osc) {
-        console.log('valores: ', field, value, id_recursos_osc);
-        //e.preventDefault();
+    getRecursosProprios(ano) {
 
-        /*if(!this.validate()){
-            return;
+        let recursos_proprios = null;
+        let recursos_publicos = null;
+        let recursos_privados = null;
+        let recursos_nao_financeiros = null;
+
+        let recursos = this.state.recursos;
+
+        console.log('recursos-->', recursos);
+
+        if (recursos[4] != undefined) {
+            console.log('OK 4');
+            recursos_proprios = recursos[4];
+        }
+        if (recursos[1] != undefined) {
+            console.log('OK 1');
+            recursos_publicos = recursos[1];
+        }
+        if (recursos[2] != undefined) {
+            console.log('OK 2');
+            recursos_privados = recursos[2];
+        }
+        if (recursos[3] != undefined) {
+            console.log('OK 3');
+            recursos_nao_financeiros = recursos[3];
+        }
+
+        /*console.log('-------------');
+        console.log(recursos_proprios);
+        console.log(recursos_publicos);
+        console.log(recursos_privados);
+        console.log(recursos_nao_financeiros);
+        console.log('-------------');*/
+
+        /*for(let i in recursos){
+            console.log('i', i);
+            if(recursos[i].dt_ano_recursos_osc == ano){
+                recursos_proprios = recursos[i].recursos_proprios;
+                recursos_publicos = recursos[i].recursos_publicos;
+                recursos_privados = recursos[i].recursos_privados;
+                recursos_nao_financeiros = recursos[i].recursos_nao_financeiros;
+                break;
+            }
         }*/
+        this.setState({
+            recursos_proprios: recursos_proprios,
+            recursos_publicos: recursos_publicos,
+            recursos_privados: recursos_privados,
+            recursos_nao_financeiros: recursos_nao_financeiros,
+            ano: ano
+        }, function () {
+            this.callSubObjetivos();
+        });
+    }
 
-        if (id_recursos_osc === 0) {
-
-            console.log('Update');
-            this.setState({ loading: true, button: false }, function () {
+    /*storeCampo(field, value, id_recursos_osc){
+        console.log('valores: ',field, value, id_recursos_osc);
+        if(id_recursos_osc===0){
+             console.log('Update')
+            this.setState({loading: true, button: false}, function(){
                 $.ajax({
-                    method: 'PUT',
-                    url: getBaseUrl2 + 'osc/recursos',
-                    data: {
+                    method:'PUT',
+                    url: getBaseUrl2+'osc/recursos',
+                    data:{
                         id_osc: '789809',
                         dt_ano_recursos_osc: '2016-01-01',
                         nr_valor_recursos_osc: value,
-                        cd_fonte_recursos_osc: field
+                        cd_fonte_recursos_osc: field,
                     },
                     cache: false,
-                    success: function (data) {
+                    success: function(data) {
                         let msg = 'Dados alterados com sucesso!';
-                        this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
                     }.bind(this),
-                    error: function (xhr, status, err) {
+                    error: function(xhr, status, err) {
                         console.error(status, err.toString());
-                        this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                        this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
                     }.bind(this)
                 });
             });
-        } else {
-            console.log('Insert');
-            this.setState({ loading: true, button: false }, function () {
+         }else{
+            console.log('Insert')
+            this.setState({loading: true, button: false}, function(){
                 $.ajax({
-                    method: 'POST',
-                    url: getBaseUrl2 + 'osc/recursos',
-                    data: {
+                    method:'POST',
+                    url: getBaseUrl2+'osc/recursos',
+                    data:{
                         id_osc: '789809',
                         dt_ano_recursos_osc: '2016-01-01',
                         nr_valor_recursos_osc: value,
-                        cd_fonte_recursos_osc: field
+                        cd_fonte_recursos_osc: field,
                     },
                     cache: false,
-                    success: function (data) {
+                    success: function(data) {
                         let msg = 'Dados alterados com sucesso!';
-                        this.setState({ msg: msg, showMsg: true, loading: false, button: true, color: 'success' });
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
                     }.bind(this),
-                    error: function (xhr, status, err) {
+                    error: function(xhr, status, err) {
                         console.error(status, err.toString());
-                        this.setState({ loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger' });
+                        this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
                     }.bind(this)
                 });
             });
         }
-    }
+      }*/
     updateCampo() {}
     deleteCampo() {}
 
     render() {
+
+        console.log('render', this.state.recursos_proprios);
 
         let anosRecursos = null;
         if (this.state.anosRecursos) {
@@ -269,9 +333,10 @@ class Recursos extends React.Component {
                 return React.createElement(
                     'div',
                     { key: "anos_" + index, id: "anos_" + index,
-                        onClick: () => this.getRecursosProprios(item.dt_ano_recursos_osc)
-                        //className="btn btn-light ">{item.dt_ano_recursos_osc}</div>
-                        , className: this.state.ano == item.dt_ano_recursos_osc ? 'btn btn-primary' : 'btn btn-light' },
+                        onClick: () => this.getRecursosProprios(item.dt_ano_recursos_osc),
+                        className: this.state.ano == item.dt_ano_recursos_osc ? 'btn btn-primary' : 'btn btn-light',
+                        style: { marginRight: '5px' }
+                    },
                     item.dt_ano_recursos_osc
                 );
             }.bind(this));
@@ -342,190 +407,48 @@ class Recursos extends React.Component {
                                     ),
                                     React.createElement('hr', null)
                                 ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais ? this.state.recursos_proprios.rendimentos_fundos_patrimoniais.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor'
-
-                                        }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Rendimentos de fundos patrimoniais'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias ? this.state.recursos_proprios.rendimentos_financeiros_reservas_contas_correntes_proprias.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Rendimentos financeiros de reservas ou c/c pr\xF3prias'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        '*',
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cp174', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.nr_valor_recursos_osc : "" : "",
-                                            onBlur: () => this.storeCampo(174, this.state.form.cp174, this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "" : ""),
-                                            placeholder: 'Informe o valor' }),
-                                        '*',
-                                        this.state.form.cp174,
-                                        '*',
-                                        this.state.recursos_proprios ? this.state.recursos_proprios.mensalidades_contribuicoes_associados ? this.state.recursos_proprios.mensalidades_contribuicoes_associados.id_recursos_osc : "" : "0",
-                                        '***',
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'cp174' },
-                                            'Mensalidades ou contribui\xE7\xF5es de associados'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.premios_recebidos ? this.state.recursos_proprios.premios_recebidos.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Pr\xEAmios recebidos'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.venda_produtos ? this.state.recursos_proprios.venda_produtos.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Venda de produtos'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.prestacao_servicos ? this.state.recursos_proprios.prestacao_servicos.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Presta\xE7\xE3o de servi\xE7os'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_estatuto_osc', onChange: this.handleInputChange,
-                                            defaultValue: this.state.recursos_proprios ? this.state.recursos_proprios.venda_bens_direitos ? this.state.recursos_proprios.venda_bens_direitos.nr_valor_recursos_osc : "" : "",
-                                            placeholder: 'Informe o valor' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Venda de bens e direitos'
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-box-info-off' },
-                                            React.createElement(
-                                                'p',
-                                                null,
-                                                '\xA0'
-                                            )
-                                        )
-                                    )
-                                )
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[0].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[0].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[0].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[0].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[0].tx_nome_fonte_recursos_osc
+                                }),
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[1].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[1].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[1].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[1].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[1].tx_nome_fonte_recursos_osc
+                                }),
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[2].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[2].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[2].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[2].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[2].tx_nome_fonte_recursos_osc
+                                }),
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[3].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[3].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[3].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[3].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[3].tx_nome_fonte_recursos_osc
+                                }),
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[4].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[4].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[4].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[4].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[4].tx_nome_fonte_recursos_osc
+                                }),
+                                React.createElement(Recurso, {
+                                    id: this.state.recursos_proprios[5].id_recursos_osc,
+                                    cd: this.state.recursos_proprios[5].cd_fonte_recurso_osc,
+                                    name: "cp" + this.state.recursos_proprios[5].cd_fonte_recurso_osc,
+                                    value: this.state.recursos_proprios[5].nr_valor_recursos_osc,
+                                    txt: this.state.recursos_proprios[5].tx_nome_fonte_recursos_osc
+                                })
                             ),
                             React.createElement(
                                 'div',

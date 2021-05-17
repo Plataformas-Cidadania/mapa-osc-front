@@ -354,6 +354,7 @@
     <script src="js/components/user-area/recursos.js"></script>
 @endif--}}
 @if($rota=="recursos-user")
+    <script src="js/components/forms/recurso.js"></script>
     <script src="js/components/user-area/recursos.js"></script>
 @endif
 @if($rota=="areas-atuacao-user")
