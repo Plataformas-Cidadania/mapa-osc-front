@@ -58,31 +58,37 @@ class Recursos extends React.Component{
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 1: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 2: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 3: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 4: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 5: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
                 },
                 6: {
+                    'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': null,
                     'nr_valor_recursos_osc': null,
                     'tx_nome_fonte_recursos_osc': null,
@@ -436,6 +442,14 @@ class Recursos extends React.Component{
                                             value={this.state.recursos_proprios[5].nr_valor_recursos_osc}
                                             txt={this.state.recursos_proprios[5].tx_nome_fonte_recursos_osc}
                                         />
+
+                                        {/*<Recurso
+                                            id={this.state.recursos_proprios[6].id_recursos_osc}
+                                            cd={this.state.recursos_proprios[6].cd_fonte_recurso_osc}
+                                            name={"cp"+this.state.recursos_proprios[6].cd_fonte_recurso_osc}
+                                            value={this.state.recursos_proprios[6].nr_valor_recursos_osc}
+                                            txt={this.state.recursos_proprios[6].tx_nome_fonte_recursos_osc}
+                                        />*/}
 
                                         {/*<div className="col-md-6">
                                             <div className="label-float">
