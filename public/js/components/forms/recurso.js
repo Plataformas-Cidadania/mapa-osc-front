@@ -1,6 +1,5 @@
 class Recurso extends React.Component {
     constructor(props) {
-        console.log('props1', props);
         super(props);
         this.state = {
             loadingList: false,
@@ -13,22 +12,18 @@ class Recurso extends React.Component {
     componentDidMount() {}
 
     handleInputChange(event) {
-        //console.log(event.target.value);
         this.setState({ value: event.target.value });
     }
 
-    storeCampo(cd, value, id) {
-        console.log('valores: ', cd, value, id);
-
+    storeCampo(cd, value, id, ano) {
         if (id > 0) {
-            console.log('Update');
             this.setState({ loading: true, button: false }, function () {
                 $.ajax({
                     method: 'PUT',
-                    url: getBaseUrl2 + 'osc/recursos',
+                    url: getBaseUrl2 + 'osc/recursos/' + id,
                     data: {
                         id_osc: '789809',
-                        dt_ano_recursos_osc: '2016-01-01',
+                        dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd
                     },
@@ -44,14 +39,13 @@ class Recurso extends React.Component {
                 });
             });
         } else {
-            console.log('Insert');
             this.setState({ loading: true, button: false }, function () {
                 $.ajax({
                     method: 'POST',
                     url: getBaseUrl2 + 'osc/recursos',
                     data: {
                         id_osc: '789809',
-                        dt_ano_recursos_osc: '2016-01-01',
+                        dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd
                     },
@@ -75,7 +69,9 @@ class Recurso extends React.Component {
             cd: props.cd,
             name: props.name,
             value: props.value,
-            txt: props.txt
+            txt: props.txt,
+            ano: props.ano,
+            type: props.type
         });
     }
 
@@ -88,7 +84,7 @@ class Recurso extends React.Component {
                 { className: 'label-float' },
                 React.createElement('input', { className: "form-control form-g ", type: 'text', name: this.state.name, onChange: this.handleInputChange,
                     defaultValue: this.state.value,
-                    onBlur: () => this.storeCampo(this.state.cd, this.state.value, this.state.id),
+                    onBlur: () => this.storeCampo(this.state.cd, this.state.value, this.state.id, this.state.ano),
                     placeholder: 'Informe o valor' }),
                 React.createElement(
                     'label',
@@ -107,7 +103,6 @@ class Recurso extends React.Component {
             )
         );
     }
-
 }
 
 ReactDOM.render(React.createElement(Recurso, null), document.getElementById('recurso'));
