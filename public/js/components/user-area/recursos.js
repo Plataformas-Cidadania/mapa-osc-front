@@ -96,7 +96,7 @@ class Recursos extends React.Component {
                         'id_recursos_osc': 0,
                         'cd_fonte_recurso_osc': 171,
                         'nr_valor_recursos_osc': null,
-                        'tx_nome_fonte_recursos_osc': 'Doações recebidas na forma de produtos e serviços (com NFE)'
+                        'tx_nome_fonte_recursos_osc': 'Doações recebidas de produtos e serviços (com NFE)'
                     }
                 },
                 3: {
@@ -335,7 +335,7 @@ class Recursos extends React.Component {
                     'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': 171,
                     'nr_valor_recursos_osc': null,
-                    'tx_nome_fonte_recursos_osc': 'Doações recebidas na forma de produtos e serviços (com NFE)'
+                    'tx_nome_fonte_recursos_osc': 'Doações recebidas de produtos e serviços (com NFE)'
                 }
             },
             3: {
