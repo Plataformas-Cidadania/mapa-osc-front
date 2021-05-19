@@ -399,6 +399,37 @@
     <script src="js/components/join/register.js"></script>
 @endif
 
+@if(
+    $rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-user" || $rota=="oscs-user" || $rota=="osc-user/{id}" ||
+    $rota=="objetivos-user" || $rota=="selo-user" || $rota=="certificates-user" || $rota=="projetos-user" ||
+    $rota=="governancas-user" || $rota=="areas-atuacao-user" || $rota=="descricao-user" || $rota=="participacoes-user" ||
+    $rota=="recursos-user" || $rota=="logout-user" || $rota=="dados-arquivos" || $rota=="dados-arquivo/{id}" || $rota=="videos-privados"
+    //$rota=="update-data" || $rota=="update-descricao" || $rota=="get-data" ||
+    //$rota=="get-osc" ||  $rota=="list-users-oscs" ||  $rota=="save-logo-osc" || $rota=="get-logo-osc" || $rota=="update-osc" ||
+    //$rota=="list-users-certificates" || $rota=="remove-user-certificate/{id}" || $rota=="edit-user-certificate/{id}" ||
+    //$rota=="list-users-governancas" ||  $rota=="remove-user-governanca/{id}" || $rota=="edit-user-governanca/{id}" ||
+    //$rota=="list-users-conselhos" || $rota=="list-users-documents" || $rota=="detalhar-users-document/{id}" ||
+    //$rota=="list-private-videos" ||  $rota=="private-video/{id}" ||  $rota=="get-descricao"
+    )
+    <script>
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'check-token',
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+                location.href = 'login';
+            }.bind(this)
+        });
+    </script>
+@endif
+
 <script>
     $('#ativarBox').click(function(){
         $('.box-busca').toggle();

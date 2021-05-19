@@ -128,28 +128,28 @@ Route::get('/register-login', 'RegisterUserController@register');
 
 /// //AREA USER///////////////////////////////////////////////////////////////////////////////////
 //views
-Route::get('/area-user', 'UserAreaController@index')->middleware('auth');
-Route::get('/dashboard-user', 'UserAreaController@index')->middleware('auth');
-Route::get('/dados-user', 'UserAreaController@data')->middleware('auth');
-Route::get('/oscs-user', 'UserAreaController@oscs')->middleware('auth');
-Route::get('/osc-user/{id}', 'UserAreaController@osc')->middleware('auth');
-Route::get('/objetivos-user', 'UserAreaController@objetivos')->middleware('auth');
-Route::get('/selo-user', 'UserAreaController@seal')->middleware('auth');
+Route::get('/area-user', 'UserAreaController@index');//->middleware('auth');
+Route::get('/dashboard-user', 'UserAreaController@index');//->middleware('auth');
+Route::get('/dados-user', 'UserAreaController@data');//->middleware('auth');
+Route::get('/oscs-user', 'UserAreaController@oscs');//->middleware('auth');
+Route::get('/osc-user/{id}', 'UserAreaController@osc');//->middleware('auth');
+Route::get('/objetivos-user', 'UserAreaController@objetivos');//->middleware('auth');
+Route::get('/selo-user', 'UserAreaController@seal');//->middleware('auth');
 
-Route::get('/certificates-user', 'UserAreaController@certificates')->middleware('auth');
-Route::get('/projetos-user', 'UserAreaController@projetos')->middleware('auth');
-Route::get('/governancas-user', 'UserAreaController@governancas')->middleware('auth');
-Route::get('/areas-atuacao-user', 'UserAreaController@atuacoes')->middleware('auth');
-Route::get('/descricao-user', 'UserAreaController@descricao')->middleware('auth');
-Route::get('/participacoes-user', 'UserAreaController@participacoes')->middleware('auth');
-Route::get('/recursos-user', 'UserAreaController@recursos')->middleware('auth');
+Route::get('/certificates-user', 'UserAreaController@certificates');//->middleware('auth');
+Route::get('/projetos-user', 'UserAreaController@projetos');//->middleware('auth');
+Route::get('/governancas-user', 'UserAreaController@governancas');//->middleware('auth');
+Route::get('/areas-atuacao-user', 'UserAreaController@atuacoes');//->middleware('auth');
+Route::get('/descricao-user', 'UserAreaController@descricao');//->middleware('auth');
+Route::get('/participacoes-user', 'UserAreaController@participacoes');//->middleware('auth');
+Route::get('/recursos-user', 'UserAreaController@recursos');//->middleware('auth');
 
 Route::get('/logout-user', 'UserLoginController@logout');
 
 
-Route::get('/dados-arquivos', 'UserAreaController@documents')->middleware('auth');
-Route::get('/dados-arquivo/{id}', 'UserAreaController@document')->middleware('auth');
-Route::get('/videos-privados', 'UserAreaController@videos')->middleware('auth');
+Route::get('/dados-arquivos', 'UserAreaController@documents');//->middleware('auth');
+Route::get('/dados-arquivo/{id}', 'UserAreaController@document');//->middleware('auth');
+Route::get('/videos-privados', 'UserAreaController@videos');//->middleware('auth');
 
 
 

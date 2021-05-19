@@ -10,6 +10,7 @@
         maxParticipacoes = 200;
         maxRecursos = 200;
         maxProjetos = 200;
+
     </script>
 
     <div id="header"></div>
@@ -26,9 +27,19 @@
             </div>
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id={{$pgUserArea}}></div>
+                    <div class="panel-body" id="content-react">
+                        {{--<div id={{$pgUserArea}}></div>--}}
                     </div>
+                    <script>
+                        let token = localStorage.getItem('@App:token');
+                        if(token){
+                            let divReact = document.createElement('div');
+                            divReact.id = "{{$pgUserArea}}";
+                            let contentReact = document.getElementById('content-react');
+                            console.log(contentReact);
+                            contentReact.appendChild(divReact);
+                        }
+                    </script>
                 </div>
             </div>
         </div>

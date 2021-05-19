@@ -83,8 +83,10 @@ class Login extends React.Component{
             success: function(data){
                 console.log(data);
 
-                if(data.status){
-                    location.href = this.state.target;
+                if(data.access_token){
+                    //location.href = this.state.target;
+                    localStorage.setItem('@App:token', data.access_token);
+                    location.href = 'area-user';
                 }
 
                 this.setState({loading: false, msgShow: true, msg: data.msg})
