@@ -87,6 +87,9 @@ class FormProjetoLocalizacao extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/localizacao',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function(data) {

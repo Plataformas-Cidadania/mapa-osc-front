@@ -120,7 +120,8 @@ class FormCertificate extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             let data = {
-                id_osc: '455128',
+                //id_osc: '455128',
+                id_osc: this.props.id,
                 dt_inicio_certificado: this.state.form.dt_inicio_certificado,
                 dt_fim_certificado: this.state.form.dt_fim_certificado,
                 cd_certificado: this.state.form.cd_certificado,
@@ -135,6 +136,9 @@ class FormCertificate extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/certificado',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function(data) {

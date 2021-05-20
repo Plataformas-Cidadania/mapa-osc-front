@@ -134,6 +134,9 @@ class Osc extends React.Component{
                 method:'PUT',
                 //url: getBaseUrl2+'osc/dados_gerais/455128',
                 url: getBaseUrl2+'osc/dados_gerais/'+this.props.id,
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 //data: this.state.form,
                 data:{
                     //id_osc: 455128,

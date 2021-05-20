@@ -165,7 +165,8 @@ class Participacoes extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/participacao_social/611720',
+            //url: getBaseUrl2 + 'osc/participacao_social/611720',
+            url: getBaseUrl2 + 'osc/participacao_social/' + this.props.id,
             data: {},
             cache: false,
             success: function (data) {
@@ -186,7 +187,8 @@ class Participacoes extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/611720',
+            //url: getBaseUrl2 + 'osc/611720',
+            url: getBaseUrl2 + 'osc/' + this.props.id,
             data: {},
             cache: false,
             success: function (data) {
@@ -249,8 +251,11 @@ class Participacoes extends React.Component {
             $.ajax({
 
                 method: 'PUT',
-                url: getBaseUrl2 + 'osc/611720',
-
+                //url: getBaseUrl2 + 'osc/611720',
+                url: getBaseUrl2 + 'osc/' + this.props.id,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function (data) {
@@ -272,6 +277,9 @@ class Participacoes extends React.Component {
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/ps_' + tipo + '/' + id,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {

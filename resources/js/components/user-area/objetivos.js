@@ -75,7 +75,8 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/objetivos/'+455128,
+            //url: getBaseUrl2+'osc/objetivos/'+455128,
+            url: getBaseUrl2+'osc/objetivos/'+this.props.id,
             success: function (data) {
                 let objetosSelected = [];
                 data.find(function(item){
@@ -146,7 +147,8 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/objetivos/'+455128,
+            //url: getBaseUrl2+'osc/objetivos/'+455128,
+            url: getBaseUrl2+'osc/objetivos/'+this.props.id,
             success: function (data) {
                 data.find(function(item){
                     item.checked = true;
@@ -178,9 +180,13 @@ class Objetivos extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2+'osc/objetivo',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: {
                     cd_meta_osc: cd_meta,
-                    id_osc: 455128,
+                    //id_osc: 455128,
+                    id_osc: this.props.id,
                     ft_objetivo_osc: 'Representante de OSC',
                 },
                 cache: false,
@@ -196,6 +202,9 @@ class Objetivos extends React.Component{
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2+'osc/objetivo/'+id_objetivo_osc,
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: {
 
                 },

@@ -35,6 +35,9 @@ class Projetos extends React.Component{
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/projeto/'+id,
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
             data: {
 
             },
@@ -158,7 +161,8 @@ class Projetos extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/projetos/455128',
+            //url: getBaseUrl2 + 'osc/projetos/455128',
+            url: getBaseUrl2 + 'osc/projetos/'+this.props.id,
             data: {
 
             },
@@ -281,6 +285,6 @@ class Projetos extends React.Component{
 }
 
 ReactDOM.render(
-    <Projetos/>,
+    <Projetos id={id}/>,
     document.getElementById('projetos')
 );

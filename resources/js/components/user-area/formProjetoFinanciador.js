@@ -69,7 +69,8 @@ class FormProjetoFinanciador extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             let data = {
-                id_osc: '455128',
+                //id_osc: '455128',
+                id_osc: this.props.id,
                 id_projeto: this.props.id_projeto,
                 tx_nome_financiador: this.state.form.tx_nome_financiador,
                 ft_nome_financiador: 'Representante de OSC',
@@ -78,6 +79,9 @@ class FormProjetoFinanciador extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/financiador',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function(data) {

@@ -93,6 +93,9 @@ class Governancas extends React.Component{
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/'+tipo+'/'+id,
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
             data: {
 
             },
@@ -123,7 +126,8 @@ class Governancas extends React.Component{
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
+            //url: getBaseUrl2 + 'osc/rel_trabalho_e_governanca/455128',
+            url: getBaseUrl2+'osc/rel_trabalho_e_governanca/'+this.props.id,
             data: {
 
             },
@@ -185,6 +189,9 @@ class Governancas extends React.Component{
             $.ajax({
                 method:'PUT',
                 url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdOsc,
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: this.state.form,
                 cache: false,
                 success: function(data) {

@@ -66,7 +66,8 @@ class FormProjetoPublico extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
             let data = {
-                id_osc: '455128',
+                //id_osc: '455128',
+                id_osc: this.props.id,
                 id_projeto: this.props.id_projeto,
                 tx_nome_publico_beneficiado: this.state.form.tx_nome_publico_beneficiado,
                 ft_publico_beneficiado: 'Representante de OSC',
@@ -75,6 +76,9 @@ class FormProjetoPublico extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/publico',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function(data) {

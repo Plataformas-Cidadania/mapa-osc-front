@@ -133,6 +133,9 @@ class FormParticipacaoConselho extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/ps_conselho',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     cd_conselho: this.state.form.tx_nome_conselho,
                     //cd_tipo_participacao: this.state.form.tx_nome_tipo_participacao,
@@ -141,7 +144,8 @@ class FormParticipacaoConselho extends React.Component {
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
                     bo_oficial: 0,
-                    id_osc: 611720
+                    //id_osc: 611720,
+                    id_osc: this.props.id
                 },
                 cache: false,
                 success: function (data) {

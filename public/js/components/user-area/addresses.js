@@ -115,6 +115,9 @@ class Addresses extends React.Component {
         $.ajax({
             method: 'POST',
             url: 'list-users-addresses',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {

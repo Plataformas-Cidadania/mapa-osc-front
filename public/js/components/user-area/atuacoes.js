@@ -247,8 +247,12 @@ class Atuacoes extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/area_atuacao_rep',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
-                    id_osc: 789809,
+                    //id_osc: 789809,
+                    id_osc: this.props.id,
                     cd_area_atuacao: area_id,
                     cd_subarea_atuacao: subarea_id,
                     ft_area_atuacao: 'Representante de OSC'
@@ -265,6 +269,9 @@ class Atuacoes extends React.Component {
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/area_atuacao_rep/' + idSelectedSub,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {},
                 cache: false,
                 success: function (data) {
@@ -306,6 +313,9 @@ class Atuacoes extends React.Component {
         $.ajax({
             method: 'PUT',
             url: getBaseUrl2 + 'osc/area_atuacao_rep/' + id,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {
                 tx_nome_outra: this.state.form.tx_nome_outra
             },

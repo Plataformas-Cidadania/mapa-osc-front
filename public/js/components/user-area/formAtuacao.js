@@ -129,6 +129,9 @@ class FormAtuacao extends React.Component {
                 method: 'POST',
                 url: url,
                 //url: '/register-atuacao',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     form: this.state.form,
                     id: id

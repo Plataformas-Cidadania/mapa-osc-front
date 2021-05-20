@@ -78,6 +78,9 @@ class Certificates extends React.Component {
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/certificado/' + id,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {
@@ -107,7 +110,8 @@ class Certificates extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/certificados/455128',
+            //url: getBaseUrl2 + 'osc/certificados/455128',
+            url: getBaseUrl2 + 'osc/certificados/' + this.props.id,
             data: {},
             cache: false,
             success: function (data) {
@@ -424,4 +428,4 @@ class Certificates extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Certificates, null), document.getElementById('certificates'));
+ReactDOM.render(React.createElement(Certificates, { id: id }), document.getElementById('certificates'));
