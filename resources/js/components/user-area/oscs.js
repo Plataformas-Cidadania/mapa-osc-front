@@ -20,9 +20,10 @@ class Oscs extends React.Component{
         this.setState({loadingList: true});
 
         $.ajax({
-            method: 'POST',
-            url: 'list-users-oscs',
-            data: {
+            method: 'get',
+            url: getBaseUrl2 + 'osc/list-oscs-usuario',
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
             },
             cache: false,
             success: function(data){

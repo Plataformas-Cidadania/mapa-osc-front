@@ -17,7 +17,9 @@ class UserAreaController extends Controller
         $this->status = config('constants.status');
     }
 
-    public function index(){
+    public function index(Request $request){
+
+
         return view('user-area', ['pgUserArea' => 'dashboard']);
     }
     public function oscs(){

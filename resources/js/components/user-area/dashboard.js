@@ -10,6 +10,7 @@ class Daschboard extends React.Component{
 
     componentDidMount(){
         this.list();
+
     }
 
     list(){
