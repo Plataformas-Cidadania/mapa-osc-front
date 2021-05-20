@@ -160,6 +160,7 @@ class Certificates extends React.Component{
         if(this.state.editTipo=='insert'){
             form = (
                 <FormCertificate
+                    id={this.props.id}//id da osc
                     action={this.state.actionForm}
                     list={this.list}
                     showHideForm={this.showHideForm}

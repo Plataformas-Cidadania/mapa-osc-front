@@ -1038,4 +1038,4 @@ class Participacoes extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Participacoes, null), document.getElementById('participacoes'));
+ReactDOM.render(React.createElement(Participacoes, { id: id }), document.getElementById('participacoes'));

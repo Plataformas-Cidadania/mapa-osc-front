@@ -242,4 +242,4 @@ class Daschboard extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Daschboard, null), document.getElementById('dashboard'));
+ReactDOM.render(React.createElement(Daschboard, { id: id }), document.getElementById('dashboard'));

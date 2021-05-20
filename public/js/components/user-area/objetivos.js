@@ -406,4 +406,4 @@ class Objetivos extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Objetivos, null), document.getElementById('objetivos'));
+ReactDOM.render(React.createElement(Objetivos, { id: id }), document.getElementById('objetivos'));

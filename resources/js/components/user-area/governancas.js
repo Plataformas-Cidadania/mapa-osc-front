@@ -476,6 +476,6 @@ class Governancas extends React.Component{
 
 
 ReactDOM.render(
-    <Governancas/>,
+    <Governancas id={id}/>,
     document.getElementById('governancas')
 );

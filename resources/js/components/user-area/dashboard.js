@@ -127,6 +127,6 @@ class Daschboard extends React.Component{
 }
 
 ReactDOM.render(
-    <Daschboard/>,
+    <Daschboard id={id}/>,
     document.getElementById('dashboard')
 );

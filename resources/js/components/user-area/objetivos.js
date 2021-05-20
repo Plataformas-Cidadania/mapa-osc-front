@@ -373,6 +373,6 @@ class Objetivos extends React.Component{
 }
 
 ReactDOM.render(
-    <Objetivos/>,
+    <Objetivos id={id}/>,
     document.getElementById('objetivos')
 );

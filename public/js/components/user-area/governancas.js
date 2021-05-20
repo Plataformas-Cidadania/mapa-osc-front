@@ -678,4 +678,4 @@ class Governancas extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Governancas, null), document.getElementById('governancas'));
+ReactDOM.render(React.createElement(Governancas, { id: id }), document.getElementById('governancas'));

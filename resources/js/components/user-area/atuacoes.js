@@ -130,7 +130,8 @@ class Atuacoes extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/areas_atuacao_rep/'+789809,
+            //url: getBaseUrl2+'osc/areas_atuacao_rep/'+789809,
+            url: getBaseUrl2+'osc/areas_atuacao_rep/'+this.props.id,
             success: function (data) {
                 let itensAreas = [];
                 let areasAtuacao = this.state.areaAtuacao;
@@ -489,6 +490,6 @@ class Atuacoes extends React.Component{
 
 
 ReactDOM.render(
-    <Atuacoes/>,
+    <Atuacoes id={id}/>,
     document.getElementById('atuacoes')
 );

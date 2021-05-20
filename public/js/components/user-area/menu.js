@@ -88,7 +88,7 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "osc-user/789809" },
+                        { href: "osc-user/" + this.props.id },
                         React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
                         " Dados gerais"
                     )

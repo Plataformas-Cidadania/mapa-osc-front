@@ -754,6 +754,6 @@ class Participacoes extends React.Component{
 
 
 ReactDOM.render(
-    <Participacoes/>,
+    <Participacoes id={id}/>,
     document.getElementById('participacoes')
 );
