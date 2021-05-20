@@ -69,7 +69,7 @@ class Login extends React.Component {
         $.ajax({
             method: 'POST',
             //url: 'login',
-            url: getBaseUrl2 + 'v1/oauth/token',
+            url: getBaseUrl2 + 'oauth/token',
             data: {
                 grant_type: 'password',
                 client_id: '2',
