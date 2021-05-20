@@ -70,7 +70,8 @@ class Osc extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2+'osc/cabecalho/455128',
+            //url: getBaseUrl2+'osc/cabecalho/455128',
+            url: getBaseUrl2+'osc/cabecalho/'+this.props.id,
             cache: false,
             success: function (data) {
                 this.setState({loading: false, txt: data, button:true})
@@ -85,7 +86,8 @@ class Osc extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2+'osc/dados_gerais/455128',
+            //url: getBaseUrl2+'osc/dados_gerais/455128',
+            url: getBaseUrl2+'osc/dados_gerais/'+this.props.id,
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -130,10 +132,12 @@ class Osc extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
-                url: getBaseUrl2+'osc/dados_gerais/455128',
+                //url: getBaseUrl2+'osc/dados_gerais/455128',
+                url: getBaseUrl2+'osc/dados_gerais/'+this.props.id,
                 //data: this.state.form,
                 data:{
-                    id_osc: 455128,
+                    //id_osc: 455128,
+                    id_osc: this.props.id,
                     tx_sigla_osc: this.state.form.tx_sigla_osc,
                     tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
                     tx_nome_situacao_imovel_osc: this.state.form.tx_nome_situacao_imovel_osc,
@@ -383,7 +387,8 @@ class Osc extends React.Component{
             //method: 'POST',
             //url: getBaseUrl+'save-logo-osc/'+id,
             //url: '/save-logo-osc',
-            url: getBaseUrl2+'osc/logo/455128',
+            //url: getBaseUrl2+'osc/logo/455128',
+            url: getBaseUrl2+'osc/logo/'+this.props.id,
             data: formData,
             processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
@@ -405,7 +410,8 @@ class Osc extends React.Component{
             //method: 'POST',
             //url: getBaseUrl+'save-logo-osc/'+id,
             //url: '/save-logo-osc',
-            url: getBaseUrl2+'osc/logo/455128',
+            //url: getBaseUrl2+'osc/logo/455128',
+            url: getBaseUrl2+'osc/logo/'+this.props.id,
             processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             cache: false,
@@ -702,6 +708,6 @@ class Osc extends React.Component{
 }
 
 ReactDOM.render(
-    <Osc/>,
+    <Osc id={id}/>,
     document.getElementById('osc')
 );

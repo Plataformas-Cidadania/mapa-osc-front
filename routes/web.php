@@ -158,7 +158,8 @@ Route::post('/update-data', 'UserAreaController@updateData')->middleware('auth')
 Route::post('/update-descricao', 'UserAreaController@updateDescricao')->middleware('auth');
 Route::get('/get-data', 'UserAreaController@getData')->middleware('auth');
 Route::get('/get-osc', 'UserAreaController@getOsc')->middleware('auth');
-Route::post('/list-users-oscs', 'UserAreaController@listOscs')->middleware('auth');
+//Route::post('/list-users-oscs', 'UserAreaController@listOscs')->middleware('auth');
+Route::post('/list-users-oscs', 'UserAreaController@listOscs');
 Route::post('/save-logo-osc', 'UserAreaController@saveLogoOsc')->middleware('auth');
 Route::post('/get-logo-osc', 'UserAreaController@getLogoOsc')->middleware('auth');
 

@@ -10,7 +10,6 @@
         maxParticipacoes = 200;
         maxRecursos = 200;
         maxProjetos = 200;
-
     </script>
 
     <div id="header"></div>
