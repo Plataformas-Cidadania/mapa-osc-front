@@ -183,7 +183,7 @@ class Osc extends React.Component {
         });
     }*/
     /*listObjetivos(){
-         $.ajax({
+          $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl2+'osc/objetivos/'+455128,
@@ -193,8 +193,8 @@ class Osc extends React.Component {
                 data.find(function(item){
                     objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
                 });
-                 const arrUnique = [...new Set(objetosSelected)];
-                 this.setState({loading: false, datalistObjetivos: arrUnique})
+                  const arrUnique = [...new Set(objetosSelected)];
+                  this.setState({loading: false, datalistObjetivos: arrUnique})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -209,13 +209,13 @@ class Osc extends React.Component {
             cache: false,
             url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
             success: function (data) {
-                 let objetivos = this.state.objetivos;
+                  let objetivos = this.state.objetivos;
                 let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                 data.find(function(item){
+                  data.find(function(item){
                     item.display = true;
                     item.checked = false;
-                 });
-                 objetivos.find(function(item){
+                  });
+                  objetivos.find(function(item){
                     if(item.metas){
                         item.metas.find(function(itemMeta){
                             itemMeta.display = false;
@@ -230,7 +230,7 @@ class Osc extends React.Component {
                         item.metas = data;
                     }
                 });
-                  this.setState({
+                    this.setState({
                     loading: false,
                     objetivos: objetivos,
                     id_area:id,
@@ -246,7 +246,7 @@ class Osc extends React.Component {
     }*/
 
     /*listChkboxMetas(){
-         $.ajax({
+          $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl2+'osc/objetivos/'+455128,
@@ -255,14 +255,14 @@ class Osc extends React.Component {
                     item.checked = true;
                     item.metas = null;
                 });
-                 this.setState({dataChkboxMetas: data})
+                  this.setState({dataChkboxMetas: data})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
     }
-     checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta){
+      checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta){
         let objetivos = this.state.objetivos;
         objetivos.find(function(item){
             if(item.cd_objetivo_projeto === cd_objetivo){
@@ -273,7 +273,7 @@ class Osc extends React.Component {
                 });
             }
         });
-         if(checkedMeta===true){
+          if(checkedMeta===true){
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2+'osc/objetivo',
@@ -295,7 +295,7 @@ class Osc extends React.Component {
                 method: 'DELETE',
                 url: getBaseUrl2+'osc/objetivo/'+id_objetivo_osc,
                 data: {
-                 },
+                  },
                 cache: false,
                 success: function(data){
                     this.listChkboxMetas();
@@ -305,27 +305,27 @@ class Osc extends React.Component {
                 }.bind(this)
             });
         }
-          this.setState({objetivos: objetivos});
+            this.setState({objetivos: objetivos});
     }
-     callSubobjetivos(id){
+      callSubobjetivos(id){
         this.setState({button:false});
         $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
             success: function (data) {
-                 let objetivos = this.state.objetivos;
-                  let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                 data.find(function(item){
+                  let objetivos = this.state.objetivos;
+                    let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
+                  data.find(function(item){
                     item.display = true;
                     item.checked = false;
-                 });
+                  });
                 objetivos.find(function(item){
                     if(item.metas){
                         item.metas.find(function(itemMeta){
                             itemMeta.display = false;
                         });
-                         if(item.cd_objetivo_projeto === id){
+                          if(item.cd_objetivo_projeto === id){
                             item.metas.find(function(itemMeta){
                                 itemMeta.display = true;
                             });
@@ -335,7 +335,7 @@ class Osc extends React.Component {
                         item.metas = data;
                     }
                 });
-                 this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
+                  this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -408,18 +408,18 @@ class Osc extends React.Component {
         if(this.state.objetivos){
             objetivos = this.state.objetivos.map(function (item) {
                 let checkedMetas = false;
-                 if(this.state.datalistObjetivos){
+                  if(this.state.datalistObjetivos){
                     if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
                         checkedMetas = true;
                     }
                 }
-                 let png = padDigits(item.cd_objetivo_projeto, 2);
-                 if(item.metas){
+                  let png = padDigits(item.cd_objetivo_projeto, 2);
+                  if(item.metas){
                     metas.push(item.metas.map(function (itemMeta) {
                         if(itemMeta.checked){
                             checkedMetas = true;
                         }
-                         let checkedMeta = false;
+                          let checkedMeta = false;
                         let id_objetivo_osc = 0;
                         this.state.dataChkboxMetas.find((itemChecked) => {
                             if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc){
@@ -438,7 +438,7 @@ class Osc extends React.Component {
                         );
                     }.bind(this)));
                 }
-                 return (
+                  return (
                     <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
                         <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
                         <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
