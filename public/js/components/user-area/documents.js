@@ -22,6 +22,9 @@ class Documents extends React.Component {
         $.ajax({
             method: 'POST',
             url: 'list-users-documents',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {

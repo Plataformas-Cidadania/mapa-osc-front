@@ -133,6 +133,9 @@ class Data extends React.Component{
             $.ajax({
                 method:'POST',
                 url: 'update-data',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data:{
                     form: this.state.form,
                     plan_id: this.props.plan_id

@@ -122,6 +122,9 @@ class FormEditParticipacaoConselho extends React.Component {
             $.ajax({
                 method: 'PUT',
                 url: getBaseUrl2 + 'osc/ps_conselho/' + this.state.editId,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     cd_conselho: this.state.form.cd_conselho,
                     //cd_tipo_participacao: this.state.form.cd_tipo_participacao,
@@ -130,7 +133,8 @@ class FormEditParticipacaoConselho extends React.Component {
                     dt_data_inicio_conselho: this.state.form.dt_data_inicio_conselho,
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
                     bo_oficial: 0,
-                    id_osc: 611720,
+                    //id_osc: 611720,
+                    id_osc: this.props.id,
                     id: this.state.editId
                 },
                 cache: false,

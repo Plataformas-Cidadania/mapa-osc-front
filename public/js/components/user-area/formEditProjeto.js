@@ -321,6 +321,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'PUT',
                 url: getBaseUrl2 + 'osc/projeto/' + this.state.editId,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     tx_nome_projeto: this.state.form.tx_nome_projeto,
                     cd_status_projeto: this.state.form.cd_status_projeto,
@@ -559,6 +562,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/objetivo',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     //id_objetivo_projeto: cd_meta,
                     cd_meta_projeto: cd_meta,
@@ -578,6 +584,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/objetivo/' + delId,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {},
                 cache: false,
                 success: function (data) {
@@ -601,6 +610,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/recurso',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     id_projeto: this.state.editId,
                     //cd_fonte_recursos_projeto: id_recurso,
@@ -620,6 +632,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/recurso/' + id,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {},
                 cache: false,
                 success: function (data) {
@@ -640,6 +655,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     cd_tipo_parceria_projeto: id_tipo,
                     id_projeto: this.state.editId,
@@ -658,6 +676,9 @@ class FormEditProjeto extends React.Component {
             $.ajax({
                 method: 'DELETE',
                 url: getBaseUrl2 + 'osc/projeto/tipo_parceria/' + id,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {},
                 cache: false,
                 success: function (data) {
@@ -685,6 +706,9 @@ class FormEditProjeto extends React.Component {
         $.ajax({
             method: 'DELETE',
             url: getBaseUrl2 + 'osc/projeto/' + rota + '/' + id,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {
@@ -739,6 +763,9 @@ class FormEditProjeto extends React.Component {
         $.ajax({
             method: 'PUT',
             url: url,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: data,
             cache: false,
             success: function (data) {

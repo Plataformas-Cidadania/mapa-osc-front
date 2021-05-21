@@ -81,11 +81,15 @@ class FormGovernanca extends React.Component{
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/governanca',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data:{
                     tx_nome_dirigente: this.state.form.tx_nome_dirigente,
                     tx_cargo_dirigente: this.state.form.tx_cargo_dirigente,
                     bo_oficial: 0,
-                    id_osc: 455128,
+                    //id_osc: 455128,
+                    id_osc: this.props.id,
                 },
                 cache: false,
                 success: function(data) {

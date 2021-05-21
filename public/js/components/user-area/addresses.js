@@ -97,7 +97,7 @@ class Addresses extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -115,6 +115,9 @@ class Addresses extends React.Component {
         $.ajax({
             method: 'POST',
             url: 'list-users-addresses',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             data: {},
             cache: false,
             success: function (data) {

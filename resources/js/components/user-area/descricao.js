@@ -47,7 +47,8 @@ class Descricao extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'osc/descricao/455128',
+            //url: getBaseUrl2 + 'osc/descricao/455128',
+            url: getBaseUrl2+'osc/descricao/'+this.props.id,
             cache: false,
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
@@ -90,8 +91,11 @@ class Descricao extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
-                //url: 'http://172.24.0.5/api/osc/dados_gerais/455128',
-                url: getBaseUrl2 + 'osc/descricao/455128',
+                //url: getBaseUrl2 + 'osc/descricao/455128',
+                url: getBaseUrl2+'osc/descricao/'+this.props.id,
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 data: this.state.form,
                 cache: false,
                 success: function(data) {
@@ -199,6 +203,6 @@ class Descricao extends React.Component{
 }
 
 ReactDOM.render(
-    <Descricao/>,
+    <Descricao id={id}/>,
     document.getElementById('descricao')
 );

@@ -119,6 +119,9 @@ class FormOscParceira extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/parceira',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: data,
                 cache: false,
                 success: function (data) {

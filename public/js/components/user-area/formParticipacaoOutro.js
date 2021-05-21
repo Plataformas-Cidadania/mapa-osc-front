@@ -115,11 +115,15 @@ class FormParticipacaoOutro extends React.Component {
             $.ajax({
                 method: method,
                 url: getBaseUrl2 + url,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     tx_nome_participacao_social_outra: this.state.form.tx_nome_participacao_social_outra,
                     ft_participacao_social_outra: 'Representante de OSC',
                     bo_oficial: 0,
-                    id_osc: 611720,
+                    //id_osc: 611720,
+                    id_osc: this.props.id,
                     id: id
                 },
                 cache: false,

@@ -78,10 +78,14 @@ class FormConselho extends React.Component {
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/conselho',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
                 data: {
                     tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
                     bo_oficial: 0,
-                    id_osc: 455128
+                    //id_osc: 455128,
+                    id_osc: this.props.id
                 },
                 cache: false,
                 success: function (data) {

@@ -23,7 +23,8 @@ class Menu extends React.Component{
                 <ul className="menu-area" key="menuOsc">
                     <li className="">OSC Apac</li>
                     <div className="line line-fix "/><br/>
-                    <li><a href="osc-user/789809"><i className="fa fa-file-alt" aria-hidden="true"/> Dados gerais</a></li>
+                    {/*<li><a href="osc-user/789809"><i className="fa fa-file-alt" aria-hidden="true"/> Dados gerais</a></li>*/}
+                    <li><a href={"osc-user/"+this.props.id}><i className="fa fa-file-alt" aria-hidden="true"/> Dados gerais</a></li>
                     <li><a href="objetivos-user"><i className="fa fa-file-alt" aria-hidden="true"/> ODS</a></li>
                     <li><a href="areas-atuacao-user"><i className="fa fa-share-alt" aria-hidden="true"/> Áreas de atuação</a></li>
                     <li><a href="descricao-user"><i className="fas fa-align-justify" aria-hidden="true"/> Descrição</a></li>
