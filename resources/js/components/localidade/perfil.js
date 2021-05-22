@@ -44,6 +44,65 @@ class Perfil extends React.Component {
 
     componentDidMount(){
         this.load();
+        this.evolucao_anual();
+        this.caracteristicas();
+        this.natureza_juridica();
+    }
+
+    evolucao_anual(){
+        $.ajax({
+            method:'GET',
+            url: getBaseUrl2 + 'perfil_localidade/evolucao_anual/33',
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                //console.log(data);
+                this.setState({evolucao_quantidade_osc_ano_chart: data.qtd_osc_por_ano});
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({loading: false});
+            }.bind(this),
+        });
+    }
+
+    caracteristicas(){
+        $.ajax({
+            method:'GET',
+            url: getBaseUrl2 + 'perfil_localidade/caracteristicas/33',
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                //console.log(data);
+                this.setState({caracteristicas: data.caracteristicas});
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({loading: false});
+            }.bind(this),
+        });
+    }
+
+    natureza_juridica(){
+        $.ajax({
+            method:'GET',
+            url: getBaseUrl2 + 'perfil_localidade/natureza_juridica/33',
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({data: data});
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({loading: false});
+            }.bind(this),
+        });
     }
 
     load() {
@@ -246,7 +305,7 @@ class Perfil extends React.Component {
 
                 this.setState({
                     loading: false,
-                    caracteristicas: data.caracteristicas,
+                    //caracteristicas: data.caracteristicas,
                     evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
 
                     area_atuacao: data.area_atuacao,
@@ -255,7 +314,7 @@ class Perfil extends React.Component {
                     repasse_recursos: data.repasse_recursos,
                     orcamento: data.orcamento,
 
-                    evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
+                    //evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
                     natureza_juridica_chart: natureza_juridica_chart,
                     trabalhadores_chart: trabalhadores_chart,
                     area_atuacao_chart: area_atuacao_chart,
@@ -522,7 +581,7 @@ class Perfil extends React.Component {
                 <MixedChart
                     id={'mix-chart-evolucao_quantidade_osc_ano_chart'}
                     series={this.state.evolucao_quantidade_osc_ano_chart.series}
-                    labels={this.state.evolucao_quantidade_osc_ano_chart.labels}
+                    labels={this.state.evolucao_quantidade_osc_ano_chart.dataLabels}
                 />
             );
         }

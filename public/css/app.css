@@ -12783,6 +12783,17 @@ label, input, .btn-number {
   display: none;
 }
 
+.box-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1px solid lightgrey;
+  float: left;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 4px;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;
