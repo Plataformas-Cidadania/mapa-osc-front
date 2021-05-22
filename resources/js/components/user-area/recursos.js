@@ -787,14 +787,25 @@ class Recursos extends React.Component{
                                             <i className="fas fa-spinner fa-spin" />
                                         </div>
                                         <div style={{display: this.state.loadingAnos ? 'none' : ''}}>
-                                            {anosRecursos}
+                                            <div style={{float: 'left', marginBottom: '10px'}}>
+                                                {anosRecursos}
+                                            </div>
+                                            <div style={{display: this.state.activeIncert ? "none" : "", float: 'left', width: '105px'}}>
+                                                <input className="form-control form-p" type="text" placeholder="Ano"  name="campoAno" style={{display: this.state.addAnos ? "" : "none"}} onChange={this.handleInputChange} maxLength="4"/>
 
-                                            <a className="cursor" onClick={() => this.callAddAnos(true)}  style={{display: this.state.addAnos ? "none" : "", top: 7, position: 'relative'}} >
+                                                <div className="icon-forms">
+                                                    <a onClick={this.callPushAnos} style={{display: this.state.addAnos ? "" : "none", marginRight: '10px'}} className="text-success cursor"><i className="far fa-save"/></a>
+                                                    <a onClick={() => this.callAddAnos(false)} style={{display: this.state.addAnos ? "" : "none"}} className="text-danger cursor"><i className="far fa-times-circle"/></a>
+                                                </div>
+                                            </div>
+
+
+                                            <a className="cursor" onClick={() => this.callAddAnos(true)}  style={{display: this.state.addAnos ? "none" : "", top: '4px', position: 'relative'}} >
                                                 <i className="fas fa-plus-circle fa-2x tx-pri" />
                                             </a>
 
                                             <div style={{display: this.state.activeMsg==true ? "" : "none"}}>
-                                                <div className="alert alert-danger" style={{display: this.state.activeIncert ? "" : "none", marginTop: '10px'}}>
+                                                <div className="alert alert-danger" style={{display: this.state.activeIncert ? "" : "none", marginTop: '10px', clear: 'both'}}>
                                                     Para adicionar mais um ano, será preciso informar uma contribuição pertinente ao ano! <br/><br/>
                                                     <a type="button" className="btn-primary btn-xs float-right" onClick={() => this.callAddAnos(false)}>
                                                         Continuar
@@ -804,12 +815,10 @@ class Recursos extends React.Component{
 
 
 
-                                            <div style={{display: this.state.activeIncert ? "none" : ""}}>
-                                                <br/>
-                                                <input className="form-control form-p" type="text" placeholder="Insira um ano (Ex.: 2021)"  name="campoAno" style={{display: this.state.addAnos ? "" : "none"}} onChange={this.handleInputChange} maxLength="4"/>
-                                                <a onClick={this.callPushAnos} style={{display: this.state.addAnos ? "" : "none", marginRight: '10px'}} className="text-success cursor">adicionar</a>
-                                                <a onClick={() => this.callAddAnos(false)} style={{display: this.state.addAnos ? "" : "none"}} className="text-danger cursor">cancelar</a>
-                                            </div>
+                                            {/*<div className="float-right" onClick={() => this.saveOutrosSub(item.idSelectedSub)}  style={{margin: '-30px 10px 0 0'}}>
+                                                <div style={{display: this.state.saveLoading===item.idSelectedSub ? 'none' : ''}}><i className="far fa-save"/></div>
+                                                <div style={{display: this.state.saveLoading===item.idSelectedSub ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                            </div>*/}
 
                                         </div>
                                     </div>

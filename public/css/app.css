@@ -12794,6 +12794,13 @@ label, input, .btn-number {
   margin-top: 4px;
 }
 
+.icon-forms {
+  float: right;
+  position: relative;
+  margin-top: -30px;
+  margin-right: 12px;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;

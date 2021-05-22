@@ -796,10 +796,33 @@ class Recursos extends React.Component {
                                 React.createElement(
                                     'div',
                                     { style: { display: this.state.loadingAnos ? 'none' : '' } },
-                                    anosRecursos,
+                                    React.createElement(
+                                        'div',
+                                        { style: { float: 'left', marginBottom: '10px' } },
+                                        anosRecursos
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.activeIncert ? "none" : "", float: 'left', width: '105px' } },
+                                        React.createElement('input', { className: 'form-control form-p', type: 'text', placeholder: 'Ano', name: 'campoAno', style: { display: this.state.addAnos ? "" : "none" }, onChange: this.handleInputChange, maxLength: '4' }),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'icon-forms' },
+                                            React.createElement(
+                                                'a',
+                                                { onClick: this.callPushAnos, style: { display: this.state.addAnos ? "" : "none", marginRight: '10px' }, className: 'text-success cursor' },
+                                                React.createElement('i', { className: 'far fa-save' })
+                                            ),
+                                            React.createElement(
+                                                'a',
+                                                { onClick: () => this.callAddAnos(false), style: { display: this.state.addAnos ? "" : "none" }, className: 'text-danger cursor' },
+                                                React.createElement('i', { className: 'far fa-times-circle' })
+                                            )
+                                        )
+                                    ),
                                     React.createElement(
                                         'a',
-                                        { className: 'cursor', onClick: () => this.callAddAnos(true), style: { display: this.state.addAnos ? "none" : "", top: 7, position: 'relative' } },
+                                        { className: 'cursor', onClick: () => this.callAddAnos(true), style: { display: this.state.addAnos ? "none" : "", top: '4px', position: 'relative' } },
                                         React.createElement('i', { className: 'fas fa-plus-circle fa-2x tx-pri' })
                                     ),
                                     React.createElement(
@@ -807,7 +830,7 @@ class Recursos extends React.Component {
                                         { style: { display: this.state.activeMsg == true ? "" : "none" } },
                                         React.createElement(
                                             'div',
-                                            { className: 'alert alert-danger', style: { display: this.state.activeIncert ? "" : "none", marginTop: '10px' } },
+                                            { className: 'alert alert-danger', style: { display: this.state.activeIncert ? "" : "none", marginTop: '10px', clear: 'both' } },
                                             'Para adicionar mais um ano, ser\xE1 preciso informar uma contribui\xE7\xE3o pertinente ao ano! ',
                                             React.createElement('br', null),
                                             React.createElement('br', null),
@@ -816,22 +839,6 @@ class Recursos extends React.Component {
                                                 { type: 'button', className: 'btn-primary btn-xs float-right', onClick: () => this.callAddAnos(false) },
                                                 'Continuar'
                                             )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { style: { display: this.state.activeIncert ? "none" : "" } },
-                                        React.createElement('br', null),
-                                        React.createElement('input', { className: 'form-control form-p', type: 'text', placeholder: 'Insira um ano (Ex.: 2021)', name: 'campoAno', style: { display: this.state.addAnos ? "" : "none" }, onChange: this.handleInputChange, maxLength: '4' }),
-                                        React.createElement(
-                                            'a',
-                                            { onClick: this.callPushAnos, style: { display: this.state.addAnos ? "" : "none", marginRight: '10px' }, className: 'text-success cursor' },
-                                            'adicionar'
-                                        ),
-                                        React.createElement(
-                                            'a',
-                                            { onClick: () => this.callAddAnos(false), style: { display: this.state.addAnos ? "" : "none" }, className: 'text-danger cursor' },
-                                            'cancelar'
                                         )
                                     )
                                 )
