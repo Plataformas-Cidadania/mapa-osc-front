@@ -3,7 +3,7 @@ class Recurso extends React.Component {
         super(props);
         this.state = {
             loadingList: false,
-            value: null
+            value: ''
         };
         this.storeCampo = this.storeCampo.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -82,10 +82,12 @@ class Recurso extends React.Component {
             React.createElement(
                 'div',
                 { className: 'label-float' },
-                React.createElement('input', { className: "form-control form-g ", type: 'text', name: this.state.name, onChange: this.handleInputChange,
-                    defaultValue: this.state.value,
-                    onBlur: () => this.storeCampo(this.state.cd, this.state.value, this.state.id, this.state.ano),
-                    placeholder: 'Informe o valor' }),
+                React.createElement('input', { className: "form-control form-g ", type: 'text', onChange: this.handleInputChange, placeholder: 'Informe o valor',
+                    name: this.state.name,
+                    value: this.state.value
+                    //defaultValue={this.state.value}
+                    , onBlur: () => this.storeCampo(this.state.cd, this.state.value, this.state.id, this.state.ano)
+                }),
                 React.createElement(
                     'label',
                     { htmlFor: this.state.name },
