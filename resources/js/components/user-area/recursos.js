@@ -718,7 +718,7 @@ class Recursos extends React.Component{
                     id_osc: 789809,
                     ano: this.state.ano,
                     ft_nao_possui: 'Representante de OSC',
-                    cd_origem_fonte_redursos_osc: cd_origem,
+                    cd_origem_fonte_recursos_osc: cd_origem,
                 },
                 cache: false,
                 url: getBaseUrl2 + 'osc/sem_recursos',

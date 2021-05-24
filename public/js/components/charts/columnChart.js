@@ -1,7 +1,6 @@
 class ColumnChart extends React.Component {
     constructor(props) {
         super(props);
-        //console.log(props);
         this.state = {
             options: {
                 chart: {
@@ -33,7 +32,7 @@ class ColumnChart extends React.Component {
                 },
                 yaxis: {
                     title: {
-                        text: props.series[0].name
+                        text: props.series.name
                     }
                 },
                 fill: {
@@ -49,7 +48,8 @@ class ColumnChart extends React.Component {
             },
             /*series: [{
                 name: 'series1',
-                data: [31, 40, 28, 51, 42, 109, 100]
+                data: [31, 40, 28, 51, 42, 109, 100],
+                type: "column",
             }]*/
             series: props.series
         };
