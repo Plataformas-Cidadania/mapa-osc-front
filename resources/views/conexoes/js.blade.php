@@ -297,6 +297,13 @@
 @if($rota=="reset-password/{token}/{email}")
     <script src="js/components/login/resetPassword.js"></script>
 @endif
+@if($rota=="osc-user/{id}")
+    <script>
+        localStorage.setItem('@App:id_osc', {{$id}});
+        id = localStorage.getItem('@App:id_osc');
+    </script>
+    <script src="js/components/user-area/osc.js"></script>
+@endif
 @if(
     $rota=="area-user" ||
     $rota=="dashboard-user" ||
@@ -316,6 +323,9 @@
     $rota=="recursos-user" ||
     $rota=="selo-user"
     )
+    <script>
+        id = localStorage.getItem('@App:id_osc');
+    </script>
     <script src="js/components/user-area/headerUser.js"></script>
     <script src="js/components/user-area/menu.js"></script>
 @endif
@@ -386,12 +396,6 @@
 @endif
 @if($rota=="oscs-user")
     <script src="js/components/user-area/oscs.js"></script>
-@endif
-@if($rota=="osc-user/{id}")
-    <script>
-        id = {{$id}};
-    </script>
-    <script src="js/components/user-area/osc.js"></script>
 @endif
 @if($rota=="objetivos-user")
     <script src="js/components/user-area/objetivos.js"></script>
