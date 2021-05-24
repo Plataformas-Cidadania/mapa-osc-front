@@ -41,6 +41,6 @@ class Menu extends React.Component{
 }
 
 ReactDOM.render(
-    <Menu/>,
+    <Menu id={id} />,
     document.getElementById('menu')
 );

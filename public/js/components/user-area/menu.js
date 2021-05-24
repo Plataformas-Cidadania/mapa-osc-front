@@ -179,4 +179,4 @@ class Menu extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Menu, null), document.getElementById('menu'));
+ReactDOM.render(React.createElement(Menu, { id: id }), document.getElementById('menu'));
