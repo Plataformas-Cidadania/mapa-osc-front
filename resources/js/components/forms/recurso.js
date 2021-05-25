@@ -25,7 +25,8 @@ class Recurso extends React.Component {
                     method:'PUT',
                     url: getBaseUrl2+'osc/recursos/'+id,
                     data:{
-                        id_osc: '789809',
+                        //id_osc: '789809',
+                        id_osc: this.props.id,
                         dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd,
@@ -46,8 +47,12 @@ class Recurso extends React.Component {
                 $.ajax({
                     method:'POST',
                     url: getBaseUrl2+'osc/recursos',
+                    headers: {
+                        Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                    },
                     data:{
-                        id_osc: '789809',
+                        //id_osc: '789809',
+                        id_osc: this.props.id,
                         dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd,
@@ -100,7 +105,7 @@ class Recurso extends React.Component {
 }
 
 ReactDOM.render(
-    <Recurso />,
+    <Recurso id={id}/>,
     document.getElementById('recurso')
 );
 
