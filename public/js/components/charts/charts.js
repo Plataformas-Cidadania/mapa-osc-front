@@ -350,7 +350,7 @@ class Charts extends React.Component {
                         chart = React.createElement(MixedChart, { id: 'mix-chart' + item.chart, yaxis: ['Teste'], series: item.series, labels: item.labels });
                         break;
                     case "pie":
-                        chart = React.createElement(PieChart, { id: 'pie-chart' + item.chart, series: item.series, labels: item.labels });
+                        chart = React.createElement(PieChart, { id: 'pie-chart' + item.chart, series: item.series, labels: item.labels, width: 500 });
                         break;
                 }
 

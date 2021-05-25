@@ -302,7 +302,7 @@ class Charts extends React.Component{
                         chart = <MixedChart id={'mix-chart'+item.chart} yaxis={['Teste']} series={item.series} labels={item.labels}/>;
                         break;
                     case "pie":
-                        chart = <PieChart id={'pie-chart'+item.chart} series={item.series} labels={item.labels}/>;
+                        chart = <PieChart id={'pie-chart'+item.chart} series={item.series} labels={item.labels} width={500}/>;
                         break;
                 }
 
