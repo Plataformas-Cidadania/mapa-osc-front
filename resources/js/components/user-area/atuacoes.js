@@ -77,8 +77,7 @@ class Atuacoes extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl+'menu/osc/area_atuacao',
-            url: getBaseUrl2+'menu/osc/area_atuacao',
+            url: getBaseUrl+'menu/osc/area_atuacao',
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
