@@ -392,6 +392,9 @@ class Osc extends React.Component{
             //url: '/save-logo-osc',
             //url: getBaseUrl2+'osc/logo/455128',
             url: getBaseUrl2+'osc/logo/'+this.props.id,
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
             data: formData,
             processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS

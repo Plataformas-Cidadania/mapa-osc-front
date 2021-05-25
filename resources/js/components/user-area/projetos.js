@@ -197,12 +197,12 @@ class Projetos extends React.Component{
 
         if(this.state.editTipo=='insert'){
             form = (
-                <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                <FormProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} id_osc={this.props.id} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                 );
         }
         if(this.state.editTipo=='edit'){
             form = (
-                <FormEditProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                <FormEditProjeto action={this.state.actionForm} list={this.list} id={this.state.editId} id_osc={this.props.id} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                 );
         }
 

@@ -95,7 +95,8 @@ class Atuacoes extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'osc/dados_gerais/'+702542,
+            //url: getBaseUrl+'osc/dados_gerais/'+702542,
+            url: getBaseUrl+'osc/dados_gerais/'+this.props.id,
             success: function (data) {
                 this.setState({loading: false, dataCnae: data.tx_nome_atividade_economica_osc})
             }.bind(this),
@@ -110,7 +111,8 @@ class Atuacoes extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/areas_atuacao/'+597188,//789809
+            //url: getBaseUrl2+'osc/areas_atuacao/'+597188,//789809
+            url: getBaseUrl2+'osc/areas_atuacao/'+this.props.id,
             success: function (data) {
                 let dataArea = '';
                 data.find(function(item){

@@ -132,7 +132,7 @@ class FormEditCertificate extends React.Component {
 
             let data = {
                 //id_osc: '455128',
-                id_osc: this.props.id,
+                id_osc: this.props.id_osc,
                 id: this.state.editId,
                 dt_inicio_certificado: this.state.form.dt_inicio_certificado,
                 dt_fim_certificado: this.state.form.dt_fim_certificado,

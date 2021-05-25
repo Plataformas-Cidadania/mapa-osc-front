@@ -154,7 +154,7 @@ class Certificates extends React.Component {
 
         if (this.state.editTipo == 'insert') {
             form = React.createElement(FormCertificate, {
-                id: this.props.id //id da osc
+                id_osc: this.props.id //id da osc
                 , action: this.state.actionForm,
                 list: this.list,
                 showHideForm: this.showHideForm,
@@ -164,7 +164,8 @@ class Certificates extends React.Component {
             form = React.createElement(FormEditCertificate, {
                 action: this.state.actionForm,
                 list: this.list,
-                id: this.state.editId,
+                id_osc: this.props.id //id da osc
+                , id: this.state.editId,
                 showHideForm: this.showHideForm,
                 closeForm: this.closeForm });
         }

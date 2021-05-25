@@ -173,7 +173,7 @@ class Projetos extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -221,10 +221,10 @@ class Projetos extends React.Component {
         let form = '';
 
         if (this.state.editTipo == 'insert') {
-            form = React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm });
+            form = React.createElement(FormProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, id_osc: this.props.id, showHideForm: this.showHideForm, closeForm: this.closeForm });
         }
         if (this.state.editTipo == 'edit') {
-            form = React.createElement(FormEditProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm });
+            form = React.createElement(FormEditProjeto, { action: this.state.actionForm, list: this.list, id: this.state.editId, id_osc: this.props.id, showHideForm: this.showHideForm, closeForm: this.closeForm });
         }
 
         return React.createElement(

@@ -382,6 +382,7 @@ class Participacoes extends React.Component {
                 action: this.state.actionForm,
                 list: this.list,
                 id: this.state.editId,
+                id_osc: this.props.id_osc,
                 closeForm: this.closeForm });
         }
         if (this.state.editTipo == 'conferencia') {
@@ -389,6 +390,7 @@ class Participacoes extends React.Component {
                 action: this.state.actionForm,
                 list: this.list,
                 id: this.state.editId,
+                id_osc: this.props.id_osc,
                 closeForm: this.closeForm });
         }
         if (this.state.editTipo == 'conselho') {
@@ -396,6 +398,7 @@ class Participacoes extends React.Component {
                 action: this.state.actionForm,
                 list: this.list,
                 id: this.state.editId,
+                id_osc: this.props.id_osc,
                 closeForm: this.cleanFormConselho });
         }
 
@@ -784,6 +787,7 @@ class Participacoes extends React.Component {
                                                 actionConselho: this.state.actionFormConselho,
                                                 list: this.list,
                                                 id: this.state.editIdConselho,
+                                                id_osc: this.props.id_osc,
                                                 showHideFormConselho: this.showHideFormConselho,
                                                 closeFormConselho: this.closeFormConselho })
                                         ),
@@ -900,7 +904,9 @@ class Participacoes extends React.Component {
                                             ),
                                             React.createElement(FormParticipacaoConferencia, {
                                                 action: this.state.actionFormConferencia,
-                                                list: this.list, id: this.state.editId,
+                                                list: this.list,
+                                                id: this.state.editId,
+                                                id_osc: this.props.id_osc,
                                                 showHideFormConferencia: this.showHideFormConferencia,
                                                 closeFormConferencia: this.closeFormConferencia })
                                         ),
@@ -1017,7 +1023,9 @@ class Participacoes extends React.Component {
                                             ),
                                             React.createElement(FormParticipacaoOutro, {
                                                 action: this.state.actionFormOutro,
-                                                list: this.list, id: this.state.editId,
+                                                list: this.list,
+                                                id: this.state.editId,
+                                                id_osc: this.props.id_osc,
                                                 showHideFormOutro: this.showHideFormOutro,
                                                 closeFormOutro: this.closeFormOutro })
                                         ),

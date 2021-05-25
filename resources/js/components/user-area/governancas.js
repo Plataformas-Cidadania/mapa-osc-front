@@ -267,6 +267,7 @@ class Governancas extends React.Component{
                 <FormEditConselho
                     action={this.state.actionFormConselho}
                     list={this.governanca}
+                    id_osc={this.props.id}
                     id={this.state.editId}
                     showHideFormConselho={this.showHideFormConselho}
                     closeForm={this.closeFormConselho}/>
@@ -278,6 +279,7 @@ class Governancas extends React.Component{
                     action={this.state.actionForm}
                     list={this.governanca}
                     id={this.state.editId}
+                    id_osc={this.props.id}
                     showHideForm={this.showHideForm}
                     closeForm={this.closeForm}/>
             );
@@ -380,7 +382,7 @@ class Governancas extends React.Component{
                                 </a>
                             </div>
                             <div style={{display: this.state.showForm ? 'block' : 'none'}}>
-                                <FormGovernanca action={this.state.actionForm} list={this.governanca} id={this.state.editId} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                                <FormGovernanca action={this.state.actionForm} list={this.governanca} id={this.state.editId} id_osc:this.props.id showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                             </div>
                             {governancas}
                         </div>
@@ -400,7 +402,7 @@ class Governancas extends React.Component{
                                 </a>
                             </div>
                             <div style={{display: this.state.showFormConselho ? 'block' : 'none'}}>
-                                <FormConselho action={this.state.actionFormConselho} list={this.governanca} id={this.state.editIdConselho} showHideFormConselho={this.showHideFormConselho} closeForm={this.closeFormConselho}/>
+                                <FormConselho action={this.state.actionFormConselho} list={this.governanca} id={this.state.editIdConselho} id_osc={this.props.id} showHideFormConselho={this.showHideFormConselho} closeForm={this.closeFormConselho}/>
                             </div>
                             {conselhos}
                         </div>

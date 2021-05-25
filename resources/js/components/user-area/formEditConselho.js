@@ -110,7 +110,7 @@ class FormEditConselho extends React.Component{
                     tx_nome_conselheiro: this.state.form.tx_nome_conselheiro,
                     bo_oficial: 0,
                     //id_osc: 455128,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                     id: this.state.editId,
                 },
                 cache: false,

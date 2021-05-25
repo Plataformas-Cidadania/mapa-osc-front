@@ -134,7 +134,7 @@ class FormEditParticipacaoConselho extends React.Component {
                     dt_data_fim_conselho: this.state.form.dt_data_fim_conselho,
                     bo_oficial: 0,
                     //id_osc: 611720,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                     id: this.state.editId
                 },
                 cache: false,

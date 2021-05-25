@@ -123,7 +123,7 @@ class FormParticipacaoOutro extends React.Component {
                     ft_participacao_social_outra: 'Representante de OSC',
                     bo_oficial: 0,
                     //id_osc: 611720,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                     id: id
                 },
                 cache: false,

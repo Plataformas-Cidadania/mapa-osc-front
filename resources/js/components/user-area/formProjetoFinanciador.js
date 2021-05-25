@@ -70,7 +70,7 @@ class FormProjetoFinanciador extends React.Component{
 
             let data = {
                 //id_osc: '455128',
-                id_osc: this.props.id,
+                id_osc: this.props.id_osc,
                 id_projeto: this.props.id_projeto,
                 tx_nome_financiador: this.state.form.tx_nome_financiador,
                 ft_nome_financiador: 'Representante de OSC',

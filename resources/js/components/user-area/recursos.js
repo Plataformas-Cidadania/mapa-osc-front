@@ -214,7 +214,8 @@ class Recursos extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2+'osc/anos_recursos/789809',
+            //url: getBaseUrl2+'osc/anos_recursos/789809',
+            url: getBaseUrl2+'osc/anos_recursos/'+this.props.id,
             cache: false,
             success: function (data) {
                 const  data2 =  data;
@@ -256,7 +257,8 @@ class Recursos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2+'osc/recursos/'+ano+'/789809',
+            //url: getBaseUrl2+'osc/recursos/'+ano+'/789809',
+            url: getBaseUrl2+'osc/recursos/'+ano+'/'+this.props.id,
             success: function (data) {
                 this.setState({dataRecursos: data[ano], ano: ano})
                 this.callRecursosValue();
@@ -626,7 +628,8 @@ class Recursos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/789809',
+            //url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/789809',
+            url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/'+this.props.id,
             success: function (data) {
 
 
@@ -715,13 +718,17 @@ class Recursos extends React.Component{
             $.ajax({
                 method: 'POST',
                 data: {
-                    id_osc: 789809,
+                    //id_osc: 789809,
+                    id_osc: this.props.id,
                     ano: this.state.ano,
                     ft_nao_possui: 'Representante de OSC',
                     cd_origem_fonte_redursos_osc: cd_origem,
                 },
                 cache: false,
                 url: getBaseUrl2 + 'osc/sem_recursos',
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 success: function (data) {
                     //this.setState();
                 }.bind(this),
@@ -736,6 +743,9 @@ class Recursos extends React.Component{
                 method: 'DELETE',
                 cache: false,
                 url: getBaseUrl2 + 'osc/sem_recursos/' + ano,
+                headers: {
+                    Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                },
                 success: function (data) {
                     //this.setState();
                 }.bind(this),
@@ -1120,6 +1130,6 @@ class Recursos extends React.Component{
 }
 
 ReactDOM.render(
-    <Recursos/>,
+    <Recursos id={id}/>,
     document.getElementById('recursos')
 );

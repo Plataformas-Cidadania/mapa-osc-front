@@ -134,7 +134,7 @@ class FormEditParticipacaoConferencia extends React.Component{
                     ft_forma_participacao_conferencia: 'Representante de OSC',
                     bo_oficial: 0,
                     //id_osc: 611720,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                     id: this.state.editId,
                 },
                 cache: false,

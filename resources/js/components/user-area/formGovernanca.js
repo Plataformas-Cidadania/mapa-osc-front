@@ -89,7 +89,7 @@ class FormGovernanca extends React.Component{
                     tx_cargo_dirigente: this.state.form.tx_cargo_dirigente,
                     bo_oficial: 0,
                     //id_osc: 455128,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                 },
                 cache: false,
                 success: function(data) {

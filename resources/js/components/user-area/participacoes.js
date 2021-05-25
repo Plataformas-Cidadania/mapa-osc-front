@@ -368,6 +368,7 @@ class Participacoes extends React.Component{
                     action={this.state.actionForm}
                     list={this.list}
                     id={this.state.editId}
+                    id_osc={this.props.id_osc}
                     closeForm={this.closeForm}/>
             );
         }
@@ -377,6 +378,7 @@ class Participacoes extends React.Component{
                     action={this.state.actionForm}
                     list={this.list}
                     id={this.state.editId}
+                    id_osc={this.props.id_osc}
                     closeForm={this.closeForm}/>
             );
         }
@@ -386,6 +388,7 @@ class Participacoes extends React.Component{
                     action={this.state.actionForm}
                     list={this.list}
                     id={this.state.editId}
+                    id_osc={this.props.id_osc}
                     closeForm={this.cleanFormConselho}/>
             );
         }
@@ -606,6 +609,7 @@ class Participacoes extends React.Component{
                                                     actionConselho={this.state.actionFormConselho}
                                                     list={this.list}
                                                     id={this.state.editIdConselho}
+                                                    id_osc={this.props.id_osc}
                                                     showHideFormConselho={this.showHideFormConselho}
                                                     closeFormConselho={this.closeFormConselho}/>
                                             </div>
@@ -665,7 +669,9 @@ class Participacoes extends React.Component{
                                                 <a onClick={this.showHideFormConferencia}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
                                                 <FormParticipacaoConferencia
                                                     action={this.state.actionFormConferencia}
-                                                    list={this.list} id={this.state.editId}
+                                                    list={this.list}
+                                                    id={this.state.editId}
+                                                    id_osc={this.props.id_osc}
                                                     showHideFormConferencia={this.showHideFormConferencia}
                                                     closeFormConferencia={this.closeFormConferencia}/>
                                             </div>
@@ -727,7 +733,9 @@ class Participacoes extends React.Component{
                                                 <a onClick={this.showHideFormOutro}><i className="far fa-times-circle cursor text-warning" style={{margin: "-25px 0 0 0", float: "right"}}/></a>
                                                 <FormParticipacaoOutro
                                                     action={this.state.actionFormOutro}
-                                                    list={this.list} id={this.state.editId}
+                                                    list={this.list}
+                                                    id={this.state.editId}
+                                                    id_osc={this.props.id_osc}
                                                     showHideFormOutro={this.showHideFormOutro}
                                                     closeFormOutro={this.closeFormOutro}/>
                                             </div>
