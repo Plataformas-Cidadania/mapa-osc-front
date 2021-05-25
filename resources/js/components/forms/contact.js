@@ -4,7 +4,6 @@ class Contact extends React.Component{
         this.state = {
             form: {
                 name: '',
-                /*email: 'this.props.email',*/
                 email: '',
                 cel: '',
                 whatsapp: '',
@@ -25,7 +24,6 @@ class Contact extends React.Component{
     }
 
     componentDidMount(){
-        //this.get_location();
     }
 
     handleInputChange(event) {
@@ -80,8 +78,6 @@ class Contact extends React.Component{
 
     validateName(name){
         let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
         if(array_name.length<2){
             return false;
         }
@@ -131,7 +127,6 @@ class Contact extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
                     this.setState({loading: false});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -144,15 +139,11 @@ class Contact extends React.Component{
 
     render(){
         return (
-
-
-
-
                     <form>
-                        <div >
-                            <label htmlFor="name">Como podemos ajudar?</label>
+                        <div>
+
                             <select className="form-control" id="assunto">
-                                <option value="">Selecione o assunto</option>
+                                <option value="">Como podemos ajudar?</option>
                                 <option value="1">Cadastro Município-Estado</option>
                                 <option value="2">Cadastro Representante</option>
                                 <option value="3">Dúvidas</option>
@@ -200,15 +191,10 @@ class Contact extends React.Component{
                             </div>
                         </div>
 
-
-
-                        <div className="clear-float"></div>
-                        {/*<p><i>* campos obrigatórios</i></p>*/}
-
+                        <div className="clear-float"/>
 
                         <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.contact}>Cadastrar</button>
                         <br/>
-                        {/*{this.state.form.cel}*/}
 
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>

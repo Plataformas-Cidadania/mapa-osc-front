@@ -4,7 +4,6 @@ class Contact extends React.Component {
         this.state = {
             form: {
                 name: '',
-                /*email: 'this.props.email',*/
                 email: '',
                 cel: '',
                 whatsapp: ''
@@ -24,9 +23,7 @@ class Contact extends React.Component {
         this.validate = this.validate.bind(this);
     }
 
-    componentDidMount() {
-        //this.get_location();
-    }
+    componentDidMount() {}
 
     handleInputChange(event) {
         const target = event.target;
@@ -80,8 +77,6 @@ class Contact extends React.Component {
 
     validateName(name) {
         let array_name = name.split(' ');
-        //console.log(array_name);
-        //console.log(array_name.length);
         if (array_name.length < 2) {
             return false;
         }
@@ -131,7 +126,6 @@ class Contact extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
                     this.setState({ loading: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -150,17 +144,12 @@ class Contact extends React.Component {
                 'div',
                 null,
                 React.createElement(
-                    'label',
-                    { htmlFor: 'name' },
-                    'Como podemos ajudar?'
-                ),
-                React.createElement(
                     'select',
                     { className: 'form-control', id: 'assunto' },
                     React.createElement(
                         'option',
                         { value: '' },
-                        'Selecione o assunto'
+                        'Como podemos ajudar?'
                     ),
                     React.createElement(
                         'option',
