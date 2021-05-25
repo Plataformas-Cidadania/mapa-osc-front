@@ -2,7 +2,7 @@ var group = L.layerGroup();
 var group2 = L.layerGroup();
 
     L.marker([-22.90193745979269, -43.18279841993748]).bindPopup('Ipea - Rio de Janeiro').addTo(group),
-    L.marker([-15.79829061538301, -47.8825063229858]).bindPopup('Ipea - Brasília').addTo(group)
+    L.marker([-15.79829061538301, -47.8825063229858]).bindPopup('Ipea - Brasília').addTo(group2)
 
 
 var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
