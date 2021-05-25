@@ -115,4 +115,7 @@ class Recurso extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Recurso, null), document.getElementById('recurso'));
+/*ReactDOM.render(
+    <Recurso/>,
+    document.getElementById('recurso')
+);*/

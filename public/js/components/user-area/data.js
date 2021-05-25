@@ -62,7 +62,11 @@ class Data extends React.Component {
         this.setState({ loadingCep: true, button: false });
         $.ajax({
             method: 'GET',
+            //url: 'get-user-auth',
             url: 'get-data',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             cache: false,
             success: function (data) {
                 this.setState({ loading: false, form: data, button: true });
@@ -130,7 +134,7 @@ class Data extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: 'update-data',
+                url: 'update-user-data',
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
