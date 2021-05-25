@@ -290,6 +290,7 @@ class Governancas extends React.Component {
             form = React.createElement(FormEditConselho, {
                 action: this.state.actionFormConselho,
                 list: this.governanca,
+                id_osc: this.props.id,
                 id: this.state.editId,
                 showHideFormConselho: this.showHideFormConselho,
                 closeForm: this.closeFormConselho });
@@ -299,6 +300,7 @@ class Governancas extends React.Component {
                 action: this.state.actionForm,
                 list: this.governanca,
                 id: this.state.editId,
+                id_osc: this.props.id,
                 showHideForm: this.showHideForm,
                 closeForm: this.closeForm });
         }
@@ -479,7 +481,7 @@ class Governancas extends React.Component {
                         React.createElement(
                             'div',
                             { style: { display: this.state.showForm ? 'block' : 'none' } },
-                            React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.governanca, id: this.state.editId, showHideForm: this.showHideForm, closeForm: this.closeForm })
+                            React.createElement(FormGovernanca, { action: this.state.actionForm, list: this.governanca, id: this.state.editId, id_osc: this.props.id, showHideForm: this.showHideForm, closeForm: this.closeForm })
                         ),
                         governancas
                     ),
@@ -513,7 +515,7 @@ class Governancas extends React.Component {
                         React.createElement(
                             'div',
                             { style: { display: this.state.showFormConselho ? 'block' : 'none' } },
-                            React.createElement(FormConselho, { action: this.state.actionFormConselho, list: this.governanca, id: this.state.editIdConselho, showHideFormConselho: this.showHideFormConselho, closeForm: this.closeFormConselho })
+                            React.createElement(FormConselho, { action: this.state.actionFormConselho, list: this.governanca, id: this.state.editIdConselho, id_osc: this.props.id, showHideFormConselho: this.showHideFormConselho, closeForm: this.closeFormConselho })
                         ),
                         conselhos
                     )
