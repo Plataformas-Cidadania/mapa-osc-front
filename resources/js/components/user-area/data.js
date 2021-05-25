@@ -3,17 +3,17 @@ class Data extends React.Component{
         super(props);
         this.state = {
             form: {
-                email: '',
-                name: '',
-                endereco: '',
+                tx_email_usuario: '',
+                tx_nome_usuario: '',
+                nr_cpf_usuario: '',
+                //endereco: '',
             },
             button: true,
             loading: false,
             requireds: {
-                name: true,
-                email: true,
-                cpf: true,
-                cnpj: true,
+                tx_nome_usuairo: true,
+                tx_email_usuario: true,
+                nr_cpf_usuario: true,
             },
             showMsg: false,
             msg: '',
@@ -63,8 +63,7 @@ class Data extends React.Component{
             this.setState({loadingCep: true, button:false});
             $.ajax({
                 method: 'GET',
-                //url: 'get-user-auth',
-                url: 'get-data',
+                url: getBaseUrl2 + 'get-user-auth',
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
@@ -190,26 +189,26 @@ class Data extends React.Component{
                 <div className="row">
                     <div className="col-md-12">
                         <form>
-                            <div>
+                            {/*<div>
                                 <div className="col-md-5">
                                     <label htmlFor="cnpj">CNPJ*</label><br/>
                                     <input className={"form-control form-g "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} value={this.state.form.cnpj} placeholder="CNPJ"/><br/>
                                 </div>
-                            </div>
+                            </div>*/}
 
                             <div className="col-md-8">
                                 <label htmlFor="name">Seu nome e sobrenome*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} value={this.state.form.name} placeholder="Nome"/><br/>
+                                <input className={"form-control form-g "+(this.state.requireds.tx_nome_usuario ? '' : 'invalid-field')} type="text" name="tx_nome_usuario" onChange={this.handleInputChange} value={this.state.form.tx_nome_usuario} placeholder="Nome"/><br/>
                             </div>
 
                             <div className="col-md-8">
                                 <label htmlFor="email">E-mail*</label><br/>
-                                <input className={"form-control form-g "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
+                                <input className={"form-control form-g "+(this.state.requireds.tx_email_usuario ? '' : 'invalid-field')} type="text" name="tx_email_usuario" onChange={this.handleInputChange} value={this.state.form.tx_email_usuario} placeholder="E-mail"/><br/>
                             </div>
 
                             <div className="col-md-4">
                                 <label htmlFor="cpf">CPF*</label><br/>
-                                <input className={"form-control form-m "+(this.state.requireds.cpf ? '' : 'invalid-field')} type="text" name="cpf" onChange={this.handleInputChange} value={this.state.form.cpf} placeholder="Cpf"/><br/>
+                                <input className={"form-control form-m "+(this.state.requireds.nr_cpf_usuario ? '' : 'invalid-field')} type="text" name="nr_cpf_usuario" onChange={this.handleInputChange} value={this.state.form.nr_cpf_usuario} placeholder="Cpf"/><br/>
                             </div>
 
 
@@ -217,10 +216,10 @@ class Data extends React.Component{
 
                             <div className="clear-float"/>
                             <div className="col-md-12">
-                                <p><i>* campos obrigatórios</i></p>
+                                {/*<p><i>* campos obrigatórios</i></p>*/}
 
 
-                                <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
+                                {/*<button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>*/}
                                 <br/>
                                 <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
                                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>

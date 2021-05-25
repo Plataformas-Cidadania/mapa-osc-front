@@ -3,17 +3,17 @@ class Data extends React.Component {
         super(props);
         this.state = {
             form: {
-                email: '',
-                name: '',
-                endereco: ''
+                tx_email_usuario: '',
+                tx_nome_usuario: '',
+                nr_cpf_usuario: ''
+                //endereco: '',
             },
             button: true,
             loading: false,
             requireds: {
-                name: true,
-                email: true,
-                cpf: true,
-                cnpj: true
+                tx_nome_usuairo: true,
+                tx_email_usuario: true,
+                nr_cpf_usuario: true
             },
             showMsg: false,
             msg: '',
@@ -62,8 +62,7 @@ class Data extends React.Component {
         this.setState({ loadingCep: true, button: false });
         $.ajax({
             method: 'GET',
-            //url: 'get-user-auth',
-            url: 'get-data',
+            url: getBaseUrl2 + 'get-user-auth',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
             },
@@ -205,22 +204,6 @@ class Data extends React.Component {
                         null,
                         React.createElement(
                             'div',
-                            null,
-                            React.createElement(
-                                'div',
-                                { className: 'col-md-5' },
-                                React.createElement(
-                                    'label',
-                                    { htmlFor: 'cnpj' },
-                                    'CNPJ*'
-                                ),
-                                React.createElement('br', null),
-                                React.createElement('input', { className: "form-control form-g " + (this.state.requireds.cnpj ? '' : 'invalid-field'), type: 'text', name: 'cnpj', onChange: this.handleInputChange, value: this.state.form.cnpj, placeholder: 'CNPJ' }),
-                                React.createElement('br', null)
-                            )
-                        ),
-                        React.createElement(
-                            'div',
                             { className: 'col-md-8' },
                             React.createElement(
                                 'label',
@@ -228,7 +211,7 @@ class Data extends React.Component {
                                 'Seu nome e sobrenome*'
                             ),
                             React.createElement('br', null),
-                            React.createElement('input', { className: "form-control form-g " + (this.state.requireds.name ? '' : 'invalid-field'), type: 'text', name: 'name', onChange: this.handleInputChange, value: this.state.form.name, placeholder: 'Nome' }),
+                            React.createElement('input', { className: "form-control form-g " + (this.state.requireds.tx_nome_usuario ? '' : 'invalid-field'), type: 'text', name: 'tx_nome_usuario', onChange: this.handleInputChange, value: this.state.form.tx_nome_usuario, placeholder: 'Nome' }),
                             React.createElement('br', null)
                         ),
                         React.createElement(
@@ -240,7 +223,7 @@ class Data extends React.Component {
                                 'E-mail*'
                             ),
                             React.createElement('br', null),
-                            React.createElement('input', { className: "form-control form-g " + (this.state.requireds.email ? '' : 'invalid-field'), type: 'text', name: 'email', onChange: this.handleInputChange, value: this.state.form.email, placeholder: 'E-mail' }),
+                            React.createElement('input', { className: "form-control form-g " + (this.state.requireds.tx_email_usuario ? '' : 'invalid-field'), type: 'text', name: 'tx_email_usuario', onChange: this.handleInputChange, value: this.state.form.tx_email_usuario, placeholder: 'E-mail' }),
                             React.createElement('br', null)
                         ),
                         React.createElement(
@@ -252,27 +235,13 @@ class Data extends React.Component {
                                 'CPF*'
                             ),
                             React.createElement('br', null),
-                            React.createElement('input', { className: "form-control form-m " + (this.state.requireds.cpf ? '' : 'invalid-field'), type: 'text', name: 'cpf', onChange: this.handleInputChange, value: this.state.form.cpf, placeholder: 'Cpf' }),
+                            React.createElement('input', { className: "form-control form-m " + (this.state.requireds.nr_cpf_usuario ? '' : 'invalid-field'), type: 'text', name: 'nr_cpf_usuario', onChange: this.handleInputChange, value: this.state.form.nr_cpf_usuario, placeholder: 'Cpf' }),
                             React.createElement('br', null)
                         ),
                         React.createElement('div', { className: 'clear-float' }),
                         React.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            React.createElement(
-                                'p',
-                                null,
-                                React.createElement(
-                                    'i',
-                                    null,
-                                    '* campos obrigat\xF3rios'
-                                )
-                            ),
-                            React.createElement(
-                                'button',
-                                { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
-                                'Salvar'
-                            ),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
