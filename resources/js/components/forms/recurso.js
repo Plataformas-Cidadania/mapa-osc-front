@@ -108,7 +108,7 @@ class Recurso extends React.Component {
 }
 
 ReactDOM.render(
-    <Recurso id_osc={id}/>,
+    <Recurso/>,
     document.getElementById('recurso')
 );
 

@@ -115,4 +115,4 @@ class Recurso extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Recurso, { id_osc: id }), document.getElementById('recurso'));
+ReactDOM.render(React.createElement(Recurso, null), document.getElementById('recurso'));

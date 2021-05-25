@@ -608,9 +608,9 @@ class Recursos extends React.Component {
         /*const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-          let form = this.state.form;
+         let form = this.state.form;
         form[name] = value;
-          this.setState({form: form});*/
+         this.setState({form: form});*/
     }
 
     getSemRecursos() {
@@ -919,6 +919,7 @@ class Recursos extends React.Component {
                                         { className: 'row', style: { display: this.state.item_recursos_publicos ? 'none' : '' } },
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][0].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][0].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][0].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][0].nr_valor_recursos_osc,
@@ -927,6 +928,7 @@ class Recursos extends React.Component {
                                         }),
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][1].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][1].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][1].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][1].nr_valor_recursos_osc,
@@ -935,6 +937,7 @@ class Recursos extends React.Component {
                                         }),
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][2].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][2].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][2].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][2].nr_valor_recursos_osc,
@@ -943,6 +946,7 @@ class Recursos extends React.Component {
                                         }),
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][3].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][3].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][3].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][3].nr_valor_recursos_osc,
@@ -951,6 +955,7 @@ class Recursos extends React.Component {
                                         }),
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][4].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][4].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][4].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][4].nr_valor_recursos_osc,
@@ -959,6 +964,7 @@ class Recursos extends React.Component {
                                         }),
                                         React.createElement(Recurso, {
                                             id: this.state.recursos[1][5].id_recursos_osc,
+                                            id_osc: this.props.id,
                                             cd: this.state.recursos[1][5].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][5].cd_fonte_recurso_osc,
                                             value: this.state.recursos[1][5].nr_valor_recursos_osc,
@@ -981,6 +987,7 @@ class Recursos extends React.Component {
                                 ),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][0].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][0].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][0].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][0].nr_valor_recursos_osc,
@@ -989,6 +996,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][1].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][1].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][1].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][1].nr_valor_recursos_osc,
@@ -997,6 +1005,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][2].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][2].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][2].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][2].nr_valor_recursos_osc,
@@ -1005,6 +1014,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][3].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][3].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][3].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][3].nr_valor_recursos_osc,
@@ -1013,6 +1023,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][4].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][4].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][4].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][4].nr_valor_recursos_osc,
@@ -1021,6 +1032,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][5].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][5].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][5].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][5].nr_valor_recursos_osc,
@@ -1029,6 +1041,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][6].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][6].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][6].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][6].nr_valor_recursos_osc,
@@ -1037,6 +1050,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][7].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][7].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][7].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][7].nr_valor_recursos_osc,
@@ -1045,6 +1059,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[2][8].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[2][8].cd_fonte_recurso_osc,
                                     name: this.state.recursos[2][8].cd_fonte_recurso_osc,
                                     value: this.state.recursos[2][8].nr_valor_recursos_osc,
@@ -1065,6 +1080,7 @@ class Recursos extends React.Component {
                                 ),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[3][0].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[3][0].cd_fonte_recurso_osc,
                                     name: this.state.recursos[3][0].cd_fonte_recurso_osc,
                                     value: this.state.recursos[3][0].nr_valor_recursos_osc,
@@ -1073,6 +1089,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[3][1].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[3][1].cd_fonte_recurso_osc,
                                     name: this.state.recursos[3][1].cd_fonte_recurso_osc,
                                     value: this.state.recursos[3][1].nr_valor_recursos_osc,
@@ -1081,6 +1098,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[3][2].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[3][2].cd_fonte_recurso_osc,
                                     name: this.state.recursos[3][2].cd_fonte_recurso_osc,
                                     value: this.state.recursos[3][2].nr_valor_recursos_osc,
@@ -1089,6 +1107,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[3][3].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[3][3].cd_fonte_recurso_osc,
                                     name: this.state.recursos[3][3].cd_fonte_recurso_osc,
                                     value: this.state.recursos[3][3].nr_valor_recursos_osc,
@@ -1097,6 +1116,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[3][4].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[3][4].cd_fonte_recurso_osc,
                                     name: this.state.recursos[3][4].cd_fonte_recurso_osc,
                                     value: this.state.recursos[3][4].nr_valor_recursos_osc,
@@ -1117,6 +1137,7 @@ class Recursos extends React.Component {
                                 ),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][0].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][0].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][0].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][0].nr_valor_recursos_osc,
@@ -1125,6 +1146,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][1].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][1].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][1].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][1].nr_valor_recursos_osc,
@@ -1133,6 +1155,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][2].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][2].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][2].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][2].nr_valor_recursos_osc,
@@ -1141,6 +1164,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][3].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][3].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][3].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][3].nr_valor_recursos_osc,
@@ -1149,6 +1173,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][4].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][4].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][4].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][4].nr_valor_recursos_osc,
@@ -1157,6 +1182,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][5].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][5].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][5].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][5].nr_valor_recursos_osc,
@@ -1165,6 +1191,7 @@ class Recursos extends React.Component {
                                 }),
                                 React.createElement(Recurso, {
                                     id: this.state.recursos[4][6].id_recursos_osc,
+                                    id_osc: this.props.id,
                                     cd: this.state.recursos[4][6].cd_fonte_recurso_osc,
                                     name: this.state.recursos[4][6].cd_fonte_recurso_osc,
                                     value: this.state.recursos[4][6].nr_valor_recursos_osc,
