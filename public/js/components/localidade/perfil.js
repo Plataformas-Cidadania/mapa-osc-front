@@ -39,6 +39,13 @@ class Perfil extends React.Component {
         };
         this.load = this.load.bind(this);
         this.callModal = this.callModal.bind(this);
+
+        this.evolucao_anual = this.evolucao_anual.bind(this);
+        this.caracteristicas = this.caracteristicas.bind(this);
+        this.natureza_juridica = this.natureza_juridica.bind(this);
+        this.transferencias_federais = this.transferencias_federais.bind(this);
+        this.areas_atuacao = this.areas_atuacao.bind(this);
+        this.trabalhadores = this.trabalhadores.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +53,9 @@ class Perfil extends React.Component {
         this.evolucao_anual();
         this.caracteristicas();
         this.natureza_juridica();
+        this.transferencias_federais();
+        this.areas_atuacao();
+        this.trabalhadores();
     }
 
     evolucao_anual() {
@@ -89,7 +99,57 @@ class Perfil extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                this.setState({ data: data });
+                this.setState({ natureza_juridica_chart: data.natureza_juridica });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({ loading: false });
+            }.bind(this)
+        });
+    }
+
+    transferencias_federais() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'perfil_localidade/transferencias_federais/33',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({ orcamento_chart: data.transferencias_federais });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({ loading: false });
+            }.bind(this)
+        });
+    }
+
+    areas_atuacao() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'perfil_localidade/qtds_areas_atuacao/33',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({ area_atuacao_chart: data.qtd_area_atuacao });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({ loading: false });
+            }.bind(this)
+        });
+    }
+
+    trabalhadores() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'perfil_localidade/qtds_trabalhadores/33',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({
+                    trabalhadores_chart: data.qtd_trabalhores
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -109,66 +169,68 @@ class Perfil extends React.Component {
                 let repasse_recursos_table = data.repasse_recursos;
 
                 /*////////////natureza_juridica////////////*/
-                let series = [{
+                /*let series = [{
                     name: 'Quantidade OSCs',
                     type: 'column',
                     data: []
                 }];
                 let labels = [];
-                data.natureza_juridica.series_1.find(function (item) {
+                data.natureza_juridica.series_1.find(function(item){
                     series[0].data.push(item.value);
                     labels.push(item.label.split(' '));
                 });
-
-                let natureza_juridica_chart = {
+                  let natureza_juridica_chart = {
                     'labels': labels,
-                    'series': series
+                    'series': series,
+                }*/
 
-                    /*////////////Trabalhadores////////////*/
-                };let trabalhadores_series = [{
+                /*////////////Trabalhadores////////////*/
+                /*let trabalhadores_series = [{
                     name: 'Número de Trabalhadores',
                     type: 'column',
                     data: []
                 }];
                 let trabalhadores_labels = [];
-                data.trabalhadores.series_1.find(function (item) {
+                data.trabalhadores.series_1.find(function(item){
                     trabalhadores_series[0].data.push(item.value);
                     trabalhadores_labels.push(item.label.split(' '));
                 });
                 let trabalhadores_chart = {
                     'labels': trabalhadores_labels,
-                    'series': trabalhadores_series
+                    'series': trabalhadores_series,
+                }*/
 
-                    /*////////////Área de Atuação////////////*/
+                /*////////////Área de Atuação////////////*/
 
-                };let area_atuacao_series = [];
-                let area_atuacao_labels = [];
-                data.area_atuacao.series_1.find(function (item) {
-                    area_atuacao_series.push(item.value);
-                    area_atuacao_labels.push(item.label);
-                });
-                let area_atuacao_chart = {
-                    'labels': area_atuacao_labels,
-                    'series': area_atuacao_series
-                    /*////////////////////Repasse Recursosos//////////////////////////*/
+                /* let area_atuacao_series = [];
+                 let area_atuacao_labels = [];
+                 data.area_atuacao.series_1.find(function(item){
+                     area_atuacao_series.push(item.value);
+                     area_atuacao_labels.push(item.label);
+                 });
+                 let area_atuacao_chart = {
+                     'labels': area_atuacao_labels,
+                     'series': area_atuacao_series,
+                 }*/
+                /*////////////////////Repasse Recursosos//////////////////////////*/
 
-                    ///////////////////////////////////////////////
-                    ///////////////////////////////////////////////
-                    /*let teste = [];
-                     if(data.repasse_recursos){
-                        for(let index in data.repasse_recursos.series_1[3].values){
-                            teste.push(data.repasse_recursos.series_1[3].values[index].x)
-                         }
-                    }
-                    for(let index in teste){
-                        console.log(teste[index]);
-                    }
-                     console.log(teste);*/
+                ///////////////////////////////////////////////
+                ///////////////////////////////////////////////
+                /*let teste = [];
+                 if(data.repasse_recursos){
+                    for(let index in data.repasse_recursos.series_1[3].values){
+                        teste.push(data.repasse_recursos.series_1[3].values[index].x)
+                     }
+                }
+                for(let index in teste){
+                    console.log(teste[index]);
+                }
+                 console.log(teste);*/
 
-                    ///////////////////////////////////////////////
-                    ///////////////////////////////////////////////
+                ///////////////////////////////////////////////
+                ///////////////////////////////////////////////
 
-                };let repasse_recursos_labels = [];
+                let repasse_recursos_labels = [];
                 let repasse_recursos_series = [];
 
                 if (data.repasse_recursos) {
@@ -212,39 +274,32 @@ class Perfil extends React.Component {
 
                     /*//////////////////////////////////////////////*/
                     /*////////////////////Orçamento//////////////////////////*/
-                };let orcamento_labels = [];
-                let orcamento_series = [];
-
-                if (data.orcamento) {
-                    let groupSerie = [];
-                    for (let serie in data.orcamento.series_1) {
-
-                        let serieName = data.orcamento.series_1[serie].key;
-
-                        let serieTeste = {
-                            name: serieName,
-                            type: 'line',
-                            data: []
-                        };
-
-                        groupSerie.push(serieTeste);
-
-                        for (let k in data.orcamento.series_1[serie].values) {
-                            orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
-                            serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
+                    /*let orcamento_labels = [];
+                    let orcamento_series = [];
+                     if(data.orcamento){
+                        let groupSerie = [];
+                        for(let serie in data.orcamento.series_1){
+                             let serieName = data.orcamento.series_1[serie].key;
+                             let serieTeste = {
+                                name: serieName,
+                                type: 'line',
+                                data: []
+                            };
+                             groupSerie.push(serieTeste);
+                             for(let k in data.orcamento.series_1[serie].values) {
+                                orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
+                                serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
+                            }
                         }
+                        orcamento_series.push(groupSerie);
                     }
-                    orcamento_series.push(groupSerie);
-                }
-
-                let chart_orcamento_series = orcamento_series[0];
-
-                let unique_orcamento_labels = [...new Set(orcamento_labels)];
-                unique_orcamento_labels = unique_orcamento_labels.sort();
-
-                let orcamento_chart = {
-                    'labels': unique_orcamento_labels,
-                    'series': chart_orcamento_series
+                     let chart_orcamento_series = orcamento_series[0]
+                     let unique_orcamento_labels = [...new Set(orcamento_labels)];
+                    unique_orcamento_labels = unique_orcamento_labels.sort()
+                     let orcamento_chart = {
+                        'labels': unique_orcamento_labels,
+                        'series': chart_orcamento_series,
+                    }*/
 
                     /*//////////////////////////////////////////////*/
                     /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
@@ -273,34 +328,34 @@ class Perfil extends React.Component {
                     evolucao_quantidade_osc_ano_series.push(groupSerie);
                 }
 
-                let chart_evolucao_quantidade_osc_ano_series = evolucao_quantidade_osc_ano_series[0];
+                /*let chart_evolucao_quantidade_osc_ano_series = evolucao_quantidade_osc_ano_series[0]
+                 let unique_evolucao_quantidade_osc_ano_labels = [...new Set(evolucao_quantidade_osc_ano_labels)];
+                unique_evolucao_quantidade_osc_ano_labels = unique_evolucao_quantidade_osc_ano_labels.sort()*/
 
-                let unique_evolucao_quantidade_osc_ano_labels = [...new Set(evolucao_quantidade_osc_ano_labels)];
-                unique_evolucao_quantidade_osc_ano_labels = unique_evolucao_quantidade_osc_ano_labels.sort();
-
-                let evolucao_quantidade_osc_ano_chart = {
+                /*let evolucao_quantidade_osc_ano_chart = {
                     'labels': unique_evolucao_quantidade_osc_ano_labels,
-                    'series': chart_evolucao_quantidade_osc_ano_series
+                    'series': chart_evolucao_quantidade_osc_ano_series,
+                }*/
 
-                    /*//////////////////////////////////////////////*/
+                /*//////////////////////////////////////////////*/
 
-                };this.setState({
+                this.setState({
                     loading: false,
                     //caracteristicas: data.caracteristicas,
                     evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
 
-                    area_atuacao: data.area_atuacao,
+                    //area_atuacao: data.area_atuacao,
                     natureza_juridica: data.natureza_juridica,
-                    trabalhadores: data.trabalhadores,
+                    //trabalhadores: data.trabalhadores,
                     repasse_recursos: data.repasse_recursos,
                     orcamento: data.orcamento,
 
                     //evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
-                    natureza_juridica_chart: natureza_juridica_chart,
-                    trabalhadores_chart: trabalhadores_chart,
-                    area_atuacao_chart: area_atuacao_chart,
+                    //natureza_juridica_chart: natureza_juridica_chart,
+                    //trabalhadores_chart: trabalhadores_chart,
+                    //area_atuacao_chart: area_atuacao_chart,
                     repasse_recursos_chart: repasse_recursos_chart,
-                    orcamento_chart: orcamento_chart,
+                    //orcamento_chart: orcamento_chart,
 
                     repasse_recursos_table: repasse_recursos_table,
 
@@ -708,18 +763,34 @@ class Perfil extends React.Component {
             tx_porcentagem_maior_media_nacional = this.state.natureza_juridica.tx_porcentagem_maior_media_nacional[0];
         }
 
+        ///////////////////////////////////////////////////CHART
         let natureza_juridica_chart = null;
+
         if (this.state.natureza_juridica_chart) {
+
+            let natureza_juridica_labels = [];
+            this.state.natureza_juridica_chart.labels.find(function (item) {
+                natureza_juridica_labels.push(item.split(' '));
+            });
+
+            let natureza_juridica_series = [{
+                name: this.state.natureza_juridica_chart.series.name,
+                type: 'column',
+                data: this.state.natureza_juridica_chart.series.data
+            }];
+
+            this.state.natureza_juridica_chart.series;
             natureza_juridica_chart = React.createElement(ColumnChart, {
                 id: 'natureza-chart',
-                series: this.state.natureza_juridica_chart.series,
-                labels: this.state.natureza_juridica_chart.labels
+                series: natureza_juridica_series,
+                labels: natureza_juridica_labels
             });
         }
+        ///////////////////////////////////////////////////CHART
         //////////////////////////////////Trabalhadores///////////////////////////////////////////
         let ft_trabalhadores = null;
-        if (this.state.trabalhadores.fontes) {
-            ft_trabalhadores = this.state.natureza_juridica.fontes.map(function (item, key) {
+        if (this.state.trabalhadores_chart) {
+            ft_trabalhadores = this.state.trabalhadores_chart.fontes.map(function (item, key) {
                 return React.createElement(
                     'span',
                     { key: "ft_qp_" + key },
@@ -729,22 +800,49 @@ class Perfil extends React.Component {
             });
         }
 
+        /*let trabalhadores_chart = null;
+        if(this.state.trabalhadores_chart){
+            trabalhadores_chart = (
+                <ColumnChart
+                    id={'trabalhadores-chart'}
+                    series={this.state.trabalhadores_chart.series}
+                    labels={this.state.trabalhadores_chart.labels}
+                />
+            );
+        }*/
+        ///////////////////////////////////////////////////CHART
         let trabalhadores_chart = null;
+
         if (this.state.trabalhadores_chart) {
+
+            let trabalhadores_labels = [];
+            this.state.trabalhadores_chart.labels.find(function (item) {
+                trabalhadores_labels.push(item.split(' '));
+            });
+
+            let trabalhadores_series = [{
+                name: this.state.trabalhadores_chart.series.name,
+                type: 'column',
+                data: this.state.trabalhadores_chart.series.data
+            }];
+
+            this.state.trabalhadores_chart.series;
             trabalhadores_chart = React.createElement(ColumnChart, {
                 id: 'natureza-chart',
-                series: this.state.trabalhadores_chart.series,
-                labels: this.state.trabalhadores_chart.labels
+                series: trabalhadores_series,
+                labels: trabalhadores_labels
             });
         }
+        ///////////////////////////////////////////////////CHART
 
+        console.log(this.state.trabalhadores_chart);
         let vinculos_deficiencia = "";
         let voluntarios = "";
         let vinculos_formais = "";
-        if (this.state.trabalhadores.series_1) {
-            vinculos_deficiencia = this.state.trabalhadores.series_1[0].value;
-            voluntarios = this.state.trabalhadores.series_1[1].value;
-            vinculos_formais = this.state.trabalhadores.series_1[2].value;
+        if (this.state.trabalhadores_chart) {
+            vinculos_deficiencia = this.state.trabalhadores_chart.series.data[0];
+            voluntarios = this.state.trabalhadores_chart.series.data[2];
+            vinculos_formais = this.state.trabalhadores_chart.series.data[1];
         }
 
         //////////////////////////////////Área de atuação///////////////////////////////////////////
@@ -775,7 +873,7 @@ class Perfil extends React.Component {
             area_atuacao_chart = React.createElement(PieChart, {
                 id: 'area-atuacao-chart',
                 width: 500,
-                series: this.state.area_atuacao_chart.series,
+                series: this.state.area_atuacao_chart.series.data,
                 labels: this.state.area_atuacao_chart.labels
             });
         }
@@ -813,15 +911,38 @@ class Perfil extends React.Component {
                 );
             });
         }
+
+        ///////////////////////////////////////////////////CHART
         let orcamento_chart = null;
+
         if (this.state.orcamento_chart) {
 
+            let orcamento_series = [{
+                name: this.state.orcamento_chart.series.name,
+                type: 'area',
+                data: this.state.orcamento_chart.series.data
+            }];
+
+            this.state.orcamento_chart.series;
             orcamento_chart = React.createElement(MixedChart, {
-                id: 'mix-chart-orcamento',
-                series: this.state.orcamento_chart.series,
+                id: 'orcamento-chart',
+                series: orcamento_series,
                 labels: this.state.orcamento_chart.labels
             });
         }
+        ///////////////////////////////////////////////////CHART
+
+
+        /*let orcamento_chart = null;
+        if(this.state.orcamento_chart){
+            orcamento_chart = (
+                <MixedChart
+                    id={'mix-chart-orcamento'}
+                    series={this.state.orcamento_chart.series}
+                    labels={this.state.orcamento_chart.labels}
+                />
+            );
+        }*/
 
         return React.createElement(
             'div',
@@ -1347,12 +1468,24 @@ class Perfil extends React.Component {
                             null,
                             this.state.localidade,
                             ' foram identificados ',
-                            vinculos_deficiencia,
-                            '\xA0 V\xEDnculos formais de pessoas com defici\xEAncia. Alem desses, as OSCS declararam ',
-                            voluntarios,
-                            '\xA0 Trabalhadores volunt\xE1rios e ',
-                            vinculos_formais,
-                            '\xA0 V\xEDnculos formais.'
+                            React.createElement(
+                                'strong',
+                                null,
+                                vinculos_deficiencia
+                            ),
+                            ' v\xEDnculos formais de pessoas com defici\xEAncia. Al\xE9m desses, as OSCS declararam ',
+                            React.createElement(
+                                'strong',
+                                null,
+                                voluntarios
+                            ),
+                            ' trabalhadores volunt\xE1rios e ',
+                            React.createElement(
+                                'strong',
+                                null,
+                                vinculos_formais
+                            ),
+                            ' v\xEDnculos formais.'
                         ),
                         React.createElement(
                             'p',
