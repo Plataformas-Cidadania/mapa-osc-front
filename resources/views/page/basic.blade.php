@@ -72,9 +72,29 @@
                     <p {{--data-message="{!! $page->descricao !!}"--}} tabindex="0">{!! $page->descricao !!}</p>
                     {{--<p data-message="{!! $page->descricao !!}" tabindex="0">{!! $page->descricao !!}</p>--}}
 
-                    @if($items)
-                        @include('page.about.accordion')
-                    @endif
+
+                        @if($show!=2)
+                            <div class="row">
+                                @foreach($items as $item)
+                                    <div class="col-md-4">
+                                        <a href="{{$item->url}}">
+                                            <div class="box-item-model">
+                                                <h2>{{$item->titulo}}</h2>
+                                                <hr>
+                                                <p>{!! $item->descricao !!}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            @if($items)
+                                @include('page.about.accordion')
+                            @endif
+                        @endif
+
+
+
 
                     @if($rota=="equipe")
                         <div>

@@ -138,6 +138,9 @@
 <script src="js/components/charts/charts.js"></script>
 <script src="js/components/charts/page/indicator.js"></script>
 @endif
+@if($rota=='pagina/depen')
+    <script src="js/components/pages/depen.js"></script>
+@endif
 
 
 @if($rota=='localidade/{id}')

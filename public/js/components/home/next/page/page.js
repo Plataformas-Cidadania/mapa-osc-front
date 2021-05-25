@@ -76,7 +76,7 @@ class Page extends React.Component {
         return React.createElement(
             'div',
             null,
-            React.createElement(Indicator, {
+            React.createElement(Depen, {
                 indicatorId: 'indicator',
                 data: this.state.data
             })
