@@ -73,8 +73,9 @@
                 <div class="col-md-6">
                     <address>
                         <h2 class="tx-pri">Rio de Janeiro</h2>
-                        Av. Rio de Janeiro - Centro - RJ<br>
-                        CEP.: 24456-422<br>
+                        Av. Presidente Vargas, 730, 16° andar - Centro - RJ<br>
+                        Torres: 3 e 4<br>
+                        CEP.: 20071-900<br>
                         <abbr title="Phone">+55 (21) 2523-2655</abbr>
                     </address>
                 </div>
@@ -82,9 +83,10 @@
                 <div class="col-md-6">
                     <address>
                         <h2 class="tx-pri">Brasília</h2>
-                        Av. Rio de Janeiro - Centro - RJ<br>
-                        CEP.: 24456-422<br>
-                        <abbr title="Phone">+55 (21) 2523-2655</abbr>
+                        SBS - Quadra 1 - Bloco J - Brasília - DF<br>
+                        Edifício: BNDES<br>
+                        CEP.: 70076-900<br>
+                        <abbr title="Phone">+55 (61) 2026-5501</abbr>
                     </address>
                 </div>
             </div>
