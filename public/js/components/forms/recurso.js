@@ -23,10 +23,13 @@ class Recurso extends React.Component {
                     url: getBaseUrl2 + 'osc/recursos/' + id,
                     data: {
                         //id_osc: '789809',
-                        id_osc: this.props.id,
+                        id_osc: this.props.id_osc,
                         dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd
+                    },
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                     },
                     cache: false,
                     success: function (data) {
@@ -49,7 +52,7 @@ class Recurso extends React.Component {
                     },
                     data: {
                         //id_osc: '789809',
-                        id_osc: this.props.id,
+                        id_osc: this.props.id_osc,
                         dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
                         cd_fonte_recursos_osc: cd
@@ -112,4 +115,4 @@ class Recurso extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Recurso, { id: id }), document.getElementById('recurso'));
+ReactDOM.render(React.createElement(Recurso, { id_osc: id }), document.getElementById('recurso'));
