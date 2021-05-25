@@ -69,6 +69,8 @@ Route::get('contato', 'ContactController@email');
 Route::get('filtro', 'FilterController@search');
 Route::get('localidade/{id}', 'LocalidadeController@localidade');
 
+Route::get('pagina/depen', 'PageController@depen');
+
 Route::post('contact', 'ContactController@send');
 Route::post('comment', 'CommentController@send');
 

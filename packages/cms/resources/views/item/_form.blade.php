@@ -20,4 +20,7 @@ null, ['class'=>"form-control width-medio <% validar(item.idioma_id) %>", 'ng-mo
 {!! Form::label('video', 'Video') !!}<br>
 {!! Form::text('video', null, ['class'=>"form-control width-grande <% validar(item.video) %>", 'ng-model'=>'item.video', 'init-model'=>'item.video', 'placeholder' => '']) !!}<br>
 
+{!! Form::label('url', 'Link') !!}<br>
+{!! Form::text('url', null, ['class'=>"form-control width-grande <% validar(item.url) %>", 'ng-model'=>'item.url', 'init-model'=>'item.url', 'placeholder' => '']) !!}<br>
+
 

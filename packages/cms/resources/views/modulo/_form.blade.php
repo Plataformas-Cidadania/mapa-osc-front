@@ -22,6 +22,7 @@ null, ['class'=>"form-control width-medio <% validar(modulo.tipo_id) %>", 'ng-mo
         array(
             '0' => 'Oculto',
             '1' => 'Visível',
+            '2' => 'Colunas',
         ),
 null, ['class'=>"form-control width-medio <% validar(modulo.show) %>", 'ng-model'=>'modulo.show', 'init-model'=>'modulo.show', 'placeholder' => 'Sem Tipo']) !!}<br>
 
