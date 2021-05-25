@@ -382,7 +382,7 @@ class Governancas extends React.Component{
                                 </a>
                             </div>
                             <div style={{display: this.state.showForm ? 'block' : 'none'}}>
-                                <FormGovernanca action={this.state.actionForm} list={this.governanca} id={this.state.editId} id_osc:this.props.id showHideForm={this.showHideForm} closeForm={this.closeForm}/>
+                                <FormGovernanca action={this.state.actionForm} list={this.governanca} id={this.state.editId} id_osc={this.props.id} showHideForm={this.showHideForm} closeForm={this.closeForm}/>
                             </div>
                             {governancas}
                         </div>
