@@ -608,9 +608,9 @@ class Recursos extends React.Component {
         /*const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-         let form = this.state.form;
+          let form = this.state.form;
         form[name] = value;
-         this.setState({form: form});*/
+          this.setState({form: form});*/
     }
 
     getSemRecursos() {
