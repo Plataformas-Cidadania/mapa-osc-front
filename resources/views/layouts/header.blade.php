@@ -157,7 +157,8 @@
                                 <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
                             </ul>
 
-                            <div class="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div id="menu-usuario"></div>
+                            <!--<div class="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="login-icon rounded-circle">
                                     <i class="far fa-user"></i>
                                 </div>
@@ -170,7 +171,7 @@
                                 <a href="oscs-user"><button class="dropdown-item" type="button">Minha OSCs</button></a>
                                 <a href="oscs-user"><button class="dropdown-item " type="button">Editar</button></a>
                                 <a href="logout-user"><button class="dropdown-item" type="button">Sair</button></a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </nav>
