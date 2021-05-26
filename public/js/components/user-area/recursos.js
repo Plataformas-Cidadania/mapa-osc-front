@@ -215,19 +215,19 @@ class Recursos extends React.Component {
             url: getBaseUrl2 + 'osc/anos_recursos/' + this.props.id,
             cache: false,
             success: function (data) {
+
+                var data = Object.values(data);
                 const data2 = data;
                 let campoAno = this.state.campoAno;
-                function isCherries(data2) {
-                    return data2.dt_ano_recursos_osc === campoAno;
-                }
 
                 let dataAntes = data.length;
 
-                if (data2.find(isCherries) == undefined) {
+                if (data.indexOf(parseInt(campoAno)) === -1) {
                     if (acao == true && campoAno > 0) {
-                        data.push({ 'dt_ano_recursos_osc': this.state.campoAno, id_osc: 789809 });
+                        data.push(this.state.campoAno);
                     }
                 }
+
                 let dataDepois = data.length;
                 let activeIncert = dataAntes !== dataDepois;
 
@@ -236,7 +236,7 @@ class Recursos extends React.Component {
                     anosRecursos: data,
                     button: true,
                     activeIncert: activeIncert,
-                    insertMsg: !data2.find(isCherries) == undefined
+                    insertMsg: !data2
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -740,16 +740,17 @@ class Recursos extends React.Component {
 
     render() {
         let anosRecursos = null;
+
         if (this.state.anosRecursos) {
             anosRecursos = this.state.anosRecursos.map(function (item, index) {
                 return React.createElement(
                     'div',
                     { key: "anos_" + index, id: "anos_" + index,
-                        onClick: () => this.callRecursos(item.dt_ano_recursos_osc),
-                        className: this.state.ano == item.dt_ano_recursos_osc ? 'btn btn-primary' : 'btn btn-light',
+                        onClick: () => this.callRecursos(item),
+                        className: this.state.ano == item ? 'btn btn-primary' : 'btn btn-light',
                         style: { marginRight: '5px' }
                     },
-                    item.dt_ano_recursos_osc
+                    item
                 );
             }.bind(this));
         }
