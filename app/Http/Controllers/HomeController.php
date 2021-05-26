@@ -16,8 +16,8 @@ class HomeController extends Controller
         $teasers = \App\Teaser::orderBy('teaser')->get();
         $text = \App\Text::where('slug', 'osc-proximas')->first();
 
-        $midiaSelect = ['artigo', 'artigos', 'Artigo', 'os artigos'];
-        $midias = \App\Noticia::orderBy('id', 'desc')->take(3)->get();
+        $midiasMenu = DB::table('midias')->orderBy('titulo')->get();
+        $midias = \App\Post::orderBy('id', 'desc')->take(3)->get();
 
 
         $osc_recentes = DB::connection('map')
@@ -51,7 +51,7 @@ class HomeController extends Controller
                 'areas_atuacao' => $area_atuacao,
                 'text' => $text,
                 'midias' => $midias,
-                'midiaSelect' => $midiaSelect,
+                'midiasMenu' => $midiasMenu,
             ]);
         }
 

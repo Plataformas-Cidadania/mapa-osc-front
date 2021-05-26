@@ -111,13 +111,22 @@
                 <li>
                     <a href="cms/texts"><i class="fa fa-fw fa-anchor"></i> Textos</a>
                 </li>
-                <li>
-                    <a href="cms/midias"><i class="fa fa-fw fa-file-text-o"></i> Mídias</a>
-                </li>
+
 <!--                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>-->
 
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo0"><i class="fa fa-fw fa-user"></i> Mídias <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo0" class="collapse">
+                        <li>
+                            <a href="cms/midias"><i class="fa fa-fw fa-file-text-o"></i> Tipo mídias</a>
+                        </li>
+                        <li>
+                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Gráficos</a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Analise <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
@@ -125,7 +134,10 @@
                             <a href="cms/tipos-graficos"><i class="fa fa-cubes" aria-hidden="true"></i> Tipo</a>
                         </li>
                         <li>
-                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Gráficos</a>
+                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Categorias</a>
+                        </li>
+                        <li>
+                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Posts</a>
                         </li>
                     </ul>
                 </li>

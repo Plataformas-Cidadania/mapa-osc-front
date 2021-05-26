@@ -47,6 +47,7 @@ class Perfil extends React.Component {
         this.transferencias_federais = this.transferencias_federais.bind(this);
         this.areas_atuacao = this.areas_atuacao.bind(this);
         this.trabalhadores = this.trabalhadores.bind(this);
+        this.repasseRecurdos = this.repasseRecurdos.bind(this);
     }
 
     componentDidMount(){
@@ -57,6 +58,7 @@ class Perfil extends React.Component {
         this.transferencias_federais();
         this.areas_atuacao();
         this.trabalhadores();
+        this.repasseRecurdos();
     }
 
     evolucao_anual(){
@@ -171,6 +173,27 @@ class Perfil extends React.Component {
         });
     }
 
+    repasseRecurdos(){
+        console.log('repasse_recursos');
+        $.ajax({
+            method:'GET',
+            url: getBaseUrl2 + 'perfil_localidade/repasse_recursos/33',
+            data:{
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({
+                    repasse_recursos_chart: data.repasse_recursos
+                });
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({loading: false});
+            }.bind(this),
+        });
+    }
+
     load() {
         this.setState({ button: false, loading: true});
         $.ajax({
@@ -248,7 +271,7 @@ class Perfil extends React.Component {
                 ///////////////////////////////////////////////
                 ///////////////////////////////////////////////
 
-                let repasse_recursos_labels = [];
+                /*let repasse_recursos_labels = [];
                 let repasse_recursos_series = [];
 
                 if(data.repasse_recursos){
@@ -265,8 +288,6 @@ class Perfil extends React.Component {
                         };
 
                         groupSerie.push(serieTeste);
-
-                        //console.log(data.repasse_recursos.series_1[serie].values);
                         for(let k in data.repasse_recursos.series_1[serie].values) {
 
                             repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
@@ -279,9 +300,6 @@ class Perfil extends React.Component {
 
                 }
 
-                //console.log(repasse_recursos_labels);
-                //console.log(repasse_recursos_series);
-
                 let chart_repasse_recursos_series = repasse_recursos_series[0]
 
                 let unique_repasse_recursos_labels = [...new Set(repasse_recursos_labels)];
@@ -290,7 +308,7 @@ class Perfil extends React.Component {
                 let repasse_recursos_chart = {
                     'labels': unique_repasse_recursos_labels,
                     'series': chart_repasse_recursos_series,
-                }
+                }*/
 
 
                 /*//////////////////////////////////////////////*/
@@ -384,7 +402,7 @@ class Perfil extends React.Component {
                     //natureza_juridica_chart: natureza_juridica_chart,
                     //trabalhadores_chart: trabalhadores_chart,
                     //area_atuacao_chart: area_atuacao_chart,
-                    repasse_recursos_chart: repasse_recursos_chart,
+                    //repasse_recursos_chart: repasse_recursos_chart,
                     //orcamento_chart: orcamento_chart,
 
                     repasse_recursos_table: repasse_recursos_table,
@@ -815,8 +833,9 @@ class Perfil extends React.Component {
             });
         }
         let repasse_recursos_chart = null;
-        if(this.state.repasse_recursos_chart){
 
+        if(this.state.repasse_recursos_chart){
+            //console.log('this.state.repasse_recursos_chart', this.state.repasse_recursos_chart.series);
             repasse_recursos_chart = (
                 <MixedChart
                     id={'mix-chart-repasse_recursos'}

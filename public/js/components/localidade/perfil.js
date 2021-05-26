@@ -46,6 +46,7 @@ class Perfil extends React.Component {
         this.transferencias_federais = this.transferencias_federais.bind(this);
         this.areas_atuacao = this.areas_atuacao.bind(this);
         this.trabalhadores = this.trabalhadores.bind(this);
+        this.repasseRecurdos = this.repasseRecurdos.bind(this);
     }
 
     componentDidMount() {
@@ -56,6 +57,7 @@ class Perfil extends React.Component {
         this.transferencias_federais();
         this.areas_atuacao();
         this.trabalhadores();
+        this.repasseRecurdos();
     }
 
     evolucao_anual() {
@@ -158,6 +160,25 @@ class Perfil extends React.Component {
         });
     }
 
+    repasseRecurdos() {
+        console.log('repasse_recursos');
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'perfil_localidade/repasse_recursos/33',
+            data: {},
+            cache: false,
+            success: function (data) {
+                this.setState({
+                    repasse_recursos_chart: data.repasse_recursos
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({ loading: false });
+            }.bind(this)
+        });
+    }
+
     load() {
         this.setState({ button: false, loading: true });
         $.ajax({
@@ -230,80 +251,65 @@ class Perfil extends React.Component {
                 ///////////////////////////////////////////////
                 ///////////////////////////////////////////////
 
-                let repasse_recursos_labels = [];
+                /*let repasse_recursos_labels = [];
                 let repasse_recursos_series = [];
-
-                if (data.repasse_recursos) {
-
-                    let groupSerie = [];
-                    for (let serie in data.repasse_recursos.series_1) {
-
-                        let serieName = data.repasse_recursos.series_1[serie].key;
-
-                        let serieTeste = {
+                 if(data.repasse_recursos){
+                     let groupSerie = [];
+                    for(let serie in data.repasse_recursos.series_1){
+                         let serieName = data.repasse_recursos.series_1[serie].key;
+                         let serieTeste = {
                             name: serieName,
                             type: 'line',
                             data: []
                         };
-
-                        groupSerie.push(serieTeste);
-
-                        //console.log(data.repasse_recursos.series_1[serie].values);
-                        for (let k in data.repasse_recursos.series_1[serie].values) {
-
-                            repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
-
-                            serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
+                         groupSerie.push(serieTeste);
+                        for(let k in data.repasse_recursos.series_1[serie].values) {
+                             repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
+                             serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
                         }
                     }
-
-                    repasse_recursos_series.push(groupSerie);
-                }
-
-                //console.log(repasse_recursos_labels);
-                //console.log(repasse_recursos_series);
-
-                let chart_repasse_recursos_series = repasse_recursos_series[0];
-
-                let unique_repasse_recursos_labels = [...new Set(repasse_recursos_labels)];
-                unique_repasse_recursos_labels = unique_repasse_recursos_labels.sort();
-
-                let repasse_recursos_chart = {
+                     repasse_recursos_series.push(groupSerie);
+                 }
+                 let chart_repasse_recursos_series = repasse_recursos_series[0]
+                 let unique_repasse_recursos_labels = [...new Set(repasse_recursos_labels)];
+                unique_repasse_recursos_labels = unique_repasse_recursos_labels.sort()
+                 let repasse_recursos_chart = {
                     'labels': unique_repasse_recursos_labels,
-                    'series': chart_repasse_recursos_series
+                    'series': chart_repasse_recursos_series,
+                }*/
 
-                    /*//////////////////////////////////////////////*/
-                    /*////////////////////Orçamento//////////////////////////*/
-                    /*let orcamento_labels = [];
-                    let orcamento_series = [];
-                     if(data.orcamento){
-                        let groupSerie = [];
-                        for(let serie in data.orcamento.series_1){
-                             let serieName = data.orcamento.series_1[serie].key;
-                             let serieTeste = {
-                                name: serieName,
-                                type: 'line',
-                                data: []
-                            };
-                             groupSerie.push(serieTeste);
-                             for(let k in data.orcamento.series_1[serie].values) {
-                                orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
-                                serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
-                            }
+                /*//////////////////////////////////////////////*/
+                /*////////////////////Orçamento//////////////////////////*/
+                /*let orcamento_labels = [];
+                let orcamento_series = [];
+                 if(data.orcamento){
+                    let groupSerie = [];
+                    for(let serie in data.orcamento.series_1){
+                         let serieName = data.orcamento.series_1[serie].key;
+                         let serieTeste = {
+                            name: serieName,
+                            type: 'line',
+                            data: []
+                        };
+                         groupSerie.push(serieTeste);
+                         for(let k in data.orcamento.series_1[serie].values) {
+                            orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
+                            serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
                         }
-                        orcamento_series.push(groupSerie);
                     }
-                     let chart_orcamento_series = orcamento_series[0]
-                     let unique_orcamento_labels = [...new Set(orcamento_labels)];
-                    unique_orcamento_labels = unique_orcamento_labels.sort()
-                     let orcamento_chart = {
-                        'labels': unique_orcamento_labels,
-                        'series': chart_orcamento_series,
-                    }*/
+                    orcamento_series.push(groupSerie);
+                }
+                 let chart_orcamento_series = orcamento_series[0]
+                 let unique_orcamento_labels = [...new Set(orcamento_labels)];
+                unique_orcamento_labels = unique_orcamento_labels.sort()
+                 let orcamento_chart = {
+                    'labels': unique_orcamento_labels,
+                    'series': chart_orcamento_series,
+                }*/
 
-                    /*//////////////////////////////////////////////*/
-                    /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
-                };let evolucao_quantidade_osc_ano_labels = [];
+                /*//////////////////////////////////////////////*/
+                /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
+                let evolucao_quantidade_osc_ano_labels = [];
                 let evolucao_quantidade_osc_ano_series = [];
 
                 if (data.evolucao_quantidade_osc_ano) {
@@ -354,7 +360,7 @@ class Perfil extends React.Component {
                     //natureza_juridica_chart: natureza_juridica_chart,
                     //trabalhadores_chart: trabalhadores_chart,
                     //area_atuacao_chart: area_atuacao_chart,
-                    repasse_recursos_chart: repasse_recursos_chart,
+                    //repasse_recursos_chart: repasse_recursos_chart,
                     //orcamento_chart: orcamento_chart,
 
                     repasse_recursos_table: repasse_recursos_table,
@@ -891,8 +897,9 @@ class Perfil extends React.Component {
             });
         }
         let repasse_recursos_chart = null;
-        if (this.state.repasse_recursos_chart) {
 
+        if (this.state.repasse_recursos_chart) {
+            //console.log('this.state.repasse_recursos_chart', this.state.repasse_recursos_chart.series);
             repasse_recursos_chart = React.createElement(MixedChart, {
                 id: 'mix-chart-repasse_recursos',
                 series: this.state.repasse_recursos_chart.series,

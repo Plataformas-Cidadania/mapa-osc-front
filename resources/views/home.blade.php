@@ -107,23 +107,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title-style">
-                    <h2>{{$midiaSelect[2]}}</h2>
+                    <h2>Posts</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
             </div>
             @foreach($midias as $item)
                 <div class="col-md-4">
-                    <a href="{{$midiaSelect[0]}}/{{$item->id}}/{{clean($item->titulo)}}">
+                    <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
-                            @if($item->imagem!="")
+                            {{--@if($item->imagem!="")
                             <picture>
                                 <source srcset="imagens/{{$midiaSelect[1]}}/sm-{{$item->imagem}}" media="(max-width: 468px)">
                                 <source srcset="imagens/publi{{$midiaSelect[1]}}cacoes/sm-{{$item->imagem}}" media="(max-width: 768px)">
                                 <source srcset="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" class="img-responsive">
                                 <img src="img/loading.gif" data-src="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
                             </picture>
-                            @endif
+                            @endif--}}
                             <div class="img-rede">
                                 <i class="fab fa-facebook-f"></i>
                                 <i class="fab fa-instagram"></i>
@@ -141,9 +141,12 @@
             <div class="col-md-12 text-center">
                 <br>
                 <br>
-                <a href="posts/{{$midiaSelect[1]}}">
-                    <button type="button" class="btn btn-outline-primary">Visualize todos {{$midiaSelect[3]}}</button>
-                </a>
+                <div>
+                    Visualize:
+                    @foreach($midiasMenu as $midia)
+                        <button type="button" class="btn btn-outline-primary"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q"  class="corrente">{{$midia->titulo}}</a></button>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
