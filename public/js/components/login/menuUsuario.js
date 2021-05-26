@@ -43,7 +43,7 @@ class MenuUsuario extends React.Component {
         let usuario = 'Olá, faça seu login ou se cadastre-se';
         if (this.state.tx_nome_usuario) {
             let arrayNome = this.state.tx_nome_usuario.split(' ');
-            usuario = arrayNome[0];
+            usuario = 'Olá, ' + arrayNome[0] + ' seja bem vindo!';
         }
         return React.createElement(
             'div',
@@ -59,8 +59,7 @@ class MenuUsuario extends React.Component {
                 React.createElement(
                     'p',
                     null,
-                    usuario,
-                    ' \xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0 '
+                    usuario
                 )
             ),
             React.createElement(
