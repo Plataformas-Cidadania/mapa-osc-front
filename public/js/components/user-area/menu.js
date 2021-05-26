@@ -15,16 +15,6 @@ class Menu extends React.Component {
                     null,
                     React.createElement(
                         "a",
-                        { href: "dashboard-user" },
-                        React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
-                        " Minha \xE1rea"
-                    )
-                ),
-                React.createElement(
-                    "li",
-                    null,
-                    React.createElement(
-                        "a",
                         { href: "oscs-user" },
                         React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
                         " Minhas OSCs"

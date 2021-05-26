@@ -748,8 +748,6 @@ class Recursos extends React.Component{
             select_recursos_id: cd_origem});
     }
 
-
-
     render(){
         let anosRecursos = null;
         if(this.state.anosRecursos){
@@ -764,8 +762,6 @@ class Recursos extends React.Component{
             }.bind(this));
         }
 
-
-
         return (
             <div>
                 <div className="container">
@@ -778,7 +774,6 @@ class Recursos extends React.Component{
                                         <h3>Fontes de recursos anuais da OSC</h3>
                                         <hr/><br/>
                                     </div>
-
 
                                     <div style={{fontSize: "13px"}}>Anos: </div>
                                     <div className="btn-group" role="group" aria-label="Anos">

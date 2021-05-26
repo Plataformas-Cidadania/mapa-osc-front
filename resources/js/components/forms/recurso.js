@@ -107,10 +107,10 @@ class Recurso extends React.Component {
     }
 }
 
-ReactDOM.render(
+/*ReactDOM.render(
     <Recurso/>,
     document.getElementById('recurso')
-);
+);*/
 
 
 

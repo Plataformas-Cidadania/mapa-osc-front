@@ -99,6 +99,8 @@
     get_location();
 </script>
 
+<script src="js/components/login/menuUsuario.js"></script>
+
 @if($rota=='detalhar/{id}/{title}')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
