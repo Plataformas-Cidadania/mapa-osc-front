@@ -192,7 +192,8 @@ class Recursos extends React.Component {
             item_recursos_publicos: false,
             item_recursos_privados: false,
             item_recursos_financeiros: false,
-            item_recursos_proprios: false
+            item_recursos_proprios: false,
+            select_recursos_id: 0
         };
 
         this.getAnos = this.getAnos.bind(this);
@@ -211,7 +212,6 @@ class Recursos extends React.Component {
         this.setState({ button: false });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl2+'osc/anos_recursos/789809',
             url: getBaseUrl2 + 'osc/anos_recursos/' + this.props.id,
             cache: false,
             success: function (data) {
@@ -254,7 +254,6 @@ class Recursos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/recursos/'+ano+'/789809',
             url: getBaseUrl2 + 'osc/recursos/' + ano + '/' + this.props.id,
             success: function (data) {
                 this.setState({ dataRecursos: data[ano], ano: ano });
@@ -269,20 +268,14 @@ class Recursos extends React.Component {
 
     callAddAnos(acao) {
         let activeMsg = false;
-        //console.log('1');
         if (this.state.activeIncert) {
-            //console.log('2');
             activeMsg = true;
         }
         if (this.state.activeIncert === true && acao === false) {
-            //console.log('3');
-
             activeMsg = false;
         }
         if (this.state.activeIncert === true && acao === true) {
-            //console.log('4');
             this.getAnos(true);
-            //this.setState({campoAno: null});
         }
 
         this.setState({ addAnos: acao, activeMsg: activeMsg });
@@ -592,7 +585,6 @@ class Recursos extends React.Component {
                 }
             }
         }
-
         this.setState({ recursos: recursos });
     }
 
@@ -605,22 +597,14 @@ class Recursos extends React.Component {
         const target = event.target;
         const value = target.value;
         this.setState({ campoAno: value });
-        /*const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-          let form = this.state.form;
-        form[name] = value;
-          this.setState({form: form});*/
     }
 
     getSemRecursos() {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/789809',
             url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/' + this.props.id,
             success: function (data) {
-
                 /*/////////////////////////////////////*/
                 let recursos_publicos = {
                     origem: {
@@ -648,36 +632,44 @@ class Recursos extends React.Component {
 
                 if (data[this.state.ano] !== undefined) {
                     if (data[this.state.ano].length > 0) {
-                        recursos_publicos = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc: data[this.state.ano][0].origem.cd_origem_fonte_recursos_osc
+                        for (let i in data[this.state.ano]) {
+                            if (data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc === 1) {
+                                recursos_publicos = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc: data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc
+                                    }
+                                };
                             }
-                        };
-                        recursos_privados = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc: data[this.state.ano][1].origem.cd_origem_fonte_recursos_osc
+                            if (data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc === 2) {
+                                recursos_privados = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc: data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc
+                                    }
+                                };
                             }
-                        };
-                        recursos_financeiros = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc: data[this.state.ano][2].origem.cd_origem_fonte_recursos_osc
+                            if (data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc === 3) {
+                                recursos_financeiros = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc: data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc
+                                    }
+                                };
                             }
-                        };
-                        recursos_proprios = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc: data[this.state.ano][3].origem.cd_origem_fonte_recursos_osc
+                            if (data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc === 4) {
+                                recursos_proprios = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc: data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc
+                                    }
+                                };
                             }
-                        };
+                        }
                     }
                 }
                 let item_recursos_publicos = recursos_publicos.origem.cd_origem_fonte_recursos_osc === 1 ? true : false;
-                let item_recursos_privados = recursos_publicos.origem.cd_origem_fonte_recursos_osc === 2 ? true : false;
-                let item_recursos_financeiros = recursos_publicos.origem.cd_origem_fonte_recursos_osc === 3 ? true : false;
-                let item_recursos_proprios = recursos_publicos.origem.cd_origem_fonte_recursos_osc === 4 ? true : false;
+                let item_recursos_privados = recursos_privados.origem.cd_origem_fonte_recursos_osc === 2 ? true : false;
+                let item_recursos_financeiros = recursos_financeiros.origem.cd_origem_fonte_recursos_osc === 3 ? true : false;
+                let item_recursos_proprios = recursos_proprios.origem.cd_origem_fonte_recursos_osc === 4 ? true : false;
 
                 /*/////////////////////////////////////*/
-
-                console.log('+++++', recursos_publicos.origem.cd_origem_fonte_recursos_osc);
 
                 this.setState({
                     item_recursos_publicos: item_recursos_publicos,
@@ -685,7 +677,6 @@ class Recursos extends React.Component {
                     item_recursos_financeiros: item_recursos_financeiros,
                     item_recursos_proprios: item_recursos_proprios
                 });
-                //this.setState({dataSemRecursos: data[this.state.ano]})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -693,17 +684,17 @@ class Recursos extends React.Component {
         });
     }
 
-    addSemRecursos(cd_origem) {
-        let acaoRecursos = !this.state.item_recursos_publicos;
+    addSemRecursos(cd_origem, status) {
 
-        if (!this.state.item_recursos_publicos) {
-            console.log('insert');
-            console.log('cd_origem', cd_origem);
-            console.log('ano', this.state.ano);
+        let item_recursos_publicos = !this.state.item_recursos_publicos;
+        let item_recursos_privados = !this.state.item_recursos_privados;
+        let item_recursos_financeiros = !this.state.item_recursos_financeiros;
+        let item_recursos_proprios = !this.state.item_recursos_proprios;
+
+        if (status === true) {
             $.ajax({
                 method: 'POST',
                 data: {
-                    //id_osc: 789809,
                     id_osc: this.props.id,
                     ano: this.state.ano,
                     ft_nao_possui: 'Representante de OSC',
@@ -715,24 +706,23 @@ class Recursos extends React.Component {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
                 success: function (data) {
-                    //this.setState();
+                    this.callRecursos(this.state.ano);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
                 }.bind(this)
             });
         } else {
-            console.log('delete');
 
             $.ajax({
                 method: 'DELETE',
                 cache: false,
-                url: getBaseUrl2 + 'osc/sem_recursos/' + ano,
+                url: getBaseUrl2 + 'osc/sem_recursos/' + this.props.id + '/' + this.state.ano + '/' + cd_origem,
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
                 success: function (data) {
-                    //this.setState();
+                    this.callRecursos(this.state.ano);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -740,7 +730,12 @@ class Recursos extends React.Component {
             });
         }
 
-        this.setState({ item_recursos_publicos: acaoRecursos });
+        this.setState({
+            item_recursos_publicos: item_recursos_publicos,
+            item_recursos_privados: item_recursos_privados,
+            item_recursos_financeiros: item_recursos_financeiros,
+            item_recursos_proprios: item_recursos_proprios,
+            select_recursos_id: cd_origem });
     }
 
     render() {
@@ -874,38 +869,9 @@ class Recursos extends React.Component {
                                             { className: 'custom-control custom-checkbox text-center' },
                                             React.createElement(
                                                 'div',
-                                                { className: 'cursor', onClick: () => this.addSemRecursos(1) },
+                                                { className: 'cursor', onClick: () => this.addSemRecursos(1, !this.state.item_recursos_publicos) },
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'alert alert-danger', style: { display: 'none' } },
-                                                React.createElement('br', null),
-                                                React.createElement(
-                                                    'a',
-                                                    { type: 'button', className: 'btn-primary btn-xs float-right' },
-                                                    'Confirmar'
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { style: { marginTop: '10px', float: 'right', display: 'none' } },
-                                                React.createElement(
-                                                    'div',
-                                                    null,
-                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                                    ' Processando ',
-                                                    React.createElement('br', null),
-                                                    ' ',
-                                                    React.createElement('br', null)
-                                                ),
-                                                React.createElement(
-                                                    'div',
-                                                    null,
-                                                    React.createElement('i', { className: "far fa-times-circle" })
-                                                ),
-                                                React.createElement('br', null)
                                             )
                                         )
                                     ),
@@ -980,92 +946,114 @@ class Recursos extends React.Component {
                                     React.createElement('br', null),
                                     React.createElement(
                                         'h2',
-                                        null,
+                                        { style: { float: 'left' } },
                                         'Recursos privados'
                                     ),
-                                    React.createElement('hr', null)
+                                    React.createElement(
+                                        'div',
+                                        { style: { float: 'right' } },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox text-center' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'cursor', onClick: () => this.addSemRecursos(2, !this.state.item_recursos_privados) },
+                                                React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_privados ? '#3A559B' : '#FFFFFF' } }),
+                                                ' N\xE3o possui'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement('hr', { style: { clear: 'both' } })
                                 ),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][0].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][0].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][0].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][0].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][0].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][1].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][1].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][1].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][1].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][1].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][2].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][2].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][2].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][2].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][2].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][3].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][3].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][3].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][3].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][3].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][4].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][4].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][4].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][4].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][4].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][5].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][5].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][5].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][5].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][5].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][6].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][6].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][6].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][6].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][6].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][7].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][7].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][7].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][7].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][7].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[2][8].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[2][8].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[2][8].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[2][8].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[2][8].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row', style: { display: this.state.item_recursos_privados ? 'none' : '' } },
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][0].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][0].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][0].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][0].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][0].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][1].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][1].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][1].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][1].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][1].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][2].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][2].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][2].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][2].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][2].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][3].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][3].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][3].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][3].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][3].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][4].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][4].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][4].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][4].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][4].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][5].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][5].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][5].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][5].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][5].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][6].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][6].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][6].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][6].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][6].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][7].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][7].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][7].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][7].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][7].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[2][8].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[2][8].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[2][8].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[2][8].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[2][8].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        })
+                                    )
+                                ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
@@ -1073,56 +1061,78 @@ class Recursos extends React.Component {
                                     React.createElement('br', null),
                                     React.createElement(
                                         'h2',
-                                        null,
+                                        { style: { float: 'left' } },
                                         'Recursos n\xE3o financeiros'
                                     ),
-                                    React.createElement('hr', null)
+                                    React.createElement(
+                                        'div',
+                                        { style: { float: 'right' } },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox text-center' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'cursor', onClick: () => this.addSemRecursos(3, !this.state.item_recursos_financeiros) },
+                                                React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_financeiros ? '#3A559B' : '#FFFFFF' } }),
+                                                ' N\xE3o possui'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement('hr', { style: { clear: 'both' } })
                                 ),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[3][0].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[3][0].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[3][0].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[3][0].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[3][0].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[3][1].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[3][1].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[3][1].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[3][1].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[3][1].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[3][2].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[3][2].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[3][2].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[3][2].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[3][2].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[3][3].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[3][3].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[3][3].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[3][3].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[3][3].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[3][4].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[3][4].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[3][4].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[3][4].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[3][4].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row', style: { display: this.state.item_recursos_financeiros ? 'none' : '' } },
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[3][0].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[3][0].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[3][0].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[3][0].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[3][0].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[3][1].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[3][1].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[3][1].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[3][1].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[3][1].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[3][2].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[3][2].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[3][2].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[3][2].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[3][2].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[3][3].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[3][3].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[3][3].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[3][3].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[3][3].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[3][4].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[3][4].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[3][4].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[3][4].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[3][4].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        })
+                                    )
+                                ),
                                 React.createElement(
                                     'div',
                                     { className: 'col-md-12' },
@@ -1130,74 +1140,96 @@ class Recursos extends React.Component {
                                     React.createElement('br', null),
                                     React.createElement(
                                         'h2',
-                                        null,
+                                        { style: { float: 'left' } },
                                         'Recursos pro\u0301prios'
                                     ),
-                                    React.createElement('hr', null)
+                                    React.createElement(
+                                        'div',
+                                        { style: { float: 'right' } },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox text-center' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'cursor', onClick: () => this.addSemRecursos(4, !this.state.item_recursos_proprios) },
+                                                React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_proprios ? '#3A559B' : '#FFFFFF' } }),
+                                                ' N\xE3o possui'
+                                            )
+                                        )
+                                    ),
+                                    React.createElement('hr', { style: { clear: 'both' } })
                                 ),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][0].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][0].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][0].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][0].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][0].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][1].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][1].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][1].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][1].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][1].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][2].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][2].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][2].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][2].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][2].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][3].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][3].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][3].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][3].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][3].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][4].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][4].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][4].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][4].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][4].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][5].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][5].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][5].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][5].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][5].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                }),
-                                React.createElement(Recurso, {
-                                    id: this.state.recursos[4][6].id_recursos_osc,
-                                    id_osc: this.props.id,
-                                    cd: this.state.recursos[4][6].cd_fonte_recurso_osc,
-                                    name: this.state.recursos[4][6].cd_fonte_recurso_osc,
-                                    value: this.state.recursos[4][6].nr_valor_recursos_osc,
-                                    txt: this.state.recursos[4][6].tx_nome_fonte_recursos_osc,
-                                    ano: this.state.ano + '-01-01'
-                                })
+                                React.createElement(
+                                    'div',
+                                    { className: 'col-md-12' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'row', style: { display: this.state.item_recursos_proprios ? 'none' : '' } },
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][0].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][0].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][0].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][0].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][0].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][1].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][1].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][1].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][1].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][1].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][2].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][2].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][2].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][2].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][2].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][3].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][3].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][3].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][3].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][3].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][4].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][4].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][4].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][4].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][4].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][5].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][5].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][5].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][5].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][5].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        }),
+                                        React.createElement(Recurso, {
+                                            id: this.state.recursos[4][6].id_recursos_osc,
+                                            id_osc: this.props.id,
+                                            cd: this.state.recursos[4][6].cd_fonte_recurso_osc,
+                                            name: this.state.recursos[4][6].cd_fonte_recurso_osc,
+                                            value: this.state.recursos[4][6].nr_valor_recursos_osc,
+                                            txt: this.state.recursos[4][6].tx_nome_fonte_recursos_osc,
+                                            ano: this.state.ano + '-01-01'
+                                        })
+                                    )
+                                )
                             )
                         ),
                         React.createElement('div', { className: 'space' })
@@ -1208,4 +1240,4 @@ class Recursos extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Recursos, { id: id }), document.getElementById('recursos'));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+ReactDOM.render(React.createElement(Recursos, { id: id }), document.getElementById('recursos'));
