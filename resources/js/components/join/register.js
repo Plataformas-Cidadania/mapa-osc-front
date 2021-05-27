@@ -2,17 +2,15 @@ class Register extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            form: {
-                email: this.props.email,
-            },
+            form: {},
             button: true,
             loading: false,
             requireds: {
-                name: true,
-                email: true,
-                password: true,
-                cpf: true,
-                cnpj: true,
+                tx_nomeusuario: true,
+                tx_email_usuario: true,
+                tx_senha_usuario: true,
+                nr_cpf_usuario: true,
+                //cnpj: true,
             },
             showMsg: false,
             msg: '',
@@ -34,21 +32,21 @@ class Register extends React.Component{
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        if(target.name==='cep'){
+        /*if(target.name==='cep'){
             value = maskCep(value);
-        }
-        if(target.name==='cpf'){
+        }*/
+        if(target.name==='nr_cpf_usuario'){
             value = maskCpf(value);
         }
-        if(target.name==='cnpj'){
+        /*if(target.name==='cnpj'){
             value = maskCnpj(value);
-        }
-        if(target.name==='cel'){
+        }*/
+        /*if(target.name==='cel'){
             value = maskCel(value);
-        }
-        if(target.name==='whatsapp'){
+        }*/
+        /*if(target.name==='whatsapp'){
             value = maskCel(value);
-        }
+        }*/
 
 
         let form = this.state.form;
@@ -78,14 +76,16 @@ class Register extends React.Component{
         }*/
 
 
-        if(!this.validateName(this.state.form.name)){
-            requireds.name = false;
+        if(!this.validateName(this.state.form.tx_nome_usuario)){
+            console.log('nome inválido');
+            requireds.tx_nome_usuario = false;
             valid = false;
         }
 
 
-        if(!validateCpf(this.state.form.cpf)){
-            requireds.cpf = false;
+        if(!validateCpf(this.state.form.nr_cpf_usuario)){
+            console.log('cpf inválido');
+            requireds.nr_cpf_usuario = false;
             valid = false;
         }
 
@@ -124,21 +124,19 @@ class Register extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: '', form: form}, function(){
             $.ajax({
                 method:'POST',
-                url: 'register',
-                data:{
-                    form: this.state.form
-                },
+                url: getBaseUrl2 + 'user',
+                data:this.state.form,
                 cache: false,
                 success: function(data) {
                     console.log('reg', data);
 
                     let msg = 'Já existe cadastro com esse';
 
-                    if(data.cpf || data.email){
-                        if(data.cpf){
+                    if(data.nr_cpf_usuario || data.tx_email_usuario){
+                        if(data.nr_cpf_usuario){
                             msg+= ' cpf';
                         }
-                        if(data.email){
+                        if(data.tx_email_usuario){
                             msg+= ' email';
                         }
                         this.setState({msg: msg, showMsg: true, loading: false, button: true});
@@ -228,36 +226,36 @@ class Register extends React.Component{
                                 </ul>*/}
                                 <br/>
                                 <div className="row">
-                                    <div className="col-md-6">
+                                    {/*<div className="col-md-6">
                                         <br/>
                                         <label htmlFor="cnpj">CNPJ*</label><br/>
                                         <input className={"form-control form-m "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} placeholder="CNPJ" value={this.state.form.cnpj}  maxLength="18"/><br/>
                                     </div>
-
+*/}
                                     <div className="col-md-12">
-                                        <label htmlFor="email">E-mail*</label><br/>
-                                        <input className={"form-control form-m "+(this.state.requireds.email ? '' : 'invalid-field')} type="text" name="email" onChange={this.handleInputChange} value={this.state.form.email} placeholder="E-mail"/><br/>
+                                        <label htmlFor="tx_email_usuario">E-mail*</label><br/>
+                                        <input className={"form-control form-m "+(this.state.requireds.tx_email_usuario ? '' : 'invalid-field')} type="text" name="tx_email_usuario" onChange={this.handleInputChange} placeholder="E-mail"/><br/>
                                     </div>
 
                                     <div className="col-md-5">
-                                        <label htmlFor="password">Senha*</label><br/>
+                                        <label htmlFor="tx_senha_usuario">Senha*</label><br/>
                                         <div className="input-icon">
-                                            <input id="password" className={"form-control form-m "+(this.state.requireds.password ? '' : 'invalid-field')} type="password" name="password" onChange={this.handleInputChange} placeholder="Senha"/>
+                                            <input id="tx_senha_usuario" className={"form-control form-m "+(this.state.requireds.tx_senha_usuario ? '' : 'invalid-field')} type="password" name="tx_senha_usuario" onChange={this.handleInputChange} placeholder="Senha"/>
                                             <a onClick={() => this.showHidePassword()}><i id="faView" className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                         </div>
                                         <br/>
                                     </div>
 
                                     <div className="col-md-12">
-                                        <label htmlFor="name">
+                                        <label htmlFor="tx_nome_usuario">
                                             <div>Seu nome e sobrenome*</div>
                                         </label><br/>
-                                        <input className={"form-control form-g "+(this.state.requireds.name ? '' : 'invalid-field')} type="text" name="name" onChange={this.handleInputChange} placeholder="Nome"/><br/>
+                                        <input className={"form-control form-g "+(this.state.requireds.tx_nome_usuario ? '' : 'invalid-field')} type="text" name="tx_nome_usuario" onChange={this.handleInputChange} placeholder="Nome"/><br/>
                                     </div>
 
                                     <div className="col-md-6">
                                         <label htmlFor="cpf">CPF*</label><br/>
-                                        <input className={"form-control form-m "+(this.state.requireds.cpf ? '' : 'invalid-field')} type="text" name="cpf" onChange={this.handleInputChange} placeholder="CPF" value={this.state.form.cpf}  maxLength="14"/><br/>
+                                        <input className={"form-control form-m "+(this.state.requireds.nr_cpf_usuario ? '' : 'invalid-field')} type="text" name="nr_cpf_usuario" onChange={this.handleInputChange} placeholder="CPF"  maxLength="14"/><br/>
                                     </div>
 
 
