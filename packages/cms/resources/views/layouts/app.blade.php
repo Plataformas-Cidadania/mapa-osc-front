@@ -184,6 +184,10 @@
                     <a href="cms/usuarios"><i class="fa fa-fw fa-users"></i> Usuários</a>
                 </li>
 
+                <li>
+                    <a href="cms/setting"><i class="fa fa-fw fa-users"></i> Configurações</a>
+                </li>
+
 
             </ul>
         </div>

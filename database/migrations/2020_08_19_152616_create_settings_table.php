@@ -38,7 +38,6 @@ class CreateSettingsTable extends Migration
             $table->string('instagram');
             $table->string('blog');
             $table->integer('cmsuser_id')->unsigned();
-            /*$table->foreign('cmsuser_id')->references('id')->on('cms_users')->onDelete('restrict');*/
             $table->timestamps();
         });
     }
