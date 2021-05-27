@@ -13,7 +13,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Nome site - @yield('title')</title>
+        <title>{{$setting->titulo}} - @yield('title')</title>
         <base href="{{$base_href}}{{$barra}}">
         {{--@include('layouts.metas')
         @include('layouts.richCards')
