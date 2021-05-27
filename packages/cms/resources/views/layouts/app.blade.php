@@ -197,11 +197,9 @@
 
     <div id="page-wrapper">
 
-
                 <div class="col-md-12">
                     @yield('content')
                 </div>
-
 
         {{--<div class="container-fluid">
 
