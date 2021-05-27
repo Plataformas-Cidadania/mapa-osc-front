@@ -346,7 +346,7 @@ class Objetivos extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'mn-accordion-icon' },
-                                    React.createElement('i', { className: 'fa fa-file-alt', 'aria-hidden': 'true' })
+                                    React.createElement('i', { className: 'fas fa-globe-americas', 'aria-hidden': 'true' })
                                 ),
                                 React.createElement(
                                     'h3',

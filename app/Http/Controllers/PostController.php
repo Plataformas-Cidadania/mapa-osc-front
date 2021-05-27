@@ -19,7 +19,7 @@ class PostController extends Controller
         $detail = \App\Post::find($id);
 
         $lasts = \App\Post::
-            where('id', '!=', $detail->id)
+        where('id', '!=', $detail->id)
             ->orderBy('id', 'desc')
             ->take(4)
             ->get();

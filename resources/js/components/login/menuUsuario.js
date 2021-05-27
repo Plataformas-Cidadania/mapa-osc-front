@@ -43,15 +43,15 @@ class MenuUsuario extends React.Component{
         let usuario = 'Olá, faça seu login ou se cadastre-se';
         if(this.state.tx_nome_usuario){
             let arrayNome = this.state.tx_nome_usuario.split(' ')
-            usuario = arrayNome[0];
+            usuario = 'Olá, ' + arrayNome[0] + ' seja bem vindo!';
         }
         return(
             <div>
                 <div className="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div className="login-icon rounded-circle">
-                        <i className="far fa-user"></i>
+                        <i className="far fa-user"/>
                     </div>
-                    <p>{usuario} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+                    <p>{usuario}</p>
                 </div>
                 <div className="dropdown-menu dropdown-menu-right">
                     <a href="login" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>

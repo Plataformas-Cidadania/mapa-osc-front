@@ -193,6 +193,7 @@ class Recursos extends React.Component{
             item_recursos_privados: false,
             item_recursos_financeiros: false,
             item_recursos_proprios: false,
+            select_recursos_id: 0,
         };
 
 
@@ -214,23 +215,22 @@ class Recursos extends React.Component{
         this.setState({button:false});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl2+'osc/anos_recursos/789809',
             url: getBaseUrl2+'osc/anos_recursos/'+this.props.id,
             cache: false,
             success: function (data) {
+
+                var data = Object.values(data);
                 const  data2 =  data;
                 let  campoAno =  this.state.campoAno;
-                function isCherries(data2) {
-                    return data2.dt_ano_recursos_osc === campoAno;
-                }
 
                 let dataAntes = data.length;
 
-                if(data2.find(isCherries)==undefined) {
+                if(data.indexOf(parseInt(campoAno))===-1) {
                     if (acao == true && campoAno > 0) {
-                        data.push({'dt_ano_recursos_osc': this.state.campoAno, id_osc: 789809});
+                        data.push(this.state.campoAno);
                     }
                 }
+
                 let dataDepois = data.length;
                 let activeIncert = dataAntes !== dataDepois;
 
@@ -239,7 +239,7 @@ class Recursos extends React.Component{
                     anosRecursos: data,
                     button:true,
                     activeIncert: activeIncert,
-                    insertMsg: !data2.find(isCherries)==undefined,
+                    insertMsg: !data2,
                 })
             }.bind(this),
             error: function (xhr, status, err) {
@@ -257,7 +257,6 @@ class Recursos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/recursos/'+ano+'/789809',
             url: getBaseUrl2+'osc/recursos/'+ano+'/'+this.props.id,
             success: function (data) {
                 this.setState({dataRecursos: data[ano], ano: ano})
@@ -272,25 +271,18 @@ class Recursos extends React.Component{
 
     callAddAnos(acao){
         let activeMsg = false;
-        //console.log('1');
         if(this.state.activeIncert){
-            //console.log('2');
             activeMsg = true;
         }
         if(this.state.activeIncert === true && acao === false){
-            //console.log('3');
-
             activeMsg = false;
         }
         if(this.state.activeIncert === true && acao === true){
-            //console.log('4');
             this.getAnos(true);
-            //this.setState({campoAno: null});
         }
 
         this.setState({addAnos: acao, activeMsg: activeMsg});
     }
-
 
 
     callRecursosValue(){
@@ -597,9 +589,6 @@ class Recursos extends React.Component{
                 }
             }
         }
-
-
-
         this.setState({recursos: recursos});
 
     }
@@ -613,14 +602,6 @@ class Recursos extends React.Component{
         const target = event.target;
         const value = target.value;
         this.setState({campoAno: value});
-        /*const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        let form = this.state.form;
-        form[name] = value;
-
-        this.setState({form: form});*/
     }
 
 
@@ -628,11 +609,8 @@ class Recursos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/789809',
             url: getBaseUrl2 + 'osc/sem_recursos/' + this.state.ano + '/'+this.props.id,
             success: function (data) {
-
-
                 /*/////////////////////////////////////*/
                 let recursos_publicos = {
                     origem: {
@@ -660,37 +638,45 @@ class Recursos extends React.Component{
 
                 if(data[this.state.ano]!==undefined){
                     if(data[this.state.ano].length>0){
-                        recursos_publicos = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc : data[this.state.ano][0].origem.cd_origem_fonte_recursos_osc,
+                        for(let i in data[this.state.ano]){
+                            if(data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc===1){
+                                recursos_publicos = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc : data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc,
+                                    }
+                                }
                             }
-                        }
-                        recursos_privados = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc : data[this.state.ano][1].origem.cd_origem_fonte_recursos_osc,
+                            if(data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc===2){
+                                recursos_privados = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc : data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc,
+                                    }
+                                }
                             }
-                        }
-                        recursos_financeiros = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc : data[this.state.ano][2].origem.cd_origem_fonte_recursos_osc,
+                            if(data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc===3){
+                                recursos_financeiros = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc : data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc,
+                                    }
+                                }
                             }
-                        }
-                        recursos_proprios = {
-                            origem: {
-                                cd_origem_fonte_recursos_osc : data[this.state.ano][3].origem.cd_origem_fonte_recursos_osc,
+                            if(data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc===4){
+                                recursos_proprios = {
+                                    origem: {
+                                        cd_origem_fonte_recursos_osc : data[this.state.ano][i].origem.cd_origem_fonte_recursos_osc,
+                                    }
+                                }
                             }
                         }
 
                     }
                 }
                 let item_recursos_publicos = recursos_publicos.origem.cd_origem_fonte_recursos_osc===1 ? true : false;
-                let item_recursos_privados = recursos_publicos.origem.cd_origem_fonte_recursos_osc===2 ? true : false;
-                let item_recursos_financeiros = recursos_publicos.origem.cd_origem_fonte_recursos_osc===3 ? true : false;
-                let item_recursos_proprios = recursos_publicos.origem.cd_origem_fonte_recursos_osc===4 ? true : false;
+                let item_recursos_privados = recursos_privados.origem.cd_origem_fonte_recursos_osc===2 ? true : false;
+                let item_recursos_financeiros = recursos_financeiros.origem.cd_origem_fonte_recursos_osc===3 ? true : false;
+                let item_recursos_proprios = recursos_proprios.origem.cd_origem_fonte_recursos_osc===4 ? true : false;
 
                 /*/////////////////////////////////////*/
-
-                console.log('+++++', recursos_publicos.origem.cd_origem_fonte_recursos_osc);
 
                 this.setState({
                     item_recursos_publicos: item_recursos_publicos,
@@ -698,7 +684,6 @@ class Recursos extends React.Component{
                     item_recursos_financeiros: item_recursos_financeiros,
                     item_recursos_proprios: item_recursos_proprios,
                 });
-                //this.setState({dataSemRecursos: data[this.state.ano]})
 
             }.bind(this),
             error: function (xhr, status, err) {
@@ -708,17 +693,17 @@ class Recursos extends React.Component{
     }
 
 
-    addSemRecursos(cd_origem){
-        let acaoRecursos = !this.state.item_recursos_publicos;
+    addSemRecursos(cd_origem, status){
 
-        if(!this.state.item_recursos_publicos){
-            console.log('insert');
-            console.log('cd_origem', cd_origem);
-            console.log('ano', this.state.ano);
+        let item_recursos_publicos = !this.state.item_recursos_publicos;
+        let item_recursos_privados = !this.state.item_recursos_privados;
+        let item_recursos_financeiros = !this.state.item_recursos_financeiros;
+        let item_recursos_proprios = !this.state.item_recursos_proprios;
+
+        if(status===true){
             $.ajax({
                 method: 'POST',
                 data: {
-                    //id_osc: 789809,
                     id_osc: this.props.id,
                     ano: this.state.ano,
                     ft_nao_possui: 'Representante de OSC',
@@ -730,24 +715,23 @@ class Recursos extends React.Component{
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
                 success: function (data) {
-                    //this.setState();
+                    this.callRecursos(this.state.ano);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
                 }.bind(this)
             });
         }else{
-            console.log('delete');
 
             $.ajax({
                 method: 'DELETE',
                 cache: false,
-                url: getBaseUrl2 + 'osc/sem_recursos/' + ano,
+                url: getBaseUrl2 + 'osc/sem_recursos/' + this.props.id + '/' + this.state.ano + '/' + cd_origem,
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
                 success: function (data) {
-                    //this.setState();
+                    this.callRecursos(this.state.ano);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -756,26 +740,28 @@ class Recursos extends React.Component{
 
         }
 
-        this.setState({item_recursos_publicos: acaoRecursos});
+        this.setState({
+            item_recursos_publicos: item_recursos_publicos,
+            item_recursos_privados: item_recursos_privados,
+            item_recursos_financeiros: item_recursos_financeiros,
+            item_recursos_proprios: item_recursos_proprios,
+            select_recursos_id: cd_origem});
     }
-
-
 
     render(){
         let anosRecursos = null;
+
         if(this.state.anosRecursos){
             anosRecursos = this.state.anosRecursos.map(function (item, index) {
                 return (
                 <div key={"anos_" + index} id={"anos_" + index}
-                    onClick={() => this.callRecursos(item.dt_ano_recursos_osc)}
-                    className={this.state.ano==item.dt_ano_recursos_osc ? 'btn btn-primary' : 'btn btn-light'}
+                    onClick={() => this.callRecursos(item)}
+                    className={this.state.ano==item ? 'btn btn-primary' : 'btn btn-light'}
                     style={{marginRight: '5px'}}
-                >{item.dt_ano_recursos_osc}</div>
+                >{item}</div>
                 );
             }.bind(this));
         }
-
-
 
         return (
             <div>
@@ -789,7 +775,6 @@ class Recursos extends React.Component{
                                         <h3>Fontes de recursos anuais da OSC</h3>
                                         <hr/><br/>
                                     </div>
-
 
                                     <div style={{fontSize: "13px"}}>Anos: </div>
                                     <div className="btn-group" role="group" aria-label="Anos">
@@ -825,11 +810,6 @@ class Recursos extends React.Component{
 
 
 
-                                            {/*<div className="float-right" onClick={() => this.saveOutrosSub(item.idSelectedSub)}  style={{margin: '-30px 10px 0 0'}}>
-                                                <div style={{display: this.state.saveLoading===item.idSelectedSub ? 'none' : ''}}><i className="far fa-save"/></div>
-                                                <div style={{display: this.state.saveLoading===item.idSelectedSub ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
-                                            </div>*/}
-
                                         </div>
                                     </div>
                                     <br/>
@@ -841,16 +821,13 @@ class Recursos extends React.Component{
                                         {/*////////////////////////////PUBLICOS//////////////////////////////*/}
                                         <div className="col-md-12">
                                             <h2 style={{float: 'left'}}>Recursos públicos</h2>
-
                                             {/*/////////////////////*/}
                                             <div  style={{float: 'right'}}  >
                                                 <div className="custom-control custom-checkbox text-center">
-
-                                                    <div className="cursor" onClick={() => this.addSemRecursos(1)}>
+                                                    <div className="cursor" onClick={() => this.addSemRecursos(1, !this.state.item_recursos_publicos)}>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
-
-                                                    <div className="alert alert-danger" style={{display: 'none'}}>
+                                                    {/*<div className="alert alert-danger" style={{display: 'none'}}>
                                                         <br/>
                                                         <a type="button" className="btn-primary btn-xs float-right" >
                                                             Confirmar
@@ -862,11 +839,11 @@ class Recursos extends React.Component{
                                                             <i className={"far fa-times-circle"} />
                                                         </div>
                                                         <br/>
-                                                    </div>
+                                                    </div>*/}
                                                 </div>
                                             </div>
                                             {/*/////////////////////*/}
-                                            <hr  style={{clear: 'both'}}/>
+                                            <hr style={{clear: 'both'}}/>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="row" style={{display: this.state.item_recursos_publicos ? 'none' : ''}}>
@@ -930,211 +907,253 @@ class Recursos extends React.Component{
                                         {/*////////////////////////////PRIVADOS//////////////////////////////*/}
                                         <div className="col-md-12">
                                             <br/><br/>
-                                            <h2>Recursos privados</h2>
-                                            <hr/>
+                                            <h2 style={{float: 'left'}}>Recursos privados</h2>
+                                            {/*/////////////////////*/}
+                                            <div  style={{float: 'right'}}  >
+                                                <div className="custom-control custom-checkbox text-center">
+                                                    <div className="cursor" onClick={() => this.addSemRecursos(2, !this.state.item_recursos_privados)}>
+                                                        <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_privados ? '#3A559B' : '#FFFFFF'}}/> Não possui
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/*/////////////////////*/}
+                                            <hr style={{clear: 'both'}}/>
                                         </div>
-                                        <Recurso
-                                            id={this.state.recursos[2][0].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][0].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][0].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][0].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][0].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][1].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][1].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][1].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][1].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][1].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][2].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][2].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][2].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][2].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][2].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][3].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][3].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][3].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][3].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][3].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][4].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][4].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][4].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][4].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][4].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][5].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][5].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][5].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][5].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][5].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][6].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][6].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][6].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][6].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][6].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][7].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][7].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][7].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][7].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][7].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[2][8].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[2][8].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[2][8].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[2][8].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[2][8].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
+
+                                        <div className="col-md-12">
+                                            <div className="row" style={{display: this.state.item_recursos_privados  ? 'none' : ''}}>
+                                                <Recurso
+                                                    id={this.state.recursos[2][0].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][0].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][0].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][0].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][0].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][1].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][1].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][1].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][1].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][1].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][2].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][2].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][2].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][2].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][2].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][3].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][3].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][3].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][3].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][3].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][4].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][4].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][4].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][4].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][4].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][5].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][5].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][5].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][5].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][5].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][6].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][6].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][6].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][6].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][6].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][7].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][7].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][7].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][7].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][7].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[2][8].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[2][8].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[2][8].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[2][8].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[2][8].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                            </div>
+                                        </div>
                                         {/*////////////////////////////NAO FINANCEIROS//////////////////////////////*/}
                                         <div className="col-md-12">
                                             <br/><br/>
-                                            <h2>Recursos não financeiros</h2>
-                                            <hr/>
+                                            <h2 style={{float: 'left'}}>Recursos não financeiros</h2>
+                                            {/*/////////////////////*/}
+                                            <div  style={{float: 'right'}}  >
+                                                <div className="custom-control custom-checkbox text-center">
+                                                    <div className="cursor" onClick={() => this.addSemRecursos(3, !this.state.item_recursos_financeiros)}>
+                                                        <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_financeiros ? '#3A559B' : '#FFFFFF'}}/> Não possui
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/*/////////////////////*/}
+                                            <hr style={{clear: 'both'}}/>
                                         </div>
-                                        <Recurso
-                                            id={this.state.recursos[3][0].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[3][0].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[3][0].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[3][0].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[3][0].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[3][1].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[3][1].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[3][1].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[3][1].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[3][1].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[3][2].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[3][2].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[3][2].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[3][2].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[3][2].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[3][3].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[3][3].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[3][3].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[3][3].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[3][3].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[3][4].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[3][4].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[3][4].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[3][4].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[3][4].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
+                                        <div className="col-md-12">
+                                            <div className="row" style={{display: this.state.item_recursos_financeiros  ? 'none' : ''}}>
+                                                <Recurso
+                                                    id={this.state.recursos[3][0].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[3][0].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[3][0].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[3][0].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[3][0].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[3][1].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[3][1].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[3][1].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[3][1].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[3][1].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[3][2].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[3][2].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[3][2].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[3][2].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[3][2].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[3][3].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[3][3].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[3][3].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[3][3].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[3][3].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[3][4].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[3][4].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[3][4].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[3][4].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[3][4].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                            </div>
+                                        </div>
+
 
                                         {/*////////////////////////////PROPRIOS//////////////////////////////*/}
                                         <div className="col-md-12">
                                             <br/><br/>
-                                            <h2>Recursos próprios</h2>
-                                            <hr/>
+                                            <h2 style={{float: 'left'}}>Recursos próprios</h2>
+                                            {/*/////////////////////*/}
+                                            <div  style={{float: 'right'}}  >
+                                                <div className="custom-control custom-checkbox text-center">
+                                                    <div className="cursor" onClick={() => this.addSemRecursos(4, !this.state.item_recursos_proprios)}>
+                                                        <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_proprios ? '#3A559B' : '#FFFFFF'}}/> Não possui
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/*/////////////////////*/}
+                                            <hr style={{clear: 'both'}}/>
                                         </div>
-                                        <Recurso
-                                            id={this.state.recursos[4][0].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][0].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][0].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][0].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][0].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][1].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][1].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][1].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][1].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][1].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][2].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][2].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][2].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][2].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][2].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][3].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][3].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][3].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][3].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][3].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][4].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][4].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][4].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][4].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][4].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][5].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][5].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][5].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][5].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][5].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
-                                        <Recurso
-                                            id={this.state.recursos[4][6].id_recursos_osc}
-                                            id_osc={this.props.id}
-                                            cd={this.state.recursos[4][6].cd_fonte_recurso_osc}
-                                            name={this.state.recursos[4][6].cd_fonte_recurso_osc}
-                                            value={this.state.recursos[4][6].nr_valor_recursos_osc}
-                                            txt={this.state.recursos[4][6].tx_nome_fonte_recursos_osc}
-                                            ano={this.state.ano+'-01-01'}
-                                        />
+                                        <div className="col-md-12">
+                                            <div className="row" style={{display: this.state.item_recursos_proprios  ? 'none' : ''}}>
+                                                <Recurso
+                                                    id={this.state.recursos[4][0].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][0].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][0].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][0].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][0].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][1].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][1].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][1].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][1].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][1].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][2].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][2].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][2].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][2].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][2].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][3].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][3].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][3].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][3].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][3].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][4].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][4].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][4].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][4].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][4].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][5].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][5].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][5].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][5].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][5].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                                <Recurso
+                                                    id={this.state.recursos[4][6].id_recursos_osc}
+                                                    id_osc={this.props.id}
+                                                    cd={this.state.recursos[4][6].cd_fonte_recurso_osc}
+                                                    name={this.state.recursos[4][6].cd_fonte_recurso_osc}
+                                                    value={this.state.recursos[4][6].nr_valor_recursos_osc}
+                                                    txt={this.state.recursos[4][6].tx_nome_fonte_recursos_osc}
+                                                    ano={this.state.ano+'-01-01'}
+                                                />
+                                            </div>
+                                        </div>
+
 
 
 

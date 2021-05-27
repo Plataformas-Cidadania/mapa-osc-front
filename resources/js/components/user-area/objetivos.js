@@ -336,7 +336,7 @@ class Objetivos extends React.Component{
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="title-user-area">
-                                    <div className="mn-accordion-icon"><i className="fa fa-file-alt" aria-hidden="true"/></div>
+                                    <div className="mn-accordion-icon"><i className="fas fa-globe-americas" aria-hidden="true"/></div>
                                     <h3>Objetivos do Desenvolvimento Sustentável - ODS</h3>
                                     <hr/><br/>
                                 </div>

@@ -74,6 +74,10 @@
 
 
                         @if($show!=2)
+                            @if($items)
+                                @include('page.about.accordion')
+                            @endif
+                        @else
                             <div class="row">
                                 @foreach($items as $item)
                                     <div class="col-md-4">
@@ -87,10 +91,6 @@
                                     </div>
                                 @endforeach
                             </div>
-                        @else
-                            @if($items)
-                                @include('page.about.accordion')
-                            @endif
                         @endif
 
 
