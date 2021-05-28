@@ -35,8 +35,7 @@ class Perfil extends React.Component {
                 trabalhadores: 'Distribuição de trabalhodores',
             },
             loading: false,
-
-
+            orcamento_txt: 0,
         };
         this.load = this.load.bind(this);
         this.callModal = this.callModal.bind(this);
@@ -125,7 +124,11 @@ class Perfil extends React.Component {
             },
             cache: false,
             success: function(data) {
-                this.setState({orcamento_chart: data.transferencias_federais});
+
+                this.setState({
+                    orcamento_chart: data.transferencias_federais,
+                    orcamento_txt:data.transferencias_federais.media
+                });
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -174,7 +177,6 @@ class Perfil extends React.Component {
     }
 
     repasseRecurdos(){
-        console.log('repasse_recursos');
         $.ajax({
             method:'GET',
             url: getBaseUrl2 + 'perfil_localidade/repasse_recursos/33',
@@ -350,7 +352,7 @@ class Perfil extends React.Component {
 
                 /*//////////////////////////////////////////////*/
                 /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
-                let evolucao_quantidade_osc_ano_labels = [];
+                /*let evolucao_quantidade_osc_ano_labels = [];
                 let evolucao_quantidade_osc_ano_series = [];
 
                 if(data.evolucao_quantidade_osc_ano){
@@ -373,7 +375,7 @@ class Perfil extends React.Component {
                         }
                     }
                     evolucao_quantidade_osc_ano_series.push(groupSerie);
-                }
+                }*/
 
                 /*let chart_evolucao_quantidade_osc_ano_series = evolucao_quantidade_osc_ano_series[0]
 
@@ -390,13 +392,13 @@ class Perfil extends React.Component {
                 this.setState({
                     loading: false,
                     //caracteristicas: data.caracteristicas,
-                    evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
+                    //evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
 
                     //area_atuacao: data.area_atuacao,
-                    natureza_juridica: data.natureza_juridica,
+                    //natureza_juridica: data.natureza_juridica,
                     //trabalhadores: data.trabalhadores,
-                    repasse_recursos: data.repasse_recursos,
-                    orcamento: data.orcamento,
+                    //repasse_recursos: data.repasse_recursos,
+                    //orcamento: data.orcamento,
 
                     //evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
                     //natureza_juridica_chart: natureza_juridica_chart,
@@ -423,8 +425,8 @@ class Perfil extends React.Component {
     callModal(type, chart, col){
 
         let ft_table = null;
-        if(this.state[type].fontes){
-            ft_table = this.state[type].fontes.map(function (item, key) {
+        if(this.state[chart].fontes){
+            ft_table = this.state[chart].fontes.map(function (item, key) {
                 return (
                     <span key={"ft_tb_" + key}>{item}, </span>
                 );
@@ -435,16 +437,38 @@ class Perfil extends React.Component {
         let table = this.state[chart];
 
 
-
-
         //////////////////////////
         if(col===3){
 
-            let grupeRows =  {
+            let teste = [];
+            let teste2 = [];
+
+            if(type==='evolucao_quantidade_osc_ano') {
+                for(let key in table.series){
+                    teste.push(table.dataLabels);
+                }
+            }
+
+            if(type==='repasse_recursos'){
+                //console.log('repasse_recursos');
+                for(let key in table.series){
+                    teste.push(table.labels);
+                }
+            }
+
+            teste2 = teste2.concat(teste).join();
+            teste2 = teste2.split(',');
+            let testArray = teste2;
+
+            let grupeRows = {
                 0: [],
-                1: table.labels,
+                1: testArray,
                 2: [],
-            } ;
+            };
+
+            /*if(type==='repasse_recursos'){
+                grupeRows[1] = table.labels;
+            }*/
 
             for(let key in table.series){
                 for(let key2 in table.series[key].data) {
@@ -473,21 +497,16 @@ class Perfil extends React.Component {
             modal.rows = gurpeCol;
 
         }else if(col===4){
-            let table = this.state.repasse_recursos_table.series_1;
-            //console.log('table', this.state.repasse_recursos_table);
-
-            let grupeRows =  {
+            let grupeRows = {
                 0: [],
-                1: [],
+                1: table.labels,
                 2: [],
-            } ;
+            };
 
-            for(let key in this.state.repasse_recursos_table.series_1){
-                for(let key2 in table[3].values) {
-                    grupeRows[0].push(table[key].key);
-                    grupeRows[1].push(table[key].values[key2].x);
-                    grupeRows[2].push(table[key].values[key2].y);
-                }
+
+            for(let key in table.series.data) {
+                grupeRows[0].push(table.series.name);
+                grupeRows[2].push(table.series.data[key]);
             }
 
             modal.name = this.state.name[type];
@@ -516,35 +535,11 @@ class Perfil extends React.Component {
                 1: [],
             } ;
 
-            for(let key in table.series){
-                for(let key2 in table.series[key].data) {
-                    grupeRows[1].push(table.series[key].data[key2]);
+            if(table){
+                for(let key in table.series.data) {
+                    grupeRows[1].push(table.series.data[key]);
                 }
             }
-
-            modal.name = this.state.name[type];
-            modal.fontes = ft_table;
-
-            modal.head = this.state.head[type].map(function (item, index){
-                return (<th key={'thModal'+index}>{item}</th>);
-            })
-
-            let gurpeCol = [];
-            for(let key in grupeRows[0]) {
-                gurpeCol.push(
-                    <tr key={'trModal'+key}>
-                        <td>{grupeRows[0][key].join(' ')}</td>
-                        <td>{grupeRows[1][key]}</td>
-                    </tr>
-                );
-            }
-            modal.rows = gurpeCol;
-
-        }else{
-            let grupeRows =  {
-                0: table.labels,
-                1: table.series,
-            } ;
 
             modal.name = this.state.name[type];
             modal.fontes = ft_table;
@@ -563,6 +558,32 @@ class Perfil extends React.Component {
                 );
             }
             modal.rows = gurpeCol;
+
+        }else{
+            /*let grupeRows =  {
+                0: table.labels,
+                1: table.series,
+            } ;
+
+            console.log('labels 0', table.labels);
+
+            modal.name = this.state.name[type];
+            modal.fontes = ft_table;
+
+            modal.head = this.state.head[type].map(function (item, index){
+                return (<th key={'thModal'+index}>{item}</th>);
+            })
+
+            let gurpeCol = [];
+            for(let key in grupeRows[0]) {
+                gurpeCol.push(
+                    <tr key={'trModal'+key}>
+                        <td>{grupeRows[0][key]}</td>
+                        <td>{grupeRows[1][key]}</td>
+                    </tr>
+                );
+            }
+            modal.rows = gurpeCol;*/
         }
 
         ////////////////////////////////
@@ -689,21 +710,23 @@ class Perfil extends React.Component {
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////Natureza Juridica///////////////////////////////////////////
         let ft_natureza_juridica = null;
-        if(this.state.natureza_juridica.fontes){
-            ft_natureza_juridica = this.state.natureza_juridica.fontes.map(function (item, key) {
+        if(this.state.natureza_juridica_chart){
+            ft_natureza_juridica = this.state.natureza_juridica_chart.fontes.map(function (item, key) {
                 return (
                     <span key={"ft_qp_" + key}>{item}, </span>
                 );
             });
         }
 
-        let tx_porcentagem_maior = '';
-        if(this.state.natureza_juridica.tx_porcentagem_maior){
-            tx_porcentagem_maior = this.state.natureza_juridica.tx_porcentagem_maior[0];
-        }
-        let tx_porcentagem_maior_media_nacional = '';
-        if(this.state.natureza_juridica.tx_porcentagem_maior_media_nacional){
-            tx_porcentagem_maior_media_nacional = this.state.natureza_juridica.tx_porcentagem_maior_media_nacional[0];
+        let nj_nr_porcentagem_maior = 0;
+        let nj_tx_porcentagem_maior = '';
+        let nj_nr_porcentagem_maior_media_nacional = 0;
+        let nj_tx_porcentagem_maior_media_nacional = '';
+        if(this.state.natureza_juridica_chart){
+            nj_nr_porcentagem_maior = this.state.natureza_juridica_chart.nr_porcentagem_maior;
+            nj_tx_porcentagem_maior = this.state.natureza_juridica_chart.tx_porcentagem_maior;
+            nj_nr_porcentagem_maior_media_nacional = this.state.natureza_juridica_chart.nr_porcentagem_maior_media_nacional;
+            nj_tx_porcentagem_maior_media_nacional = this.state.natureza_juridica_chart.tx_porcentagem_maior_media_nacional;
         }
 
         ///////////////////////////////////////////////////CHART
@@ -742,16 +765,6 @@ class Perfil extends React.Component {
             });
         }
 
-        /*let trabalhadores_chart = null;
-        if(this.state.trabalhadores_chart){
-            trabalhadores_chart = (
-                <ColumnChart
-                    id={'trabalhadores-chart'}
-                    series={this.state.trabalhadores_chart.series}
-                    labels={this.state.trabalhadores_chart.labels}
-                />
-            );
-        }*/
         ///////////////////////////////////////////////////CHART
         let trabalhadores_chart = null;
 
@@ -791,23 +804,23 @@ class Perfil extends React.Component {
 
         //////////////////////////////////Área de atuação///////////////////////////////////////////
         let ft_area_atuacao = null;
-        if(this.state.area_atuacao.fontes){
-            ft_area_atuacao = this.state.area_atuacao.fontes.map(function (item, key) {
+        if(this.state.area_atuacao_chart){
+            ft_area_atuacao = this.state.area_atuacao_chart.fontes.map(function (item, key) {
                 return (
                     <span key={"ft_qp_" + key}>{item}, </span>
                 );
             });
         }
 
-        let nr_area_atuacao = '';
-        if(this.state.area_atuacao.media_nacional){
-            nr_area_atuacao = this.state.area_atuacao.media_nacional[0].nr_area_atuacao;
+        let nr_porcentagem_maior = 0;
+        let nr_area_atuacao = 0;
+        let tx_area_atuacao = '';
+        if(this.state.area_atuacao_chart){
+            nr_porcentagem_maior = this.state.area_atuacao_chart.nr_porcentagem_maior;
+            nr_area_atuacao = this.state.area_atuacao_chart.nr_media_nacional_area_atuacao;
+            tx_area_atuacao = this.state.area_atuacao_chart.tx_porcentagem_maior;
         }
 
-        let tx_area_atuacao = '';
-        if(this.state.area_atuacao.media_nacional){
-            tx_area_atuacao = this.state.area_atuacao.media_nacional[0].tx_area_atuacao;
-        }
 
 
 
@@ -825,8 +838,8 @@ class Perfil extends React.Component {
 
         //////////////////////////////////Repasse de Recursos///////////////////////////////////////////
         let ft_repasse_recursos = null;
-        if(this.state.repasse_recursos.fontes){
-            ft_repasse_recursos = this.state.repasse_recursos.fontes.map(function (item, key) {
+        if(this.state.repasse_recursos_chart){
+            ft_repasse_recursos = this.state.repasse_recursos_chart.fontes.map(function (item, key) {
                 return (
                     <span key={"ft_qp_" + key}>{item}, </span>
                 );
@@ -835,7 +848,6 @@ class Perfil extends React.Component {
         let repasse_recursos_chart = null;
 
         if(this.state.repasse_recursos_chart){
-            //console.log('this.state.repasse_recursos_chart', this.state.repasse_recursos_chart.series);
             repasse_recursos_chart = (
                 <MixedChart
                     id={'mix-chart-repasse_recursos'}
@@ -844,10 +856,21 @@ class Perfil extends React.Component {
                 />
             );
         }
+        let nr_colocacao_nacional = 0;
+        let nr_porcentagem_maior_tipo_repasse = 0;
+        let nr_repasse_media = 0;
+        let nr_repasse_media_nacional = 0;
+        if(this.state.repasse_recursos_chart){
+            nr_colocacao_nacional = this.state.repasse_recursos_chart.nr_colocacao_nacional;
+            nr_porcentagem_maior_tipo_repasse = this.state.repasse_recursos_chart.nr_porcentagem_maior_tipo_repasse;
+            nr_repasse_media = this.state.repasse_recursos_chart.nr_repasse_media;
+            nr_repasse_media_nacional = this.state.repasse_recursos_chart.nr_repasse_media_nacional;
+        }
+
         //////////////////////////////////Transferências Federais///////////////////////////////////////////
         let ft_orcamento = null;
-        if(this.state.orcamento.fontes){
-            ft_orcamento = this.state.orcamento.fontes.map(function (item, key) {
+        if(this.state.orcamento_chart){
+            ft_orcamento = this.state.orcamento_chart.fontes.map(function (item, key) {
                 return (
                     <span key={"ft_qp_" + key}>{item}, </span>
                 );
@@ -888,6 +911,7 @@ class Perfil extends React.Component {
             );
         }*/
 
+        //console.log('****', this.state.orcamento_chart.media)
 
 
         return (
@@ -991,10 +1015,10 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                Na população de OSCs do estado, {this.state.natureza_juridica.nr_porcentagem_maior}%
-                                são classificadas como {tx_porcentagem_maior}.
-                                A média nacional é de {this.state.natureza_juridica.nr_porcentagem_maior_media_nacional}%
-                                de OSCs identificadas como {tx_porcentagem_maior_media_nacional}.
+                                Na população de OSCs do estado, <strong>{nj_nr_porcentagem_maior}%</strong>&nbsp;
+                                são classificadas como <strong>{nj_tx_porcentagem_maior}.</strong>&nbsp;
+                                A média nacional é de <strong>{nj_nr_porcentagem_maior_media_nacional}%</strong>&nbsp;
+                                de OSCs identificadas como <strong>{nj_tx_porcentagem_maior_media_nacional}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_natureza_juridica} <br/>
@@ -1021,16 +1045,16 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} é o {this.state.repasse_recursos.nr_colocacao_nacional}º&nbsp;
-                                em relação aos repasses de recursos para OSCs, com média de R$ {this.state.repasse_recursos.nr_repasse_media}&nbsp;
-                                por ano. A média nacional por estado de repasse de recursos é de R$ {this.state.repasse_recursos.nr_repasse_media_nacional}&nbsp;
-                                . Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com {this.state.repasse_recursos.nr_colocacao_nacional}%&nbsp;
-                                do total.
+                                {this.state.localidade} é o&nbsp;
+                                <strong>{nr_colocacao_nacional}</strong>º em relação aos repasses de recursos para OSCs, com média de R$&nbsp;
+                                <strong>{nr_repasse_media}</strong> por ano. A média nacional por estado de repasse de recursos é de R$&nbsp;
+                                <strong>{nr_repasse_media_nacional}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
+                                <strong>{nr_porcentagem_maior_tipo_repasse}</strong>% do total.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_repasse_recursos} <br/>
                             </p>
-                            <div className="btn btn-outline-primary" onClick={() => this.callModal('repasse_recursos', 'repasse_recursos_chart', 4)}>Visualize os dados em tabela.</div>
+                            <div className="btn btn-outline-primary" onClick={() => this.callModal('repasse_recursos', 'repasse_recursos_chart', 3)}>Visualize os dados em tabela.</div>
                         </div>
                         <div className="col-md-6">
                             {repasse_recursos_chart}
@@ -1050,12 +1074,12 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                A média por estado de transferências Federais é de R$ {this.state.orcamento.media}.
+                                A média por estado de transferências Federais é de R$ <strong>{this.state.orcamento_txt}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_orcamento} <br/>
                             </p>
-                            <div className="btn btn-outline-primary" onClick={() => this.callModal('orcamento', 'orcamento_chart', 3)}>Visualize os dados em tabela.</div>
+                            <div className="btn btn-outline-primary" onClick={() => this.callModal('orcamento', 'orcamento_chart', 4)}>Visualize os dados em tabela.</div>
                         </div>
                         <div className="col-md-6">
                             {orcamento_chart}
@@ -1075,13 +1099,13 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} possui {this.state.area_atuacao.nr_porcentagem_maior}%
-                                das OSCs atuando em {tx_area_atuacao}, enquanto o percentual médio nacional de OSCs nesta categoria é de {nr_area_atuacao}%.
+                                {this.state.localidade} possui <strong>{nr_porcentagem_maior}</strong>%
+                                das OSCs atuando em <strong>{tx_area_atuacao}</strong>, enquanto o percentual médio nacional de OSCs nesta categoria é de <strong>{nr_area_atuacao}</strong>%.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_area_atuacao} <br/>
                             </p>
-                            <div className="btn btn-outline-primary" onClick={() => this.callModal('area_atuacao', 'area_atuacao_chart', 0)}>Visualize os dados em tabela.</div>
+                            <div className="btn btn-outline-primary" onClick={() => this.callModal('area_atuacao', 'area_atuacao_chart', 2)}>Visualize os dados em tabela.</div>
                         </div>
                         <div className="col-md-6">
                             {area_atuacao_chart}

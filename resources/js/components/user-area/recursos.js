@@ -827,19 +827,6 @@ class Recursos extends React.Component{
                                                     <div className="cursor" onClick={() => this.addSemRecursos(1, !this.state.item_recursos_publicos)}>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
-                                                    {/*<div className="alert alert-danger" style={{display: 'none'}}>
-                                                        <br/>
-                                                        <a type="button" className="btn-primary btn-xs float-right" >
-                                                            Confirmar
-                                                        </a>
-                                                    </div>
-                                                    <div style={{marginTop: '10px', float: 'right', display: 'none'}}>
-                                                        <div ><i className="fa fa-spin fa-spinner"/> Processando <br/> <br/></div>
-                                                        <div >
-                                                            <i className={"far fa-times-circle"} />
-                                                        </div>
-                                                        <br/>
-                                                    </div>*/}
                                                 </div>
                                             </div>
                                             {/*/////////////////////*/}
