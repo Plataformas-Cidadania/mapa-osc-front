@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <header>
-                        <a href="localidade/33" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise do estado</a>
+                        <a href="localidade/{{$origem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise do estado</a>
                         <br>
                         <h1>Mapa</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Mapa das OSCs</a> </h5>

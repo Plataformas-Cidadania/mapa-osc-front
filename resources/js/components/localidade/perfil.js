@@ -1,5 +1,6 @@
 class Perfil extends React.Component {
     constructor(props) {
+
         super(props);
         this.state = {
             localidade: '',
@@ -36,6 +37,7 @@ class Perfil extends React.Component {
             },
             loading: false,
             orcamento_txt: 0,
+            localidade_id: origem,
         };
         this.load = this.load.bind(this);
         this.callModal = this.callModal.bind(this);
@@ -63,7 +65,7 @@ class Perfil extends React.Component {
     evolucao_anual(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/evolucao_anual/33',
+            url: getBaseUrl2 + 'perfil_localidade/evolucao_anual/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -82,7 +84,7 @@ class Perfil extends React.Component {
     caracteristicas(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/caracteristicas/33',
+            url: getBaseUrl2 + 'perfil_localidade/caracteristicas/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -101,7 +103,7 @@ class Perfil extends React.Component {
     natureza_juridica(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/natureza_juridica/33',
+            url: getBaseUrl2 + 'perfil_localidade/natureza_juridica/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -119,7 +121,7 @@ class Perfil extends React.Component {
     transferencias_federais(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/transferencias_federais/33',
+            url: getBaseUrl2 + 'perfil_localidade/transferencias_federais/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -141,7 +143,7 @@ class Perfil extends React.Component {
     areas_atuacao(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/qtds_areas_atuacao/33',
+            url: getBaseUrl2 + 'perfil_localidade/qtds_areas_atuacao/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -159,7 +161,7 @@ class Perfil extends React.Component {
     trabalhadores(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/qtds_trabalhadores/33',
+            url: getBaseUrl2 + 'perfil_localidade/qtds_trabalhadores/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -179,7 +181,7 @@ class Perfil extends React.Component {
     repasseRecurdos(){
         $.ajax({
             method:'GET',
-            url: getBaseUrl2 + 'perfil_localidade/repasse_recursos/33',
+            url: getBaseUrl2 + 'perfil_localidade/repasse_recursos/'+this.state.localidade_id,
             data:{
             },
             cache: false,
@@ -200,7 +202,7 @@ class Perfil extends React.Component {
         this.setState({ button: false, loading: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'analises/localidade/33',
+            url: getBaseUrl + 'analises/localidade/'+this.state.localidade_id,
             cache: false,
             success: function (data) {
 
@@ -450,7 +452,6 @@ class Perfil extends React.Component {
             }
 
             if(type==='repasse_recursos'){
-                //console.log('repasse_recursos');
                 for(let key in table.series){
                     teste.push(table.labels);
                 }
@@ -465,10 +466,6 @@ class Perfil extends React.Component {
                 1: testArray,
                 2: [],
             };
-
-            /*if(type==='repasse_recursos'){
-                grupeRows[1] = table.labels;
-            }*/
 
             for(let key in table.series){
                 for(let key2 in table.series[key].data) {
@@ -559,33 +556,7 @@ class Perfil extends React.Component {
             }
             modal.rows = gurpeCol;
 
-        }else{
-            /*let grupeRows =  {
-                0: table.labels,
-                1: table.series,
-            } ;
-
-            console.log('labels 0', table.labels);
-
-            modal.name = this.state.name[type];
-            modal.fontes = ft_table;
-
-            modal.head = this.state.head[type].map(function (item, index){
-                return (<th key={'thModal'+index}>{item}</th>);
-            })
-
-            let gurpeCol = [];
-            for(let key in grupeRows[0]) {
-                gurpeCol.push(
-                    <tr key={'trModal'+key}>
-                        <td>{grupeRows[0][key]}</td>
-                        <td>{grupeRows[1][key]}</td>
-                    </tr>
-                );
-            }
-            modal.rows = gurpeCol;*/
         }
-
         ////////////////////////////////
 
 
@@ -899,21 +870,6 @@ class Perfil extends React.Component {
         }
         ///////////////////////////////////////////////////CHART
 
-
-        /*let orcamento_chart = null;
-        if(this.state.orcamento_chart){
-            orcamento_chart = (
-                <MixedChart
-                    id={'mix-chart-orcamento'}
-                    series={this.state.orcamento_chart.series}
-                    labels={this.state.orcamento_chart.labels}
-                />
-            );
-        }*/
-
-        //console.log('****', this.state.orcamento_chart.media)
-
-
         return (
             <div>
 
@@ -923,8 +879,8 @@ class Perfil extends React.Component {
                             <div className="col-md-12">
                                 <header>
                                     <br/>
-                                        <h1>Rio de Janeiro</h1>
-                                        <h5><a href="/">Home</a></h5>
+                                        <h1>{this.state.localidade}</h1>
+                                        <h5><a href="/">Home</a>/ {this.state.localidade}</h5>
                                         <br/>
                                 </header>
                             </div>

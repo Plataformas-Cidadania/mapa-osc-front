@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 class LocalidadeController extends Controller{
 
-    public function localidade(){
-        return view('osc.localidade');
+    public function localidade($origem=0){
+        return view('osc.localidade', ['origem' => $origem]);
     }
 
 

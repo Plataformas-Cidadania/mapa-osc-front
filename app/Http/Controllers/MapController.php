@@ -13,18 +13,16 @@ use Illuminate\Support\Facades\Route;
 class MapController extends Controller{
 
     private $obj;
-    private $module;
     private $table;
 
 
     public function __construct(){
         $this->obj = new \App\Map();
-        $this->module = 'map';
         $this->table = 'maps';
 
     }
 
-    public function details(){
-        return view($this->module.'.detail');
+    public function details($origem=0){
+        return view('map.detail', ['origem' => $origem]);
     }
 }

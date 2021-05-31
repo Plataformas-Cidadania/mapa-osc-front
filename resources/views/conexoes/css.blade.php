@@ -7,7 +7,7 @@
 @if($rota=='/')
     <link rel="stylesheet" href="css/home.css">
 @endif
-@if($rota=='mapa' || $rota=='contato')
+@if($rota=='mapa' || $rota=='mapa/{origem}' || $rota=='contato')
     <link rel="stylesheet" href="css/leaflet.css">
 @endif
 <style>
