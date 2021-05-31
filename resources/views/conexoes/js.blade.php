@@ -160,7 +160,7 @@
 @endif
 
 
-@if($rota=='mapa')
+@if($rota=='mapa' || $rota=='mapa/{origem}')
 <script src="js/leaflet.js"></script>
 <script src="js/components/maps/oscMap.js"></script>
 <script src="js/components/maps/page/page.js"></script>

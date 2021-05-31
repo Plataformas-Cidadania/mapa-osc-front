@@ -89,26 +89,35 @@ class Search extends React.Component {
             )
         }.bind(this));
 
-        let menuList = this.state.listMenuItem.map(function (item) {
-
+        let menuList = this.state.listMenuItem.map(function (item, index) {
+            //console.log('item', item);
             let tx_nome = '';
+            let origem_id = 0;
             if(this.state.searchNameCampo==='tx_nome_osc'){
                 tx_nome = item.tx_nome_osc;
+                origem_id = item.tx_nome_osc;
             }else if(this.state.searchNameCampo==='edmu_nm_municipio'){
                 tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
+                origem_id = item.edmu_cd_municipio;
             }else if(this.state.searchNameCampo==='eduf_nm_uf'){
                 tx_nome = item.eduf_nm_uf;
+                origem_id = item.eduf_cd_uf;
             }else if(this.state.searchNameCampo==='edre_nm_regiao'){
                 tx_nome = item.edre_nm_regiao;
+                origem_id = item.edre_cd_regiao;
             }
+
+            //console.log(origem_id);
 
             return (
                 <li
-                    key={'menuList' + item.id}
+                    key={'menuList' + index}
                     //onClick={() => this.btnSearch()}
                     className="list-group-item d-flex"
                 >
-                    {tx_nome}
+                    <a href={"mapa/"+origem_id}>
+                        {tx_nome}
+                    </a>
                 </li>
             )
         }.bind(this));
