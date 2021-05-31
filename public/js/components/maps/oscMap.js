@@ -738,7 +738,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -747,7 +747,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1421,6 +1421,20 @@ class OscMap extends React.Component {
                 { className: 'col-md-12' },
                 React.createElement(
                     'div',
+                    { className: 'box-qtd' },
+                    React.createElement(
+                        'p',
+                        null,
+                        'Quantidade de OSCs: '
+                    ),
+                    React.createElement(
+                        'h2',
+                        null,
+                        '781921'
+                    )
+                ),
+                React.createElement(
+                    'div',
                     { style: { margin: '0 15px 0 0' } },
                     React.createElement(
                         'div',
@@ -1456,6 +1470,11 @@ class OscMap extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'table-responsive-sm' },
+                        React.createElement(
+                            'p',
+                            { style: { fontSize: '12px' } },
+                            'Obs: 27 OSCs com dados de endere\xE7o ausentes ou incompletos.'
+                        ),
                         React.createElement(
                             'table',
                             { className: 'table' },

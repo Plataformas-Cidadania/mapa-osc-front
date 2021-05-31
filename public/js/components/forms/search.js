@@ -11,7 +11,8 @@ class Search extends React.Component {
             searchOscQtd: '10',
             searchNameCampo: 'tx_nome_osc',
 
-            listMenuItem: []
+            listMenuItem: [],
+            msg: ''
         };
 
         this.load = this.load.bind(this);
@@ -20,9 +21,10 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.load();
+        //this.load();
     }
     handleSearchOsc(e) {
+        //this.setState({searchOsc: ''});
         let search = e.target.value ? e.target.value : ' ';
         this.setState({ searchOsc: search }, function () {
             if (search.length > 2) {
@@ -32,6 +34,7 @@ class Search extends React.Component {
     }
     btnSearch(id, txt, rota, qtd, campo) {
         this.setState({
+            msg: '',
             //searchOsc: '',
             searchOscId: id,
             searchOscTxt: txt,
@@ -57,7 +60,7 @@ class Search extends React.Component {
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
-                this.setState({ loadingList: false });
+                this.setState({ loadingList: false, msg: xhr.responseJSON.msg });
             }.bind(this)
         });
     }
@@ -78,15 +81,17 @@ class Search extends React.Component {
         }.bind(this));
 
         let menuList = this.state.listMenuItem.map(function (item, index) {
-            //console.log('item', item);
+
             let tx_nome = '';
             let origem_id = 0;
             if (this.state.searchNameCampo === 'tx_nome_osc') {
                 tx_nome = item.tx_nome_osc;
                 origem_id = item.tx_nome_osc;
             } else if (this.state.searchNameCampo === 'edmu_nm_municipio') {
-                tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
-                origem_id = item.edmu_cd_municipio;
+                if (item.edmu_nm_municipio !== undefined) {
+                    tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
+                    origem_id = item.edmu_cd_municipio;
+                }
             } else if (this.state.searchNameCampo === 'eduf_nm_uf') {
                 tx_nome = item.eduf_nm_uf;
                 origem_id = item.eduf_cd_uf;
@@ -95,14 +100,11 @@ class Search extends React.Component {
                 origem_id = item.edre_cd_regiao;
             }
 
-            //console.log(origem_id);
-
             return React.createElement(
                 'li',
                 {
-                    key: 'menuList' + index
-                    //onClick={() => this.btnSearch()}
-                    , className: 'list-group-item d-flex'
+                    key: 'menuList' + index,
+                    className: 'list-group-item d-flex'
                 },
                 React.createElement(
                     'a',
@@ -150,11 +152,17 @@ class Search extends React.Component {
                         { className: 'text-center' },
                         React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingList ? '' : 'none' } })
                     ),
-                    menuList
-                ),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null)
+                    React.createElement(
+                        'div',
+                        { style: { display: this.state.msg === '' ? '' : 'none' } },
+                        menuList
+                    ),
+                    React.createElement(
+                        'div',
+                        { style: { display: this.state.msg === '' ? 'none' : '' }, className: 'p-2 text-center' },
+                        this.state.msg
+                    )
+                )
             )
         );
     }

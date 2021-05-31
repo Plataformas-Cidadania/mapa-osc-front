@@ -6,6 +6,7 @@
 <div class="container">
 
     <div id="search"></div>
+    <br><br><br>
 
     <section>
         <div class="row">

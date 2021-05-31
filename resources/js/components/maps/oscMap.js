@@ -1456,6 +1456,10 @@ class OscMap extends React.Component{
         return(
             <div>
                 <div className="col-md-12">
+                    <div className="box-qtd">
+                        <p>Quantidade de OSCs: </p>
+                        <h2>781921</h2>
+                    </div>
                 <div  style={{margin: '0 15px 0 0'}}>
                     <div style={{margin: '0 -15px 0 -15px'}}>
                         <div>
@@ -1475,6 +1479,7 @@ class OscMap extends React.Component{
                 <div className="row">
                     <div className="col-md-12">
                         <div className="table-responsive-sm">
+                            <p style={{fontSize: '12px'}}>Obs: 27 OSCs com dados de endereço ausentes ou incompletos.</p>
                             <table className="table">
                                 <thead className="bg-pri text-light">
                                 <tr>
