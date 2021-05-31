@@ -6,7 +6,7 @@ class Register extends React.Component {
             button: true,
             loading: false,
             requireds: {
-                tx_nomeusuario: true,
+                tx_nome_usuario: true,
                 tx_email_usuario: true,
                 tx_senha_usuario: true,
                 nr_cpf_usuario: true
@@ -70,12 +70,14 @@ class Register extends React.Component {
             }
         }*/
 
+        requireds.tx_nome_usuario = true;
         if (!this.validateName(this.state.form.tx_nome_usuario)) {
             console.log('nome inválido');
             requireds.tx_nome_usuario = false;
             valid = false;
         }
 
+        requireds.nr_cpf_usuario = true;
         if (!validateCpf(this.state.form.nr_cpf_usuario)) {
             console.log('cpf inválido');
             requireds.nr_cpf_usuario = false;
@@ -83,7 +85,9 @@ class Register extends React.Component {
         }
 
         console.log(valid);
-        this.setState({ requireds: requireds });
+        this.setState({ requireds: requireds }, function () {
+            console.log(this.state.requireds);
+        });
         return valid;
     }
 
@@ -133,12 +137,27 @@ class Register extends React.Component {
                         return;
                     }
 
-                    location.href = '/login';
+                    location.href = 'login';
                     //this.setState({loading: false})
                 }.bind(this),
                 error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                    this.setState({ loading: false });
+                    //console.error(status, err.toString());
+                    console.log(status);
+                    console.log(xhr);
+                    console.log(err);
+                    let msg = '';
+                    if (err === 'Unprocessable Entity') {
+                        console.log(err);
+                        let errors = xhr.responseJSON.errors;
+                        if (errors.hasOwnProperty('nr_cpf_usuario')) {
+                            msg += "Já existe usuário com este cpf  ";
+                        }
+                        if (errors.hasOwnProperty('tx_email_usuario')) {
+                            msg += "Já existe usuário com este e-mail  ";
+                        }
+                        this.setState({ msg: msg, showMsg: true });
+                    }
+                    this.setState({ loading: false, button: true });
                 }.bind(this)
             });
         });

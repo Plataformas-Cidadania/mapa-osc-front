@@ -75,7 +75,7 @@ class OscMap2 extends React.Component {
         let markers = L.markerClusterGroup();
 
         /* let linhas = {};
-           for(let k in this.state.data[0]){
+          for(let k in this.state.data[0]){
              linhas[k] = L.markerClusterGroup();
          }*/
 
@@ -138,7 +138,7 @@ class OscMap2 extends React.Component {
 
             /*oscs.titles.push(data[0].tx_nome_regiao);
             oscs.values.push(data[0].length);
-                    for(let i in data[0][k]['features']){
+                for(let i in data[0][k]['features']){
                 pontos.push([data[0][k]["features"][i]["geometry"]["coordinates"][1], data[0][k]["features"][i]["geometry"]["coordinates"][0]]);
             }*/
         }
@@ -149,10 +149,10 @@ class OscMap2 extends React.Component {
         };
 
         /*for(let k in data[1]) {
-              //console.log(data[1][k].velocidade);
-              oscsGeral.titles.push(data[1][k].velocidade);
+             //console.log(data[1][k].velocidade);
+             oscsGeral.titles.push(data[1][k].velocidade);
             oscsGeral.values.push(data[1][k].qtd);
-          }*/
+         }*/
 
         //console.log(oscsGeral);
 
@@ -176,7 +176,7 @@ class OscMap2 extends React.Component {
         let rows = null;
 
         /*if(this.state.data){
-              rows = this.state.data[1].map(function(item, index){
+             rows = this.state.data[1].map(function(item, index){
                 return (
                     <tr key={'lista'+index}>
                         <td>
@@ -191,7 +191,7 @@ class OscMap2 extends React.Component {
                     </tr>
                 );
             });
-              tabela =  (
+             tabela =  (
                 <table className="table">
                     <thead>
                     <tr>
@@ -205,7 +205,7 @@ class OscMap2 extends React.Component {
                     </tbody>
                 </table>
             );
-          }*/
+         }*/
 
         return React.createElement(
             'div',

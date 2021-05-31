@@ -1,5 +1,9 @@
 <link rel="stylesheet" href="css/app.css">
-
+<style>
+    .invalid-field{
+        border-color: red;
+    }
+</style>
 @if($rota=='/')
     <link rel="stylesheet" href="css/home.css">
 @endif
