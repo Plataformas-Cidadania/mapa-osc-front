@@ -74,6 +74,9 @@ function downloadCanvas(linkId, canvasId, filename) {
 }
 
 function validateCpf(strCPF) {
+    if(!strCPF){
+        return false;
+    }
 
     strCPF = strCPF.replace(/[^0-9]/g,'');
 
