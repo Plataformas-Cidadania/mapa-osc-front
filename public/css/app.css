@@ -11885,7 +11885,8 @@ time {
 }
 
 .menu-icons p {
-  padding: 6px 0 0 0;
+  padding: 0 0 0 0;
+  /*margin-bottom: 8px!important;*/
 }
 
 /**/
