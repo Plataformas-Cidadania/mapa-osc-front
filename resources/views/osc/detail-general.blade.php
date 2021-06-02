@@ -15,6 +15,16 @@
             <div class="img-upload">
                 <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif" alt="">
             </div>
+            <br>
+            <a href="metodologia">
+                <img src="img/selos/ouro.png" alt="" width="50">
+            </a>
+
+            <a href="https://gife.org.br/indicadores-gife-de-governanca/autoavaliacao/" target="_blank">
+                <img src="img/gife.png" alt="" width="80" style="margin-left: 20px;">
+            </a>
+
+
         </div>
         <div class="col-md-5">
             <p>
