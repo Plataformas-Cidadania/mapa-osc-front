@@ -312,7 +312,6 @@
 }
 .menu-icons li:first-child{
     border-bottom: 0;
-
 }
 .menu-icons li:last-child{
     border: 0;
@@ -321,21 +320,22 @@
     background-color: #1b4b72;
     border-radius: 50%;
     padding: 4px;
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     float: left;
     text-align: center;
     margin: 0 10px 0 0;
 }
 .menu-icons div svg{
     color: #FFFFFF;
-    padding: 5px;
-    font-size: 35px;
-    margin-top: 2px;
+    padding: 3px;
+    font-size: 25px;
+    margin-top: 0px;
 }
 .menu-icons p{
-    padding: 12px 0 0 0;
+    padding: 6px 0 0 0;
 }
+
 /**/
 .menu-txt-icon{
     margin: 0;
@@ -395,7 +395,6 @@
 .menu-small li:hover{
     border-bottom: solid 2px #1b4b72;
 }
-
 
 @media only screen and (max-width : 480px) {
     .cel-footer{

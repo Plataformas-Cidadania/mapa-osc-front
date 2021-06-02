@@ -305,6 +305,9 @@ if ( ! function_exists('formatBr') ) {
             else if ($weeks <= 4) return $weeks==1 ?'1 semana atrás':$weeks.' semanas atrás';
             else if ($months <= 12) return $months == 1 ?'1 mês atrás':$months.' meses atrás';
             else return $years == 1 ? 'um ano atrás':$years.' anos atrás';
+        }else if($type == 'y'){
+            $string = date_create($string);
+            $string = date_format($string, 'Y'.$hour);
         }
 
         return $string;

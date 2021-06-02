@@ -19,7 +19,7 @@
         <div class="col-md-5">
             <p>
                 <strong>CNPJ:</strong> {{$dados_gerais->cd_identificador_osc}}<br>
-                <strong>Natureza Jurídica:</strong> <br>
+                <strong>Natureza Jurídica:</strong> {{$dados_gerais->tx_nome_natureza_juridica_osc}}<br>
             </p>
             <br>
         </div>
@@ -79,13 +79,13 @@
         <div class="col-md-4">
             <div class="item-detail">
                 <h4>Ano de Cadastro de CNPJ:</h4>
-                <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? $txt_alert_abb : formatBr($dados_gerais->dt_ano_cadastro_cnpj, 'num')}}</p>
+                <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? $txt_alert_abb : formatBr($dados_gerais->dt_ano_cadastro_cnpj, 'y')}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
                 <h4>Ano de Fundação:</h4>
-                <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'num')}}</p>
+                <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'y')}}</p>
             </div>
         </div>
         <div class="col-md-8">
@@ -97,7 +97,7 @@
         <div class="col-md-12">
             <div class="item-detail">
                 <h4>O que a OSC faz:</h4>
-                <p>{{$dados_gerais->ft_resumo_osc == null ? $txt_alert_abb : $dados_gerais->ft_resumo_osc}}</p>
+                <p>{{$dados_gerais->ft_resumo_osc == null ? $txt_alert_abb : $dados_gerais->tx_resumo_osc}}</p>
             </div>
         </div>
         <div class="col-md-12">
@@ -107,7 +107,14 @@
                 <div class="item-obj">
                     @foreach($objetivos_osc as $objetivo_osc)
                         <div class="col-md-12">
-                            <img src="img/ods/0{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                            @if($objetivo_osc->cd_objetivo_osc <= 10)
+                                <img src="img/ods/0{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                                <br>
+                            @else
+                                <img src="img/ods/{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                                <br>
+                            @endif
+
                             <h3><strong class="objetivo_color{{$objetivo_osc->cd_objetivo_osc}}">{{$objetivo_title[$objetivo_osc->cd_objetivo_osc]}}</strong></h3>
                             <p>{{substr($objetivo_osc->tx_nome_objetivo_osc, 2, -1)}}</p>
                         </div>
