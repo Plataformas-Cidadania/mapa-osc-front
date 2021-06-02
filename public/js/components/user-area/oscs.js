@@ -10,7 +10,8 @@ class Oscs extends React.Component {
             search: '',
             oscs: [],
             oscsSearch: [],
-            editId: 0
+            editId: 0,
+            idOscRemove: 0
         };
 
         this.list = this.list.bind(this);
@@ -18,6 +19,9 @@ class Oscs extends React.Component {
         this.clickSearch = this.clickSearch.bind(this);
         this.listSearch = this.listSearch.bind(this);
         this.addOsc = this.addOsc.bind(this);
+        this.askRemove = this.askRemove.bind(this);
+        this.removeOsc = this.removeOsc.bind(this);
+        this.cancelRemove = this.cancelRemove.bind(this);
     }
 
     componentDidMount() {
@@ -45,7 +49,6 @@ class Oscs extends React.Component {
         });
     }
 
-    /*parceira*/
     handleSearch(e) {
         let search = e.target.value ? e.target.value : ' ';
         this.setState({ search: search }, function () {
@@ -58,7 +61,6 @@ class Oscs extends React.Component {
     }
     listSearch(search) {
         if (search.length >= 8) {
-            this.setState({ loadingSearch: true });
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
@@ -76,11 +78,19 @@ class Oscs extends React.Component {
 
     addOsc(id_osc) {
         $.ajax({
-            method: 'GET',
-            url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
+            method: 'POST',
+            url: getBaseUrl2 + 'osc/representacao/',
+            data: {
+                id_osc: id_osc
+            },
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
             cache: false,
             success: function (data) {
-                this.setState({ oscsSearch: data, loadingSearch: false });
+                //console.log(data);
+                this.setState({ search: '' });
+                this.list();
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -89,7 +99,32 @@ class Oscs extends React.Component {
         });
     }
 
-    removeOsc() {}
+    askRemove(id_osc) {
+        this.setState({ idOscRemove: id_osc });
+    }
+
+    cancelRemove(id_osc) {
+        this.setState({ idOscRemove: 0 });
+    }
+
+    removeOsc(id_osc) {
+        $.ajax({
+            method: 'DELETE',
+            url: getBaseUrl2 + 'osc/representacao/' + id_osc,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function (data) {
+                //console.log(data);
+                this.list();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingSearch: false });
+            }.bind(this)
+        });
+    }
 
     render() {
 
@@ -115,7 +150,7 @@ class Oscs extends React.Component {
                 ),
                 React.createElement(
                     'td',
-                    { width: '230' },
+                    { width: '320' },
                     React.createElement(
                         'div',
                         { className: 'btn btn-primary' },
@@ -135,6 +170,45 @@ class Oscs extends React.Component {
                             { href: "osc-user/" + item.id_osc },
                             React.createElement('i', { className: 'far fa-edit' }),
                             ' Editar'
+                        )
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-danger',
+                            style: { display: item.id_osc === this.state.idOscRemove ? 'none' : '' },
+                            onClick: () => this.askRemove(item.id_osc)
+                        },
+                        React.createElement(
+                            'a',
+                            { style: { cursor: 'pointer' } },
+                            React.createElement('i', { className: 'fa fa-trash' })
+                        )
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-light',
+                            style: { display: item.id_osc === this.state.idOscRemove ? '' : 'none' },
+                            onClick: () => this.cancelRemove(item.id_osc)
+                        },
+                        React.createElement(
+                            'a',
+                            { style: { cursor: 'pointer' }, title: 'Cancelar' },
+                            React.createElement('i', { className: 'fa fa-undo' })
+                        )
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-danger',
+                            style: { display: item.id_osc === this.state.idOscRemove ? '' : 'none' },
+                            onClick: () => this.removeOsc(item.id_osc)
+                        },
+                        React.createElement(
+                            'a',
+                            { style: { cursor: 'pointer' }, title: 'Remover' },
+                            React.createElement('i', { className: 'fa fa-times' })
                         )
                     )
                 )
@@ -218,8 +292,8 @@ class Oscs extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement('input', { type: 'text',
                         className: 'form-control float-left mx-sm-3',
-                        placeholder: 'Digite o CNPJ da OSC parceira...',
-                        name: 'cd_parceira',
+                        placeholder: 'Digite o CNPJ e clique na OSC para adicionar.',
+                        name: 'osc',
                         autoComplete: 'off',
                         onClick: this.clickSearch,
                         onChange: this.handleSearch,
