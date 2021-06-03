@@ -15,6 +15,7 @@ class OscMap extends React.Component{
             data: [],
             dataOscUf: [],
             dataIdhUf: [],
+            dataIDHM: [],
             dataOsc: null,
             dataCalor: [],
             //year:props.year,
@@ -191,9 +192,12 @@ class OscMap extends React.Component{
             let _this = this;
             this.state.info.update = function (props, tipo) {
                 //console.log('info', props);
-
+                let nome = '';
+                if(props){
+                    nome = tipo === 'IDHM' ? props.nm_municipio : props.nm_uf;
+                }
                 this._div.innerHTML =
-                    (props ? '<b>' + props.nm_uf + '</b><br />' + tipo + ': ' + formatNumber(props.nr_valor, 2, ',', '.')
+                    (props ? '<b>' + nome + '</b><br />' + tipo + ': ' + formatNumber(props.nr_valor, 2, ',', '.')
                     : "Passe o mouse sobre na região");
             };
             this.state.info.addTo(mapElements.map);
@@ -524,6 +528,7 @@ class OscMap extends React.Component{
                 container.id = "ctrlAreaIdh";
                 container.onclick = function(){
                     //console.log(options.check);
+                    //console.log("CLICK CONTROL AREA IDH");
                     options.check = !options.check;
                     container.className = 'control-data-types leaflet-control check-control-data-types';
                     thisReact.removeAreaOscGroup();
@@ -691,6 +696,9 @@ class OscMap extends React.Component{
         mapElements.areaIdhGroup = L.layerGroup();
         mapElements.map.addLayer(mapElements.areaIdhGroup);
 
+        mapElements.areaIdhMGroup = L.layerGroup();
+        mapElements.map.addLayer(mapElements.areaIdhMGroup);
+
         mapElements.areaOscGroup = L.layerGroup();
         mapElements.map.addLayer(mapElements.areaOscGroup);
 
@@ -712,6 +720,34 @@ class OscMap extends React.Component{
                     console.log(data);
                     _this.setState({data: data, processingOscUfs: false});
                     _this.populateMap();
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
+
+            });
+        });
+
+    }
+
+    loadDataIDHM(uf){
+        let _this = this;
+        let baseUrl = getBaseUrl;
+        baseUrl = 'http://mapaosc.ipea.gov.br/api/';
+        this.setState({processingOscUfs: true}, function (){
+            $.ajax({
+                method:'GET',
+                //url: baseUrl + 'analises/idhgeo/' + uf,
+                url: 'get-idhm/' + uf,
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    _this.setState({dataIDHM: data.idh, processingOscUfs: false}, function(){
+                        _this.areaIdhM();
+                    });
                 },
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -1051,7 +1087,14 @@ class OscMap extends React.Component{
                     _this2.state.info.update(null);
                     areaIdh.resetStyle(this);
                 });
-            }
+                layer.on('click', function () {
+                    console.log('click area idh');
+                    let cod_uf = layer.feature.properties.cod_uf;
+                    console.log(cod_uf);
+                    _this2.zoomToFeature();
+                    _this2.loadDataIDHM(cod_uf);
+                });
+            },
             //onEachFeature: this.onEachFeature //listeners
         });
 
@@ -1059,6 +1102,47 @@ class OscMap extends React.Component{
         this.setState({mapElements: mapElements}, function(){
             //this.areaOscMap();
             this.idhLegend();
+        }.bind(this));
+    }
+
+    areaIdhM(){
+        let _this = this;
+        let mapElements = this.state.mapElements;
+        let areaIDHM = L.geoJson(this.state.dataIDHM, {
+            style: function(feature) {
+                return {
+                    fillColor: this.getColorIDH(feature.properties.nr_valor),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.9
+                };
+            }.bind(this),
+            onEachFeature: function (feature, layer) {
+                let _this2 = _this;
+                layer.on('mouseover', function () {
+                    this.setStyle({
+                        weight: 2,
+                        color: '#333',
+                        dashArray: '',
+                        fillOpacity: 1
+                    });
+                    this.bringToFront();
+                    _this2.state.info.update(layer.feature.properties, 'IDHM');
+                });
+                layer.on('mouseout', function () {
+                    _this2.state.info.update(null);
+                    areaIDHM.resetStyle(this);
+                });
+            }
+            //onEachFeature: this.onEachFeature //listeners
+        });
+
+        mapElements.areaIdhGroup.addLayer(areaIDHM);
+        this.setState({mapElements: mapElements}, function(){
+            //this.areaOscMap();
+            //this.idhLegend();
         }.bind(this));
     }
 
@@ -1162,6 +1246,8 @@ class OscMap extends React.Component{
     }*/
     zoomToFeature(e) {
         console.log('zoom');
+        console.log(e);
+        //this.state.mapElements.map.fitBounds(e.target.getBounds);
         //this.state.mymap.fitBounds(e.target.getBounds());
     }
     /*onEachFeature(feature, layer) {

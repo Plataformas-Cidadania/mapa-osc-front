@@ -214,6 +214,23 @@ class OscController extends Controller{
         return ['osc' => $areas, 'idh' => $dataIdh];
     }
 
+    public function getIDHM($cod_uf){
+        $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo/$cod_uf";
+
+        $chIdh = curl_init();
+        curl_setopt( $chIdh, CURLOPT_URL, $pgIdh );
+        curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
+        $dataIdh = curl_exec( $chIdh );
+        curl_close( $chIdh );
+
+        $dataIdh = json_decode($dataIdh);
+        $dataIdh->type = 'FeatureColleciton';
+
+        return ['idh' => $dataIdh];
+
+    }
+
     public function declaration(){
 
 
