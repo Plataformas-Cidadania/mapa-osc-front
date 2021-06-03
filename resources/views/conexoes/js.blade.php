@@ -101,7 +101,7 @@
 
 <script src="js/components/login/menuUsuario.js"></script>
 
-@if($rota=='detalhar/{id}/{title}')
+@if($rota=='detalhar/{id}/{title}' || $rota=='detalhar/{id}')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>

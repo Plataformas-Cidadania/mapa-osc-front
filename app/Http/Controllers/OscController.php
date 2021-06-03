@@ -29,17 +29,6 @@ class OscController extends Controller{
 
     public function details($id){
 
-        //$id = 394905;
-        //$id = 594485;
-        //$id = 784138;
-        //$id = 598897;
-        //$id = 1064708;
-        //$id = 2;
-        $id = 789809;
-        //$id = 655204;
-        //$id = 669177; //Verificar erro
-
-
 
         $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
         $area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();

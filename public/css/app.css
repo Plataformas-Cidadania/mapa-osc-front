@@ -11870,8 +11870,8 @@ time {
   background-color: #1b4b72;
   border-radius: 50%;
   padding: 4px;
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   float: left;
   text-align: center;
   margin: 0 10px 0 0;
@@ -11879,13 +11879,14 @@ time {
 
 .menu-icons div svg {
   color: #FFFFFF;
-  padding: 5px;
-  font-size: 35px;
-  margin-top: 2px;
+  padding: 3px;
+  font-size: 25px;
+  margin-top: 0px;
 }
 
 .menu-icons p {
-  padding: 12px 0 0 0;
+  padding: 0 0 0 0;
+  /*margin-bottom: 8px!important;*/
 }
 
 /**/
