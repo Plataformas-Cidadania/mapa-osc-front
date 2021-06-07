@@ -273,11 +273,12 @@
 }
 /*Menu*/
 .box-floating{
-    position: fixed;
+    position: relative;
     z-index: 9999999999;
     float: right;
     right: 0;
-    width: 300px
+    width: 300px;
+    top: 20vh;
 }
 .box-floating{
     position: fixed;
@@ -305,10 +306,11 @@
 .menu-icons li{
     display: inline-block;
     width: 100%;
-    padding: 6px 0 0 0;
-    //border-bottom: solid 1px #CCCCCC;//Começar Fechado
+    padding: 1px 0 0 0;
     border: 0;//Começar Fechado
-    font-size: 16px;
+    font-size: 15px;
+    /*padding-bottom: 3px;
+    margin-bottom: 2px;*/
 }
 .menu-icons li:first-child{
     border-bottom: 0;
@@ -328,12 +330,15 @@
 }
 .menu-icons div svg{
     color: #FFFFFF;
-    padding: 3px;
-    font-size: 25px;
+    padding: 0px;
+    margin: auto;
+    font-size: 20px;
     margin-top: 0px;
+    text-align: center;
 }
 .menu-icons p{
-    padding: 0 0 0 0;
+    padding: 4px 0 0 0;
+    margin: 0;
     /*margin-bottom: 8px!important;*/
 }
 

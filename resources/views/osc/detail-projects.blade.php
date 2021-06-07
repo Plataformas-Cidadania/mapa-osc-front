@@ -3,6 +3,7 @@
         <br><br>
         <div class="title-style">
             <h2><div class="mn-accordion-icon"><i class="fas fa-project-diagram"></i></div> Projetos, atividades e/ou programas</h2>
+            <i class="fas fa-chevron-down float-right mn-accordion-arrow" style="margin-top: -20px" title="Fechar ou abrir grupo Projetos, atividades e/ou programas"></i>
             <div class="line line-fix"></div>
             <hr/>
         </div>

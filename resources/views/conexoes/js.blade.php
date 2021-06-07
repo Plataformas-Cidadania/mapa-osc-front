@@ -248,8 +248,10 @@
             $('.menu-icons-txt').hide();
             $('.fa-chevron-right').hide();
             $('.fa-chevron-left').show();
-            $('.box-floating').css('width', '80px');
+            $('.box-floating').css('width', '45px');
             $('.menu-icons li').css('border', '0');
+            $('.menu-icons li').css('padding-bottom', 0);
+            $('.menu-icons li').css('margin-bottom', 0);
         });
 
         $('.btn-menu-txt-show').click(function() {
@@ -258,6 +260,9 @@
             $('.fa-chevron-left').hide();
             $('.box-floating').css('width', '300px');
             $('.menu-icons li').css('border-bottom', 'solid 1px #CCCCCC');
+            $('.menu-icons li').css('padding-bottom', '3px');
+            $('.menu-icons li').css('margin-bottom', '2px');
+
         });
 
     });
