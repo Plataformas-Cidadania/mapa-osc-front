@@ -173,7 +173,7 @@ class Recursos extends React.Component {
                         'id_recursos_osc': 0,
                         'cd_fonte_recurso_osc': 178,
                         'nr_valor_recursos_osc': '',
-                        'tx_nome_fonte_recursos_osc': 'Prestação de serviços'
+                        'tx_nome_fonte_recursos_osc': 'Venda de bens e direitos'
                     }
                 }
             },
@@ -451,7 +451,7 @@ class Recursos extends React.Component {
                     'id_recursos_osc': 0,
                     'cd_fonte_recurso_osc': 178,
                     'nr_valor_recursos_osc': '',
-                    'tx_nome_fonte_recursos_osc': 'Prestação de serviços'
+                    'tx_nome_fonte_recursos_osc': 'Venda de bens e direitos'
                 }
             }
         };

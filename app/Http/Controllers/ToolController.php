@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 
 class ToolController extends Controller{
 
-    public function seal(){
-        /*$text = \App\Text::where('slug', 'contato')->first();*/
-        return view('tool.seal'/*, [
-            'text' => $text,
-        ]*/);
+    public function seal($id){
+
+        $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
+
+        return view('tool.seal', [
+            'dados_gerais' => $dados_gerais,
+        ]);
     }
 
 

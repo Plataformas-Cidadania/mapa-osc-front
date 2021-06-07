@@ -99,7 +99,7 @@ Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');
 Route::get('declaracao', 'OscController@declaration');
 
 
-Route::get('selo-osc/{hostname}/{osc_id}', 'ToolController@seal');
+Route::get('selo-osc/{osc_id}', 'ToolController@seal');
 
 
 /*Route::get('qr-code-g', function () {

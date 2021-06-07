@@ -258,7 +258,7 @@
             $('.menu-icons-txt').show();
             $('.fa-chevron-right').show();
             $('.fa-chevron-left').hide();
-            $('.box-floating').css('width', '300px');
+            $('.box-floating').css('width', '250px');
             $('.menu-icons li').css('border-bottom', 'solid 1px #CCCCCC');
             $('.menu-icons li').css('padding-bottom', '3px');
             $('.menu-icons li').css('margin-bottom', '2px');

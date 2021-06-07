@@ -14,7 +14,10 @@
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
-            <div class="col-md-6 text-lg-right text-md-right">
+            <div class="col-md-3 text-lg-right text-md-right">
+                <a href="https://www.ipea.gov.br" target="_blank" alt="Link externo para o IPEA." title="Link externo para o IPEA."><img src="img/logo-ipea.png" width="150"/></a>
+            </div>
+            <div class="col-md-3 text-lg-right text-md-right">
                 <ul id="botoes" >
                     <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
@@ -136,13 +139,13 @@
                                 <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
-                                <li role="presentation"><a href="" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
+                                <li role="presentation"><a href="#" accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
                                         <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
                                     </ul>
                                 </li>
-                                <li role="presentation"><a href="" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
+                                <li role="presentation"><a href="#" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($midias as $midia)
                                             <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
