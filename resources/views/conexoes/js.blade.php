@@ -390,6 +390,13 @@
 @if($rota=="selo-user")
     <script src="js/components/user-area/seal.js"></script>
 @endif
+@if($rota=="selo-osc-user/{id_osc}")
+    <script>
+        id_osc = {{$id_osc}};
+        app_url = "{{env('APP_URL')}}";
+    </script>
+    <script src="js/components/user-area/seal.js"></script>
+@endif
 @if($rota=="dados-arquivos")
     <script src="js/components/user-area/documents.js"></script>
 @endif

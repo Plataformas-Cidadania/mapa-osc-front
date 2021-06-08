@@ -94,6 +94,15 @@ class MenuUsuario extends React.Component {
                 ),
                 React.createElement(
                     'a',
+                    { href: 'dados-user', style: { display: this.state.tx_nome_usuario ? '' : 'none' } },
+                    React.createElement(
+                        'button',
+                        { className: 'dropdown-item', type: 'button' },
+                        'Meus Dados'
+                    )
+                ),
+                React.createElement(
+                    'a',
                     { onClick: this.logout, style: { display: this.state.tx_nome_usuario ? '' : 'none' } },
                     React.createElement(
                         'button',

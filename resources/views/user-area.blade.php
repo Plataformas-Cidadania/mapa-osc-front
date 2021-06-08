@@ -45,7 +45,6 @@
     </div>
     <br><br>
     <div id="footer"></div>
-
     <style>
         .label-float label {
             top: calc(48% - 28px);

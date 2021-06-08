@@ -69,9 +69,16 @@ class OscController extends Controller{
 
     public function getOsc($territory, $territory_id = null){
 
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
         $urlsApi = [
-            1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
-            2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+            //1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
+            1 => $api."osc/geo/regioes",
+            //2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+            2 => $api."osc/ipeadata/uff/".$territory_id,
             3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
         ];
 
@@ -93,6 +100,15 @@ class OscController extends Controller{
         //return $data;
 
         $idh = [];
+
+        //cria o array com indices començado de 0 para ficar no padrão do javascript
+        if($territory == 1){
+            $data2 = [];
+            foreach ($data as $index => $item) {
+                array_push($data2, $item);
+            }
+            $data = $data2;
+        }
 
         //cria um array com índices començando de 0
         if($territory == 3){
@@ -159,7 +175,13 @@ class OscController extends Controller{
     }
 
     public function getOscAllUfs(){
-        $pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
+        //$pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+        $pgOsc = $api."osc/geo/estados";
+        Log::info($pgOsc);
         $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
 
         $ch = curl_init();
@@ -167,6 +189,7 @@ class OscController extends Controller{
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $dataOsc = curl_exec( $ch );
+        Log::info(curl_error($ch));
         curl_close( $ch );
 
         $chIdh = curl_init();
@@ -220,10 +243,26 @@ class OscController extends Controller{
 
     }
 
-    public function declaration(){
+    public function declaration($id_osc){
 
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+        $pg = $api."osc/cabecalho/".$id_osc;
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pg );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $data = curl_exec( $ch );
+        //Log::info(curl_error($ch));
+        curl_close( $ch );
+        $dataJSON = json_decode($data);
 
-        return view($this->module.'.declaration');
+        //return ['osc' => $dataJSON];
+
+        return view($this->module.'.declaration', ['osc' => $dataJSON, 'id_osc' => $id_osc]);
     }
 
     public function getAllOscs(){
@@ -256,6 +295,10 @@ class OscController extends Controller{
 
         return $data2;
 
+    }
+
+    public function seal($id_osc){
+        return view('user-area', ['pgUserArea' => 'seal', 'id_osc' => $id_osc]);
     }
 
 

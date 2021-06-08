@@ -2,7 +2,8 @@ class Seal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            totais: []
+            osc: {},
+            loading: false
         };
 
         this.list = this.list.bind(this);
@@ -14,16 +15,14 @@ class Seal extends React.Component {
 
     list() {
 
-        this.setState({ loadingList: true });
-
+        this.setState({ loading: true });
         $.ajax({
             method: 'GET',
-            url: 'dashboard-status',
-            data: {},
+            url: getBaseUrl2 + 'osc/cabecalho/' + this.props.id_osc,
             cache: false,
             success: function (data) {
-                console.log(data);
-                this.setState({ totais: data });
+                //console.log(data);
+                this.setState({ osc: data });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -33,27 +32,6 @@ class Seal extends React.Component {
     }
 
     render() {
-
-        let totais = this.state.totais.map(function (total, index) {
-            return React.createElement(
-                'div',
-                { className: 'col-md-3 text-center', key: "totais_" + index, style: { marginBottom: '30px' } },
-                React.createElement(
-                    'div',
-                    { className: 'btn btn-default box-item-area' },
-                    React.createElement(
-                        'h2',
-                        null,
-                        total.qtdTotal
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        total.status
-                    )
-                )
-            );
-        });
 
         return React.createElement(
             'div',
@@ -87,7 +65,7 @@ class Seal extends React.Component {
                         React.createElement(
                             'strong',
                             null,
-                            'OSC Apac'
+                            this.state.osc.tx_razao_social_osc
                         )
                     ),
                     React.createElement('hr', null),
@@ -99,7 +77,9 @@ class Seal extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'label-float-tx' },
-                        React.createElement('textarea', { className: 'form-control form-g', name: 'tx_historico', value: '<a href=\'http://mapa-osc-laravel.local/selo-osc/www.ipea.gov.br/211212\'><img src=\'https://mapaosc.ipea.gov.br/img/logo.png\'></a>',
+                        React.createElement('textarea', { className: 'form-control form-g',
+                            name: 'tx_historico',
+                            value: "<a href='" + this.props.app_url + "selo-osc/www.ipea.gov.br/" + this.props.id_osc + "'>" + "<img src='" + this.props.app_url + "img/logo.png'>" + "</a>",
                             rows: '3' }),
                         React.createElement(
                             'label',
@@ -126,4 +106,4 @@ class Seal extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Seal, null), document.getElementById('seal'));
+ReactDOM.render(React.createElement(Seal, { id_osc: id_osc, app_url: app_url }), document.getElementById('seal'));

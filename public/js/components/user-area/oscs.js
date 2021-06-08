@@ -150,7 +150,28 @@ class Oscs extends React.Component {
                 ),
                 React.createElement(
                     'td',
-                    { width: '320' },
+                    { width: '500' },
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-primary' },
+                        React.createElement(
+                            'a',
+                            { href: "selo-osc-user/" + item.id_osc, target: '_blank' },
+                            ' Selo'
+                        )
+                    ),
+                    '\xA0',
+                    React.createElement(
+                        'div',
+                        { className: 'btn btn-primary' },
+                        React.createElement(
+                            'a',
+                            { href: "declaracao/" + item.id_osc, target: '_blank' },
+                            React.createElement('i', { className: 'fas fa-certificate' }),
+                            ' Declara\xE7\xE3o'
+                        )
+                    ),
+                    '\xA0',
                     React.createElement(
                         'div',
                         { className: 'btn btn-primary' },

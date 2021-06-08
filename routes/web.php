@@ -96,7 +96,8 @@ Route::get('detalhar/{id}/{title}', 'OscController@details');
 
 
 Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');
-Route::get('declaracao', 'OscController@declaration');
+Route::get('declaracao/{id_osc}', 'OscController@declaration');
+Route::get('selo-osc-user/{id_osc}', 'OscController@seal');
 
 
 Route::get('selo-osc/{hostname}/{osc_id}', 'ToolController@seal');
@@ -140,7 +141,7 @@ Route::get('/dados-user', 'UserAreaController@data');//->middleware('auth');
 Route::get('/oscs-user', 'UserAreaController@oscs');//->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc');//->middleware('auth');
 Route::get('/objetivos-user', 'UserAreaController@objetivos');//->middleware('auth');
-Route::get('/selo-user', 'UserAreaController@seal');//->middleware('auth');
+//Route::get('/selo-user', 'UserAreaController@seal');//->middleware('auth');
 
 Route::get('/certificates-user', 'UserAreaController@certificates');//->middleware('auth');
 Route::get('/projetos-user', 'UserAreaController@projetos');//->middleware('auth');

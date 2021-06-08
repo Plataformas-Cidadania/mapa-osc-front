@@ -5,10 +5,10 @@
                 <br>
                 <h2 id="title">Declaração</h2>
                 <p>
-                  Declaramos que 002/ES GRUPO ESCOTEIRO LOREN RENO (CNPJ07744937000110) está cadastrada
-                    no Mapa das Organizações da Sociedade Civil até a data de 18/05/2020.
+                  Declaramos que {{$osc->tx_razao_social_osc}} (CNPJ {{$osc->cd_identificador_osc}}) está cadastrada
+                    no Mapa das Organizações da Sociedade Civil até a data de {{date('d/m/Y')}}.
                 </p>
-                <div>{!! QrCode::size(250)->generate($_SERVER['SERVER_NAME'].'/detalhar/1111/nome'); !!}</div>
+                <div>{!! QrCode::size(250)->generate(env('APP_URL').'detalhar/'.$id_osc.'/'.clean($osc->tx_razao_social_osc)); !!}</div>
                 <br>
                 <div class="text-center footer-print">mapaosc.ipea.gov.br</div>
             </div>

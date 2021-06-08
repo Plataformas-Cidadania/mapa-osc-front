@@ -142,7 +142,19 @@ class Oscs extends React.Component{
                            {/* <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />*/}
                             {item.tx_nome_osc}
                         </td>
-                        <td width="320">
+                        <td width="500">
+                            <div className="btn btn-primary">
+                                <a href={"selo-osc-user/"+item.id_osc} target="_blank">
+                                    {/*<i className="fas fa-certificate"/>*/} Selo
+                                </a>
+                            </div>
+                            &nbsp;
+                            <div className="btn btn-primary">
+                                <a href={"declaracao/"+item.id_osc} target="_blank">
+                                    <i className="fas fa-certificate"/> Declaração
+                                </a>
+                            </div>
+                            &nbsp;
                             <div className="btn btn-primary">
                                 <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc}>
                                     <i className="fas fa-binoculars"/> Visualizar

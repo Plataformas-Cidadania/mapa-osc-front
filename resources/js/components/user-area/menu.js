@@ -12,8 +12,8 @@ class Menu extends React.Component{
                     {/*<li><a href="dashboard-user"><i className="fa fa-home" aria-hidden="true"/> Minha área</a></li>*/}
                     <li><a href="oscs-user"><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</a></li>
                     <li><a href="dados-user"><i className="fa fa-user" aria-hidden="true"/> Meus Dados</a></li>
-                    <li><a href="declaracao" target='_blank'><i className="fa fa-user" aria-hidden="true"/> Declaração</a></li>
-                    <li><a href="selo-user"><i className="fa fa-user" aria-hidden="true"/> Selo Site</a></li>
+                    {/*<li><a href={"declaracao/"+this.props.id} target='_blank'><i className="fa fa-user" aria-hidden="true"/> Declaração</a></li>*/}
+                    {/*<li><a href="selo-user"><i className="fa fa-user" aria-hidden="true"/> Selo Site</a></li>*/}
                     <li><a href="logout-user"><i className="fa fa-power-off" aria-hidden="true"/> Sair</a></li>
                 </ul>
             </div>

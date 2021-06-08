@@ -2,7 +2,8 @@ class Seal extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            totais: [],
+            osc: {},
+            loading: false,
         };
 
         this.list = this.list.bind(this);
@@ -14,18 +15,14 @@ class Seal extends React.Component{
 
     list(){
 
-        this.setState({loadingList: true});
-
+        this.setState({loading: true});
         $.ajax({
             method: 'GET',
-            url: 'dashboard-status',
-            data: {
-
-            },
+            url: getBaseUrl2+'osc/cabecalho/'+this.props.id_osc,
             cache: false,
             success: function(data){
-                console.log(data);
-                this.setState({totais: data});
+                //console.log(data);
+                this.setState({osc: data});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -35,17 +32,6 @@ class Seal extends React.Component{
     }
 
     render(){
-
-        let totais = this.state.totais.map(function(total, index) {
-            return(
-                <div className="col-md-3 text-center" key={"totais_"+index}  style={{marginBottom: '30px'}}>
-                    <div className="btn btn-default box-item-area">
-                        <h2>{total.qtdTotal}</h2>
-                        <p>{total.status}</p>
-                    </div>
-                </div>
-            );
-        });
 
         return(
             <div>
@@ -58,12 +44,16 @@ class Seal extends React.Component{
 
                 <div className="row">
                     <div className="col-md-12">
-                        <p><strong>OSC Apac</strong></p>
+                        <p><strong>{this.state.osc.tx_razao_social_osc}</strong></p>
                         <hr/><br/>
                     </div>
                     <div className="col-md-12">
                         <div className="label-float-tx">
-                        <textarea className="form-control form-g" name="tx_historico" value="<a href='http://mapa-osc-laravel.local/selo-osc/www.ipea.gov.br/211212'><img src='https://mapaosc.ipea.gov.br/img/logo.png'></a>"
+                        <textarea className="form-control form-g"
+                                  name="tx_historico"
+                                  value={"<a href='"+this.props.app_url+"selo-osc/www.ipea.gov.br/"+this.props.id_osc+"'>" +
+                                  "<img src='"+this.props.app_url+"img/logo.png'>" +
+                                  "</a>"}
                                   rows="3"  />
                                 <label htmlFor="tx_historico">Script</label>
                                 <div className="label-box-info-tx-off">
@@ -79,6 +69,6 @@ class Seal extends React.Component{
 }
 
 ReactDOM.render(
-    <Seal/>,
+    <Seal id_osc={id_osc} app_url={app_url}/>,
     document.getElementById('seal')
 );
