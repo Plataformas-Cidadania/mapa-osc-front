@@ -40,9 +40,10 @@
                         <br>
                         <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;
-                        <a class="cursor" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
-                        <a href="declaracao"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
-                        <a class=" float-right" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8"><i class="fas fa-sort-amount-down fa-2x"></i>&nbsp;</a>
+                        <div class="fa-svg float-right" style="margin-top: -25px;" >
+                            <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
+                            <a href="declaracao" title="Declaração da OSC"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
+                        </div>
                         <br>
                     </header>
                 </div>
@@ -56,12 +57,12 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="alert alert-secondary box-floating d-print-none"  style="z-index: 9999999;">
+                <div class="alert alert-secondary box-floating d-print-none"  style="z-index: 9999999; padding: 10px 5px; width: 45px;">
                     <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
-                    <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" style="float: left;"></i>
+                    <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" ></i>
                     <ul class="menu-icons menu-right">
 <!--                        <li id="btn-right"></li>-->
-                        <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt">Dados gerais</p></a></li>
+                        <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
                         <li><a href="detalhar/974758#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
                         <li><a href="detalhar/974758#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
                         <li><a href="detalhar/974758#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>

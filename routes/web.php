@@ -100,7 +100,7 @@ Route::get('declaracao/{id_osc}', 'OscController@declaration');
 Route::get('selo-osc-user/{id_osc}', 'OscController@seal');
 
 
-Route::get('selo-osc/{hostname}/{osc_id}', 'ToolController@seal');
+Route::get('selo-osc/{osc_id}', 'ToolController@seal');
 
 
 /*Route::get('qr-code-g', function () {

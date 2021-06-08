@@ -168,7 +168,7 @@ class Descricao extends React.Component{
                                         <div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
                                                    placeholder={this.state.placeholder.tx_link_estatuto_osc} />
-                                            <label htmlFor="tx_link_estatuto_osc">Link para o Estatutu da OSC</label>
+                                            <label htmlFor="tx_link_estatuto_osc">Link para o Estatuto da OSC</label>
                                             <div className="label-box-info-off">
                                                 <p>&nbsp;</p>
                                             </div>

@@ -39,7 +39,7 @@ class Perfil extends React.Component {
             orcamento_txt: 0,
             localidade_id: origem
         };
-        this.load = this.load.bind(this);
+        //this.load = this.load.bind(this);
         this.callModal = this.callModal.bind(this);
 
         this.evolucao_anual = this.evolucao_anual.bind(this);
@@ -52,7 +52,7 @@ class Perfil extends React.Component {
     }
 
     componentDidMount() {
-        this.load();
+        //this.load();
         this.evolucao_anual();
         this.caracteristicas();
         this.natureza_juridica();

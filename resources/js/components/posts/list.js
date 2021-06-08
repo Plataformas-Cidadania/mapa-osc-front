@@ -199,7 +199,7 @@ class List extends React.Component{
                     </div>*/
                      /*OPCAO 2 UTILIZAR NA TROCA*/
                     <div key={"ads_"+item.id}>
-                        <a href={"/post/"+item.id+"/"+cleanReplace(item.titulo)}>
+                        <a href={"/post/"+item.id+"/"+clean(item.titulo)}>
                             <div>
                                 <br/>
                                 <div style={{display: item.imagem == '' ? 'none' : ''}}>

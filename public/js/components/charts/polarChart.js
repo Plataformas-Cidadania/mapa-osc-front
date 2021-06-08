@@ -11,6 +11,9 @@ class PolarChart extends React.Component {
                     type: 'polarArea'
                 },
                 labels: ['A', 'B', 'C', 'D', 'E', 'F'],
+                legend: {
+                    show: false
+                },
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -67,7 +70,7 @@ class PolarChart extends React.Component {
     }
 
     componentDidMount() {
-        console.log('aaaa');
+        //console.log('aaaa');
     }
 
     render() {
@@ -80,7 +83,7 @@ class PolarChart extends React.Component {
             React.createElement(
                 'div',
                 { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'polarArea', height: '350' })
+                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'polarArea', height: '250' })
             ),
             React.createElement('div', { id: "html-dist-" + this.props.id })
         );

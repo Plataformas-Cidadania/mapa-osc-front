@@ -3,6 +3,7 @@
         <br><br>
         <div class="title-style">
             <h2><div class="mn-accordion-icon"><i class="fas fa-share-alt"></i></div> Áreas e Subáreas de Atuação da OSC</h2>
+            <i class="fas fa-chevron-down float-right mn-accordion-arrow" style="margin-top: -20px" title="Fechar ou abrir grupo Áreas e Subáreas de Atuação da OSC" ></i>
             <div class="line line-fix"></div>
             <hr/>
         </div>

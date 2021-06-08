@@ -238,7 +238,7 @@ class Descricao extends React.Component {
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Link para o Estatutu da OSC'
+                                            'Link para o Estatuto da OSC'
                                         ),
                                         React.createElement(
                                             'div',

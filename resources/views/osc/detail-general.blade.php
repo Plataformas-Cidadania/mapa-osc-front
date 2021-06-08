@@ -2,8 +2,9 @@
     <div class="col-md-12">
         <br><br>
         <div class="title-style">
-            <h2><div class="mn-accordion-icon"><i class="far fa-file-alt"></i></div> Dados Gerais</h2>
-            <i class="fas fa-chevron-down float-right mn-accordion-arrow" ></i>
+            <h2><div class="mn-accordion-icon"><i class="far fa-file-alt"></i></div> Dados Gerais </h2>
+            <i class="fas fa-chevron-down float-right mn-accordion-arrow" title="Fechar ou abrir grupo Dados Gerais" ></i>
+            <a class=" float-right" type="button" data-toggle="collapse" title="Fechar ou abrir todos os grupos" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8" style="float: left; margin-top: -23px; margin-right: 25px"><i class="fas fa-sort-amount-down"></i>&nbsp;</a>
             <div class="line line-fix"></div>
             <hr/>
         </div>
@@ -13,7 +14,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="img-upload">
-                <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif" alt="">
+                <img src="api/osc/logo/{{$dados_gerais->id_osc}}" alt="">
             </div>
             <br>
             <a href="metodologia">
@@ -33,8 +34,10 @@
             </p>
             <br>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 text-center">
+            <p>Índice de Preenchimento</p>
             <div id="preenchimento"></div>
+            <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999;"><a href="/metodologia">Metodologia</a></p>
         </div>
     </div>
     <br><br>
@@ -64,8 +67,8 @@
                         <i class="fas fa-phone-alt"></i> {{$dados_gerais->tx_telefone == null ? $txt_alert_abb : $dados_gerais->tx_telefone}}
 
                         <div class="col-md-6 text-right fa-svg float-right">
-                            @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank"><i class="far fa-envelope"></i></a>@endif
-                            @if($dados_gerais->tx_site!=null)<a href="http://{{$dados_gerais->tx_site}}" target="_blank"><i class="fas fa-globe"></i></a>@endif
+                            @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank" title="E-mail de contato"><i class="far fa-envelope"></i></a>@endif
+                            @if($dados_gerais->tx_site!=null)<a href="http://{{$dados_gerais->tx_site}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
                         </div>
                     </div>
                     <div class="col-md-6">

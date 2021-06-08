@@ -3,6 +3,7 @@
         <br><br>
         <div class="title-style">
             <h2><div class="mn-accordion-icon"><i class="fas fa-align-justify"></i></div> Descrição da OSC</h2>
+            <i class="fas fa-chevron-down float-right mn-accordion-arrow" style="margin-top: -20px"></i>
             <div class="line line-fix"></div>
             <hr/>
         </div>

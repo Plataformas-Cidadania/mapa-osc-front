@@ -192,7 +192,7 @@ class List extends React.Component {
                         { key: "ads_" + item.id },
                         React.createElement(
                             'a',
-                            { href: "/post/" + item.id + "/" + cleanReplace(item.titulo) },
+                            { href: "/post/" + item.id + "/" + clean(item.titulo) },
                             React.createElement(
                                 'div',
                                 null,
