@@ -648,7 +648,6 @@ class Perfil extends React.Component {
         }
         ///////////////////////////////////////////////////CHART
 
-        console.log(this.state.trabalhadores_chart);
         let vinculos_deficiencia = "";
         let voluntarios = "";
         let vinculos_formais = "";
