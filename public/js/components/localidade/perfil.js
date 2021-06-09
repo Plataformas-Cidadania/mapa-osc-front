@@ -788,6 +788,12 @@ class Perfil extends React.Component {
                                         'Home'
                                     ),
                                     '/ ',
+                                    React.createElement(
+                                        'a',
+                                        { href: "/mapa/" + this.state.localidade_id },
+                                        'Mapa'
+                                    ),
+                                    ' / ',
                                     this.state.localidade
                                 ),
                                 React.createElement('br', null)

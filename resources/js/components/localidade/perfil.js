@@ -686,7 +686,7 @@ class Perfil extends React.Component {
                                 <header>
                                     <br/>
                                         <h1>{this.state.localidade}</h1>
-                                        <h5><a href="/">Home</a>/ {this.state.localidade}</h5>
+                                    <h5><a href="/">Home</a>/ <a href={"/mapa/"+this.state.localidade_id}>Mapa</a> / {this.state.localidade}</h5>
                                         <br/>
                                 </header>
                             </div>
