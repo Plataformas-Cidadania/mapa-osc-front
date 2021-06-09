@@ -76,9 +76,10 @@ class OscController extends Controller{
 
         $urlsApi = [
             //1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
-            1 => $api."osc/geo/regioes",
-            //2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
-            2 => $api."osc/ipeadata/uff/".$territory_id,
+            //1 => $api."osc/geo/regioes",
+            1 => "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/regioes",
+            2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+            //2 => $api."osc/ipeadata/uff/".$territory_id,
             3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
         ];
 
@@ -86,6 +87,8 @@ class OscController extends Controller{
         "https://mapaosc.ipea.gov.br/api/analises/idhgeo"*/
 
         $pagina = $urlsApi[$territory];
+
+        Log::info($pagina);
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -180,9 +183,11 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-        $pgOsc = $api."osc/geo/estados";
-        Log::info($pgOsc);
+        //$pgOsc = $api."osc/geo/estado";
+        $pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
+        //Log::info($pgOsc);
         $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
+        //$pgIdh = "http://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -199,9 +204,18 @@ class OscController extends Controller{
         $dataIdh = curl_exec( $chIdh );
         curl_close( $chIdh );
 
+
+
         $dataOsc = json_decode($dataOsc);
         $dataIdh = json_decode($dataIdh);
         $dataIdh->type = 'FeatureColleciton';
+        Log::info([$dataOsc]);
+        //criar array com indices començando de zero, pois o javascript não considera array se os indices forem personalizados
+        $dataOscTemp = [];
+        foreach ($dataOsc as $item) {
+            array_push($dataOscTemp, $item);
+            $dataOsc = $dataOscTemp;
+        }
 
         //return $dataIdh;
 

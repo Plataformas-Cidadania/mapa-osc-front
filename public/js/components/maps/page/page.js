@@ -5,6 +5,7 @@ class Page extends React.Component {
             processingOsc: false,
             processingOscIdhUfs: false,
             data: null,
+            dataTerritorio: [],
             territory: 1, //país (irá carregar as regiões),
             dataOscUf: null,
             dataIdhUf: null
@@ -12,10 +13,12 @@ class Page extends React.Component {
         };
 
         this.load = this.load.bind(this);
+        this.loadTerritorio = this.loadTerritorio.bind(this);
     }
 
     componentDidMount() {
         this.load();
+        this.loadTerritorio();
         this.loadOscUf();
     }
 
@@ -30,6 +33,27 @@ class Page extends React.Component {
                 success: function (data) {
                     //console.log(data);
                     _this.setState({ data: data, processingOsc: false });
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
+
+            });
+        });
+    }
+
+    loadTerritorio() {
+        let _this = this;
+        this.setState({ processingOsc: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2 + 'osc/geo/regioes',
+                data: {},
+                cache: false,
+                success: function (data) {
+                    //console.log(data);
+                    _this.setState({ dataTerritorio: data, processingOsc: false });
                 },
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -68,6 +92,7 @@ class Page extends React.Component {
             React.createElement(OscMap, {
                 mapId: 'mapTeste',
                 data: this.state.data,
+                dataTerritorio: this.state.dataTerritorio,
                 dataOscUf: this.state.dataOscUf,
                 dataIdhUf: this.state.dataIdhUf,
                 processingOsc: this.state.processingOsc,

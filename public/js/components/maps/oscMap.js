@@ -13,6 +13,7 @@ class OscMap extends React.Component {
             regioes: [],
             ufs: [],
             data: [],
+            dataTerritorio: [],
             dataOscUf: [],
             dataIdhUf: [],
             dataIDHM: [],
@@ -100,10 +101,11 @@ class OscMap extends React.Component {
     componentWillReceiveProps(props) {
         //console.log('will receve props');
         //console.log(props.data);
-        if (props.data != this.state.data || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf || props.processingOsc != this.state.processingOsc || props.processingOscIdhUfs != this.state.processingOscIdhUfs) {
+        if (props.data != this.state.data || props.dataTerritorio != this.state.dataTerritorio || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf || props.processingOsc != this.state.processingOsc || props.processingOscIdhUfs != this.state.processingOscIdhUfs) {
             //console.log(props.data);
             this.setState({
                 data: props.data,
+                dataTerritorio: props.dataTerritorio,
                 dataOscUf: props.dataOscUf,
                 dataIdhUf: props.dataIdhUf,
                 processingOsc: props.processingOsc,
@@ -772,7 +774,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -781,7 +783,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -915,6 +917,7 @@ class OscMap extends React.Component {
         let data = null;
         data = this.state.data;
         let territorio = this.state.data['territorio'];
+        //let territorio = this.state.dataTerritorio;
 
         let intervalos = this.gerarIntervalos(data);
 
