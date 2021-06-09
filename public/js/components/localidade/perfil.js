@@ -83,7 +83,11 @@ class Perfil extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                this.setState({ caracteristicas: data.caracteristicas });
+                this.setState({
+                    caracteristicas: data.caracteristicas,
+                    localidade: data.caracteristicas.tx_localidade,
+                    tipo: data.caracteristicas.tx_tipo_localidade
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
