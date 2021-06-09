@@ -93,9 +93,9 @@
 <!--                <li>
                     <a href="cms/noticias"><i class="fa fa-fw fa-newspaper-o"></i> Notícias</a>
                 </li>-->
-                <li>
+<!--                <li>
                     <a href="cms/editais"><i class="fa fa-fw fa-file"></i> Editais</a>
-                </li>
+                </li>-->
                 <li>
                     <a href="cms/videos"><i class="fa fa-fw fa-video-camera"></i> Vídeos</a>
                 </li>
@@ -117,21 +117,10 @@
                 </li>-->
 
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#demo0"><i class="fa fa-fw fa-user"></i> Mídias <i class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="demo0" class="collapse">
-                        <li>
-                            <a href="cms/midias"><i class="fa fa-fw fa-file-text-o"></i> Tipo mídias</a>
-                        </li>
-                        <li>
-                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Gráficos</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Analise <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
                         <li>
-                            <a href="cms/tipos-graficos"><i class="fa fa-cubes" aria-hidden="true"></i> Tipo</a>
+                            <a href="cms/midias"><i class="fa fa-cubes" aria-hidden="true"></i> Tipo mídias</a>
                         </li>
                         <li>
                             <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Categorias</a>

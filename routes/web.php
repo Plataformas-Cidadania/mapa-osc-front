@@ -17,15 +17,15 @@ Route::get('get-home-chart/', 'HomeController@getChartHome');
 
 $routes = [
     //controller, listing, details
-    ['Article', 'artigos', 'artigo'],
+    //['Article', 'artigos', 'artigo'],
     ['Page', 'sobres', 'sobre'],
-    ['New', 'noticias', 'noticia'],
-    ['Product', 'produtos', 'produto'],
+    //['New', 'noticias', 'noticia'],
+    //['Product', 'produtos', 'produto'],
     ['Video', 'videos', 'video'],
 ];
 $routesSearch = [
     //controller, search
-    ['New', 'noticias'],
+    //['New', 'noticias'],
 ];
 
 //ROTAS PADRÕES
@@ -156,8 +156,6 @@ Route::get('/logout-user', 'UserLoginController@logout');
 
 Route::get('/dados-arquivos', 'UserAreaController@documents');//->middleware('auth');
 Route::get('/dados-arquivo/{id}', 'UserAreaController@document');//->middleware('auth');
-Route::get('/videos-privados', 'UserAreaController@videos');//->middleware('auth');
-
 
 
 //ajax
@@ -188,8 +186,7 @@ Route::get('/detail-user-osc/{id}', 'UserAreaController@detailOsc')->middleware(
 
 Route::post('/list-users-documents', 'UserAreaController@listDocuments')->middleware('auth');
 Route::get('/detalhar-users-document/{id}', 'UserAreaController@detailDocument')->middleware('auth');
-Route::get('/list-private-videos', 'PrivateVideoController@listing')->middleware('auth');
-Route::get('/private-video/{id}', 'PrivateVideoController@video')->middleware('auth');
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,8 +7,8 @@ class Search extends React.Component {
             /* {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'search/osc/autocomplete/', qtd: '10', campo: 'tx_nome_osc'},
              {id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'menu/geo/municipio/', qtd: '25', campo: 'edmu_nm_municipio'},
              {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'menu/geo/estado/', qtd: '10', campo: 'eduf_nm_uf'},
-             {id: 4, title: "Regição", txt: 'Digite o nome da região...', rota: 'menu/geo/regiao/', qtd: '10', campo: 'edre_nm_regiao'},*/
-            { id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'search/cnpj/autocomplete/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Regição", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
+             {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'menu/geo/regiao/', qtd: '10', campo: 'edre_nm_regiao'},*/
+            { id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'search/cnpj/autocomplete/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
             searchOsc: '',
             searchOscId: 1,
             searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -57,8 +57,6 @@ class Search extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl+this.state.searchOscRota+this.state.searchOsc+'/'+this.state.searchOscQtd+'/0',
-            //url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc + '/' + this.state.searchOscQtd + '/0',
             url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc,
             data: {},
             cache: false,
