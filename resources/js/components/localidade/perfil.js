@@ -35,6 +35,12 @@ class Perfil extends React.Component {
                 area_atuacao: 'Distribuição de OSCs por área de atuação',
                 trabalhadores: 'Distribuição de trabalhodores',
             },
+
+            tipoSelect: {
+                estado: 'estado',
+                municipio: 'município',
+                regiao: 'região',
+            },
             loading: false,
             orcamento_txt: 0,
             localidade_id: origem,
@@ -86,10 +92,13 @@ class Perfil extends React.Component {
             },
             cache: false,
             success: function(data) {
+
+                let tipo = this.state.tipoSelect[data.caracteristicas.tx_tipo_localidade];
+
                 this.setState({
                     caracteristicas: data.caracteristicas,
                     localidade: data.caracteristicas.tx_localidade,
-                    tipo: data.caracteristicas.tx_tipo_localidade
+                    tipo: tipo,
                 });
 
             }.bind(this),
@@ -462,15 +471,15 @@ class Perfil extends React.Component {
         }
         let evolucao_tx_primeiro_colocado_municipio = '';
         if(this.state.evolucao_quantidade_osc_ano_chart){
-            evolucao_tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_municipio[0];
+            evolucao_tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_municipio;
         }
         let evolucao_tx_ultimo_colocado_estado = '';
         if(this.state.evolucao_quantidade_osc_ano_chart){
-            evolucao_tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_estado[0];
+            evolucao_tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_estado;
         }
         let evolucao_tx_ultimo_colocado_municipio = '';
         if(this.state.evolucao_quantidade_osc_ano_chart){
-            evolucao_tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_municipio[0];
+            evolucao_tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_municipio;
         }
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////Natureza Juridica///////////////////////////////////////////
@@ -769,7 +778,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                Na população de OSCs do estado, <strong>{nj_nr_porcentagem_maior}%</strong>&nbsp;
+                                Na população de OSCs do {this.state.tipo}, <strong>{nj_nr_porcentagem_maior}%</strong>&nbsp;
                                 são classificadas como <strong>{nj_tx_porcentagem_maior}.</strong>&nbsp;
                                 A média nacional é de <strong>{nj_nr_porcentagem_maior_media_nacional}%</strong>&nbsp;
                                 de OSCs identificadas como <strong>{nj_tx_porcentagem_maior_media_nacional}</strong>.
@@ -801,7 +810,7 @@ class Perfil extends React.Component {
                             <p>
                                 {this.state.localidade} é o&nbsp;
                                 <strong>{nr_colocacao_nacional}</strong>º em relação aos repasses de recursos para OSCs, com média de R$&nbsp;
-                                <strong>{nr_repasse_media}</strong> por ano. A média nacional por estado de repasse de recursos é de R$&nbsp;
+                                <strong>{nr_repasse_media}</strong> por ano. A média nacional por {this.state.tipo} de repasse de recursos é de R$&nbsp;
                                 <strong>{nr_repasse_media_nacional}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
                                 <strong>{nr_porcentagem_maior_tipo_repasse}</strong>% do total.
                             </p>
@@ -828,7 +837,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                A média por estado de transferências Federais é de R$ <strong>{this.state.orcamento_txt}</strong>.
+                                A média por {this.state.tipo} de transferências Federais é de R$ <strong>{this.state.orcamento_txt}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_orcamento} <br/>

@@ -35,6 +35,12 @@ class Perfil extends React.Component {
                 area_atuacao: 'Distribuição de OSCs por área de atuação',
                 trabalhadores: 'Distribuição de trabalhodores'
             },
+
+            tipoSelect: {
+                estado: 'estado',
+                municipio: 'município',
+                regiao: 'região'
+            },
             loading: false,
             orcamento_txt: 0,
             localidade_id: origem
@@ -83,10 +89,13 @@ class Perfil extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
+
+                let tipo = this.state.tipoSelect[data.caracteristicas.tx_tipo_localidade];
+
                 this.setState({
                     caracteristicas: data.caracteristicas,
                     localidade: data.caracteristicas.tx_localidade,
-                    tipo: data.caracteristicas.tx_tipo_localidade
+                    tipo: tipo
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -542,15 +551,15 @@ class Perfil extends React.Component {
         }
         let evolucao_tx_primeiro_colocado_municipio = '';
         if (this.state.evolucao_quantidade_osc_ano_chart) {
-            evolucao_tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_municipio[0];
+            evolucao_tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_municipio;
         }
         let evolucao_tx_ultimo_colocado_estado = '';
         if (this.state.evolucao_quantidade_osc_ano_chart) {
-            evolucao_tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_estado[0];
+            evolucao_tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_estado;
         }
         let evolucao_tx_ultimo_colocado_municipio = '';
         if (this.state.evolucao_quantidade_osc_ano_chart) {
-            evolucao_tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_municipio[0];
+            evolucao_tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_municipio;
         }
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////Natureza Juridica///////////////////////////////////////////
@@ -1029,7 +1038,9 @@ class Perfil extends React.Component {
                         React.createElement(
                             'p',
                             null,
-                            'Na popula\xE7\xE3o de OSCs do estado, ',
+                            'Na popula\xE7\xE3o de OSCs do ',
+                            this.state.tipo,
+                            ', ',
                             React.createElement(
                                 'strong',
                                 null,
@@ -1123,7 +1134,9 @@ class Perfil extends React.Component {
                                 null,
                                 nr_repasse_media
                             ),
-                            ' por ano. A m\xE9dia nacional por estado de repasse de recursos \xE9 de R$\xA0',
+                            ' por ano. A m\xE9dia nacional por ',
+                            this.state.tipo,
+                            ' de repasse de recursos \xE9 de R$\xA0',
                             React.createElement(
                                 'strong',
                                 null,
@@ -1189,7 +1202,9 @@ class Perfil extends React.Component {
                         React.createElement(
                             'p',
                             null,
-                            'A m\xE9dia por estado de transfer\xEAncias Federais \xE9 de R$ ',
+                            'A m\xE9dia por ',
+                            this.state.tipo,
+                            ' de transfer\xEAncias Federais \xE9 de R$ ',
                             React.createElement(
                                 'strong',
                                 null,
