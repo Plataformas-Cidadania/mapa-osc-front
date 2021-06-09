@@ -115,6 +115,7 @@ class OscController extends Controller{
 
         //cria um array com índices començando de 0
         if($territory == 3){
+            //$data = [$data];
             $data2 = [];
             foreach ($data as $key => $item) {
                 if(count($item) > 0){

@@ -149,7 +149,7 @@ class FormProjeto extends React.Component {
                 },
                 data: {
                     //id_osc: 455128,
-                    id_osc: this.props.id,
+                    id_osc: this.props.id_osc,
                     tx_nome_projeto: this.state.form.tx_nome_projeto,
                     cd_status_projeto: this.state.form.cd_status_projeto,
                     dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,

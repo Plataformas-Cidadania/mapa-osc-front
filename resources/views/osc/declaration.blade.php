@@ -12,7 +12,7 @@
                 <br>
                 <div class="text-center footer-print">mapaosc.ipea.gov.br</div>
             </div>
-            <img src="img/declaration.jpg" class="bg-print">
+            <img src="{{env('APP_URL')}}img/declaration.jpg" class="bg-print">
             <div></div>
         </div>
     </div>
