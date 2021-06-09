@@ -719,25 +719,25 @@ class Perfil extends React.Component {
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade OSCs</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_osc}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade Trabalhadores</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_trabalhadores}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Transferências federais</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_recursos}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade Projetos</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_projetos}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -778,9 +778,9 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                Na população de OSCs do {this.state.tipo}, <strong>{nj_nr_porcentagem_maior}%</strong>&nbsp;
+                                Na população de OSCs do {this.state.tipo}, <strong>{numberDecimalPtBR(nj_nr_porcentagem_maior, 2)}%</strong>&nbsp;
                                 são classificadas como <strong>{nj_tx_porcentagem_maior}.</strong>&nbsp;
-                                A média nacional é de <strong>{nj_nr_porcentagem_maior_media_nacional}%</strong>&nbsp;
+                                A média nacional é de <strong>{numberDecimalPtBR(nj_nr_porcentagem_maior_media_nacional, 2)}%</strong>&nbsp;
                                 de OSCs identificadas como <strong>{nj_tx_porcentagem_maior_media_nacional}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
@@ -810,9 +810,9 @@ class Perfil extends React.Component {
                             <p>
                                 {this.state.localidade} é o&nbsp;
                                 <strong>{nr_colocacao_nacional}</strong>º em relação aos repasses de recursos para OSCs, com média de R$&nbsp;
-                                <strong>{nr_repasse_media}</strong> por ano. A média nacional por {this.state.tipo} de repasse de recursos é de R$&nbsp;
-                                <strong>{nr_repasse_media_nacional}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
-                                <strong>{nr_porcentagem_maior_tipo_repasse}</strong>% do total.
+                                <strong>{numberDecimalPtBR(nr_repasse_media, 2)}</strong> por ano. A média nacional por {this.state.tipo} de repasse de recursos é de R$&nbsp;
+                                <strong>{numberDecimalPtBR(nr_repasse_media_nacional, 2)}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
+                                <strong>{numberDecimalPtBR(nr_porcentagem_maior_tipo_repasse, 2)}</strong>% do total.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_repasse_recursos} <br/>
@@ -837,7 +837,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                A média por {this.state.tipo} de transferências Federais é de R$ <strong>{this.state.orcamento_txt}</strong>.
+                                A média por {this.state.tipo} de transferências Federais é de R$ <strong>{numberDecimalPtBR(this.state.orcamento_txt, 2)}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_orcamento} <br/>
@@ -862,8 +862,8 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} possui <strong>{nr_porcentagem_maior}</strong>%
-                                das OSCs atuando em <strong>{tx_area_atuacao}</strong>, enquanto o percentual médio nacional de OSCs nesta categoria é de <strong>{nr_area_atuacao}</strong>%.
+                                {this.state.localidade} possui <strong>{numberDecimalPtBR(nr_porcentagem_maior,2)}</strong>%
+                                das OSCs atuando em <strong>{tx_area_atuacao}</strong>, enquanto o percentual médio nacional de OSCs nesta categoria é de <strong>{numberDecimalPtBR(nr_area_atuacao,2)}</strong>%.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_area_atuacao} <br/>

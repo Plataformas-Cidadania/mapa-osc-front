@@ -855,7 +855,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'h2',
                                 null,
-                                this.state.caracteristicas.nr_quantidade_osc
+                                numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc, 0)
                             )
                         )
                     ),
@@ -873,7 +873,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'h2',
                                 null,
-                                this.state.caracteristicas.nr_quantidade_trabalhadores
+                                numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores, 0)
                             )
                         )
                     ),
@@ -891,7 +891,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'h2',
                                 null,
-                                this.state.caracteristicas.nr_quantidade_recursos
+                                numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos, 0)
                             )
                         )
                     ),
@@ -909,7 +909,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'h2',
                                 null,
-                                this.state.caracteristicas.nr_quantidade_projetos
+                                numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos, 0)
                             )
                         )
                     ),
@@ -1044,7 +1044,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nj_nr_porcentagem_maior,
+                                numberDecimalPtBR(nj_nr_porcentagem_maior, 2),
                                 '%'
                             ),
                             '\xA0 s\xE3o classificadas como ',
@@ -1058,7 +1058,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nj_nr_porcentagem_maior_media_nacional,
+                                numberDecimalPtBR(nj_nr_porcentagem_maior_media_nacional, 2),
                                 '%'
                             ),
                             '\xA0 de OSCs identificadas como ',
@@ -1132,7 +1132,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nr_repasse_media
+                                numberDecimalPtBR(nr_repasse_media, 2)
                             ),
                             ' por ano. A m\xE9dia nacional por ',
                             this.state.tipo,
@@ -1140,13 +1140,13 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nr_repasse_media_nacional
+                                numberDecimalPtBR(nr_repasse_media_nacional, 2)
                             ),
                             '. Al\xE9m dos repasses federais, a categoria de recursos mais declarada foi Recursos p\xFAblicos com\xA0',
                             React.createElement(
                                 'strong',
                                 null,
-                                nr_porcentagem_maior_tipo_repasse
+                                numberDecimalPtBR(nr_porcentagem_maior_tipo_repasse, 2)
                             ),
                             '% do total.'
                         ),
@@ -1208,7 +1208,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                this.state.orcamento_txt
+                                numberDecimalPtBR(this.state.orcamento_txt, 2)
                             ),
                             '.'
                         ),
@@ -1269,7 +1269,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nr_porcentagem_maior
+                                numberDecimalPtBR(nr_porcentagem_maior, 2)
                             ),
                             '% das OSCs atuando em ',
                             React.createElement(
@@ -1281,7 +1281,7 @@ class Perfil extends React.Component {
                             React.createElement(
                                 'strong',
                                 null,
-                                nr_area_atuacao
+                                numberDecimalPtBR(nr_area_atuacao, 2)
                             ),
                             '%.'
                         ),
