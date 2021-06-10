@@ -35,11 +35,16 @@ class Perfil extends React.Component {
                 area_atuacao: 'Distribuição de OSCs por área de atuação',
                 trabalhadores: 'Distribuição de trabalhodores',
             },
+
+            tipoSelect: {
+                estado: 'estado',
+                municipio: 'município',
+                regiao: 'região',
+            },
             loading: false,
             orcamento_txt: 0,
             localidade_id: origem,
         };
-        //this.load = this.load.bind(this);
         this.callModal = this.callModal.bind(this);
 
         this.evolucao_anual = this.evolucao_anual.bind(this);
@@ -52,7 +57,6 @@ class Perfil extends React.Component {
     }
 
     componentDidMount(){
-        //this.load();
         this.evolucao_anual();
         this.caracteristicas();
         this.natureza_juridica();
@@ -70,7 +74,6 @@ class Perfil extends React.Component {
             },
             cache: false,
             success: function(data) {
-                //console.log(data);
                 this.setState({evolucao_quantidade_osc_ano_chart: data.qtd_osc_por_ano});
 
             }.bind(this),
@@ -89,8 +92,14 @@ class Perfil extends React.Component {
             },
             cache: false,
             success: function(data) {
-                //console.log(data);
-                this.setState({caracteristicas: data.caracteristicas});
+
+                let tipo = this.state.tipoSelect[data.caracteristicas.tx_tipo_localidade];
+
+                this.setState({
+                    caracteristicas: data.caracteristicas,
+                    localidade: data.caracteristicas.tx_localidade,
+                    tipo: tipo,
+                });
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -126,7 +135,6 @@ class Perfil extends React.Component {
             },
             cache: false,
             success: function(data) {
-
                 this.setState({
                     orcamento_chart: data.transferencias_federais,
                     orcamento_txt:data.transferencias_federais.media
@@ -149,7 +157,6 @@ class Perfil extends React.Component {
             cache: false,
             success: function(data) {
                 this.setState({area_atuacao_chart: data.qtd_area_atuacao});
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
@@ -169,7 +176,6 @@ class Perfil extends React.Component {
                 this.setState({
                     trabalhadores_chart: data.qtd_trabalhores
                 });
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
@@ -198,230 +204,6 @@ class Perfil extends React.Component {
         });
     }
 
-    load() {
-        this.setState({ button: false, loading: true});
-        $.ajax({
-            method: 'GET',
-            url: getBaseUrl + 'analises/localidade/'+this.state.localidade_id,
-            cache: false,
-            success: function (data) {
-
-                let repasse_recursos_table = data.repasse_recursos;
-
-                /*////////////natureza_juridica////////////*/
-                /*let series = [{
-                    name: 'Quantidade OSCs',
-                    type: 'column',
-                    data: []
-                }];
-                let labels = [];
-                data.natureza_juridica.series_1.find(function(item){
-                    series[0].data.push(item.value);
-                    labels.push(item.label.split(' '));
-                });
-
-
-                let natureza_juridica_chart = {
-                    'labels': labels,
-                    'series': series,
-                }*/
-
-                /*////////////Trabalhadores////////////*/
-                /*let trabalhadores_series = [{
-                    name: 'Número de Trabalhadores',
-                    type: 'column',
-                    data: []
-                }];
-                let trabalhadores_labels = [];
-                data.trabalhadores.series_1.find(function(item){
-                    trabalhadores_series[0].data.push(item.value);
-                    trabalhadores_labels.push(item.label.split(' '));
-                });
-                let trabalhadores_chart = {
-                    'labels': trabalhadores_labels,
-                    'series': trabalhadores_series,
-                }*/
-
-                /*////////////Área de Atuação////////////*/
-
-               /* let area_atuacao_series = [];
-                let area_atuacao_labels = [];
-                data.area_atuacao.series_1.find(function(item){
-                    area_atuacao_series.push(item.value);
-                    area_atuacao_labels.push(item.label);
-                });
-                let area_atuacao_chart = {
-                    'labels': area_atuacao_labels,
-                    'series': area_atuacao_series,
-                }*/
-                /*////////////////////Repasse Recursosos//////////////////////////*/
-
-                ///////////////////////////////////////////////
-                ///////////////////////////////////////////////
-                /*let teste = [];
-
-                if(data.repasse_recursos){
-                    for(let index in data.repasse_recursos.series_1[3].values){
-                        teste.push(data.repasse_recursos.series_1[3].values[index].x)
-
-                    }
-                }
-                for(let index in teste){
-                    console.log(teste[index]);
-                }
-
-                console.log(teste);*/
-
-                ///////////////////////////////////////////////
-                ///////////////////////////////////////////////
-
-                /*let repasse_recursos_labels = [];
-                let repasse_recursos_series = [];
-
-                if(data.repasse_recursos){
-
-                    let groupSerie = [];
-                    for(let serie in data.repasse_recursos.series_1){
-
-                        let serieName = data.repasse_recursos.series_1[serie].key;
-
-                        let serieTeste = {
-                            name: serieName,
-                            type: 'line',
-                            data: []
-                        };
-
-                        groupSerie.push(serieTeste);
-                        for(let k in data.repasse_recursos.series_1[serie].values) {
-
-                            repasse_recursos_labels.push(data.repasse_recursos.series_1[serie].values[k].x);
-
-                            serieTeste.data.push(data.repasse_recursos.series_1[serie].values[k].y);
-                        }
-                    }
-
-                    repasse_recursos_series.push(groupSerie);
-
-                }
-
-                let chart_repasse_recursos_series = repasse_recursos_series[0]
-
-                let unique_repasse_recursos_labels = [...new Set(repasse_recursos_labels)];
-                unique_repasse_recursos_labels = unique_repasse_recursos_labels.sort()
-
-                let repasse_recursos_chart = {
-                    'labels': unique_repasse_recursos_labels,
-                    'series': chart_repasse_recursos_series,
-                }*/
-
-
-                /*//////////////////////////////////////////////*/
-                /*////////////////////Orçamento//////////////////////////*/
-                /*let orcamento_labels = [];
-                let orcamento_series = [];
-
-                if(data.orcamento){
-                    let groupSerie = [];
-                    for(let serie in data.orcamento.series_1){
-
-                        let serieName = data.orcamento.series_1[serie].key;
-
-                        let serieTeste = {
-                            name: serieName,
-                            type: 'line',
-                            data: []
-                        };
-
-                        groupSerie.push(serieTeste);
-
-                        for(let k in data.orcamento.series_1[serie].values) {
-                            orcamento_labels.push(data.orcamento.series_1[serie].values[k].x);
-                            serieTeste.data.push(data.orcamento.series_1[serie].values[k].y);
-                        }
-                    }
-                    orcamento_series.push(groupSerie);
-                }
-
-                let chart_orcamento_series = orcamento_series[0]
-
-                let unique_orcamento_labels = [...new Set(orcamento_labels)];
-                unique_orcamento_labels = unique_orcamento_labels.sort()
-
-                let orcamento_chart = {
-                    'labels': unique_orcamento_labels,
-                    'series': chart_orcamento_series,
-                }*/
-
-                /*//////////////////////////////////////////////*/
-                /*////////////////////evolucao_quantidade_osc_ano//////////////////////////*/
-                /*let evolucao_quantidade_osc_ano_labels = [];
-                let evolucao_quantidade_osc_ano_series = [];
-
-                if(data.evolucao_quantidade_osc_ano){
-                    let groupSerie = [];
-                    for(let serie in data.evolucao_quantidade_osc_ano.series_1){
-
-                        let serieName = data.evolucao_quantidade_osc_ano.series_1[serie].key;
-
-                        let serieTeste = {
-                            name: serieName,
-                            type: 'line',
-                            data: []
-                        };
-
-                        groupSerie.push(serieTeste);
-
-                        for(let k in data.evolucao_quantidade_osc_ano.series_1[serie].values) {
-                            evolucao_quantidade_osc_ano_labels.push(data.evolucao_quantidade_osc_ano.series_1[serie].values[k].x);
-                            serieTeste.data.push(data.evolucao_quantidade_osc_ano.series_1[serie].values[k].y);
-                        }
-                    }
-                    evolucao_quantidade_osc_ano_series.push(groupSerie);
-                }*/
-
-                /*let chart_evolucao_quantidade_osc_ano_series = evolucao_quantidade_osc_ano_series[0]
-
-                let unique_evolucao_quantidade_osc_ano_labels = [...new Set(evolucao_quantidade_osc_ano_labels)];
-                unique_evolucao_quantidade_osc_ano_labels = unique_evolucao_quantidade_osc_ano_labels.sort()*/
-
-                /*let evolucao_quantidade_osc_ano_chart = {
-                    'labels': unique_evolucao_quantidade_osc_ano_labels,
-                    'series': chart_evolucao_quantidade_osc_ano_series,
-                }*/
-
-                /*//////////////////////////////////////////////*/
-
-                this.setState({
-                    loading: false,
-                    //caracteristicas: data.caracteristicas,
-                    //evolucao_quantidade_osc_ano: data.evolucao_quantidade_osc_ano,
-
-                    //area_atuacao: data.area_atuacao,
-                    //natureza_juridica: data.natureza_juridica,
-                    //trabalhadores: data.trabalhadores,
-                    //repasse_recursos: data.repasse_recursos,
-                    //orcamento: data.orcamento,
-
-                    //evolucao_quantidade_osc_ano_chart: evolucao_quantidade_osc_ano_chart,
-                    //natureza_juridica_chart: natureza_juridica_chart,
-                    //trabalhadores_chart: trabalhadores_chart,
-                    //area_atuacao_chart: area_atuacao_chart,
-                    //repasse_recursos_chart: repasse_recursos_chart,
-                    //orcamento_chart: orcamento_chart,
-
-                    repasse_recursos_table: repasse_recursos_table,
-
-
-                    localidade: data.tx_localidade,
-                    tipo: data.tx_tipo_localidade,
-                });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-            }.bind(this)
-        });
-    }
-
 
     //////////////////////////////////////////MODAL TABELA///////////////////////////////////////////////////
 
@@ -438,7 +220,6 @@ class Perfil extends React.Component {
 
         let modal = this.state.modal;
         let table = this.state[chart];
-
 
         //////////////////////////
         if(col===3){
@@ -663,21 +444,42 @@ class Perfil extends React.Component {
             );
         }
         /////////////////////////////////////////////////////////////////////////////
-        let tx_primeiro_colocado_estado = '';
-        if(this.state.evolucao_quantidade_osc_ano.tx_primeiro_colocado_estado){
-            tx_primeiro_colocado_estado = this.state.evolucao_quantidade_osc_ano.tx_primeiro_colocado_estado[0];
+        let evolucao_nr_colocacao_nacional = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_nr_colocacao_nacional = this.state.evolucao_quantidade_osc_ano_chart.nr_colocacao_nacional;
         }
-        let tx_primeiro_colocado_municipio = '';
-        if(this.state.evolucao_quantidade_osc_ano.tx_primeiro_colocado_municipio){
-            tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano.tx_primeiro_colocado_municipio[0];
+        let evolucao_nr_quantidade_oscs_primeiro_colocado_estado = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_nr_quantidade_oscs_primeiro_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.nr_quantidade_oscs_primeiro_colocado_estado;
         }
-        let tx_ultimo_colocado_estado = '';
-        if(this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_estado){
-            tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_estado[0];
+        let evolucao_nr_quantidade_oscs_primeiro_colocado_municipio = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_nr_quantidade_oscs_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.nr_quantidade_oscs_primeiro_colocado_municipio;
         }
-        let tx_ultimo_colocado_municipio = '';
-        if(this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_municipio){
-            tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano.tx_ultimo_colocado_municipio[0];
+        let evolucao_nr_quantidade_oscs_ultimo_colocado_estado = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_nr_quantidade_oscs_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.nr_quantidade_oscs_ultimo_colocado_estado;
+        }
+        let evolucao_nr_quantidade_oscs_ultimo_colocado_municipio = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_nr_quantidade_oscs_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.nr_quantidade_oscs_ultimo_colocado_municipio;
+        }
+
+        let evolucao_tx_primeiro_colocado_estado = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_tx_primeiro_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_estado;
+        }
+        let evolucao_tx_primeiro_colocado_municipio = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_tx_primeiro_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_primeiro_colocado_municipio;
+        }
+        let evolucao_tx_ultimo_colocado_estado = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_tx_ultimo_colocado_estado = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_estado;
+        }
+        let evolucao_tx_ultimo_colocado_municipio = '';
+        if(this.state.evolucao_quantidade_osc_ano_chart){
+            evolucao_tx_ultimo_colocado_municipio = this.state.evolucao_quantidade_osc_ano_chart.tx_ultimo_colocado_municipio;
         }
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////Natureza Juridica///////////////////////////////////////////
@@ -764,7 +566,6 @@ class Perfil extends React.Component {
         }
         ///////////////////////////////////////////////////CHART
 
-        console.log(this.state.trabalhadores_chart);
         let vinculos_deficiencia = "";
         let voluntarios = "";
         let vinculos_formais = "";
@@ -852,6 +653,8 @@ class Perfil extends React.Component {
         ///////////////////////////////////////////////////CHART
         let orcamento_chart = null;
 
+
+
         if(this.state.orcamento_chart){
 
             let orcamento_series = [{
@@ -871,6 +674,8 @@ class Perfil extends React.Component {
         }
         ///////////////////////////////////////////////////CHART
 
+
+
         return (
             <div>
 
@@ -881,7 +686,7 @@ class Perfil extends React.Component {
                                 <header>
                                     <br/>
                                         <h1>{this.state.localidade}</h1>
-                                        <h5><a href="/">Home</a>/ {this.state.localidade}</h5>
+                                    <h5><a href="/">Home</a>/ <a href={"/mapa/"+this.state.localidade_id}>Mapa</a> / {this.state.localidade}</h5>
                                         <br/>
                                 </header>
                             </div>
@@ -913,39 +718,39 @@ class Perfil extends React.Component {
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade OSCs</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_osc}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade Trabalhadores</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_trabalhadores}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Transferências federais</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_recursos}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
                                 <h3>Quantidade Projetos</h3>
-                                <h2>{this.state.caracteristicas.nr_quantidade_projetos}</h2>
+                                <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-12">
                             <br/>
                             <p>
                                 {this.state.localidade} é o&nbsp;
-                                <strong>{this.state.evolucao_quantidade_osc_ano.nr_colocacao_nacional}º</strong> em relação a quantidade de OSCs no âmbito nacional. Nesse ranking, o estado&nbsp;
-                                ({tx_primeiro_colocado_estado}, <strong>{this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_estado}</strong>) e o município&nbsp;
-                                ({tx_primeiro_colocado_municipio},&nbsp;
-                                <strong>{this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_primeiro_colocado_municipio}</strong> OSCs) são os que contêm mais OSCs. O estado&nbsp;
-                                ({tx_ultimo_colocado_estado}) e o município&nbsp;
-                                ({tx_ultimo_colocado_municipio}) são os que contêm menos OSCs,&nbsp;
-                                <strong>{this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_estado}</strong> e&nbsp;
-                                <strong>{this.state.evolucao_quantidade_osc_ano.nr_quantidade_oscs_ultimo_colocado_municipio}</strong> respectivamente.
+                                <strong>{evolucao_nr_colocacao_nacional}º</strong> em relação a quantidade de OSCs no âmbito nacional. Nesse ranking, o estado&nbsp;
+                                ({evolucao_tx_primeiro_colocado_estado}, <strong>{evolucao_nr_quantidade_oscs_primeiro_colocado_estado}</strong>) e o município&nbsp;
+                                ({evolucao_tx_primeiro_colocado_municipio},&nbsp;
+                                <strong>{evolucao_nr_quantidade_oscs_primeiro_colocado_municipio}</strong> OSCs) são os que contêm mais OSCs. O estado&nbsp;
+                                ({evolucao_tx_ultimo_colocado_estado}) e o município&nbsp;
+                                ({evolucao_tx_ultimo_colocado_municipio}) são os que contêm menos OSCs,&nbsp;
+                                <strong>{evolucao_nr_quantidade_oscs_ultimo_colocado_estado}</strong> e&nbsp;
+                                <strong>{evolucao_nr_quantidade_oscs_ultimo_colocado_municipio}</strong> respectivamente.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_quantidade_osc} <br/>
@@ -972,9 +777,9 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                Na população de OSCs do estado, <strong>{nj_nr_porcentagem_maior}%</strong>&nbsp;
+                                Na população de OSCs do {this.state.tipo}, <strong>{numberDecimalPtBR(nj_nr_porcentagem_maior, 2)}%</strong>&nbsp;
                                 são classificadas como <strong>{nj_tx_porcentagem_maior}.</strong>&nbsp;
-                                A média nacional é de <strong>{nj_nr_porcentagem_maior_media_nacional}%</strong>&nbsp;
+                                A média nacional é de <strong>{numberDecimalPtBR(nj_nr_porcentagem_maior_media_nacional, 2)}%</strong>&nbsp;
                                 de OSCs identificadas como <strong>{nj_tx_porcentagem_maior_media_nacional}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
@@ -1004,9 +809,9 @@ class Perfil extends React.Component {
                             <p>
                                 {this.state.localidade} é o&nbsp;
                                 <strong>{nr_colocacao_nacional}</strong>º em relação aos repasses de recursos para OSCs, com média de R$&nbsp;
-                                <strong>{nr_repasse_media}</strong> por ano. A média nacional por estado de repasse de recursos é de R$&nbsp;
-                                <strong>{nr_repasse_media_nacional}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
-                                <strong>{nr_porcentagem_maior_tipo_repasse}</strong>% do total.
+                                <strong>{numberDecimalPtBR(nr_repasse_media, 2)}</strong> por ano. A média nacional por {this.state.tipo} de repasse de recursos é de R$&nbsp;
+                                <strong>{numberDecimalPtBR(nr_repasse_media_nacional, 2)}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
+                                <strong>{numberDecimalPtBR(nr_porcentagem_maior_tipo_repasse, 2)}</strong>% do total.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_repasse_recursos} <br/>
@@ -1031,7 +836,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                A média por estado de transferências Federais é de R$ <strong>{this.state.orcamento_txt}</strong>.
+                                A média por {this.state.tipo} de transferências Federais é de R$ <strong>{numberDecimalPtBR(this.state.orcamento_txt, 2)}</strong>.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_orcamento} <br/>
@@ -1056,8 +861,8 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} possui <strong>{nr_porcentagem_maior}</strong>%
-                                das OSCs atuando em <strong>{tx_area_atuacao}</strong>, enquanto o percentual médio nacional de OSCs nesta categoria é de <strong>{nr_area_atuacao}</strong>%.
+                                {this.state.localidade} possui <strong>{numberDecimalPtBR(nr_porcentagem_maior,2)}</strong>%
+                                das OSCs atuando em <strong>{tx_area_atuacao}</strong>, enquanto o percentual médio nacional de OSCs nesta categoria é de <strong>{numberDecimalPtBR(nr_area_atuacao,2)}</strong>%.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_area_atuacao} <br/>
