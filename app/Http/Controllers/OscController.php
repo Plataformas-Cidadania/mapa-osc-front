@@ -187,8 +187,8 @@ class OscController extends Controller{
         //$pgOsc = $api."osc/geo/estado";
         $pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
         //Log::info($pgOsc);
-        $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
-        //$pgIdh = "http://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
+        //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
+        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -203,14 +203,13 @@ class OscController extends Controller{
         curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
         $dataIdh = curl_exec( $chIdh );
+        Log::info(curl_error($chIdh));
         curl_close( $chIdh );
 
 
 
         $dataOsc = json_decode($dataOsc);
-        $dataIdh = json_decode($dataIdh);
-        $dataIdh->type = 'FeatureColleciton';
-        Log::info([$dataOsc]);
+        //Log::info([$dataOsc]);
         //criar array com indices començando de zero, pois o javascript não considera array se os indices forem personalizados
         $dataOscTemp = [];
         foreach ($dataOsc as $item) {
@@ -218,7 +217,23 @@ class OscController extends Controller{
             $dataOsc = $dataOscTemp;
         }
 
-        //return $dataIdh;
+        $dataIdh = json_decode($dataIdh);
+        //$dataIdh->type = 'FeatureColleciton';
+
+        //colocando os dados retornados da API nova no modelo da API antiga
+        //para alimentar o padrão que já existe no front
+        $areasIdh = [];
+        $areasIdh['type'] = 'FeatureCollection';
+        $areasIdh['features'] = [];
+        foreach ($dataIdh as $index => $valor) {
+            $areasIdh['features'][$index]['type'] = 'Feature';
+            $areasIdh['features'][$index]['id'] = $index;
+            $areasIdh['features'][$index]['properties']['nm_uf'] = $valor->eduf_nm_uf;
+            $areasIdh['features'][$index]['properties']['Regiao'] = $valor->edre_cd_regiao;
+            $areasIdh['features'][$index]['properties']['cod_uf'] = $valor->eduf_cd_uf;
+            $areasIdh['features'][$index]['properties']['nr_valor'] = $valor->nr_valor;
+            $areasIdh['features'][$index]['geometry'] = json_decode($valor->eduf_geometry);
+        }
 
         $areas = [];
         $areas['type'] = 'FeatureCollection';
@@ -231,14 +246,17 @@ class OscController extends Controller{
             $areas['features'][$index]['properties']['total'] = $valor->nr_quantidade_osc_regiao;
             $areas['features'][$index]['properties']['x'] = $valor->geo_lat_centroid_regiao;
             $areas['features'][$index]['properties']['y'] = $valor->geo_lng_centroid_regiao;
-            foreach ($dataIdh->features as $item) {
-                if($item->properties->cod_uf == $valor->id_regiao){
-                    $areas['features'][$index]['geometry'] = $item->geometry;
+            //foreach ($dataIdh->features as $item) {
+            foreach ($areasIdh['features'] as $item) {
+                //if($item->properties->cod_uf == $valor->id_regiao){
+                if($item['properties']['cod_uf'] == $valor->id_regiao){
+                    $areas['features'][$index]['geometry'] = $item['geometry'];
                 }
             }
         }
 
-        return ['osc' => $areas, 'idh' => $dataIdh];
+        //return ['osc' => $areas, 'idh' => $dataIdh];
+        return ['osc' => $areas, 'idh' => $areasIdh];
     }
 
     public function getIDHM($cod_uf){
