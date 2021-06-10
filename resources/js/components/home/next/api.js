@@ -50,13 +50,12 @@ class NextOsc extends React.Component {
         this.setState({loadingAreas: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl+'menu/osc/area_atuacao',
-            //url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
+            //url: getBaseUrl+'menu/osc/area_atuacao',
+            url: getBaseUrl2+'area_atuacao',
             data: {
             },
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.setState({data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false}, function(){
                     this.callMenu();//carregar as oscs da primeira área de atuação.
                 });
@@ -86,7 +85,7 @@ class NextOsc extends React.Component {
             lon = lon.replace(".", ",");
             url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
         }
-        console.log(url);
+
         $.ajax({
             method: 'GET',
             //url: getBaseUrl+'osc/listaareaatuacao/'+index,
@@ -146,7 +145,7 @@ class NextOsc extends React.Component {
         });
     }
     setMunicipio(edmu_cd_municipio, edmu_nm_municipio, eduf_sg_uf){
-        console.log(edmu_cd_municipio);
+        //console.log(edmu_cd_municipio);
         localStorage.setItem('cd_municipio', edmu_cd_municipio);
         localStorage.setItem('nome_municipio', edmu_nm_municipio+' - '+eduf_sg_uf);
         $("#modalLocalidade").modal('hide');
@@ -158,13 +157,13 @@ class NextOsc extends React.Component {
     render(){
 
         //console.log("1 ", this.state.nextsOsc.length);
-        console.log("1 ", nextOscTitle);
+        //console.log("1 ", nextOscTitle);
 
         let geoCity = localStorage.getItem('city')+' - '+localStorage.getItem('state');
 
-        let municipios = this.state.municipios.map((item) => {
+        let municipios = this.state.municipios.map((item, index) => {
             return (
-                <li style={{cursor: 'pointer'}} onClick={() => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf)}>
+                <li style={{cursor: 'pointer'}} onClick={() => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf)}  key={'mun'+index}>
                     {item.edmu_nm_municipio} - {item.eduf_sg_uf}
                 </li>
             );
@@ -181,7 +180,7 @@ class NextOsc extends React.Component {
                             let tx_nome_area_atuacao = item.tx_nome_area_atuacao== 'Associações patronais, profissionais e de produtores rurais' ? 'Associações' : item.tx_nome_area_atuacao;
                             //item.push(item.tx_nome_area_atuacao== 'Associações patronais, profissionais e de produtores rurais' ? 'Associações' : item.tx_nome_area_atuacao)
                             return (
-                                <li id={'menuArea'+index} className="item">
+                                <li id={'menuArea'+index} className="item" key={'menuArea'+index}>
                                     <a onClick={() => this.setAreaAtuacao(item.cd_area_atuacao, item.tx_nome_area_atuacao)}>
                                         <i className={this.state.icon[item.cd_area_atuacao]+" theme-"+index}/>
                                         <p>{tx_nome_area_atuacao}</p>
@@ -247,7 +246,7 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1);//remove do array o ratation utilizado.
                     return (
-                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}}>
+                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
                                 <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
                             </div>
@@ -262,7 +261,7 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1);//remove do array o ratation utilizado.
                     return (
-                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}}>
+                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext2'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
                                 <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
                             </div>
@@ -274,7 +273,7 @@ class NextOsc extends React.Component {
             nextOscTitulo = this.state.nextsOsc.map(function (item, index) {
                     return (
                         <li id={'txt' + index}>
-                            <a href={"detalhar/" + item.id_osc + "/" + item.tx_nome_osc} className="circle-item">
+                            <a href={"detalhar/" + item.id_osc + "/" + item.tx_nome_osc} className="circle-item" key={'listnext3'+index}>
                                 {index + 1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
                             </a>
                             <hr/>

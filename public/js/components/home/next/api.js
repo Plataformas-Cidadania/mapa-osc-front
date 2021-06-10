@@ -49,12 +49,11 @@ class NextOsc extends React.Component {
         this.setState({ loadingAreas: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/area_atuacao',
-            //url: 'http://172.22.0.3/api/menu/osc/area_atuacao',
+            //url: getBaseUrl+'menu/osc/area_atuacao',
+            url: getBaseUrl2 + 'area_atuacao',
             data: {},
             cache: false,
             success: function (data) {
-                //console.log(data);
                 this.setState({ data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false }, function () {
                     this.callMenu(); //carregar as oscs da primeira área de atuação.
                 });
@@ -84,7 +83,7 @@ class NextOsc extends React.Component {
             lon = lon.replace(".", ",");
             url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
         }
-        console.log(url);
+
         $.ajax({
             method: 'GET',
             //url: getBaseUrl+'osc/listaareaatuacao/'+index,
@@ -139,7 +138,7 @@ class NextOsc extends React.Component {
         });
     }
     setMunicipio(edmu_cd_municipio, edmu_nm_municipio, eduf_sg_uf) {
-        console.log(edmu_cd_municipio);
+        //console.log(edmu_cd_municipio);
         localStorage.setItem('cd_municipio', edmu_cd_municipio);
         localStorage.setItem('nome_municipio', edmu_nm_municipio + ' - ' + eduf_sg_uf);
         $("#modalLocalidade").modal('hide');
@@ -151,14 +150,14 @@ class NextOsc extends React.Component {
     render() {
 
         //console.log("1 ", this.state.nextsOsc.length);
-        console.log("1 ", nextOscTitle);
+        //console.log("1 ", nextOscTitle);
 
         let geoCity = localStorage.getItem('city') + ' - ' + localStorage.getItem('state');
 
-        let municipios = this.state.municipios.map(item => {
+        let municipios = this.state.municipios.map((item, index) => {
             return React.createElement(
                 "li",
-                { style: { cursor: 'pointer' }, onClick: () => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf) },
+                { style: { cursor: 'pointer' }, onClick: () => this.setMunicipio(item.edmu_cd_municipio, item.edmu_nm_municipio, item.eduf_sg_uf), key: 'mun' + index },
                 item.edmu_nm_municipio,
                 " - ",
                 item.eduf_sg_uf
@@ -177,7 +176,7 @@ class NextOsc extends React.Component {
                     //item.push(item.tx_nome_area_atuacao== 'Associações patronais, profissionais e de produtores rurais' ? 'Associações' : item.tx_nome_area_atuacao)
                     return React.createElement(
                         "li",
-                        { id: 'menuArea' + index, className: "item" },
+                        { id: 'menuArea' + index, className: "item", key: 'menuArea' + index },
                         React.createElement(
                             "a",
                             { onClick: () => this.setAreaAtuacao(item.cd_area_atuacao, item.tx_nome_area_atuacao) },
@@ -234,7 +233,7 @@ class NextOsc extends React.Component {
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
                         "div",
-                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
+                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext' + index },
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
@@ -251,7 +250,7 @@ class NextOsc extends React.Component {
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
                         "div",
-                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" } },
+                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext2' + index },
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
@@ -267,7 +266,7 @@ class NextOsc extends React.Component {
                     { id: 'txt' + index },
                     React.createElement(
                         "a",
-                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: "circle-item" },
+                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: "circle-item", key: 'listnext3' + index },
                         index + 1,
                         " ",
                         item.tx_nome_osc,
