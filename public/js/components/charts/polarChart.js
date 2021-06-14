@@ -5,12 +5,12 @@ class PolarChart extends React.Component {
 
         this.state = {
 
-            series: [14, 25, 21, 17, 15, 20],
+            series: props.data.serie,
             options: {
                 chart: {
                     type: 'polarArea'
                 },
-                labels: ['A', 'B', 'C', 'D', 'E', 'F'],
+                labels: props.data.labels,
                 legend: {
                     show: false
                 },
@@ -28,50 +28,9 @@ class PolarChart extends React.Component {
             }
 
         };
-
-        /*this.state = {
-            options: {
-                chart: {
-                    events: {
-                        click: function (chart, w, e) {
-                            console.log(chart, w, e)
-                        }
-                    },
-                    id: props.id
-                },
-                colors: props.colors,
-                plotOptions: {
-                    bar: {
-                        columnWidth: '45%',
-                        distributed: true
-                    }
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                xaxis: {
-                    //categories: ['BRT', 'Joe', 'Jake', 'Amber', 'Peter', 'Mary', 'David', 'Lily'],
-                    categories: props.data ? props.data.titles : [],
-                    labels: {
-                        style: {
-                            colors: props.colors,
-                            fontSize: '14px'
-                        }
-                    }
-                }
-            },
-            series: [{
-                //data: props.data ? props.data.values : [10, 20, 30, 80, 70, 60, 50, 40]
-                data: props.data ? props.data.values : []
-            }],
-        };*/
-
-        //this.update = this.update.bind(this);
     }
 
-    componentDidMount() {
-        //console.log('aaaa');
-    }
+    componentDidMount() {}
 
     render() {
         if (!this.state.series) {

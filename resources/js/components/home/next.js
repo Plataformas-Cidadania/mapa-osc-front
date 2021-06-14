@@ -304,7 +304,7 @@ class Indicator extends React.Component{
                         <a onClick={() => this.callMenu(index)}>{index + 1} - {item}</a>
                     </li>
                 )
-                console.log(this.callMenu());
+                //console.log(this.callMenu());
             }.bind(this));
         }
 
