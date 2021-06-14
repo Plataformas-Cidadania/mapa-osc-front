@@ -11,5 +11,9 @@
 {!! Form::text('url', null, ['class'=>"form-control width-grande <% validar(teaser.url) %>", 'ng-model'=>'teaser.url', 'init-model'=>'teaser.url', 'placeholder' => '']) !!}<br>
 
 
+{!! Form::label('posicao', 'Posição') !!}<br>
+{!! Form::text('posicao', null, ['class'=>"form-control width-grande <% validar(teaser.posicao) %>", 'ng-model'=>'teaser.posicao', 'init-model'=>'teaser.posicao', 'placeholder' => '']) !!}<br>
+
+
 
 

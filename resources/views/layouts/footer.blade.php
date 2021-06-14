@@ -119,7 +119,7 @@
         {{----}}
         <div>
             <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
-                <p>Top</p>
+                <p>Topo</p>
                 <i class="fas fa-angle-up"></i>
             </a>
         </div>
