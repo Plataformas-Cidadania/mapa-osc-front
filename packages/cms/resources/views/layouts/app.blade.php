@@ -117,16 +117,16 @@
                 </li>-->
 
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Analise <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Conteúdo <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
                         <li>
                             <a href="cms/midias"><i class="fa fa-cubes" aria-hidden="true"></i> Tipo mídias</a>
                         </li>
                         <li>
-                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Categorias</a>
+                            <a href="cms/categorais"><i class="fa fa-fw fa-file-text-o"></i> Categorias</a>
                         </li>
                         <li>
-                            <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Posts</a>
+                            <a href="cms/posts"><i class="fa fa-fw fa-file-text-o"></i> Posts</a>
                         </li>
                     </ul>
                 </li>
