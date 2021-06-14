@@ -118,7 +118,8 @@ class OscMap extends React.Component{
                 processingOsc: props.processingOsc,
                 processingOscIdhUfs: props.processingOscIdhUfs
             }, function(){
-                if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
+                //if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
+                if(this.state.dataTerritorio && this.state.dataOscUf && this.state.dataIdhUf){
                     this.populateMap();
                     //this.areaOscMap();
                     this.areaIdhMap();
@@ -502,7 +503,7 @@ class OscMap extends React.Component{
                     thisReact.removeAreaIdhGroup();
                     thisReact.addAreaOscGroup();
                     document.getElementById('ctrlAreaIdh').className = "control-data-types leaflet-control";
-                    console.log(container);
+                    //console.log(container);
                 }.bind(options, thisReact);
 
                 container.className = 'control-data-types leaflet-control';
@@ -720,7 +721,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({data: data, processingOscUfs: false});
                     _this.populateMap();
                 },
@@ -747,7 +748,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({dataIDHM: data.idh, processingOscUfs: false}, function(){
                         _this.areaIdhM();
                     });
@@ -772,7 +773,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({dataCalor: data, processingHeatMap: false});
                     _this.heatMap();
                 },
@@ -887,13 +888,15 @@ class OscMap extends React.Component{
     }
 
     gerarIntervalos(data){
+        console.log('gerarIntevalos', data);
 
         if(data===undefined){
             return null;
         }
 
 
-        let valores = data.territorio.map(function(item){
+        //let valores = data.territorio.map(function(item){
+        let valores = data.map(function(item){
             return item.nr_quantidade_osc_regiao;
         });
 
@@ -949,17 +952,21 @@ class OscMap extends React.Component{
 
         let data = null;
         data = this.state.data;
-        let territorio = this.state.data['territorio'];
-        //let territorio = this.state.dataTerritorio;
+        let dataTerritorio = this.state.dataTerritorio;
+        //let territorio = this.state.data['territorio'];
+        let territorio = dataTerritorio['territorios'];
 
-        let intervalos = this.gerarIntervalos(data);
+        //let intervalos = this.gerarIntervalos(data);
+        console.log('dataTerritorio', dataTerritorio);
+        let intervalos = this.gerarIntervalos(territorio);
 
         let pontos = []; //será usado para enquadrar o mapa (fitBounds)
 
         for(let i in territorio){
 
             let cor = this.defineCor(territorio[i].nr_quantidade_osc_regiao, intervalos);
-            let classMarker = _this.state.classMarker[data.tipo_territorio];
+            //let classMarker = _this.state.classMarker[data.tipo_territorio];
+            let classMarker = _this.state.classMarker[territorio.tipo_territorio];
             //let classMarker = "marker";
             //console.log(classMarker);
 
@@ -987,7 +994,7 @@ class OscMap extends React.Component{
                     codigoTerritorioSelecionado: [territorio[i].id_regiao], //203 - Brasil 13 - SE, etc...
                     //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
                 }, function(){
-                    console.log(data.tipo_territorio);
+                    console.log('marker click - tipo territorio', data.tipo_territorio);
                     _this.state.loadData[data.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
@@ -999,7 +1006,8 @@ class OscMap extends React.Component{
             pontos.push([territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao]);
         }
 
-        if(data.tipo_territorio > 2){
+        //if(data.tipo_territorio > 2){
+        if(dataTerritorio.tipo_territorio > 2){
             let bounds = new L.LatLngBounds(pontos);
             mapElements.map.fitBounds(bounds);
         }
@@ -1015,11 +1023,15 @@ class OscMap extends React.Component{
 
         let markers = L.markerClusterGroup({ spiderfyOnMaxZoom: true, showCoverageOnHover: true, zoomToBoundsOnClick: true });
 
-        let data = null;
-        data = this.state.data;
-        console.log(data['territorio']);
+        //let data = null;
+        //data = this.state.data;
+        //console.log(data['territorio']);
 
-        data['territorio'].find(function(item){
+        let territorios = this.state.dataTerritorio['territorios'];
+        console.log('populateMapCluster', territorios);
+
+        //data['territorio'].find(function(item){
+        territorios.find(function(item){
             //console.log(item);
 
             let icon = L.icon({
@@ -1092,9 +1104,9 @@ class OscMap extends React.Component{
                     areaIdh.resetStyle(this);
                 });
                 layer.on('click', function () {
-                    console.log('click area idh');
+                    //console.log('click area idh');
                     let cod_uf = layer.feature.properties.cod_uf;
-                    console.log(cod_uf);
+                    //console.log(cod_uf);
                     _this2.zoomToFeature();
                     _this2.loadDataIDHM(cod_uf);
                 });
@@ -1227,7 +1239,7 @@ class OscMap extends React.Component{
     }
 
     highlightFeature(e) {
-        console.log(e);
+        //console.log(e);
         let layer = e.target;
         layer.setStyle({
             weight: 2,
@@ -1377,14 +1389,14 @@ class OscMap extends React.Component{
         mapElements.map.removeLayer(this.state.mapElements.areaOscGroup);
         document.getElementById('oscLegend').style.display = 'none';
         document.getElementById('infoOsc').style.display = 'none';
-        console.log('removeAreaOscGrup');
+        //console.log('removeAreaOscGrup');
         this.setState({mapElements: mapElements});
     }
 
     addAreaOscGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaOscGroup);
-        console.log('addAreaOscGroup');
+        //console.log('addAreaOscGroup');
         document.getElementById('oscLegend').style.display = '';
         document.getElementById('infoOsc').style.display = '';
         this.setState({mapElements: mapElements});
@@ -1401,7 +1413,7 @@ class OscMap extends React.Component{
     addAreaIdhGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaIdhGroup);
-        console.log('addAreaIdhGroup');
+        //console.log('addAreaIdhGroup');
         document.getElementById('idhLegend').style.display = '';
         document.getElementById('infoIdh').style.display = '';
         this.setState({mapElements: mapElements});
@@ -1479,7 +1491,7 @@ class OscMap extends React.Component{
 
     render(){
 
-        console.log(this.state.mapElements.map);
+        //console.log(this.state.mapElements.map);
 
         let tableOsc = null;
 

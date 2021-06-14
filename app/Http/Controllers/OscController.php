@@ -148,6 +148,8 @@ class OscController extends Controller{
         }
         $list = $list2;
 
+        $list = [];
+
         /*List*/
 
         $data = [

@@ -55,8 +55,15 @@ class Page extends React.Component {
                 },
                 cache: false,
                 success: function(data) {
-                    //console.log(data);
-                    _this.setState({dataTerritorio: data, processingOsc: false});
+                    console.log('loadTerritorio', data);
+                    let territorio = [];
+                    territorio.tipo_territorio = _this.state.territory+1
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for(let i in data){
+                        territorio.territorios.push(data[i]);
+                    }
+                    _this.setState({dataTerritorio: territorio, processingOsc: false});
                 },
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
