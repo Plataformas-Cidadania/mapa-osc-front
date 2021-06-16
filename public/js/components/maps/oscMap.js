@@ -56,7 +56,8 @@ class OscMap extends React.Component {
                 2: function () {
                     //console.log('bbb');
                     //this.loadDataTotalPorTerritorio();
-                    this.loadDataUf();
+                    //this.loadDataUf();
+                    this.loadTerritorioUf();
                 }.bind(this),
                 3: function () {
                     //console.log('ccc');
@@ -710,6 +711,37 @@ class OscMap extends React.Component {
         });
     }
 
+    loadTerritorioUf() {
+        let _this = this;
+        this.setState({ processingOscUfs: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2 + "osc/geo/estados/regiao/" + this.state.codigoTerritorioSelecionado,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log('loadTerritorio', data);
+                    let territorio = [];
+                    //territorio.tipo_territorio = _this.state.territory+1
+                    territorio.tipo_territorio = 3;
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for (let i in data) {
+                        territorio.territorios.push(data[i]);
+                    }
+                    _this.setState({ dataTerritorio: territorio, processingOscUfs: false }, function () {
+                        _this.populateMap();
+                    });
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
+
+            });
+        });
+    }
+
     loadDataIDHM(uf) {
         let _this = this;
         let baseUrl = getBaseUrl;
@@ -930,10 +962,9 @@ class OscMap extends React.Component {
         let pontos = []; //será usado para enquadrar o mapa (fitBounds)
 
         for (let i in territorio) {
-
             let cor = this.defineCor(territorio[i].nr_quantidade_osc_regiao, intervalos);
             //let classMarker = _this.state.classMarker[data.tipo_territorio];
-            let classMarker = _this.state.classMarker[territorio.tipo_territorio];
+            let classMarker = _this.state.classMarker[dataTerritorio.tipo_territorio];
             //let classMarker = "marker";
             //console.log(classMarker);
 
@@ -959,8 +990,8 @@ class OscMap extends React.Component {
                     codigoTerritorioSelecionado: [territorio[i].id_regiao] //203 - Brasil 13 - SE, etc...
                     //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
                 }, function () {
-                    console.log('marker click - tipo territorio', data.tipo_territorio);
-                    _this.state.loadData[data.tipo_territorio]();
+                    console.log('marker click - tipo territorio', dataTerritorio.tipo_territorio);
+                    _this.state.loadData[dataTerritorio.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
             });
