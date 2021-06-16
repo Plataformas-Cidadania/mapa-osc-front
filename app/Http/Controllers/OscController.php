@@ -78,8 +78,8 @@ class OscController extends Controller{
             //1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
             //1 => $api."osc/geo/regioes",
             1 => "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/regioes",
-            2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
-            //2 => $api."osc/ipeadata/uff/".$territory_id,
+            //2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+            2 => $api."osc/geo/estados/regiao/".$territory_id,
             3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
         ];
 
@@ -179,13 +179,13 @@ class OscController extends Controller{
     }
 
     public function getOscAllUfs(){
-        //$pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
+        $pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
         $api = env('APP_API_ROUTE');
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
         //$pgOsc = $api."osc/geo/estado";
-        $pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
+        //$pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
         //Log::info($pgOsc);
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
         $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
