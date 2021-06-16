@@ -77,6 +77,7 @@
                                 @foreach($mnDados as $mn)
                                     <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
                                 @endforeach
+                                    <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
                                     <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>Análises</a></li>
                             </ul>
                         </div>
