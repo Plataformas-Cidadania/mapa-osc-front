@@ -36,7 +36,7 @@
             <br>
         </div>
         <div class="col-md-4 text-center">
-            <p>Índice de Preenchimento</p>
+            <p>Índice de preenchimento</p>
             <div id="preenchimento"></div>
             <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999;"><a href="/metodologia">Metodologia</a></p>
         </div>

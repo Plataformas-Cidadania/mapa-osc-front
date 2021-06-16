@@ -11,8 +11,8 @@ class Data extends React.Component {
             button: true,
             loading: false,
             requireds: {
-                tx_nome_usuairo: true,
                 tx_email_usuario: true,
+                tx_nome_usuario: true,
                 nr_cpf_usuario: true
             },
             showMsg: false,
@@ -188,7 +188,7 @@ class Data extends React.Component {
                 React.createElement(
                     'p',
                     null,
-                    'Mantenha sempre seus dados atualizados, fica mais f\xE1cil para n\xF3s conversarmos!'
+                    'Procure manter seu e-mail sempre atualizado. Assim, voc\xEA garante o recebimento dos comunicados, avisos e demais informa\xE7\xF5es por parte da equipe do Mapa das OSC.'
                 ),
                 React.createElement('hr', null),
                 React.createElement('br', null)
