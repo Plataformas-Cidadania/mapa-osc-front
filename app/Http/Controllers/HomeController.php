@@ -19,36 +19,10 @@ class HomeController extends Controller
         $midiasMenu = DB::table('midias')->orderBy('titulo')->get();
         $midias = \App\Post::orderBy('id', 'desc')->take(3)->get();
 
-
-        $osc_recentes = DB::connection('map')
-            ->table('portal.vw_log_alteracao')
-            ->select('id_osc', 'tx_nome_osc')
-            ->orderBy('dt_alteracao', 'desc')
-            ->take(9)
-            ->get();
-
-        $area_atuacao = [
-            1 => "Habitação",
-            2 => "Saúde",
-            3 => "Cultura e recreação",
-            4 => "Educação e pesquisa",
-            5 => "Assistência social",
-            6 => "Religião",
-            7 => "Associações patronais",
-            8 => "Meio ambiente",
-            9 => "Desenvolvimento",
-            10 => "Outros",
-            11 => "Outras atividades",
-        ];
-
-        //return $area_atuacao;
-
         if(!empty($text)){
             return view('home', [
                 'webdoors' => $webdoors,
                 'teasers' => $teasers,
-                'osc_recentes' => $osc_recentes,
-                'areas_atuacao' => $area_atuacao,
                 'text' => $text,
                 'midias' => $midias,
                 'midiasMenu' => $midiasMenu,

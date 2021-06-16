@@ -2,7 +2,7 @@ class Preenchimento extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: null
         };
         this.load = this.load.bind(this);
     }
@@ -16,13 +16,26 @@ class Preenchimento extends React.Component {
 
         $.ajax({
             method: 'GET',
-            //url: 'osc/barratransparencia/565031',
-            url: getBaseUrl + 'osc/barratransparencia/565031',
+            url: getBaseUrl2 + 'osc/indice_preenchimento/' + this.props.id_osc,
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
-                _this.setState({ data: data });
+
+                let transparencia = {
+                    serie: [],
+                    labels: ['Áreas e Subáreas de Atuação da OSC', 'Dados Gerais', 'Descrição da OSC', 'Espaços de Participação Social', 'Fontes de recursos anuais da OSC', 'Projetos, atividades e/ou programas', 'Relações de Trabalho e Governança', 'Titulações e Certificações']
+                };
+
+                transparencia.serie.push(data[0].transparencia_area_atuacao);
+                transparencia.serie.push(data[0].transparencia_dados_gerais);
+                transparencia.serie.push(data[0].transparencia_descricao);
+                transparencia.serie.push(data[0].transparencia_espacos_participacao_social);
+                transparencia.serie.push(data[0].transparencia_fontes_recursos);
+                transparencia.serie.push(data[0].transparencia_projetos_atividades_programas);
+                transparencia.serie.push(data[0].transparencia_relacoes_trabalho_governanca);
+                transparencia.serie.push(data[0].transparencia_titulos_certificacoes);
+
+                _this.setState({ data: transparencia });
             },
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -32,15 +45,19 @@ class Preenchimento extends React.Component {
     }
 
     render() {
+        let polarChart = null;
+        if (this.state.data) {
+            polarChart = React.createElement(PolarChart, {
+                polarChart: 'polarChart',
+                data: this.state.data
+            });
+        }
         return React.createElement(
             'div',
             null,
-            React.createElement(PolarChart, {
-                polarChart: 'polarChart',
-                data: this.state.data
-            })
+            polarChart
         );
     }
 }
 
-ReactDOM.render(React.createElement(Preenchimento, null), document.getElementById('preenchimento'));
+ReactDOM.render(React.createElement(Preenchimento, { id_osc: id_osc }), document.getElementById('preenchimento'));

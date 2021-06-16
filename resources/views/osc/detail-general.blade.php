@@ -1,3 +1,6 @@
+<script>
+    id_osc = {{$dados_gerais->id_osc}};
+</script>
 <div id="dados-gerais" class="row mn-accordion" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
     <div class="col-md-12">
         <br><br>
@@ -18,14 +21,12 @@
             </div>
             <br>
             <a href="metodologia">
-                <img src="img/selos/ouro.png" alt="" width="50">
+                <div id="selo"></div>
             </a>
 
             <a href="https://gife.org.br/indicadores-gife-de-governanca/autoavaliacao/" target="_blank">
                 <img src="img/gife.png" alt="" width="80" style="margin-left: 20px;">
             </a>
-
-
         </div>
         <div class="col-md-5">
             <p>
@@ -35,7 +36,7 @@
             <br>
         </div>
         <div class="col-md-4 text-center">
-            <p>Índice de Preenchimento</p>
+            <p>Índice de preenchimento</p>
             <div id="preenchimento"></div>
             <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999;"><a href="/metodologia">Metodologia</a></p>
         </div>

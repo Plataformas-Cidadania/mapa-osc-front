@@ -107,6 +107,7 @@
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
     <script src="js/components/charts/polarChart.js"></script>
     <script src="js/components/osc/preenchimento.js"></script>
+    <script src="js/components/osc/selo.js"></script>
 @endif
 @if($rota=='/')
 <script src="js/home.js" ></script>

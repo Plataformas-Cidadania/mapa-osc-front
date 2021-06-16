@@ -17,7 +17,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
 
             $scope.processandoSalvar = true;
             //console.log($scope.setting);
-            $http.post("/cms/alterar-setting/"+$scope.id, {'setting': $scope.setting, 'removerImagem': $scope.removerImagem}).success(function (data){
+            $http.post("cms/alterar-setting/"+$scope.id, {'setting': $scope.setting, 'removerImagem': $scope.removerImagem}).success(function (data){
                 //console.log(data);
                 $scope.processandoSalvar = false;
                 $scope.mensagemSalvar = data;
@@ -31,7 +31,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
         }else{
 
             file.upload = Upload.upload({
-                url: '/cms/alterar-setting/'+$scope.id,
+                url: 'cms/alterar-setting/'+$scope.id,
                 data: {setting: $scope.setting, file: file},
             });
 
@@ -42,7 +42,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
                 $scope.picFile = null;//limpa o form
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = '/imagens/settings/'+response.data;
+                $scope.imagemBD = 'imagens/settings/'+response.data;
                 console.log($scope.imagemDB);
             }, function (response) {
                 if (response.status > 0){
@@ -64,7 +64,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
 
     $scope.carregaImagem  = function(img) {
         if(img!=''){
-            $scope.imagemBD = '/imagens/settings/xs-'+img;
+            $scope.imagemBD = 'imagens/settings/xs-'+img;
             //console.log($scope.imagemBD);
         }
     };
@@ -75,9 +75,9 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
         return "";
     };
     /////////////////////////////////
-    
-    
 
-    
+
+
+
 
 }]);

@@ -378,7 +378,7 @@ class Indicator extends React.Component {
                         item
                     )
                 );
-                console.log(this.callMenu());
+                //console.log(this.callMenu());
             }.bind(this));
         }
 

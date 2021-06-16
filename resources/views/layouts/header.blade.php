@@ -1,4 +1,4 @@
-<?php $midias = DB::table('midias')->orderBy('titulo')->get();?>
+
 <div class="progress">
     <div  id="progress" class="progress-bar bg-success" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -143,21 +143,27 @@
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
                                         <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
+                                        <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>Análises</a></li>
                                     </ul>
                                 </li>
-                                <li role="presentation"><a href="#" accesskey="a" @if($rota=='quem') class="corrente" @endif>Mídias</a>
+                                <li role="presentation"><a accesskey="a" @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($midias as $midia)
                                             <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
                                         @endforeach
-<!--                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
-                                        <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
-                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>-->
+                                        <li role="presentation"><a href="editais" accesskey="a" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
                                         <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>
 
-                                <li role="presentation"><a href="contato" accesskey="c" @if($rota=='contato') class="corrente" @endif>Contato</a></li>
+                                <li role="presentation"><a accesskey="c" @if($rota=='contato') class="corrente" @endif>Ajuda</a>
+                                    <ul class="noJS menu-desk-sub">
+                                        @foreach($mnAjuda as $ajuda)
+                                            <li role="presentation"><a href="{{$ajuda->slug}}">{{$ajuda->titulo}}</a></li>
+                                        @endforeach
+                                        <li role="presentation"><a href="contato" accesskey="a" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
+                                    </ul>
+                                </li>
                             </ul>
 
                             <div id="menu-usuario"></div>

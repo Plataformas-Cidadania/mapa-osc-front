@@ -11,8 +11,8 @@ class Data extends React.Component{
             button: true,
             loading: false,
             requireds: {
-                tx_nome_usuairo: true,
                 tx_email_usuario: true,
+                tx_nome_usuario: true,
                 nr_cpf_usuario: true,
             },
             showMsg: false,
@@ -182,7 +182,7 @@ class Data extends React.Component{
             <div>
                 <div className="title-user-area">
                     <h3><i className="fa fa-user" aria-hidden="true"/> Meus Dados</h3>
-                    <p>Mantenha sempre seus dados atualizados, fica mais fácil para nós conversarmos!</p>
+                    <p>Procure manter seu e-mail sempre atualizado. Assim, você garante o recebimento dos comunicados, avisos e demais informações por parte da equipe do Mapa das OSC.</p>
                     <hr/>
                     <br/>
                 </div>

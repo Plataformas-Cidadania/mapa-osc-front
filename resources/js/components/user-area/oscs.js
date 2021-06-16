@@ -143,20 +143,20 @@ class Oscs extends React.Component{
                             {item.tx_nome_osc}
                         </td>
                         <td width="500">
-                            <div className="btn btn-primary">
+                            <div className="btn btn-outline-primary">
                                 <a href={"selo-osc-user/"+item.id_osc} target="_blank">
-                                    {/*<i className="fas fa-certificate"/>*/} Selo
+                                   {/* <i className="fas fa-tag"/>*/} Selo
                                 </a>
                             </div>
                             &nbsp;
-                            <div className="btn btn-primary">
+                            <div className="btn btn-outline-primary">
                                 <a href={"declaracao/"+item.id_osc} target="_blank">
                                     <i className="fas fa-certificate"/> Declaração
                                 </a>
                             </div>
                             &nbsp;
-                            <div className="btn btn-primary">
-                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc}>
+                            <div className="btn btn-outline-primary">
+                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc} target="_blank">
                                     <i className="fas fa-binoculars"/> Visualizar
                                 </a>
                             </div>
@@ -222,12 +222,19 @@ class Oscs extends React.Component{
 
         return(
             <div>
+                <div className="title-user-area">
+                    <h3><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</h3>
+                    <p>Nessa área você pode gerenciar sua OSC ou varias</p>
+                    <a className="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" style={{marginTop: '-80px'}}><i className="fa fa-plus"/> Adicionar OSC</a>
+                    <hr/>
+                    <br/>
+                </div>
                 <div className="row">
                     <div className="col-md-12">
                         <table className="table">
                             <thead className="thead-light">
                             <tr>
-                                <th scope="col">Id</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Nome da OSC</th>
                                 <th scope="col" className="text-center">Ações</th>
                             </tr>
@@ -238,27 +245,51 @@ class Oscs extends React.Component{
                         </table>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <input type="text"
-                               className="form-control float-left mx-sm-3"
-                               placeholder="Digite o CNPJ e clique na OSC para adicionar."
-                               name="osc"
-                               autoComplete="off"
-                               onClick={this.clickSearch}
-                               onChange={this.handleSearch}
-                               defaultValue={this.state.search}
-                        />
-                        <br/><br/>
-                        <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
-                            <div className="col-md-12 text-center">
-                                <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
+
+
+
+                {/*Modal*/}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Adicione uma OSC</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            {listSearch}
-                        </ul>
+                            <div class="modal-body">
+                                <div className="container">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <input type="text"
+                                               className="form-control float-left "
+                                               placeholder="Digite o CNPJ e clique na OSC para adicionar."
+                                               name="osc"
+                                               autoComplete="off"
+                                               onClick={this.clickSearch}
+                                               onChange={this.handleSearch}
+                                               defaultValue={this.state.search}
+                                        />
+                                        <br/><br/>
+                                        <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
+                                            <div className="col-md-12 text-center">
+                                                <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
+                                            </div>
+                                            {listSearch}
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         );
     }
 }

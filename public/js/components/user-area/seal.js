@@ -50,7 +50,7 @@ class Seal extends React.Component {
             React.createElement(
                 'p',
                 null,
-                'Nessa \xE1rea voc\xEA encontrara selos que identificam que sua institui\xE7\xE3o se encontra em nosso banco de dados.'
+                'Nessa \xE1rea voc\xEA encontrara selo que identificam que sua institui\xE7\xE3o se encontra em nosso banco de dados, copie o script e cole em seu site!'
             ),
             React.createElement('br', null),
             React.createElement(

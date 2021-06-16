@@ -99,7 +99,11 @@
     </div>
 
     {{--Chapa chart react--}}
-    <div id="home"></div>
+    <div style="background-color: #F9F9F9;">
+        <br><br><br>
+        <div id="home"></div>
+    </div>
+
 
 
     {{--<div class="space">&nbsp;</div>--}}
