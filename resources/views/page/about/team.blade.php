@@ -59,7 +59,7 @@
                     @foreach($teams as $team)
                     <div class="col-md-4">
                         <div class="list-user">
-                            @if($coordinator->imagem=="")
+                            @if($team->imagem=="")
                                 <img src="img/sem-imagem.png" alt="" class="rounded-circle float-left" width="50" height="50">
                             @else
                                 <img src="imagens/integrantes/xs-{{$team->imagem}}" alt="" class="rounded-circle float-left" width="50" height="50">
