@@ -86,8 +86,9 @@
                         <div>
                             <h3>Biblioteca</h3>
                             <ul>
-                                <li><a href="posts/2/publicações">Publicações</a></li>
-                                <li><a href="posts/3/noticias">Notícias</a></li>
+                                @foreach($midias as $midia)
+                                    <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
+                                @endforeach
                                 <li><a href="editais">Editais</a></li>
                                 <li><a href="videos">Vídeos</a></li>
                             </ul>

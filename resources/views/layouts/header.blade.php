@@ -1,5 +1,4 @@
-<?php $midias = DB::table('midias')->where('status', 1)->where('id','!=', 1)->orderBy('titulo')->get();?>
-<?php $ajudas = DB::table('modulos')->where('tipo_id', 3)->orderBy('titulo')->get();?>
+
 <div class="progress">
     <div  id="progress" class="progress-bar bg-success" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -152,9 +151,6 @@
                                         @foreach($midias as $midia)
                                             <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
                                         @endforeach
-<!--                                        <li role="presentation"><a href="posts/publicacoes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Publicações</a></li>
-                                        <li role="presentation"><a href="posts/analizes" accesskey="q" @if($rota=='quem') class="corrente" @endif>Análises</a></li>
-                                        <li role="presentation"><a href="posts/noticias" accesskey="q" @if($rota=='noticias') class="corrente" @endif>Notícias</a></li>-->
                                         <li role="presentation"><a href="editais" accesskey="a" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
                                         <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
@@ -162,7 +158,7 @@
 
                                 <li role="presentation"><a accesskey="c" @if($rota=='contato') class="corrente" @endif>Ajuda</a>
                                     <ul class="noJS menu-desk-sub">
-                                        @foreach($ajudas as $ajuda)
+                                        @foreach($mnAjuda as $ajuda)
                                             <li role="presentation"><a href="{{$ajuda->slug}}">{{$ajuda->titulo}}</a></li>
                                         @endforeach
                                         <li role="presentation"><a href="contato" accesskey="a" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
