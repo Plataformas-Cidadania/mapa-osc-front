@@ -38,7 +38,7 @@
             <div class="col-md-12">
                 @foreach($coordinators as $coordinator)
                     <div class="list-user">
-                        <img src="images/integrantes/xs-{{$coordinator->imagem}}" alt="" class="rounded-circle float-left" width="50">
+                        <img src="imagens/integrantes/xs-{{$coordinator->imagem}}/integrantes/xs-{{$coordinator->imagem}}" alt="" class="rounded-circle float-left" width="50">
                         <h4>{{$coordinator->titulo}}</h4>
                         <p>{{$coordinator->descricao}}sss</p>
                     </div>
@@ -55,7 +55,7 @@
                     @foreach($teams as $team)
                     <div class="col-md-4">
                         <div class="list-user">
-                            <img src="images/integrantes/xs-{{$coordinator->imagem}}" alt="" class="rounded-circle float-left" width="50">
+                            <img src="imagens/integrantes/xs-{{$coordinator->imagem}}" alt="" class="rounded-circle float-left" width="50">
                             <h4>{{$team->titulo}}</h4>
                             <p>{{$team->funcao}}&nbsp; @if($team->instituicao!="") - <strong>&nbsp;{{$team->instituicao}}</strong> @endif</p>
                         </div>
