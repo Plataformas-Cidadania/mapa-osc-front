@@ -17,7 +17,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
 
             $scope.processandoSalvar = true;
             //console.log($scope.setting);
-            $http.post("/cms/alterar-setting/"+$scope.id, {'setting': $scope.setting, 'removerImagem': $scope.removerImagem}).success(function (data){
+            $http.post("cms/alterar-setting/"+$scope.id, {'setting': $scope.setting, 'removerImagem': $scope.removerImagem}).success(function (data){
                 //console.log(data);
                 $scope.processandoSalvar = false;
                 $scope.mensagemSalvar = data;
@@ -31,7 +31,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
         }else{
 
             file.upload = Upload.upload({
-                url: '/cms/alterar-setting/'+$scope.id,
+                url: 'cms/alterar-setting/'+$scope.id,
                 data: {setting: $scope.setting, file: file},
             });
 
@@ -75,9 +75,9 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
         return "";
     };
     /////////////////////////////////
-    
-    
 
-    
+
+
+
 
 }]);
