@@ -40,7 +40,7 @@
                     <div class="list-user">
                         <img src="imagens/integrantes/xs-{{$coordinator->imagem}}" alt="" class="rounded-circle float-left" width="50">
                         <h4>{{$coordinator->titulo}}</h4>
-                        <p>{{$coordinator->descricao}}sss</p>
+                        <p>{{$coordinator->descricao}}</p>
                     </div>
                 @endforeach
             </div>
