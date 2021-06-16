@@ -62,35 +62,33 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div>
-                            <h3>Mapa das OSCs</h3>
+                            <h3>O Portal</h3>
                             <ul>
-                                <li><a href="filtros-series/">Metodologia</a></li>
-                                <li><a href="filtros-series/">Termos de Uso</a></li>
-                                <li><a href="filtros-series/">Cadastro de Representante</a></li>
-                                <li><a href="filtros-series/">Contato e Sugestões</a></li>
+                                @foreach($mnPortal as $mn)
+                                <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div>
-                            <h3>Ajuda</h3>
+                            <h3>Dados</h3>
                             <ul>
-                                <li><a href="contato">Glossário</a></li>
-                                <li><a href="noticias">Perguntas Frequentes</a></li>
-                                <li><a href="artigos/0/todos">Tutoriais</a></li>
-                                <li><a href="videos">Mapa do Site</a></li>
+                                @foreach($mnDados as $mn)
+                                    <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div>
-                            <h3>Ipea</h3>
+                            <h3>Biblioteca</h3>
                             <ul>
-                                <li><a href="contato">Portal dos Convênios</a></li>
-                                <li><a href="contato">Atlas da Vulnerabilidade Social</a></li>
-                                <li><a href="contato">Extrator de Dados do Ipea</a></li>
-                                <li><a href="contato">Participação em Foco</a></li>
+                                <li><a href="posts/1/publicações">Publicações</a></li>
+                                <li><a href="posts/1/newsletter">Newsletter</a></li>
+                                <li><a href="posts/1/editais">Editais</a></li>
+                                <li><a href="posts/1/videos">Vídeos</a></li>
                             </ul>
                         </div>
                     </div>
@@ -98,12 +96,11 @@
                     @if($setting->twitter!="" || $setting->youtube!="" || $setting->facebook!="" || $setting->pinterest!="")
                         <div class="col-md-3">
                             <div>
-                                <h3>Redes</h3>
+                                <h3>Ajuda</h3>
                                 <ul>
-                                    @if($setting->twitter!="")<li><a href="{{$setting->twitter}}" target="_blank">Twitter</a></li>@endif
-                                    @if($setting->youtube!="")<li><a href="{{$setting->youtube}}" target="_blank">YouTube</a></li>@endif
-                                    @if($setting->facebook!="")<li><a href="{{$setting->facebook}}" target="_blank">Facebook</a></li>@endif
-                                    @if($setting->pinterest!="")<li><a href="{{$setting->pinterest}}" target="_blank">Pinterest</a></li>@endif
+                                    @foreach($mnAjuda as $mn)
+                                        <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -116,7 +113,7 @@
         <br>
         <br>
         <br>
-        {{----}}
+
         <div>
             <a href="#acessibilidade" class="link-to-menu bg-pri btn-circle rounded-circle">
                 <p>Topo</p>
@@ -125,49 +122,6 @@
         </div>
     </div>
 
-
-
-
-    <style>
-        .rp-menu{
-            padding: 30px 0;
-        }
-        .rp-menu .col-md-3{
-            border-left: dotted 1px #999;
-        }
-        .rp-menu ul{
-            margin: 0;
-            padding: 0;
-        }
-        .rp-menu ul{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .rp-menu h3{
-            font-weight: bold;
-        }
-        .btn-circle{
-            float: right;
-            width: 60px;
-            height: 60px;
-            color: #FFFFFF!important;
-            text-align: center;
-            margin: 20px;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-        .btn-circle:hover{
-            transform: scale(1.1);
-            /*border: solid 5px rgba(0,0,0, 0.1);*/
-            box-shadow: 0 0 3px #000000;
-        }
-        .btn-circle p{
-            margin: 10px 0 -5px 0;
-            padding: 0;
-        }
-    </style>
 </footer>
 
 

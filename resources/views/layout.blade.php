@@ -5,6 +5,10 @@
     $base_href = config('app.url');
     #$protocol = env('APP_PROTOCOL', 'http://');
     $barra = "";
+
+    $mnPortal = DB::table('modulos')->where('tipo_id', 1)->orderBy('titulo')->get();
+    $mnDados = DB::table('modulos')->where('tipo_id', 5)->orderBy('titulo')->get();
+    $mnAjuda = DB::table('modulos')->where('tipo_id', 3)->orderBy('titulo')->get();
 ?>
 
 <!doctype html>
