@@ -144,6 +144,7 @@
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
                                         <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
+                                        <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>Análises</a></li>
                                     </ul>
                                 </li>
                                 <li role="presentation"><a href="#" accesskey="a" @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
