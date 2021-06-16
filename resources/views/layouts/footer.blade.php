@@ -77,6 +77,7 @@
                                 @foreach($mnDados as $mn)
                                     <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
                                 @endforeach
+                                    <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>Análises</a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,10 +86,10 @@
                         <div>
                             <h3>Biblioteca</h3>
                             <ul>
-                                <li><a href="posts/1/publicações">Publicações</a></li>
-                                <li><a href="posts/1/newsletter">Newsletter</a></li>
-                                <li><a href="posts/1/editais">Editais</a></li>
-                                <li><a href="posts/1/videos">Vídeos</a></li>
+                                <li><a href="posts/2/publicações">Publicações</a></li>
+                                <li><a href="posts/3/noticias">Notícias</a></li>
+                                <li><a href="editais">Editais</a></li>
+                                <li><a href="videos">Vídeos</a></li>
                             </ul>
                         </div>
                     </div>
@@ -101,6 +102,7 @@
                                     @foreach($mnAjuda as $mn)
                                         <li><a href="{{$mn->slug}}">{{$mn->titulo}}</a></li>
                                     @endforeach
+                                        <li role="presentation"><a href="contato" accesskey="a" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
                                 </ul>
                             </div>
                         </div>
