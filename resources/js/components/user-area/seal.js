@@ -39,7 +39,7 @@ class Seal extends React.Component{
                     <h3><i className="fa fa-home" aria-hidden="true"/> Selo para seu site</h3>
                     <hr/>
                 </div>
-                <p>Nessa área você encontrara selos que identificam que sua instituição se encontra em nosso banco de dados.</p>
+                <p>Nessa área você encontrara selo que identificam que sua instituição se encontra em nosso banco de dados, copie o script e cole em seu site!</p>
                 <br/>
 
                 <div className="row">

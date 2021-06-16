@@ -153,7 +153,7 @@ class Oscs extends React.Component {
                     { width: '500' },
                     React.createElement(
                         'div',
-                        { className: 'btn btn-primary' },
+                        { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
                             { href: "selo-osc-user/" + item.id_osc, target: '_blank' },
@@ -163,7 +163,7 @@ class Oscs extends React.Component {
                     '\xA0',
                     React.createElement(
                         'div',
-                        { className: 'btn btn-primary' },
+                        { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
                             { href: "declaracao/" + item.id_osc, target: '_blank' },
@@ -174,10 +174,10 @@ class Oscs extends React.Component {
                     '\xA0',
                     React.createElement(
                         'div',
-                        { className: 'btn btn-primary' },
+                        { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
+                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, target: '_blank' },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
                             ' Visualizar'
                         )
@@ -267,6 +267,29 @@ class Oscs extends React.Component {
             null,
             React.createElement(
                 'div',
+                { className: 'title-user-area' },
+                React.createElement(
+                    'h3',
+                    null,
+                    React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                    ' Minhas OSCs'
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    'Nessa \xE1rea voc\xEA pode gerenciar sua OSC ou varias'
+                ),
+                React.createElement(
+                    'a',
+                    { className: 'btn btn-primary float-right', 'data-toggle': 'modal', 'data-target': '#exampleModal', style: { marginTop: '-80px' } },
+                    React.createElement('i', { className: 'fa fa-plus' }),
+                    ' Adicionar OSC'
+                ),
+                React.createElement('hr', null),
+                React.createElement('br', null)
+            ),
+            React.createElement(
+                'div',
                 { className: 'row' },
                 React.createElement(
                     'div',
@@ -283,7 +306,7 @@ class Oscs extends React.Component {
                                 React.createElement(
                                     'th',
                                     { scope: 'col' },
-                                    'Id'
+                                    'ID'
                                 ),
                                 React.createElement(
                                     'th',
@@ -307,30 +330,68 @@ class Oscs extends React.Component {
             ),
             React.createElement(
                 'div',
-                { className: 'row' },
+                { 'class': 'modal fade', id: 'exampleModal', tabindex: '-1', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
                 React.createElement(
                     'div',
-                    { className: 'col-md-12' },
-                    React.createElement('input', { type: 'text',
-                        className: 'form-control float-left mx-sm-3',
-                        placeholder: 'Digite o CNPJ e clique na OSC para adicionar.',
-                        name: 'osc',
-                        autoComplete: 'off',
-                        onClick: this.clickSearch,
-                        onChange: this.handleSearch,
-                        defaultValue: this.state.search
-                    }),
-                    React.createElement('br', null),
-                    React.createElement('br', null),
+                    { 'class': 'modal-dialog' },
                     React.createElement(
-                        'ul',
-                        { className: 'box-search-itens', style: { display: this.state.search ? '' : 'none' } },
+                        'div',
+                        { 'class': 'modal-content' },
                         React.createElement(
                             'div',
-                            { className: 'col-md-12 text-center' },
-                            React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingSearch ? '' : 'none' } })
+                            { 'class': 'modal-header' },
+                            React.createElement(
+                                'h5',
+                                { 'class': 'modal-title', id: 'exampleModalLabel' },
+                                'Adicione uma OSC'
+                            ),
+                            React.createElement(
+                                'button',
+                                { type: 'button', 'class': 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                React.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
                         ),
-                        listSearch
+                        React.createElement(
+                            'div',
+                            { 'class': 'modal-body' },
+                            React.createElement(
+                                'div',
+                                { className: 'container' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement('input', { type: 'text',
+                                            className: 'form-control float-left ',
+                                            placeholder: 'Digite o CNPJ e clique na OSC para adicionar.',
+                                            name: 'osc',
+                                            autoComplete: 'off',
+                                            onClick: this.clickSearch,
+                                            onChange: this.handleSearch,
+                                            defaultValue: this.state.search
+                                        }),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null),
+                                        React.createElement(
+                                            'ul',
+                                            { className: 'box-search-itens', style: { display: this.state.search ? '' : 'none' } },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-12 text-center' },
+                                                React.createElement('img', { src: '/img/load.gif', alt: '', width: '60', className: 'login-img', style: { display: this.state.loadingSearch ? '' : 'none' } })
+                                            ),
+                                            listSearch
+                                        )
+                                    )
+                                )
+                            )
+                        )
                     )
                 )
             )

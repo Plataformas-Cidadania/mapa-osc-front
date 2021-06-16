@@ -15,7 +15,7 @@
                             <br>
                             <i class="far fa-check-circle float-right fa-5x text-light" style="margin-top: -5px"></i>
                             <h1 class="text-light" data-message="" tabindex="0">{{$dados_gerais->tx_razao_social_osc}}</h1>
-                            <h5 class="text-light">{{formatBr($hoje = date('d/m/Y'), 'ext')}}</h5>
+                            <h5 class="text-light">{{$hoje = date('d/m/Y')}}</h5>
                             <br>
                         </header>
                     </div>
