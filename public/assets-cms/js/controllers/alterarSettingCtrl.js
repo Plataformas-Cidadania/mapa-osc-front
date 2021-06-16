@@ -42,7 +42,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
                 $scope.picFile = null;//limpa o form
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = '/imagens/settings/'+response.data;
+                $scope.imagemBD = 'imagens/settings/'+response.data;
                 console.log($scope.imagemDB);
             }, function (response) {
                 if (response.status > 0){
@@ -64,7 +64,7 @@ cmsApp.controller('alterarSettingCtrl', ['$scope', '$http', 'Upload', function($
 
     $scope.carregaImagem  = function(img) {
         if(img!=''){
-            $scope.imagemBD = '/imagens/settings/xs-'+img;
+            $scope.imagemBD = 'imagens/settings/xs-'+img;
             //console.log($scope.imagemBD);
         }
     };
