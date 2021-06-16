@@ -225,6 +225,8 @@ class NextOsc extends React.Component {
 
         let rotations = [[0, 0], [30, -30], [60, -60], [90, -90], [120, -120], [150, -150], [180, -180], [210, -210], [240, -240], [270, -270], [300, -300], [330, -330]];
 
+        //console.log('--->', this.state.nextsOsc.length);
+
         if (this.state.nextsOsc) {
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
                 if (index <= 2) {
@@ -366,6 +368,24 @@ class NextOsc extends React.Component {
                 )
             ),
             React.createElement("br", null),
+            React.createElement(
+                "div",
+                { className: "col-md-12" },
+                React.createElement(
+                    "div",
+                    { className: "title-style" },
+                    React.createElement(
+                        "h2",
+                        null,
+                        this.state.nextsOsc.length,
+                        " OSCs de ",
+                        this.state.txtAreaAtuacao,
+                        " pr\xF3ximas da sua localidade"
+                    ),
+                    React.createElement("div", { className: "line line-fix block", "data-move-x": "980px" }),
+                    React.createElement("hr", null)
+                )
+            ),
             React.createElement(
                 "div",
                 { className: "text-center" },

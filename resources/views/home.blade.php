@@ -66,33 +66,17 @@
     <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+<!--            <div class="col-md-12">
                 <div class="title-style">
                     <h2>5 OSCs mais próximas de você, por área de atuação</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
-            </div>
+            </div>-->
             <div class="col-md-12">
                 {{--OSCs proximas--}}
                 <div id="nextOsc"></div>
             </div>
-
-            {{--<div class="custom0 owl-carousel owl-theme">
-                @foreach($osc_recentes as $item)
-                    <a href="" target="_blank">
-                        <div class="item">
-                            <picture>
-                                <source data-src="/imagens/items/lg-" media="(max-width: 468px)">
-                                <source data-src="/imagens/items/md-" media="(max-width: 768px)">
-                                <source data-src="/imagens/items/md-" class="img-responsive">
-                                <img src="/img/pre-img.gif" data-src="/imagens/items/lg-" alt="Imagem sobre " title="Imagem sobre " width="100%" class="cliente-list-img-hover lazyload">
-                            </picture>
-                        </div>
-                    </a>
-                @endforeach
-            </div>--}}
-
 
 
         </div>

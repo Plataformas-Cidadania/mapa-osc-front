@@ -239,6 +239,8 @@ class NextOsc extends React.Component {
             [330, -330],
         ]
 
+        //console.log('--->', this.state.nextsOsc.length);
+
         if(this.state.nextsOsc){
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
                 if(index <= 2){
@@ -327,6 +329,15 @@ class NextOsc extends React.Component {
                     }
                 </div>
                 <br/>
+                <div className="col-md-12">
+                    <div className="title-style">
+                        {/*<h2>5 OSCs mais próximas de você, por área de atuação</h2>*/}
+                        <h2>{this.state.nextsOsc.length} OSCs de {this.state.txtAreaAtuacao} próximas da sua localidade</h2>
+                        <div className="line line-fix block" data-move-x="980px"/>
+                        <hr/>
+                    </div>
+                </div>
+
                 <div className="text-center">
                     {owNextOsc}
                 </div>
