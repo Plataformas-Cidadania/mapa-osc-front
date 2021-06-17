@@ -2,15 +2,37 @@ class Menu extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            sigla_osc: '',
         }
-
+        this.getOsc = this.getOsc.bind(this);
     }
+    componentDidMount(){
+        this.getOsc();
+    }
+
+    getOsc(){
+        this.setState({button:false});
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2+'osc/dados_gerais/'+this.props.id,
+            cache: false,
+            success: function (data) {
+                this.setState({loading: false, sigla_osc: data.tx_sigla_osc, button:true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+
+
     render(){
         let menu = [
             <div key="menu">
                 <ul className="menu-area">
                     {/*<li><a href="dashboard-user"><i className="fa fa-home" aria-hidden="true"/> Minha área</a></li>*/}
-                    <li><a href="oscs-user"><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</a></li>
+                    <li><a href="oscs-user"><i className="fas fa-list-alt"/> Minhas OSCs</a></li>
                     <li><a href="dados-user"><i className="fa fa-user" aria-hidden="true"/> Meus Dados</a></li>
                     {/*<li><a href={"declaracao/"+this.props.id} target='_blank'><i className="fa fa-user" aria-hidden="true"/> Declaração</a></li>*/}
                     {/*<li><a href="selo-user"><i className="fa fa-user" aria-hidden="true"/> Selo Site</a></li>*/}
@@ -21,7 +43,7 @@ class Menu extends React.Component{
         if(pageRoute===true){
             menu.push(
                 <ul className="menu-area" key="menuOsc">
-                    <li className="">OSC Apac</li>
+                    <li className="">OSC <strong>{this.state.sigla_osc}</strong></li>
                     <div className="line line-fix "/><br/>
                     {/*<li><a href="osc-user/789809"><i className="fa fa-file-alt" aria-hidden="true"/> Dados gerais</a></li>*/}
                     <li><a href={"osc-user/"+this.props.id}><i className="fa fa-file-alt" aria-hidden="true"/> Dados gerais</a></li>

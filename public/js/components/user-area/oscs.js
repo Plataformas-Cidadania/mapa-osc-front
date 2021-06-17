@@ -271,7 +271,7 @@ class Oscs extends React.Component {
                 React.createElement(
                     'h3',
                     null,
-                    React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                    React.createElement('i', { className: 'fas fa-list-alt' }),
                     ' Minhas OSCs'
                 ),
                 React.createElement(

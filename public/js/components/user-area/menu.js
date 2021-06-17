@@ -1,146 +1,173 @@
 class Menu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            sigla_osc: ''
+        };
+        this.getOsc = this.getOsc.bind(this);
     }
+    componentDidMount() {
+        this.getOsc();
+    }
+
+    getOsc() {
+        this.setState({ button: false });
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
+            cache: false,
+            success: function (data) {
+                this.setState({ loading: false, sigla_osc: data.tx_sigla_osc, button: true });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
     render() {
         let menu = [React.createElement(
-            "div",
-            { key: "menu" },
+            'div',
+            { key: 'menu' },
             React.createElement(
-                "ul",
-                { className: "menu-area" },
+                'ul',
+                { className: 'menu-area' },
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "oscs-user" },
-                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
-                        " Minhas OSCs"
+                        'a',
+                        { href: 'oscs-user' },
+                        React.createElement('i', { className: 'fas fa-list-alt' }),
+                        ' Minhas OSCs'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "dados-user" },
-                        React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
-                        " Meus Dados"
+                        'a',
+                        { href: 'dados-user' },
+                        React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                        ' Meus Dados'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "logout-user" },
-                        React.createElement("i", { className: "fa fa-power-off", "aria-hidden": "true" }),
-                        " Sair"
+                        'a',
+                        { href: 'logout-user' },
+                        React.createElement('i', { className: 'fa fa-power-off', 'aria-hidden': 'true' }),
+                        ' Sair'
                     )
                 )
             )
         )];
         if (pageRoute === true) {
             menu.push(React.createElement(
-                "ul",
-                { className: "menu-area", key: "menuOsc" },
+                'ul',
+                { className: 'menu-area', key: 'menuOsc' },
                 React.createElement(
-                    "li",
-                    { className: "" },
-                    "OSC Apac"
+                    'li',
+                    { className: '' },
+                    'OSC ',
+                    React.createElement(
+                        'strong',
+                        null,
+                        this.state.sigla_osc
+                    )
                 ),
-                React.createElement("div", { className: "line line-fix " }),
-                React.createElement("br", null),
+                React.createElement('div', { className: 'line line-fix ' }),
+                React.createElement('br', null),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
+                        'a',
                         { href: "osc-user/" + this.props.id },
-                        React.createElement("i", { className: "fa fa-file-alt", "aria-hidden": "true" }),
-                        " Dados gerais"
+                        React.createElement('i', { className: 'fa fa-file-alt', 'aria-hidden': 'true' }),
+                        ' Dados gerais'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "objetivos-user" },
-                        React.createElement("i", { className: "fas fa-globe-americas", "aria-hidden": "true" }),
-                        " ODS"
+                        'a',
+                        { href: 'objetivos-user' },
+                        React.createElement('i', { className: 'fas fa-globe-americas', 'aria-hidden': 'true' }),
+                        ' ODS'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "areas-atuacao-user" },
-                        React.createElement("i", { className: "fa fa-share-alt", "aria-hidden": "true" }),
-                        " \xC1reas de atua\xE7\xE3o"
+                        'a',
+                        { href: 'areas-atuacao-user' },
+                        React.createElement('i', { className: 'fa fa-share-alt', 'aria-hidden': 'true' }),
+                        ' \xC1reas de atua\xE7\xE3o'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "descricao-user" },
-                        React.createElement("i", { className: "fas fa-align-justify", "aria-hidden": "true" }),
-                        " Descri\xE7\xE3o"
+                        'a',
+                        { href: 'descricao-user' },
+                        React.createElement('i', { className: 'fas fa-align-justify', 'aria-hidden': 'true' }),
+                        ' Descri\xE7\xE3o'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "certificates-user" },
-                        React.createElement("i", { className: "fas fa-certificate", "aria-hidden": "true" }),
-                        " T\xEDtulos e Certificados"
+                        'a',
+                        { href: 'certificates-user' },
+                        React.createElement('i', { className: 'fas fa-certificate', 'aria-hidden': 'true' }),
+                        ' T\xEDtulos e Certificados'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "governancas-user" },
-                        React.createElement("i", { className: "fas fa-briefcase", "aria-hidden": "true" }),
-                        " Trabalho e Governan\xE7a"
+                        'a',
+                        { href: 'governancas-user' },
+                        React.createElement('i', { className: 'fas fa-briefcase', 'aria-hidden': 'true' }),
+                        ' Trabalho e Governan\xE7a'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "participacoes-user" },
-                        React.createElement("i", { className: "fas fa-users", "aria-hidden": "true" }),
-                        " Participa\xE7\xE3o Social"
+                        'a',
+                        { href: 'participacoes-user' },
+                        React.createElement('i', { className: 'fas fa-users', 'aria-hidden': 'true' }),
+                        ' Participa\xE7\xE3o Social'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "projetos-user" },
-                        React.createElement("i", { className: "fas fa-project-diagram", "aria-hidden": "true" }),
-                        " Projetos"
+                        'a',
+                        { href: 'projetos-user' },
+                        React.createElement('i', { className: 'fas fa-project-diagram', 'aria-hidden': 'true' }),
+                        ' Projetos'
                     )
                 ),
                 React.createElement(
-                    "li",
+                    'li',
                     null,
                     React.createElement(
-                        "a",
-                        { href: "recursos-user" },
-                        React.createElement("i", { className: "fas fa-boxes", "aria-hidden": "true" }),
-                        " Fontes de recursos"
+                        'a',
+                        { href: 'recursos-user' },
+                        React.createElement('i', { className: 'fas fa-boxes', 'aria-hidden': 'true' }),
+                        ' Fontes de recursos'
                     )
                 )
             ));

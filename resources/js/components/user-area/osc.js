@@ -618,7 +618,7 @@ class Osc extends React.Component{
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_site" onChange={this.handleInputChange} value={this.state.form.tx_site}
                                                        placeholder="Se houver, insira o endereço da página da OSC na internet. Ex.: http://www.seudominio.com.br" />
-                                                <label htmlFor="tx_site">Web site</label>
+                                                <label htmlFor="tx_site">Site oficial</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
                                                 </div>
@@ -670,7 +670,7 @@ class Osc extends React.Component{
                                                     {this.state.msg}
                                                 </div>
                                                 <button type="button" className="btn btn-success" onClick={this.updateOsc}><i
-                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
+                                                    className="fas fa-cloud-download-alt"/> Salvar</button>
                                                 <br/>
                                             </div>
                                         </div>

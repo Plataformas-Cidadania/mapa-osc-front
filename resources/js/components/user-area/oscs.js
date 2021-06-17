@@ -223,7 +223,7 @@ class Oscs extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <h3><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</h3>
+                    <h3><i className="fas fa-list-alt"/> Minhas OSCs</h3>
                     <p>Nessa área você pode gerenciar sua OSC ou varias</p>
                     <a className="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" style={{marginTop: '-80px'}}><i className="fa fa-plus"/> Adicionar OSC</a>
                     <hr/>

@@ -96,7 +96,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title-style">
-                    <h2>Posts</h2>
+                    <h2>Destaques</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
@@ -127,7 +127,7 @@
                     </a>
                 </div>
             @endforeach
-            <div class="col-md-12 text-center">
+<!--            <div class="col-md-12 text-center">
                 <br>
                 <br>
                 <div>
@@ -136,7 +136,7 @@
                         <button type="button" class="btn btn-outline-primary"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q"  class="corrente">{{$midia->titulo}}</a></button>
                     @endforeach
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="space">&nbsp;</div>

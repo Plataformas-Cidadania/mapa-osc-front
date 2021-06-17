@@ -20,8 +20,8 @@ class Descricao extends React.Component {
             placeholder: {
                 tx_historico: 'De modo resumido e objetivo, diga como surgiu a OSC, quando, onde, por que e por quem foi fundada',
                 tx_missao_osc: 'Se houver, apresente qual a missão da OSC',
-                tx_visao_osc: 'Se houver, apresente a visão da OSC',
-                tx_finalidades_estatutarias: 'Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC',
+                tx_visao_osc: 'Se houver, apresente a visão e valores da OSC',
+                tx_finalidades_estatutarias: 'Apresente as finalidades Estatutárias da OSC. Se preferir, copie do estatuto da OSC',
                 tx_link_estatuto_osc: 'Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf'
 
             },
@@ -198,7 +198,7 @@ class Descricao extends React.Component {
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_visao_osc' },
-                                            'Vis\xE3o'
+                                            'Vis\xE3o e valores'
                                         ),
                                         React.createElement(
                                             'div',
@@ -238,7 +238,7 @@ class Descricao extends React.Component {
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_link_estatuto_osc' },
-                                            'Link para o Estatuto da OSC'
+                                            'Link para o estatuto da OSC'
                                         ),
                                         React.createElement(
                                             'div',
@@ -281,7 +281,7 @@ class Descricao extends React.Component {
                                             { type: 'button', className: 'btn btn-success', onClick: this.updateDescricao },
                                             React.createElement('i', {
                                                 className: 'fas fa-cloud-download-alt' }),
-                                            ' Salvar descri\xE7\xE3o'
+                                            ' Salvar '
                                         ),
                                         React.createElement('br', null)
                                     )
