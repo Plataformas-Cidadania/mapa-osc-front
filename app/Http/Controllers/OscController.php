@@ -190,7 +190,9 @@ class OscController extends Controller{
         //$pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
         //Log::info($pgOsc);
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
+        //************NAO ESTA FUNCIONANDO COM O BD LOCAL POR FALTA DA VIEW vw_dados_geograficos_idh_uf**************
         $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
+        //$pgIdh = $api."osc/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -219,6 +221,7 @@ class OscController extends Controller{
             $dataOsc = $dataOscTemp;
         }
 
+        Log::info($dataIdh);
         $dataIdh = json_decode($dataIdh);
         //$dataIdh->type = 'FeatureColleciton';
 
@@ -262,19 +265,42 @@ class OscController extends Controller{
     }
 
     public function getIDHM($cod_uf){
-        $pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo/$cod_uf";
+        //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo/$cod_uf";
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+        $pgIdh = $api."osc/ipeadata/municipios/estado/$cod_uf";
+        //Log::info($pgIdh);
 
         $chIdh = curl_init();
         curl_setopt( $chIdh, CURLOPT_URL, $pgIdh );
         curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
         $dataIdh = curl_exec( $chIdh );
+        //Log::info(curl_error($chIdh));
         curl_close( $chIdh );
 
         $dataIdh = json_decode($dataIdh);
-        $dataIdh->type = 'FeatureColleciton';
+        //$dataIdh->type = 'FeatureColleciton';
 
-        return ['idh' => $dataIdh];
+        //colocando os dados retornados da API nova no modelo da API antiga
+        //para alimentar o padrão que já existe no front
+        $areasIdh = [];
+        $areasIdh['type'] = 'FeatureCollection';
+        $areasIdh['features'] = [];
+        foreach ($dataIdh as $index => $valor) {
+            $areasIdh['features'][$index]['type'] = 'Feature';
+            $areasIdh['features'][$index]['id'] = $index;
+            $areasIdh['features'][$index]['properties']['nm_municipio'] = $valor->edmu_nm_municipio;
+            $areasIdh['features'][$index]['properties']['municipio'] = $valor->edmu_cd_municipio;
+            $areasIdh['features'][$index]['properties']['nr_valor'] = $valor->nr_valor;
+            $areasIdh['features'][$index]['geometry'] = json_decode($valor->edmu_geometry);
+        }
+
+        return ['idh' => $areasIdh];
+        //return ['idh' => $dataIdh];
 
     }
 
