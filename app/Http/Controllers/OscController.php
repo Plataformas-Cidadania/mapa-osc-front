@@ -67,28 +67,122 @@ class OscController extends Controller{
         ]);
     }
 
-    public function getOsc($territory, $territory_id = null){
+//    public function getOsc($territory, $territory_id = null){
+//
+//        $api = env('APP_API_ROUTE');
+//        if(env('LOCALHOST_DOCKER') == 1){
+//            $api = env('HOST_DOCKER')."api/";
+//        }
+//
+//        $urlsApi = [
+//            //1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
+//            //1 => $api."osc/geo/regioes",
+//            1 => "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/regioes",
+//            //2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
+//            2 => $api."osc/geo/estados/regiao/".$territory_id,
+//            3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
+//            //3 => "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$territory_id,
+//        ];
+//
+//        /*"https://mapaosc.ipea.gov.br/api/search/all/lista/10/0" paginação listagem
+//        "https://mapaosc.ipea.gov.br/api/analises/idhgeo"*/
+//
+//        $pagina = $urlsApi[$territory];
+//
+//        Log::info($pagina);
+//
+//        $ch = curl_init();
+//        curl_setopt( $ch, CURLOPT_URL, $pagina );
+//        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        $data = curl_exec( $ch );
+//        curl_close( $ch );
+//
+//        $data = json_decode($data);
+//       // $data = \GuzzleHttp\json_decode($data);
+//
+//        //return $data;
+//
+//        $idh = [];
+//
+//        //cria o array com indices començado de 0 para ficar no padrão do javascript
+//        if($territory == 1){
+//            $data2 = [];
+//            foreach ($data as $index => $item) {
+//                array_push($data2, $item);
+//            }
+//            $data = $data2;
+//        }
+//
+//        //cria um array com índices començando de 0
+//        //o que faz com o retorno dos dados com a api nova
+//        /*if($territory == 3){
+//            //$data = [$data];
+//            $data2 = [];
+//            foreach ($data as $key => $item) {
+//                array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+//            }
+//            $data = $data2;
+//        }*/
+//        //o que fazia com o retorno dos dados na api antiga
+//        if($territory == 3){
+//            //$data = [$data];
+//            $data2 = [];
+//            foreach ($data as $key => $item) {
+//                if(count($item) > 0){
+//                    //$key é o id da osc
+//                    array_push($data2, [$key, $item[0], $item[1]]);
+//                }
+//            }
+//            $data = $data2;
+//        }
+//
+//
+//        /*List*/
+//        $paginaList = "https://mapaosc.ipea.gov.br/api/search/all/lista/10/0";
+//        $ch = curl_init();
+//        curl_setopt( $ch, CURLOPT_URL, $paginaList );
+//        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        $list = curl_exec( $ch );
+//        curl_close( $ch );
+//
+//        $list = json_decode($list);
+//
+//
+//        $list2 = [];
+//        foreach ($list as $key => $item) {
+//            if(count($item) > 0){
+//                //$key é o id da osc
+//                array_push($list2, [$key, $item[0], $item[1], $item[2], $item[3]]);
+//            }
+//        }
+//        $list = $list2;
+//
+//        $list = [];
+//
+//        /*List*/
+//
+//        $data = [
+//            "territorio" => $data,
+//            "idh" => $idh,
+//            "tipo_territorio" => $territory+1,
+//            "list" => $list,
+//        ];
+//
+//        return $data;
+//
+//    }
+
+    public function getOscsUf($estado_id){
 
         $api = env('APP_API_ROUTE');
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
 
-        $urlsApi = [
-            //1 => "https://mapaosc.ipea.gov.br/api/geo/cluster/regiao",
-            //1 => $api."osc/geo/regioes",
-            1 => "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/regioes",
-            //2 => "https://mapaosc.ipea.gov.br/api/geo/cluster/estado/".$territory_id,
-            2 => $api."osc/geo/estados/regiao/".$territory_id,
-            3 => "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$territory_id,
-        ];
-
-        /*"https://mapaosc.ipea.gov.br/api/search/all/lista/10/0" paginação listagem
-        "https://mapaosc.ipea.gov.br/api/analises/idhgeo"*/
-
-        $pagina = $urlsApi[$territory];
-
-        Log::info($pagina);
+        //$pagina = $api."geo/oscs/estado/".$estado_id;
+        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$estado_id;
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -98,73 +192,25 @@ class OscController extends Controller{
         curl_close( $ch );
 
         $data = json_decode($data);
-       // $data = \GuzzleHttp\json_decode($data);
 
-        //return $data;
-
-        $idh = [];
-
-        //cria o array com indices començado de 0 para ficar no padrão do javascript
-        if($territory == 1){
-            $data2 = [];
-            foreach ($data as $index => $item) {
-                array_push($data2, $item);
-            }
-            $data = $data2;
+        $data2 = [];
+        foreach ($data as $key => $item) {
+            array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
         }
-
-        //cria um array com índices començando de 0
-        if($territory == 3){
-            //$data = [$data];
-            $data2 = [];
-            foreach ($data as $key => $item) {
-                if(count($item) > 0){
-                    //$key é o id da osc
-                    array_push($data2, [$key, $item[0], $item[1]]);
-                }
-            }
-            $data = $data2;
-        }
-
-
-        /*List*/
-        $paginaList = "https://mapaosc.ipea.gov.br/api/search/all/lista/10/0";
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $paginaList );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $list = curl_exec( $ch );
-        curl_close( $ch );
-
-        $list = json_decode($list);
-
-
-        $list2 = [];
-        foreach ($list as $key => $item) {
-            if(count($item) > 0){
-                //$key é o id da osc
-                array_push($list2, [$key, $item[0], $item[1], $item[2], $item[3]]);
-            }
-        }
-        $list = $list2;
-
-        $list = [];
-
-        /*List*/
-
-        $data = [
-            "territorio" => $data,
-            "idh" => $idh,
-            "tipo_territorio" => $territory+1,
-            "list" => $list,
-        ];
+        $data = $data2;
 
         return $data;
-
     }
 
     public function getDataOsc($id){
-        $pagina = "https://mapaosc.ipea.gov.br/api/osc/popup/".$id;
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        //$pagina = $api."geo/oscs/estado/".$estado_id;
+        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/popup/".$id;
 
 
         $ch = curl_init();
@@ -176,23 +222,32 @@ class OscController extends Controller{
 
         //$data = json_decode($data);
 
+        /*$data2 = [];
+        foreach ($data as $key => $item) {
+            array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+        }
+        $data = $data2;*/
+
         return $data;
 
     }
 
+
+
     public function getOscAllUfs(){
-        $pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
+
         $api = env('APP_API_ROUTE');
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
         //$pgOsc = $api."osc/geo/estado";
-        //$pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/geo/estado";
+        $pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/estados";
+        //$pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
         //Log::info($pgOsc);
+
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
-        //************NAO ESTA FUNCIONANDO COM O BD LOCAL POR FALTA DA VIEW vw_dados_geograficos_idh_uf**************
-        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/ipeadata/uffs";
         //$pgIdh = $api."osc/ipeadata/uffs";
+        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -211,7 +266,7 @@ class OscController extends Controller{
         curl_close( $chIdh );
 
 
-
+        //Log::info([$dataOsc]);
         $dataOsc = json_decode($dataOsc);
         //Log::info([$dataOsc]);
         //criar array com indices començando de zero, pois o javascript não considera array se os indices forem personalizados
@@ -221,7 +276,7 @@ class OscController extends Controller{
             $dataOsc = $dataOscTemp;
         }
 
-        Log::info($dataIdh);
+        //Log::info($dataIdh);
         $dataIdh = json_decode($dataIdh);
         //$dataIdh->type = 'FeatureColleciton';
 
@@ -271,7 +326,8 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-        $pgIdh = $api."osc/ipeadata/municipios/estado/$cod_uf";
+        //$pgIdh = $api."ipeadata/municipios/estado/$cod_uf";
+        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/municipios/estado/$cod_uf";
         //Log::info($pgIdh);
 
         $chIdh = curl_init();
@@ -279,7 +335,7 @@ class OscController extends Controller{
         curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
         $dataIdh = curl_exec( $chIdh );
-        //Log::info(curl_error($chIdh));
+        Log::info(curl_error($chIdh));
         curl_close( $chIdh );
 
         $dataIdh = json_decode($dataIdh);
@@ -333,8 +389,15 @@ class OscController extends Controller{
 
         $data2 = [];
 
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
         foreach ($ufs as $uf) {
-            $pagina = "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$uf;
+            //$pagina = "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$uf;
+            $pagina = $api."geo/oscs/estado/".$uf;
+            $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$uf;
 
             $ch = curl_init();
             curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -361,6 +424,5 @@ class OscController extends Controller{
     public function seal($id_osc){
         return view('user-area', ['pgUserArea' => 'seal', 'id_osc' => $id_osc]);
     }
-
 
 }

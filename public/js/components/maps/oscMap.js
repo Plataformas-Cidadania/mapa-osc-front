@@ -13,6 +13,7 @@ class OscMap extends React.Component {
             regioes: [],
             ufs: [],
             data: [],
+            dataOscCluster: [],
             dataTerritorio: [],
             dataOscUf: [],
             dataIdhUf: [],
@@ -716,11 +717,12 @@ class OscMap extends React.Component {
         this.setState({ processingOscUfs: true }, function () {
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl2 + "osc/geo/estados/regiao/" + this.state.codigoTerritorioSelecionado,
+                //url: getBaseUrl2+"geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
+                url: "geo/estados/regiao/" + this.state.codigoTerritorioSelecionado,
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log('loadTerritorio', data);
+                    console.log('loadTerritorioUf', data);
                     let territorio = [];
                     //territorio.tipo_territorio = _this.state.territory+1
                     territorio.tipo_territorio = 3;
@@ -729,6 +731,7 @@ class OscMap extends React.Component {
                     for (let i in data) {
                         territorio.territorios.push(data[i]);
                     }
+                    //console.log(territorio);
                     _this.setState({ dataTerritorio: territorio, processingOscUfs: false }, function () {
                         _this.populateMap();
                     });
@@ -848,12 +851,14 @@ class OscMap extends React.Component {
         this.setState({ processingOscPontos: true }, function () {
             $.ajax({
                 method: 'GET',
-                url: 'get-osc/3/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
+                //url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+                url: 'get-osc-uf/' + this.state.codigoTerritorioSelecionado, //tipo 2 região ao ser clicado irá carregas as ufs
                 data: {},
                 cache: false,
                 success: function (data) {
-                    //console.log(data);
-                    this.setState({ data: data, processingOscPontos: false }, function () {
+                    console.log('loadPontosPorTerritorio', data);
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({ dataOscCluster: data, processingOscPontos: false }, function () {
                         this.populateMapCluster();
                     });
                 }.bind(this),
@@ -1021,7 +1026,8 @@ class OscMap extends React.Component {
         //data = this.state.data;
         //console.log(data['territorio']);
 
-        let territorios = this.state.dataTerritorio['territorios'];
+        //let territorios = this.state.dataTerritorio['territorios'];
+        let territorios = this.state.dataOscCluster;
         console.log('populateMapCluster', territorios);
 
         //data['territorio'].find(function(item){
@@ -1311,15 +1317,15 @@ class OscMap extends React.Component {
             cache: false,
             success: function (data) {
                 data = JSON.parse(data);
-                //console.log(data);
-                marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Endereço: </strong>' + data['tx_endereco'] + ' - ' + data['tx_bairro'] + '<br/>' + '<strong>Atividade Econômica: </strong>' + data['tx_nome_atividade_economica'] + '<br/>' + '<strong>Natureza Jurídica: </strong>' + data['tx_nome_natureza_juridica'] + '<br/>' + "<div class='text-center'><a href='/detalhar/" + id + "'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>");
+                data = data[0];
+                console.log(data);
+                marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Endereço: </strong>' + data['tx_endereco'] + ' - ' + data['tx_bairro'] + '<br/>' + '<strong>Atividade Econômica: </strong>' + data['tx_nome_atividade_economica_osc'] + '<br/>' + '<strong>Natureza Jurídica: </strong>' + data['tx_nome_natureza_juridica_osc'] + '<br/>' + "<div class='text-center'><a href='detalhar/" + id + "'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>");
                 marker.openPopup();
             },
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({ loading: false });
             }
-
         });
     }
 

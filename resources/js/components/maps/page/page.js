@@ -17,7 +17,7 @@ class Page extends React.Component {
     }
 
     componentDidMount(){
-        this.load();
+        //this.load();
         this.loadTerritorio();
         this.loadOscUf();
     }
@@ -50,12 +50,13 @@ class Page extends React.Component {
         this.setState({processingOsc: true}, function(){
             $.ajax({
                 method:'GET',
-                url: getBaseUrl2+'osc/geo/regioes',
+                //url: getBaseUrl2+'geo/regioes',
+                url: 'geo/regioes',
                 data:{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('loadTerritorio', data);
+                    console.log('loadTerritorio data', data);
                     let territorio = [];
                     territorio.tipo_territorio = _this.state.territory+1
                     territorio.territorios = [];
@@ -63,6 +64,7 @@ class Page extends React.Component {
                     for(let i in data){
                         territorio.territorios.push(data[i]);
                     }
+                    console.log('loadTerritorio territorio',territorio);
                     _this.setState({dataTerritorio: territorio, processingOsc: false});
                 },
                 error: function(xhr, status, err) {
