@@ -2,7 +2,8 @@ class Preenchimento extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: null
+            data: null,
+            total: 0
         };
         this.load = this.load.bind(this);
     }
@@ -35,7 +36,30 @@ class Preenchimento extends React.Component {
                 transparencia.serie.push(data[0].transparencia_relacoes_trabalho_governanca);
                 transparencia.serie.push(data[0].transparencia_titulos_certificacoes);
 
-                _this.setState({ data: transparencia });
+                /*////////////////////*/
+                let soma = [];
+
+                soma.push(data[0].transparencia_area_atuacao / 800 * 100);
+                soma.push(data[0].transparencia_dados_gerais / 800 * 100);
+                soma.push(data[0].transparencia_descricao / 800 * 100);
+                soma.push(data[0].transparencia_espacos_participacao_social / 800 * 100);
+                soma.push(data[0].transparencia_fontes_recursos / 800 * 100);
+                soma.push(data[0].transparencia_projetos_atividades_programas / 800 * 100);
+                soma.push(data[0].transparencia_relacoes_trabalho_governanca / 800 * 100);
+                soma.push(data[0].transparencia_titulos_certificacoes / 800 * 100);
+
+                var total = 0;
+                var numeros = soma;
+                for (var i = 0; i < numeros.length; i++) {
+                    total += parseInt(numeros[i]);
+                }
+
+                /*////////////////////*/
+
+                _this.setState({
+                    data: transparencia,
+                    total: total
+                });
             },
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -55,7 +79,12 @@ class Preenchimento extends React.Component {
         return React.createElement(
             'div',
             null,
-            polarChart
+            polarChart,
+            React.createElement(
+                'div',
+                { className: 'indice-total' },
+                this.state.total
+            )
         );
     }
 }

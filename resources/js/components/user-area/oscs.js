@@ -144,7 +144,7 @@ class Oscs extends React.Component{
                         </td>
                         <td width="500">
                             <div className="btn btn-outline-primary">
-                                <a href={"selo-osc-user/"+item.id_osc} target="_blank">
+                                <a href={"selo-osc-user/"+item.id_osc} >
                                    {/* <i className="fas fa-tag"/>*/} Selo
                                 </a>
                             </div>
@@ -156,7 +156,7 @@ class Oscs extends React.Component{
                             </div>
                             &nbsp;
                             <div className="btn btn-outline-primary">
-                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc} target="_blank">
+                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc}>
                                     <i className="fas fa-binoculars"/> Visualizar
                                 </a>
                             </div>

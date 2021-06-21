@@ -26,44 +26,47 @@ class Menu extends React.Component {
     }
 
     render() {
-        let menu = [React.createElement(
-            'div',
-            { key: 'menu' },
-            React.createElement(
-                'ul',
-                { className: 'menu-area' },
+        let menu = [];
+        if (pageRoute === false) {
+            menu = [React.createElement(
+                'div',
+                { key: 'menu' },
                 React.createElement(
-                    'li',
-                    null,
+                    'ul',
+                    { className: 'menu-area' },
                     React.createElement(
-                        'a',
-                        { href: 'oscs-user' },
-                        React.createElement('i', { className: 'fas fa-list-alt' }),
-                        ' Minhas OSCs'
-                    )
-                ),
-                React.createElement(
-                    'li',
-                    null,
+                        'li',
+                        null,
+                        React.createElement(
+                            'a',
+                            { href: 'oscs-user' },
+                            React.createElement('i', { className: 'fas fa-list-alt' }),
+                            ' Minhas OSCs'
+                        )
+                    ),
                     React.createElement(
-                        'a',
-                        { href: 'dados-user' },
-                        React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-                        ' Meus Dados'
-                    )
-                ),
-                React.createElement(
-                    'li',
-                    null,
+                        'li',
+                        null,
+                        React.createElement(
+                            'a',
+                            { href: 'dados-user' },
+                            React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                            ' Meus dados'
+                        )
+                    ),
                     React.createElement(
-                        'a',
-                        { href: 'logout-user' },
-                        React.createElement('i', { className: 'fa fa-power-off', 'aria-hidden': 'true' }),
-                        ' Sair'
+                        'li',
+                        null,
+                        React.createElement(
+                            'a',
+                            { href: 'logout-user' },
+                            React.createElement('i', { className: 'fa fa-power-off', 'aria-hidden': 'true' }),
+                            ' Sair'
+                        )
                     )
                 )
-            )
-        )];
+            )];
+        }
         if (pageRoute === true) {
             menu.push(React.createElement(
                 'ul',
@@ -127,7 +130,7 @@ class Menu extends React.Component {
                         'a',
                         { href: 'certificates-user' },
                         React.createElement('i', { className: 'fas fa-certificate', 'aria-hidden': 'true' }),
-                        ' T\xEDtulos e Certificados'
+                        ' T\xEDtulos e certificados'
                     )
                 ),
                 React.createElement(
@@ -137,7 +140,7 @@ class Menu extends React.Component {
                         'a',
                         { href: 'governancas-user' },
                         React.createElement('i', { className: 'fas fa-briefcase', 'aria-hidden': 'true' }),
-                        ' Trabalho e Governan\xE7a'
+                        ' Trabalho e governan\xE7a'
                     )
                 ),
                 React.createElement(
@@ -147,7 +150,7 @@ class Menu extends React.Component {
                         'a',
                         { href: 'participacoes-user' },
                         React.createElement('i', { className: 'fas fa-users', 'aria-hidden': 'true' }),
-                        ' Participa\xE7\xE3o Social'
+                        ' Participa\xE7\xE3o social'
                     )
                 ),
                 React.createElement(
@@ -168,6 +171,16 @@ class Menu extends React.Component {
                         { href: 'recursos-user' },
                         React.createElement('i', { className: 'fas fa-boxes', 'aria-hidden': 'true' }),
                         ' Fontes de recursos'
+                    )
+                ),
+                React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                        'a',
+                        { href: 'oscs-user' },
+                        React.createElement('i', { className: 'far fa-arrow-alt-circle-left' }),
+                        ' Voltar'
                     )
                 )
             ));

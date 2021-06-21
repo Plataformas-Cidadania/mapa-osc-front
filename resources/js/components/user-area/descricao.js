@@ -21,7 +21,7 @@ class Descricao extends React.Component{
                 tx_historico: 'De modo resumido e objetivo, diga como surgiu a OSC, quando, onde, por que e por quem foi fundada',
                 tx_missao_osc: 'Se houver, apresente qual a missão da OSC',
                 tx_visao_osc: 'Se houver, apresente a visão e valores da OSC',
-                tx_finalidades_estatutarias: 'Apresente as finalidades Estatutárias da OSC. Se preferir, copie do estatuto da OSC',
+                tx_finalidades_estatutarias: 'Apresente as finalidades estatutárias da OSC. Se preferir, copie do estatuto da OSC',
                 tx_link_estatuto_osc: 'Se houver, insira o link que leva ao estatuto da OSC. Ex.: http://www.nomesite.com/link-completo.pdf',
 
             },
@@ -159,7 +159,7 @@ class Descricao extends React.Component{
                                         <div className="label-float-tx">
                                             <textarea className="form-control form-g" name="tx_finalidades_estatutarias" onChange={this.handleInputChange} value={this.state.form.tx_finalidades_estatutarias}
                                                       rows="3" placeholder={this.state.placeholder.tx_finalidades_estatutarias}/>
-                                            <label htmlFor="tx_finalidades_estatutarias">Finalidades Estatutárias da OSC</label>
+                                            <label htmlFor="tx_finalidades_estatutarias">Finalidades estatutárias da OSC</label>
                                             <div className="label-box-info-tx-off">
                                                 <p>&nbsp;</p>
                                             </div>

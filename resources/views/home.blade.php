@@ -105,14 +105,14 @@
                 <div class="col-md-4">
                     <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
-                            {{--@if($item->imagem!="")
+                            @if($item->imagem!="")
                             <picture>
-                                <source srcset="imagens/{{$midiaSelect[1]}}/sm-{{$item->imagem}}" media="(max-width: 468px)">
-                                <source srcset="imagens/publi{{$midiaSelect[1]}}cacoes/sm-{{$item->imagem}}" media="(max-width: 768px)">
-                                <source srcset="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" class="img-responsive">
-                                <img src="img/loading.gif" data-src="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
+                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
+                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
+                                <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
+                                <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
                             </picture>
-                            @endif--}}
+                            @endif
                             <div class="img-rede">
                                 <i class="fab fa-facebook-f"></i>
                                 <i class="fab fa-instagram"></i>
@@ -209,7 +209,7 @@
             autoplay:true,
             dots: true,
             navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
-            autoplayTimeout:5000,
+            autoplayTimeout:15000,
             responsive: {
                 0: {
                     items: 5

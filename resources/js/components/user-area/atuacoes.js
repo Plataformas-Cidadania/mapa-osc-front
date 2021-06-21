@@ -36,6 +36,7 @@ class Atuacoes extends React.Component{
             dataCnae: '',
             dataCnaeArea: '',
             dataCnaeSubArea: [],
+            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar',
 
         };
 
@@ -444,14 +445,18 @@ class Atuacoes extends React.Component{
                         <h3>Áreas e Subáreas de atuação da OSC</h3>
                         <hr/><br/>
                     </div>
-                    <div className="text-center">
-                        <strong><i className="fas fa-database tx-pri"/> Atividade econômica (CNAE): </strong> {this.state.dataCnae}
-                    </div>
-                    <br/>
+
+
                     <div className="form-row">
                         <div className="form-group col-md-12">
                             <div className="alert alert-secondary">
-                                <i className="fas fa-database float-right tx-pri"/>
+
+                                <div className="tooltips float-right">
+                                    <i className="fas fa-database tx-pri"/>
+                                    <span className="tooltiptext">{this.state.tooltip}</span>
+                                </div>
+
+                                <strong>Atividade econômica (CNAE): </strong> {this.state.dataCnae} <br/>
                                 <strong>Área de Atuação: {this.state.dataCnaeArea}</strong>{areaAtuacaoCnae}
                             </div>
                         </div>

@@ -156,7 +156,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "selo-osc-user/" + item.id_osc, target: '_blank' },
+                            { href: "selo-osc-user/" + item.id_osc },
                             ' Selo'
                         )
                     ),
@@ -177,7 +177,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, target: '_blank' },
+                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
                             ' Visualizar'
                         )

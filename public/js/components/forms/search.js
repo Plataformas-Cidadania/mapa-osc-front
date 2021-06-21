@@ -128,19 +128,14 @@ class Search extends React.Component {
                 React.createElement('br', null),
                 React.createElement('br', null),
                 React.createElement(
+                    'h2',
+                    { className: 'text-center' },
+                    'Busque uma OSC no Mapa'
+                ),
+                React.createElement(
                     'ul',
                     { className: 'menu-small mb-2' },
-                    menu,
-                    React.createElement(
-                        'li',
-                        { className: 'float-right' },
-                        React.createElement(
-                            'a',
-                            { href: 'filtro' },
-                            React.createElement('i', { className: 'fas fa-filter' }),
-                            ' Filtro'
-                        )
-                    )
+                    menu
                 ),
                 React.createElement(
                     'div',
@@ -167,6 +162,12 @@ class Search extends React.Component {
                         { style: { display: this.state.msg === '' ? 'none' : '' }, className: 'p-2 text-center' },
                         this.state.msg
                     )
+                ),
+                React.createElement(
+                    'a',
+                    { className: 'btn btn-outline-primary btn-sm', href: 'filtro', style: { marginTop: '8px' } },
+                    React.createElement('i', { className: 'fas fa-search' }),
+                    ' Consulta avan\xE7ada'
                 )
             )
         );

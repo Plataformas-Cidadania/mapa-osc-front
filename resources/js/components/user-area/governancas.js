@@ -35,8 +35,8 @@ class Governancas extends React.Component{
             editIdConselho: 0,
             loadingRemoveConselho: [],
 
-            deficiencia: null,
-            empregados: null,
+            deficiencia: 0,
+            empregados: 0,
             totalTrabalhadores: null,
 
             editIdOsc: 0,
@@ -133,11 +133,12 @@ class Governancas extends React.Component{
             },
             cache: false,
             success: function(data){
+
                 this.setState({
                     governancas: data.governanca,
                     conselhos: data.conselho_fiscal,
-                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
-                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_vinculo,
 
                     totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
                     loadingGovernanca: false,
@@ -359,7 +360,7 @@ class Governancas extends React.Component{
 
             <div>
                 <div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div> <h3>Relações de Trabalho e Governança</h3><br/>
+                    <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div> <h3>Relações de trabalho e governança</h3><br/>
                     <p>Você tem {this.state.governancas.length} dirigentes e {this.state.conselhos.length} conselhos cadastrados</p>
                     <hr/>
                 </div>
@@ -420,7 +421,9 @@ class Governancas extends React.Component{
                                     <h3>Total de Trabalhadores</h3>
                                     <div>
                                         <h2>{this.state.totalTrabalhadores}</h2>
-                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
+                                        <p className='not-info'>
+                                            <span style={{display: this.state.totalTrabalhadores > 0 ? 'none' : ''}}>Não constam informações nas bases de dados do Mapa.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -429,7 +432,9 @@ class Governancas extends React.Component{
                                     <h3>Empregados</h3>
                                     <div>
                                         <h2>{this.state.empregados}</h2>
-                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
+                                        <p className='not-info'>
+                                            <span style={{display: this.state.empregados > 0 ? 'none' : ''}}>Não constam informações nas bases de dados do Mapa.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -438,7 +443,9 @@ class Governancas extends React.Component{
                                     <h3>Deficiência</h3>
                                     <div>
                                         <h2>{this.state.deficiencia}</h2>
-                                        <p className='not-info'>Não constam informações nas bases de dados do Mapa.</p>
+                                        <p className='not-info'>
+                                            <span style={{display: this.state.deficiencia > 0 ? 'none' : ''}}>Não constam informações nas bases de dados do Mapa.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -451,8 +458,9 @@ class Governancas extends React.Component{
                                         <input className="input-lg" type="number" min="1" name="nr_trabalhadores_voluntarios" onChange={this.handleInputChange} defaultValue={this.state.form.nr_trabalhadores_voluntarios}
                                                style={{float: 'left'}} placeholder="0" />
                                         <div>
-                                            <button type="button" className="btn btn-success" onClick={this.updateVoluntario}><i
-                                                className="fas fa-cloud-download-alt"/> </button>
+                                            <button type="button" className="btn btn-success" onClick={this.updateVoluntario}>
+                                                <i className="fas fa-check-circle"/>
+                                            </button>
                                             <br/>
                                         </div>
 

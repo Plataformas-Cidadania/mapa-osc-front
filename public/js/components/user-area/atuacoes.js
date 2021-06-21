@@ -35,7 +35,8 @@ class Atuacoes extends React.Component {
             boxInfo: false,
             dataCnae: '',
             dataCnaeArea: '',
-            dataCnaeSubArea: []
+            dataCnaeSubArea: [],
+            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar'
 
         };
 
@@ -490,19 +491,6 @@ class Atuacoes extends React.Component {
                 ),
                 React.createElement(
                     'div',
-                    { className: 'text-center' },
-                    React.createElement(
-                        'strong',
-                        null,
-                        React.createElement('i', { className: 'fas fa-database tx-pri' }),
-                        ' Atividade econ\xF4mica (CNAE): '
-                    ),
-                    ' ',
-                    this.state.dataCnae
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'div',
                     { className: 'form-row' },
                     React.createElement(
                         'div',
@@ -510,7 +498,25 @@ class Atuacoes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'alert alert-secondary' },
-                            React.createElement('i', { className: 'fas fa-database float-right tx-pri' }),
+                            React.createElement(
+                                'div',
+                                { className: 'tooltips float-right' },
+                                React.createElement('i', { className: 'fas fa-database tx-pri' }),
+                                React.createElement(
+                                    'span',
+                                    { className: 'tooltiptext' },
+                                    this.state.tooltip
+                                )
+                            ),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Atividade econ\xF4mica (CNAE): '
+                            ),
+                            ' ',
+                            this.state.dataCnae,
+                            ' ',
+                            React.createElement('br', null),
                             React.createElement(
                                 'strong',
                                 null,
