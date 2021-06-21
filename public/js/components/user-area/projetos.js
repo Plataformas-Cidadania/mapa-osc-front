@@ -173,7 +173,7 @@ class Projetos extends React.Component {
         if(showForm){
             let actionForm = 'new';
         }
-          this.setState({showForm: showForm, actionForm: action});*/
+         this.setState({showForm: showForm, actionForm: action});*/
 
         let actionForm = action;
 
@@ -329,7 +329,7 @@ class Projetos extends React.Component {
                     null,
                     'Voc\xEA tem ',
                     this.state.projetos.length,
-                    ' t\xEDtulos ou projetos cadastrados'
+                    ' projetos cadastrados'
                 ),
                 React.createElement('hr', null)
             ),
