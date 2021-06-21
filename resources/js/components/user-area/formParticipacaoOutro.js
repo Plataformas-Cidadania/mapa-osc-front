@@ -171,8 +171,8 @@ class FormParticipacaoOutro extends React.Component{
                         </div>
 
 
-                        <button className="btn btn-primary" onClick={this.register}>
-                            Cadastrar
+                        <button className="btn btn-success" onClick={this.register}>
+                            Salvar
                         </button>
 
 

@@ -273,8 +273,8 @@ class FormParticipacaoConselho extends React.Component{
                                 <p>&nbsp;</p>
                             </div>
                         </div>
-                        <button className="btn btn-primary" onClick={this.register}>
-                            Cadastrar
+                        <button className="btn btn-success" onClick={this.register}>
+                            Salvar
                         </button>
 
 
