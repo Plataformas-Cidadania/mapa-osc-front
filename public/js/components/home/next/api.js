@@ -80,7 +80,7 @@ class NextOsc extends React.Component {
             let lon = geo.lon.toString();
             lat = lat.replace(".", ",");
             lon = lon.replace(".", ",");
-            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
+            url = getBaseUrl + 'lista_por_area_atuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
         }
 
         $.ajax({
