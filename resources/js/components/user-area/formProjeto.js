@@ -462,7 +462,8 @@ class FormProjeto extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            //url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -584,7 +585,8 @@ class FormProjeto extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2+'objetivos/metas/'+id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;

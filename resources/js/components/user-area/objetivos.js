@@ -57,7 +57,7 @@ class Objetivos extends React.Component{
             method: 'GET',
             cache: false,
             //url: getBaseUrl+'menu/osc/objetivo_projeto',
-            url: getBaseUrl2+'objetivos',
+            url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
