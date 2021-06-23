@@ -142,7 +142,7 @@ class Oscs extends React.Component{
                            {/* <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />*/}
                             {item.tx_nome_osc}
                         </td>
-                        <td width="500">
+                        <td width="500" className="text-right">
                             <div className="btn btn-outline-primary">
                                 <a href={"selo-osc-user/"+item.id_osc} >
                                    {/* <i className="fas fa-tag"/>*/} Selo

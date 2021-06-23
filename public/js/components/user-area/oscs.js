@@ -150,7 +150,7 @@ class Oscs extends React.Component {
                 ),
                 React.createElement(
                     'td',
-                    { width: '500' },
+                    { width: '500', className: 'text-right' },
                     React.createElement(
                         'div',
                         { className: 'btn btn-outline-primary' },
