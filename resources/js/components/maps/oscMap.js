@@ -8,6 +8,7 @@ class OscMap extends React.Component{
             processingOscUfs: false,
             processingOscPontos: false,
             processingHeatMap: false,
+            processingList: false,
             mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
@@ -20,6 +21,9 @@ class OscMap extends React.Component{
             dataIDHM: [],
             dataOsc: null,
             dataCalor: [],
+            dataOscList: [],
+            pagina: 0,
+            totalOscList: 0,
             //year:props.year,
             //month:props.month,
             //filters: props.filters,
@@ -75,6 +79,7 @@ class OscMap extends React.Component{
         //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
+        this.loadOscList = this.loadOscList.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.areaOscMap = this.areaOscMap.bind(this);
@@ -98,6 +103,7 @@ class OscMap extends React.Component{
     componentDidMount(){
         this.loadFirstMap();
         this.loadMap();
+        this.loadOscList();
         //this.loadAllUfs();
     }
 
@@ -680,6 +686,7 @@ class OscMap extends React.Component{
         }).bind(thisReact);
     }
 
+
     loadMap(){
 
         let mapElements = this.state.mapElements;
@@ -711,6 +718,29 @@ class OscMap extends React.Component{
 
         this.setState({mapElements: mapElements});
 
+    }
+
+
+    loadOscList(){
+        this.setState({processingList: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: 'lista_osc/'+this.state.pagina,//tipo 2 região ao ser clicado irá carregas as ufs
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    this.setState({dataOscList: data.lista, totalList: data.total, processingList: false});
+                    //this.populateMap();
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({processingList: false});
+                }.bind(this)
+
+            });
+        });
     }
 
     loadDataUf(){
@@ -1561,32 +1591,47 @@ class OscMap extends React.Component{
 
 
 
-        if(this.state.data) {
-            if(this.state.data.list) {
+        if(this.state.dataOscList) {
 
-                //console.log('***', this.state.data);
-                tableOsc = this.state.data.list.map(function (item, index) {
+            //console.log('***', this.state.data);
+            tableOsc = this.state.dataOscList.map(function (item, index) {
 
-                    return (
-                        <tr key={'tabela' + index}>
-                            <td className="capitalize">
-                                <div className="img-upload img-upload-p">
-                                    <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
-                                         alt=""/>
-                                </div>
-                                {item[1].toLowerCase()}</td>
-                            <td>{formatCnpjCpf(item[2])}</td>
-                            <td className="text-center">{item[3]}</td>
-                            <td className="capitalize">{item[4].toLowerCase()}</td>
-                            <td>
-                                <a href={'detalhar/' + item[0] + '/' + removeAccent(item[1])}><i
-                                    className="fas fa-share-square"/></a>
-                            </td>
-                        </tr>
-                    );
-                });
-            }
+                return (
+                    <tr key={'tabela' + index}>
+                        <td className="capitalize">
+                            <div className="img-upload img-upload-p">
+                                <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
+                                     alt=""/>
+                            </div>
+                            {item.tx_nome_osc.toLowerCase()}</td>
+                        <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
+                        <td className="text-center">{item.tx_nome_osc}</td>
+                        <td className="capitalize">{item.tx_natureza_juridica_osc.toLowerCase()}</td>
+                        <td>
+                            <a href={'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc)}><i
+                                className="fas fa-share-square"/></a>
+                        </td>
+                    </tr>
+                );
+            });
         }
+
+        let pagination = (
+            <ul className="pagination">
+                <li className="page-item disabled" style={{display: this.state.pagina > 0 ? '' : 'none'}}>
+                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                </li>
+                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                <li className="page-item active">
+                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
+                </li>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                <li className="page-item" style={{display: this.state.pagina < parseInt(this.state.total / 10) ? '' : 'none'}}>
+                    <a className="page-link" href="#">Próximo</a>
+                </li>
+            </ul>
+        );
+
 
         let processingOsc =  this.state.processingOsc;
         let processingOscIdhUfs =  this.state.processingOscIdhUfs;
@@ -1637,19 +1682,7 @@ class OscMap extends React.Component{
                             </table>
                         </div>
                         <nav aria-label="...">
-                            <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                <li className="page-item active">
-                                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">Próximo</a>
-                                </li>
-                            </ul>
+                            {pagination}
                         </nav>
                     </div>
 

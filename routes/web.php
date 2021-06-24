@@ -94,6 +94,7 @@ Route::get('/get-idhm/{cod_uf}', 'OscController@getIDHM');
 //testando rota direta
 Route::get('/geo/regioes', 'TesteController@geoRegioes');
 Route::get('/geo/estados/regiao/{regiao_id}', 'TesteController@geoEstadosRegiao');
+Route::get('/lista_osc/{pagina}', 'TesteController@listaOsc');
 ////////////////
 
 

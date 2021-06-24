@@ -42,4 +42,19 @@ class TesteController extends Controller{
         return $data;
     }
 
+    public function listaOsc($pagina){
+        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/lista_osc/$pagina";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
 }

@@ -8,6 +8,7 @@ class OscMap extends React.Component {
             processingOscUfs: false,
             processingOscPontos: false,
             processingHeatMap: false,
+            processingList: false,
             mapId: props.mapId,
             firstTimeLoad: true,
             regioes: [],
@@ -20,6 +21,9 @@ class OscMap extends React.Component {
             dataIDHM: [],
             dataOsc: null,
             dataCalor: [],
+            dataOscList: [],
+            pagina: 0,
+            totalOscList: 0,
             //year:props.year,
             //month:props.month,
             //filters: props.filters,
@@ -75,6 +79,7 @@ class OscMap extends React.Component {
         //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
+        this.loadOscList = this.loadOscList.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.areaOscMap = this.areaOscMap.bind(this);
@@ -97,6 +102,7 @@ class OscMap extends React.Component {
     componentDidMount() {
         this.loadFirstMap();
         this.loadMap();
+        this.loadOscList();
         //this.loadAllUfs();
     }
 
@@ -688,6 +694,27 @@ class OscMap extends React.Component {
         mapElements.map.addLayer(mapElements.areaOscGroup);
 
         this.setState({ mapElements: mapElements });
+    }
+
+    loadOscList() {
+        this.setState({ processingList: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'lista_osc/' + this.state.pagina, //tipo 2 região ao ser clicado irá carregas as ufs
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    this.setState({ dataOscList: data.lista, totalList: data.total, processingList: false });
+                    //this.populateMap();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({ processingList: false });
+                }.bind(this)
+
+            });
+        });
     }
 
     loadDataUf() {
@@ -1493,55 +1520,108 @@ class OscMap extends React.Component {
         ////////////////////////////////////////////
 
 
-        if (this.state.data) {
-            if (this.state.data.list) {
+        if (this.state.dataOscList) {
 
-                //console.log('***', this.state.data);
-                tableOsc = this.state.data.list.map(function (item, index) {
+            //console.log('***', this.state.data);
+            tableOsc = this.state.dataOscList.map(function (item, index) {
 
-                    return React.createElement(
-                        'tr',
-                        { key: 'tabela' + index },
+                return React.createElement(
+                    'tr',
+                    { key: 'tabela' + index },
+                    React.createElement(
+                        'td',
+                        { className: 'capitalize' },
                         React.createElement(
-                            'td',
-                            { className: 'capitalize' },
-                            React.createElement(
-                                'div',
-                                { className: 'img-upload img-upload-p' },
-                                React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
-                                    alt: '' })
-                            ),
-                            item[1].toLowerCase()
+                            'div',
+                            { className: 'img-upload img-upload-p' },
+                            React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
+                                alt: '' })
                         ),
+                        item.tx_nome_osc.toLowerCase()
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        formatCnpjCpf(item.cd_identificador_osc)
+                    ),
+                    React.createElement(
+                        'td',
+                        { className: 'text-center' },
+                        item.tx_nome_osc
+                    ),
+                    React.createElement(
+                        'td',
+                        { className: 'capitalize' },
+                        item.tx_natureza_juridica_osc.toLowerCase()
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
                         React.createElement(
-                            'td',
-                            null,
-                            formatCnpjCpf(item[2])
-                        ),
-                        React.createElement(
-                            'td',
-                            { className: 'text-center' },
-                            item[3]
-                        ),
-                        React.createElement(
-                            'td',
-                            { className: 'capitalize' },
-                            item[4].toLowerCase()
-                        ),
-                        React.createElement(
-                            'td',
-                            null,
-                            React.createElement(
-                                'a',
-                                { href: 'detalhar/' + item[0] + '/' + removeAccent(item[1]) },
-                                React.createElement('i', {
-                                    className: 'fas fa-share-square' })
-                            )
+                            'a',
+                            { href: 'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc) },
+                            React.createElement('i', {
+                                className: 'fas fa-share-square' })
                         )
-                    );
-                });
-            }
+                    )
+                );
+            });
         }
+
+        let pagination = React.createElement(
+            'ul',
+            { className: 'pagination' },
+            React.createElement(
+                'li',
+                { className: 'page-item disabled', style: { display: this.state.pagina > 0 ? '' : 'none' } },
+                React.createElement(
+                    'a',
+                    { className: 'page-link', href: '#', tabIndex: '-1' },
+                    'Anterior'
+                )
+            ),
+            React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    { className: 'page-link', href: '#' },
+                    '1'
+                )
+            ),
+            React.createElement(
+                'li',
+                { className: 'page-item active' },
+                React.createElement(
+                    'a',
+                    { className: 'page-link', href: '#' },
+                    '2 ',
+                    React.createElement(
+                        'span',
+                        { className: 'sr-only' },
+                        '(atual)'
+                    )
+                )
+            ),
+            React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    { className: 'page-link', href: '#' },
+                    '3'
+                )
+            ),
+            React.createElement(
+                'li',
+                { className: 'page-item', style: { display: this.state.pagina < parseInt(this.state.total / 10) ? '' : 'none' } },
+                React.createElement(
+                    'a',
+                    { className: 'page-link', href: '#' },
+                    'Pr\xF3ximo'
+                )
+            )
+        );
 
         let processingOsc = this.state.processingOsc;
         let processingOscIdhUfs = this.state.processingOscIdhUfs;
@@ -1657,60 +1737,7 @@ class OscMap extends React.Component {
                     React.createElement(
                         'nav',
                         { 'aria-label': '...' },
-                        React.createElement(
-                            'ul',
-                            { className: 'pagination' },
-                            React.createElement(
-                                'li',
-                                { className: 'page-item disabled' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#', tabIndex: '-1' },
-                                    'Anterior'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '1'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item active' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '2 ',
-                                    React.createElement(
-                                        'span',
-                                        { className: 'sr-only' },
-                                        '(atual)'
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    '3'
-                                )
-                            ),
-                            React.createElement(
-                                'li',
-                                { className: 'page-item' },
-                                React.createElement(
-                                    'a',
-                                    { className: 'page-link', href: '#' },
-                                    'Pr\xF3ximo'
-                                )
-                            )
-                        )
+                        pagination
                     )
                 ),
                 React.createElement('div', { className: 'col-md-12' })
