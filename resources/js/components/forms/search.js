@@ -135,9 +135,9 @@ class Search extends React.Component {
             <div className="row justify-content-md-center">
                 <div className="col-md-5">
                     <br/><br/>
+                        <h2 className="text-center">Busque uma OSC no Mapa</h2>
                         <ul className="menu-small mb-2">
                             {menu}
-                            <li className="float-right"><a href="filtro"><i className="fas fa-filter"/> Filtro</a></li>
                         </ul>
                         <div className="input-icon">
                             <input id="ativarBox" type="text" className="form-control"
@@ -155,6 +155,7 @@ class Search extends React.Component {
                                 {this.state.msg}
                             </div>
                         </ul>
+                    <a className="btn btn-outline-primary btn-sm" href="filtro" style={{marginTop: '8px'}}><i className="fas fa-search"/> Consulta avançada</a>
 
 
                 </div>

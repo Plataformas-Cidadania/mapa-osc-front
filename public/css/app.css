@@ -12438,6 +12438,41 @@ figcaption {
   padding: 0;
 }
 
+.tooltips {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltips .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #3A559B;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltips .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltips:hover .tooltiptext {
+  visibility: visible;
+}
+
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;
@@ -12933,6 +12968,14 @@ label, input, .btn-number {
   font-size: 12px;
   line-height: 13px;
   cursor: pointer;
+  border: solid 1px #EEEEEE;
+  border-radius: 35px;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.login:hover {
+  background-color: #EEEEEE;
 }
 
 .login-icon {
@@ -12940,7 +12983,7 @@ label, input, .btn-number {
   height: 40px;
   background-color: #3A559B;
   float: left;
-  margin: 0 10px 0 10px;
+  margin: 0 10px 0 0;
 }
 
 .login svg {
@@ -12950,9 +12993,10 @@ label, input, .btn-number {
 }
 
 .login p {
-  margin-top: 8px;
-  padding-top: 7px;
   width: 170px;
+  margin-top: 0 !important;
+  margin-bottom: 6px !important;
+  padding-top: 8px;
 }
 
 .circle {
@@ -13472,6 +13516,22 @@ label, input, .btn-number {
 .box-qtd h2 {
   padding: 0;
   margin: 0;
+}
+
+.indice-total {
+  position: relative;
+  top: -137px;
+  background: #3A559B;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  margin: auto;
+  color: #FFFFFF;
+  padding-top: 6px;
+}
+
+.not-info {
+  min-height: 30px;
 }
 
 @media only screen and (max-width: 780px) {

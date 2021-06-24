@@ -261,7 +261,7 @@ class Certificates extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <div className="mn-accordion-icon"><i className="fas fa-certificate" aria-hidden="true"/></div> <h3>Títulos e Certificações</h3><br/>
+                    <div className="mn-accordion-icon"><i className="fas fa-certificate" aria-hidden="true"/></div> <h3>Títulos e certificações</h3><br/>
                     <p>Você tem {this.state.certificates.length} títulos ou certificados cadastrados</p>
                     <hr/>
                 </div>

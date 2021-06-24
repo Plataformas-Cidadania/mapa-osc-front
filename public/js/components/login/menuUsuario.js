@@ -40,10 +40,10 @@ class MenuUsuario extends React.Component {
 
     render() {
 
-        let usuario = 'Olá, faça seu login ou se cadastre-se';
+        let usuario = 'Olá, faça seu login ou se cadastre';
         if (this.state.tx_nome_usuario) {
             let arrayNome = this.state.tx_nome_usuario.split(' ');
-            usuario = 'Olá, ' + arrayNome[0] + ' seja bem vindo!';
+            usuario = 'Olá, ' + arrayNome[0] + '. Seja bem-vind@!';
         }
         return React.createElement(
             'div',

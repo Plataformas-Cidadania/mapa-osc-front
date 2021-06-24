@@ -66,33 +66,17 @@
     <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+<!--            <div class="col-md-12">
                 <div class="title-style">
                     <h2>5 OSCs mais próximas de você, por área de atuação</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
-            </div>
+            </div>-->
             <div class="col-md-12">
                 {{--OSCs proximas--}}
                 <div id="nextOsc"></div>
             </div>
-
-            {{--<div class="custom0 owl-carousel owl-theme">
-                @foreach($osc_recentes as $item)
-                    <a href="" target="_blank">
-                        <div class="item">
-                            <picture>
-                                <source data-src="/imagens/items/lg-" media="(max-width: 468px)">
-                                <source data-src="/imagens/items/md-" media="(max-width: 768px)">
-                                <source data-src="/imagens/items/md-" class="img-responsive">
-                                <img src="/img/pre-img.gif" data-src="/imagens/items/lg-" alt="Imagem sobre " title="Imagem sobre " width="100%" class="cliente-list-img-hover lazyload">
-                            </picture>
-                        </div>
-                    </a>
-                @endforeach
-            </div>--}}
-
 
 
         </div>
@@ -112,7 +96,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title-style">
-                    <h2>Posts</h2>
+                    <h2>Destaques</h2>
                     <div class="line line-fix block" data-move-x="980px"></div>
                     <hr/>
                 </div>
@@ -121,14 +105,14 @@
                 <div class="col-md-4">
                     <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
-                            {{--@if($item->imagem!="")
+                            @if($item->imagem!="")
                             <picture>
-                                <source srcset="imagens/{{$midiaSelect[1]}}/sm-{{$item->imagem}}" media="(max-width: 468px)">
-                                <source srcset="imagens/publi{{$midiaSelect[1]}}cacoes/sm-{{$item->imagem}}" media="(max-width: 768px)">
-                                <source srcset="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" class="img-responsive">
-                                <img src="img/loading.gif" data-src="imagens/{{$midiaSelect[1]}}/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
+                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
+                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
+                                <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
+                                <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
                             </picture>
-                            @endif--}}
+                            @endif
                             <div class="img-rede">
                                 <i class="fab fa-facebook-f"></i>
                                 <i class="fab fa-instagram"></i>
@@ -143,7 +127,7 @@
                     </a>
                 </div>
             @endforeach
-            <div class="col-md-12 text-center">
+<!--            <div class="col-md-12 text-center">
                 <br>
                 <br>
                 <div>
@@ -152,7 +136,7 @@
                         <button type="button" class="btn btn-outline-primary"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q"  class="corrente">{{$midia->titulo}}</a></button>
                     @endforeach
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="space">&nbsp;</div>
@@ -225,7 +209,7 @@
             autoplay:true,
             dots: true,
             navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
-            autoplayTimeout:5000,
+            autoplayTimeout:15000,
             responsive: {
                 0: {
                     items: 5

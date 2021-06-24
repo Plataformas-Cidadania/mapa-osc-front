@@ -35,8 +35,8 @@ class Governancas extends React.Component {
             editIdConselho: 0,
             loadingRemoveConselho: [],
 
-            deficiencia: null,
-            empregados: null,
+            deficiencia: 0,
+            empregados: 0,
             totalTrabalhadores: null,
 
             editIdOsc: 0,
@@ -125,11 +125,12 @@ class Governancas extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
+
                 this.setState({
                     governancas: data.governanca,
                     conselhos: data.conselho_fiscal,
-                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia,
-                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo,
+                    deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_deficiencia,
+                    empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_vinculo,
 
                     totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
                     loadingGovernanca: false,
@@ -430,7 +431,7 @@ class Governancas extends React.Component {
                 React.createElement(
                     'h3',
                     null,
-                    'Rela\xE7\xF5es de Trabalho e Governan\xE7a'
+                    'Rela\xE7\xF5es de trabalho e governan\xE7a'
                 ),
                 React.createElement('br', null),
                 React.createElement(
@@ -561,7 +562,11 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        React.createElement(
+                                            'span',
+                                            { style: { display: this.state.totalTrabalhadores > 0 ? 'none' : '' } },
+                                            'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        )
                                     )
                                 )
                             )
@@ -588,7 +593,11 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        React.createElement(
+                                            'span',
+                                            { style: { display: this.state.empregados > 0 ? 'none' : '' } },
+                                            'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        )
                                     )
                                 )
                             )
@@ -615,7 +624,11 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        React.createElement(
+                                            'span',
+                                            { style: { display: this.state.deficiencia > 0 ? 'none' : '' } },
+                                            'N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa.'
+                                        )
                                     )
                                 )
                             )
@@ -643,9 +656,7 @@ class Governancas extends React.Component {
                                         React.createElement(
                                             'button',
                                             { type: 'button', className: 'btn btn-success', onClick: this.updateVoluntario },
-                                            React.createElement('i', {
-                                                className: 'fas fa-cloud-download-alt' }),
-                                            ' '
+                                            React.createElement('i', { className: 'fas fa-check-circle' })
                                         ),
                                         React.createElement('br', null)
                                     ),

@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function index(){
 
         $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
-        $teasers = \App\Teaser::orderBy('teaser')->get();
+        $teasers = \App\Teaser::orderBy('posicao')->get();
         $text = \App\Text::where('slug', 'osc-proximas')->first();
 
         $midiasMenu = DB::table('midias')->orderBy('titulo')->get();

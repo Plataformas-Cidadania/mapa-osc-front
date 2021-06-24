@@ -150,13 +150,13 @@ class Oscs extends React.Component {
                 ),
                 React.createElement(
                     'td',
-                    { width: '500' },
+                    { width: '500', className: 'text-right' },
                     React.createElement(
                         'div',
                         { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "selo-osc-user/" + item.id_osc, target: '_blank' },
+                            { href: "selo-osc-user/" + item.id_osc },
                             ' Selo'
                         )
                     ),
@@ -177,7 +177,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, target: '_blank' },
+                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
                             ' Visualizar'
                         )
@@ -271,7 +271,7 @@ class Oscs extends React.Component {
                 React.createElement(
                     'h3',
                     null,
-                    React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                    React.createElement('i', { className: 'fas fa-list-alt' }),
                     ' Minhas OSCs'
                 ),
                 React.createElement(

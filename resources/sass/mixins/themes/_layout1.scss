@@ -44,13 +44,20 @@
     font-size: 12px;
     line-height: 13px;
     cursor: pointer;
+    border: solid 1px #EEEEEE ;
+    border-radius: 35px;
+    padding: 5px;
+    margin-top: 10px;
+}
+.login:hover{
+    background-color: #EEEEEE ;
 }
 .login-icon{
     width: 40px;
     height: 40px;
     background-color: $color-pri;
     float: left;
-    margin: 0 10px 0 10px;
+    margin: 0 10px 0 0;
 }
 .login svg{
     font-size: 20px;
@@ -58,9 +65,10 @@
     margin: 9px 0 0 10px;
 }
 .login p{
-    margin-top: 8px;
-    padding-top: 7px;
     width: 170px;
+    margin-top: 0!important;
+    margin-bottom: 6px!important;
+    padding-top: 8px;
 }
 .circle {
     height: 410px;

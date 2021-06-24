@@ -56,7 +56,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            //url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
@@ -98,7 +99,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -223,7 +225,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -354,6 +357,11 @@ class Objetivos extends React.Component {
                                     'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
                                 ),
                                 React.createElement('hr', null),
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    'Voc\xEA pode alinhar as atividades da sua OSC aos ODS da ONU. \xC9 muito simples. Basta escolher at\xE9 3 ODS relacionados \xE0s a\xE7\xF5es desenvolvidas e suas respectivas metas. O salvamento dessa p\xE1gina \xE9 autom\xE1tico.'
+                                ),
                                 React.createElement('br', null)
                             )
                         )

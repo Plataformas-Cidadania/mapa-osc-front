@@ -56,7 +56,8 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            //url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -98,7 +99,8 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2+'objetivos/metas/'+id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -228,7 +230,8 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2+'objetivos/metas/'+id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -338,7 +341,10 @@ class Objetivos extends React.Component{
                                 <div className="title-user-area">
                                     <div className="mn-accordion-icon"><i className="fas fa-globe-americas" aria-hidden="true"/></div>
                                     <h3>Objetivos do Desenvolvimento Sustentável - ODS</h3>
-                                    <hr/><br/>
+                                    <hr/>
+                                    <p>Você pode alinhar as atividades da sua OSC aos ODS da ONU. É muito simples. Basta escolher até 3 ODS relacionados às ações desenvolvidas e suas respectivas metas. O salvamento dessa página é automático.</p>
+                                    <br/>
+
                                 </div>
                             </div>
                         </div>

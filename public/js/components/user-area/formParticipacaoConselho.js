@@ -299,8 +299,8 @@ class FormParticipacaoConselho extends React.Component {
                     ),
                     React.createElement(
                         'button',
-                        { className: 'btn btn-primary', onClick: this.register },
-                        'Cadastrar'
+                        { className: 'btn btn-success', onClick: this.register },
+                        'Salvar'
                     ),
                     React.createElement(
                         'div',

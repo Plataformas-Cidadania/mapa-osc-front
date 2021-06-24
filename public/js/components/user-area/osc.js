@@ -35,7 +35,9 @@ class Osc extends React.Component {
             titleObjetivo: "",
             buttonObjetivos: 0,
 
-            dataChkboxMetas: []
+            dataChkboxMetas: [],
+
+            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar'
 
         };
 
@@ -481,7 +483,7 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'h3',
                                         null,
-                                        'Dados Gerais'
+                                        'Dados gerais'
                                     ),
                                     React.createElement('hr', null),
                                     React.createElement('br', null)
@@ -609,7 +611,16 @@ class Osc extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'alert alert-secondary' },
-                                        React.createElement('i', { className: 'fas fa-database float-right tx-pri' }),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'tooltips float-right' },
+                                            React.createElement('i', { className: 'fas fa-database tx-pri' }),
+                                            React.createElement(
+                                                'span',
+                                                { className: 'tooltiptext' },
+                                                this.state.tooltip
+                                            )
+                                        ),
                                         React.createElement(
                                             'strong',
                                             null,
@@ -760,7 +771,7 @@ class Osc extends React.Component {
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_site' },
-                                            'Web site'
+                                            'Site oficial'
                                         ),
                                         React.createElement(
                                             'div',
@@ -852,7 +863,7 @@ class Osc extends React.Component {
                                             { type: 'button', className: 'btn btn-success', onClick: this.updateOsc },
                                             React.createElement('i', {
                                                 className: 'fas fa-cloud-download-alt' }),
-                                            ' Salvar descri\xE7\xE3o'
+                                            ' Salvar'
                                         ),
                                         React.createElement('br', null)
                                     )

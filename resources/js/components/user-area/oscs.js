@@ -142,9 +142,9 @@ class Oscs extends React.Component{
                            {/* <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />*/}
                             {item.tx_nome_osc}
                         </td>
-                        <td width="500">
+                        <td width="500" className="text-right">
                             <div className="btn btn-outline-primary">
-                                <a href={"selo-osc-user/"+item.id_osc} target="_blank">
+                                <a href={"selo-osc-user/"+item.id_osc} >
                                    {/* <i className="fas fa-tag"/>*/} Selo
                                 </a>
                             </div>
@@ -156,7 +156,7 @@ class Oscs extends React.Component{
                             </div>
                             &nbsp;
                             <div className="btn btn-outline-primary">
-                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc} target="_blank">
+                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc}>
                                     <i className="fas fa-binoculars"/> Visualizar
                                 </a>
                             </div>
@@ -223,7 +223,7 @@ class Oscs extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <h3><i className="fa fa-user" aria-hidden="true"/> Minhas OSCs</h3>
+                    <h3><i className="fas fa-list-alt"/> Minhas OSCs</h3>
                     <p>Nessa área você pode gerenciar sua OSC ou varias</p>
                     <a className="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" style={{marginTop: '-80px'}}><i className="fa fa-plus"/> Adicionar OSC</a>
                     <hr/>
