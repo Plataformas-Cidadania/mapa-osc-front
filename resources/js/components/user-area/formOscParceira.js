@@ -167,7 +167,8 @@ class FormOscParceira extends React.Component{
             this.setState({loadingOscParceira: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'search/cnpj/autocomplete/' + search,
+                //url: getBaseUrl + 'search/cnpj/autocomplete/' + search,
+                url: getBaseUrl2 + 'busca/osc/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({listparceira: data, loadingOscParceira: false});

@@ -63,7 +63,8 @@ class Oscs extends React.Component {
         if (search.length >= 8) {
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
+                //url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
+                url: getBaseUrl2 + 'busca/osc/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({ oscsSearch: data, loadingSearch: false });
