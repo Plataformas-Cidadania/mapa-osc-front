@@ -767,7 +767,7 @@ class Osc extends React.Component {
                                         'div',
                                         { className: 'label-float' },
                                         React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_site', onChange: this.handleInputChange, value: this.state.form.tx_site,
-                                            placeholder: 'Se houver, insira o endere\xE7o da p\xE1gina da OSC na internet. Ex.: http://www.seudominio.com.br' }),
+                                            placeholder: 'Ex.: http://www.seudominio.com.br' }),
                                         React.createElement(
                                             'label',
                                             { htmlFor: 'tx_site' },

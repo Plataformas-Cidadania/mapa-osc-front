@@ -179,7 +179,7 @@ class Recursos extends React.Component{
             },
 
             loading: false,
-            ano: 2010,
+            ano: null,
             showMsg: false,
             msg: '',
             loadingAnos: false,
@@ -194,6 +194,11 @@ class Recursos extends React.Component{
             item_recursos_financeiros: false,
             item_recursos_proprios: false,
             select_recursos_id: 0,
+
+            tourRecursos1: true,
+            tourRecursos2: false,
+            tourRecursos3: false,
+            tourRecursos4: false,
         };
 
 
@@ -204,10 +209,37 @@ class Recursos extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.callPushAnos = this.callPushAnos.bind(this);
 
-
         this.getSemRecursos = this.getSemRecursos.bind(this);
         this.addSemRecursos = this.addSemRecursos.bind(this);
 
+        this.desativarTour = this.desativarTour.bind(this);
+
+    }
+
+    desativarTour(acao){
+
+        console.log(acao);
+
+        if(acao===1){
+            this.setState({tourRecursos1: false})
+            this.setState({tourRecursos2: true})
+        }
+        if(acao===2){
+            this.setState({tourRecursos2: false})
+            this.setState({tourRecursos3: true})
+        }
+        if(acao===3){
+            this.setState({tourRecursos3: false})
+            this.setState({tourRecursos4: true})
+        }
+        if(acao===0){
+            this.setState({
+                tourRecursos1: false,
+                tourRecursos2: false,
+                tourRecursos3: false,
+                tourRecursos4: false,
+            })
+        }
     }
 
     getAnos(acao){
@@ -218,7 +250,7 @@ class Recursos extends React.Component{
             url: getBaseUrl2+'osc/anos_recursos/'+this.props.id,
             cache: false,
             success: function (data) {
-
+                const data3 = data;
                 var data = Object.values(data);
                 const  data2 =  data;
                 let  campoAno =  this.state.campoAno;
@@ -240,12 +272,19 @@ class Recursos extends React.Component{
                     button:true,
                     activeIncert: activeIncert,
                     insertMsg: !data2,
+                }, function(){
+                    let teste = data3.shift()
+                    this.callRecursos(teste);
                 })
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
+    }
+
+    callTour(){
+        this.setState({loading: false});
     }
 
     callPushAnos(){
@@ -283,7 +322,6 @@ class Recursos extends React.Component{
 
         this.setState({addAnos: acao, activeMsg: activeMsg});
     }
-
 
     callRecursosValue(){
 
@@ -596,6 +634,14 @@ class Recursos extends React.Component{
     componentDidMount(){
         this.getAnos();
         this.getSemRecursos();
+        if(localStorage.getItem('tourRecursos')==="false"){
+            this.setState({
+                tourRecursos1: false,
+                tourRecursos2: false,
+                tourRecursos3: false,
+                tourRecursos4: false,
+            })
+        }
     }
 
     handleInputChange(event) {
@@ -775,8 +821,30 @@ class Recursos extends React.Component{
                                         <h3>Fontes de recursos anuais da OSC</h3>
                                         <hr/><br/>
                                     </div>
-
+                                    {/*=============================*/}
+                                    <Tour
+                                        position={0}//0 pular | 1 finalizar 2 1 none
+                                        passo={1}
+                                        txt={'Para descrever os recursos financeiros público ou privado recebidos pela sua OSC, escolha o ano de referência.'}
+                                        top={''}
+                                        right={''}
+                                        display={this.state.tourRecursos1}
+                                        desativarTour={this.desativarTour}
+                                    />
+                                    {/*=============================*/}
                                     <div style={{fontSize: "13px"}}>Anos: </div>
+                                    {/*=============================*/}
+                                    <Tour
+                                        position={2}//0 pular | 1 finalizar | 2 none
+                                        passo={2}
+                                        txt={'Caso não exista o ano desejado, você pode adicionar.'}
+                                        top={'-60px'}
+                                        right={'-200px'}
+                                        float={'right'}
+                                        display={this.state.tourRecursos2}
+                                        desativarTour={this.desativarTour}
+                                    />
+                                    {/*=============================*/}
                                     <div className="btn-group" role="group" aria-label="Anos">
                                         <div style={{display: this.state.loadingAnos ? '' : 'none'}}>
                                             <i className="fas fa-spinner fa-spin" />
@@ -798,6 +866,7 @@ class Recursos extends React.Component{
                                             <a className="cursor" onClick={() => this.callAddAnos(true)}  style={{display: this.state.addAnos ? "none" : "", top: '4px', position: 'relative'}} >
                                                 <i className="fas fa-plus-circle fa-2x tx-pri" />
                                             </a>
+
 
                                             <div style={{display: this.state.activeMsg==true ? "" : "none"}}>
                                                 <div className="alert alert-danger" style={{display: this.state.activeIncert ? "" : "none", marginTop: '10px', clear: 'both'}}>
@@ -821,8 +890,32 @@ class Recursos extends React.Component{
                                         {/*////////////////////////////PUBLICOS//////////////////////////////*/}
                                         <div className="col-md-12">
                                             <h2 style={{float: 'left'}}>Recursos públicos</h2>
+                                            {/*=============================*/}
+                                            <Tour
+                                                position={2}//0 pular | 1 finalizar | 2 none
+                                                passo={3}
+                                                txt={'Preencha os campos, digitando as informações. Apos digitar assim que sair do compo será salvo altomaticamente!'}
+                                                top={'-120px'}
+                                                right={''}
+                                                float={''}
+                                                display={this.state.tourRecursos3}
+                                                desativarTour={this.desativarTour}
+                                            />
+                                            {/*=============================*/}
                                             {/*/////////////////////*/}
                                             <div  style={{float: 'right'}}  >
+                                                {/*=============================*/}
+                                                <Tour
+                                                    position={1}//0 pular | 1 finalizar | 2 none
+                                                    passo={4}
+                                                    txt={'Se não tiver informações sobre esse tema, há a opção de clicar na caixa "Não possui"'}
+                                                    top={'-170px'}
+                                                    right={'-240px'}
+                                                    float={'right'}
+                                                    display={this.state.tourRecursos4}
+                                                    desativarTour={this.desativarTour}
+                                                />
+                                                {/*/=============================*/}
                                                 <div className="custom-control custom-checkbox text-center">
                                                     <div className="cursor" onClick={() => this.addSemRecursos(1, !this.state.item_recursos_publicos)}>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF'}}/> Não possui
@@ -839,7 +932,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][0].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][0].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][0].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][0].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][0].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -848,7 +941,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][1].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][1].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][1].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][1].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][1].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -857,7 +950,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][2].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][2].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][2].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][2].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][2].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -866,7 +959,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][3].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][3].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][3].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][3].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][3].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -875,7 +968,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][4].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][4].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][4].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][4].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][4].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -884,7 +977,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[1][5].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[1][5].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[1][5].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[1][5].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[1][5].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -914,7 +1007,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][0].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][0].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][0].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][0].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][0].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -923,7 +1016,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][1].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][1].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][1].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][1].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][1].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -932,7 +1025,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][2].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][2].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][2].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][2].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][2].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -941,7 +1034,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][3].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][3].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][3].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][3].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][3].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -950,7 +1043,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][4].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][4].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][4].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][4].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][4].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -959,7 +1052,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][5].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][5].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][5].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][5].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][5].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -968,7 +1061,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][6].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][6].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][6].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][6].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][6].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -977,7 +1070,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][7].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][7].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][7].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][7].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][7].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -986,7 +1079,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[2][8].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[2][8].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[2][8].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[2][8].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[2][8].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1014,7 +1107,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[3][0].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[3][0].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[3][0].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[3][0].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[3][0].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1023,7 +1116,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[3][1].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[3][1].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[3][1].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[3][1].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[3][1].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1032,7 +1125,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[3][2].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[3][2].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[3][2].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[3][2].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[3][2].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1041,7 +1134,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[3][3].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[3][3].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[3][3].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[3][3].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[3][3].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1050,7 +1143,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[3][4].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[3][4].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[3][4].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[3][4].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[3][4].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1080,7 +1173,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][0].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][0].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][0].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][0].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][0].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1089,7 +1182,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][1].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][1].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][1].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][1].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][1].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1098,7 +1191,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][2].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][2].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][2].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][2].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][2].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1107,7 +1200,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][3].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][3].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][3].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][3].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][3].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1116,7 +1209,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][4].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][4].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][4].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][4].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][4].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1125,7 +1218,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][5].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][5].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][5].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][5].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][5].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />
@@ -1134,7 +1227,7 @@ class Recursos extends React.Component{
                                                     id_osc={this.props.id}
                                                     cd={this.state.recursos[4][6].cd_fonte_recurso_osc}
                                                     name={this.state.recursos[4][6].cd_fonte_recurso_osc}
-                                                    value={this.state.recursos[4][6].nr_valor_recursos_osc}
+                                                    value={formatarMoeda(this.state.recursos[4][6].nr_valor_recursos_osc)}
                                                     txt={this.state.recursos[4][6].tx_nome_fonte_recursos_osc}
                                                     ano={this.state.ano+'-01-01'}
                                                 />

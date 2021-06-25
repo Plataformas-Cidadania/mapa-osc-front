@@ -623,7 +623,7 @@ class Osc extends React.Component{
                                         <div className="col-md-6">
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_site" onChange={this.handleInputChange} value={this.state.form.tx_site}
-                                                       placeholder="Se houver, insira o endereço da página da OSC na internet. Ex.: http://www.seudominio.com.br" />
+                                                       placeholder="Ex.: http://www.seudominio.com.br" />
                                                 <label htmlFor="tx_site">Site oficial</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
