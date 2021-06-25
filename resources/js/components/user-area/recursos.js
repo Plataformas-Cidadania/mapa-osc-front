@@ -199,6 +199,8 @@ class Recursos extends React.Component{
             tourRecursos2: false,
             tourRecursos3: false,
             tourRecursos4: false,
+
+            loadingNPossui: false,
         };
 
 
@@ -746,6 +748,9 @@ class Recursos extends React.Component{
         let item_recursos_financeiros = !this.state.item_recursos_financeiros;
         let item_recursos_proprios = !this.state.item_recursos_proprios;
 
+
+        this.setState({loadingNPossui: true});
+
         if(status===true){
             $.ajax({
                 method: 'POST',
@@ -762,6 +767,7 @@ class Recursos extends React.Component{
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({loadingNPossui: false});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -778,6 +784,7 @@ class Recursos extends React.Component{
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({loadingNPossui: false});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -918,6 +925,7 @@ class Recursos extends React.Component{
                                                 {/*/=============================*/}
                                                 <div className="custom-control custom-checkbox text-center">
                                                     <div className="cursor" onClick={() => this.addSemRecursos(1, !this.state.item_recursos_publicos)}>
+                                                        <div className="float-left" style={{display: this.state.loadingNPossui ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
                                                 </div>
@@ -992,6 +1000,7 @@ class Recursos extends React.Component{
                                             <div  style={{float: 'right'}}  >
                                                 <div className="custom-control custom-checkbox text-center">
                                                     <div className="cursor" onClick={() => this.addSemRecursos(2, !this.state.item_recursos_privados)}>
+                                                        <div className="float-left" style={{display: this.state.loadingNPossui ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_privados ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
                                                 </div>
@@ -1093,6 +1102,7 @@ class Recursos extends React.Component{
                                             <div  style={{float: 'right'}}  >
                                                 <div className="custom-control custom-checkbox text-center">
                                                     <div className="cursor" onClick={() => this.addSemRecursos(3, !this.state.item_recursos_financeiros)}>
+                                                        <div className="float-left" style={{display: this.state.loadingNPossui ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_financeiros ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
                                                 </div>
@@ -1159,6 +1169,7 @@ class Recursos extends React.Component{
                                             <div  style={{float: 'right'}}  >
                                                 <div className="custom-control custom-checkbox text-center">
                                                     <div className="cursor" onClick={() => this.addSemRecursos(4, !this.state.item_recursos_proprios)}>
+                                                        <div className="float-left" style={{display: this.state.loadingNPossui ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
                                                         <div className="box-checkbox" style={{backgroundColor: this.state.item_recursos_proprios ? '#3A559B' : '#FFFFFF'}}/> Não possui
                                                     </div>
                                                 </div>

@@ -198,7 +198,9 @@ class Recursos extends React.Component {
             tourRecursos1: true,
             tourRecursos2: false,
             tourRecursos3: false,
-            tourRecursos4: false
+            tourRecursos4: false,
+
+            loadingNPossui: false
         };
 
         this.getAnos = this.getAnos.bind(this);
@@ -739,6 +741,8 @@ class Recursos extends React.Component {
         let item_recursos_financeiros = !this.state.item_recursos_financeiros;
         let item_recursos_proprios = !this.state.item_recursos_proprios;
 
+        this.setState({ loadingNPossui: true });
+
         if (status === true) {
             $.ajax({
                 method: 'POST',
@@ -755,6 +759,7 @@ class Recursos extends React.Component {
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({ loadingNPossui: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -771,6 +776,7 @@ class Recursos extends React.Component {
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({ loadingNPossui: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -958,6 +964,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(1, !this.state.item_recursos_publicos) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -1046,6 +1057,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(2, !this.state.item_recursos_privados) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_privados ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -1161,6 +1177,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(3, !this.state.item_recursos_financeiros) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_financeiros ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -1240,6 +1261,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(4, !this.state.item_recursos_proprios) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_proprios ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
