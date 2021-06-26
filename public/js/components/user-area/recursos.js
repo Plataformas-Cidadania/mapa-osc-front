@@ -195,10 +195,10 @@ class Recursos extends React.Component {
             item_recursos_proprios: false,
             select_recursos_id: 0,
 
-            tourRecursos1: true,
-            tourRecursos2: false,
-            tourRecursos3: false,
-            tourRecursos4: false,
+            tour1: true,
+            tour2: false,
+            tour3: false,
+            tour4: false,
 
             loadingNPossui: false
         };
@@ -218,26 +218,24 @@ class Recursos extends React.Component {
 
     desativarTour(acao) {
 
-        console.log(acao);
-
         if (acao === 1) {
-            this.setState({ tourRecursos1: false });
-            this.setState({ tourRecursos2: true });
+            this.setState({ tour1: false });
+            this.setState({ tour2: true });
         }
         if (acao === 2) {
-            this.setState({ tourRecursos2: false });
-            this.setState({ tourRecursos3: true });
+            this.setState({ tour2: false });
+            this.setState({ tour3: true });
         }
         if (acao === 3) {
-            this.setState({ tourRecursos3: false });
-            this.setState({ tourRecursos4: true });
+            this.setState({ tour3: false });
+            this.setState({ tour4: true });
         }
         if (acao === 0) {
             this.setState({
-                tourRecursos1: false,
-                tourRecursos2: false,
-                tourRecursos3: false,
-                tourRecursos4: false
+                tour1: false,
+                tour2: false,
+                tour3: false,
+                tour4: false
             });
         }
     }
@@ -635,10 +633,10 @@ class Recursos extends React.Component {
         this.getSemRecursos();
         if (localStorage.getItem('tourRecursos') === "false") {
             this.setState({
-                tourRecursos1: false,
-                tourRecursos2: false,
-                tourRecursos3: false,
-                tourRecursos4: false
+                tour1: false,
+                tour2: false,
+                tour3: false,
+                tour4: false
             });
         }
     }
@@ -846,8 +844,9 @@ class Recursos extends React.Component {
                                 txt: 'Para descrever os recursos financeiros público ou privado recebidos pela sua OSC, escolha o ano de referência.',
                                 top: '',
                                 right: '',
-                                display: this.state.tourRecursos1,
-                                desativarTour: this.desativarTour
+                                display: this.state.tour1,
+                                desativarTour: this.desativarTour,
+                                storage: 'tourRecursos'
                             }),
                             React.createElement(
                                 'div',
@@ -859,10 +858,11 @@ class Recursos extends React.Component {
                                 , passo: 2,
                                 txt: 'Caso não exista o ano desejado, você pode adicionar.',
                                 top: '-60px',
-                                right: '-200px',
+                                right: '-263px',
                                 float: 'right',
-                                display: this.state.tourRecursos2,
-                                desativarTour: this.desativarTour
+                                display: this.state.tour2,
+                                desativarTour: this.desativarTour,
+                                storage: 'tourRecursos'
                             }),
                             React.createElement(
                                 'div',
@@ -938,12 +938,13 @@ class Recursos extends React.Component {
                                     React.createElement(Tour, {
                                         position: 2 //0 pular | 1 finalizar | 2 none
                                         , passo: 3,
-                                        txt: 'Preencha os campos, digitando as informações. Apos digitar assim que sair do compo será salvo altomaticamente!',
+                                        txt: 'Preencha os campos, digitando as informações. Após digitar, assim que sair do campo, as informações serão salvas automaticamente.',
                                         top: '-120px',
                                         right: '',
                                         float: '',
-                                        display: this.state.tourRecursos3,
-                                        desativarTour: this.desativarTour
+                                        display: this.state.tour3,
+                                        desativarTour: this.desativarTour,
+                                        storage: 'tourRecursos'
                                     }),
                                     React.createElement(
                                         'div',
@@ -951,12 +952,13 @@ class Recursos extends React.Component {
                                         React.createElement(Tour, {
                                             position: 1 //0 pular | 1 finalizar | 2 none
                                             , passo: 4,
-                                            txt: 'Se não tiver informações sobre esse tema, há a opção de clicar na caixa "Não possui"',
-                                            top: '-170px',
+                                            txt: 'Se não tiver informações sobre o tema no ano selecionado, há a opção de clicar na caixa "Não possui".',
+                                            top: '-193px',
                                             right: '-240px',
                                             float: 'right',
-                                            display: this.state.tourRecursos4,
-                                            desativarTour: this.desativarTour
+                                            display: this.state.tour4,
+                                            desativarTour: this.desativarTour,
+                                            storage: 'tourRecursos'
                                         }),
                                         React.createElement(
                                             'div',

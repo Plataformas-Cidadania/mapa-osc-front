@@ -10,6 +10,8 @@ class Objetivos extends React.Component{
             buttonObjetivos: 0,
             dataChkboxMetas: [],
 
+            tour1: true,
+            tour2: false,
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,12 +22,34 @@ class Objetivos extends React.Component{
         this.listObjetivos = this.listObjetivos.bind(this);
         this.listChkboxMetas = this.listChkboxMetas.bind(this);
         this.listArea = this.listArea.bind(this);
+
+        this.desativarTour = this.desativarTour.bind(this);
+    }
+
+    desativarTour(acao){
+
+        if(acao===1){
+            this.setState({tour1: false})
+            this.setState({tour2: true})
+        }
+        if(acao===0){
+            this.setState({
+                tour1: false,
+                tour2: false,
+            })
+        }
     }
 
     componentDidMount(){
         this.listArea();
         this.listChkboxMetas();
         this.listObjetivos();
+        if(localStorage.getItem('tourODS')==="false"){
+            this.setState({
+                tour1: false,
+                tour2: false,
+            })
+        }
     }
 
     handleInputChange(event) {
@@ -342,9 +366,8 @@ class Objetivos extends React.Component{
                                     <div className="mn-accordion-icon"><i className="fas fa-globe-americas" aria-hidden="true"/></div>
                                     <h3>Objetivos do Desenvolvimento Sustentável - ODS</h3>
                                     <hr/>
-                                    <p>Você pode alinhar as atividades da sua OSC aos ODS da ONU. É muito simples. Basta escolher até 3 ODS relacionados às ações desenvolvidas e suas respectivas metas. O salvamento dessa página é automático.</p>
+                                    {/*<p>Você pode alinhar as atividades da sua OSC aos ODS da ONU. É muito simples. Basta escolher até 3 ODS relacionados às ações desenvolvidas e suas respectivas metas. O salvamento dessa página é automático.</p>*/}
                                     <br/>
-
                                 </div>
                             </div>
                         </div>
@@ -352,6 +375,18 @@ class Objetivos extends React.Component{
                         <form>
                             <div className="row">
                                 <div className="col-md-12">
+                                    {/*=============================*/}
+                                    <Tour
+                                        position={0}//0 pular | 1 finalizar 2 1 none
+                                        passo={1}
+                                        txt={'Você pode alinhar as atividades da sua OSC aos ODS da ONU. É muito simples. Basta escolher até 3 ODS relacionados às ações desenvolvidas e suas respectivas metas, Para visualizar o próximo passo selecione um Objetivo.'}
+                                        top={'-240px'}
+                                        right={''}
+                                        display={this.state.tour1}
+                                        desativarTour={this.desativarTour}
+                                        storage={'tourODS'}
+                                    />
+                                    {/*=============================*/}
                                     <div>
                                         {objetivos}
                                         <br/><br/>
@@ -360,6 +395,19 @@ class Objetivos extends React.Component{
                                         <strong>Metas Relacionadas ao ODS definido</strong><hr/>
                                         <div>
                                             <strong>{this.state.titleObjetivo}</strong><br/><br/>
+                                            {/*=============================*/}
+                                            <Tour
+                                                position={1}//0 pular | 1 finalizar | 2 none
+                                                passo={2}
+                                                txt={'Selecione quais metas a sua organização se enquadra, ao clicar o salvamento será automático.'}
+                                                top={'140px'}
+                                                right={'8px'}
+                                                float={''}
+                                                display={this.state.tour2}
+                                                desativarTour={this.desativarTour}
+                                                storage={'tourRecursos'}
+                                            />
+                                            {/*/=============================*/}
                                             {metas}
                                         </div>
                                     </div>

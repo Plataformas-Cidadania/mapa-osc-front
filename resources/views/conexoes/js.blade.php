@@ -417,6 +417,7 @@
     <script src="js/components/user-area/oscs.js"></script>
 @endif
 @if($rota=="objetivos-user")
+    <script src="js/components/osc/tour.js"></script>
     <script src="js/components/user-area/objetivos.js"></script>
 @endif
 @if($rota=="register")

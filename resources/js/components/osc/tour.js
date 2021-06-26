@@ -75,7 +75,7 @@ class Tour extends React.Component {
 
     callCookies(acao){
         this.props.desativarTour(acao);
-        localStorage.setItem('tourRecursos', false);
+        localStorage.setItem(this.state.storage, false);
     }
 
     callPassos(acao){
@@ -91,6 +91,7 @@ class Tour extends React.Component {
             right: props.right,
             float: props.float,
             display: props.display,
+            storage: props.storage,
         });
     }
 
