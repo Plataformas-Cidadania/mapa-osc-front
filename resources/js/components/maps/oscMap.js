@@ -22,7 +22,7 @@ class OscMap extends React.Component{
             dataOsc: null,
             dataCalor: [],
             dataOscList: [],
-            pagina: 0,
+            paginaOscList: 0,
             totalOscList: 0,
             //year:props.year,
             //month:props.month,
@@ -80,6 +80,9 @@ class OscMap extends React.Component{
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
         this.loadOscList = this.loadOscList.bind(this);
+        this.setPageOscList = this.setPageOscList.bind(this);
+        this.nextPaceOscList = this.nextPaceOscList.bind(this);
+        this.previousPaceOscList = this.previousPaceOscList.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.areaOscMap = this.areaOscMap.bind(this);
@@ -720,18 +723,30 @@ class OscMap extends React.Component{
 
     }
 
+    setPageOscList(page){
+        this.setState({paginaOscList: page}, function(){
+            this.loadOscList();
+        });
+    }
+
+    nextPaceOscList(){
+        this.setPageOscList(this.state.pageOscList+1);
+    }
+    previousPaceOscList(){
+        this.setPageOscList(this.state.pageOscList-1);
+    }
 
     loadOscList(){
         this.setState({processingList: true}, function (){
             $.ajax({
                 method:'GET',
-                url: 'lista_osc/'+this.state.pagina,//tipo 2 região ao ser clicado irá carregas as ufs
+                url: 'lista_osc/'+this.state.paginaOscList,//tipo 2 região ao ser clicado irá carregas as ufs
                 data:{
                 },
                 cache: false,
                 success: function(data) {
                     console.log(data);
-                    this.setState({dataOscList: data.lista, totalList: data.total, processingList: false});
+                    this.setState({dataOscList: data.lista, totalOscList: data.total, processingList: false});
                     //this.populateMap();
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -1616,17 +1631,88 @@ class OscMap extends React.Component{
             });
         }
 
+        //MONTANDO A PAGINAÇÃO
+        let pagina = this.state.paginaOscList;
+        let p = [];//armazena todas as paginas
+        let pages = [];//paginas q serão mostradas
+        let n_paginas = Math.ceil(this.state.totalOscList/10);
+        console.log('pagina', pagina);
+        let qtdPages = 5;
+        for (let i=0; i < n_paginas; i++){
+            let active = this.state.paginaOscList === i ? 'active' : '';
+            p[i] = (
+                <li className={"page-item "+active}>
+                    <a className="page-link" style={{cursor: 'pointer'}} onClick={()=>this.setPageOscList(i)}>
+                        {i + 1}
+                    </a>
+                </li>);
+        }
+        if(n_paginas <= 10){
+            for (let i=0; i < qtdPages; i++){
+                let active = this.state.paginaOscList === i ? 'active' : '';
+                pages.push(p[i]);
+            }
+        }else{
+            if(pagina<=5){
+                pages.push(p[0]);
+                pages.push(p[1]);
+                pages.push(p[2]);
+                pages.push(p[3]);
+                pages.push(p[4]);
+                pages.push(p[5]);
+                pages.push(p[6]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                pages.push(p[n_paginas-1]);
+            }else if(pagina===n_paginas-1 || pagina===n_paginas-2){
+                pages.push(p[0]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                pages.push(p[n_paginas-8]);
+                pages.push(p[n_paginas-7]);
+                pages.push(p[n_paginas-6]);
+                pages.push(p[n_paginas-5]);
+                pages.push(p[n_paginas-4]);
+                pages.push(p[n_paginas-3]);
+                pages.push(p[n_paginas-2]);
+                pages.push(p[n_paginas-1]);
+            }else{
+                pages.push(p[0]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                if(parseInt(pagina)+4 < n_paginas-1){
+                    pages.push(p[parseInt(pagina)-3]);
+                    pages.push(p[parseInt(pagina)-2]);
+                    pages.push(p[parseInt(pagina)-1]);
+                    pages.push(p[pagina]);
+                    pages.push(p[parseInt(pagina)+1])
+                    pages.push(p[parseInt(pagina)+2])
+                    pages.push(p[parseInt(pagina)+3])
+                    pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                }else{
+                    pages.push(p[n_paginas-8]);
+                    pages.push(p[n_paginas-7]);
+                    pages.push(p[n_paginas-6]);
+                    pages.push(p[n_paginas-5]);
+                    pages.push(p[n_paginas-4]);
+                    pages.push(p[n_paginas-3]);
+                    pages.push(p[n_paginas-2]);
+                    pages.push(p[n_paginas-1]);
+                }
+                pages.push(p[n_paginas-1]);
+            }
+        }
+
+
         let pagination = (
             <ul className="pagination">
-                <li className="page-item disabled" style={{display: this.state.pagina > 0 ? '' : 'none'}}>
+                <li className="page-item disabled" style={{display: this.state.pageOscList > 0 ? '' : 'none'}}>
                     <a className="page-link" href="#" tabIndex="-1">Anterior</a>
                 </li>
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                {pages}
+                {/*<li className="page-item"><a className="page-link" href="#">1</a></li>
                 <li className="page-item active">
                     <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
                 </li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item" style={{display: this.state.pagina < parseInt(this.state.total / 10) ? '' : 'none'}}>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>*/}
+                <li className="page-item" style={{display: this.state.pageOscList < parseInt(this.state.totalOscList / 10) ? '' : 'none'}}>
                     <a className="page-link" href="#">Próximo</a>
                 </li>
             </ul>
