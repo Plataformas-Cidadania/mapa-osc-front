@@ -50,8 +50,8 @@ class Page extends React.Component {
         this.setState({processingOsc: true}, function(){
             $.ajax({
                 method:'GET',
-                //url: getBaseUrl2+'geo/regioes',
-                url: 'geo/regioes',
+                url: getBaseUrl2+'geo/regioes',
+                //url: 'geo/regioes',
                 data:{
                 },
                 cache: false,

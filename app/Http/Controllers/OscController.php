@@ -181,8 +181,8 @@ class OscController extends Controller{
             $api = env('HOST_DOCKER')."api/";
         }
 
-        //$pagina = $api."geo/oscs/estado/".$estado_id;
-        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$estado_id;
+        $pagina = $api."geo/oscs/estado/".$estado_id;
+        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$estado_id;
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -209,8 +209,8 @@ class OscController extends Controller{
             $api = env('HOST_DOCKER')."api/";
         }
 
-        //$pagina = $api."geo/oscs/estado/".$estado_id;
-        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/popup/".$id;
+        $pagina = $api."osc/popup/".$id;
+        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/popup/".$id;
 
 
         $ch = curl_init();
@@ -240,13 +240,13 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-        //$pgOsc = $api."osc/geo/estado";
-        $pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/estados";
+        $pgOsc = $api."geo/estados";
+        //$pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/estados";
         //$pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
         //Log::info($pgOsc);
 
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
-        //$pgIdh = $api."osc/ipeadata/uffs";
+        //$pgIdh = $api."ipeadata/uffs";
         $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
 
         $ch = curl_init();
@@ -326,8 +326,8 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-        //$pgIdh = $api."ipeadata/municipios/estado/$cod_uf";
-        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/municipios/estado/$cod_uf";
+        $pgIdh = $api."ipeadata/municipios/estado/$cod_uf";
+        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/municipios/estado/$cod_uf";
         //Log::info($pgIdh);
 
         $chIdh = curl_init();

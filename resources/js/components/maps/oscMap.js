@@ -740,7 +740,8 @@ class OscMap extends React.Component{
         this.setState({processingList: true}, function (){
             $.ajax({
                 method:'GET',
-                url: 'lista_osc/'+this.state.paginaOscList,//tipo 2 região ao ser clicado irá carregas as ufs
+                url: getBaseUrl2 + 'lista_osc/'+this.state.paginaOscList,
+                //url: 'lista_osc/'+this.state.paginaOscList,
                 data:{
                 },
                 cache: false,
@@ -787,8 +788,8 @@ class OscMap extends React.Component{
         this.setState({processingOscUfs: true}, function(){
             $.ajax({
                 method:'GET',
-                //url: getBaseUrl2+"geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
-                url: "geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
+                url: getBaseUrl2+"geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
+                //url: "geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
                 data:{
                 },
                 cache: false,
@@ -928,13 +929,23 @@ class OscMap extends React.Component{
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
                 method:'GET',
-                //url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
-                url: 'get-osc-uf/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+                //url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,
+                //url: 'get-osc-uf/'+this.state.codigoTerritorioSelecionado,
+                url: getBaseUrl2 + 'geo/oscs/estado/'+this.state.codigoTerritorioSelecionado,
                 data:{
                 },
                 cache: false,
                 success: function(data) {
                     console.log('loadPontosPorTerritorio', data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+                    }
+                    data = data2;
+                    /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
                         this.populateMapCluster();
@@ -1406,12 +1417,13 @@ class OscMap extends React.Component{
         let _this = this;
         $.ajax({
             method:'GET',
-            url: 'get-data-osc/'+id,
+            //url: 'get-data-osc/'+id,
+            url: getBaseUrl2 + 'osc/popup/'+id,
             data:{
             },
             cache: false,
             success: function(data) {
-                data = JSON.parse(data);
+                //data = JSON.parse(data);
                 data = data[0];
                 console.log(data);
                 marker.bindPopup('' +
