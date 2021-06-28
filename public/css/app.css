@@ -12513,6 +12513,12 @@ figcaption {
   color: #324885 !important;
 }
 
+.save-check {
+  position: absolute;
+  left: 22px;
+  margin-top: -31px;
+}
+
 .btn-plus {
   color: #3A559B;
   text-decoration: underline;
