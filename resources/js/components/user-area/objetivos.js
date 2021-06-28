@@ -406,7 +406,7 @@ class Objetivos extends React.Component{
                                         <br/><br/>
                                     </div>
                                     <div style={{display: this.state.titleMeta ? '' : 'none'}}>
-                                        <strong>Metas Relacionadas ao ODS definido</strong><hr/>
+                                        <strong>Metas relacionadas ao ODS definido</strong><hr/>
                                         <div>
                                             <strong>{this.state.titleObjetivo}</strong><br/><br/>
                                             {/*=============================*/}

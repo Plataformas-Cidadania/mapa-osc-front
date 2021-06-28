@@ -560,7 +560,7 @@ class Osc extends React.Component{
 
 
                                     <div className="form-row">
-                                        <div className="form-group col-md-6">
+                                        <div className="form-group col-md-7">
                                             <div className="alert alert-secondary">
 
                                                 <div className="tooltips float-right">

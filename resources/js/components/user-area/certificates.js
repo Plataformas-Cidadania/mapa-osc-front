@@ -248,7 +248,7 @@ class Certificates extends React.Component{
                     <td>{municipio}{estado}</td>
                     <td width="70">
                         <div style={{display: (item.cd_certificado==7 || item.cd_certificado==8 ? '' : 'none')}}>
-                            <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
+                            <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary cursor"/></a>&nbsp;&nbsp;
                             <a onClick={() => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado')} style={{cursor: 'pointer', top: '4px', position: 'relative'}}>
                                 <i className="far fa-trash-alt text-danger float-right"/>
                             </a>

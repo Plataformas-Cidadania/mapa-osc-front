@@ -435,7 +435,7 @@ class Objetivos extends React.Component {
                                     React.createElement(
                                         "strong",
                                         null,
-                                        "Metas Relacionadas ao ODS definido"
+                                        "Metas relacionadas ao ODS definido"
                                     ),
                                     React.createElement("hr", null),
                                     React.createElement(

@@ -624,10 +624,6 @@ class FormProjeto extends React.Component {
     }
 
     checkMetas(cd_objetivo, cd_meta, delId, checkedMeta) {
-
-        console.log('checkedMeta', checkedMeta);
-        console.log(cd_objetivo, cd_meta, delId, checkedMeta);
-
         let objetivos = this.state.objetivos;
         objetivos.find(function (item) {
             if (item.cd_objetivo_projeto === cd_objetivo) {
@@ -640,7 +636,6 @@ class FormProjeto extends React.Component {
         });
 
         if (checkedMeta === true) {
-            console.log('Insert');
             $.ajax({
                 method: 'POST',
                 url: getBaseUrl2 + 'osc/projeto/objetivo',
@@ -648,7 +643,6 @@ class FormProjeto extends React.Component {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
                 data: {
-                    //id_objetivo_projeto: cd_meta,
                     cd_meta_projeto: cd_meta,
                     id_projeto: this.state.editId,
                     ft_objetivo_projeto: 'Representante de OSC'

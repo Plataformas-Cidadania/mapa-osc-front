@@ -607,7 +607,7 @@ class Osc extends React.Component {
                                 { className: 'form-row' },
                                 React.createElement(
                                     'div',
-                                    { className: 'form-group col-md-6' },
+                                    { className: 'form-group col-md-7' },
                                     React.createElement(
                                         'div',
                                         { className: 'alert alert-secondary' },

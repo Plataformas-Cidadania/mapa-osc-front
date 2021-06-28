@@ -318,7 +318,7 @@ class Certificates extends React.Component {
                         React.createElement(
                             'a',
                             { onClick: () => this.callModal(item.id_certificado, 'edit', 'Alterar') },
-                            React.createElement('i', { className: 'far fa-edit text-primary' })
+                            React.createElement('i', { className: 'far fa-edit text-primary cursor' })
                         ),
                         '\xA0\xA0',
                         React.createElement(
