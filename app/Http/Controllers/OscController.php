@@ -232,6 +232,18 @@ class OscController extends Controller{
 
     }
 
+    public function getGeoOscSearch($osc){
+        $pagina = "https://mapaosc.ipea.gov.br/api/search/osc/geo/$osc/0/0/1";
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        return $data;
+    }
+
 
 
     public function getOscAllUfs(){
@@ -246,8 +258,8 @@ class OscController extends Controller{
         //Log::info($pgOsc);
 
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
-        //$pgIdh = $api."ipeadata/uffs";
-        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
+        $pgIdh = $api."ipeadata/uffs";
+        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );

@@ -4,14 +4,25 @@
 @section('description', '')
 @section('image', '')
 @section('content')
-
+    <?php
+    $localidade = 'localidade';
+    if($origem >= 1 && $origem <= 5){
+        $localidade = "Região";
+    }else if($origem >= 11 && $origem <= 53){
+        $localidade = "Estado";
+    }else{
+        $localidade = "Município";
+    }
+    ?>
 
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <header>
-                        <a href="localidade/{{$origem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise do estado</a>
+                        @if(!empty($origem))
+                            <a href="localidade/{{$origem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise da {{$localidade}}</a>
+                        @endif
                         <br>
                         <h1>Mapa</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Mapa das OSCs</a> </h5>
@@ -33,7 +44,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
+                <script>
+                    origem = "{{$origem}}";
+                </script>
 
                 <style>
                     .map-load{

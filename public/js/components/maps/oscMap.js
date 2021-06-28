@@ -11,6 +11,7 @@ class OscMap extends React.Component {
             processingList: false,
             mapId: props.mapId,
             firstTimeLoad: true,
+            origem: props.origem,
             regioes: [],
             ufs: [],
             data: [],
@@ -112,11 +113,12 @@ class OscMap extends React.Component {
     componentWillReceiveProps(props) {
         //console.log('will receve props');
         //console.log(props.data);
-        if (props.data != this.state.data || props.dataTerritorio != this.state.dataTerritorio || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf || props.processingOsc != this.state.processingOsc || props.processingOscIdhUfs != this.state.processingOscIdhUfs) {
+        if (props.data != this.state.data || props.origem != this.state.origem || props.dataTerritorio != this.state.dataTerritorio || props.dataOscUf != this.state.dataOscUf || props.dataIdhUf != this.state.dataIdhUf || props.processingOsc != this.state.processingOsc || props.processingOscIdhUfs != this.state.processingOscIdhUfs) {
             //console.log(props.data);
             this.setState({
                 data: props.data,
-                dataTerritorio: props.dataTerritorio,
+                origem: props.origem,
+                //dataTerritorio: props.dataTerritorio,
                 dataOscUf: props.dataOscUf,
                 dataIdhUf: props.dataIdhUf,
                 processingOsc: props.processingOsc,
@@ -124,7 +126,23 @@ class OscMap extends React.Component {
             }, function () {
                 //if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
                 if (this.state.dataTerritorio && this.state.dataOscUf && this.state.dataIdhUf) {
-                    this.populateMap();
+                    let osc = true;
+                    if (parseInt(this.state.origem) <= 5) {
+                        this.loadTerritorio();
+                        osc = false;
+                    }
+                    if (parseInt(this.state.origem) >= 11 && parseInt(this.state.origem) <= 53) {
+                        this.loadTerritorioUf();
+                        osc = false;
+                    }
+                    if (parseInt(this.state.origem) > 53) {
+                        this.loadDataPontosPorMunicipio();
+                        osc = false;
+                    }
+                    if (osc) {
+                        this.loadDataPontosOscPesquisa();
+                    }
+                    //this.populateMap();
                     //this.areaOscMap();
                     this.areaIdhMap();
                 }
@@ -360,13 +378,13 @@ class OscMap extends React.Component {
         controlsMap.appendChild(divControlMarkerMap);
 
         //HeatMap
-        mapElements.controlHeatMap = this.controlHeatMap(thisReact);
+        /*mapElements.controlHeatMap = this.controlHeatMap(thisReact);
         let controlHeatMapObj = new mapElements.controlHeatMap();
         mapElements.map.addControl(controlHeatMapObj);
         //pega o div do controle
         let divControlHeatMap = controlHeatMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlHeatMap);
+        controlsMap.appendChild(divControlHeatMap);*/
         ////////////////FIM CONTROLERS DOS LAYERS////////////////////////////////////////////
 
 
@@ -756,17 +774,69 @@ class OscMap extends React.Component {
         });
     }
 
+    loadTerritorio() {
+        let _this = this;
+        let rota = 'geo/regioes';
+        if (parseInt(this.state.origem) > 0) {
+            rota = 'geo/elem/' + this.state.origem;
+        }
+        this.setState({ processingOsc: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2 + rota,
+                //url: 'geo/regioes',
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log('loadTerritorio data', data);
+                    let dataTemp = [];
+                    if (parseInt(_this.state.origem) > 0) {
+                        dataTemp[0] = data;
+                        data = dataTemp;
+                    }
+                    let territorio = [];
+                    //territorio.tipo_territorio = _this.state.territory+1
+                    territorio.tipo_territorio = 2;
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for (let i in data) {
+                        territorio.territorios.push(data[i]);
+                    }
+                    console.log('loadTerritorio territorio', territorio);
+                    _this.setState({ dataTerritorio: territorio, processingOsc: false }, function () {
+                        _this.populateMap();
+                    });
+                },
+                error: function (xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({ loading: false });
+                }
+
+            });
+        });
+    }
+
     loadTerritorioUf() {
         let _this = this;
+        let rota = "geo/estados/regiao/" + this.state.codigoTerritorioSelecionado;
+        if (parseInt(this.state.origem) >= 11 && parseInt(this.state.origem) <= 53) {
+            rota = 'geo/elem/' + this.state.origem;
+        }
         this.setState({ processingOscUfs: true }, function () {
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl2 + "geo/estados/regiao/" + this.state.codigoTerritorioSelecionado,
+                url: getBaseUrl2 + rota,
+                //url: getBaseUrl2+"geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
                 //url: "geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
                 data: {},
                 cache: false,
                 success: function (data) {
                     console.log('loadTerritorioUf', data);
+                    let dataTemp = [];
+                    if (parseInt(_this.state.origem) > 0) {
+                        dataTemp[0] = data;
+                        data = dataTemp;
+                    }
                     let territorio = [];
                     //territorio.tipo_territorio = _this.state.territory+1
                     territorio.tipo_territorio = 3;
@@ -909,6 +979,73 @@ class OscMap extends React.Component {
                         data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
                         //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
                     }
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({ dataOscCluster: data, processingOscPontos: false }, function () {
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
+        });
+    }
+
+    loadDataPontosPorMunicipio() {
+        console.log('CARREGAR PONTOS POR MUNICIPIO');
+        this.setState({ processingOscPontos: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2 + 'geo/oscs/municipio/' + this.state.origem,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log('loadPontosPorTerritorio', data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+                    }
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({ dataOscCluster: data, processingOscPontos: false }, function () {
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
+        });
+    }
+
+    loadDataPontosOscPesquisa() {
+        console.log('CARREGAR PONTOS OSC PESQUISADA');
+        let origem = this.state.origem.replace(/ /g, "_");
+        this.setState({ processingOscPontos: true }, function () {
+            $.ajax({
+                method: 'GET',
+                url: 'search/osc/geo/' + origem,
+                data: {},
+                cache: false,
+                success: function (data) {
+                    console.log('loadPontosPorTerritorio', data);
+                    data = JSON.parse(data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        if (parseInt(i) > 0) {
+                            data2.push([i, data[i][0], data[i][1]]);
+                        }
+                    }
+                    console.log('AAAAAAAAAAAAAAAAA', data);
+                    console.log('BBBBBBBBBBBBBBBBB', data2);
                     data = data2;
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){

@@ -13,12 +13,12 @@ class Page extends React.Component {
         };
 
         this.load = this.load.bind(this);
-        this.loadTerritorio = this.loadTerritorio.bind(this);
+        //this.loadTerritorio = this.loadTerritorio.bind(this);
     }
 
     componentDidMount(){
         //this.load();
-        this.loadTerritorio();
+        //this.loadTerritorio();
         this.loadOscUf();
     }
 
@@ -45,8 +45,9 @@ class Page extends React.Component {
 
     }
 
-    loadTerritorio(){
+    /*loadTerritorio(){
         let _this = this;
+        let rota = 'geo/regioes';
         this.setState({processingOsc: true}, function(){
             $.ajax({
                 method:'GET',
@@ -75,7 +76,7 @@ class Page extends React.Component {
             });
         })
 
-    }
+    }*/
 
     loadOscUf(){
         let _this = this;
@@ -110,7 +111,8 @@ class Page extends React.Component {
                 <OscMap
                     mapId="mapTeste"
                     data={this.state.data}
-                    dataTerritorio={this.state.dataTerritorio}
+                    origem={this.props.origem}
+                    //dataTerritorio={this.state.dataTerritorio}
                     dataOscUf={this.state.dataOscUf}
                     dataIdhUf={this.state.dataIdhUf}
                     processingOsc={this.state.processingOsc}
@@ -125,7 +127,7 @@ class Page extends React.Component {
 
 
 ReactDOM.render(
-    <Page />,
+    <Page origem={origem}/>,
     document.getElementById('page')
 );
 
