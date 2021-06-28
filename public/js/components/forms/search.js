@@ -3,16 +3,11 @@ class Search extends React.Component {
         super(props);
         this.state = {
             loadingList: false,
-            menu: [
-            /* {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'search/osc/autocomplete/', qtd: '10', campo: 'tx_nome_osc'},
-             {id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'menu/geo/municipio/', qtd: '25', campo: 'edmu_nm_municipio'},
-             {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'menu/geo/estado/', qtd: '10', campo: 'eduf_nm_uf'},
-             {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'menu/geo/regiao/', qtd: '10', campo: 'edre_nm_regiao'},*/
-            { id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'search/cnpj/autocomplete/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
+            menu: [{ id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
             searchOsc: '',
             searchOscId: 1,
             searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
-            searchOscRota: 'search/osc/autocomplete/',
+            searchOscRota: 'busca/osc/',
             searchOscQtd: '10',
             searchNameCampo: 'tx_nome_osc',
 
@@ -128,19 +123,14 @@ class Search extends React.Component {
                 React.createElement('br', null),
                 React.createElement('br', null),
                 React.createElement(
+                    'h2',
+                    { className: 'text-center' },
+                    'Busque uma OSC no Mapa'
+                ),
+                React.createElement(
                     'ul',
                     { className: 'menu-small mb-2' },
-                    menu,
-                    React.createElement(
-                        'li',
-                        { className: 'float-right' },
-                        React.createElement(
-                            'a',
-                            { href: 'filtro' },
-                            React.createElement('i', { className: 'fas fa-filter' }),
-                            ' Filtro'
-                        )
-                    )
+                    menu
                 ),
                 React.createElement(
                     'div',
@@ -167,6 +157,12 @@ class Search extends React.Component {
                         { style: { display: this.state.msg === '' ? 'none' : '' }, className: 'p-2 text-center' },
                         this.state.msg
                     )
+                ),
+                React.createElement(
+                    'a',
+                    { className: 'btn btn-outline-primary btn-sm', href: 'filtro', style: { marginTop: '8px' } },
+                    React.createElement('i', { className: 'fas fa-search' }),
+                    ' Consulta avan\xE7ada'
                 )
             )
         );

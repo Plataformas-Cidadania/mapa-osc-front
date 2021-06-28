@@ -176,7 +176,8 @@ class FormParticipacaoConselho extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/conselho',
+            //url: getBaseUrl + 'menu/osc/conselho',
+            url: getBaseUrl2 + 'ps_conselhos',
             data: {
 
             },
@@ -196,7 +197,8 @@ class FormParticipacaoConselho extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/periodicidade_reuniao',
+            //url: getBaseUrl + 'menu/osc/periodicidade_reuniao',
+            url: getBaseUrl2 + 'ps_conselhos_periodicidade',
             data: {
 
             },
@@ -273,8 +275,8 @@ class FormParticipacaoConselho extends React.Component{
                                 <p>&nbsp;</p>
                             </div>
                         </div>
-                        <button className="btn btn-primary" onClick={this.register}>
-                            Cadastrar
+                        <button className="btn btn-success" onClick={this.register}>
+                            Salvar
                         </button>
 
 

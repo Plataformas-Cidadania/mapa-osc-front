@@ -60,22 +60,20 @@
     .items-img{
         cursor: pointer;
         margin: 20px 0;
-        padding: 5px;
+        padding: 10px;
         text-align: center;
-        background-color: #3A559B;
+        border: solid 1px #EEEEEE;
+        border-radius: 5px;
+        min-height: 110px;
 
         transition: .3s;
-
-        /*-webkit-filter: grayscale(100%);
-        filter: grayscale(100%);
-        filter: gray; !* IE *!*/
     }
     .items-img img{
         margin: auto;
 
     }
     .items-img:hover{
-        background-color: #3A559B;
+        background-color: #EEEEEE;
         -webkit-transform: scale(1.1);
         -moz-transform: scale(1.1);
         -ms-transform: scale(1.1);

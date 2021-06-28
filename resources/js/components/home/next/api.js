@@ -68,51 +68,39 @@ class NextOsc extends React.Component {
     }
 
     callMenu(){
-        //console.log("2 ", index);
+
         this.setState({loadingOscs: true});
-        //let cd_municipio = JSON.parse(localStorage.getItem('cd_municipio'));
-        //let geo = JSON.parse(localStorage.getItem('geo'));
+
         let cd_municipio = this.state.cd_municipio;
         let geo = this.state.geo;
-        let url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao;
+        let url = getBaseUrl2 + 'lista_por_area_atuacao/' + this.state.areaAtuacao;
         if(cd_municipio){
-            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + '/municipio/' + cd_municipio;
+            url = getBaseUrl2 + 'lista_por_area_atuacao/' + this.state.areaAtuacao + '/municipio/' + cd_municipio;
         }
         if(geo){
             let lat = geo.lat.toString();
             let lon = geo.lon.toString();
             lat = lat.replace(".", ",");
             lon = lon.replace(".", ",");
-            url = getBaseUrl + 'osc/listaareaatuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
+            url = getBaseUrl + 'lista_por_area_atuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
         }
 
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl+'osc/listaareaatuacao/'+index,
             url: url,
-            //url: 'http://172.22.0.3/api/osc/listaareaatuacao/'+index,
             data: {
             },
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.setState({nextsOsc: data, loadingOscs: false});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
-                //this.setState({loadingList: false});
             }.bind(this)
         });
 
         $("#txtNext").hide(1000);
 
-
-
-        /*$(".divOff").hide(1000);
-        $("#divChart"+index).first().slideDown("slow");
-
-        $(".menu-left-active").attr('class', "list-group-item-theme");
-        $("#divMenuChart"+index).attr('class', "menu-left-active");*/
     }
 
     loadMunicipios(){
@@ -123,7 +111,6 @@ class NextOsc extends React.Component {
             },
             cache: false,
             success: function(data){
-                //console.log(data);
                 this.setState({municipios: data, loadingMunicipios: false});
             }.bind(this),
             error: function(xhr, status, err){
@@ -145,7 +132,6 @@ class NextOsc extends React.Component {
         });
     }
     setMunicipio(edmu_cd_municipio, edmu_nm_municipio, eduf_sg_uf){
-        //console.log(edmu_cd_municipio);
         localStorage.setItem('cd_municipio', edmu_cd_municipio);
         localStorage.setItem('nome_municipio', edmu_nm_municipio+' - '+eduf_sg_uf);
         $("#modalLocalidade").modal('hide');
@@ -155,9 +141,6 @@ class NextOsc extends React.Component {
     }
 
     render(){
-
-        //console.log("1 ", this.state.nextsOsc.length);
-        //console.log("1 ", nextOscTitle);
 
         let geoCity = localStorage.getItem('city')+' - '+localStorage.getItem('state');
 
@@ -238,6 +221,7 @@ class NextOsc extends React.Component {
             [300, -300],
             [330, -330],
         ]
+
 
         if(this.state.nextsOsc){
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
@@ -327,6 +311,15 @@ class NextOsc extends React.Component {
                     }
                 </div>
                 <br/>
+                <div className="col-md-12">
+                    <div className="title-style">
+                        {/*<h2>5 OSCs mais próximas de você, por área de atuação</h2>*/}
+                        <h2>{this.state.nextsOsc.length} OSCs de {this.state.txtAreaAtuacao} próximas da sua localidade</h2>
+                        <div className="line line-fix block" data-move-x="980px"/>
+                        <hr/>
+                    </div>
+                </div>
+
                 <div className="text-center">
                     {owNextOsc}
                 </div>

@@ -123,7 +123,8 @@ class FormProjetoLocalizacao extends React.Component{
             this.setState({loadingLocal: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'menu/geo/municipio/' + search,
+                //url: getBaseUrl + 'menu/geo/municipio/' + search,
+                url: getBaseUrl2 + 'busca/municipio/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({listMunicipio: data, loadingLocal: false});

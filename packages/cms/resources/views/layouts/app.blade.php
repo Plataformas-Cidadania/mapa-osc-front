@@ -109,14 +109,14 @@
                     <a href="cms/teasers"><i class="fa fa-fw fa-anchor"></i> Teaser</a>
                 </li>
                 <li>
-                    <a href="cms/texts"><i class="fa fa-fw fa-anchor"></i> Textos</a>
+                    <a href="cms/midias"><i class="fa fa-fw fa-anchor"></i> Mídias</a>
                 </li>
 
 <!--                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>-->
 
-                <li>
+<!--                <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Conteúdo <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
                         <li>
@@ -129,7 +129,7 @@
                             <a href="cms/posts"><i class="fa fa-fw fa-file-text-o"></i> Posts</a>
                         </li>
                     </ul>
-                </li>
+                </li>-->
 
 
                 {{--<li>

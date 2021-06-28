@@ -35,7 +35,8 @@ class Atuacoes extends React.Component {
             boxInfo: false,
             dataCnae: '',
             dataCnaeArea: '',
-            dataCnaeSubArea: []
+            dataCnaeSubArea: [],
+            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar'
 
         };
 
@@ -54,7 +55,7 @@ class Atuacoes extends React.Component {
 
     componentDidMount() {
         this.listArea();
-        this.listAreaSelected();
+        //this.listAreaSelected();
         this.listCnae();
         this.listCnaeArea();
     }
@@ -75,12 +76,14 @@ class Atuacoes extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/area_atuacao',
+            url: getBaseUrl2 + 'area_atuacao',
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
                 });
-                this.setState({ loading: false, areaAtuacao: data, button: true });
+                this.setState({ loading: false, areaAtuacao: data, button: true }, function () {
+                    this.listAreaSelected();
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -93,8 +96,8 @@ class Atuacoes extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl+'osc/dados_gerais/'+702542,
-            url: getBaseUrl + 'osc/dados_gerais/' + this.props.id,
+
+            url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
             success: function (data) {
                 this.setState({ loading: false, dataCnae: data.tx_nome_atividade_economica_osc });
             }.bind(this),
@@ -126,10 +129,10 @@ class Atuacoes extends React.Component {
     }
 
     listAreaSelected() {
+        //this.loadSubareas();
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/areas_atuacao_rep/'+789809,
             url: getBaseUrl2 + 'osc/areas_atuacao_rep/' + this.props.id,
             success: function (data) {
                 let itensAreas = [];
@@ -166,7 +169,8 @@ class Atuacoes extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/subarea_atuacao',
+            //url: getBaseUrl+'menu/osc/subarea_atuacao',
+            url: getBaseUrl2 + 'subarea_atuacao/',
             success: function (data) {
                 let areaAtuacao = this.state.areaAtuacao;
                 let imputOutros = this.state.imputOutros;
@@ -490,19 +494,6 @@ class Atuacoes extends React.Component {
                 ),
                 React.createElement(
                     'div',
-                    { className: 'text-center' },
-                    React.createElement(
-                        'strong',
-                        null,
-                        React.createElement('i', { className: 'fas fa-database tx-pri' }),
-                        ' Atividade econ\xF4mica (CNAE): '
-                    ),
-                    ' ',
-                    this.state.dataCnae
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'div',
                     { className: 'form-row' },
                     React.createElement(
                         'div',
@@ -510,7 +501,25 @@ class Atuacoes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'alert alert-secondary' },
-                            React.createElement('i', { className: 'fas fa-database float-right tx-pri' }),
+                            React.createElement(
+                                'div',
+                                { className: 'tooltips float-right' },
+                                React.createElement('i', { className: 'fas fa-database tx-pri' }),
+                                React.createElement(
+                                    'span',
+                                    { className: 'tooltiptext' },
+                                    this.state.tooltip
+                                )
+                            ),
+                            React.createElement(
+                                'strong',
+                                null,
+                                'Atividade econ\xF4mica (CNAE): '
+                            ),
+                            ' ',
+                            this.state.dataCnae,
+                            ' ',
+                            React.createElement('br', null),
                             React.createElement(
                                 'strong',
                                 null,

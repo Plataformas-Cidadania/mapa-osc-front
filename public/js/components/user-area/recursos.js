@@ -179,7 +179,7 @@ class Recursos extends React.Component {
             },
 
             loading: false,
-            ano: 2010,
+            ano: null,
             showMsg: false,
             msg: '',
             loadingAnos: false,
@@ -193,7 +193,14 @@ class Recursos extends React.Component {
             item_recursos_privados: false,
             item_recursos_financeiros: false,
             item_recursos_proprios: false,
-            select_recursos_id: 0
+            select_recursos_id: 0,
+
+            tour1: true,
+            tour2: false,
+            tour3: false,
+            tour4: false,
+
+            loadingNPossui: false
         };
 
         this.getAnos = this.getAnos.bind(this);
@@ -205,6 +212,32 @@ class Recursos extends React.Component {
 
         this.getSemRecursos = this.getSemRecursos.bind(this);
         this.addSemRecursos = this.addSemRecursos.bind(this);
+
+        this.desativarTour = this.desativarTour.bind(this);
+    }
+
+    desativarTour(acao) {
+
+        if (acao === 1) {
+            this.setState({ tour1: false });
+            this.setState({ tour2: true });
+        }
+        if (acao === 2) {
+            this.setState({ tour2: false });
+            this.setState({ tour3: true });
+        }
+        if (acao === 3) {
+            this.setState({ tour3: false });
+            this.setState({ tour4: true });
+        }
+        if (acao === 0) {
+            this.setState({
+                tour1: false,
+                tour2: false,
+                tour3: false,
+                tour4: false
+            });
+        }
     }
 
     getAnos(acao) {
@@ -215,7 +248,7 @@ class Recursos extends React.Component {
             url: getBaseUrl2 + 'osc/anos_recursos/' + this.props.id,
             cache: false,
             success: function (data) {
-
+                const data3 = data;
                 var data = Object.values(data);
                 const data2 = data;
                 let campoAno = this.state.campoAno;
@@ -237,12 +270,19 @@ class Recursos extends React.Component {
                     button: true,
                     activeIncert: activeIncert,
                     insertMsg: !data2
+                }, function () {
+                    let teste = data3.shift();
+                    this.callRecursos(teste);
                 });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
             }.bind(this)
         });
+    }
+
+    callTour() {
+        this.setState({ loading: false });
     }
 
     callPushAnos() {
@@ -591,6 +631,14 @@ class Recursos extends React.Component {
     componentDidMount() {
         this.getAnos();
         this.getSemRecursos();
+        if (localStorage.getItem('tourRecursos') === "false") {
+            this.setState({
+                tour1: false,
+                tour2: false,
+                tour3: false,
+                tour4: false
+            });
+        }
     }
 
     handleInputChange(event) {
@@ -691,6 +739,8 @@ class Recursos extends React.Component {
         let item_recursos_financeiros = !this.state.item_recursos_financeiros;
         let item_recursos_proprios = !this.state.item_recursos_proprios;
 
+        this.setState({ loadingNPossui: true });
+
         if (status === true) {
             $.ajax({
                 method: 'POST',
@@ -707,6 +757,7 @@ class Recursos extends React.Component {
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({ loadingNPossui: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -723,6 +774,7 @@ class Recursos extends React.Component {
                 },
                 success: function (data) {
                     this.callRecursos(this.state.ano);
+                    this.setState({ loadingNPossui: false });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -786,11 +838,32 @@ class Recursos extends React.Component {
                                 React.createElement('hr', null),
                                 React.createElement('br', null)
                             ),
+                            React.createElement(Tour, {
+                                position: 0 //0 pular | 1 finalizar 2 1 none
+                                , passo: 1,
+                                txt: 'Para descrever os recursos financeiros público ou privado recebidos pela sua OSC, escolha o ano de referência.',
+                                top: '',
+                                right: '',
+                                display: this.state.tour1,
+                                desativarTour: this.desativarTour,
+                                storage: 'tourRecursos'
+                            }),
                             React.createElement(
                                 'div',
                                 { style: { fontSize: "13px" } },
                                 'Anos: '
                             ),
+                            React.createElement(Tour, {
+                                position: 2 //0 pular | 1 finalizar | 2 none
+                                , passo: 2,
+                                txt: 'Caso não exista o ano desejado, você pode adicionar.',
+                                top: '-60px',
+                                right: '-263px',
+                                float: 'right',
+                                display: this.state.tour2,
+                                desativarTour: this.desativarTour,
+                                storage: 'tourRecursos'
+                            }),
                             React.createElement(
                                 'div',
                                 { className: 'btn-group', role: 'group', 'aria-label': 'Anos' },
@@ -862,15 +935,42 @@ class Recursos extends React.Component {
                                         { style: { float: 'left' } },
                                         'Recursos p\xFAblicos'
                                     ),
+                                    React.createElement(Tour, {
+                                        position: 2 //0 pular | 1 finalizar | 2 none
+                                        , passo: 3,
+                                        txt: 'Preencha os campos, digitando as informações. Após digitar, assim que sair do campo, as informações serão salvas automaticamente.',
+                                        top: '-120px',
+                                        right: '',
+                                        float: '',
+                                        display: this.state.tour3,
+                                        desativarTour: this.desativarTour,
+                                        storage: 'tourRecursos'
+                                    }),
                                     React.createElement(
                                         'div',
                                         { style: { float: 'right' } },
+                                        React.createElement(Tour, {
+                                            position: 1 //0 pular | 1 finalizar | 2 none
+                                            , passo: 4,
+                                            txt: 'Se não tiver informações sobre o tema no ano selecionado, há a opção de clicar na caixa "Não possui".',
+                                            top: '-193px',
+                                            right: '-240px',
+                                            float: 'right',
+                                            display: this.state.tour4,
+                                            desativarTour: this.desativarTour,
+                                            storage: 'tourRecursos'
+                                        }),
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox text-center' },
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(1, !this.state.item_recursos_publicos) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_publicos ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -889,7 +989,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][0].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][0].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][0].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][0].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][0].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -898,7 +998,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][1].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][1].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][1].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][1].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][1].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -907,7 +1007,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][2].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][2].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][2].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][2].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][2].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -916,7 +1016,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][3].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][3].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][3].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][3].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][3].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -925,7 +1025,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][4].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][4].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][4].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][4].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][4].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -934,7 +1034,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[1][5].cd_fonte_recurso_osc,
                                             name: this.state.recursos[1][5].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[1][5].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[1][5].nr_valor_recursos_osc),
                                             txt: this.state.recursos[1][5].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         })
@@ -959,6 +1059,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(2, !this.state.item_recursos_privados) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_privados ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -977,7 +1082,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][0].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][0].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][0].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][0].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][0].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -986,7 +1091,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][1].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][1].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][1].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][1].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][1].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -995,7 +1100,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][2].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][2].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][2].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][2].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][2].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1004,7 +1109,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][3].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][3].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][3].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][3].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][3].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1013,7 +1118,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][4].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][4].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][4].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][4].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][4].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1022,7 +1127,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][5].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][5].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][5].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][5].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][5].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1031,7 +1136,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][6].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][6].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][6].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][6].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][6].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1040,7 +1145,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][7].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][7].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][7].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][7].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][7].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1049,7 +1154,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[2][8].cd_fonte_recurso_osc,
                                             name: this.state.recursos[2][8].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[2][8].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[2][8].nr_valor_recursos_osc),
                                             txt: this.state.recursos[2][8].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         })
@@ -1074,6 +1179,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(3, !this.state.item_recursos_financeiros) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_financeiros ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -1092,7 +1202,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[3][0].cd_fonte_recurso_osc,
                                             name: this.state.recursos[3][0].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[3][0].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[3][0].nr_valor_recursos_osc),
                                             txt: this.state.recursos[3][0].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1101,7 +1211,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[3][1].cd_fonte_recurso_osc,
                                             name: this.state.recursos[3][1].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[3][1].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[3][1].nr_valor_recursos_osc),
                                             txt: this.state.recursos[3][1].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1110,7 +1220,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[3][2].cd_fonte_recurso_osc,
                                             name: this.state.recursos[3][2].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[3][2].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[3][2].nr_valor_recursos_osc),
                                             txt: this.state.recursos[3][2].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1119,7 +1229,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[3][3].cd_fonte_recurso_osc,
                                             name: this.state.recursos[3][3].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[3][3].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[3][3].nr_valor_recursos_osc),
                                             txt: this.state.recursos[3][3].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1128,7 +1238,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[3][4].cd_fonte_recurso_osc,
                                             name: this.state.recursos[3][4].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[3][4].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[3][4].nr_valor_recursos_osc),
                                             txt: this.state.recursos[3][4].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         })
@@ -1153,6 +1263,11 @@ class Recursos extends React.Component {
                                             React.createElement(
                                                 'div',
                                                 { className: 'cursor', onClick: () => this.addSemRecursos(4, !this.state.item_recursos_proprios) },
+                                                React.createElement(
+                                                    'div',
+                                                    { className: 'float-left', style: { display: this.state.loadingNPossui ? '' : 'none' } },
+                                                    React.createElement('i', { className: 'fa fa-spin fa-spinner' })
+                                                ),
                                                 React.createElement('div', { className: 'box-checkbox', style: { backgroundColor: this.state.item_recursos_proprios ? '#3A559B' : '#FFFFFF' } }),
                                                 ' N\xE3o possui'
                                             )
@@ -1171,7 +1286,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][0].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][0].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][0].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][0].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][0].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1180,7 +1295,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][1].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][1].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][1].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][1].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][1].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1189,7 +1304,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][2].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][2].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][2].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][2].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][2].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1198,7 +1313,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][3].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][3].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][3].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][3].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][3].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1207,7 +1322,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][4].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][4].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][4].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][4].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][4].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1216,7 +1331,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][5].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][5].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][5].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][5].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][5].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         }),
@@ -1225,7 +1340,7 @@ class Recursos extends React.Component {
                                             id_osc: this.props.id,
                                             cd: this.state.recursos[4][6].cd_fonte_recurso_osc,
                                             name: this.state.recursos[4][6].cd_fonte_recurso_osc,
-                                            value: this.state.recursos[4][6].nr_valor_recursos_osc,
+                                            value: formatarMoeda(this.state.recursos[4][6].nr_valor_recursos_osc),
                                             txt: this.state.recursos[4][6].tx_nome_fonte_recursos_osc,
                                             ano: this.state.ano + '-01-01'
                                         })

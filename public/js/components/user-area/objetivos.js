@@ -8,8 +8,10 @@ class Objetivos extends React.Component {
             titleMeta: null,
             titleObjetivo: "",
             buttonObjetivos: 0,
-            dataChkboxMetas: []
+            dataChkboxMetas: [],
 
+            tour1: true,
+            tour2: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,12 +22,34 @@ class Objetivos extends React.Component {
         this.listObjetivos = this.listObjetivos.bind(this);
         this.listChkboxMetas = this.listChkboxMetas.bind(this);
         this.listArea = this.listArea.bind(this);
+
+        this.desativarTour = this.desativarTour.bind(this);
+    }
+
+    desativarTour(acao) {
+
+        if (acao === 1) {
+            this.setState({ tour1: false });
+            this.setState({ tour2: true });
+        }
+        if (acao === 0) {
+            this.setState({
+                tour1: false,
+                tour2: false
+            });
+        }
     }
 
     componentDidMount() {
         this.listArea();
         this.listChkboxMetas();
         this.listObjetivos();
+        if (localStorage.getItem('tourODS') === "false") {
+            this.setState({
+                tour1: false,
+                tour2: false
+            });
+        }
     }
 
     handleInputChange(event) {
@@ -56,7 +80,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            //url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function (item) {
                     item.checked = false;
@@ -98,7 +123,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -223,7 +249,8 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
             success: function (data) {
 
                 let objetivos = this.state.objetivos;
@@ -295,111 +322,132 @@ class Objetivos extends React.Component {
                         });
 
                         return React.createElement(
-                            'div',
+                            "div",
                             { key: "subarea_" + itemMeta.cd_meta_projeto, style: { display: itemMeta.display ? '' : 'none' } },
                             React.createElement(
-                                'div',
-                                { className: 'custom-control custom-checkbox', onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta2) },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta2, onChange: this.handleInputChange }),
+                                "div",
+                                { className: "custom-control custom-checkbox", onChange: () => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta2) },
+                                React.createElement("input", { type: "checkbox", className: "custom-control-input", id: "subarea_" + itemMeta.cd_meta_projeto, required: true, defaultChecked: checkedMeta2, onChange: this.handleInputChange }),
                                 React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
+                                    "label",
+                                    { className: "custom-control-label", htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
                                     itemMeta.tx_nome_meta_projeto
                                 )
                             ),
-                            React.createElement('hr', null)
+                            React.createElement("hr", null)
                         );
                     }.bind(this)));
                 }
 
                 return React.createElement(
-                    'div',
-                    { className: 'custom-control custom-checkbox', key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
-                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "area_" + item.cd_objetivo_projeto, required: true }),
+                    "div",
+                    { className: "custom-control custom-checkbox", key: "area_" + item.cd_objetivo_projeto, onChange: () => this.callSubobjetivos(item.cd_objetivo_projeto), style: { paddingLeft: 0 } },
+                    React.createElement("input", { type: "checkbox", className: "custom-control-input", id: "area_" + item.cd_objetivo_projeto, required: true }),
                     React.createElement(
-                        'label',
+                        "label",
                         { htmlFor: "area_" + item.cd_objetivo_projeto, style: { marginLeft: '0', marginRight: '5px', paddingBottom: 0 } },
-                        React.createElement('img', { src: "img/ods/" + png + ".png", alt: '', className: (checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: '83', style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
+                        React.createElement("img", { src: "img/ods/" + png + ".png", alt: "", className: (checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : ""), width: "83", style: { position: 'relative' }, title: item.tx_nome_objetivo_projeto })
                     )
                 );
             }.bind(this));
         }
 
         return React.createElement(
-            'div',
-            { className: 'container' },
+            "div",
+            { className: "container" },
             React.createElement(
-                'div',
-                { className: 'row' },
+                "div",
+                { className: "row" },
                 React.createElement(
-                    'div',
-                    { className: 'col-md-12' },
+                    "div",
+                    { className: "col-md-12" },
                     React.createElement(
-                        'div',
-                        { className: 'row' },
+                        "div",
+                        { className: "row" },
                         React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
+                            "div",
+                            { className: "col-md-12" },
                             React.createElement(
-                                'div',
-                                { className: 'title-user-area' },
+                                "div",
+                                { className: "title-user-area" },
                                 React.createElement(
-                                    'div',
-                                    { className: 'mn-accordion-icon' },
-                                    React.createElement('i', { className: 'fas fa-globe-americas', 'aria-hidden': 'true' })
+                                    "div",
+                                    { className: "mn-accordion-icon" },
+                                    React.createElement("i", { className: "fas fa-globe-americas", "aria-hidden": "true" })
                                 ),
                                 React.createElement(
-                                    'h3',
+                                    "h3",
                                     null,
-                                    'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                    "Objetivos do Desenvolvimento Sustent\xE1vel - ODS"
                                 ),
-                                React.createElement('hr', null),
-                                React.createElement('br', null)
+                                React.createElement("hr", null),
+                                React.createElement("br", null)
                             )
                         )
                     ),
                     React.createElement(
-                        'form',
+                        "form",
                         null,
                         React.createElement(
-                            'div',
-                            { className: 'row' },
+                            "div",
+                            { className: "row" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-12' },
+                                "div",
+                                { className: "col-md-12" },
+                                React.createElement(Tour, {
+                                    position: 0 //0 pular | 1 finalizar 2 1 none
+                                    , passo: 1,
+                                    txt: 'Você pode alinhar as atividades da sua OSC aos ODS da ONU. É muito simples. Basta escolher até 3 ODS relacionados às ações desenvolvidas e suas respectivas metas, Para visualizar o próximo passo selecione um Objetivo.',
+                                    top: '-240px',
+                                    right: '',
+                                    display: this.state.tour1,
+                                    desativarTour: this.desativarTour,
+                                    storage: 'tourODS'
+                                }),
                                 React.createElement(
-                                    'div',
+                                    "div",
                                     null,
                                     objetivos,
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
+                                    React.createElement("br", null),
+                                    React.createElement("br", null)
                                 ),
                                 React.createElement(
-                                    'div',
+                                    "div",
                                     { style: { display: this.state.titleMeta ? '' : 'none' } },
                                     React.createElement(
-                                        'strong',
+                                        "strong",
                                         null,
-                                        'Metas Relacionadas ao ODS definido'
+                                        "Metas Relacionadas ao ODS definido"
                                     ),
-                                    React.createElement('hr', null),
+                                    React.createElement("hr", null),
                                     React.createElement(
-                                        'div',
+                                        "div",
                                         null,
                                         React.createElement(
-                                            'strong',
+                                            "strong",
                                             null,
                                             this.state.titleObjetivo
                                         ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null),
+                                        React.createElement("br", null),
+                                        React.createElement("br", null),
+                                        React.createElement(Tour, {
+                                            position: 1 //0 pular | 1 finalizar | 2 none
+                                            , passo: 2,
+                                            txt: 'Selecione quais metas a sua organização se enquadra, ao clicar o salvamento será automático.',
+                                            top: '140px',
+                                            right: '8px',
+                                            float: '',
+                                            display: this.state.tour2,
+                                            desativarTour: this.desativarTour,
+                                            storage: 'tourRecursos'
+                                        }),
                                         metas
                                     )
                                 )
                             )
                         )
                     ),
-                    React.createElement('div', { className: 'space' })
+                    React.createElement("div", { className: "space" })
                 )
             )
         );

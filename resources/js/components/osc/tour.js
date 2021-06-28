@@ -1,13 +1,12 @@
-class Recurso extends React.Component {
+class Tour extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
-            loadingSave: false,
+            loadingList: false,
             value: '',
         };
-        this.storeCampo = this.storeCampo.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.callCookies = this.callCookies.bind(this);
+        this.callPassos = this.callPassos.bind(this);
     }
 
 
@@ -15,18 +14,13 @@ class Recurso extends React.Component {
 
     }
 
-    handleInputChange(event){
-        this.setState({value: formatarMoeda(event.target.value)});
-    }
 
-    storeCampo(cd, value, id, ano){
-
-        this.setState({loading: true, loadingSave: false});
+   /* storeCampo(cd, value, id, ano){
 
         value = clearMoeda(value);
 
         if(id>0){
-            this.setState({button: false}, function(){
+            this.setState({loading: true, button: false}, function(){
                 $.ajax({
                     method:'PUT',
                     url: getBaseUrl2+'osc/recursos/'+id,
@@ -42,7 +36,7 @@ class Recurso extends React.Component {
                     cache: false,
                     success: function(data) {
                         let msg = 'Dados alterados com sucesso!';
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', loadingSave: true});
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
                     }.bind(this),
                     error: function(xhr, status, err) {
                         console.error(status, err.toString());
@@ -51,7 +45,7 @@ class Recurso extends React.Component {
                 });
             });
         }else{
-            this.setState({button: false}, function(){
+            this.setState({loading: true, button: false}, function(){
                 $.ajax({
                     method:'POST',
                     url: getBaseUrl2+'osc/recursos',
@@ -59,6 +53,7 @@ class Recurso extends React.Component {
                         Authorization: 'Bearer '+localStorage.getItem('@App:token')
                     },
                     data:{
+                        //id_osc: '789809',
                         id_osc: this.props.id_osc,
                         dt_ano_recursos_osc: ano,
                         nr_valor_recursos_osc: value,
@@ -67,7 +62,7 @@ class Recurso extends React.Component {
                     cache: false,
                     success: function(data) {
                         let msg = 'Dados alterados com sucesso!';
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', loadingSave: true});
+                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
                     }.bind(this),
                     error: function(xhr, status, err) {
                         console.error(status, err.toString());
@@ -76,51 +71,45 @@ class Recurso extends React.Component {
                 });
             });
         }
+    }*/
+
+    callCookies(acao){
+        this.props.desativarTour(acao);
+        localStorage.setItem(this.state.storage, false);
     }
 
+    callPassos(acao){
+        this.props.desativarTour(acao);
+        console.log('acao', acao);
+    }
     componentWillReceiveProps(props){
         this.setState({
-            id: props.id,
-            cd: props.cd,
-            name: props.name,
-            value: props.value,
+            passo: props.passo,
+            position: props.position,
             txt: props.txt,
-            ano: props.ano,
-            type: props.type,
+            top: props.top,
+            right: props.right,
+            float: props.float,
+            display: props.display,
+            storage: props.storage,
         });
     }
 
     render(){
         return (
-            <div className="col-md-6">
-                <div className="label-float">
-                    <input className={"form-control form-g "} type="text" onChange={this.handleInputChange} placeholder="Informe o valor"
-                           id={this.state.name}
-                           name={this.state.name}
-                           value={this.state.value}
-                           //defaultValue={this.state.value}
-                           onBlur={() => this.storeCampo(this.state.cd, this.state.value, this.state.id, this.state.ano)}
-                           />
-                    <label htmlFor={this.state.name}>{this.state.txt}</label>
-                    <div className="label-box-info-off">
-                        <p>&nbsp;</p>
-                    </div>
-                    <div className="float-right" style={{marginTop: '-50px', marginRight: '10px'}}>
-                        <div style={{display: this.state.loadingSave ? '' : 'none'}}><i className="far fa-save text-success"/></div>
-                        <div style={{display: this.state.loading ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
-                    </div>
+            <div className={"bg-pri box-help  " + this.state.float} style={{top: this.props.top, display: this.props.display ? '' : 'none'}} >
+                <strong>{this.state.passo}º Passo</strong>
+                <p>{this.state.txt}</p>
+                <div className="box-help-btns">
+                    <a className="btn btn-outline-light btn-outline-light-hover float-right" style={{margin: '0 10px', display: this.props.position!==1? '' : 'none'}} onClick={() => this.callPassos(this.state.passo)}>Próximo passo</a>
+                    <a className="btn btn-outline-light btn-outline-light-hover float-right" style={{display: this.props.position===0 ? '' : 'none'}} onClick={() => this.callCookies(0)}>Pular tour</a>
+                    <a className="btn btn-outline-light btn-outline-light-hover float-right" style={{display: this.props.position===1 ? '' : 'none'}} onClick={() => this.callCookies(0)}>Finalizar tour</a>
+                </div>
+                <div className="box-help-i" style={{right: this.props.right}}>
+                    <i className="fas fa-3x fa-caret-down"/>
                 </div>
             </div>
         );
 
     }
 }
-
-/*ReactDOM.render(
-    <Recurso/>,
-    document.getElementById('recurso')
-);*/
-
-
-
-

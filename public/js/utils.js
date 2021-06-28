@@ -176,3 +176,27 @@ function formatDate(data, formato) {
     }
 
 }
+
+///////
+function formatarMoeda(e) {
+    var valor = e;
+
+    valor = valor + '';
+    valor = parseInt(valor.replace(/[\D]+/g, ''));
+    valor = valor + '';
+    valor = valor.replace(/([0-9]{2})$/g, ",$1");
+
+    if (valor.length > 6) {
+        valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    }
+
+    valor.value = valor;
+    if(valor === 'NaN') valor = '0,00';
+    valor = 'R$ ' + valor;
+    return valor;
+}
+function clearMoeda(e) {
+    var valor = e;
+    valor = parseInt(valor.replace(/[\D]+/g, ''));
+    return valor;
+}

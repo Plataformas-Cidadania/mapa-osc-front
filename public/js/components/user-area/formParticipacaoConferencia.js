@@ -170,7 +170,8 @@ class FormParticipacaoConferencia extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/conferencia',
+            //url: getBaseUrl + 'menu/osc/conferencia',
+            url: getBaseUrl2 + 'ps_conferencias',
             data: {},
             cache: false,
             success: function (data) {
@@ -187,7 +188,8 @@ class FormParticipacaoConferencia extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/forma_participacao_conferencia',
+            //url: getBaseUrl + 'menu/osc/forma_participacao_conferencia',
+            url: getBaseUrl2 + 'ps_conferencias_formas',
             data: {},
             cache: false,
             success: function (data) {
@@ -285,8 +287,8 @@ class FormParticipacaoConferencia extends React.Component {
                     ),
                     React.createElement(
                         'button',
-                        { className: 'btn btn-primary', onClick: this.register },
-                        'Cadastrar'
+                        { className: 'btn btn-success', onClick: this.register },
+                        'Salvar'
                     ),
                     React.createElement(
                         'div',

@@ -37,6 +37,8 @@ class Osc extends React.Component{
 
             dataChkboxMetas: [],
 
+            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar',
+
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -502,7 +504,7 @@ class Osc extends React.Component{
                                 <div className="col-md-12">
                                     <div className="title-user-area">
                                         <div className="mn-accordion-icon"><i className="fa fa-file-alt" aria-hidden="true"/></div>
-                                        <h3>Dados Gerais</h3>
+                                        <h3>Dados gerais</h3>
                                         <hr/><br/>
                                     </div>
                                 </div>
@@ -560,7 +562,11 @@ class Osc extends React.Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <div className="alert alert-secondary">
-                                                <i className="fas fa-database float-right tx-pri"/>
+
+                                                <div className="tooltips float-right">
+                                                    <i className="fas fa-database tx-pri"/>
+                                                    <span className="tooltiptext">{this.state.tooltip}</span>
+                                                </div>
                                                 <strong>Endereço:</strong><br/>
                                                 {this.state.form.tx_endereco}, {this.state.form.nr_localizacao}<br/>
                                                 {this.state.form.tx_bairro}, {this.state.form.tx_nome_municipio} - {this.state.form.tx_nome_uf}<br/>
@@ -617,8 +623,8 @@ class Osc extends React.Component{
                                         <div className="col-md-6">
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_site" onChange={this.handleInputChange} value={this.state.form.tx_site}
-                                                       placeholder="Se houver, insira o endereço da página da OSC na internet. Ex.: http://www.seudominio.com.br" />
-                                                <label htmlFor="tx_site">Web site</label>
+                                                       placeholder="Ex.: http://www.seudominio.com.br" />
+                                                <label htmlFor="tx_site">Site oficial</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
                                                 </div>
@@ -670,7 +676,7 @@ class Osc extends React.Component{
                                                     {this.state.msg}
                                                 </div>
                                                 <button type="button" className="btn btn-success" onClick={this.updateOsc}><i
-                                                    className="fas fa-cloud-download-alt"/> Salvar descrição</button>
+                                                    className="fas fa-cloud-download-alt"/> Salvar</button>
                                                 <br/>
                                             </div>
                                         </div>

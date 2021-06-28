@@ -681,7 +681,7 @@ class Participacoes extends React.Component {
                 React.createElement(
                     'h3',
                     null,
-                    'Espa\xE7os de Participa\xE7\xE3o Social'
+                    'Espa\xE7os de participa\xE7\xE3o social'
                 ),
                 React.createElement('hr', null),
                 React.createElement('br', null)
@@ -698,7 +698,7 @@ class Participacoes extends React.Component {
                         React.createElement(
                             'h2',
                             null,
-                            'Conselhos de Pol\xEDticas P\xFAblicas'
+                            'Conselhos de pol\xEDticas p\xFAblicas'
                         ),
                         React.createElement(
                             'div',
@@ -817,7 +817,7 @@ class Participacoes extends React.Component {
                         React.createElement(
                             'h2',
                             null,
-                            'Confer\xEAncias de Pol\xEDticas P\xFAblicas'
+                            'Confer\xEAncias de pol\xEDticas p\xFAblicas'
                         ),
                         React.createElement(
                             'div',

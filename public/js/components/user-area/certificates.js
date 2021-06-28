@@ -346,7 +346,7 @@ class Certificates extends React.Component {
                 React.createElement(
                     'h3',
                     null,
-                    'T\xEDtulos e Certifica\xE7\xF5es'
+                    'T\xEDtulos e certifica\xE7\xF5es'
                 ),
                 React.createElement('br', null),
                 React.createElement(

@@ -108,7 +108,7 @@
                         </div>
                     @endif
 
-                    @if($rota=="apoio")
+                    @if($rota=="parceiros")
                         <div>
                             @include('page.about.partner')
                         </div>

@@ -557,14 +557,14 @@ class Participacoes extends React.Component{
             <div>
                 <div className="title-user-area">
                     <div className="mn-accordion-icon"><i className="fa fa-users" aria-hidden="true"/></div>
-                    <h3>Espaços de Participação Social</h3>
+                    <h3>Espaços de participação social</h3>
                     <hr/><br/>
                 </div>
 
                 <div className="row">
                     <div className="col-md-12">
                         <div className="box-groups">
-                            <h2>Conselhos de Políticas Públicas</h2>
+                            <h2>Conselhos de políticas públicas</h2>
 
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
@@ -627,7 +627,7 @@ class Participacoes extends React.Component{
                     <div className="col-md-12">
                         <div className="box-groups">
                             <br/><br/>
-                            <h2>Conferências de Políticas Públicas</h2>
+                            <h2>Conferências de políticas públicas</h2>
 
                             <div className="text-center">
                                 <div className="custom-control custom-checkbox text-center">
