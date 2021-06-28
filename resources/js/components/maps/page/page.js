@@ -13,12 +13,12 @@ class Page extends React.Component {
         };
 
         this.load = this.load.bind(this);
-        this.loadTerritorio = this.loadTerritorio.bind(this);
+        //this.loadTerritorio = this.loadTerritorio.bind(this);
     }
 
     componentDidMount(){
-        this.load();
-        this.loadTerritorio();
+        //this.load();
+        //this.loadTerritorio();
         this.loadOscUf();
     }
 
@@ -45,18 +45,28 @@ class Page extends React.Component {
 
     }
 
-    loadTerritorio(){
+    /*loadTerritorio(){
         let _this = this;
+        let rota = 'geo/regioes';
         this.setState({processingOsc: true}, function(){
             $.ajax({
                 method:'GET',
-                url: getBaseUrl2+'osc/geo/regioes',
+                url: getBaseUrl2+'geo/regioes',
+                //url: 'geo/regioes',
                 data:{
                 },
                 cache: false,
                 success: function(data) {
-                    //console.log(data);
-                    _this.setState({dataTerritorio: data, processingOsc: false});
+                    console.log('loadTerritorio data', data);
+                    let territorio = [];
+                    territorio.tipo_territorio = _this.state.territory+1
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for(let i in data){
+                        territorio.territorios.push(data[i]);
+                    }
+                    console.log('loadTerritorio territorio',territorio);
+                    _this.setState({dataTerritorio: territorio, processingOsc: false});
                 },
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -66,7 +76,7 @@ class Page extends React.Component {
             });
         })
 
-    }
+    }*/
 
     loadOscUf(){
         let _this = this;
@@ -101,7 +111,8 @@ class Page extends React.Component {
                 <OscMap
                     mapId="mapTeste"
                     data={this.state.data}
-                    dataTerritorio={this.state.dataTerritorio}
+                    origem={this.props.origem}
+                    //dataTerritorio={this.state.dataTerritorio}
                     dataOscUf={this.state.dataOscUf}
                     dataIdhUf={this.state.dataIdhUf}
                     processingOsc={this.state.processingOsc}
@@ -116,7 +127,7 @@ class Page extends React.Component {
 
 
 ReactDOM.render(
-    <Page />,
+    <Page origem={origem}/>,
     document.getElementById('page')
 );
 

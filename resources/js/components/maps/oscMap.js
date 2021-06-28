@@ -8,17 +8,23 @@ class OscMap extends React.Component{
             processingOscUfs: false,
             processingOscPontos: false,
             processingHeatMap: false,
+            processingList: false,
             mapId: props.mapId,
             firstTimeLoad: true,
+            origem: props.origem,
             regioes: [],
             ufs: [],
             data: [],
+            dataOscCluster: [],
             dataTerritorio:[],
             dataOscUf: [],
             dataIdhUf: [],
             dataIDHM: [],
             dataOsc: null,
             dataCalor: [],
+            dataOscList: [],
+            paginaOscList: 0,
+            totalOscList: 0,
             //year:props.year,
             //month:props.month,
             //filters: props.filters,
@@ -56,7 +62,8 @@ class OscMap extends React.Component{
                 2: function() {
                     //console.log('bbb');
                     //this.loadDataTotalPorTerritorio();
-                    this.loadDataUf();
+                    //this.loadDataUf();
+                    this.loadTerritorioUf();
                 }.bind(this),
                 3: function() {
                     //console.log('ccc');
@@ -73,6 +80,10 @@ class OscMap extends React.Component{
         //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
+        this.loadOscList = this.loadOscList.bind(this);
+        this.setPageOscList = this.setPageOscList.bind(this);
+        this.nextPaceOscList = this.nextPaceOscList.bind(this);
+        this.previousPaceOscList = this.previousPaceOscList.bind(this);
         //this.loadAllUfs = this.loadAllUfs.bind(this);
         this.populateMap = this.populateMap.bind(this);
         this.areaOscMap = this.areaOscMap.bind(this);
@@ -96,6 +107,7 @@ class OscMap extends React.Component{
     componentDidMount(){
         this.loadFirstMap();
         this.loadMap();
+        this.loadOscList();
         //this.loadAllUfs();
     }
 
@@ -103,6 +115,7 @@ class OscMap extends React.Component{
         //console.log('will receve props');
         //console.log(props.data);
         if(props.data != this.state.data ||
+            props.origem != this.state.origem ||
             props.dataTerritorio != this.state.dataTerritorio ||
             props.dataOscUf != this.state.dataOscUf ||
             props.dataIdhUf != this.state.dataIdhUf ||
@@ -112,14 +125,32 @@ class OscMap extends React.Component{
             //console.log(props.data);
             this.setState({
                 data: props.data,
-                dataTerritorio: props.dataTerritorio,
+                origem: props.origem,
+                //dataTerritorio: props.dataTerritorio,
                 dataOscUf: props.dataOscUf,
                 dataIdhUf: props.dataIdhUf,
                 processingOsc: props.processingOsc,
                 processingOscIdhUfs: props.processingOscIdhUfs
             }, function(){
-                if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
-                    this.populateMap();
+                //if(this.state.data && this.state.dataOscUf && this.state.dataIdhUf){
+                if(this.state.dataTerritorio && this.state.dataOscUf && this.state.dataIdhUf){
+                    let osc = true;
+                    if(parseInt(this.state.origem) <= 5){
+                        this.loadTerritorio();
+                        osc = false;
+                    }
+                    if(parseInt(this.state.origem) >= 11 && parseInt(this.state.origem) <= 53){
+                        this.loadTerritorioUf();
+                        osc = false;
+                    }
+                    if(parseInt(this.state.origem) > 53){
+                        this.loadDataPontosPorMunicipio();
+                        osc = false;
+                    }
+                    if(osc){
+                        this.loadDataPontosOscPesquisa();
+                    }
+                    //this.populateMap();
                     //this.areaOscMap();
                     this.areaIdhMap();
                 }
@@ -364,13 +395,13 @@ class OscMap extends React.Component{
         controlsMap.appendChild(divControlMarkerMap);
 
         //HeatMap
-        mapElements.controlHeatMap = this.controlHeatMap(thisReact);
+        /*mapElements.controlHeatMap = this.controlHeatMap(thisReact);
         let controlHeatMapObj = new mapElements.controlHeatMap();
         mapElements.map.addControl(controlHeatMapObj);
         //pega o div do controle
         let divControlHeatMap = controlHeatMapObj.getContainer();
         //coloca o div do controle no div externo
-        controlsMap.appendChild(divControlHeatMap);
+        controlsMap.appendChild(divControlHeatMap);*/
         ////////////////FIM CONTROLERS DOS LAYERS////////////////////////////////////////////
 
 
@@ -502,7 +533,7 @@ class OscMap extends React.Component{
                     thisReact.removeAreaIdhGroup();
                     thisReact.addAreaOscGroup();
                     document.getElementById('ctrlAreaIdh').className = "control-data-types leaflet-control";
-                    console.log(container);
+                    //console.log(container);
                 }.bind(options, thisReact);
 
                 container.className = 'control-data-types leaflet-control';
@@ -677,6 +708,7 @@ class OscMap extends React.Component{
         }).bind(thisReact);
     }
 
+
     loadMap(){
 
         let mapElements = this.state.mapElements;
@@ -710,6 +742,42 @@ class OscMap extends React.Component{
 
     }
 
+    setPageOscList(page){
+        this.setState({paginaOscList: page}, function(){
+            this.loadOscList();
+        });
+    }
+
+    nextPaceOscList(){
+        this.setPageOscList(this.state.pageOscList+1);
+    }
+    previousPaceOscList(){
+        this.setPageOscList(this.state.pageOscList-1);
+    }
+
+    loadOscList(){
+        this.setState({processingList: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: getBaseUrl2 + 'lista_osc/'+this.state.paginaOscList,
+                //url: 'lista_osc/'+this.state.paginaOscList,
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    this.setState({dataOscList: data.lista, totalOscList: data.total, processingList: false});
+                    //this.populateMap();
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({processingList: false});
+                }.bind(this)
+
+            });
+        });
+    }
+
     loadDataUf(){
         let _this = this;
         this.setState({processingOscUfs: true}, function (){
@@ -720,7 +788,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({data: data, processingOscUfs: false});
                     _this.populateMap();
                 },
@@ -731,6 +799,95 @@ class OscMap extends React.Component{
 
             });
         });
+
+    }
+
+    loadTerritorio(){
+        let _this = this;
+        let rota = 'geo/regioes';
+        if(parseInt(this.state.origem) > 0){
+            rota = 'geo/elem/'+this.state.origem;
+        }
+        this.setState({processingOsc: true}, function(){
+            $.ajax({
+                method:'GET',
+                url: getBaseUrl2+rota,
+                //url: 'geo/regioes',
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('loadTerritorio data', data);
+                    let dataTemp = [];
+                    if(parseInt(_this.state.origem) > 0){
+                        dataTemp[0] = data;
+                        data = dataTemp;
+                    }
+                    let territorio = [];
+                    //territorio.tipo_territorio = _this.state.territory+1
+                    territorio.tipo_territorio = 2;
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for(let i in data){
+                        territorio.territorios.push(data[i]);
+                    }
+                    console.log('loadTerritorio territorio',territorio);
+                    _this.setState({dataTerritorio: territorio, processingOsc: false}, function(){
+                        _this.populateMap();
+                    });
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
+
+            });
+        })
+
+    }
+
+    loadTerritorioUf(){
+        let _this = this;
+        let rota = "geo/estados/regiao/"+this.state.codigoTerritorioSelecionado;
+        if(parseInt(this.state.origem) >= 11 && parseInt(this.state.origem) <= 53){
+            rota = 'geo/elem/'+this.state.origem;
+        }
+        this.setState({processingOscUfs: true}, function(){
+            $.ajax({
+                method:'GET',
+                url: getBaseUrl2+rota,
+                //url: getBaseUrl2+"geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
+                //url: "geo/estados/regiao/"+this.state.codigoTerritorioSelecionado,
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('loadTerritorioUf', data);
+                    let dataTemp = [];
+                    if(parseInt(_this.state.origem) > 0){
+                        dataTemp[0] = data;
+                        data = dataTemp;
+                    }
+                    let territorio = [];
+                    //territorio.tipo_territorio = _this.state.territory+1
+                    territorio.tipo_territorio = 3
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for(let i in data){
+                        territorio.territorios.push(data[i]);
+                    }
+                    //console.log(territorio);
+                    _this.setState({dataTerritorio: territorio, processingOscUfs: false}, function(){
+                        _this.populateMap();
+                    });
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
+
+            });
+        })
 
     }
 
@@ -747,7 +904,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({dataIDHM: data.idh, processingOscUfs: false}, function(){
                         _this.areaIdhM();
                     });
@@ -772,7 +929,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({dataCalor: data, processingHeatMap: false});
                     _this.heatMap();
                 },
@@ -845,13 +1002,94 @@ class OscMap extends React.Component{
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
                 method:'GET',
-                url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,//tipo 2 região ao ser clicado irá carregas as ufs
+                //url: 'get-osc/3/'+this.state.codigoTerritorioSelecionado,
+                //url: 'get-osc-uf/'+this.state.codigoTerritorioSelecionado,
+                url: getBaseUrl2 + 'geo/oscs/estado/'+this.state.codigoTerritorioSelecionado,
                 data:{
                 },
                 cache: false,
                 success: function(data) {
-                    //console.log(data);
-                    this.setState({data: data, processingOscPontos: false}, function(){
+                    console.log('loadPontosPorTerritorio', data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+                    }
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
+        });
+    }
+
+    loadDataPontosPorMunicipio(){
+        console.log('CARREGAR PONTOS POR MUNICIPIO');
+        this.setState({processingOscPontos: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: getBaseUrl2 + 'geo/oscs/municipio/'+this.state.origem,
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('loadPontosPorTerritorio', data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
+                    }
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
+        });
+    }
+
+    loadDataPontosOscPesquisa(){
+        console.log('CARREGAR PONTOS OSC PESQUISADA');
+        let origem = this.state.origem.replace(/ /g, "_");
+        this.setState({processingOscPontos: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: 'search/osc/geo/'+origem,
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('loadPontosPorTerritorio', data);
+                    data = JSON.parse(data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        if(parseInt(i) > 0){
+                            data2.push([i, data[i][0], data[i][1]]);
+                        }
+                    }
+                    console.log('AAAAAAAAAAAAAAAAA', data);
+                    console.log('BBBBBBBBBBBBBBBBB', data2);
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
                         this.populateMapCluster();
                     });
                 }.bind(this),
@@ -887,13 +1125,15 @@ class OscMap extends React.Component{
     }
 
     gerarIntervalos(data){
+        console.log('gerarIntevalos', data);
 
         if(data===undefined){
             return null;
         }
 
 
-        let valores = data.territorio.map(function(item){
+        //let valores = data.territorio.map(function(item){
+        let valores = data.map(function(item){
             return item.nr_quantidade_osc_regiao;
         });
 
@@ -949,17 +1189,20 @@ class OscMap extends React.Component{
 
         let data = null;
         data = this.state.data;
-        let territorio = this.state.data['territorio'];
-        //let territorio = this.state.dataTerritorio;
+        let dataTerritorio = this.state.dataTerritorio;
+        //let territorio = this.state.data['territorio'];
+        let territorio = dataTerritorio['territorios'];
 
-        let intervalos = this.gerarIntervalos(data);
+        //let intervalos = this.gerarIntervalos(data);
+        console.log('dataTerritorio', dataTerritorio);
+        let intervalos = this.gerarIntervalos(territorio);
 
         let pontos = []; //será usado para enquadrar o mapa (fitBounds)
 
         for(let i in territorio){
-
             let cor = this.defineCor(territorio[i].nr_quantidade_osc_regiao, intervalos);
-            let classMarker = _this.state.classMarker[data.tipo_territorio];
+            //let classMarker = _this.state.classMarker[data.tipo_territorio];
+            let classMarker = _this.state.classMarker[dataTerritorio.tipo_territorio];
             //let classMarker = "marker";
             //console.log(classMarker);
 
@@ -987,8 +1230,8 @@ class OscMap extends React.Component{
                     codigoTerritorioSelecionado: [territorio[i].id_regiao], //203 - Brasil 13 - SE, etc...
                     //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
                 }, function(){
-                    console.log(data.tipo_territorio);
-                    _this.state.loadData[data.tipo_territorio]();
+                    console.log('marker click - tipo territorio', dataTerritorio.tipo_territorio);
+                    _this.state.loadData[dataTerritorio.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
 
@@ -999,7 +1242,8 @@ class OscMap extends React.Component{
             pontos.push([territorio[i].geo_lat_centroid_regiao, territorio[i].geo_lng_centroid_regiao]);
         }
 
-        if(data.tipo_territorio > 2){
+        //if(data.tipo_territorio > 2){
+        if(dataTerritorio.tipo_territorio > 2){
             let bounds = new L.LatLngBounds(pontos);
             mapElements.map.fitBounds(bounds);
         }
@@ -1015,11 +1259,16 @@ class OscMap extends React.Component{
 
         let markers = L.markerClusterGroup({ spiderfyOnMaxZoom: true, showCoverageOnHover: true, zoomToBoundsOnClick: true });
 
-        let data = null;
-        data = this.state.data;
-        console.log(data['territorio']);
+        //let data = null;
+        //data = this.state.data;
+        //console.log(data['territorio']);
 
-        data['territorio'].find(function(item){
+        //let territorios = this.state.dataTerritorio['territorios'];
+        let territorios = this.state.dataOscCluster;
+        console.log('populateMapCluster', territorios);
+
+        //data['territorio'].find(function(item){
+        territorios.find(function(item){
             //console.log(item);
 
             let icon = L.icon({
@@ -1092,9 +1341,9 @@ class OscMap extends React.Component{
                     areaIdh.resetStyle(this);
                 });
                 layer.on('click', function () {
-                    console.log('click area idh');
+                    //console.log('click area idh');
                     let cod_uf = layer.feature.properties.cod_uf;
-                    console.log(cod_uf);
+                    //console.log(cod_uf);
                     _this2.zoomToFeature();
                     _this2.loadDataIDHM(cod_uf);
                 });
@@ -1227,7 +1476,7 @@ class OscMap extends React.Component{
     }
 
     highlightFeature(e) {
-        console.log(e);
+        //console.log(e);
         let layer = e.target;
         layer.setStyle({
             weight: 2,
@@ -1310,19 +1559,21 @@ class OscMap extends React.Component{
         let _this = this;
         $.ajax({
             method:'GET',
-            url: 'get-data-osc/'+id,
+            //url: 'get-data-osc/'+id,
+            url: getBaseUrl2 + 'osc/popup/'+id,
             data:{
             },
             cache: false,
             success: function(data) {
-                data = JSON.parse(data);
-                //console.log(data);
+                //data = JSON.parse(data);
+                data = data[0];
+                console.log(data);
                 marker.bindPopup('' +
                     '<strong>'+data['tx_nome_osc']+'</strong><hr style="margin:5px 0; padding:0;">'+
                     '<strong>Endereço: </strong>'+data['tx_endereco']+' - '+ data['tx_bairro']+'<br/>'+
-                    '<strong>Atividade Econômica: </strong>'+data['tx_nome_atividade_economica']+'<br/>'+
-                    '<strong>Natureza Jurídica: </strong>'+data['tx_nome_natureza_juridica']+'<br/>'+
-                    "<div class='text-center'><a href='/detalhar/"+id+"'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>"
+                    '<strong>Atividade Econômica: </strong>'+data['tx_nome_atividade_economica_osc']+'<br/>'+
+                    '<strong>Natureza Jurídica: </strong>'+data['tx_nome_natureza_juridica_osc']+'<br/>'+
+                    "<div class='text-center'><a href='detalhar/"+id+"'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>"
                 )
                 marker.openPopup();
             },
@@ -1330,7 +1581,6 @@ class OscMap extends React.Component{
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-
         });
     }
 
@@ -1377,14 +1627,14 @@ class OscMap extends React.Component{
         mapElements.map.removeLayer(this.state.mapElements.areaOscGroup);
         document.getElementById('oscLegend').style.display = 'none';
         document.getElementById('infoOsc').style.display = 'none';
-        console.log('removeAreaOscGrup');
+        //console.log('removeAreaOscGrup');
         this.setState({mapElements: mapElements});
     }
 
     addAreaOscGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaOscGroup);
-        console.log('addAreaOscGroup');
+        //console.log('addAreaOscGroup');
         document.getElementById('oscLegend').style.display = '';
         document.getElementById('infoOsc').style.display = '';
         this.setState({mapElements: mapElements});
@@ -1401,7 +1651,7 @@ class OscMap extends React.Component{
     addAreaIdhGroup(){
         let mapElements = this.state.mapElements;
         mapElements.map.addLayer(this.state.mapElements.areaIdhGroup);
-        console.log('addAreaIdhGroup');
+        //console.log('addAreaIdhGroup');
         document.getElementById('idhLegend').style.display = '';
         document.getElementById('infoIdh').style.display = '';
         this.setState({mapElements: mapElements});
@@ -1479,7 +1729,7 @@ class OscMap extends React.Component{
 
     render(){
 
-        console.log(this.state.mapElements.map);
+        //console.log(this.state.mapElements.map);
 
         let tableOsc = null;
 
@@ -1510,32 +1760,118 @@ class OscMap extends React.Component{
 
 
 
-        if(this.state.data) {
-            if(this.state.data.list) {
+        if(this.state.dataOscList) {
 
-                //console.log('***', this.state.data);
-                tableOsc = this.state.data.list.map(function (item, index) {
+            //console.log('***', this.state.data);
+            tableOsc = this.state.dataOscList.map(function (item, index) {
 
-                    return (
-                        <tr key={'tabela' + index}>
-                            <td className="capitalize">
-                                <div className="img-upload img-upload-p">
-                                    <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
-                                         alt=""/>
-                                </div>
-                                {item[1].toLowerCase()}</td>
-                            <td>{formatCnpjCpf(item[2])}</td>
-                            <td className="text-center">{item[3]}</td>
-                            <td className="capitalize">{item[4].toLowerCase()}</td>
-                            <td>
-                                <a href={'detalhar/' + item[0] + '/' + removeAccent(item[1])}><i
-                                    className="fas fa-share-square"/></a>
-                            </td>
-                        </tr>
-                    );
-                });
+                return (
+                    <tr key={'tabela' + index}>
+                        <td className="capitalize">
+                            <div className="img-upload img-upload-p">
+                                <img src="https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif"
+                                     alt=""/>
+                            </div>
+                            {item.tx_nome_osc.toLowerCase()}</td>
+                        <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
+                        <td className="text-center">{item.tx_nome_osc}</td>
+                        <td className="capitalize">{item.tx_natureza_juridica_osc.toLowerCase()}</td>
+                        <td>
+                            <a href={'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc)}><i
+                                className="fas fa-share-square"/></a>
+                        </td>
+                    </tr>
+                );
+            });
+        }
+
+        //MONTANDO A PAGINAÇÃO
+        let pagina = this.state.paginaOscList;
+        let p = [];//armazena todas as paginas
+        let pages = [];//paginas q serão mostradas
+        let n_paginas = Math.ceil(this.state.totalOscList/10);
+        console.log('pagina', pagina);
+        let qtdPages = 5;
+        for (let i=0; i < n_paginas; i++){
+            let active = this.state.paginaOscList === i ? 'active' : '';
+            p[i] = (
+                <li className={"page-item "+active}>
+                    <a className="page-link" style={{cursor: 'pointer'}} onClick={()=>this.setPageOscList(i)}>
+                        {i + 1}
+                    </a>
+                </li>);
+        }
+        if(n_paginas <= 10){
+            for (let i=0; i < qtdPages; i++){
+                let active = this.state.paginaOscList === i ? 'active' : '';
+                pages.push(p[i]);
+            }
+        }else{
+            if(pagina<=5){
+                pages.push(p[0]);
+                pages.push(p[1]);
+                pages.push(p[2]);
+                pages.push(p[3]);
+                pages.push(p[4]);
+                pages.push(p[5]);
+                pages.push(p[6]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                pages.push(p[n_paginas-1]);
+            }else if(pagina===n_paginas-1 || pagina===n_paginas-2){
+                pages.push(p[0]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                pages.push(p[n_paginas-8]);
+                pages.push(p[n_paginas-7]);
+                pages.push(p[n_paginas-6]);
+                pages.push(p[n_paginas-5]);
+                pages.push(p[n_paginas-4]);
+                pages.push(p[n_paginas-3]);
+                pages.push(p[n_paginas-2]);
+                pages.push(p[n_paginas-1]);
+            }else{
+                pages.push(p[0]);
+                pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                if(parseInt(pagina)+4 < n_paginas-1){
+                    pages.push(p[parseInt(pagina)-3]);
+                    pages.push(p[parseInt(pagina)-2]);
+                    pages.push(p[parseInt(pagina)-1]);
+                    pages.push(p[pagina]);
+                    pages.push(p[parseInt(pagina)+1])
+                    pages.push(p[parseInt(pagina)+2])
+                    pages.push(p[parseInt(pagina)+3])
+                    pages.push(<li className="page-item "><a className="page-link" href="#">...</a></li>);
+                }else{
+                    pages.push(p[n_paginas-8]);
+                    pages.push(p[n_paginas-7]);
+                    pages.push(p[n_paginas-6]);
+                    pages.push(p[n_paginas-5]);
+                    pages.push(p[n_paginas-4]);
+                    pages.push(p[n_paginas-3]);
+                    pages.push(p[n_paginas-2]);
+                    pages.push(p[n_paginas-1]);
+                }
+                pages.push(p[n_paginas-1]);
             }
         }
+
+
+        let pagination = (
+            <ul className="pagination">
+                <li className="page-item disabled" style={{display: this.state.pageOscList > 0 ? '' : 'none'}}>
+                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                </li>
+                {pages}
+                {/*<li className="page-item"><a className="page-link" href="#">1</a></li>
+                <li className="page-item active">
+                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
+                </li>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>*/}
+                <li className="page-item" style={{display: this.state.pageOscList < parseInt(this.state.totalOscList / 10) ? '' : 'none'}}>
+                    <a className="page-link" href="#">Próximo</a>
+                </li>
+            </ul>
+        );
+
 
         let processingOsc =  this.state.processingOsc;
         let processingOscIdhUfs =  this.state.processingOscIdhUfs;
@@ -1586,19 +1922,7 @@ class OscMap extends React.Component{
                             </table>
                         </div>
                         <nav aria-label="...">
-                            <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                <li className="page-item active">
-                                    <a className="page-link" href="#">2 <span className="sr-only">(atual)</span></a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">Próximo</a>
-                                </li>
-                            </ul>
+                            {pagination}
                         </nav>
                     </div>
 

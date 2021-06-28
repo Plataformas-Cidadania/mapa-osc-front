@@ -13,12 +13,12 @@ class Page extends React.Component {
         };
 
         this.load = this.load.bind(this);
-        this.loadTerritorio = this.loadTerritorio.bind(this);
+        //this.loadTerritorio = this.loadTerritorio.bind(this);
     }
 
     componentDidMount() {
-        this.load();
-        this.loadTerritorio();
+        //this.load();
+        //this.loadTerritorio();
         this.loadOscUf();
     }
 
@@ -43,26 +43,36 @@ class Page extends React.Component {
         });
     }
 
-    loadTerritorio() {
+    /*loadTerritorio(){
         let _this = this;
-        this.setState({ processingOsc: true }, function () {
+        let rota = 'geo/regioes';
+        this.setState({processingOsc: true}, function(){
             $.ajax({
-                method: 'GET',
-                url: getBaseUrl2 + 'osc/geo/regioes',
-                data: {},
-                cache: false,
-                success: function (data) {
-                    //console.log(data);
-                    _this.setState({ dataTerritorio: data, processingOsc: false });
+                method:'GET',
+                url: getBaseUrl2+'geo/regioes',
+                //url: 'geo/regioes',
+                data:{
                 },
-                error: function (xhr, status, err) {
+                cache: false,
+                success: function(data) {
+                    console.log('loadTerritorio data', data);
+                    let territorio = [];
+                    territorio.tipo_territorio = _this.state.territory+1
+                    territorio.territorios = [];
+                    //transformando objeto em array para poder usar o método .map()
+                    for(let i in data){
+                        territorio.territorios.push(data[i]);
+                    }
+                    console.log('loadTerritorio territorio',territorio);
+                    _this.setState({dataTerritorio: territorio, processingOsc: false});
+                },
+                error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    _this.setState({ loading: false });
+                    _this.setState({loading: false});
                 }
-
-            });
-        });
-    }
+             });
+        })
+     }*/
 
     loadOscUf() {
         let _this = this;
@@ -92,8 +102,9 @@ class Page extends React.Component {
             React.createElement(OscMap, {
                 mapId: 'mapTeste',
                 data: this.state.data,
-                dataTerritorio: this.state.dataTerritorio,
-                dataOscUf: this.state.dataOscUf,
+                origem: this.props.origem
+                //dataTerritorio={this.state.dataTerritorio}
+                , dataOscUf: this.state.dataOscUf,
                 dataIdhUf: this.state.dataIdhUf,
                 processingOsc: this.state.processingOsc,
                 processingOscIdhUfs: this.state.processingOscIdhUfs
@@ -102,4 +113,4 @@ class Page extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Page, null), document.getElementById('page'));
+ReactDOM.render(React.createElement(Page, { origem: origem }), document.getElementById('page'));

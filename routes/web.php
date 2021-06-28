@@ -86,10 +86,18 @@ Route::post('/archives', 'PostController@archives');
 
 Route::get('/get-osc/{territory}', 'OscController@getOsc');
 Route::get('/get-osc/{territory}/{territory_id}', 'OscController@getOsc');
+Route::get('/get-osc-uf/{estado_id}', 'OscController@getOscsUf');//TESTANDO ROTA NO BACK PARA SUBISTITUIR O /get-osc/{territory}/{territory_id}
 Route::get('/get-data-osc/{id}', 'OscController@getDataOsc');
 Route::get('/get-osc-all-ufs/', 'OscController@getOscAllUfs');
 Route::get('/get-all-oscs/', 'OscController@getAllOscs');
 Route::get('/get-idhm/{cod_uf}', 'OscController@getIDHM');
+Route::get('/search/osc/geo/{osc}', 'OscController@getGeoOscSearch');
+//testando rota direta
+Route::get('/geo/regioes', 'TesteController@geoRegioes');
+Route::get('/geo/estados/regiao/{regiao_id}', 'TesteController@geoEstadosRegiao');
+Route::get('/lista_osc/{pagina}', 'TesteController@listaOsc');
+////////////////
+
 
 Route::get('detalhar/{id}', 'OscController@details');
 Route::get('detalhar/{id}/{title}', 'OscController@details');
