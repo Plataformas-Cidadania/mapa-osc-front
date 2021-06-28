@@ -16,6 +16,7 @@ class Objetivos extends React.Component{
             loading: false,
             loadingSave: false,
             metaSelected: 0,
+            maxObjetivos: false,
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -103,7 +104,6 @@ class Objetivos extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/objetivos/'+455128,
             url: getBaseUrl2+'osc/objetivos/'+this.props.id,
             success: function (data) {
                 let objetosSelected = [];
@@ -112,8 +112,7 @@ class Objetivos extends React.Component{
                 });
 
                 const arrUnique = [...new Set(objetosSelected)];
-
-                this.setState({datalistObjetivos: arrUnique})
+                this.setState({datalistObjetivos: arrUnique});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -122,6 +121,14 @@ class Objetivos extends React.Component{
     }
 
     callSubobjetivos(id){
+
+        let maxObjetivos = false;
+        if(this.state.datalistObjetivos.indexOf(id)!==-1){
+            maxObjetivos = true;
+        }
+
+        this.setState({maxObjetivos: maxObjetivos})
+
         $.ajax({
             method: 'GET',
             cache: false,
@@ -415,7 +422,13 @@ class Objetivos extends React.Component{
                                                 storage={'tourRecursos'}
                                             />
                                             {/*/=============================*/}
-                                            {metas}
+                                            <div style={{display: this.state.maxObjetivos ? '' : 'none'}}>
+                                                {metas}
+                                            </div>
+                                            <div className="alert alert-info"  style={{display: this.state.maxObjetivos ? 'none' : ''}}>
+                                                <p>Você atingiu a quantidade máxima de objetivos permitidos (3)! </p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
