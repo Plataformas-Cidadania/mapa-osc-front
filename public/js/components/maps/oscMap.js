@@ -1905,7 +1905,7 @@ class OscMap extends React.Component {
                     React.createElement(
                         'h2',
                         null,
-                        '781921'
+                        this.state.totalOscList
                     )
                 ),
                 React.createElement(
