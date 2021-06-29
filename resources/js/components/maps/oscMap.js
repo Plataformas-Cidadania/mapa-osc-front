@@ -756,10 +756,24 @@ class OscMap extends React.Component{
     }
 
     loadOscList(){
+        let rota = 'lista_osc/'+this.state.paginaOscList;
+        let origem = parseInt(this.state.origem);
+        if(origem === 0){
+            rota = 'lista_osc/'+this.state.paginaOscList;
+        }else if(origem >= 1 && origem <= 5){
+            rota = 'lista_osc/regiao/'+origem+'/'+this.state.paginaOscList;
+        }else if(origem >=11 && origem <= 53){
+            rota = 'lista_osc/estado/'+origem+'/'+this.state.paginaOscList;
+        }else if(origem > 53){
+            rota = 'lista_osc/municipio/'+origem+'/'+this.state.paginaOscList;
+        }else{
+            //pesquisa por osc
+            rota = "";
+        }
         this.setState({processingList: true}, function (){
             $.ajax({
                 method:'GET',
-                url: getBaseUrl2 + 'lista_osc/'+this.state.paginaOscList,
+                url: getBaseUrl2 + rota,
                 //url: 'lista_osc/'+this.state.paginaOscList,
                 data:{
                 },
@@ -1068,13 +1082,20 @@ class OscMap extends React.Component{
         let origem = this.state.origem.replace(/ /g, "_");
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
-                method:'GET',
-                url: 'search/osc/geo/'+origem,
-                data:{
-                },
+                //method:'GET',
+                method:'POST',
+                url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0/',
+                //url: 'search/osc/geo/'+origem,
+                data:JSON.stringify({
+                    avancado: {
+                        dadosGerais: {
+                            tx_razao_social_osc: origem
+                        }
+                    }
+                }),
                 cache: false,
                 success: function(data) {
-                    console.log('loadPontosPorTerritorio', data);
+                    //console.log('loadPontosPorTerritorio', data);
                     data = JSON.parse(data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
@@ -1084,8 +1105,7 @@ class OscMap extends React.Component{
                             data2.push([i, data[i][0], data[i][1]]);
                         }
                     }
-                    console.log('AAAAAAAAAAAAAAAAA', data);
-                    console.log('BBBBBBBBBBBBBBBBB', data2);
+
                     data = data2;
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1904,8 +1924,11 @@ class OscMap extends React.Component{
                 <br/>
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="table-responsive-sm">
-                            <p style={{fontSize: '12px'}}>Obs: 27 OSCs com dados de endereço ausentes ou incompletos.</p>
+                        <div className="text-center" style={{display: this.state.processingList ? '' : 'none'}}>
+                            <i className="fa fa-spinner fa-spin fa-3x"/>
+                        </div>
+                        <div className="table-responsive-sm" style={{display: this.state.processingList ? 'none' : ''}}>
+                            <p style={{fontSize: '12px'}}>Obs: Algumas OSCs com dados de endereço ausentes ou incompletos.</p>
                             <table className="table">
                                 <thead className="bg-pri text-light">
                                 <tr>

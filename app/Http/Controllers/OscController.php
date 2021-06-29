@@ -258,8 +258,9 @@ class OscController extends Controller{
         //Log::info($pgOsc);
 
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
-        $pgIdh = $api."ipeadata/uffs";
-        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
+
+        //$pgIdh = $api."ipeadata/uffs";
+        $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
