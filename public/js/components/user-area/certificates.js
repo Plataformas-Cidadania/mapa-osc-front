@@ -274,62 +274,65 @@ class Certificates extends React.Component {
         let modalExcluir = this.modalExcluir();
 
         let modal = this.modal();
-        let certificates = this.state.certificates.map(function (item, index) {
+        let certificates = null;
 
-            let municipio = '';
-            if (item.municipio != null) {
-                municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
-            }
-            let estado = '';
-            if (item.uf != null) {
-                estado = item.uf.eduf_sg_uf;
-            }
+        if (this.state.certificates.Resposta != 'Nenhum Certificado foi encontrado para essa OSC!') {
+            certificates = this.state.certificates.map(function (item, index) {
+                let municipio = '';
+                if (item.municipio != null) {
+                    municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
+                }
+                let estado = '';
+                if (item.uf != null) {
+                    estado = item.uf.eduf_sg_uf;
+                }
 
-            return React.createElement(
-                'tr',
-                { key: "certificate_" + index },
-                React.createElement(
-                    'td',
-                    null,
-                    item.dc_certificado.tx_nome_certificado
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    formatDate(item.dt_inicio_certificado, 'pt-br')
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    formatDate(item.dt_fim_certificado, 'pt-br')
-                ),
-                React.createElement(
-                    'td',
-                    null,
-                    municipio,
-                    estado
-                ),
-                React.createElement(
-                    'td',
-                    { width: '70' },
+                return React.createElement(
+                    'tr',
+                    { key: "certificate_" + index },
                     React.createElement(
-                        'div',
-                        { style: { display: item.cd_certificado == 7 || item.cd_certificado == 8 ? '' : 'none' } },
+                        'td',
+                        null,
+                        item.dc_certificado.tx_nome_certificado
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        formatDate(item.dt_inicio_certificado, 'pt-br')
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        formatDate(item.dt_fim_certificado, 'pt-br')
+                    ),
+                    React.createElement(
+                        'td',
+                        null,
+                        municipio,
+                        estado
+                    ),
+                    React.createElement(
+                        'td',
+                        { width: '70' },
                         React.createElement(
-                            'a',
-                            { onClick: () => this.callModal(item.id_certificado, 'edit', 'Alterar') },
-                            React.createElement('i', { className: 'far fa-edit text-primary' })
-                        ),
-                        '\xA0\xA0',
-                        React.createElement(
-                            'a',
-                            { onClick: () => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado'), style: { cursor: 'pointer', top: '4px', position: 'relative' } },
-                            React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                            'div',
+                            { style: { display: item.cd_certificado == 7 || item.cd_certificado == 8 ? '' : 'none' } },
+                            React.createElement(
+                                'a',
+                                { onClick: () => this.callModal(item.id_certificado, 'edit', 'Alterar') },
+                                React.createElement('i', { className: 'far fa-edit text-primary cursor' })
+                            ),
+                            '\xA0\xA0',
+                            React.createElement(
+                                'a',
+                                { onClick: () => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado'), style: { cursor: 'pointer', top: '4px', position: 'relative' } },
+                                React.createElement('i', { className: 'far fa-trash-alt text-danger float-right' })
+                            )
                         )
                     )
-                )
-            );
-        }.bind(this));
+                );
+            }.bind(this));
+        }
 
         return React.createElement(
             'div',

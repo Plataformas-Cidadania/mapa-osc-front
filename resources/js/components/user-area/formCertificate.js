@@ -199,7 +199,8 @@ class FormCertificate extends React.Component{
             this.setState({loadingList: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'menu/geo/' + type + '/' + search,
+                //url: getBaseUrl + 'menu/geo/' + type + '/' + search,
+                url: getBaseUrl2 + 'busca/' + type + '/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({listUf: data, loadingList: false});
@@ -240,7 +241,8 @@ class FormCertificate extends React.Component{
             this.setState({loadingList: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'menu/geo/municipio/' + search,
+                //url: getBaseUrl + 'menu/geo/municipio/' + search,
+                url: getBaseUrl2 + 'busca/municipio/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({listMunicipio: data, loadingList: false});

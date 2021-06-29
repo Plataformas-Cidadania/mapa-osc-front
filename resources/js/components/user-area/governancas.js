@@ -372,7 +372,7 @@ class Governancas extends React.Component{
                 <div className="row">
                     <div className="col-md-6">
                         <div className="bg-lgt box-itens-g min-h">
-                            <h2>Quadro de Dirigentes</h2>
+                            <h2>Quadro de dirigentes</h2>
 
                             <div style={{float: 'right'}}>
                                 <a className="btn-add" onClick={this.showHideForm} style={{display: this.state.showForm ? "none" : "block"}}>
@@ -392,7 +392,7 @@ class Governancas extends React.Component{
 
                     <div className="col-md-6">
                         <div className="bg-lgt box-itens-g min-h">
-                            <h2>Conselho Fiscal</h2>
+                            <h2>Conselho fiscal</h2>
 
                             <div style={{float: 'right'}}>
                                 <a className="btn-add" onClick={this.showHideFormConselho} style={{display: this.state.showFormConselho ? "none" : "block"}}>
@@ -418,7 +418,7 @@ class Governancas extends React.Component{
 
                             <div className="col-md-3">
                                 <div className="bg-lgt box-itens">
-                                    <h3>Total de Trabalhadores</h3>
+                                    <h3>Total de trabalhadores</h3>
                                     <div>
                                         <h2>{this.state.totalTrabalhadores}</h2>
                                         <p className='not-info'>
@@ -470,7 +470,7 @@ class Governancas extends React.Component{
                                             <i className={"far "+(this.state.updateOkVoluntario ? "fa-check-circle" : "fa-times-circle")} />
                                             {this.state.msgVoluntario}
                                         </div>
-                                        <p className='not-info'>Atualize suas informações sobre Voluntários</p>
+                                        <p className='not-info'>Atualize suas informações sobre voluntários</p>
 
                                     </div>
 

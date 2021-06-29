@@ -6,7 +6,6 @@ class Data extends React.Component{
                 tx_email_usuario: '',
                 tx_nome_usuario: '',
                 nr_cpf_usuario: '',
-                //endereco: '',
             },
             button: true,
             loading: false,
@@ -17,7 +16,6 @@ class Data extends React.Component{
             },
             showMsg: false,
             msg: '',
-            juridica: false
 
         };
 
@@ -131,21 +129,20 @@ class Data extends React.Component{
             return;
         }
 
-
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
-                method:'POST',
-                url: 'update-user-data',
+                method:'PUT',
+                url: getBaseUrl2+'user/'+this.props.id,
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
                 data:{
-                    form: this.state.form,
-                    plan_id: this.props.plan_id
+                    tx_nome_usuario: this.state.form.tx_nome_usuario,
+                    tx_email_usuario: this.state.form.tx_email_usuario,
+                    nr_cpf_usuario: this.state.form.nr_cpf_usuario,
                 },
                 cache: false,
                 success: function(data) {
-                    console.log('reg', data);
 
                     let msg = 'Já existe outro cadastro com esse';
 
@@ -176,7 +173,6 @@ class Data extends React.Component{
 
     render(){
 
-        //console.log(this.state.requireds.name);
 
         return (
             <div>
@@ -189,13 +185,6 @@ class Data extends React.Component{
                 <div className="row">
                     <div className="col-md-12">
                         <form>
-                            {/*<div>
-                                <div className="col-md-5">
-                                    <label htmlFor="cnpj">CNPJ*</label><br/>
-                                    <input className={"form-control form-g "+(this.state.requireds.cnpj ? '' : 'invalid-field')} type="text" name="cnpj" onChange={this.handleInputChange} value={this.state.form.cnpj} placeholder="CNPJ"/><br/>
-                                </div>
-                            </div>*/}
-
                             <div className="col-md-8">
                                 <label htmlFor="name">Seu nome e sobrenome*</label><br/>
                                 <input className={"form-control form-g "+(this.state.requireds.tx_nome_usuario ? '' : 'invalid-field')} type="text" name="tx_nome_usuario" onChange={this.handleInputChange} value={this.state.form.tx_nome_usuario} placeholder="Nome"/><br/>
@@ -211,15 +200,10 @@ class Data extends React.Component{
                                 <input className={"form-control form-m "+(this.state.requireds.nr_cpf_usuario ? '' : 'invalid-field')} type="text" name="nr_cpf_usuario" onChange={this.handleInputChange} value={this.state.form.nr_cpf_usuario} placeholder="Cpf"/><br/>
                             </div>
 
-
-
-
                             <div className="clear-float"/>
                             <div className="col-md-12">
-                                {/*<p><i>* campos obrigatórios</i></p>*/}
 
-
-                                {/*<button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>*/}
+                                <button style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-success" onClick={this.register}>Salvar</button>
                                 <br/>
                                 <div style={{display: this.state.showMsg ? 'block' : 'none'}} className={'text-'+this.state.color}>{this.state.msg}</div>
                                 <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
@@ -233,6 +217,6 @@ class Data extends React.Component{
 }
 
 ReactDOM.render(
-    <Data/>,
+    <Data id={id}/>,
     document.getElementById('data')
 );

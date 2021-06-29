@@ -229,34 +229,38 @@ class Certificates extends React.Component{
         let modalExcluir = this.modalExcluir();
 
         let modal = this.modal();
-        let certificates = this.state.certificates.map(function(item, index){
+        let certificates = null;
 
-            let municipio = '';
-            if(item.municipio!=null){
-                municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
-            }
-            let estado = '';
-            if(item.uf!=null){
-                estado = item.uf.eduf_sg_uf;
-            }
+        if(this.state.certificates.Resposta!='Nenhum Certificado foi encontrado para essa OSC!'){
+            certificates = this.state.certificates.map(function(item, index){
+                let municipio = '';
+                if(item.municipio!=null){
+                    municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
+                }
+                let estado = '';
+                if(item.uf!=null){
+                    estado = item.uf.eduf_sg_uf;
+                }
 
-            return (
-                <tr key={"certificate_"+index}>
-                    <td>{item.dc_certificado.tx_nome_certificado}</td>
-                    <td>{formatDate(item.dt_inicio_certificado, 'pt-br')}</td>
-                    <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
-                    <td>{municipio}{estado}</td>
-                    <td width="70">
-                        <div style={{display: (item.cd_certificado==7 || item.cd_certificado==8 ? '' : 'none')}}>
-                            <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary"/></a>&nbsp;&nbsp;
-                            <a onClick={() => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado')} style={{cursor: 'pointer', top: '4px', position: 'relative'}}>
-                                <i className="far fa-trash-alt text-danger float-right"/>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            );
-        }.bind(this));
+                return (
+                    <tr key={"certificate_"+index}>
+                        <td>{item.dc_certificado.tx_nome_certificado}</td>
+                        <td>{formatDate(item.dt_inicio_certificado, 'pt-br')}</td>
+                        <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
+                        <td>{municipio}{estado}</td>
+                        <td width="70">
+                            <div style={{display: (item.cd_certificado==7 || item.cd_certificado==8 ? '' : 'none')}}>
+                                <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary cursor"/></a>&nbsp;&nbsp;
+                                <a onClick={() => this.callModalExcluir(item.id_certificado, item.dc_certificado.tx_nome_certificado, 'certificado')} style={{cursor: 'pointer', top: '4px', position: 'relative'}}>
+                                    <i className="far fa-trash-alt text-danger float-right"/>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                );
+            }.bind(this));
+        }
+
 
         return(
             <div>

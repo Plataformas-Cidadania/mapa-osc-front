@@ -11,7 +11,12 @@ class Objetivos extends React.Component {
             dataChkboxMetas: [],
 
             tour1: true,
-            tour2: false
+            tour2: false,
+
+            loading: false,
+            loadingSave: false,
+            metaSelected: 0,
+            maxObjetivos: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -76,7 +81,6 @@ class Objetivos extends React.Component {
     }
 
     listArea() {
-        this.setState({ button: false });
         $.ajax({
             method: 'GET',
             cache: false,
@@ -87,7 +91,7 @@ class Objetivos extends React.Component {
                     item.checked = false;
                     item.metas = null;
                 });
-                this.setState({ loading: false, objetivos: data, button: true });
+                this.setState({ objetivos: data });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -100,7 +104,6 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/objetivos/'+455128,
             url: getBaseUrl2 + 'osc/objetivos/' + this.props.id,
             success: function (data) {
                 let objetosSelected = [];
@@ -109,8 +112,7 @@ class Objetivos extends React.Component {
                 });
 
                 const arrUnique = [...new Set(objetosSelected)];
-
-                this.setState({ loading: false, datalistObjetivos: arrUnique });
+                this.setState({ datalistObjetivos: arrUnique });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -119,11 +121,17 @@ class Objetivos extends React.Component {
     }
 
     callSubobjetivos(id) {
-        this.setState({ button: false });
+
+        let maxObjetivos = false;
+        if (this.state.datalistObjetivos.indexOf(id) !== -1) {
+            maxObjetivos = true;
+        }
+
+        this.setState({ maxObjetivos: maxObjetivos });
+
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
             url: getBaseUrl2 + 'objetivos/metas/' + id,
             success: function (data) {
 
@@ -152,7 +160,6 @@ class Objetivos extends React.Component {
                 });
 
                 this.setState({
-                    loading: false,
                     objetivos: objetivos,
                     id_area: id,
                     buttonObjetivos: id,
@@ -166,12 +173,47 @@ class Objetivos extends React.Component {
         });
     }
 
+    /*callSubobjetivos(id){
+        this.setState({button:false, loading: true, loadingSave: false});
+         $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'objetivos/metas/'+id,
+            success: function (data) {
+                 let objetivos = this.state.objetivos;
+                let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
+                 data.find(function(item){
+                    item.display = true;
+                    item.checked = false;
+                 });
+                objetivos.find(function(item){
+                    if(item.metas){
+                        item.metas.find(function(itemMeta){
+                            itemMeta.display = false;
+                        });
+                         if(item.cd_objetivo_projeto === id){
+                            item.metas.find(function(itemMeta){
+                                itemMeta.display = true;
+                            });
+                        }
+                    }
+                    if(item.cd_objetivo_projeto === id && !item.metas){
+                        item.metas = data;
+                    }
+                });
+                 this.setState({objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo, loading: false, loadingSave: true})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }*/
+
     listChkboxMetas() {
 
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl2+'osc/objetivos/'+455128,
             url: getBaseUrl2 + 'osc/objetivos/' + this.props.id,
             success: function (data) {
                 data.find(function (item) {
@@ -188,6 +230,8 @@ class Objetivos extends React.Component {
     }
 
     checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta) {
+
+        this.setState({ loading: true, loadingSave: false, metaSelected: cd_meta });
 
         let objetivos = this.state.objetivos;
         objetivos.find(function (item) {
@@ -217,6 +261,7 @@ class Objetivos extends React.Component {
                 success: function (data) {
                     this.listObjetivos();
                     this.listChkboxMetas();
+                    this.setState({ loading: false, loadingSave: true });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
@@ -234,6 +279,7 @@ class Objetivos extends React.Component {
                 success: function (data) {
                     this.listObjetivos();
                     this.listChkboxMetas();
+                    this.setState({ loading: false, loadingSave: true });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
@@ -242,48 +288,6 @@ class Objetivos extends React.Component {
         }
 
         this.setState({ objetivos: objetivos });
-    }
-
-    callSubobjetivos(id) {
-        this.setState({ button: false });
-        $.ajax({
-            method: 'GET',
-            cache: false,
-            //url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
-            url: getBaseUrl2 + 'objetivos/metas/' + id,
-            success: function (data) {
-
-                let objetivos = this.state.objetivos;
-
-                let titleObjetivo = this.state.objetivos[id - 1].tx_nome_objetivo_projeto;
-
-                data.find(function (item) {
-                    item.display = true;
-                    item.checked = false;
-                });
-                objetivos.find(function (item) {
-                    if (item.metas) {
-                        item.metas.find(function (itemMeta) {
-                            itemMeta.display = false;
-                        });
-
-                        if (item.cd_objetivo_projeto === id) {
-                            item.metas.find(function (itemMeta) {
-                                itemMeta.display = true;
-                            });
-                        }
-                    }
-                    if (item.cd_objetivo_projeto === id && !item.metas) {
-                        item.metas = data;
-                    }
-                });
-
-                this.setState({ loading: false, objetivos: objetivos, id_area: id, buttonObjetivos: id, titleMeta: true, titleObjetivo: titleObjetivo });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-            }.bind(this)
-        });
     }
 
     render() {
@@ -332,6 +336,20 @@ class Objetivos extends React.Component {
                                     "label",
                                     { className: "custom-control-label", htmlFor: "subarea_" + itemMeta.cd_meta_projeto },
                                     itemMeta.tx_nome_meta_projeto
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "save-check", style: { display: itemMeta.cd_meta_projeto === this.state.metaSelected ? '' : 'none' } },
+                                React.createElement(
+                                    "div",
+                                    { style: { display: this.state.loadingSave ? '' : 'none' } },
+                                    React.createElement("i", { className: "far fa-save text-success" })
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { style: { display: this.state.loading ? '' : 'none' } },
+                                    React.createElement("i", { className: "fa fa-spin fa-spinner" })
                                 )
                             ),
                             React.createElement("hr", null)
@@ -417,7 +435,7 @@ class Objetivos extends React.Component {
                                     React.createElement(
                                         "strong",
                                         null,
-                                        "Metas Relacionadas ao ODS definido"
+                                        "Metas relacionadas ao ODS definido"
                                     ),
                                     React.createElement("hr", null),
                                     React.createElement(
@@ -441,7 +459,20 @@ class Objetivos extends React.Component {
                                             desativarTour: this.desativarTour,
                                             storage: 'tourRecursos'
                                         }),
-                                        metas
+                                        React.createElement(
+                                            "div",
+                                            { style: { display: this.state.maxObjetivos ? '' : 'none' } },
+                                            metas
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "alert alert-info", style: { display: this.state.maxObjetivos ? 'none' : '' } },
+                                            React.createElement(
+                                                "p",
+                                                null,
+                                                "Voc\xEA atingiu a quantidade m\xE1xima de objetivos permitidos (3)! "
+                                            )
+                                        )
                                     )
                                 )
                             )

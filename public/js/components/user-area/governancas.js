@@ -463,7 +463,7 @@ class Governancas extends React.Component {
                         React.createElement(
                             'h2',
                             null,
-                            'Quadro de Dirigentes'
+                            'Quadro de dirigentes'
                         ),
                         React.createElement(
                             'div',
@@ -497,7 +497,7 @@ class Governancas extends React.Component {
                         React.createElement(
                             'h2',
                             null,
-                            'Conselho Fiscal'
+                            'Conselho fiscal'
                         ),
                         React.createElement(
                             'div',
@@ -549,7 +549,7 @@ class Governancas extends React.Component {
                                 React.createElement(
                                     'h3',
                                     null,
-                                    'Total de Trabalhadores'
+                                    'Total de trabalhadores'
                                 ),
                                 React.createElement(
                                     'div',
@@ -679,7 +679,7 @@ class Governancas extends React.Component {
                                     React.createElement(
                                         'p',
                                         { className: 'not-info' },
-                                        'Atualize suas informa\xE7\xF5es sobre Volunt\xE1rios'
+                                        'Atualize suas informa\xE7\xF5es sobre volunt\xE1rios'
                                     )
                                 )
                             )

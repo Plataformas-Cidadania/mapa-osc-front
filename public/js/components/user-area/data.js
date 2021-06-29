@@ -6,7 +6,6 @@ class Data extends React.Component {
                 tx_email_usuario: '',
                 tx_nome_usuario: '',
                 nr_cpf_usuario: ''
-                //endereco: '',
             },
             button: true,
             loading: false,
@@ -16,8 +15,7 @@ class Data extends React.Component {
                 nr_cpf_usuario: true
             },
             showMsg: false,
-            msg: '',
-            juridica: false
+            msg: ''
 
         };
 
@@ -132,18 +130,18 @@ class Data extends React.Component {
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
-                method: 'POST',
-                url: 'update-user-data',
+                method: 'PUT',
+                url: getBaseUrl2 + 'user/' + this.props.id,
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
                 data: {
-                    form: this.state.form,
-                    plan_id: this.props.plan_id
+                    tx_nome_usuario: this.state.form.tx_nome_usuario,
+                    tx_email_usuario: this.state.form.tx_email_usuario,
+                    nr_cpf_usuario: this.state.form.nr_cpf_usuario
                 },
                 cache: false,
                 success: function (data) {
-                    console.log('reg', data);
 
                     let msg = 'Já existe outro cadastro com esse';
 
@@ -170,8 +168,6 @@ class Data extends React.Component {
     }
 
     render() {
-
-        //console.log(this.state.requireds.name);
 
         return React.createElement(
             'div',
@@ -242,6 +238,11 @@ class Data extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'col-md-12' },
+                            React.createElement(
+                                'button',
+                                { style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-success', onClick: this.register },
+                                'Salvar'
+                            ),
                             React.createElement('br', null),
                             React.createElement(
                                 'div',
@@ -262,4 +263,4 @@ class Data extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Data, null), document.getElementById('data'));
+ReactDOM.render(React.createElement(Data, { id: id }), document.getElementById('data'));
