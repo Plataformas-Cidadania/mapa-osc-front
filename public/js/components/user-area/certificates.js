@@ -275,7 +275,9 @@ class Certificates extends React.Component {
 
         let modal = this.modal();
         let certificates = null;
-        if (this.state.certificates) {
+        console.log(this.state.certificates.Resposta);
+
+        if (this.state.certificates.Resposta != 'Nenhum Certificado foi encontrado para essa OSC!') {
             certificates = this.state.certificates.map(function (item, index) {
                 let municipio = '';
                 if (item.municipio != null) {
