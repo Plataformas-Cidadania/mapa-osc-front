@@ -742,8 +742,8 @@ class OscMap extends React.Component {
         } else if (origem > 53) {
             rota = 'lista_osc/municipio/' + origem + '/' + this.state.paginaOscList;
         } else {
-            //pesquisa por osc
-            rota = "";
+            //Pesquisa por osc. Está pegando tudo enquanto não existe a rota.
+            rota = 'lista_osc/' + this.state.paginaOscList;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
@@ -938,7 +938,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -947,7 +947,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1045,7 +1045,7 @@ class OscMap extends React.Component {
             $.ajax({
                 //method:'GET',
                 method: 'POST',
-                url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0/',
+                url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
                 //url: 'search/osc/geo/'+origem,
                 data: JSON.stringify({
                     avancado: {
