@@ -25,6 +25,7 @@ class OscMap extends React.Component {
             dataOscList: [],
             paginaOscList: 0,
             totalOscList: 0,
+            logos: [],
             //year:props.year,
             //month:props.month,
             //filters: props.filters,
@@ -81,6 +82,7 @@ class OscMap extends React.Component {
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
         this.loadOscList = this.loadOscList.bind(this);
+        this.getLogos = this.getLogos.bind(this);
         this.setPageOscList = this.setPageOscList.bind(this);
         this.nextPaceOscList = this.nextPaceOscList.bind(this);
         this.previousPaceOscList = this.previousPaceOscList.bind(this);
@@ -754,7 +756,9 @@ class OscMap extends React.Component {
                 cache: false,
                 success: function (data) {
                     console.log(data);
-                    this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false });
+                    this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false }, function () {
+                        //this.getLogos();
+                    });
                     //this.populateMap();
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -764,6 +768,34 @@ class OscMap extends React.Component {
 
             });
         });
+    }
+
+    getLogos() {
+        let logos = this.state.logos;
+        for (let i in this.state.dataOscList) {
+            let id_osc = this.state.dataOscList[i].id_osc;
+            //console.log(id_osc);
+            $.ajax({
+                method: 'GET',
+                //method: 'POST',
+                //url: getBaseUrl+'save-logo-osc/'+id,
+                //url: '/save-logo-osc',
+                //url: getBaseUrl2+'osc/logo/455128',
+                url: getBaseUrl2 + 'osc/logo/' + id_osc,
+                processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+                contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+                cache: false,
+                success: function (data) {
+                    //console.log(data);
+                    logos[id_osc] = data;
+                    this.setState({ logos: logos });
+                    //this.setState({logo: data});
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
     }
 
     loadDataUf() {
@@ -802,7 +834,7 @@ class OscMap extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log('loadTerritorio data', data);
+                    //console.log('loadTerritorio data', data);
                     let dataTemp = [];
                     if (parseInt(_this.state.origem) > 0) {
                         dataTemp[0] = data;
@@ -816,7 +848,7 @@ class OscMap extends React.Component {
                     for (let i in data) {
                         territorio.territorios.push(data[i]);
                     }
-                    console.log('loadTerritorio territorio', territorio);
+                    //console.log('loadTerritorio territorio',territorio);
                     _this.setState({ dataTerritorio: territorio, processingOsc: false }, function () {
                         _this.populateMap();
                     });
@@ -845,7 +877,7 @@ class OscMap extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log('loadTerritorioUf', data);
+                    //console.log('loadTerritorioUf', data);
                     let dataTemp = [];
                     if (parseInt(_this.state.origem) > 0) {
                         dataTemp[0] = data;
@@ -985,7 +1017,7 @@ class OscMap extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log('loadPontosPorTerritorio', data);
+                    //console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
@@ -1008,7 +1040,7 @@ class OscMap extends React.Component {
     }
 
     loadDataPontosPorMunicipio() {
-        console.log('CARREGAR PONTOS POR MUNICIPIO');
+        //console.log('CARREGAR PONTOS POR MUNICIPIO');
         this.setState({ processingOscPontos: true }, function () {
             $.ajax({
                 method: 'GET',
@@ -1016,7 +1048,7 @@ class OscMap extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log('loadPontosPorTerritorio', data);
+                    //console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
@@ -1039,7 +1071,7 @@ class OscMap extends React.Component {
     }
 
     loadDataPontosOscPesquisa() {
-        console.log('CARREGAR PONTOS OSC PESQUISADA');
+        //console.log('CARREGAR PONTOS OSC PESQUISADA');
         let origem = this.state.origem.replace(/ /g, "_");
         this.setState({ processingOscPontos: true }, function () {
             $.ajax({
@@ -1106,7 +1138,7 @@ class OscMap extends React.Component {
     }
 
     gerarIntervalos(data) {
-        console.log('gerarIntevalos', data);
+        //console.log('gerarIntevalos', data);
 
         if (data === undefined) {
             return null;
@@ -1173,7 +1205,7 @@ class OscMap extends React.Component {
         let territorio = dataTerritorio['territorios'];
 
         //let intervalos = this.gerarIntervalos(data);
-        console.log('dataTerritorio', dataTerritorio);
+        //console.log('dataTerritorio', dataTerritorio);
         let intervalos = this.gerarIntervalos(territorio);
 
         let pontos = []; //será usado para enquadrar o mapa (fitBounds)
@@ -1207,7 +1239,7 @@ class OscMap extends React.Component {
                     codigoTerritorioSelecionado: [territorio[i].id_regiao] //203 - Brasil 13 - SE, etc...
                     //tipoTerritorioAgrupamento: parseInt(territorio[i].tipo_territorio)+1,//1 - país, 2 - regiao, 3 - uf, 4 - municipio
                 }, function () {
-                    console.log('marker click - tipo territorio', dataTerritorio.tipo_territorio);
+                    //console.log('marker click - tipo territorio', dataTerritorio.tipo_territorio);
                     _this.state.loadData[dataTerritorio.tipo_territorio]();
                     mapElements.map.setView([e.target._latlng.lat, e.target._latlng.lng], zoom);
                 });
@@ -1240,7 +1272,7 @@ class OscMap extends React.Component {
 
         //let territorios = this.state.dataTerritorio['territorios'];
         let territorios = this.state.dataOscCluster;
-        console.log('populateMapCluster', territorios);
+        //console.log('populateMapCluster', territorios);
 
         //data['territorio'].find(function(item){
         territorios.find(function (item) {
@@ -1463,12 +1495,12 @@ class OscMap extends React.Component {
         //this.state.geojson.resetStyle(e.target);
         this.state.info.update();
     }*/
-    zoomToFeature(e) {
-        console.log('zoom');
-        console.log(e);
-        //this.state.mapElements.map.fitBounds(e.target.getBounds);
-        //this.state.mymap.fitBounds(e.target.getBounds());
-    }
+    zoomToFeature(e) {}
+    //console.log('zoom');
+    //console.log(e);
+    //this.state.mapElements.map.fitBounds(e.target.getBounds);
+    //this.state.mymap.fitBounds(e.target.getBounds());
+
     /*onEachFeature(feature, layer) {
         //console.log('feature', feature);
         //console.log('layer', layer);
@@ -1531,7 +1563,7 @@ class OscMap extends React.Component {
             success: function (data) {
                 //data = JSON.parse(data);
                 data = data[0];
-                console.log(data);
+                //console.log(data);
                 marker.bindPopup('' + '<strong>' + data['tx_nome_osc'] + '</strong><hr style="margin:5px 0; padding:0;">' + '<strong>Endereço: </strong>' + data['tx_endereco'] + ' - ' + data['tx_bairro'] + '<br/>' + '<strong>Atividade Econômica: </strong>' + data['tx_nome_atividade_economica_osc'] + '<br/>' + '<strong>Natureza Jurídica: </strong>' + data['tx_nome_natureza_juridica_osc'] + '<br/>' + "<div class='text-center'><a href='detalhar/" + id + "'><br><button class='btn btn-primary'>Detalhar </button><br/></a></div>");
                 marker.openPopup();
             },
@@ -1720,7 +1752,7 @@ class OscMap extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'img-upload img-upload-p' },
-                            React.createElement('img', { src: 'https://www.serjaomotopecas.com.br/Assets/Produtos/Gigantes/noimage.gif',
+                            React.createElement('img', { src: 'img/sem-imagem.png',
                                 alt: '' })
                         ),
                         item.tx_nome_osc.toLowerCase()
@@ -1759,7 +1791,7 @@ class OscMap extends React.Component {
         let p = []; //armazena todas as paginas
         let pages = []; //paginas q serão mostradas
         let n_paginas = Math.ceil(this.state.totalOscList / 10);
-        console.log('pagina', pagina);
+        //console.log('pagina', pagina);
         let qtdPages = 5;
         for (let i = 0; i < n_paginas; i++) {
             let active = this.state.paginaOscList === i ? 'active' : '';
@@ -1945,7 +1977,7 @@ class OscMap extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'text-center', style: { display: this.state.processingList ? '' : 'none' } },
-                        React.createElement('i', { className: 'fa fa-spinner fa-spin fa-3x' })
+                        React.createElement('img', { src: 'img/load.gif', alt: 'loading', title: 'loading' })
                     ),
                     React.createElement(
                         'div',
@@ -1976,7 +2008,7 @@ class OscMap extends React.Component {
                                     ),
                                     React.createElement(
                                         'th',
-                                        { width: '120' },
+                                        { width: '220' },
                                         'N. Juridica'
                                     ),
                                     React.createElement(
