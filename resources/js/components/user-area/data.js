@@ -59,7 +59,6 @@ class Data extends React.Component{
         this.setState({form: form});
     }
 
-
     validate(){
         //console.log(this.state.form);
         let valid = true;
