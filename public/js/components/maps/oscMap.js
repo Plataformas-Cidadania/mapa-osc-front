@@ -1072,12 +1072,15 @@ class OscMap extends React.Component {
 
     loadDataPontosOscPesquisa() {
         //console.log('CARREGAR PONTOS OSC PESQUISADA');
-        let origem = this.state.origem.replace(/ /g, "_");
+        //let origem = this.state.origem.replace(/ /g, "_");
+        let origem = this.state.origem;
+        let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origem + '"}}';
         this.setState({ processingOscPontos: true }, function () {
             $.ajax({
                 //method:'GET',
                 method: 'POST',
-                url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
+                url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado=' + avancado,
+                //url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
                 //url: 'search/osc/geo/'+origem,
                 data: JSON.stringify({
                     avancado: {
