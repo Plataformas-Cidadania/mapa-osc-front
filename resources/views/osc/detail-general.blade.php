@@ -17,7 +17,11 @@
     <div class="row">
         <div class="col-md-3">
             <div class="img-upload">
-                <img src="api/osc/logo/{{$dados_gerais->id_osc}}" alt="">
+                @if($dados_gerais->id_osc!="")
+                    <img src="api/osc/logo/{{$dados_gerais->id_osc}}" alt="">
+                @else
+                    <img src="img/sem-imagem.png" alt="">
+                @endif
             </div>
             <br>
             <a href="metodologia">
