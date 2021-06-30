@@ -1122,7 +1122,7 @@ class OscMap extends React.Component{
                 url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
                 //url: 'search/osc/geo/'+origem,
-                data:{}
+                data:{},
                 /*data:JSON.stringify({
                     avancado: {
                         dadosGerais: {
