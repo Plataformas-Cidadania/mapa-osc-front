@@ -735,6 +735,7 @@ class OscMap extends React.Component {
     loadOscList() {
         let rota = 'lista_osc/' + this.state.paginaOscList;
         let origem = parseInt(this.state.origem);
+        let pesquisaPorOsc = false;
         if (origem === 0) {
             rota = 'lista_osc/' + this.state.paginaOscList;
         } else if (origem >= 1 && origem <= 5) {
@@ -745,17 +746,29 @@ class OscMap extends React.Component {
             rota = 'lista_osc/municipio/' + origem + '/' + this.state.paginaOscList;
         } else {
             //Pesquisa por osc. Está pegando tudo enquanto não existe a rota.
-            rota = 'lista_osc/' + this.state.paginaOscList;
+            //rota = 'lista_osc/'+this.state.paginaOscList;
+            pesquisaPorOsc = true;
+            let origemOsc = this.state.origem;
+            let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
+            rota = 'osc/busca_avancada/lista/10/0?avancado=' + avancado;
+            //rota = 'osc/busca_avancada/lista/10/0/'+avancado;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl2 + rota,
+                //url: rota,//ROTA PARA TESTES LOCAIS
                 //url: 'lista_osc/'+this.state.paginaOscList,
                 data: {},
                 cache: false,
                 success: function (data) {
                     console.log(data);
+                    if (pesquisaPorOsc) {
+                        data = {
+                            lista: data,
+                            total: data.length
+                        };
+                    }
                     this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false }, function () {
                         //this.getLogos();
                     });
@@ -1080,6 +1093,7 @@ class OscMap extends React.Component {
                 method: 'GET',
                 //method:'POST',
                 url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado=' + avancado,
+                //url: 'osc/busca_avancada/geo/10/0/'+avancado,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
                 //url: 'search/osc/geo/'+origem,
                 data: {},
@@ -1092,7 +1106,7 @@ class OscMap extends React.Component {
                 }),*/
                 cache: false,
                 success: function (data) {
-                    console.log('loadPontosPorTerritorio', data);
+                    //console.log('loadPontosPorTerritorio', data);
                     //data = JSON.parse(data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];

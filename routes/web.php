@@ -96,6 +96,8 @@ Route::get('/search/osc/geo/{osc}', 'OscController@getGeoOscSearch');
 Route::get('/geo/regioes', 'TesteController@geoRegioes');
 Route::get('/geo/estados/regiao/{regiao_id}', 'TesteController@geoEstadosRegiao');
 Route::get('/lista_osc/{pagina}', 'TesteController@listaOsc');
+Route::get('/osc/busca_avancada/geo/10/0/{avancado}', 'TesteController@buscaOscGeo');
+Route::get('/osc/busca_avancada/lista/10/0/{avancado}', 'TesteController@buscaOscLista');
 ////////////////
 
 

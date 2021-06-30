@@ -57,4 +57,42 @@ class TesteController extends Controller{
         return $data;
     }
 
+    public function buscaOscGeo($avancado){
+
+        $avancado = urlencode($avancado);
+        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0?avancado=$avancado";
+        //Log::info($pagina);
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        Log::info($data);
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
+    public function buscaOscLista($avancado){
+
+        $avancado = urlencode($avancado);
+        $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/0?avancado=$avancado";
+        //Log::info($pagina);
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        Log::info($data);
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
 }
