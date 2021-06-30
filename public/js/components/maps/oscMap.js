@@ -1092,8 +1092,8 @@ class OscMap extends React.Component {
                 }),*/
                 cache: false,
                 success: function (data) {
-                    //console.log('loadPontosPorTerritorio', data);
-                    data = JSON.parse(data);
+                    console.log('loadPontosPorTerritorio', data);
+                    //data = JSON.parse(data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
