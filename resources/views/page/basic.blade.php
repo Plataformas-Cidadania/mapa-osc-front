@@ -51,12 +51,12 @@
                 <ul class="menu-left">
                     @foreach($subMenus as $menu)
                         <li class="list-group-item-theme @if($menu->slug==$rota) menu-left-active @endif" >
-                            <a href="/contato">{{$menu->titulo}}</a>
+                            <a href="{{$menu->slug}}">{{$menu->titulo}}</a>
                         </li>
                     @endforeach
                         @if($page->tipo_id==3)
                             <li class="list-group-item-theme" >
-                                <a href="{{$menu->slug}}">Fale conosco</a>
+                                <a href="/contato">Fale conosco</a>
                             </li>
                         @endif
                 </ul>
