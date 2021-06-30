@@ -1099,10 +1099,9 @@ class OscMap extends React.Component {
                     //for ($data as $key => $item) {
                     for (let i in data) {
                         if (parseInt(i) > 0) {
-                            data2.push([i, data[i][0], data[i][1]]);
+                            data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
                         }
                     }
-
                     data = data2;
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
