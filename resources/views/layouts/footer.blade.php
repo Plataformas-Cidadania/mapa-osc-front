@@ -23,11 +23,11 @@
             <div class="row">
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <p><a href="/">Ínicio</a></p>
+                    <p><a href="/">Home</a></p>
                 </div>
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-archive" aria-hidden="true"></i>
-                    <p><a href="/produtos">Mapa</a></p>
+                    <p><a href="/mapa">Mapa</a></p>
                 </div>
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-paper-plane"></i>

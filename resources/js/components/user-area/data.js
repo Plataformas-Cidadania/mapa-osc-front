@@ -22,39 +22,11 @@ class Data extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.register = this.register.bind(this);
         this.validate = this.validate.bind(this);
-        this.getAddress = this.getAddress.bind(this);
         this.getData = this.getData.bind(this);
     }
 
     componentDidMount(){
-        //this.getAddress();
         this.getData();
-    }
-
-
-    getAddress(){
-        this.setState({loadingCep: true});
-        $.ajax({
-            method: 'GET',
-            url: 'get-address/'+this.state.form.cep,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                let address = data.address;
-
-                let form = this.state.form;
-                form.endereco = address.logradouro;
-                form.bairro = address.bairro;
-                form.cidade = address.localidade;
-                form.estado = address.uf;
-
-                this.setState({loadingCep: false, form: form})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
     }
 
     getData(){
@@ -67,7 +39,7 @@ class Data extends React.Component{
                 },
                 cache: false,
                 success: function (data) {
-                    this.setState({loading: false, form: data, button:true})
+                    this.setState({loading: false, form: data, button:true});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -86,6 +58,7 @@ class Data extends React.Component{
 
         this.setState({form: form});
     }
+
 
     validate(){
         //console.log(this.state.form);
@@ -132,7 +105,7 @@ class Data extends React.Component{
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
             $.ajax({
                 method:'PUT',
-                url: getBaseUrl2+'user/'+this.props.id,
+                url: getBaseUrl2+'user/'+this.state.form.id_usuario,
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
