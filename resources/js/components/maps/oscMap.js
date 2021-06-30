@@ -1152,9 +1152,9 @@ class OscMap extends React.Component{
                     let data2 = [];
                     //for ($data as $key => $item) {
                     for (let i in data) {
-                        if(parseInt(i) > 0){
-                            data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
-                        }
+                        //if(parseInt(i) > 0){ //ESSE IF PRECISAVA NA API ANTIGA PQ O INDICE ZERO VINHA COM OS DADOS VAZIOS
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //}
                     }
                     data = data2;
                     /////////////////////////////////////////////
