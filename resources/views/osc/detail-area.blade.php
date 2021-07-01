@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="item-detail">
                 <h4>Atividade Econômica (CNAE):</h4>
-                <p>{{$dados_gerais->tx_nome_atividade_economica_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_atividade_economica_osc}}</p>
+                <p>{{$dados_gerais->tx_nome_classe_atividade_economica == null ? $txt_alert_abb : $dados_gerais->tx_nome_classe_atividade_economica}}</p>
             </div>
         </div>
         <div class="col-md-4">

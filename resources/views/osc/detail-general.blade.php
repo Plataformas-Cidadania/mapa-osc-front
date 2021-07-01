@@ -1,6 +1,7 @@
 <script>
-    id_osc = {{$dados_gerais->id_osc}};
+    id_osc = {{$id_osc}};
 </script>
+
 <div id="dados-gerais" class="row mn-accordion" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
     <div class="col-md-12">
         <br><br>
@@ -19,10 +20,10 @@
             <div class="img-upload">
                 <?php
                     $logo = "img/sem-imagem.png";
-                    if($dados_gerais->im_logo!=""){
-                        $logo =  $dados_gerais->im_logo;
+                    if(substr($cabecalho->im_logo, 0, 10)=='data:image'){
+                        $logo =  $cabecalho->im_logo;
                     }else{
-                        $pagina = env('APP_API_ROUTE')."osc/logo/".$dados_gerais->id_osc;
+                        $pagina = env('APP_API_ROUTE')."osc/logo/".$id_osc;
                         $ch = curl_init();
                         curl_setopt($ch, CURLOPT_URL, $pagina);
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -34,11 +35,8 @@
                         $logo = substr($logo, 0, -1);
                         $logo = str_replace("\\", "", $logo);
                     }
-
                 ?>
-
-
-                <img src="{{$logo}}" alt="{{$dados_gerais->tx_nome_natureza_juridica_osc}}" title="{{$dados_gerais->tx_nome_natureza_juridica_osc}}">
+                <img src="{{$logo}}" alt="{{$cabecalho->tx_razao_social_osc}}" title="{{$cabecalho->tx_razao_social_osc}}">
                 <br><br>
             </div>
             <a href="metodologia">
@@ -51,8 +49,8 @@
         </div>
         <div class="col-md-5">
             <p>
-                <strong>CNPJ:</strong> {{$dados_gerais->cd_identificador_osc}}<br>
-                <strong>Natureza Jurídica:</strong> {{$dados_gerais->tx_nome_natureza_juridica_osc}}<br>
+                <strong>CNPJ:</strong> {{$cabecalho->cd_identificador_osc}}<br>
+                <strong>Natureza Jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
             </p>
             <br>
         </div>
@@ -67,7 +65,7 @@
 
         <div class="col-md-8">
             <div class="item-detail">
-                <h4>Nome Fantasia:</h4>
+                <h4>Nome fantasia:</h4>
                 <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_fantasia_osc}}</p>
             </div>
         </div>

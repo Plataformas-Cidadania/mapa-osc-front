@@ -29,29 +29,42 @@ class OscController extends Controller{
 
     public function details($id){
 
-        /*$url = env('APP_API_ROUTE')."osc/dados_gerais/".$id;
+
+        $cabecalho = curl('cabecalho', $id);
+        $dados_gerais = curl('dados_gerais', $id);
+        //$area_atuacao = curl('area_atuacao', $id);
+        $descricao = curl('descricao', $id);
+        //$certificacoes = curl('certificados', $id);
+
+        $url = env('APP_API_ROUTE')."osc/certificados/".$id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $dados_gerais = curl_exec($ch);
+        $certificacoes = curl_exec($ch);
         $error = curl_error($ch);
-        curl_close($ch);*/
+        curl_close($ch);
+        $certificacoes = json_decode($certificacoes);
+        //$certificacoes = var_dump(json_decode($certificacoes, true));
+        //$data = response()->json($data);
+        //$data = $data->toArray();
+        //$data = var_dump($data);
+
+        /*foreach($certificacoes as $certificado){
+        //return response()->json($certificado->tx_nome_certificado);
+        echo $certificado->tx_nome_certificado;
+    }*/
 
 
-        //$dados_gerais = json_decode($dados_gerais, true);
-        //$dados_gerais =  var_dump($dados_gerais);
+        return $certificacoes;
 
 
-        //$dados_gerais2 = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
 
 
-        //return [$dados_gerais2];
-        //return [$dados_gerais];
 
-
-        $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
+        //$dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
         $area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();
-        $descricao = DB::connection('map')->table('portal.vw_osc_descricao')->where('id_osc', $id)->first();
+        //$descricao = DB::connection('map')->table('portal.vw_osc_descricao')->where('id_osc', $id)->first();
+        //$certificacoes = DB::connection('map')->table('portal.vw_osc_certificado')->where('id_osc', $id)->get();
         $relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
         $recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
         $projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
@@ -75,8 +88,10 @@ class OscController extends Controller{
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
+            'cabecalho' => $cabecalho,
             'dados_gerais' => $dados_gerais,
             'area_atuacao' => $area_atuacao,
+            'certificacoes' => $certificacoes,
             'descricao' => $descricao,
             'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
             'recursos' => $recursos,

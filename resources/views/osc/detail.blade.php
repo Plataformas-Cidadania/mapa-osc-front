@@ -30,7 +30,11 @@
     ];
 
 
+
     ?>
+    @foreach($certificacoes as $certificado)
+        {{$certificado->tx_nome_certificado}}
+    @endforeach
 
     <div class="bg-lgt">
         <div class="container">
@@ -39,11 +43,11 @@
                     <header>
 
                         <br>
-                        <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
+                        <h1>{{$cabecalho->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;
                         <div class="fa-svg float-right" style="margin-top: -25px;" >
                             <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
-                            <a href="declaracao/{{$dados_gerais->id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
+                            <a href="declaracao/{{--{{$dados_gerais->id_osc}}--}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
                         </div>
                         <br>
                     </header>
@@ -75,13 +79,13 @@
                     <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
                 </div>
                 @include('osc.detail-general')
-                @include('osc.detail-area')
+                {{--@include('osc.detail-area')--}}
                 @include('osc.detail-description')
-                @include('osc.detail-titration')
-                @include('osc.detail-governance')
+                {{--@include('osc.detail-titration')--}}
+                {{--@include('osc.detail-governance')
                 @include('osc.detail-participation')
                 @include('osc.detail-projects')
-                @include('osc.detail-resources')
+                @include('osc.detail-resources')--}}
                 <br>
             </div>
 
@@ -93,18 +97,21 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
-<script>
-    var map = L.map('mapPointOsc').setView([{{$dados_gerais->geo_lat}}, {{$dados_gerais->geo_lng}}], 15);
+    <?php /*?>
+    <script>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        var map = L.map('mapPointOsc').setView([{{$dados_gerais->geo_lat}}, {{$dados_gerais->geo_lng}}], 15);
 
-    L.marker([{{$dados_gerais->geo_lat}}, {{$dados_gerais->geo_lng}}]).addTo(map)
-        .bindPopup('{{$dados_gerais->tx_razao_social_osc}}')
-        /*.openPopup();*/
-</script>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
+        L.marker([{{$dados_gerais->geo_lat}}, {{$dados_gerais->geo_lng}}]).addTo(map)
+            .bindPopup('{{$dados_gerais->tx_razao_social_osc}}')
+
+
+    </script>
+<?php */?>
 
 
 @endsection

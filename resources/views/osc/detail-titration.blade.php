@@ -10,7 +10,6 @@
     </div>
 </div>
 <div id="multiCollapse4" class="collapse multi-collapse show">
-    <?php $certificacoes = DB::connection('map')->table('portal.vw_osc_certificado')->where('id_osc', $id_osc)->get();?>
     <table class="table">
         <thead class="bg-pri text-light">
         <tr>

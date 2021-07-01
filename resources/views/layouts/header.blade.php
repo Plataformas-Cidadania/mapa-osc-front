@@ -14,10 +14,10 @@
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 col-sm-6 col-xl-6 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right">
                 <a href="https://www.ipea.gov.br" target="_blank" alt="Link externo para o IPEA." title="Link externo para o IPEA."><img src="img/logo-ipea.png" width="150"/></a>
             </div>
-            <div class="col-md-3 col-sm-6 col-xl-6 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right">
                 <ul id="botoes" >
                     <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
