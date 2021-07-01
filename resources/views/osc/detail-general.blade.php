@@ -17,13 +17,30 @@
     <div class="row">
         <div class="col-md-3">
             <div class="img-upload">
-                @if($dados_gerais->id_osc!="")
-                    <img src="api/osc/logo/{{$dados_gerais->id_osc}}" alt="">
-                @else
-                    <img src="img/sem-imagem.png" alt="">
-                @endif
+                <?php
+                    $logo = "img/sem-imagem.png";
+                    if($dados_gerais->im_logo!=""){
+                        $logo =  $dados_gerais->im_logo;
+                    }else{
+                        $pagina = env('APP_API_ROUTE')."osc/logo/".$dados_gerais->id_osc;
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $pagina);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        $logo = curl_exec($ch);
+                        $error = curl_error($ch);
+                        curl_close($ch);
+                        $logo = substr($logo, 1);
+                        $logo = substr($logo, 0, -1);
+                        $logo = str_replace("\\", "", $logo);
+                    }
+
+                ?>
+
+
+                <img src="{{$logo}}" alt="{{$dados_gerais->tx_nome_natureza_juridica_osc}}" title="{{$dados_gerais->tx_nome_natureza_juridica_osc}}">
+                <br><br>
             </div>
-            <br>
             <a href="metodologia">
                 <div id="selo"></div>
             </a>
@@ -42,10 +59,10 @@
         <div class="col-md-4 text-center">
             <p>Índice de preenchimento</p>
             <div id="preenchimento"></div>
-            <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999;"><a href="/metodologia">Metodologia</a></p>
+            <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999; margin-top: -30px;"><a href="/metodologia">Metodologia</a></p>
         </div>
     </div>
-    <br><br>
+
     <div class="row">
 
         <div class="col-md-8">

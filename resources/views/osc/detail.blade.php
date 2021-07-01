@@ -37,6 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <header>
+
                         <br>
                         <h1>{{$dados_gerais->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;

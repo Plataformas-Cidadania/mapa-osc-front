@@ -42,7 +42,7 @@ class PolarChart extends React.Component {
             React.createElement(
                 'div',
                 { id: this.props.id },
-                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'polarArea', height: '250' })
+                React.createElement(ReactApexChart, { options: this.state.options, series: this.state.series, type: 'polarArea', height: '200' })
             ),
             React.createElement('div', { id: "html-dist-" + this.props.id })
         );
