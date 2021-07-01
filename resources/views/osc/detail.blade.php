@@ -32,8 +32,9 @@
 
 
     ?>
+
     @foreach($certificacoes as $certificado)
-        {{$certificado->tx_nome_certificado}}
+        {{$certificado->dc_certificado->tx_nome_certificado}}
     @endforeach
 
     <div class="bg-lgt">

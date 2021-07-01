@@ -333,7 +333,12 @@ if ( ! function_exists('captz') ) {
 if ( ! function_exists('curl') ) {
     function curl($string, $id) {
 
-        $url = env('APP_API_ROUTE')."osc/".$string."/".$id;
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/".$string."/".$id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

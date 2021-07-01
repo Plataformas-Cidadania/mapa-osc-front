@@ -36,7 +36,12 @@ class OscController extends Controller{
         $descricao = curl('descricao', $id);
         //$certificacoes = curl('certificados', $id);
 
-        $url = env('APP_API_ROUTE')."osc/certificados/".$id;
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/certificados/".$id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -44,6 +49,10 @@ class OscController extends Controller{
         $error = curl_error($ch);
         curl_close($ch);
         $certificacoes = json_decode($certificacoes);
+        Log::info([$certificacoes]);
+        if(!is_array($certificacoes)){
+            $certificacoes = [];
+        }
         //$certificacoes = var_dump(json_decode($certificacoes, true));
         //$data = response()->json($data);
         //$data = $data->toArray();
@@ -54,8 +63,7 @@ class OscController extends Controller{
         echo $certificado->tx_nome_certificado;
     }*/
 
-
-        return $certificacoes;
+        //return [$certificacoes];
 
 
 
@@ -337,7 +345,7 @@ class OscController extends Controller{
         foreach ($ufs as $uf) {
             //$pagina = "https://mapaosc.ipea.gov.br/api/search/estado/geo/".$uf;
             $pagina = $api."geo/oscs/estado/".$uf;
-            $pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$uf;
+            //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$uf;
 
             $ch = curl_init();
             curl_setopt( $ch, CURLOPT_URL, $pagina );
