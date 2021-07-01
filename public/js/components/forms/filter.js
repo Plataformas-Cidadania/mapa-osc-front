@@ -2,6 +2,10 @@ class Filter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            json: {
+                avancado: {}
+            },
+            camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_organizacaoReligiosa'],
             form: {
                 name: '',
                 email: '',
@@ -134,6 +138,8 @@ class Filter extends React.Component {
         this.statusProjeto = this.statusProjeto.bind(this);
         this.zonaAtuacaoProjeto = this.zonaAtuacaoProjeto.bind(this);
         this.abrangenciaProjeto = this.abrangenciaProjeto.bind(this);
+
+        this.setJsonDadosGerais = this.setJsonDadosGerais.bind(this);
     }
 
     componentDidMount() {
@@ -159,10 +165,27 @@ class Filter extends React.Component {
         }
     }
 
+    setJsonDadosGerais(name, value) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('dadosGerais')) {
+            json.avancado.dadosGerais = {};
+        }
+        json.avancado.dadosGerais[name] = value;
+        this.setState({ json: json }, function () {
+            console.log(this.state.json);
+            console.log(JSON.stringify(this.state.json));
+        });
+    }
+
     handleInputChange(event) {
         const target = event.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
+        console.log(name);
+        if (this.state.camposDadosGerais.includes(name)) {
+            this.setJsonDadosGerais(name, value);
+        }
 
         if (target.name == 'cd_objetivo_oscSelectBoxItText' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
             this.objetivosMetas(target.value);
@@ -196,7 +219,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/regiao/' + search,
+            //url: getBaseUrl + 'menu/geo/regiao/'+search,
+            url: getBaseUrl2 + 'busca/regiao/' + search,
             cache: false,
             success: function (data) {
                 this.setState({ listRegiao: data, loadingList: false });
@@ -210,6 +234,8 @@ class Filter extends React.Component {
     setRegiao(item) {
         let filters = this.state.filters;
         filters.regiao = item;
+        this.setJsonDadosGerais('tx_nome_regiao', item.edre_nm_regiao);
+        this.setJsonDadosGerais('cd_regiao', item.edre_cd_regiao);
         this.setState({ filters: filters, searchRegiao: null });
     }
     removeRegiao() {
@@ -222,18 +248,23 @@ class Filter extends React.Component {
     handleSearchUf(e) {
         let search = e.target.value ? e.target.value : ' ';
         this.setState({ searchUf: search }, function () {
-            this.listUf(search);
+            if (search.length > 2) {
+                this.listUf(search);
+            }
         });
     }
     clickSearchUf() {
         let search = this.state.searchUf ? this.state.searchUf : ' ';
-        this.listUf(search);
+        if (search.length > 2) {
+            this.listUf(search);
+        }
     }
     listUf(search) {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/estado/' + search,
+            //url: getBaseUrl + 'menu/geo/estado/'+search,
+            url: getBaseUrl2 + 'busca/estado/' + search,
             cache: false,
             success: function (data) {
                 this.setState({ listUf: data, loadingList: false });
@@ -247,6 +278,8 @@ class Filter extends React.Component {
     setUf(item) {
         let filters = this.state.filters;
         filters.uf = item;
+        this.setJsonDadosGerais('tx_nome_uf', item.eduf_nm_uf);
+        this.setJsonDadosGerais('cd_uf', item.eduf_cd_uf);
         this.setState({ filters: filters });
     }
     removeUf() {
@@ -259,18 +292,23 @@ class Filter extends React.Component {
     handleSearchMunicipio(e) {
         let search = e.target.value ? e.target.value : ' ';
         this.setState({ searchMunicipio: search }, function () {
-            this.listMunicipio(search);
+            if (search.length > 2) {
+                this.listMunicipio(search);
+            }
         });
     }
     clickSearchMunicipio() {
         let search = this.state.searchMunicipio ? this.state.searchMunicipio : ' ';
-        this.listMunicipio(search);
+        if (search.length > 2) {
+            this.listMunicipio(search);
+        }
     }
     listMunicipio(search) {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/municipio/' + search,
+            //url: getBaseUrl + 'menu/geo/municipio/'+search,
+            url: getBaseUrl2 + 'busca/municipio/' + search,
             cache: false,
             success: function (data) {
                 this.setState({ listMunicipio: data, loadingList: false });
@@ -417,6 +455,8 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonDadosGerais('anoFundacaoMIN', start);
+        this.setJsonDadosGerais('anoFundacaoMAX', end);
         this.setState({ filters: filters });
     }
     setTotalTrabalhadores(start, end) {
@@ -637,10 +677,11 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'menu/osc/objetivo_projeto',
+            //url: getBaseUrl + 'menu/osc/objetivo_projeto',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataObjetivos: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -654,10 +695,11 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'componente/metas_objetivo_projeto/' + id,
+            //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'componente/metas_objetivo_projeto/' + id,
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataObjetivosMetas: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -677,7 +719,7 @@ class Filter extends React.Component {
             url: getBaseUrl2 + 'ps_conselhos',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataConselhos: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -694,7 +736,7 @@ class Filter extends React.Component {
             url: getBaseUrl + 'menu/osc/tipo_participacao',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataParticipacoes: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -712,7 +754,7 @@ class Filter extends React.Component {
             url: getBaseUrl2 + 'ps_conferencias',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataConferencias: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -730,7 +772,7 @@ class Filter extends React.Component {
             url: getBaseUrl2 + 'ps_conferencias_formas',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataFormaParticipacoes: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -750,7 +792,7 @@ class Filter extends React.Component {
             url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataFonteRecursosProjeto: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -767,7 +809,7 @@ class Filter extends React.Component {
             url: getBaseUrl + 'menu/osc/status_projeto',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataStatusProjeto: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -784,7 +826,7 @@ class Filter extends React.Component {
             url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataZonaAtuacaoProjeto: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -801,7 +843,7 @@ class Filter extends React.Component {
             url: getBaseUrl + 'menu/osc/abrangencia_projeto',
             cache: false,
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 this.setState({ dataAbrangenciaProjeto: data });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -816,7 +858,7 @@ class Filter extends React.Component {
 
     render() {
 
-        console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes);
+        //console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes)
 
         let certificados = null;
         if (this.state.certificados) {
@@ -1325,7 +1367,7 @@ class Filter extends React.Component {
                                         { className: 'label-float' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_situacao_imovel_oscSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_situacao_imovel_osc', defaultValue: 0, onChange: this.handleInputChange },
                                             React.createElement(
                                                 'option',
                                                 { value: '0' },
