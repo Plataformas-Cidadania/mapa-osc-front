@@ -6,7 +6,7 @@
 <div class="bg-lgt d-print-none" id="acessibilidade" >
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12">
                 <ul id="atalhos">
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodoconteudo" accesskey="1">Ir para o Conteúdo [1]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodomenu" accesskey="2">Ir para o Menu [2]</a></li>
@@ -14,10 +14,10 @@
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xl-6 text-lg-right text-md-right">
                 <a href="https://www.ipea.gov.br" target="_blank" alt="Link externo para o IPEA." title="Link externo para o IPEA."><img src="img/logo-ipea.png" width="150"/></a>
             </div>
-            <div class="col-md-3 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xl-6 text-lg-right text-md-right">
                 <ul id="botoes" >
                     <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
@@ -87,11 +87,11 @@
         <div class="col-xs-8">
             {{-- <img src="img/logo.png" alt="" >--}}
             <a href="/">
-                {{--<picture>
-                    <source srcset="/imagens/settings/sm-{{$setting->imagem}}" media="(max-width: 468px)">
+                <picture>
+                    <source srcset="/imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
                     <source srcset="/imagens/settings/{{$setting->imagem}}" class="img-responsive">
-                    <img src="/img/pre-img.gif" srcset="/imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}" style="width: 160px;">
-                </picture>--}}
+                    <img src="/img/pre-img.gif" srcset="/imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}" width="240" style="margin-left: 30px;">
+                </picture>
             </a>
         </div>
         <div class="col-xs-2"></div>
@@ -99,7 +99,8 @@
 </div>
 
 <div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide" style="display: none;">
-    <div class="menu-cel-redes">
+    <?php /*?>
+ <div class="menu-cel-redes">
         {{--@if($setting->pinterest!="")<a href="{{$setting->pinterest}}" target="_blank"><i class="fab fa-pinterest-square font-color" aria-hidden="true"></i></a>@endif
         @if($setting->instagram!="")<a href="{{$setting->instagram}}" target="_blank"><i class="fab fa-instagram font-color" aria-hidden="true"></i></a>@endif
         @if($setting->twitter!="")<a href="{{$setting->twitter}}" target="_blank"><i class="fab fa-twitter font-color" aria-hidden="true"></i></a>@endif
@@ -111,11 +112,25 @@
         <i class="fab fa-whatsapp"></i>
         <hr class="hr-cel">
     </div>
+ <?php */?>
     <ul>
-        <li><a href="/">Ínicio</a></li>
-        <li><a href="sobre">Sobre</a></li>
-        <li><a href="mapa">Mapa</a></li>
-        <li><a href="contato">Contato</a></li>
+        <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
+        <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
+        <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
+
+        <li role="presentation"><a accesskey="q" @if($rota=='quem') class="corrente" @endif>Dados</a></li>
+        <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Base de Dados</a></li>
+        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Dados e Indicadores</a></li>
+        <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
+
+        <li role="presentation"><a accesskey="a" @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
+        <li role="presentation"><a href="posts/3/analises" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
+        <li role="presentation"><a href="posts/2/noticias" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Notícias</a></li>
+        <li role="presentation"><a href="editais" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Editais</a></li>
+        <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Vídeos</a></li>
+
+
+        <li role="presentation"><a accesskey="c" href="glossario"  @if($rota=='contato') class="corrente" @endif>Ajuda</a></li>
     </ul>
 </div>
 <div class="box-menu menu-cel-hide" style="display: none;"></div>
@@ -130,7 +145,11 @@
             <div class="col-md-12">
                 <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
-                        <img src="https://mapaosc.ipea.gov.br/img/logo.png" alt="" width="300">
+                        <picture>
+                            <source srcset="/imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
+                            <source srcset="/imagens/settings/{{$setting->imagem}}" class="img-responsive">
+                            <img src="/img/pre-img.gif" srcset="/imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}"  width="300">
+                        </picture>
                     </a>
                     <div>
                         <br>
