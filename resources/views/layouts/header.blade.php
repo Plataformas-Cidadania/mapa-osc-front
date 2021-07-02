@@ -88,9 +88,9 @@
             {{-- <img src="img/logo.png" alt="" >--}}
             <a href="/">
                 <picture>
-                    <source srcset="/imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
-                    <source srcset="/imagens/settings/{{$setting->imagem}}" class="img-responsive">
-                    <img src="/img/pre-img.gif" srcset="/imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}" width="240" style="margin-left: 30px;">
+                    <source srcset="imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
+                    <source srcset="imagens/settings/{{$setting->imagem}}" class="img-responsive">
+                    <img src="img/pre-img.gif" srcset="imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}" width="240" style="margin-left: 30px;">
                 </picture>
             </a>
         </div>
@@ -146,9 +146,9 @@
                 <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
                         <picture>
-                            <source srcset="/imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
-                            <source srcset="/imagens/settings/{{$setting->imagem}}" class="img-responsive">
-                            <img src="/img/pre-img.gif" srcset="/imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}"  width="300">
+                            <source srcset="imagens/settings/{{$setting->imagem}}" media="(max-width: 468px)">
+                            <source srcset="imagens/settings/{{$setting->imagem}}" class="img-responsive">
+                            <img src="img/pre-img.gif" srcset="imagens/settings/{{$setting->imagem}}" alt="{{$setting->titulo}}" title="{{$setting->titulo}}"  width="300">
                         </picture>
                     </a>
                     <div>
