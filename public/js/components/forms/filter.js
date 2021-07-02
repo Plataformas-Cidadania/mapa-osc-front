@@ -371,10 +371,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-         let valid = true;
-         let requireds = this.state.requireds;
-         let form = this.state.form;
-         for(let index in requireds){
+          let valid = true;
+          let requireds = this.state.requireds;
+          let form = this.state.form;
+          for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -382,8 +382,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-          this.setState({requireds: requireds});
-         return valid;
+            this.setState({requireds: requireds});
+          return valid;
     }*/
 
     filter(e) {

@@ -29,7 +29,6 @@ class OscController extends Controller{
 
     public function details($id){
 
-
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
