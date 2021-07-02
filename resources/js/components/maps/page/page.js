@@ -112,6 +112,7 @@ class Page extends React.Component {
                     mapId="mapTeste"
                     data={this.state.data}
                     origem={this.props.origem}
+                    strJson={this.props.strJson}
                     //dataTerritorio={this.state.dataTerritorio}
                     dataOscUf={this.state.dataOscUf}
                     dataIdhUf={this.state.dataIdhUf}
@@ -127,7 +128,7 @@ class Page extends React.Component {
 
 
 ReactDOM.render(
-    <Page origem={origem}/>,
+    <Page origem={origem} strJson={strJson}/>,
     document.getElementById('page')
 );
 

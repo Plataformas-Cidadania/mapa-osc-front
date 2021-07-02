@@ -190,6 +190,10 @@ class Filter extends React.Component{
         }
     }
 
+    submitForm(){
+        $("#frmMapa").submit();
+    }
+
     setJsonDadosGerais(name, value){
         let json = this.state.json;
         if(!json.avancado.hasOwnProperty('dadosGerais')){
@@ -197,8 +201,8 @@ class Filter extends React.Component{
         }
         json.avancado.dadosGerais[name] = value;
         this.setState({json: json}, function(){
-            console.log(this.state.json);
-            console.log(JSON.stringify(this.state.json));
+            //console.log(this.state.json);
+            //console.log(JSON.stringify(this.state.json));
         });
     }
 
@@ -419,6 +423,7 @@ class Filter extends React.Component{
 
 
     filter(e){
+
         //console.log(this.validate());
         /*if(!this.validate()){
             return;
@@ -1194,1058 +1199,1065 @@ class Filter extends React.Component{
         return (
 
 
+            <div>
+                <form>
 
-            <form>
-
-                <div className="accordion" id="accordionExample">
-                    <div className="card">
-                        <div className="card-header" id="item-1">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
-                                 aria-controls="collapse1">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Dados Gerais
-                                 <i className="fas fa-angle-down float-right"/>
+                    <div className="accordion" id="accordionExample">
+                        <div className="card">
+                            <div className="card-header" id="item-1">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
+                                     aria-controls="collapse1">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Dados Gerais
+                                    <i className="fas fa-angle-down float-right"/>
+                                </div>
                             </div>
-                        </div>
-                        <div id="collapse1" className="collapse show " aria-labelledby="heading1"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-md-9">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="name">Nome da OSC</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="input-icon">
-                                            <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
-                                                   style={{display: (this.state.filters.regiao ? 'none' : '')}}
-                                                   onClick={this.clickSearchRegiao} onChange={this.handleSearchRegiao}/>
-                                            <input type="text" className="form-control" name="tx_nome_regiao2"
-                                                   style={{display: (this.state.filters.regiao ? '' : 'none')}}
-                                                   readOnly={this.state.filters.regiao}
-                                                   defaultValue={this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : ''}/>
-
-                                               <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
-                                                   <i className="fas fa-search" style={{top: '-28px'}}/>
-                                               </div>
-                                               <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
-                                                   <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
-                                               </div>
-
-                                            <div>
-                                                <ul className="box-search-itens" style={{display: ((this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao) ? '' : 'none'}}>
-                                                    {regioes}
-                                                </ul>
+                            <div id="collapse1" className="collapse show " aria-labelledby="heading1"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-md-9">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="name">Nome da OSC</label>
+                                                <div className="label-box-info-off"/>
                                             </div>
-                                            <br/>
                                         </div>
-                                    </div>
-                                    <div className="col-md-9">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="name">Nome Fantasia</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="col-md-3">
+                                            <div className="input-icon">
+                                                <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
+                                                       style={{display: (this.state.filters.regiao ? 'none' : '')}}
+                                                       onClick={this.clickSearchRegiao} onChange={this.handleSearchRegiao}/>
+                                                <input type="text" className="form-control" name="tx_nome_regiao2"
+                                                       style={{display: (this.state.filters.regiao ? '' : 'none')}}
+                                                       readOnly={this.state.filters.regiao}
+                                                       defaultValue={this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : ''}/>
+
+                                                <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
+                                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                                </div>
+                                                <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
+                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                </div>
+
+                                                <div>
+                                                    <ul className="box-search-itens" style={{display: ((this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao) ? '' : 'none'}}>
+                                                        {regioes}
+                                                    </ul>
+                                                </div>
+                                                <br/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        {/*<div className="label-float">
+                                        <div className="col-md-9">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="name">Nome Fantasia</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_nome_uf" onChange={this.handleInputChange} placeholder=" "/>
                                             <label htmlFor="name">Estado</label>
                                             <div className="label-box-info-off"/>
                                         </div>*/}
 
-                                        <div className="input-icon">
-                                            <input type="text" className="form-control" placeholder="Busque um estado" name="tx_nome_uf"
-                                                   style={{display: (this.state.filters.uf ? 'none' : '')}}
-                                                   onClick={this.clickSearchUf} onChange={this.handleSearchUf}/>
-                                            <input type="text" className="form-control" name="tx_nome_uf2"
-                                                   style={{display: (this.state.filters.uf ? '' : 'none')}}
-                                                   readOnly={this.state.filters.uf}
-                                                   defaultValue={this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : ''}/>
+                                            <div className="input-icon">
+                                                <input type="text" className="form-control" placeholder="Busque um estado" name="tx_nome_uf"
+                                                       style={{display: (this.state.filters.uf ? 'none' : '')}}
+                                                       onClick={this.clickSearchUf} onChange={this.handleSearchUf}/>
+                                                <input type="text" className="form-control" name="tx_nome_uf2"
+                                                       style={{display: (this.state.filters.uf ? '' : 'none')}}
+                                                       readOnly={this.state.filters.uf}
+                                                       defaultValue={this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : ''}/>
 
-                                            <div style={{display: (this.state.filters.uf ? 'none' : '')}}>
-                                                <i className="fas fa-search" style={{top: '-28px'}}/>
-                                            </div>
-                                            <div style={{display: (this.state.filters.uf ? '' : 'none')}} onClick={this.removeUf}>
-                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.uf ? 'none' : '')}}>
+                                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                                </div>
+                                                <div style={{display: (this.state.filters.uf ? '' : 'none')}} onClick={this.removeUf}>
+                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                </div>
+
+                                                <div>
+                                                    <ul className="box-search-itens" style={{display: ((this.state.searchUf || this.state.listUf) && !this.state.filters.uf) ? '' : 'none'}}>
+                                                        {ufs}
+                                                    </ul>
+                                                </div>
+                                                <br/>
                                             </div>
 
-                                            <div>
-                                                <ul className="box-search-itens" style={{display: ((this.state.searchUf || this.state.listUf) && !this.state.filters.uf) ? '' : 'none'}}>
-                                                    {ufs}
-                                                </ul>
+
+                                        </div>
+
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "  />
+                                                <label htmlFor="name">CNPJ</label>
+                                                <div className="label-box-info-off"/>
                                             </div>
+                                        </div>
+
+                                        <div className="col-md-3">
+
+                                            <div className="label-float">
+                                                {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>*/}
+                                                <select className="custom-select" name="cd_situacao_imovel_osc" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Situação do Imóvel</option>
+                                                    <option value="1">Próprio</option>
+                                                    <option value="2">Alugado</option>
+                                                    <option value="3">Cedido</option>
+                                                    <option value="4">Comodato</option>
+                                                </select>
+                                                <label htmlFor="name"/>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Ano de Fundação"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setAnoFundacao}
+                                            />
+                                        </div>
+
+
+
+                                        <div className="col-md-3">
+                                            <div className="input-icon">
+                                                <input type="text" className="form-control" placeholder="Busque um Município" name="tx_nome_municipio"
+                                                       style={{display: (this.state.filters.municipio ? 'none' : '')}}
+                                                       onClick={this.clickSearchMunicipio} onChange={this.handleSearchMunicipio}/>
+                                                <input type="text" className="form-control" name="tx_nome_municipio2"
+                                                       style={{display: (this.state.filters.municipio ? '' : 'none')}}
+                                                       readOnly={this.state.filters.municipio}
+                                                       defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
+
+                                                <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
+                                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                                </div>
+                                                <div style={{display: (this.state.filters.municipio ? '' : 'none')}} onClick={this.removeMunicipio}>
+                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                </div>
+
+                                                <div>
+                                                    <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
+                                                        {municipios}
+                                                    </ul>
+                                                </div>
+                                                <br/>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="col-md-12">
                                             <br/>
+                                            <strong>Natureza Jurídica:</strong><br/>
+
+                                            <div className="custom-control custom-checkbox ">
+                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_associacaoPrivada" required/>
+                                                <label className="custom-control-label" htmlFor="naturezaJuridica_associacaoPrivada">Associação Privada</label>
+                                            </div>
+                                            <div className="custom-control custom-checkbox ">
+                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_fundacaoPrivada" required/>
+                                                <label className="custom-control-label" htmlFor="naturezaJuridica_fundacaoPrivada">Fundação Privada</label>
+                                            </div>
+                                            <div className="custom-control custom-checkbox ">
+                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoReligiosa" required/>
+                                                <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoReligiosa">Organização Religiosa</label>
+                                            </div>
+                                            <div className="custom-control custom-checkbox ">
+                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoSocial" required/>
+                                                <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoSocial">Organização Social</label>
+                                            </div>
+                                            <div className="custom-control custom-checkbox ">
+                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_outra" required/>
+                                                <label className="custom-control-label" htmlFor="naturezaJuridica_outra">Não informado</label>
+                                            </div>
+
+                                            <br/><br/>
                                         </div>
 
-
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "  />
-                                            <label htmlFor="name">CNPJ</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-
-                                        <div className="label-float">
-                                            {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>*/}
-                                            <select className="custom-select" name="cd_situacao_imovel_osc" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                <option value="1">Próprio</option>
-                                                <option value="2">Alugado</option>
-                                                <option value="3">Cedido</option>
-                                                <option value="4">Comodato</option>
+                                        <div className="col-md-6">
+                                            <select className="custom-select" name="cd_objetivo_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                                <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                                {objetivos}
                                             </select>
-                                            <label htmlFor="name"/>
-                                            <div className="label-box-info-off"/>
+                                            <br/><br/>
                                         </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Ano de Fundação"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setAnoFundacao}
-                                        />
-                                    </div>
-
-
-
-                                    <div className="col-md-3">
-                                        <div className="input-icon">
-                                            <input type="text" className="form-control" placeholder="Busque um Município" name="tx_nome_municipio"
-                                                   style={{display: (this.state.filters.municipio ? 'none' : '')}}
-                                                   onClick={this.clickSearchMunicipio} onChange={this.handleSearchMunicipio}/>
-                                            <input type="text" className="form-control" name="tx_nome_municipio2"
-                                                   style={{display: (this.state.filters.municipio ? '' : 'none')}}
-                                                   readOnly={this.state.filters.municipio}
-                                                   defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
-
-                                            <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
-                                                <i className="fas fa-search" style={{top: '-28px'}}/>
-                                            </div>
-                                            <div style={{display: (this.state.filters.municipio ? '' : 'none')}} onClick={this.removeMunicipio}>
-                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
-                                            </div>
-
-                                            <div>
-                                                <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
-                                                    {municipios}
-                                                </ul>
-                                            </div>
-                                            <br/>
+                                        <div className="col-md-6">
+                                            <select className="custom-select" name="cd_meta_oscSelectBoxItText" onChange={this.handleInputChange}>
+                                                <option selected>Metas Relacionadas ao ODS</option>
+                                                {objetivosMetas}
+                                            </select>
+                                            <br/><br/>
                                         </div>
 
                                     </div>
 
-                                    <div className="col-md-12">
-                                        <br/>
-                                        <strong>Natureza Jurídica:</strong><br/>
 
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_associacaoPrivada" required/>
-                                            <label className="custom-control-label" htmlFor="naturezaJuridica_associacaoPrivada">Associação Privada</label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_fundacaoPrivada" required/>
-                                            <label className="custom-control-label" htmlFor="naturezaJuridica_fundacaoPrivada">Fundação Privada</label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoReligiosa" required/>
-                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoReligiosa">Organização Religiosa</label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoSocial" required/>
-                                            <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoSocial">Organização Social</label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="naturezaJuridica_outra" required/>
-                                            <label className="custom-control-label" htmlFor="naturezaJuridica_outra">Não informado</label>
-                                        </div>
 
-                                        <br/><br/>
-                                    </div>
 
-                                    <div className="col-md-6">
-                                        <select className="custom-select" name="cd_objetivo_oscSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
-                                            {objetivos}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <select className="custom-select" name="cd_meta_oscSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected>Metas Relacionadas ao ODS</option>
-                                            {objetivosMetas}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
 
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
-                    </div>
 
-                    <div className="card">
-                        <div className="card-header" id="item-2">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
-                                 aria-controls="collapse2">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
+                        <div className="card">
+                            <div className="card-header" id="item-2">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
+                                     aria-controls="collapse2">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
+                                </div>
                             </div>
-                        </div>
-                        <div id="collapse2" className="collapse" aria-labelledby="heading2"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
+                            <div id="collapse2" className="collapse" aria-labelledby="heading2"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
 
-                                <div className="row">
-                                    <div className="col-md-9">
-                                        {/*<div className="label-float">
+                                    <div className="row">
+                                        <div className="col-md-9">
+                                            {/*<div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_atividade_economica" onChange={this.handleInputChange} placeholder=" " />
                                             <label htmlFor="name">Atividade Econômica (CNAE)</label>
                                             <div className="label-box-info-off"/>
                                         </div>*/}
 
 
-                                        <div className="input-icon">
-                                            <input type="text" className="form-control" placeholder="Busque uma Atividade Econômica" name="tx_atividade_economica"
-                                                   style={{display: (this.state.filters.cnae ? 'none' : '')}}
-                                                   onClick={this.clickSearchCnae} onChange={this.handleSearchCnae}/>
-                                            <input type="text" className="form-control" name="tx_atividade_economica2"
-                                                   style={{display: (this.state.filters.cnae ? '' : 'none')}}
-                                                   readOnly={this.state.filters.cnae}
-                                                   defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : ''}/>
+                                            <div className="input-icon">
+                                                <input type="text" className="form-control" placeholder="Busque uma Atividade Econômica" name="tx_atividade_economica"
+                                                       style={{display: (this.state.filters.cnae ? 'none' : '')}}
+                                                       onClick={this.clickSearchCnae} onChange={this.handleSearchCnae}/>
+                                                <input type="text" className="form-control" name="tx_atividade_economica2"
+                                                       style={{display: (this.state.filters.cnae ? '' : 'none')}}
+                                                       readOnly={this.state.filters.cnae}
+                                                       defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : ''}/>
 
-                                            <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
-                                                <i className="fas fa-search" style={{top: '-28px'}}/>
-                                            </div>
-                                            <div style={{display: (this.state.filters.cnae ? '' : 'none')}} onClick={this.removeCnae}>
-                                                <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
+                                                    <i className="fas fa-search" style={{top: '-28px'}}/>
+                                                </div>
+                                                <div style={{display: (this.state.filters.cnae ? '' : 'none')}} onClick={this.removeCnae}>
+                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                </div>
+
+                                                <div>
+                                                    <ul className="box-search-itens" style={{display: ((this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ) ? '' : 'none'}}>
+                                                        {cnae}
+                                                    </ul>
+                                                </div>
+                                                <br/>
                                             </div>
 
+
+                                        </div>
+                                        <div className="col-md-12">
+                                            <strong>Área de Atuação</strong><hr/>
                                             <div>
-                                                <ul className="box-search-itens" style={{display: ((this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ) ? '' : 'none'}}>
-                                                    {cnae}
-                                                </ul>
+                                                {areaAtuacao}
+                                                <br/><br/>
                                             </div>
-                                            <br/>
+
+                                            <strong>Subárea de Atuação</strong><hr/>
+                                            <div className="card-columns">
+                                                {subAreaAtuacao}
+                                            </div>
+
+
                                         </div>
-
-
                                     </div>
-                                    <div className="col-md-12">
-                                        <strong>Área de Atuação</strong><hr/>
-                                        <div>
-                                            {areaAtuacao}
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header" id="item-3">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+                                     aria-controls="collapse3">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Titulações e Certificações <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse3" className="collapse" aria-labelledby="heading3"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            {certificados}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header" id="item-4">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+                                     aria-controls="collapse4">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse4" className="collapse" aria-labelledby="heading4"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="name">Nome do Dirigente</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_cargo_dirigente" onChange={this.handleInputChange} placeholder=" "/>
+                                                <label htmlFor="name">Cargo do Dirigente</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_conselheiro" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="name">Nome do Membro do Conselho Fiscal</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Total de trabalhadores"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setTotalTrabalhadores}
+                                            />
+                                        </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Total de empregados"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setTotalEmpregados}
+                                            />
+                                        </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Trabalhadores com deficiência"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setTrabalhadoresDeficiencia}
+                                            />
+                                        </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Trabalhadores voluntários"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setTrabalhadoresVoluntarios}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header" id="item-5">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+                                     aria-controls="collapse5">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse5" className="collapse" aria-labelledby="heading5"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+
+                                        <div className="col-md-9">
+                                            <select className="custom-select" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange}>
+                                                {/*<option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>*/}
+                                                {conselhos}
+                                            </select>
                                             <br/><br/>
                                         </div>
-
-                                        <strong>Subárea de Atuação</strong><hr/>
-                                        <div className="card-columns">
-                                            {subAreaAtuacao}
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control"} type="date" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_dirigente">Data de Início de Vigência</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
                                         </div>
 
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <div className="card-header" id="item-3">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
-                                 aria-controls="collapse3">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Titulações e Certificações <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse3" className="collapse" aria-labelledby="heading3"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        {certificados}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <div className="card-header" id="item-4">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
-                                 aria-controls="collapse4">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse4" className="collapse" aria-labelledby="heading4"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-md-4">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="name">Nome do Dirigente</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="cd_conselhoSelectBoxItText">Nome de representante conselho</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_cargo_dirigente" onChange={this.handleInputChange} placeholder=" "/>
-                                            <label htmlFor="name">Cargo do Dirigente</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_conselheiro" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="name">Nome do Membro do Conselho Fiscal</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Total de trabalhadores"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setTotalTrabalhadores}
-                                        />
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Total de empregados"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setTotalEmpregados}
-                                        />
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Trabalhadores com deficiência"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setTrabalhadoresDeficiencia}
-                                        />
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Trabalhadores voluntários"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setTrabalhadoresVoluntarios}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Situação do Imóvel</option>
+                                                    {participacoes}
+                                                </select>
+                                                <br/><br/>
+                                            </div>
 
-                    <div className="card">
-                        <div className="card-header" id="item-5">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
-                                 aria-controls="collapse5">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse5" className="collapse" aria-labelledby="heading5"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-
-                                    <div className="col-md-9">
-                                        <select className="custom-select" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange}>
-                                            {/*<option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>*/}
-                                            {conselhos}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control"} type="date" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_dirigente">Data de Início de Vigência</label>
-                                            <div className="label-box-info-off"/>
                                         </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="cd_conselhoSelectBoxItText">Nome de representante conselho</label>
-                                            <div className="label-box-info-off"/>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="date" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do Imóvel</option>
-                                                {participacoes}
+
+                                        <div className="col-md-9">
+                                            <select className="custom-select" name="cd_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                                {conferencias}
                                             </select>
                                             <br/><br/>
                                         </div>
 
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="date" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-9">
-                                        <select className="custom-select" name="cd_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
-                                            {conferencias}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                        <select className="custom-select" name="cd_forma_participacao_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
-                                            {formaParticipacoes}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Ano de Realização da Conferência"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setAnoRealizacao}
-                                        />
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <div className="card-header" id="item-6">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
-                                 aria-controls="collapse6">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Projetos <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse6" className="collapse" aria-labelledby="heading6"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-
-                                {/*/////*/}
-                                <div className="row">
-                                    <div className="col-md-9">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_projeto">Nome do Projeto</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <select className="custom-select" name="cd_status_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Situação do projeto</option>
-                                                {listStatusProjeto}
+                                        <div className="col-md-6">
+                                            <select className="custom-select" name="cd_forma_participacao_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                                {formaParticipacoes}
                                             </select>
                                             <br/><br/>
                                         </div>
 
-                                    </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Ano de Realização da Conferência"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setAnoRealizacao}
+                                            />
+                                        </div>
 
-                                    <div className="col-md-2">
-                                        <div className="label-float">
-                                            <input className={"form-control"} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="dt_data_inicio_projeto">Data de início</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
+
                                     </div>
-                                    <div className="col-md-2">
-                                        <div className="label-float">
-                                            <input className={"form-control"} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="dt_data_fim_projeto">Data de fim</label>
-                                            <div className="label-box-info-off"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header" id="item-6">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
+                                     aria-controls="collapse6">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Projetos <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse6" className="collapse" aria-labelledby="heading6"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+
+                                    {/*/////*/}
+                                    <div className="row">
+                                        <div className="col-md-9">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_projeto">Nome do Projeto</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <select className="custom-select" name="cd_abrangencia_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Abrangência de atuação</option>
-                                                {listAbrangenciaProjeto}
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_status_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Situação do projeto</option>
+                                                    {listStatusProjeto}
+                                                </select>
+                                                <br/><br/>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="col-md-2">
+                                            <div className="label-float">
+                                                <input className={"form-control"} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="dt_data_inicio_projeto">Data de início</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <div className="label-float">
+                                                <input className={"form-control"} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="dt_data_fim_projeto">Data de fim</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_abrangencia_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Abrangência de atuação</option>
+                                                    {listAbrangenciaProjeto}
+                                                </select>
+                                                <br/><br/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_zona_atuacao_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Zona de Atuação</option>
+                                                    {listZonaAtuacaoProjeto}
+                                                </select>
+                                                <br/><br/>
+                                            </div>
+
+                                        </div>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_origem_fonte_recursos_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Fontes de Recursos</option>
+                                                    {listFonteRecursosProjeto}
+                                                </select>
+                                                <br/><br/>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_financiador">Financiadores do Projeto</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de Execução</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_publico_beneficiado">Público Beneficiado</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-9">
+                                            <div className="label-float">
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_osc_parceira_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_osc_parceira_projeto">OSC Parceiras</label>
+                                                <div className="label-box-info-off"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Ano"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setTotalBeneficiarios}
+                                            />
+                                        </div>
+
+                                        <div className="col-md-9">
+                                            <select className="custom-select" name="cd_objetivo_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                                <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                                {objetivos}
                                             </select>
                                             <br/><br/>
                                         </div>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <div className="label-float">
-                                            <select className="custom-select" name="cd_zona_atuacao_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Zona de Atuação</option>
-                                                {listZonaAtuacaoProjeto}
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Ano"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setValorTotal}
+                                            />
+                                        </div>
+
+                                        <div className="col-md-9">
+                                            <select className="custom-select" name="cd_meta_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                                <option selected>Metas Relacionadas ao ODS</option>
+                                                {objetivosMetas}
                                             </select>
                                             <br/><br/>
                                         </div>
-
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <select className="custom-select" name="cd_origem_fonte_recursos_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                <option value="0">Fontes de Recursos</option>
-                                                {listFonteRecursosProjeto}
-                                            </select>
-                                            <br/><br/>
+                                        <div className="col-md-3">
+                                            <Range
+                                                title="Ano"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                defaultValueStart="0"
+                                                defaultValueEnd="100"
+                                                setValue={this.setValorRecebido}
+                                            />
                                         </div>
 
-
-
                                     </div>
-                                    <div className="col-md-6">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_financiador">Financiadores do Projeto</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de Execução</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_publico_beneficiado">Público Beneficiado</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-9">
-                                        <div className="label-float">
-                                            <input className={"form-control form-g "} type="text" name="tx_nome_osc_parceira_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                            <label htmlFor="tx_nome_osc_parceira_projeto">OSC Parceiras</label>
-                                            <div className="label-box-info-off"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Ano"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setTotalBeneficiarios}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-9">
-                                        <select className="custom-select" name="cd_objetivo_projetoSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
-                                            {objetivos}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Ano"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setValorTotal}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-9">
-                                        <select className="custom-select" name="cd_meta_projetoSelectBoxItText" onChange={this.handleInputChange}>
-                                            <option selected>Metas Relacionadas ao ODS</option>
-                                            {objetivosMetas}
-                                        </select>
-                                        <br/><br/>
-                                    </div>
-                                    <div className="col-md-3">
-                                        <Range
-                                            title="Ano"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            defaultValueStart="0"
-                                            defaultValueEnd="100"
-                                            setValue={this.setValorRecebido}
-                                        />
-                                    </div>
+                                    {/*/////*/}
 
                                 </div>
-                                {/*/////*/}
-
                             </div>
                         </div>
-                    </div>
 
-                    <div className="card">
-                        <div className="card-header" id="item-7">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
-                                 aria-controls="collapse7">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Fontes de Recursos <i className="fas fa-angle-down float-right"/>
+                        <div className="card">
+                            <div className="card-header" id="item-7">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
+                                     aria-controls="collapse7">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Fontes de Recursos <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse7" className="collapse" aria-labelledby="heading7"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <h4>Fontes de recursos anuais da OSC</h4>
+                                            <hr />
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <Range
+                                                        title="Ano"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setAnoFonteRecurso}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <h4>Recursos próprios</h4>
+                                            <hr />
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Rendimentos financeiros de reservas ou contas correntes próprias"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setRendimentosFinanceirosReservas}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Rendimentos de fundos patrimoniais"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setRendimentosFundosPatrimoniais}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Mensalidades ou contribuições de associados"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setMensalidadesContribuicoes}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Venda de bens e direitos"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setVendaBensDireitos}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Prêmios recebidos"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setPremiosRecebidos}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Venda de produtos"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setVendaProdutos}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Prestação de serviços"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setPrestacaoServicos}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <h4>Recursos públicos</h4>
+                                            <hr />
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Empresas públicas ou sociedades de economia mista"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setEmpresasPublicasSociedadesEconomia}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Acordo com organismos multilaterais"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setAcordoOrganismosMultilaterais}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Acordo com governos estrangeiros"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setAcordoGovernosEstrangeiros}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com o governo estadual"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaGovernoEstadual}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com o governo municipal"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaGovernoMunicipal}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Transferências federais recebidas pela OSC"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setTransferenciasFederaisRecebidas}
+                                                    />
+                                                </div>
+                                            </div>
+
+
+
+                                            <h4>Recursos privados</h4>
+                                            <hr />
+
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com OSCs brasileiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaBrasileiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com OSCs estrangeiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaEstrangeiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com organizações religiosas brasileiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaOrganizacoesReligiosasBrasileiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Parceria com organizações religiosas estrangeiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setParceriaOrganizacoesReligiosasEstrangeiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Empresas privadas brasileiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setEmpresasPrivadasBrasileiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Empresas estrangeiras"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setEmpresasEstrangeiras}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Doações de pessoa jurídica"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setDoacoesPessoaJuridica}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Doações de pessoa física"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setDoacoesPessoaFisica}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Doações recebidas na forma de produtos e serviços (com NF)"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setDoacoesFormaProdutosServicos}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <h4>Recursos não financeiros</h4>
+                                            <hr />
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Voluntariado"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setVoluntariado}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Isenções"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setIsencoes}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Imunidades"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setImunidades}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <Range
+                                                        title="Bens recebidos em direito de uso"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setBensRecebidosDireito}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <Range
+                                                        title="Doações recebidas na forma de produtos e serviços (sem NF)"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        defaultValueStart="0"
+                                                        defaultValueEnd="100"
+                                                        setValue={this.setDoacoesRecebidasFormaProdutosServicos}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div id="collapse7" className="collapse" aria-labelledby="heading7"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <h4>Fontes de recursos anuais da OSC</h4>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-md-3">
-                                                <Range
-                                                    title="Ano"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setAnoFonteRecurso}
-                                                />
-                                            </div>
+
+                        <div className="card">
+                            <div className="card-header" id="item-8">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
+                                     aria-controls="collapse8">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse8" className="collapse" aria-labelledby="heading8"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+
+
+                                    <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
+                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
+                                        <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+                                    </div>
+
+                                    <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
+                                        <br/>
+                                        <strong> Faixas de IDHM:</strong>
+                                        <br/>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="baixo" required/>
+                                            <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
                                         </div>
-
-                                        <h4>Recursos próprios</h4>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Rendimentos financeiros de reservas ou contas correntes próprias"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setRendimentosFinanceirosReservas}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Rendimentos de fundos patrimoniais"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setRendimentosFundosPatrimoniais}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Mensalidades ou contribuições de associados"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setMensalidadesContribuicoes}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Venda de bens e direitos"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setVendaBensDireitos}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Prêmios recebidos"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setPremiosRecebidos}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Venda de produtos"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setVendaProdutos}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Prestação de serviços"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setPrestacaoServicos}
-                                                />
-                                            </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="medio" required/>
+                                            <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
                                         </div>
-
-                                        <h4>Recursos públicos</h4>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Empresas públicas ou sociedades de economia mista"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setEmpresasPublicasSociedadesEconomia}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Acordo com organismos multilaterais"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setAcordoOrganismosMultilaterais}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Acordo com governos estrangeiros"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setAcordoGovernosEstrangeiros}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com o governo estadual"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaGovernoEstadual}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com o governo municipal"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaGovernoMunicipal}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Transferências federais recebidas pela OSC"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setTransferenciasFederaisRecebidas}
-                                                />
-                                            </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="alto" required/>
+                                            <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
                                         </div>
+                                    </div>
 
 
+                                </div>
+                            </div>
+                        </div>
 
-                                        <h4>Recursos privados</h4>
-                                        <hr />
-
-                                        <div className="row">
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com OSCs brasileiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaBrasileiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com OSCs estrangeiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaEstrangeiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com organizações religiosas brasileiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaOrganizacoesReligiosasBrasileiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Parceria com organizações religiosas estrangeiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setParceriaOrganizacoesReligiosasEstrangeiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Empresas privadas brasileiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setEmpresasPrivadasBrasileiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Empresas estrangeiras"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setEmpresasEstrangeiras}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Doações de pessoa jurídica"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setDoacoesPessoaJuridica}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Doações de pessoa física"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setDoacoesPessoaFisica}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Doações recebidas na forma de produtos e serviços (com NF)"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setDoacoesFormaProdutosServicos}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <h4>Recursos não financeiros</h4>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Voluntariado"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setVoluntariado}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Isenções"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setIsencoes}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Imunidades"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setImunidades}
-                                                />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Range
-                                                    title="Bens recebidos em direito de uso"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setBensRecebidosDireito}
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Range
-                                                    title="Doações recebidas na forma de produtos e serviços (sem NF)"
-                                                    min="0"
-                                                    max="100"
-                                                    step="1"
-                                                    defaultValueStart="0"
-                                                    defaultValueEnd="100"
-                                                    setValue={this.setDoacoesRecebidasFormaProdutosServicos}
-                                                />
-                                            </div>
-                                        </div>
+                        <div className="card">
+                            <div className="card-header" id="item-9">
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
+                                     aria-controls="collapse9">
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"/>
+                                </div>
+                            </div>
+                            <div id="collapse9" className="collapse" aria-labelledby="heading9"
+                                 data-parent="#accordionExample">
+                                <div className="card-body">
+                                    <div className="row">
+                                        {indicadores}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="card">
-                        <div className="card-header" id="item-8">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
-                                 aria-controls="collapse8">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Índice de Desenvolvimento Humano <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse8" className="collapse" aria-labelledby="heading8"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
+
+                    <div className="clear-float"/>
+                    <br/>
 
 
-                                <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
-                                    <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
-                                    <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
-                                </div>
-
-                                <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
-                                    <br/>
-                                    <strong> Faixas de IDHM:</strong>
-                                    <br/>
-                                    <div className="custom-control custom-checkbox ">
-                                        <input type="checkbox" className="custom-control-input" id="baixo" required/>
-                                        <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
-                                    </div>
-                                    <div className="custom-control custom-checkbox ">
-                                        <input type="checkbox" className="custom-control-input" id="medio" required/>
-                                        <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
-                                    </div>
-                                    <div className="custom-control custom-checkbox ">
-                                        <input type="checkbox" className="custom-control-input" id="alto" required/>
-                                        <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
-                                    </div>
-                                </div>
+                    {/*<button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.filter}>Filtrar</button>*/}
+                    <br/>
 
 
-                            </div>
-                        </div>
-                    </div>
+                    <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
+                    <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                </form>
+                <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST">
+                    <input type="hidden" name="csrf-token" value={this.props.csrf_token}/>
+                    <input type="hidden" id="json" name="json" value={JSON.stringify(this.state.json)}/>
+                    <button type="submit" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary">Filtrar</button>
+                </form>
+            </div>
 
-                    <div className="card">
-                        <div className="card-header" id="item-9">
-                            <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
-                                 aria-controls="collapse9">
-                                <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                Indicadores Socioeconômicos Adicionais  <i className="fas fa-angle-down float-right"/>
-                            </div>
-                        </div>
-                        <div id="collapse9" className="collapse" aria-labelledby="heading9"
-                             data-parent="#accordionExample">
-                            <div className="card-body">
-                                <div className="row">
-                                    {indicadores}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="clear-float"/>
-                <br/>
-
-
-                <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.filter}>Filtrar</button>
-                <br/>
-
-
-                <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
-                <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
-            </form>
 
         );
     }

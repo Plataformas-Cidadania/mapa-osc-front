@@ -165,6 +165,10 @@ class Filter extends React.Component {
         }
     }
 
+    submitForm() {
+        $("#frmMapa").submit();
+    }
+
     setJsonDadosGerais(name, value) {
         let json = this.state.json;
         if (!json.avancado.hasOwnProperty('dadosGerais')) {
@@ -172,8 +176,8 @@ class Filter extends React.Component {
         }
         json.avancado.dadosGerais[name] = value;
         this.setState({ json: json }, function () {
-            console.log(this.state.json);
-            console.log(JSON.stringify(this.state.json));
+            //console.log(this.state.json);
+            //console.log(JSON.stringify(this.state.json));
         });
     }
 
@@ -367,10 +371,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -378,11 +382,12 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
+
         //console.log(this.validate());
         /*if(!this.validate()){
             return;
@@ -1210,1622 +1215,1632 @@ class Filter extends React.Component {
 
 
         return React.createElement(
-            'form',
+            'div',
             null,
             React.createElement(
-                'div',
-                { className: 'accordion', id: 'accordionExample' },
+                'form',
+                null,
                 React.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'accordion', id: 'accordionExample' },
                     React.createElement(
                         'div',
-                        { className: 'card-header', id: 'item-1' },
+                        { className: 'card' },
                         React.createElement(
                             'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse1', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse1' },
+                            { className: 'card-header', id: 'item-1' },
                             React.createElement(
                                 'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Dados Gerais',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse1', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse1' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Dados Gerais',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse1', className: 'collapse show ', 'aria-labelledby': 'heading1',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'Nome da OSC'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'input-icon' },
+                                            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao',
+                                                style: { display: this.state.filters.regiao ? 'none' : '' },
+                                                onClick: this.clickSearchRegiao, onChange: this.handleSearchRegiao }),
+                                            React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_regiao2',
+                                                style: { display: this.state.filters.regiao ? '' : 'none' },
+                                                readOnly: this.state.filters.regiao,
+                                                defaultValue: this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : '' }),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.regiao ? 'none' : '' } },
+                                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.regiao ? '' : 'none' }, onClick: this.removeRegiao },
+                                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                null,
+                                                React.createElement(
+                                                    'ul',
+                                                    { className: 'box-search-itens', style: { display: (this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao ? '' : 'none' } },
+                                                    regioes
+                                                )
+                                            ),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'Nome Fantasia'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'input-icon' },
+                                            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um estado', name: 'tx_nome_uf',
+                                                style: { display: this.state.filters.uf ? 'none' : '' },
+                                                onClick: this.clickSearchUf, onChange: this.handleSearchUf }),
+                                            React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_uf2',
+                                                style: { display: this.state.filters.uf ? '' : 'none' },
+                                                readOnly: this.state.filters.uf,
+                                                defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.uf ? 'none' : '' } },
+                                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.uf ? '' : 'none' }, onClick: this.removeUf },
+                                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                null,
+                                                React.createElement(
+                                                    'ul',
+                                                    { className: 'box-search-itens', style: { display: (this.state.searchUf || this.state.listUf) && !this.state.filters.uf ? '' : 'none' } },
+                                                    ufs
+                                                )
+                                            ),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_identificador_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'CNPJ'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_situacao_imovel_osc', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Situa\xE7\xE3o do Im\xF3vel'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '1' },
+                                                    'Pr\xF3prio'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '2' },
+                                                    'Alugado'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '3' },
+                                                    'Cedido'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '4' },
+                                                    'Comodato'
+                                                )
+                                            ),
+                                            React.createElement('label', { htmlFor: 'name' }),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Ano de Funda\xE7\xE3o',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setAnoFundacao
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'input-icon' },
+                                            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um Munic\xEDpio', name: 'tx_nome_municipio',
+                                                style: { display: this.state.filters.municipio ? 'none' : '' },
+                                                onClick: this.clickSearchMunicipio, onChange: this.handleSearchMunicipio }),
+                                            React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_municipio2',
+                                                style: { display: this.state.filters.municipio ? '' : 'none' },
+                                                readOnly: this.state.filters.municipio,
+                                                defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.municipio ? 'none' : '' } },
+                                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
+                                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                null,
+                                                React.createElement(
+                                                    'ul',
+                                                    { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
+                                                    municipios
+                                                )
+                                            ),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement('br', null),
+                                        React.createElement(
+                                            'strong',
+                                            null,
+                                            'Natureza Jur\xEDdica:'
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox ' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_associacaoPrivada', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'naturezaJuridica_associacaoPrivada' },
+                                                'Associa\xE7\xE3o Privada'
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox ' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_fundacaoPrivada', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'naturezaJuridica_fundacaoPrivada' },
+                                                'Funda\xE7\xE3o Privada'
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox ' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoReligiosa', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoReligiosa' },
+                                                'Organiza\xE7\xE3o Religiosa'
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox ' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoSocial', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoSocial' },
+                                                'Organiza\xE7\xE3o Social'
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'custom-control custom-checkbox ' },
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_outra', required: true }),
+                                            React.createElement(
+                                                'label',
+                                                { className: 'custom-control-label', htmlFor: 'naturezaJuridica_outra' },
+                                                'N\xE3o informado'
+                                            )
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-6' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_objetivo_oscSelectBoxItText', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { selected: true },
+                                                'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                            ),
+                                            objetivos
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-6' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_meta_oscSelectBoxItText', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { selected: true },
+                                                'Metas Relacionadas ao ODS'
+                                            ),
+                                            objetivosMetas
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    )
+                                )
+                            )
                         )
                     ),
                     React.createElement(
                         'div',
-                        { id: 'collapse1', className: 'collapse show ', 'aria-labelledby': 'heading1',
-                            'data-parent': '#accordionExample' },
+                        { className: 'card' },
                         React.createElement(
                             'div',
-                            { className: 'card-body' },
+                            { className: 'card-header', id: 'item-2' },
                             React.createElement(
                                 'div',
-                                { className: 'row' },
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse2', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse2' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_razao_social_osc', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Nome da OSC'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
                                 ),
+                                '\xC1reas e Sub\xE1reas de Atua\xE7\xE3o ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse2', className: 'collapse', 'aria-labelledby': 'heading2',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-3' },
+                                    { className: 'row' },
                                     React.createElement(
                                         'div',
-                                        { className: 'input-icon' },
-                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma regi\xE3o', name: 'tx_nome_regiao',
-                                            style: { display: this.state.filters.regiao ? 'none' : '' },
-                                            onClick: this.clickSearchRegiao, onChange: this.handleSearchRegiao }),
-                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_regiao2',
-                                            style: { display: this.state.filters.regiao ? '' : 'none' },
-                                            readOnly: this.state.filters.regiao,
-                                            defaultValue: this.state.filters.regiao ? this.state.filters.regiao.edre_nm_regiao : '' }),
+                                        { className: 'col-md-9' },
                                         React.createElement(
                                             'div',
-                                            { style: { display: this.state.filters.regiao ? 'none' : '' } },
-                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
-                                        ),
+                                            { className: 'input-icon' },
+                                            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma Atividade Econ\xF4mica', name: 'tx_atividade_economica',
+                                                style: { display: this.state.filters.cnae ? 'none' : '' },
+                                                onClick: this.clickSearchCnae, onChange: this.handleSearchCnae }),
+                                            React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_atividade_economica2',
+                                                style: { display: this.state.filters.cnae ? '' : 'none' },
+                                                readOnly: this.state.filters.cnae,
+                                                defaultValue: this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : '' }),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.cnae ? 'none' : '' } },
+                                                React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { style: { display: this.state.filters.cnae ? '' : 'none' }, onClick: this.removeCnae },
+                                                React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                null,
+                                                React.createElement(
+                                                    'ul',
+                                                    { className: 'box-search-itens', style: { display: (this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ? '' : 'none' } },
+                                                    cnae
+                                                )
+                                            ),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
                                         React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.regiao ? '' : 'none' }, onClick: this.removeRegiao },
-                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
+                                            'strong',
+                                            null,
+                                            '\xC1rea de Atua\xE7\xE3o'
                                         ),
+                                        React.createElement('hr', null),
                                         React.createElement(
                                             'div',
                                             null,
-                                            React.createElement(
-                                                'ul',
-                                                { className: 'box-search-itens', style: { display: (this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao ? '' : 'none' } },
-                                                regioes
-                                            )
-                                        ),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Nome Fantasia'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'input-icon' },
-                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um estado', name: 'tx_nome_uf',
-                                            style: { display: this.state.filters.uf ? 'none' : '' },
-                                            onClick: this.clickSearchUf, onChange: this.handleSearchUf }),
-                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_uf2',
-                                            style: { display: this.state.filters.uf ? '' : 'none' },
-                                            readOnly: this.state.filters.uf,
-                                            defaultValue: this.state.filters.uf ? this.state.filters.uf.eduf_nm_uf : '' }),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.uf ? 'none' : '' } },
-                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
+                                            areaAtuacao,
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
                                         ),
                                         React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.uf ? '' : 'none' }, onClick: this.removeUf },
-                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
-                                        ),
-                                        React.createElement(
-                                            'div',
+                                            'strong',
                                             null,
-                                            React.createElement(
-                                                'ul',
-                                                { className: 'box-search-itens', style: { display: (this.state.searchUf || this.state.listUf) && !this.state.filters.uf ? '' : 'none' } },
-                                                ufs
-                                            )
+                                            'Sub\xE1rea de Atua\xE7\xE3o'
                                         ),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_identificador_osc', onChange: this.handleInputChange, placeholder: ' ' }),
+                                        React.createElement('hr', null),
                                         React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'CNPJ'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
+                                            'div',
+                                            { className: 'card-columns' },
+                                            subAreaAtuacao
+                                        )
                                     )
-                                ),
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-3' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse3', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse3' },
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-3' },
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Titula\xE7\xF5es e Certifica\xE7\xF5es ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse3', className: 'collapse', 'aria-labelledby': 'heading3',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
                                     React.createElement(
                                         'div',
-                                        { className: 'label-float' },
+                                        { className: 'col-md-12' },
+                                        certificados
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-4' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse4', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse4' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Rela\xE7\xF5es de Trabalho e Governan\xE7a ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse4', className: 'collapse', 'aria-labelledby': 'heading4',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-4' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'Nome do Dirigente'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-4' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_cargo_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'Cargo do Dirigente'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-4' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_conselheiro', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'name' },
+                                                'Nome do Membro do Conselho Fiscal'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Total de trabalhadores',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setTotalTrabalhadores
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Total de empregados',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setTotalEmpregados
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Trabalhadores com defici\xEAncia',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setTrabalhadoresDeficiencia
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Trabalhadores volunt\xE1rios',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setTrabalhadoresVoluntarios
+                                        })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-5' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse5', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse5' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Espa\xE7os de Participa\xE7\xE3o Social ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse5', className: 'collapse', 'aria-labelledby': 'heading5',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_situacao_imovel_osc', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Situa\xE7\xE3o do Im\xF3vel'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '1' },
-                                                'Pr\xF3prio'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '2' },
-                                                'Alugado'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '3' },
-                                                'Cedido'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '4' },
-                                                'Comodato'
-                                            )
+                                            { className: 'custom-select', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange },
+                                            conselhos
                                         ),
-                                        React.createElement('label', { htmlFor: 'name' }),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano de Funda\xE7\xE3o',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setAnoFundacao
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
                                     React.createElement(
                                         'div',
-                                        { className: 'input-icon' },
-                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque um Munic\xEDpio', name: 'tx_nome_municipio',
-                                            style: { display: this.state.filters.municipio ? 'none' : '' },
-                                            onClick: this.clickSearchMunicipio, onChange: this.handleSearchMunicipio }),
-                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_nome_municipio2',
-                                            style: { display: this.state.filters.municipio ? '' : 'none' },
-                                            readOnly: this.state.filters.municipio,
-                                            defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                        { className: 'col-md-3' },
                                         React.createElement(
                                             'div',
-                                            { style: { display: this.state.filters.municipio ? 'none' : '' } },
-                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.municipio ? '' : 'none' }, onClick: this.removeMunicipio },
-                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control", type: 'date', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
                                             React.createElement(
-                                                'ul',
-                                                { className: 'box-search-itens', style: { display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none' } },
-                                                municipios
+                                                'label',
+                                                { htmlFor: 'tx_nome_dirigente' },
+                                                'Data de In\xEDcio de Vig\xEAncia'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-6' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                                'Nome de representante conselho'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_tipo_participacaoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Situa\xE7\xE3o do Im\xF3vel'
+                                                ),
+                                                participacoes
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                                'Data de Fim de Vig\xEAncia'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_conferenciaSelectBoxItText', onChange: this.handleInputChange },
+                                            conferencias
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-6' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_forma_participacao_conferenciaSelectBoxItText', onChange: this.handleInputChange },
+                                            formaParticipacoes
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Ano de Realiza\xE7\xE3o da Confer\xEAncia',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setAnoRealizacao
+                                        })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-6' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse6', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse6' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Projetos ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse6', className: 'collapse', 'aria-labelledby': 'heading6',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_nome_projeto' },
+                                                'Nome do Projeto'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_status_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Situa\xE7\xE3o do projeto'
+                                                ),
+                                                listStatusProjeto
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-2' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'dt_data_inicio_projeto' },
+                                                'Data de in\xEDcio'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-2' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'dt_data_fim_projeto' },
+                                                'Data de fim'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_abrangencia_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Abrang\xEAncia de atua\xE7\xE3o'
+                                                ),
+                                                listAbrangenciaProjeto
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-2' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_zona_atuacao_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Zona de Atua\xE7\xE3o'
+                                                ),
+                                                listZonaAtuacaoProjeto
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement(
+                                                'select',
+                                                { className: 'custom-select', name: 'cd_origem_fonte_recursos_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '0' },
+                                                    'Fontes de Recursos'
+                                                ),
+                                                listFonteRecursosProjeto
+                                            ),
+                                            React.createElement('br', null),
+                                            React.createElement('br', null)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-6' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_nome_financiador' },
+                                                'Financiadores do Projeto'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_regiao_localizacao_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_nome_regiao_localizacao_projeto' },
+                                                'Local de Execu\xE7\xE3o'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_publico_beneficiado', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_nome_publico_beneficiado' },
+                                                'P\xFAblico Beneficiado'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'label-float' },
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_osc_parceira_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement(
+                                                'label',
+                                                { htmlFor: 'tx_nome_osc_parceira_projeto' },
+                                                'OSC Parceiras'
+                                            ),
+                                            React.createElement('div', { className: 'label-box-info-off' })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Ano',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setTotalBeneficiarios
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_objetivo_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { selected: true },
+                                                'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
+                                            ),
+                                            objetivos
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Ano',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setValorTotal
+                                        })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-9' },
+                                        React.createElement(
+                                            'select',
+                                            { className: 'custom-select', name: 'cd_meta_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { selected: true },
+                                                'Metas Relacionadas ao ODS'
+                                            ),
+                                            objetivosMetas
+                                        ),
+                                        React.createElement('br', null),
+                                        React.createElement('br', null)
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-3' },
+                                        React.createElement(Range, {
+                                            title: 'Ano',
+                                            min: '0',
+                                            max: '100',
+                                            step: '1',
+                                            defaultValueStart: '0',
+                                            defaultValueEnd: '100',
+                                            setValue: this.setValorRecebido
+                                        })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-7' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse7', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse7' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Fontes de Recursos ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse7', className: 'collapse', 'aria-labelledby': 'heading7',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement(
+                                            'h4',
+                                            null,
+                                            'Fontes de recursos anuais da OSC'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-3' },
+                                                React.createElement(Range, {
+                                                    title: 'Ano',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setAnoFonteRecurso
+                                                })
                                             )
                                         ),
-                                        React.createElement('br', null)
+                                        React.createElement(
+                                            'h4',
+                                            null,
+                                            'Recursos pro\u0301prios'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Rendimentos financeiros de reservas ou contas correntes pr\xF3prias',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setRendimentosFinanceirosReservas
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Rendimentos de fundos patrimoniais',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setRendimentosFundosPatrimoniais
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Mensalidades ou contribui\xE7\xF5es de associados',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setMensalidadesContribuicoes
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Venda de bens e direitos',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setVendaBensDireitos
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Pr\xEAmios recebidos',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setPremiosRecebidos
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Venda de produtos',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setVendaProdutos
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Presta\xE7\xE3o de servi\xE7os',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setPrestacaoServicos
+                                                })
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'h4',
+                                            null,
+                                            'Recursos pu\u0301blicos'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Empresas p\xFAblicas ou sociedades de economia mista',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setEmpresasPublicasSociedadesEconomia
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Acordo com organismos multilaterais',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setAcordoOrganismosMultilaterais
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Acordo com governos estrangeiros',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setAcordoGovernosEstrangeiros
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com o governo estadual',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaGovernoEstadual
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com o governo municipal',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaGovernoMunicipal
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Transfer\xEAncias federais recebidas pela OSC',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setTransferenciasFederaisRecebidas
+                                                })
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'h4',
+                                            null,
+                                            'Recursos privados'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com OSCs brasileiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaBrasileiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com OSCs estrangeiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaEstrangeiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com organiza\xE7\xF5es religiosas brasileiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaOrganizacoesReligiosasBrasileiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Parceria com organiza\xE7\xF5es religiosas estrangeiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setParceriaOrganizacoesReligiosasEstrangeiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Empresas privadas brasileiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setEmpresasPrivadasBrasileiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Empresas estrangeiras',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setEmpresasEstrangeiras
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Doa\xE7\xF5es de pessoa jur\xEDdica',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setDoacoesPessoaJuridica
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Doa\xE7\xF5es de pessoa f\xEDsica',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setDoacoesPessoaFisica
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (com NF)',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setDoacoesFormaProdutosServicos
+                                                })
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'h4',
+                                            null,
+                                            'Recursos na\u0303o financeiros'
+                                        ),
+                                        React.createElement('hr', null),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'row' },
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Voluntariado',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setVoluntariado
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Isen\xE7\xF5es',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setIsencoes
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Imunidades',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setImunidades
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-4' },
+                                                React.createElement(Range, {
+                                                    title: 'Bens recebidos em direito de uso',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setBensRecebidosDireito
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                { className: 'col-md-6' },
+                                                React.createElement(Range, {
+                                                    title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (sem NF)',
+                                                    min: '0',
+                                                    max: '100',
+                                                    step: '1',
+                                                    defaultValueStart: '0',
+                                                    defaultValueEnd: '100',
+                                                    setValue: this.setDoacoesRecebidasFormaProdutosServicos
+                                                })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'card' },
+                        React.createElement(
+                            'div',
+                            { className: 'card-header', id: 'item-8' },
+                            React.createElement(
+                                'div',
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse8', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse8' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                '\xCDndice de Desenvolvimento Humano ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse8', className: 'collapse', 'aria-labelledby': 'heading8',
+                                'data-parent': '#accordionExample' },
+                            React.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'custom-control custom-checkbox', onChange: this.clickIdh },
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true }),
+                                    React.createElement(
+                                        'label',
+                                        { className: 'custom-control-label', htmlFor: 'IDH_Municipal' },
+                                        'IDH Municipal'
                                     )
                                 ),
                                 React.createElement(
                                     'div',
-                                    { className: 'col-md-12' },
+                                    { id: 'divIdh', style: { display: this.state.active === false ? 'none' : '' } },
                                     React.createElement('br', null),
                                     React.createElement(
                                         'strong',
                                         null,
-                                        'Natureza Jur\xEDdica:'
+                                        ' Faixas de IDHM:'
                                     ),
                                     React.createElement('br', null),
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_associacaoPrivada', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true }),
                                         React.createElement(
                                             'label',
-                                            { className: 'custom-control-label', htmlFor: 'naturezaJuridica_associacaoPrivada' },
-                                            'Associa\xE7\xE3o Privada'
+                                            { className: 'custom-control-label', htmlFor: 'baixo' },
+                                            'Baixo (abaixo de 0,600)'
                                         )
                                     ),
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_fundacaoPrivada', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true }),
                                         React.createElement(
                                             'label',
-                                            { className: 'custom-control-label', htmlFor: 'naturezaJuridica_fundacaoPrivada' },
-                                            'Funda\xE7\xE3o Privada'
+                                            { className: 'custom-control-label', htmlFor: 'medio' },
+                                            'M\xE9dio (entre 0,600 e 0,699)'
                                         )
                                     ),
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoReligiosa', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true }),
                                         React.createElement(
                                             'label',
-                                            { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoReligiosa' },
-                                            'Organiza\xE7\xE3o Religiosa'
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoSocial', required: true }),
-                                        React.createElement(
-                                            'label',
-                                            { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoSocial' },
-                                            'Organiza\xE7\xE3o Social'
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_outra', required: true }),
-                                        React.createElement(
-                                            'label',
-                                            { className: 'custom-control-label', htmlFor: 'naturezaJuridica_outra' },
-                                            'N\xE3o informado'
-                                        )
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_objetivo_oscSelectBoxItText', onChange: this.handleInputChange },
-                                        React.createElement(
-                                            'option',
-                                            { selected: true },
-                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
-                                        ),
-                                        objetivos
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_meta_oscSelectBoxItText', onChange: this.handleInputChange },
-                                        React.createElement(
-                                            'option',
-                                            { selected: true },
-                                            'Metas Relacionadas ao ODS'
-                                        ),
-                                        objetivosMetas
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-2' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse2', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse2' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            '\xC1reas e Sub\xE1reas de Atua\xE7\xE3o ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse2', className: 'collapse', 'aria-labelledby': 'heading2',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'input-icon' },
-                                        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Busque uma Atividade Econ\xF4mica', name: 'tx_atividade_economica',
-                                            style: { display: this.state.filters.cnae ? 'none' : '' },
-                                            onClick: this.clickSearchCnae, onChange: this.handleSearchCnae }),
-                                        React.createElement('input', { type: 'text', className: 'form-control', name: 'tx_atividade_economica2',
-                                            style: { display: this.state.filters.cnae ? '' : 'none' },
-                                            readOnly: this.state.filters.cnae,
-                                            defaultValue: this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : '' }),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.cnae ? 'none' : '' } },
-                                            React.createElement('i', { className: 'fas fa-search', style: { top: '-28px' } })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { style: { display: this.state.filters.cnae ? '' : 'none' }, onClick: this.removeCnae },
-                                            React.createElement('i', { className: 'fas fa-times', style: { top: '-28px', cursor: 'pointer' } })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            null,
-                                            React.createElement(
-                                                'ul',
-                                                { className: 'box-search-itens', style: { display: (this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ? '' : 'none' } },
-                                                cnae
-                                            )
-                                        ),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement(
-                                        'strong',
-                                        null,
-                                        '\xC1rea de Atua\xE7\xE3o'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        null,
-                                        areaAtuacao,
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    ),
-                                    React.createElement(
-                                        'strong',
-                                        null,
-                                        'Sub\xE1rea de Atua\xE7\xE3o'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'card-columns' },
-                                        subAreaAtuacao
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-3' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse3', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse3' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Titula\xE7\xF5es e Certifica\xE7\xF5es ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse3', className: 'collapse', 'aria-labelledby': 'heading3',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    certificados
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-4' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse4', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse4' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Rela\xE7\xF5es de Trabalho e Governan\xE7a ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse4', className: 'collapse', 'aria-labelledby': 'heading4',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-4' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Nome do Dirigente'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-4' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_cargo_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Cargo do Dirigente'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-4' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_conselheiro', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'name' },
-                                            'Nome do Membro do Conselho Fiscal'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Total de trabalhadores',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setTotalTrabalhadores
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Total de empregados',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setTotalEmpregados
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Trabalhadores com defici\xEAncia',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setTrabalhadoresDeficiencia
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Trabalhadores volunt\xE1rios',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setTrabalhadoresVoluntarios
-                                    })
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-5' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse5', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse5' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Espa\xE7os de Participa\xE7\xE3o Social ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse5', className: 'collapse', 'aria-labelledby': 'heading5',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange },
-                                        conselhos
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control", type: 'date', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_dirigente' },
-                                            'Data de In\xEDcio de Vig\xEAncia'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
-                                            'Nome de representante conselho'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement(
-                                            'select',
-                                            { className: 'custom-select', name: 'cd_tipo_participacaoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Situa\xE7\xE3o do Im\xF3vel'
-                                            ),
-                                            participacoes
-                                        ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'cd_conselhoSelectBoxItText' },
-                                            'Data de Fim de Vig\xEAncia'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_conferenciaSelectBoxItText', onChange: this.handleInputChange },
-                                        conferencias
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_forma_participacao_conferenciaSelectBoxItText', onChange: this.handleInputChange },
-                                        formaParticipacoes
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano de Realiza\xE7\xE3o da Confer\xEAncia',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setAnoRealizacao
-                                    })
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-6' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse6', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse6' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Projetos ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse6', className: 'collapse', 'aria-labelledby': 'heading6',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_projeto' },
-                                            'Nome do Projeto'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement(
-                                            'select',
-                                            { className: 'custom-select', name: 'cd_status_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Situa\xE7\xE3o do projeto'
-                                            ),
-                                            listStatusProjeto
-                                        ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-2' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'dt_data_inicio_projeto' },
-                                            'Data de in\xEDcio'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-2' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'dt_data_fim_projeto' },
-                                            'Data de fim'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement(
-                                            'select',
-                                            { className: 'custom-select', name: 'cd_abrangencia_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Abrang\xEAncia de atua\xE7\xE3o'
-                                            ),
-                                            listAbrangenciaProjeto
-                                        ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-2' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement(
-                                            'select',
-                                            { className: 'custom-select', name: 'cd_zona_atuacao_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Zona de Atua\xE7\xE3o'
-                                            ),
-                                            listZonaAtuacaoProjeto
-                                        ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement(
-                                            'select',
-                                            { className: 'custom-select', name: 'cd_origem_fonte_recursos_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '0' },
-                                                'Fontes de Recursos'
-                                            ),
-                                            listFonteRecursosProjeto
-                                        ),
-                                        React.createElement('br', null),
-                                        React.createElement('br', null)
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-6' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_financiador', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_financiador' },
-                                            'Financiadores do Projeto'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_regiao_localizacao_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_regiao_localizacao_projeto' },
-                                            'Local de Execu\xE7\xE3o'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_publico_beneficiado', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_publico_beneficiado' },
-                                            'P\xFAblico Beneficiado'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'label-float' },
-                                        React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_osc_parceira_projeto', onChange: this.handleInputChange, placeholder: ' ' }),
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'tx_nome_osc_parceira_projeto' },
-                                            'OSC Parceiras'
-                                        ),
-                                        React.createElement('div', { className: 'label-box-info-off' })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setTotalBeneficiarios
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_objetivo_projetoSelectBoxItText', onChange: this.handleInputChange },
-                                        React.createElement(
-                                            'option',
-                                            { selected: true },
-                                            'Objetivos do Desenvolvimento Sustent\xE1vel - ODS'
-                                        ),
-                                        objetivos
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setValorTotal
-                                    })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement(
-                                        'select',
-                                        { className: 'custom-select', name: 'cd_meta_projetoSelectBoxItText', onChange: this.handleInputChange },
-                                        React.createElement(
-                                            'option',
-                                            { selected: true },
-                                            'Metas Relacionadas ao ODS'
-                                        ),
-                                        objetivosMetas
-                                    ),
-                                    React.createElement('br', null),
-                                    React.createElement('br', null)
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(Range, {
-                                        title: 'Ano',
-                                        min: '0',
-                                        max: '100',
-                                        step: '1',
-                                        defaultValueStart: '0',
-                                        defaultValueEnd: '100',
-                                        setValue: this.setValorRecebido
-                                    })
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-7' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse7', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse7' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Fontes de Recursos ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse7', className: 'collapse', 'aria-labelledby': 'heading7',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement(
-                                        'h4',
-                                        null,
-                                        'Fontes de recursos anuais da OSC'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-3' },
-                                            React.createElement(Range, {
-                                                title: 'Ano',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setAnoFonteRecurso
-                                            })
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'h4',
-                                        null,
-                                        'Recursos pro\u0301prios'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Rendimentos financeiros de reservas ou contas correntes pr\xF3prias',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setRendimentosFinanceirosReservas
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Rendimentos de fundos patrimoniais',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setRendimentosFundosPatrimoniais
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Mensalidades ou contribui\xE7\xF5es de associados',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setMensalidadesContribuicoes
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Venda de bens e direitos',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setVendaBensDireitos
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Pr\xEAmios recebidos',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setPremiosRecebidos
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Venda de produtos',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setVendaProdutos
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Presta\xE7\xE3o de servi\xE7os',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setPrestacaoServicos
-                                            })
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'h4',
-                                        null,
-                                        'Recursos pu\u0301blicos'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Empresas p\xFAblicas ou sociedades de economia mista',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setEmpresasPublicasSociedadesEconomia
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Acordo com organismos multilaterais',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setAcordoOrganismosMultilaterais
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Acordo com governos estrangeiros',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setAcordoGovernosEstrangeiros
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com o governo estadual',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaGovernoEstadual
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com o governo municipal',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaGovernoMunicipal
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Transfer\xEAncias federais recebidas pela OSC',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setTransferenciasFederaisRecebidas
-                                            })
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'h4',
-                                        null,
-                                        'Recursos privados'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com OSCs brasileiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaBrasileiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com OSCs estrangeiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaEstrangeiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com organiza\xE7\xF5es religiosas brasileiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaOrganizacoesReligiosasBrasileiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Parceria com organiza\xE7\xF5es religiosas estrangeiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setParceriaOrganizacoesReligiosasEstrangeiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Empresas privadas brasileiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setEmpresasPrivadasBrasileiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Empresas estrangeiras',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setEmpresasEstrangeiras
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Doa\xE7\xF5es de pessoa jur\xEDdica',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setDoacoesPessoaJuridica
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Doa\xE7\xF5es de pessoa f\xEDsica',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setDoacoesPessoaFisica
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (com NF)',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setDoacoesFormaProdutosServicos
-                                            })
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'h4',
-                                        null,
-                                        'Recursos na\u0303o financeiros'
-                                    ),
-                                    React.createElement('hr', null),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'row' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Voluntariado',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setVoluntariado
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Isen\xE7\xF5es',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setIsencoes
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Imunidades',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setImunidades
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-4' },
-                                            React.createElement(Range, {
-                                                title: 'Bens recebidos em direito de uso',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setBensRecebidosDireito
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'col-md-6' },
-                                            React.createElement(Range, {
-                                                title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (sem NF)',
-                                                min: '0',
-                                                max: '100',
-                                                step: '1',
-                                                defaultValueStart: '0',
-                                                defaultValueEnd: '100',
-                                                setValue: this.setDoacoesRecebidasFormaProdutosServicos
-                                            })
+                                            { className: 'custom-control-label', htmlFor: 'alto' },
+                                            'Alto (0,700 ou mais)'
                                         )
                                     )
                                 )
                             )
                         )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-8' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse8', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse8' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            '\xCDndice de Desenvolvimento Humano ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
                     ),
                     React.createElement(
                         'div',
-                        { id: 'collapse8', className: 'collapse', 'aria-labelledby': 'heading8',
-                            'data-parent': '#accordionExample' },
+                        { className: 'card' },
                         React.createElement(
                             'div',
-                            { className: 'card-body' },
+                            { className: 'card-header', id: 'item-9' },
                             React.createElement(
                                 'div',
-                                { className: 'custom-control custom-checkbox', onChange: this.clickIdh },
-                                React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true }),
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse9', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse9' },
                                 React.createElement(
-                                    'label',
-                                    { className: 'custom-control-label', htmlFor: 'IDH_Municipal' },
-                                    'IDH Municipal'
-                                )
-                            ),
+                                    'div',
+                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
+                                    React.createElement('i', { className: 'far fa-file-alt' })
+                                ),
+                                'Indicadores Socioecon\xF4micos Adicionais  ',
+                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { id: 'collapse9', className: 'collapse', 'aria-labelledby': 'heading9',
+                                'data-parent': '#accordionExample' },
                             React.createElement(
                                 'div',
-                                { id: 'divIdh', style: { display: this.state.active === false ? 'none' : '' } },
-                                React.createElement('br', null),
-                                React.createElement(
-                                    'strong',
-                                    null,
-                                    ' Faixas de IDHM:'
-                                ),
-                                React.createElement('br', null),
+                                { className: 'card-body' },
                                 React.createElement(
                                     'div',
-                                    { className: 'custom-control custom-checkbox ' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'custom-control-label', htmlFor: 'baixo' },
-                                        'Baixo (abaixo de 0,600)'
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'custom-control custom-checkbox ' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'custom-control-label', htmlFor: 'medio' },
-                                        'M\xE9dio (entre 0,600 e 0,699)'
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'custom-control custom-checkbox ' },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true }),
-                                    React.createElement(
-                                        'label',
-                                        { className: 'custom-control-label', htmlFor: 'alto' },
-                                        'Alto (0,700 ou mais)'
-                                    )
+                                    { className: 'row' },
+                                    indicadores
                                 )
                             )
                         )
                     )
                 ),
+                React.createElement('div', { className: 'clear-float' }),
+                React.createElement('br', null),
+                React.createElement('br', null),
                 React.createElement(
                     'div',
-                    { className: 'card' },
-                    React.createElement(
-                        'div',
-                        { className: 'card-header', id: 'item-9' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse9', 'aria-expanded': 'true',
-                                'aria-controls': 'collapse9' },
-                            React.createElement(
-                                'div',
-                                { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                React.createElement('i', { className: 'far fa-file-alt' })
-                            ),
-                            'Indicadores Socioecon\xF4micos Adicionais  ',
-                            React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { id: 'collapse9', className: 'collapse', 'aria-labelledby': 'heading9',
-                            'data-parent': '#accordionExample' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                indicadores
-                            )
-                        )
-                    )
+                    { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-danger' },
+                    this.state.msg
+                ),
+                React.createElement(
+                    'div',
+                    { style: { display: this.state.loading ? 'block' : 'none' } },
+                    React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
+                    'Processando'
                 )
             ),
-            React.createElement('div', { className: 'clear-float' }),
-            React.createElement('br', null),
             React.createElement(
-                'button',
-                { type: 'button', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary', onClick: this.filter },
-                'Filtrar'
-            ),
-            React.createElement('br', null),
-            React.createElement(
-                'div',
-                { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-danger' },
-                this.state.msg
-            ),
-            React.createElement(
-                'div',
-                { style: { display: this.state.loading ? 'block' : 'none' } },
-                React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                'Processando'
+                'form',
+                { id: 'frmMapa', name: 'frmMapa', action: 'mapa-busca-avancada', method: 'POST' },
+                React.createElement('input', { type: 'hidden', name: 'csrf-token', value: this.props.csrf_token }),
+                React.createElement('input', { type: 'hidden', id: 'json', name: 'json', value: JSON.stringify(this.state.json) }),
+                React.createElement(
+                    'button',
+                    { type: 'submit', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary' },
+                    'Filtrar'
+                )
             )
         );
     }

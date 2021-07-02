@@ -100,6 +100,7 @@ class Api extends React.Component {
         //console.log(this.state.ipeaData);
         return (
             <Filter
+                csrf_token={this.props.csrf_token}
                 certificados={this.state.certificados}
                 areaAtuacao={this.state.areaAtuacao}
                 ipeaData={this.state.ipeaData}
@@ -110,6 +111,6 @@ class Api extends React.Component {
 }
 
 ReactDOM.render(
-    <Api />,
+    <Api csrf_token={csrf_token}/>,
     document.getElementById('api')
 );

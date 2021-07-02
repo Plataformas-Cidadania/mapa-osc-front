@@ -149,6 +149,10 @@ class OscMap extends React.Component{
                         this.loadDataPontosPorMunicipio();
                         osc = false;
                     }
+                    if(this.state.origem === 'busca-avancada'){
+                        this.loadDataPontosOscPesquisaAvancada();
+                        osc = false;
+                    }
                     if(osc){
                         this.loadDataPontosOscPesquisa();
                     }
@@ -775,14 +779,14 @@ class OscMap extends React.Component{
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"'+origemOsc+'"}}';
-            rota = 'osc/busca_avancada/lista/10/0?avancado='+avancado;
-            //rota = 'osc/busca_avancada/lista/10/0/'+avancado;
+            //rota = 'osc/busca_avancada/lista/10/0?avancado='+avancado;
+            rota = 'osc/busca_avancada/lista/10/0/'+avancado;
         }
         this.setState({processingList: true}, function (){
             $.ajax({
                 method:'GET',
-                url: getBaseUrl2 + rota,
-                //url: rota,//ROTA PARA TESTES LOCAIS
+                //url: getBaseUrl2 + rota,
+                url: rota,//ROTA PARA TESTES LOCAIS
                 //url: 'lista_osc/'+this.state.paginaOscList,
                 data:{
                 },
@@ -1123,19 +1127,64 @@ class OscMap extends React.Component{
         });
     }
 
-    loadDataPontosOscPesquisa(){
-        //console.log('CARREGAR PONTOS OSC PESQUISADA');
-        //let origem = this.state.origem.replace(/ /g, "_");
-        let origem = this.state.origem;
-        let avancado = '{"dadosGerais":{"tx_razao_social_osc":"'+origem+'"}}';
+    loadDataPontosOscPesquisaAvancada(){
+        console.log('CARREGAR PONTOS OSC POR PESQUISA AVANCADA');
+        console.log(this.props.strJson);
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
                 method:'GET',
                 //method:'POST',
-                url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,
+                //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
+                url: 'osc/busca_avancada/geo/10/0/'+this.props.strJson,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
+                data:{},
+                /*data:JSON.stringify({
+                    avancado: {
+                        dadosGerais: {
+                            tx_razao_social_osc: origem
+                        }
+                    }
+                }),*/
+                cache: false,
+                success: function(data) {
+                    //console.log('loadPontosPorTerritorio', data);
+                    //data = JSON.parse(data);
+                    //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
+                    let data2 = [];
+                    //for ($data as $key => $item) {
+                    for (let i in data) {
+                        //if(parseInt(i) > 0){ //ESSE IF PRECISAVA NA API ANTIGA PQ O INDICE ZERO VINHA COM OS DADOS VAZIOS
+                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        //}
+                    }
+                    data = data2;
+                    /////////////////////////////////////////////
+                    //this.setState({data: data, processingOscPontos: false}, function(){
+                    this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
+                        this.populateMapCluster();
+                    });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.log('erro');
+                }.bind(this)
+            });
+        });
+    }
+
+    loadDataPontosOscPesquisa(){
+        //console.log('CARREGAR PONTOS OSC PESQUISADA');
+        let origem = this.state.origem.replace(/ /g, "_");
+
+        //let origem = this.state.origem;
+        //let avancado = '{"dadosGerais":{"tx_razao_social_osc":"'+origem+'"}}';
+        this.setState({processingOscPontos: true}, function (){
+            $.ajax({
+                method:'GET',
+                //method:'POST',
+                //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
                 //url: 'osc/busca_avancada/geo/10/0/'+avancado,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
                 //url: 'search/osc/geo/'+origem,
+                url: getBaseUrl2 + 'osc/busca/geo/'+origem,
                 data:{},
                 /*data:JSON.stringify({
                     avancado: {

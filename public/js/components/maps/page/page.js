@@ -70,9 +70,9 @@ class Page extends React.Component {
                     console.error(status, err.toString());
                     _this.setState({loading: false});
                 }
-              });
+             });
         })
-      }*/
+     }*/
 
     loadOscUf() {
         let _this = this;
@@ -102,7 +102,8 @@ class Page extends React.Component {
             React.createElement(OscMap, {
                 mapId: 'mapTeste',
                 data: this.state.data,
-                origem: this.props.origem
+                origem: this.props.origem,
+                strJson: this.props.strJson
                 //dataTerritorio={this.state.dataTerritorio}
                 , dataOscUf: this.state.dataOscUf,
                 dataIdhUf: this.state.dataIdhUf,
@@ -113,4 +114,4 @@ class Page extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Page, { origem: origem }), document.getElementById('page'));
+ReactDOM.render(React.createElement(Page, { origem: origem, strJson: strJson }), document.getElementById('page'));
