@@ -39,10 +39,8 @@
             <div class="item-detail">
                 <h4>Link para o Estatuto da OSC:</h4>
                 <p>
-                    <a href="{{$descricao->tx_link_estatuto_osc}}" target="_blank">
-                        <div class="btn btn-primary">
-                            {{$descricao->tx_link_estatuto_osc == null ? $txt_alert_abb : 'Clique no link para ir ao Estatuto da OSC'}}
-                        </div>
+                    <a href="{{$descricao->tx_link_estatuto_osc}}" target="_blank" class="btn btn-primary">
+                        {{$descricao->tx_link_estatuto_osc == null ? $txt_alert_abb : 'Clique no link para ir ao Estatuto da OSC'}}
                     </a>
                 </p>
             </div>

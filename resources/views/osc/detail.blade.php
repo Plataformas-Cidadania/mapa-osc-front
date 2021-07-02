@@ -29,7 +29,17 @@
         17 => "Parcerias e Meios de Implementação",
     ];
 
+    $abrangencia = [
+        1 => "Municipal",
+        2 => "Estadual",
+        3 => "Regional",
+        4 => "Nacional",
+    ];
 
+    $zonaAtuacao = [
+        1 => "Rural",
+        2 => "Urbana",
+    ];
 
     ?>
 
@@ -80,7 +90,7 @@
                 @include('osc.detail-titration')
                 @include('osc.detail-governance')
                 @include('osc.detail-participation')
-                {{--@include('osc.detail-projects')--}}
+                @include('osc.detail-projects')
                 @include('osc.detail-resources')
                 <br>
             </div>

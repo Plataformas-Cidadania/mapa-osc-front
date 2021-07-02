@@ -138,28 +138,46 @@
                 <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>
                 <br>
                 <div class="item-obj">
-                    @foreach($objetivos_osc as $objetivo_osc)
+
+                    <?php
+                        $objetivos = [];
+
+                        foreach ($objetivos_osc as $item) {
+                            $cdObjetivo = $item->meta_projeto->cd_objetivo_projeto;
+                            if(array_search($cdObjetivo, array_column($objetivos, 'cd_objetivo_projeto')) === false){
+                                $nome_objetivo = $item->meta_projeto->objetivo_projeto->tx_nome_objetivo_projeto;
+                                array_push($objetivos, ['cd_objetivo_projeto' => $cdObjetivo, 'tx_nome_objetivo_projeto' => $nome_objetivo, 'metas' => []]);
+                            }
+                            $key = array_search($cdObjetivo, array_column($objetivos, 'cd_objetivo_projeto'));
+                            array_push($objetivos[$key]['metas'], [
+                                'cd_meta_projeto' => $item->meta_projeto->cd_meta_projeto,
+                                'tx_nome_meta_projeto' => $item->meta_projeto->tx_nome_meta_projeto,
+                            ]);
+                        }
+                    ?>
+                    @foreach($objetivos as $objetivo)
                         <div class="col-md-12">
-                            @if($objetivo_osc->cd_objetivo_osc <= 10)
-                                <img src="img/ods/0{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                            @if($objetivo['cd_objetivo_projeto'] <= 10)
+                                <img src="img/ods/0{{$objetivo['cd_objetivo_projeto']}}.png" alt="">
                                 <br>
                             @else
-                                <img src="img/ods/{{$objetivo_osc->cd_objetivo_osc}}.png" alt="">
+                                <img src="img/ods/{{$objetivo['cd_objetivo_projeto']}}.png" alt="">
                                 <br>
                             @endif
-
-                            <h3><strong class="objetivo_color{{$objetivo_osc->cd_objetivo_osc}}">{{$objetivo_title[$objetivo_osc->cd_objetivo_osc]}}</strong></h3>
-                            <p>{{substr($objetivo_osc->tx_nome_objetivo_osc, 2, -1)}}</p>
+                            <h3><strong class="objetivo_color{{$objetivo['cd_objetivo_projeto']}}">{{$objetivo_title[$objetivo['cd_objetivo_projeto']]}}</strong></h3>
+                            <p>{{$objetivo['tx_nome_objetivo_projeto']}}</p>
+                            <div style="clear: both;"></div>
                         </div>
                         <br>
                         <div class="col-md-12">
                             <div class="item-detail">
                                 <h4>Metas Relacionadas ao ODS:</h4>
-                                @foreach($objetivo_osc->objetivo_metas as $objetivo_meta)
-                                    <p>{{$objetivo_meta->tx_nome_meta_osc}}</p>
+                                @foreach($objetivo['metas'] as $meta)
+                                    <p>{{$objetivo['cd_objetivo_projeto']}}.{{$meta['cd_meta_projeto']}}. {{$meta['tx_nome_meta_projeto']}}</p>
                                 @endforeach
                             </div>
                         </div>
+
                     @endforeach
                     <br><br>
                 </div>

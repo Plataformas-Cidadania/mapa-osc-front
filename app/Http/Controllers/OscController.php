@@ -36,6 +36,9 @@ class OscController extends Controller{
         $certificacoes = curlList('certificados', $id);
         $area_atuacao = curlList('areas_atuacao', $id);
         $area_atuacao_rep = curlList('areas_atuacao_rep', $id);
+        $projetos = curlList('projetos', $id);
+
+        $objetivos_osc = curlList('objetivos', $id);
 
 
         //$area_atuacao_rep = array_unique($area_atuacao_rep->dc_area_atuacao->tx_nome_area_atuacao, SORT_REGULAR);
@@ -63,10 +66,17 @@ class OscController extends Controller{
         //$relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
 
         //$recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
-        $projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
-        $objetivos_osc_db = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
+        //$projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
+        //$objetivos_osc_db = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
         //$objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
-        $objetivos_osc = [];
+
+
+        //Log::info('/////////////////////////');
+        //Log::info($objetivos_osc_db2);
+        //Log::info('/////////////////////////');
+
+
+        /*$objetivos_osc = [];
         foreach ($objetivos_osc_db as $objetivo_osc_db) {
             $objetivo_metas = DB::connection('map')
                 ->table('portal.vw_osc_objetivo_osc')
@@ -80,7 +90,32 @@ class OscController extends Controller{
             $objetivo_osc->objetivo_metas = $objetivo_metas;
 
             array_push($objetivos_osc, $objetivo_osc);
-        }
+        }*/
+
+        //Log::info('/////////////////////////');
+        //Log::info($objetivos_osc_db);
+       // Log::info('/////////////////////////');
+
+        /*$objetivos_osc = [];
+        foreach ($objetivos_osc_db as $objetivo_osc_db) {
+
+            $objetivo_metas = DB::connection('map')
+                ->table('portal.vw_osc_objetivo_osc')
+                ->where('id_osc', $id)
+                ->where('cd_objetivo_osc', $objetivo_osc_db->meta_projeto->objetivo_projeto->cd_objetivo_projeto)
+                ->get();
+
+            //$objetivo_metas = curlList('objetivos', $id);
+
+            $objetivo_osc = new \StdClass;
+            $objetivo_osc->cd_objetivo_osc = $objetivo_osc_db->meta_projeto->objetivo_projeto->cd_objetivo_projeto;
+            $objetivo_osc->tx_nome_objetivo_osc = $objetivo_osc_db->meta_projeto->objetivo_projeto->tx_nome_objetivo_projeto;
+            $objetivo_osc->objetivo_metas = $objetivo_metas;
+
+            array_push($objetivos_osc, $objetivo_osc);
+        }*/
+
+
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
