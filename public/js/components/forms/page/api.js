@@ -99,6 +99,7 @@ class Api extends React.Component {
     render() {
         //console.log(this.state.ipeaData);
         return React.createElement(Filter, {
+            csrf_token: this.props.csrf_token,
             certificados: this.state.certificados,
             areaAtuacao: this.state.areaAtuacao,
             ipeaData: this.state.ipeaData
@@ -106,4 +107,4 @@ class Api extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(Api, null), document.getElementById('api'));
+ReactDOM.render(React.createElement(Api, { csrf_token: csrf_token }), document.getElementById('api'));

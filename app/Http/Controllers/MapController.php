@@ -25,4 +25,8 @@ class MapController extends Controller{
     public function details($origem=0){
         return view('map.detail', ['origem' => $origem]);
     }
+
+    public function buscaAvancada(Request $request){
+        return view('map.detail', ['origem' => 'busca-avancada', 'json' => $request->json]);
+    }
 }

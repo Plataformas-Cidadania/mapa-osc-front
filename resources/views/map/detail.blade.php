@@ -13,6 +13,7 @@
     }else{
         $localidade = "Município";
     }
+
     ?>
 
     <div class="bg-lgt">
@@ -46,6 +47,11 @@
             <div class="col-md-12">
                 <script>
                     origem = "{{$origem}}";
+                    @if(isset($json))
+                        strJson = '<?php echo $json;?>';
+                    @else
+                        strJson = "";
+                    @endif
                 </script>
 
                 <style>

@@ -161,7 +161,7 @@
 @endif
 
 
-@if($rota=='mapa' || $rota=='mapa/{origem}')
+@if($rota=='mapa' || $rota=='mapa/{origem}' || $rota=='mapa-busca-avancada')
     <script src="js/components/forms/search.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/components/maps/oscMap.js"></script>
@@ -277,6 +277,9 @@
     <script src="js/components/maps/address.js"></script>
 @endif
 @if($rota=="filtro")
+    <script>
+        csrf_token = '<?php echo csrf_token(); ?>';
+    </script>
     <script src="js/components/forms/range.js"></script>
     <script src="js/components/forms/filter.js"></script>
     <script src="js/components/forms/page/api.js"></script>
