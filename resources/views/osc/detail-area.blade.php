@@ -23,13 +23,13 @@
             <div class="col-md-6">
                 <div class="item-detail">
                     <h4>Área de Atuação:</h4>
-                    <p>{{$area->dc_area_atuacao->tx_nome_area_atuacao}}</p>
+                    <p>{{$area->dc_area_atuacao->tx_nome_area_atuacao == null ? $txt_alert_abb : $area->dc_area_atuacao->tx_nome_area_atuacao}}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="item-detail">
                     <h4>Subárea:</h4>
-                    <p>{{$area->dc_subarea_atuacao->tx_nome_subarea_atuacao}}</p>
+                    <p>{{$area->dc_subarea_atuacao->tx_nome_subarea_atuacao == null ? $txt_alert_abb :$area->dc_subarea_atuacao->tx_nome_subarea_atuacao}}</p>
                 </div>
             </div>
         @endforeach
