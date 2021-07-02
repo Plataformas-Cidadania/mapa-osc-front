@@ -10,10 +10,10 @@
                         <div class="items-link">
                             <a href="{{$link->url}}" target="_blank">
                                 <picture>
-                                    <source srcset="/imagens/links/sm-{{$link->imagem}}" media="(max-width: 468px)">
-                                    <source srcset="/imagens/links/md-{{$link->imagem}}" media="(max-width: 768px)">
-                                    <source srcset="/imagens/links/lg-{{$link->imagem}}" class="img-responsive">
-                                    <img src="/img/pre-img.gif" data-src="/imagens/links/lg-{{$link->imagem}}" alt="Imagem sobre {{$link->titulo}}" title="Imagem sobre {{$link->titulo}}" class="img-responsive lazyload">
+                                    <source srcset="imagens/links/sm-{{$link->imagem}}" media="(max-width: 468px)">
+                                    <source srcset="imagens/links/md-{{$link->imagem}}" media="(max-width: 768px)">
+                                    <source srcset="imagens/links/lg-{{$link->imagem}}" class="img-responsive">
+                                    <img src="img/pre-img.gif" data-src="imagens/links/lg-{{$link->imagem}}" alt="Imagem sobre {{$link->titulo}}" title="Imagem sobre {{$link->titulo}}" class="img-responsive lazyload">
                                 </picture>
                                 <h2>{{$link->titulo}}</h2>
                                 {!! $link->descricao !!}

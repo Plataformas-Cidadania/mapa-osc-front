@@ -40,8 +40,9 @@ class OscController extends Controller{
 
         $objetivos_osc = curlList('objetivos', $id);
 
+        //Log::info($area_atuacao_rep);
 
-        //$area_atuacao_rep = array_unique($area_atuacao_rep->dc_area_atuacao->tx_nome_area_atuacao, SORT_REGULAR);
+
 
         $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
         $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
@@ -52,69 +53,6 @@ class OscController extends Controller{
         $participacao_social_outros = curlListParametros('participacao_social', $id, 'outros_espacos_participacao_social');
 
         $recursos = curlList('anos_recursos', $id);
-
-        //return $area_atuacao_rep;
-
-
-        //$dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
-        //$area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();
-        //$descricao = DB::connection('map')->table('portal.vw_osc_descricao')->where('id_osc', $id)->first();
-        //$certificacoes = DB::connection('map')->table('portal.vw_osc_certificado')->where('id_osc', $id)->get();
-
-        //$governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id)->get();
-        //$conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id)->get();
-        //$relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
-
-        //$recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
-        //$projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
-        //$objetivos_osc_db = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
-        //$objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
-
-
-        //Log::info('/////////////////////////');
-        //Log::info($objetivos_osc_db2);
-        //Log::info('/////////////////////////');
-
-
-        /*$objetivos_osc = [];
-        foreach ($objetivos_osc_db as $objetivo_osc_db) {
-            $objetivo_metas = DB::connection('map')
-                ->table('portal.vw_osc_objetivo_osc')
-                ->where('id_osc', $id)
-                ->where('cd_objetivo_osc', $objetivo_osc_db->cd_objetivo_osc)
-                ->get();
-
-            $objetivo_osc = new \StdClass;
-            $objetivo_osc->cd_objetivo_osc = $objetivo_osc_db->cd_objetivo_osc;
-            $objetivo_osc->tx_nome_objetivo_osc = $objetivo_osc_db->tx_nome_objetivo_osc;
-            $objetivo_osc->objetivo_metas = $objetivo_metas;
-
-            array_push($objetivos_osc, $objetivo_osc);
-        }*/
-
-        //Log::info('/////////////////////////');
-        //Log::info($objetivos_osc_db);
-       // Log::info('/////////////////////////');
-
-        /*$objetivos_osc = [];
-        foreach ($objetivos_osc_db as $objetivo_osc_db) {
-
-            $objetivo_metas = DB::connection('map')
-                ->table('portal.vw_osc_objetivo_osc')
-                ->where('id_osc', $id)
-                ->where('cd_objetivo_osc', $objetivo_osc_db->meta_projeto->objetivo_projeto->cd_objetivo_projeto)
-                ->get();
-
-            //$objetivo_metas = curlList('objetivos', $id);
-
-            $objetivo_osc = new \StdClass;
-            $objetivo_osc->cd_objetivo_osc = $objetivo_osc_db->meta_projeto->objetivo_projeto->cd_objetivo_projeto;
-            $objetivo_osc->tx_nome_objetivo_osc = $objetivo_osc_db->meta_projeto->objetivo_projeto->tx_nome_objetivo_projeto;
-            $objetivo_osc->objetivo_metas = $objetivo_metas;
-
-            array_push($objetivos_osc, $objetivo_osc);
-        }*/
-
 
 
         return view($this->module.'.detail', [
@@ -138,7 +76,6 @@ class OscController extends Controller{
             'recursos' => $recursos,
             'projetos' => $projetos,
             'objetivos_osc' => $objetivos_osc,
-            /*'objetivo_metas' => $objetivo_metas,*/
         ]);
     }
 
@@ -150,7 +87,6 @@ class OscController extends Controller{
         }
 
         $pagina = $api."geo/oscs/estado/".$estado_id;
-        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/oscs/estado/".$estado_id;
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pagina );
@@ -178,7 +114,6 @@ class OscController extends Controller{
         }
 
         $pagina = $api."osc/popup/".$id;
-        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/popup/".$id;
 
 
         $ch = curl_init();

@@ -25,7 +25,7 @@ class CategoriesFilter extends React.Component {
     load() {
         $.ajax({
             method: 'POST',
-            url: '/categories',
+            url: 'categories',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

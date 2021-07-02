@@ -76,8 +76,8 @@
                         <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
                         <li><a href="detalhar/974758#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
                         <li><a href="detalhar/974758#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
-                        <li><a href="detalhar/974758#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e Certificações</p></a></li>
-                        <li><a href="detalhar/974758#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e Governança</p></a></li>
+                        <li><a href="detalhar/974758#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e certificações</p></a></li>
+                        <li><a href="detalhar/974758#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
                         <li><a href="detalhar/974758#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
                         <li><a href="detalhar/974758#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
                         <li style="border-bottom: 0;"><a href="detalhar/974758#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>

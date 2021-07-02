@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <br><br>
         <div class="title-style">
-            <h2><div class="mn-accordion-icon"><i class="far fa-file-alt"></i></div> Dados Gerais </h2>
+            <h2><div class="mn-accordion-icon"><i class="far fa-file-alt"></i></div> Dados gerais </h2>
             <i class="fas fa-chevron-down float-right mn-accordion-arrow" title="Fechar ou abrir grupo Dados Gerais" ></i>
             <a class=" float-right" type="button" data-toggle="collapse" title="Fechar ou abrir todos os grupos" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8" style="float: left; margin-top: -23px; margin-right: 25px"><i class="fas fa-sort-amount-down"></i>&nbsp;</a>
             <div class="line line-fix"></div>
@@ -50,7 +50,7 @@
         <div class="col-md-5">
             <p>
                 <strong>CNPJ:</strong> {{$cabecalho->cd_identificador_osc}}<br>
-                <strong>Natureza Jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
+                <strong>Natureza jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
             </p>
             <br>
         </div>
@@ -99,25 +99,25 @@
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Situação do Imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
+                <h4>Situação do imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
                 <p>{{$dados_gerais->tx_nome_situacao_imovel_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_situacao_imovel_osc}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Responsável Legal:</h4>
+                <h4>Responsável legal:</h4>
                 <p>{{$dados_gerais->tx_nome_responsavel_legal == null ? $txt_alert_abb : $dados_gerais->tx_nome_responsavel_legal}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Ano de Cadastro de CNPJ:</h4>
+                <h4>Ano de cadastro de CNPJ:</h4>
                 <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? $txt_alert_abb : formatBr($dados_gerais->dt_ano_cadastro_cnpj, 'y')}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Ano de Fundação:</h4>
+                <h4>Ano de fundação:</h4>
                 <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'y')}}</p>
             </div>
         </div>
@@ -171,7 +171,7 @@
                         <br>
                         <div class="col-md-12">
                             <div class="item-detail">
-                                <h4>Metas Relacionadas ao ODS:</h4>
+                                <h4>Metas relacionadas ao ODS:</h4>
                                 @foreach($objetivo['metas'] as $meta)
                                     <p>{{$objetivo['cd_objetivo_projeto']}}.{{$meta['cd_meta_projeto']}}. {{$meta['tx_nome_meta_projeto']}}</p>
                                 @endforeach

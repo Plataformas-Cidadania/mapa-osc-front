@@ -59,7 +59,7 @@ class List extends React.Component {
 
         $.ajax({
             method: 'POST',
-            url: '/list-posts',
+            url: 'list-posts',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
