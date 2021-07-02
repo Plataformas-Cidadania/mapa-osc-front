@@ -268,7 +268,7 @@
                 <br>
                 <div>
                     <p><strong>Total de recursos com projetos, atividades e/ou programas</strong></p>
-                    <p>{{$projetos_descricao->nr_valor_total_projeto == null ? $txt_alert_abb : "R$ ".number_format(floatval($projetos_descricao->nr_valor_total_projeto), 2, ',', '.')}}</p>
+
                 </div>
             </div>
         </div>
