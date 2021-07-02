@@ -33,10 +33,6 @@
 
     ?>
 
-    @foreach($certificacoes as $certificado)
-        {{$certificado->dc_certificado->tx_nome_certificado}}
-    @endforeach
-
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
@@ -67,7 +63,6 @@
                     <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
                     <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" ></i>
                     <ul class="menu-icons menu-right">
-<!--                        <li id="btn-right"></li>-->
                         <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
                         <li><a href="detalhar/974758#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
                         <li><a href="detalhar/974758#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
@@ -80,13 +75,13 @@
                     <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
                 </div>
                 @include('osc.detail-general')
-                {{--@include('osc.detail-area')--}}
+                @include('osc.detail-area')
                 @include('osc.detail-description')
-                {{--@include('osc.detail-titration')--}}
-                {{--@include('osc.detail-governance')
+                @include('osc.detail-titration')
+                @include('osc.detail-governance')
                 @include('osc.detail-participation')
-                @include('osc.detail-projects')
-                @include('osc.detail-resources')--}}
+                {{--@include('osc.detail-projects')--}}
+                @include('osc.detail-resources')
                 <br>
             </div>
 

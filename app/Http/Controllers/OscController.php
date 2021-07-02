@@ -32,49 +32,38 @@ class OscController extends Controller{
 
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
-        //$area_atuacao = curl('area_atuacao', $id);
         $descricao = curl('descricao', $id);
-        //$certificacoes = curl('certificados', $id);
 
-        $api = env('APP_API_ROUTE');
-        if(env('LOCALHOST_DOCKER') == 1){
-            $api = env('HOST_DOCKER')."api/";
-        }
-
-        $url = $api."osc/certificados/".$id;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $certificacoes = curl_exec($ch);
-        $error = curl_error($ch);
-        curl_close($ch);
-        $certificacoes = json_decode($certificacoes);
-        Log::info([$certificacoes]);
-        if(!is_array($certificacoes)){
-            $certificacoes = [];
-        }
-        //$certificacoes = var_dump(json_decode($certificacoes, true));
-        //$data = response()->json($data);
-        //$data = $data->toArray();
-        //$data = var_dump($data);
-
-        /*foreach($certificacoes as $certificado){
-        //return response()->json($certificado->tx_nome_certificado);
-        echo $certificado->tx_nome_certificado;
-    }*/
-
-        //return [$certificacoes];
+        $certificacoes = curlList('certificados', $id);
+        $area_atuacao = curlList('areas_atuacao', $id);
+        $area_atuacao_rep = curlList('areas_atuacao_rep', $id);
 
 
+        //$area_atuacao_rep = array_unique($area_atuacao_rep->dc_area_atuacao->tx_nome_area_atuacao, SORT_REGULAR);
 
+        $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
+        $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
+        $relacoes_trabalho_governanca = curlListParametros('rel_trabalho_e_governanca', $id, 'relacoes_trabalho');
+
+        $participacao_social_conselhos = curlListParametros('participacao_social', $id, 'conselhos_politicas_publicas');
+        $participacao_social_conferencia = curlListParametros('participacao_social', $id, 'conferencias_politicas_publicas');
+        $participacao_social_outros = curlListParametros('participacao_social', $id, 'outros_espacos_participacao_social');
+
+        $recursos = curlList('anos_recursos', $id);
+
+        //return $area_atuacao_rep;
 
 
         //$dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
-        $area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();
+        //$area_atuacao = DB::connection('map')->table('portal.vw_osc_area_atuacao')->where('id_osc', $id)->first();
         //$descricao = DB::connection('map')->table('portal.vw_osc_descricao')->where('id_osc', $id)->first();
         //$certificacoes = DB::connection('map')->table('portal.vw_osc_certificado')->where('id_osc', $id)->get();
-        $relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
-        $recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
+
+        //$governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id)->get();
+        //$conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id)->get();
+        //$relacoes_trabalho_governanca = DB::connection('map')->table('portal.vw_osc_relacoes_trabalho')->where('id_osc', $id)->first();
+
+        //$recursos = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('dt_ano_recursos_osc')->where('id_osc', $id)->distinct()->orderBy('dt_ano_recursos_osc', 'desc')->get();
         $projetos = DB::connection('map')->table('portal.vw_osc_projeto')->where('id_osc', $id)->get();
         $objetivos_osc_db = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->select('cd_objetivo_osc', 'tx_nome_objetivo_osc')->where('id_osc', $id)->distinct()->get();
         //$objetivo_metas = DB::connection('map')->table('portal.vw_osc_objetivo_osc')->where('id_osc', $id)->get();
@@ -98,10 +87,20 @@ class OscController extends Controller{
             'id_osc' => $id,
             'cabecalho' => $cabecalho,
             'dados_gerais' => $dados_gerais,
-            'area_atuacao' => $area_atuacao,
-            'certificacoes' => $certificacoes,
             'descricao' => $descricao,
+            'certificacoes' => $certificacoes,
+
+            'area_atuacao' => $area_atuacao,
+            'area_atuacao_rep' => $area_atuacao_rep,
+
+            'governancas' => $governancas,
+            'conselhos_fiscais' => $conselhos_fiscais,
             'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
+
+            'participacao_social_conselhos' => $participacao_social_conselhos,
+            'participacao_social_conferencia' => $participacao_social_conferencia,
+            'participacao_social_outros' => $participacao_social_outros,
+
             'recursos' => $recursos,
             'projetos' => $projetos,
             'objetivos_osc' => $objetivos_osc,
@@ -202,7 +201,7 @@ class OscController extends Controller{
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $dataOsc = curl_exec( $ch );
-        Log::info(curl_error($ch));
+
         curl_close( $ch );
 
         $chIdh = curl_init();
@@ -210,7 +209,7 @@ class OscController extends Controller{
         curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
         $dataIdh = curl_exec( $chIdh );
-        Log::info(curl_error($chIdh));
+
         curl_close( $chIdh );
 
 

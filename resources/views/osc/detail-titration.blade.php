@@ -21,7 +21,7 @@
         <tbody>
         @foreach($certificacoes as $certificado)
             <tr>
-                <td>{{$certificado->tx_nome_certificado}}</td>
+                <td>{{$certificado->dc_certificado->tx_nome_certificado}}</td>
                 <td>{{formatBr($certificado->dt_inicio_certificado, 'num')}}</td>
                 <td>{{formatBr($certificado->dt_fim_certificado, 'num')}}</td>
             </tr>

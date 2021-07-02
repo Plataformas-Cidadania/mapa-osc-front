@@ -13,24 +13,21 @@
     <div class="row">
         <div class="col-md-6">
             <div class="bg-lgt box-itens-g min-h">
-                <h2>Quadro de Dirigentes</h2>
-                <?php $governancas = DB::connection('map')->table('portal.vw_osc_governanca')->where('id_osc', $id_osc)->get();?>
+                <h2>Quadro de dirigentes</h2>
                 @foreach($governancas as $governanca)
                     <div>
-                        <p>{{$governanca->tx_cargo_dirigente}}</p>
-                        <p><strong>{{$governanca->tx_nome_dirigente}}</strong></p>
+                        <p>{{$governanca['tx_cargo_dirigente']}}</p>
+                        <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
                     </div>
                 @endforeach
             </div>
-            {{--<p>{{$relacoes_trabalho_governanca->governanca == null ? $txt_alert_abb : $relacoes_trabalho_governanca->governanca}}</p>--}}
         </div>
         <div class="col-md-6">
             <div class="bg-lgt box-itens-g min-h">
-                <h2>Conselho Fiscal</h2>
-                <?php $conselhos_fiscais = DB::connection('map')->table('portal.vw_osc_conselho_fiscal')->where('id_osc', $id_osc)->get();?>
+                <h2>Conselho fiscal</h2>
                 @foreach($conselhos_fiscais as $conselho_fiscal)
                     <div>
-                        <p>{{$conselho_fiscal->tx_nome_conselheiro}}</p>
+                        <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
                     </div>
                 @endforeach
             </div>
@@ -46,8 +43,8 @@
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
-                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores))
-                                <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores}}</h2>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores']}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
                             @endif
@@ -58,8 +55,8 @@
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
-                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_vinculo))
-                                <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_vinculo}}</h2>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo']}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
                             @endif
@@ -70,8 +67,8 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
-                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_deficiencia))
-                                <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_deficiencia}}</h2>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
                             @endif
@@ -82,8 +79,8 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
-                            @if(!empty($relacoes_trabalho_governanca->nr_trabalhadores_voluntarios))
-                                <h2>{{$relacoes_trabalho_governanca->nr_trabalhadores_voluntarios}}</h2>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']}}</h2>
                             @else
                                 <p class='not-info'>{{$txt_alert}}</p>
                             @endif

@@ -350,3 +350,81 @@ if ( ! function_exists('curl') ) {
         return $data;
     }
 }
+
+if ( ! function_exists('curlList') ) {
+    function curlList($string, $id) {
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/".$string."/".$id;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $string = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+        $data = json_decode($string);
+
+        if(!is_array($data)){
+            $data = [];
+        }
+
+        return $data;
+    }
+}
+
+if ( ! function_exists('curlListParametros') ) {
+    function curlListParametros($string, $id, $paremetros) {
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/".$string."/".$id;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $string = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        $data = json_decode($string, true);
+        $data = $data[$paremetros];
+        if(!is_array($data)){
+            $data = [];
+        }
+        return $data;
+    }
+}
+
+if ( ! function_exists('curlListAno') ) {
+    function curlListAno($string, $id, $ano) {
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/".$string."/".$ano."/".$id;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $string = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        $data = json_decode($string, true);
+
+        $data = $data[$ano];
+        if(!is_array($data)){
+            $data = [];
+        }
+
+        return $data;
+    }
+}

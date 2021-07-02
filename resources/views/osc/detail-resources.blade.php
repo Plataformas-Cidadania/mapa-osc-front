@@ -17,27 +17,87 @@
                     <div class="card">
                         <div class="card-header" id="heading{{$key}}">
                             <div class="mb-0" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">
-                                {{$recurso->dt_ano_recursos_osc}} <i class="fas fa-angle-down float-right"></i>
+                                {{$recurso}} <i class="fas fa-angle-down float-right"></i>
                             </div>
                         </div>
                         <div id="collapse{{$key}}" class="collapse @if($key===0) show @endif" aria-labelledby="heading{{$key}}" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="row">
-                                    <?php $recursos_nome = DB::connection('map')->table('portal.vw_osc_recursos_osc')->select('tx_nome_origem_fonte_recursos_osc')->where('id_osc', $id_osc)->where('dt_ano_recursos_osc', $recurso->dt_ano_recursos_osc)->orderBy('tx_nome_origem_fonte_recursos_osc', 'desc')->distinct()->get();?>
-                                    @foreach($recursos_nome as $key => $recurso_nome)
-                                        <?php $recursos_propios = DB::connection('map')->table('portal.vw_osc_recursos_osc')->where('id_osc', $id_osc)->where('dt_ano_recursos_osc', $recurso->dt_ano_recursos_osc)->where('tx_nome_origem_fonte_recursos_osc', $recurso_nome->tx_nome_origem_fonte_recursos_osc)->get();?>
+                                    <?php $recursos_nome = curlListAno('recursos', $id_osc, $recurso);?>
+
+                                    {{--//////////////////////////////////--}}
+                                    @if(!empty($recursos_nome[1]))
                                         <div class="col-md-12">
-                                            <h2 class="bg-pri text-light title-mp">{{$recurso_nome->tx_nome_origem_fonte_recursos_osc}}</h2>
+                                            <h2 class="bg-pri text-light title-mp">{{$recursos_nome[1]['tx_nome_origem_fonte_recursos_osc']}}</h2>
                                         </div>
-                                        @foreach($recursos_propios as $key => $recurso_propio)
-                                            <div class="col-md-4">
-                                                <div class="line-items line-add">
-                                                    <p>{{$recurso_propio->tx_nome_fonte_recursos_osc}}</p>
-                                                    <h2>{{"R$ ".number_format($recurso_propio->nr_valor_recursos_osc, 2, ',', '.')}}</h2>
+                                        @foreach($recursos_nome[1] as $key => $recurso_nome)
+                                            @if(is_numeric($key))
+                                                <div class="col-md-4">
+                                                    <div class="line-items line-add">
+                                                        <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         @endforeach
-                                    @endforeach
+                                    @endif
+                                    {{--//////////////////////////////////--}}
+
+                                    {{--//////////////////////////////////--}}
+                                   @if(!empty($recursos_nome[2]))
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">{{$recursos_nome[2]['tx_nome_origem_fonte_recursos_osc']}}</h2>
+                                        </div>
+                                        @foreach($recursos_nome[2] as $key => $recurso_nome)
+                                            @if(is_numeric($key))
+                                                <div class="col-md-4">
+                                                    <div class="line-items line-add">
+                                                        <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    {{--//////////////////////////////////--}}
+
+                                    {{--//////////////////////////////////--}}
+                                   @if(!empty($recursos_nome[3]))
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">{{$recursos_nome[3]['tx_nome_origem_fonte_recursos_osc']}}</h2>
+                                        </div>
+                                        @foreach($recursos_nome[3] as $key => $recurso_nome)
+                                            @if(is_numeric($key))
+                                                <div class="col-md-4">
+                                                    <div class="line-items line-add">
+                                                        <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    {{--//////////////////////////////////--}}
+
+                                    {{--//////////////////////////////////--}}
+                                   @if(!empty($recursos_nome[4]))
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">{{$recursos_nome[4]['tx_nome_origem_fonte_recursos_osc']}}</h2>
+                                        </div>
+                                        @foreach($recursos_nome[4] as $key => $recurso_nome)
+                                            @if(is_numeric($key))
+                                                <div class="col-md-4">
+                                                    <div class="line-items line-add">
+                                                        <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    {{--//////////////////////////////////--}}
+
+
                                 </div>
                             </div>
                         </div>
