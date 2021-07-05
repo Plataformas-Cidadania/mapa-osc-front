@@ -163,7 +163,7 @@ class OscController extends Controller{
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
 
         $pgIdh = $api."ipeadata/uffs";
-        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";
+        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -353,7 +353,7 @@ class OscController extends Controller{
         }
 
         $pagina = $api."osc/busca_avancada/geo/10/0";
-        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";
+        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";//PARA TESTAR LOCALMENTE
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
@@ -383,7 +383,7 @@ class OscController extends Controller{
         }
 
         $url = $api."osc/busca_avancada/lista/10/$pagina";
-        //$url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";
+        //$url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";//PARA TESTAR LOCALMENTE
         //Log::info($url);
 
         $ch = curl_init();
