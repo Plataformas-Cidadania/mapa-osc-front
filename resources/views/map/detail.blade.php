@@ -5,14 +5,18 @@
 @section('image', '')
 @section('content')
     <?php
+
+    $intOrigem = (int)$origem;
     $localidade = 'localidade';
-    if($origem >= 1 && $origem <= 5){
+    if($intOrigem >= 1 && $intOrigem <= 5){
         $localidade = "Região";
-    }else if($origem >= 11 && $origem <= 53){
+    }else if($intOrigem >= 11 && $intOrigem <= 53){
         $localidade = "Estado";
     }else{
         $localidade = "Município";
     }
+
+
 
     ?>
 
@@ -21,8 +25,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <header>
-                        @if(!empty($origem))
-                            <a href="localidade/{{$origem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise da {{$localidade}}</a>
+                        @if(!empty($intOrigem))
+                            <a href="localidade/{{$intOrigem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise da {{$localidade}}</a>
                         @endif
                         <br>
                         <h1>Mapa</h1>

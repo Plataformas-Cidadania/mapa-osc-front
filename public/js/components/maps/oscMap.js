@@ -737,17 +737,28 @@ class OscMap extends React.Component {
     }
 
     loadOscList() {
+        let method = 'GET'; //Será usado POST no caso da pesquisa avançada.
+        let data = {}; //Será usado busca no caso da pesquisa avançada.
         let rota = 'lista_osc/' + this.state.paginaOscList;
         let origem = parseInt(this.state.origem);
         let pesquisaPorOsc = false;
+        let buscaAvancada = false;
         if (origem === 0) {
-            rota = 'lista_osc/' + this.state.paginaOscList;
+            rota = getBaseUrl2 + 'lista_osc/' + this.state.paginaOscList;
         } else if (origem >= 1 && origem <= 5) {
-            rota = 'lista_osc/regiao/' + origem + '/' + this.state.paginaOscList;
+            rota = getBaseUrl2 + 'lista_osc/regiao/' + origem + '/' + this.state.paginaOscList;
         } else if (origem >= 11 && origem <= 53) {
-            rota = 'lista_osc/estado/' + origem + '/' + this.state.paginaOscList;
+            rota = getBaseUrl2 + 'lista_osc/estado/' + origem + '/' + this.state.paginaOscList;
         } else if (origem > 53) {
-            rota = 'lista_osc/municipio/' + origem + '/' + this.state.paginaOscList;
+            rota = getBaseUrl2 + 'lista_osc/municipio/' + origem + '/' + this.state.paginaOscList;
+        } else if (this.state.origem === 'busca-avancada') {
+            method = 'POST';
+            rota = 'osc/busca_avancada/lista';
+            data = {
+                busca: this.props.strJson,
+                pagina: this.state.paginaOscList
+            };
+            buscaAvancada = true;
         } else {
             //Pesquisa por osc. Está pegando tudo enquanto não existe a rota.
             //rota = 'lista_osc/'+this.state.paginaOscList;
@@ -755,25 +766,26 @@ class OscMap extends React.Component {
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
             //rota = 'osc/busca_avancada/lista/10/0?avancado='+avancado;
-            rota = 'osc/busca_avancada/lista/10/0/' + avancado;
+            rota = 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
-                method: 'GET',
+                method: method,
                 //url: getBaseUrl2 + rota,
                 url: rota, //ROTA PARA TESTES LOCAIS
                 //url: 'lista_osc/'+this.state.paginaOscList,
-                data: {},
+                data: data,
                 cache: false,
                 success: function (data) {
                     console.log(data);
-                    if (pesquisaPorOsc) {
+                    if (pesquisaPorOsc || buscaAvancada) {
                         data = {
                             lista: data,
                             total: data.length
                         };
                     }
                     this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false }, function () {
+                        console.log('loadOscList', this.state.dataOscList);
                         //this.getLogos();
                     });
                     //this.populateMap();
@@ -987,7 +999,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -996,7 +1008,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1089,14 +1101,17 @@ class OscMap extends React.Component {
 
     loadDataPontosOscPesquisaAvancada() {
         console.log('CARREGAR PONTOS OSC POR PESQUISA AVANCADA');
-        console.log(this.props.strJson);
+        //console.log(this.props.strJson);
         this.setState({ processingOscPontos: true }, function () {
             $.ajax({
-                method: 'GET',
-                //method:'POST',
+                //method:'GET',
+                method: 'POST',
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
-                url: 'osc/busca_avancada/geo/10/0/' + this.props.strJson, //USANSO ROTA DO FRONT PRA TESTES LOCAIS
-                data: {},
+                //url: 'osc/busca_avancada/geo/10/0/'+this.props.strJson,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
+                url: 'osc/busca_avancada/geo',
+                data: {
+                    busca: this.props.strJson
+                },
                 /*data:JSON.stringify({
                     avancado: {
                         dadosGerais: {
