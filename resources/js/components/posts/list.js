@@ -199,11 +199,11 @@ class List extends React.Component{
                     </div>*/
                      /*OPCAO 2 UTILIZAR NA TROCA*/
                     <div key={"ads_"+item.id}>
-                        <a href={"/post/"+item.id+"/"+clean(item.titulo)}>
+                        <a href={"post/"+item.id+"/"+clean(item.titulo)}>
                             <div>
                                 <br/>
                                 <div style={{display: item.imagem == '' ? 'none' : ''}}>
-                                    <img data-src="holder.js/200x200" className="img-fluid" alt={item.titulo} title={item.titulo} src={"/imagens/posts/"+item.imagem} data-holder-rendered="true" width="100%"/>
+                                    <img className="img-fluid" alt={item.titulo} title={item.titulo} src={"imagens/posts/"+item.imagem} data-holder-rendered="true" width="100%"/>
                                     <br/><br/>
                                 </div>
                                 <div className="row">
