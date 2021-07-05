@@ -163,7 +163,9 @@ class OscController extends Controller{
         //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
 
         $pgIdh = $api."ipeadata/uffs";
-        //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
+        if(env('LOCALHOST_DOCKER') == 1) {
+            $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
+        }
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -352,13 +354,15 @@ class OscController extends Controller{
             $api = env('HOST_DOCKER')."api/";
         }
 
-        $pagina = $api."osc/busca_avancada/geo/10/0";
-        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";//PARA TESTAR LOCALMENTE
+        $url = $api."osc/busca_avancada/geo/10/0";
+        if(env('LOCALHOST_DOCKER') == 1) {
+            $url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";//PARA TESTAR LOCALMENTE
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_URL, $url );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec( $ch );
@@ -383,7 +387,9 @@ class OscController extends Controller{
         }
 
         $url = $api."osc/busca_avancada/lista/10/$pagina";
-        //$url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";//PARA TESTAR LOCALMENTE
+        if(env('LOCALHOST_DOCKER') == 1) {
+            $url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";//PARA TESTAR LOCALMENTE
+        }
         //Log::info($url);
 
         $ch = curl_init();

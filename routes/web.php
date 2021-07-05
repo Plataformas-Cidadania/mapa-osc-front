@@ -67,6 +67,7 @@ Route::get('get-indicador/', 'IndicatorController@getIndicator');
 Route::get('mapa', 'MapController@details');
 Route::get('mapa/{origem}', 'MapController@details');
 Route::post('mapa-busca-avancada', 'MapController@buscaAvancada');
+Route::get('mapa-busca-avancada', 'MapController@buscaAvancada');
 Route::get('contato', 'ContactController@email');
 Route::get('filtro', 'FilterController@search');
 Route::get('localidade/{id}', 'LocalidadeController@localidade');
