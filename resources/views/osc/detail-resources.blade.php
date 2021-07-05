@@ -24,6 +24,34 @@
                             <div class="card-body">
                                 <div class="row">
                                     <?php $recursos_nome = curlListAno('recursos', $id_osc, $recurso);?>
+                                    <?php
+                                        $sem_recursos = curlListAno('sem_recursos', $id_osc, $recurso);
+
+                                        $sem_recurso_origem_1 = false;
+                                        $sem_recurso_origem_2 = false;
+                                        $sem_recurso_origem_3 = false;
+                                        $sem_recurso_origem_4 = false;
+
+                                        if(!empty($sem_recursos)){
+                                            foreach($sem_recursos as $key => $sem_recurso){
+
+                                                if($sem_recurso['origem']['cd_origem_fonte_recursos_osc']==1){
+                                                    $sem_recurso_origem_1 = true;
+                                                }
+                                                if($sem_recurso['origem']['cd_origem_fonte_recursos_osc']==2){
+                                                    $sem_recurso_origem_2 = true;
+                                                }
+                                                if($sem_recurso['origem']['cd_origem_fonte_recursos_osc']==3){
+                                                    $sem_recurso_origem_3 = true;
+                                                }
+                                                if($sem_recurso['origem']['cd_origem_fonte_recursos_osc']==4){
+                                                    $sem_recurso_origem_4 = true;
+                                                }
+
+                                            }
+                                        }
+
+                                    ?>
 
                                     {{--//////////////////////////////////--}}
                                     @if(!empty($recursos_nome[1]))
@@ -40,6 +68,17 @@
                                                 </div>
                                             @endif
                                         @endforeach
+                                    @else
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">Recursos públicos</h2>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if($sem_recurso_origem_1==true)
+                                                <p>Não possui recursos públicos</p>
+                                            @else
+                                                <p>Não informado</p>
+                                            @endif
+                                        </div>
                                     @endif
                                     {{--//////////////////////////////////--}}
 
@@ -58,6 +97,17 @@
                                                 </div>
                                             @endif
                                         @endforeach
+                                    @else
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">Recursos privados</h2>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if($sem_recurso_origem_2==true)
+                                                <p>Não possui recursos privados</p>
+                                            @else
+                                                <p>Não informado</p>
+                                            @endif
+                                        </div>
                                     @endif
                                     {{--//////////////////////////////////--}}
 
@@ -76,6 +126,17 @@
                                                 </div>
                                             @endif
                                         @endforeach
+                                    @else
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">Recursos não financeiros</h2>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if($sem_recurso_origem_3==true)
+                                                <p>Não possui recursos não financeiros</p>
+                                            @else
+                                                <p>Não informado</p>
+                                            @endif
+                                        </div>
                                     @endif
                                     {{--//////////////////////////////////--}}
 
@@ -94,6 +155,17 @@
                                                 </div>
                                             @endif
                                         @endforeach
+                                    @else
+                                        <div class="col-md-12">
+                                            <h2 class="bg-pri text-light title-mp">Recursos próprios</h2>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if($sem_recurso_origem_4==true)
+                                                <p>Não possui recursos próprios</p>
+                                            @else
+                                                <p>Não informado</p>
+                                            @endif
+                                        </div>
                                     @endif
                                     {{--//////////////////////////////////--}}
 

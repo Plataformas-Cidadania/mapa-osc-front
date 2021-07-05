@@ -445,12 +445,18 @@ if ( ! function_exists('curlListAno') ) {
         $error = curl_error($ch);
         curl_close($ch);
 
+
+
         $data = json_decode($string, true);
 
-        $data = $data[$ano];
-        if(!is_array($data)){
-            $data = [];
+        if(!empty($data[$ano])){
+            $data = $data[$ano];
+            if(!is_array($data)){
+                $data = [];
+            }
         }
+
+        \Illuminate\Support\Facades\Log::info($data);
 
         return $data;
     }
