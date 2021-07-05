@@ -230,11 +230,12 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1);//remove do array o ratation utilizado.
                     return (
-                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext'+index}>
+                        <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate"  onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
+                                {/*<img src={this.props.app_url+"osc/logo/"+item.id_osc} alt={item.tx_nome_osc} width="65"/>*/}
+                                <img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>
                             </div>
-                        </div>
+                        </a>
                     )
                 }
             }.bind(this));
@@ -245,11 +246,11 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1);//remove do array o ratation utilizado.
                     return (
-                        <div id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext2'+index}>
+                        <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext2'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src="img/sem-imagem.png" alt="{item.id_osc}" width="65"/>
+                                <img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>
                             </div>
-                        </div>
+                        </a>
                     )
                 }
             }.bind(this));
@@ -257,7 +258,7 @@ class NextOsc extends React.Component {
             nextOscTitulo = this.state.nextsOsc.map(function (item, index) {
                     return (
                         <li id={'txt' + index}>
-                            <a href={"detalhar/" + item.id_osc + "/" + item.tx_nome_osc} className="circle-item" key={'listnext3'+index}>
+                            <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} className="circle-item" key={'listnext3'+index}>
                                 {index + 1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
                             </a>
                             <hr/>
@@ -366,7 +367,7 @@ class NextOsc extends React.Component {
 
 
 ReactDOM.render(
-    <NextOsc />,
+    <NextOsc app_url={app_url}/>,
     document.getElementById('nextOsc')
 );
 

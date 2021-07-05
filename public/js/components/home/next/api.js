@@ -217,12 +217,12 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
-                        "div",
-                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext' + index },
+                        "a",
+                        { href: "detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc), id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext' + index },
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: "img/sem-imagem.png", alt: "{item.id_osc}", width: "65" })
+                            React.createElement("img", { src: "img/sem-imagem.png", alt: item.tx_nome_osc, width: "65" })
                         )
                     );
                 }
@@ -234,12 +234,12 @@ class NextOsc extends React.Component {
                     const rotation = rotations[random];
                     rotations.splice(random, 1); //remove do array o ratation utilizado.
                     return React.createElement(
-                        "div",
-                        { id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext2' + index },
+                        "a",
+                        { href: "detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc), id: 'icon' + index, className: "rotate", onClick: () => this.callMenu2(item.id_osc), style: { transform: "rotate(" + rotation[0] + "deg)" }, key: 'listnext2' + index },
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: "img/sem-imagem.png", alt: "{item.id_osc}", width: "65" })
+                            React.createElement("img", { src: "img/sem-imagem.png", alt: item.tx_nome_osc, width: "65" })
                         )
                     );
                 }
@@ -251,7 +251,7 @@ class NextOsc extends React.Component {
                     { id: 'txt' + index },
                     React.createElement(
                         "a",
-                        { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc, className: "circle-item", key: 'listnext3' + index },
+                        { href: "detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc), className: "circle-item", key: 'listnext3' + index },
                         index + 1,
                         " ",
                         item.tx_nome_osc,
@@ -436,4 +436,4 @@ class NextOsc extends React.Component {
 
 }
 
-ReactDOM.render(React.createElement(NextOsc, null), document.getElementById('nextOsc'));
+ReactDOM.render(React.createElement(NextOsc, { app_url: app_url }), document.getElementById('nextOsc'));

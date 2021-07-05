@@ -44,26 +44,29 @@
                         </div>
                         <address class="address">
                             <div>
-                                <strong class="fa-aling">Nosso endereço no Rio de Janeiro</strong><br>
-                                Av. Rio de Janeiro - Centro - RJ<br>
-                                CEP.: 24456-422<br>
-                                <abbr title="Phone"> <i class="fas fa-phone-alt"></i>+55 (21) 2523-2655</abbr>
+                                <strong class="fa-aling">{{$setting->endereco_tutulo}}</strong><br>
+                                {{$setting->endereco}} {{$setting->numero}} - {{$setting->complemento}}
+                                {{$setting->bairro}} - {{$setting->cidade}} - {{$setting->estado}}<br>
+                                CEP.: {{$setting->cep}}<br>
+                                <abbr title="Phone"> <i class="fas fa-phone-alt"></i>{{$setting->telefone}}</abbr>
                             </div>
                         </address>
                         <address class="address">
                             <div>
-                                <strong class="fa-aling">Nosso endereço em Brasília</strong><br>
-                                Av. Rio de Janeiro - Centro - RJ<br>
-                                CEP.: 24456-422<br>
-                                <abbr title="Phone"><i class="fas fa-phone-alt"></i> +55 (21) 2523-2655</abbr>
+                                <strong class="fa-aling">{{$setting->endereco_tutulo2}}</strong><br>
+                                {{$setting->endereco2}} {{$setting->numero2}} - {{$setting->complemento2}}
+                                {{$setting->bairro2}} - {{$setting->cidade2}} - {{$setting->estado2}}<br>
+                                CEP.: {{$setting->cep2}}<br>
+                                <abbr title="Phone"> <i class="fas fa-phone-alt"></i>{{$setting->telefone2}}</abbr>
                             </div>
                         </address>
                     </div>
                     <div>
                         <br>
-                        <p><i class="fas fa-envelope"></i> nome@dominio.com</p>
+                        <p><i class="fas fa-envelope"></i> {{$setting->email}}</p>
                         <br>
                     </div>
+                    <?php /*?>
                     <div>
                         <div class=" fa-aling">
                             <strong ><i class="fas fa-clock fa-2x"></i> {{$expediente->titulo}}</strong>
@@ -75,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php */?>
                     <br><br>
                 </div>
             </div>

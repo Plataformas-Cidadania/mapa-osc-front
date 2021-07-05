@@ -18,6 +18,7 @@ class SettingController extends Controller
         $this->setting = new \App\Setting;
         $this->campos = [
             'imagem', 'email', 'titulo', 'rodape', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'descricao_contato', 'telefone', 'telefone2', 'telefone3', 'facebook', 'youtube', 'pinterest', 'twitter', 'blog', 'instagram',
+            'endereco_tutulo', 'endereco_tutulo2', 'cep2', 'endereco2', 'numero2', 'complemento2', 'bairro2', 'cidade2', 'estado2',
         ];
         $this->pathImagem = public_path().'/imagens/settings';
         $this->sizesImagem = [
@@ -30,7 +31,7 @@ class SettingController extends Controller
     }
 
     public function detalhar()
-    {        
+    {
         $setting = $this->setting->firstOrFail();
         return view('cms::setting.detalhar', ['setting' => $setting]);
     }
@@ -67,9 +68,9 @@ class SettingController extends Controller
     }
 
     $setting = $this->setting->firstOrFail();
-    
+
     $file = $request->file('file');
-    
+
     if($file!=null){
         $filename = rand(1000,9999)."-".clean($file->getClientOriginalName());
         $imagemCms = new ImagemCms();
@@ -82,7 +83,7 @@ class SettingController extends Controller
             return "erro";
         }
     }
-    
+
     //remover imagem
     if($data['removerImagem']){
         $data['setting']['imagem'] = '';
@@ -90,7 +91,7 @@ class SettingController extends Controller
             unlink($this->pathImagem . "/" . $setting->imagem);
         }
     }
-    
+
     $setting->update($data['setting']);
     return "Gravado com sucesso";
     }
