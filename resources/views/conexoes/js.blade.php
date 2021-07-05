@@ -110,6 +110,9 @@
     <script src="js/components/osc/selo.js"></script>
 @endif
 @if($rota=='/')
+    <script>
+        app_url = "{{env('APP_URL')}}";
+    </script>
 <script src="js/home.js" ></script>
 <script src="js/conf-owl-carousel.js"></script>
 {{--<script src="js/chart.js"></script>

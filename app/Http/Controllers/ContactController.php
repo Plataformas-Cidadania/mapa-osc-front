@@ -29,9 +29,10 @@ class ContactController extends Controller{
     public function email(){
         $text = \App\Text::where('slug', 'contato')->first();
         $expediente = \App\Text::where('slug', 'contato-expediente')->first();
+        $setting = \App\Setting::first();
 
         if(!empty($text) && !empty($expediente)){
-            return view($this->module.'.contact', ['text' => $text, 'expediente' => $expediente]);
+            return view($this->module.'.contact', ['text' => $text, 'expediente' => $expediente, 'setting' => $setting]);
         }
 
         return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
