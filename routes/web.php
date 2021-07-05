@@ -93,15 +93,20 @@ Route::get('/get-osc-all-ufs/', 'OscController@getOscAllUfs');
 Route::get('/get-all-oscs/', 'OscController@getAllOscs');
 Route::get('/get-idhm/{cod_uf}', 'OscController@getIDHM');
 Route::get('/search/osc/geo/{osc}', 'OscController@getGeoOscSearch');
+Route::post('/osc/busca_avancada/geo', 'OscController@buscaAvancadaOscGeo');
+Route::post('/osc/busca_avancada/lista', 'OscController@buscaAvancadaOscLista');
+
 //testando rota direta
 Route::get('/geo/regioes', 'TesteController@geoRegioes');
 Route::get('/geo/estados/regiao/{regiao_id}', 'TesteController@geoEstadosRegiao');
 Route::get('/lista_osc/{pagina}', 'TesteController@listaOsc');
 Route::get('/osc/busca_avancada/geo/10/0/{avancado}', 'TesteController@buscaOscGeo');
+
 Route::get('/osc/busca_avancada/lista/10/0/{avancado}', 'TesteController@buscaOscLista');
 
 Route::get('/teste/osc/logo/{id_osc}', 'TesteController@testeLogo');
 Route::get('/teste/json', 'TesteController@testeEstruturaJson');
+Route::get('/teste/objetivos_metas', 'TesteController@objetivosMetas');
 ////////////////
 
 

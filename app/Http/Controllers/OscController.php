@@ -341,4 +341,64 @@ class OscController extends Controller{
         return view('user-area', ['pgUserArea' => 'seal', 'id_osc' => $id_osc]);
     }
 
+
+    public function buscaAvancadaOscGeo(Request $request){
+
+        $data = $request->all();
+        $busca = $data['busca'];
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $pagina = $api."osc/busca_avancada/geo/10/0";
+        //$pagina = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
+
+    public function buscaAvancadaOscLista(Request $request){
+
+        $data = $request->all();
+        $busca = $data['busca'];
+        $pagina = $data['pagina'];
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/busca_avancada/lista/10/$pagina";
+        //$url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";
+        //Log::info($url);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
 }
