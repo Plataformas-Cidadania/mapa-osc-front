@@ -105,6 +105,4 @@
     </style>
     <br>
 
-
-
 @endsection
