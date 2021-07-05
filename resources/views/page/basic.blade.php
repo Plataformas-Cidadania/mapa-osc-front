@@ -101,11 +101,11 @@
 
 
 
-                    @if($rota=="equipe")
+                    {{--@if($rota=="equipe")
                         <div>
                             @include('page.about.team')
                         </div>
-                    @endif
+                    @endif--}}
 
                     @if($rota=="marca")
                         <div>
