@@ -192,7 +192,7 @@ class List extends React.Component {
                         { key: "ads_" + item.id },
                         React.createElement(
                             'a',
-                            { href: "/post/" + item.id + "/" + clean(item.titulo) },
+                            { href: "post/" + item.id + "/" + clean(item.titulo) },
                             React.createElement(
                                 'div',
                                 null,
@@ -200,7 +200,7 @@ class List extends React.Component {
                                 React.createElement(
                                     'div',
                                     { style: { display: item.imagem == '' ? 'none' : '' } },
-                                    React.createElement('img', { 'data-src': 'holder.js/200x200', className: 'img-fluid', alt: item.titulo, title: item.titulo, src: "/imagens/posts/" + item.imagem, 'data-holder-rendered': 'true', width: '100%' }),
+                                    React.createElement('img', { className: 'img-fluid', alt: item.titulo, title: item.titulo, src: "imagens/posts/" + item.imagem, 'data-holder-rendered': 'true', width: '100%' }),
                                     React.createElement('br', null),
                                     React.createElement('br', null)
                                 ),
