@@ -246,9 +246,7 @@ class Register extends React.Component {
                                         { className: 'bg-light text-center p-3' },
                                         React.createElement('i', { className: 'fas fa-info-circle fa-3x text-primary' }),
                                         React.createElement('br', null),
-                                        'Informar dados da organiza\xE7\xE3o',
-                                        React.createElement('br', null),
-                                        '\xA0'
+                                        'Inserir e atualizar dados da sua institui\xE7\xE3o'
                                     )
                                 ),
                                 React.createElement(
@@ -259,7 +257,7 @@ class Register extends React.Component {
                                         { className: 'bg-light text-center p-3' },
                                         React.createElement('i', { className: 'fas fa-hands-helping fa-3x text-primary' }),
                                         React.createElement('br', null),
-                                        'Compartilhar informa\xE7\xF5es com seus amigos'
+                                        'Compartilhar informa\xE7\xF5es com parceiros'
                                     )
                                 ),
                                 React.createElement(
@@ -270,7 +268,7 @@ class Register extends React.Component {
                                         { className: 'bg-light text-center p-3' },
                                         React.createElement('i', { className: 'fas fa-puzzle-piece fa-3x text-primary' }),
                                         React.createElement('br', null),
-                                        'Definir suas prefer\xEAncias no mapa'
+                                        'Definir suas prefer\xEAncias no Mapa das OSC'
                                     )
                                 )
                             ),

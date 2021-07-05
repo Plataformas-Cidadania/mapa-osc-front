@@ -220,19 +220,19 @@ class Register extends React.Component{
                                     <div className="col-md-4">
                                         <div className="bg-light text-center p-3">
                                             <i className="fas fa-info-circle fa-3x text-primary"/><br/>
-                                            Informar dados da organização<br/>&nbsp;
+                                            Inserir e atualizar dados da sua instituição
                                         </div>
                                     </div>
                                     <div className="col-md-4">
                                         <div className="bg-light text-center p-3">
                                             <i className="fas fa-hands-helping fa-3x text-primary"/><br/>
-                                            Compartilhar informações com seus amigos
+                                            Compartilhar informações com parceiros
                                         </div>
                                     </div>
                                     <div className="col-md-4">
                                         <div className="bg-light text-center p-3">
                                             <i className="fas fa-puzzle-piece fa-3x text-primary"/><br/>
-                                            Definir suas preferências no mapa
+                                            Definir suas preferências no Mapa das OSC
                                         </div>
                                     </div>
                                 </div>
