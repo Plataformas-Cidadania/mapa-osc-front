@@ -42,7 +42,7 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
 
         $scope.processandoListagem = true;
         $http({
-            url: 'cms/listar-categorias/',
+            url: 'cms/listar-categorias',
             method: 'GET',
             params: {
                 page: $scope.currentPage,
