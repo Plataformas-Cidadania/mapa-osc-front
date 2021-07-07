@@ -23,6 +23,9 @@
         {!! Form::text('numero', null, ['class'=>"form-control width-grande <% validar(setting.numero) %>", 'ng-model'=>'setting.numero', 'ng-required'=>'true', 'init-model'=>'setting.numero']) !!}<br>
     </div>
 </div>
+{!! Form::label('endereco_tutulo', 'Título') !!}<br>
+{!! Form::text('endereco_tutulo', null, ['class'=>"form-control width-grande <% validar(setting.endereco_tutulo) %>", 'ng-model'=>'setting.endereco_tutulo', 'ng-required'=>'true', 'init-model'=>'setting.endereco_tutulo']) !!}<br>
+
 {!! Form::label('complemento', 'Complemento') !!}<br>
 {!! Form::text('complemento', null, ['class'=>"form-control width-grande <% validar(setting.complemento) %>", 'ng-model'=>'setting.complemento', 'ng-required'=>'true', 'init-model'=>'setting.complemento']) !!}<br>
 
@@ -44,6 +47,9 @@
 <!-- ///// -->
 
 <h2>Endereço 2</h2>
+{!! Form::label('endereco_tutulo2', 'Título') !!}<br>
+{!! Form::text('endereco_tutulo2', null, ['class'=>"form-control width-grande <% validar(setting.endereco_tutulo2) %>", 'ng-model'=>'setting.endereco_tutulo2', 'ng-required'=>'true', 'init-model'=>'setting.endereco_tutulo2']) !!}<br>
+
 <div class="row">
     <div class="col-md-5">
         {!! Form::label('endereco2', 'Endereço') !!}<br>
