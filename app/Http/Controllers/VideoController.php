@@ -23,10 +23,10 @@ class VideoController extends Controller{
 
     public function listing(){
         //Vídeos em destaque
-        $listsTop = $this->obj->orderBy('views', 'desc')->take(4)->get();
+        $listsTop = $this->obj->where('status', 1)->orderBy('views', 'desc')->take(4)->get();
 
         //Vídeos mais recentes
-        $lists = $this->obj->orderBy('id', 'desc')->skip(4)->paginate(16);
+        $lists = $this->obj->where('status', 1)->orderBy('id', 'desc')->skip(4)->paginate(16);
 
         //return $lists;
 
@@ -39,7 +39,7 @@ class VideoController extends Controller{
 
         $detail = $this->obj->where('id', $id)->first();
 
-        $lists = $this->obj->orderBy('id', 'desc')->take(10)->get();
+        $lists = $this->obj->where('status', 1)->orderBy('id', 'desc')->take(10)->get();
 
         $prev = $this->obj->select('id', 'titulo')->where('id','<', $id)->orderBy('id', 'desc')->first();
         $next = $this->obj->select('id', 'titulo')->where('id','>', $id)->orderBy('id')->first();

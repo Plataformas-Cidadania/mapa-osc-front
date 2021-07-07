@@ -56,7 +56,7 @@
                     @endforeach
                         @if($page->tipo_id==3)
                             <li class="list-group-item-theme" >
-                                <a href="/contato">Fale conosco</a>
+                                <a href="contato">Fale conosco</a>
                             </li>
                         @endif
                 </ul>

@@ -125,6 +125,20 @@
             </a>
         </div>
     </div>
+    <div class="bg-pri">
+        <script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <div id="footer-brasil"></div>
+        <style>
+            div#wrapper-barra-brasil {
+                position: relative;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 1100px;
+                height: 100%;
+            }
+        </style>
+    </div>
+
 
 </footer>
 

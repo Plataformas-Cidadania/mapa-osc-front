@@ -196,6 +196,4 @@ cmsApp.controller('midiaCtrl', ['$scope', '$http', 'Upload', '$timeout', functio
         });
     };
     //////////////////////////////////
-
-
 }]);

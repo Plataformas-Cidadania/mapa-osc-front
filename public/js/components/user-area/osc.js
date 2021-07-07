@@ -357,10 +357,6 @@ class Osc extends React.Component {
 
         $.ajax({
             method: 'POST',
-            //method: 'POST',
-            //url: getBaseUrl+'save-logo-osc/'+id,
-            //url: '/save-logo-osc',
-            //url: getBaseUrl2+'osc/logo/455128',
             url: getBaseUrl2 + 'osc/logo/' + this.props.id,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
@@ -370,7 +366,6 @@ class Osc extends React.Component {
             contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             cache: false,
             success: function (data) {
-                console.log(data);
                 this.setState({ logo: data });
                 //this.setState({logo: data});
             }.bind(this),
@@ -383,16 +378,11 @@ class Osc extends React.Component {
     getLogo() {
         $.ajax({
             method: 'GET',
-            //method: 'POST',
-            //url: getBaseUrl+'save-logo-osc/'+id,
-            //url: '/save-logo-osc',
-            //url: getBaseUrl2+'osc/logo/455128',
             url: getBaseUrl2 + 'osc/logo/' + this.props.id,
             processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
             cache: false,
             success: function (data) {
-                console.log(data);
                 this.setState({ logo: data });
                 //this.setState({logo: data});
             }.bind(this),
