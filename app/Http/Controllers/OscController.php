@@ -166,6 +166,7 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1) {
             $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
         }
+        //Log::info($pgIdh);
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
@@ -216,6 +217,14 @@ class OscController extends Controller{
         $areas = [];
         $areas['type'] = 'FeatureCollection';
         $areas['features'] = [];
+        //Log::info($areasIdh['features']);
+
+        //cria um array para os geometry das ufs pegando os dados do array do idh
+        $ufsGeometry = [];
+        foreach ($areasIdh['features'] as $feature) {
+            $ufsGeometry[$feature['properties']['cod_uf']] = $feature['geometry'];
+        }
+
         foreach($dataOsc as $index => $valor){
             $areas['features'][$index]['type'] = 'Feature';
             $areas['features'][$index]['id'] = $index;
@@ -224,13 +233,14 @@ class OscController extends Controller{
             $areas['features'][$index]['properties']['total'] = $valor->nr_quantidade_osc_regiao;
             $areas['features'][$index]['properties']['x'] = $valor->geo_lat_centroid_regiao;
             $areas['features'][$index]['properties']['y'] = $valor->geo_lng_centroid_regiao;
+            $areas['features'][$index]['geometry'] = $ufsGeometry[$valor->id_regiao];
             //foreach ($dataIdh->features as $item) {
-            foreach ($areasIdh['features'] as $item) {
+            /*foreach ($areasIdh['features'] as $item) {
                 //if($item->properties->cod_uf == $valor->id_regiao){
                 if($item['properties']['cod_uf'] == $valor->id_regiao){
                     $areas['features'][$index]['geometry'] = $item['geometry'];
                 }
-            }
+            }*/
         }
 
         //return ['osc' => $areas, 'idh' => $dataIdh];

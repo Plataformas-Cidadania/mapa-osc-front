@@ -788,8 +788,8 @@ class OscMap extends React.Component{
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"'+origemOsc+'"}}';
-            //rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
-            rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;
+            rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
+            //rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;
         }
         this.setState({processingList: true}, function (){
             $.ajax({
@@ -827,10 +827,6 @@ class OscMap extends React.Component{
             //console.log(id_osc);
             $.ajax({
                 method: 'GET',
-                //method: 'POST',
-                //url: getBaseUrl+'save-logo-osc/'+id,
-                //url: '/save-logo-osc',
-                //url: getBaseUrl2+'osc/logo/455128',
                 url: getBaseUrl2+'osc/logo/'+id_osc,
                 processData: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
                 contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
@@ -1089,6 +1085,7 @@ class OscMap extends React.Component{
                         //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
                     }
                     data = data2;
+                    console.log(data);
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
@@ -1167,6 +1164,7 @@ class OscMap extends React.Component{
                         //}
                     }
                     data = data2;
+                    console.log(data);
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){

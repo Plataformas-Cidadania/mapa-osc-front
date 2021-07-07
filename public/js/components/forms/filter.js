@@ -5,7 +5,7 @@ class Filter extends React.Component {
             json: {
                 avancado: {}
             },
-            camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_organizacaoReligiosa'],
+            camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
             form: {
                 name: '',
                 email: '',
@@ -79,6 +79,7 @@ class Filter extends React.Component {
         this.removeCnae = this.removeCnae.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleCheckChange = this.handleCheckChange.bind(this);
 
         this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
@@ -169,16 +170,36 @@ class Filter extends React.Component {
         $("#frmMapa").submit();
     }
 
-    setJsonDadosGerais(name, value) {
+    setJsonDadosGerais(name, value, type) {
+
         let json = this.state.json;
         if (!json.avancado.hasOwnProperty('dadosGerais')) {
             json.avancado.dadosGerais = {};
         }
-        json.avancado.dadosGerais[name] = value;
-        this.setState({ json: json }, function () {
-            //console.log(this.state.json);
-            //console.log(JSON.stringify(this.state.json));
-        });
+
+        if (type === 'input' || type === 'search') {
+            json.avancado.dadosGerais[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+
+        if (type === 'checkbox') {
+            if (value) {
+                json.avancado.dadosGerais[name] = value;
+                this.setState({ json: json });
+                return;
+            }
+            delete json.avancado.dadosGerais[name];
+            this.setState({ json: json });
+        }
+    }
+
+    handleCheckChange(event) {
+        const target = event.target;
+        const id = target.id;
+        if (this.state.camposDadosGerais.includes(id)) {
+            this.setJsonDadosGerais(id, target.checked, 'checkbox');
+        }
     }
 
     handleInputChange(event) {
@@ -186,12 +207,12 @@ class Filter extends React.Component {
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        console.log(name);
+        //console.log(name);
         if (this.state.camposDadosGerais.includes(name)) {
-            this.setJsonDadosGerais(name, value);
+            this.setJsonDadosGerais(name, value, 'input');
         }
 
-        if (target.name == 'cd_objetivo_oscSelectBoxItText' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
+        if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
             this.objetivosMetas(target.value);
         }
 
@@ -240,6 +261,7 @@ class Filter extends React.Component {
         filters.regiao = item;
         this.setJsonDadosGerais('tx_nome_regiao', item.edre_nm_regiao);
         this.setJsonDadosGerais('cd_regiao', item.edre_cd_regiao);
+
         this.setState({ filters: filters, searchRegiao: null });
     }
     removeRegiao() {
@@ -282,8 +304,8 @@ class Filter extends React.Component {
     setUf(item) {
         let filters = this.state.filters;
         filters.uf = item;
-        this.setJsonDadosGerais('tx_nome_uf', item.eduf_nm_uf);
-        this.setJsonDadosGerais('cd_uf', item.eduf_cd_uf);
+        this.setJsonDadosGerais('tx_nome_uf', item.eduf_nm_uf, 'search');
+        this.setJsonDadosGerais('cd_uf', item.eduf_cd_uf, 'search');
         this.setState({ filters: filters });
     }
     removeUf() {
@@ -682,7 +704,7 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'menu/osc/objetivo_projeto',
+            url: getBaseUrl2 + 'objetivos',
             //url: getBaseUrl + 'menu/osc/objetivo_projeto',
             cache: false,
             success: function (data) {
@@ -701,7 +723,7 @@ class Filter extends React.Component {
         $.ajax({
             method: 'GET',
             //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
-            url: getBaseUrl2 + 'componente/metas_objetivo_projeto/' + id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -864,6 +886,9 @@ class Filter extends React.Component {
     render() {
 
         //console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes)
+
+        let date = new Date();
+        let ano = date.getFullYear();
 
         let certificados = null;
         if (this.state.certificados) {
@@ -1218,6 +1243,18 @@ class Filter extends React.Component {
             'div',
             null,
             React.createElement(
+                'div',
+                { className: 'text-right' },
+                React.createElement(
+                    'a',
+                    { onClick: () => {
+                            console.log(this.state.json);
+                            console.log(JSON.stringify(this.state.json));
+                        }, style: { cursor: 'pointer' } },
+                    'json'
+                )
+            ),
+            React.createElement(
                 'form',
                 null,
                 React.createElement(
@@ -1411,11 +1448,11 @@ class Filter extends React.Component {
                                         { className: 'col-md-3' },
                                         React.createElement(Range, {
                                             title: 'Ano de Funda\xE7\xE3o',
-                                            min: '0',
-                                            max: '100',
+                                            min: '1900',
+                                            max: ano,
                                             step: '1',
-                                            defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueStart: '1900',
+                                            defaultValueEnd: ano,
                                             setValue: this.setAnoFundacao
                                         })
                                     ),
@@ -1467,7 +1504,7 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox ' },
-                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_associacaoPrivada', required: true }),
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_associacaoPrivada', required: true, onChange: this.handleCheckChange }),
                                             React.createElement(
                                                 'label',
                                                 { className: 'custom-control-label', htmlFor: 'naturezaJuridica_associacaoPrivada' },
@@ -1477,7 +1514,7 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox ' },
-                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_fundacaoPrivada', required: true }),
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_fundacaoPrivada', required: true, onChange: this.handleCheckChange }),
                                             React.createElement(
                                                 'label',
                                                 { className: 'custom-control-label', htmlFor: 'naturezaJuridica_fundacaoPrivada' },
@@ -1487,7 +1524,7 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox ' },
-                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoReligiosa', required: true }),
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoReligiosa', required: true, onChange: this.handleCheckChange }),
                                             React.createElement(
                                                 'label',
                                                 { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoReligiosa' },
@@ -1497,7 +1534,7 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox ' },
-                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoSocial', required: true }),
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_organizacaoSocial', required: true, onChange: this.handleCheckChange }),
                                             React.createElement(
                                                 'label',
                                                 { className: 'custom-control-label', htmlFor: 'naturezaJuridica_organizacaoSocial' },
@@ -1507,7 +1544,7 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'custom-control custom-checkbox ' },
-                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_outra', required: true }),
+                                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'naturezaJuridica_outra', required: true, onChange: this.handleCheckChange }),
                                             React.createElement(
                                                 'label',
                                                 { className: 'custom-control-label', htmlFor: 'naturezaJuridica_outra' },
@@ -1522,7 +1559,7 @@ class Filter extends React.Component {
                                         { className: 'col-md-6' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_objetivo_oscSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_objetivo_osc', onChange: this.handleInputChange },
                                             React.createElement(
                                                 'option',
                                                 { selected: true },
@@ -1538,7 +1575,7 @@ class Filter extends React.Component {
                                         { className: 'col-md-6' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_meta_oscSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_meta_osc', onChange: this.handleInputChange },
                                             React.createElement(
                                                 'option',
                                                 { selected: true },
