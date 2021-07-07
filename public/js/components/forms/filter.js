@@ -2834,7 +2834,6 @@ class Filter extends React.Component {
             React.createElement(
                 'form',
                 { id: 'frmMapa', name: 'frmMapa', action: 'mapa-busca-avancada', method: 'POST' },
-                React.createElement('input', { type: 'hidden', name: 'csrf-token', value: this.props.csrf_token }),
                 React.createElement('input', { type: 'hidden', id: 'json', name: 'json', value: JSON.stringify(this.state.json) }),
                 React.createElement(
                     'button',

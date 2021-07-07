@@ -2252,7 +2252,7 @@ class Filter extends React.Component{
                     <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                 </form>
                 <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST">
-                    <input type="hidden" name="csrf-token" value={this.props.csrf_token}/>
+                    {/*<input type="hidden" name="csrf-token" value={this.props.csrf_token}/>*/}
                     <input type="hidden" id="json" name="json" value={JSON.stringify(this.state.json)}/>
                     <button type="submit" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary">Filtrar</button>
                 </form>

@@ -760,20 +760,16 @@ class OscMap extends React.Component {
             };
             buscaAvancada = true;
         } else {
-            //Pesquisa por osc. Está pegando tudo enquanto não existe a rota.
-            //rota = 'lista_osc/'+this.state.paginaOscList;
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
-            //rota = 'osc/busca_avancada/lista/10/0?avancado='+avancado;
-            rota = 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
+            //rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
+            rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
                 method: method,
-                //url: getBaseUrl2 + rota,
-                url: rota, //ROTA PARA TESTES LOCAIS
-                //url: 'lista_osc/'+this.state.paginaOscList,
+                url: rota,
                 data: data,
                 cache: false,
                 success: function (data) {
