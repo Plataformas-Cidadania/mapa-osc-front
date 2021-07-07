@@ -155,39 +155,30 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-        $pgOsc = $api."geo/estados";
-        //$pgOsc = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/geo/estados";
-        //$pgOsc = "https://mapaosc.ipea.gov.br/api/geo/cluster/estado";
-        //Log::info($pgOsc);
 
-        //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo";
+        $pgOsc = $api."geo/estados";
 
         $pgIdh = $api."ipeadata/uffs";
         if(env('LOCALHOST_DOCKER') == 1) {
             $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
         }
-        //Log::info($pgIdh);
 
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $pgOsc );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $dataOsc = curl_exec( $ch );
-
         curl_close( $ch );
+        $dataOsc = json_decode($dataOsc);
 
         $chIdh = curl_init();
         curl_setopt( $chIdh, CURLOPT_URL, $pgIdh );
         curl_setopt( $chIdh, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($chIdh, CURLOPT_SSL_VERIFYPEER, false);
         $dataIdh = curl_exec( $chIdh );
-
         curl_close( $chIdh );
+        $dataIdh = json_decode($dataIdh);
 
-
-        //Log::info([$dataOsc]);
-        $dataOsc = json_decode($dataOsc);
-        //Log::info([$dataOsc]);
         //criar array com indices començando de zero, pois o javascript não considera array se os indices forem personalizados
         $dataOscTemp = [];
         foreach ($dataOsc as $item) {
@@ -195,12 +186,7 @@ class OscController extends Controller{
             $dataOsc = $dataOscTemp;
         }
 
-        //Log::info($dataIdh);
-        $dataIdh = json_decode($dataIdh);
-        //$dataIdh->type = 'FeatureColleciton';
-
-        //colocando os dados retornados da API nova no modelo da API antiga
-        //para alimentar o padrão que já existe no front
+        //estrutura de dados para o leaflet
         $areasIdh = [];
         $areasIdh['type'] = 'FeatureCollection';
         $areasIdh['features'] = [];
@@ -217,9 +203,8 @@ class OscController extends Controller{
         $areas = [];
         $areas['type'] = 'FeatureCollection';
         $areas['features'] = [];
-        //Log::info($areasIdh['features']);
 
-        //cria um array para os geometry das ufs pegando os dados do array do idh
+        //montando array com geometry de ufs
         $ufsGeometry = [];
         foreach ($areasIdh['features'] as $feature) {
             $ufsGeometry[$feature['properties']['cod_uf']] = $feature['geometry'];
@@ -243,12 +228,10 @@ class OscController extends Controller{
             }*/
         }
 
-        //return ['osc' => $areas, 'idh' => $dataIdh];
         return ['osc' => $areas, 'idh' => $areasIdh];
     }
 
     public function getIDHM($cod_uf){
-        //$pgIdh = "https://mapaosc.ipea.gov.br/api/analises/idhgeo/$cod_uf";
 
         $api = env('APP_API_ROUTE');
         if(env('LOCALHOST_DOCKER') == 1){
@@ -256,7 +239,6 @@ class OscController extends Controller{
         }
         $pgIdh = $api."ipeadata/municipios/estado/$cod_uf";
         //$pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/municipios/estado/$cod_uf";
-        //Log::info($pgIdh);
 
         $chIdh = curl_init();
         curl_setopt( $chIdh, CURLOPT_URL, $pgIdh );
@@ -269,8 +251,7 @@ class OscController extends Controller{
         $dataIdh = json_decode($dataIdh);
         //$dataIdh->type = 'FeatureColleciton';
 
-        //colocando os dados retornados da API nova no modelo da API antiga
-        //para alimentar o padrão que já existe no front
+        //estrutura de dados para o leaflet
         $areasIdh = [];
         $areasIdh['type'] = 'FeatureCollection';
         $areasIdh['features'] = [];
@@ -284,7 +265,6 @@ class OscController extends Controller{
         }
 
         return ['idh' => $areasIdh];
-        //return ['idh' => $dataIdh];
 
     }
 
@@ -304,8 +284,6 @@ class OscController extends Controller{
         //Log::info(curl_error($ch));
         curl_close( $ch );
         $dataJSON = json_decode($data);
-
-        //return ['osc' => $dataJSON];
 
         return view($this->module.'.declaration', ['osc' => $dataJSON, 'id_osc' => $id_osc]);
     }
@@ -353,7 +331,6 @@ class OscController extends Controller{
         return view('user-area', ['pgUserArea' => 'seal', 'id_osc' => $id_osc]);
     }
 
-
     public function buscaAvancadaOscGeo(Request $request){
 
         $data = $request->all();
@@ -384,7 +361,6 @@ class OscController extends Controller{
         return $data;
     }
 
-
     public function buscaAvancadaOscLista(Request $request){
 
         $data = $request->all();
@@ -400,7 +376,6 @@ class OscController extends Controller{
         if(env('LOCALHOST_DOCKER') == 1) {
             $url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";//PARA TESTAR LOCALMENTE
         }
-        //Log::info($url);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
