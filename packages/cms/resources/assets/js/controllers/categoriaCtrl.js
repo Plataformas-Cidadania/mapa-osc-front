@@ -90,7 +90,6 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
      });
      };*/
 
-
     $scope.ordernarPor = function(ordem){
         $scope.ordem = ordem;
         //console.log($scope.ordem);
@@ -204,6 +203,4 @@ cmsApp.controller('categoriaCtrl', ['$scope', '$http', 'Upload', '$timeout', fun
         });
     };
     //////////////////////////////////
-
-
 }]);
