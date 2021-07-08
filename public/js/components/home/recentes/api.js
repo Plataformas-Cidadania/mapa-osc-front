@@ -24,8 +24,9 @@ class OscsRecentes extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                this.getLogos();
-                this.setState({ oscs: data, loading: false });
+                this.setState({ oscs: data, loading: false }, function () {
+                    this.getLogos();
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -35,20 +36,18 @@ class OscsRecentes extends React.Component {
     }
     getLogos() {
         let logos = this.state.logos;
-        for (let i in this.state.dataOscList) {
-            let id_osc = this.state.dataOscList[i].id_osc;
-            //console.log(id_osc);
+        for (let i in this.state.oscs) {
+            let id_osc = this.state.oscs[i].id_osc;
             $.ajax({
                 method: 'GET',
                 url: getBaseUrl2 + 'osc/logo/' + id_osc,
-                processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
-                contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+                processData: false,
+                contentType: false,
                 cache: false,
                 success: function (data) {
-                    //console.log(data);
+                    console.log('data', data);
                     logos[id_osc] = data;
                     this.setState({ logos: logos });
-                    //this.setState({logo: data});
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(status, err.toString());
@@ -72,8 +71,7 @@ class OscsRecentes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'list-user list-lgt' },
-                            React.createElement('img', { src: logo, alt: '',
-                                className: 'rounded-circle float-left', width: '50', style: { backgroundColor: '#FFFFFF' } }),
+                            React.createElement('img', { src: logo, alt: '', className: 'rounded-circle float-left', width: '50', height: '50', style: { backgroundColor: '#FFFFFF' } }),
                             React.createElement(
                                 'h4',
                                 { className: 'capitalize' },
