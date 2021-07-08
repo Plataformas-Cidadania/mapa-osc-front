@@ -48,7 +48,6 @@ class OscsRecentes extends React.Component {
                 contentType: false,
                 cache: false,
                 success: function(data){
-                    console.log('data', data);
                     logos[id_osc] = data;
                     this.setState({logos: logos});
                 }.bind(this),

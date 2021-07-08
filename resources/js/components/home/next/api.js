@@ -60,7 +60,6 @@ class NextOsc extends React.Component {
             success: function(data){
                 this.setState({data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false}, function(){
                     this.callMenu();//carregar as oscs da primeira área de atuação.
-                    this.getLogos();
                 });
             }.bind(this),
             error: function(xhr, status, err){
@@ -95,7 +94,9 @@ class NextOsc extends React.Component {
             },
             cache: false,
             success: function(data){
-                this.setState({nextsOsc: data, loadingOscs: false});
+                this.setState({nextsOsc: data, loadingOscs: false}, function (){
+                    this.getLogos();
+                });
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -145,6 +146,7 @@ class NextOsc extends React.Component {
 
     getLogos(){
         let logos = this.state.logos;
+        console.log(this.state.nextsOsc);
         for(let i in this.state.nextsOsc){
             let id_osc = this.state.nextsOsc[i].id_osc;
             $.ajax({
@@ -154,6 +156,7 @@ class NextOsc extends React.Component {
                 contentType: false,
                 cache: false,
                 success: function(data){
+                    console.log('data', data);
                     logos[id_osc] = data;
                     this.setState({logos: logos});
                 }.bind(this),
@@ -251,6 +254,7 @@ class NextOsc extends React.Component {
         if(this.state.nextsOsc){
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
                 let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                console.log('logo--->', logo);
                 if(index <= 2){
                     const random = Math.floor(Math.random() * rotations.length);
                     const rotation = rotations[random];
@@ -287,7 +291,7 @@ class NextOsc extends React.Component {
                     return (
                         <li id={'txt' + index}>
                             <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} className="circle-item" key={'listnext3'+index}>
-                                {index + 1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
+                                {index + 1} {item.tx_nome_osc} <i className="fas fa-share-square"/>
                             </a>
                             <hr/>
                         </li>
