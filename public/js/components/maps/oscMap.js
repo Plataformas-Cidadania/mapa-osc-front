@@ -763,8 +763,8 @@ class OscMap extends React.Component {
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
-            rota = 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado; //PARA TESTAR LOCALMENTE
-            //rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;
+            //rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
+            rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
@@ -991,7 +991,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1000,7 +1000,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
