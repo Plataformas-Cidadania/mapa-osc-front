@@ -200,3 +200,10 @@ function clearMoeda(e) {
     valor = parseInt(valor.replace(/[\D]+/g, ''));
     return valor;
 }
+
+function objTest(obj) {
+    if(JSON.stringify(obj) === '{}' || JSON.stringify(obj) === undefined) {
+        obj = false;
+    }
+    return obj;
+}
