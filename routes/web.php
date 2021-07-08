@@ -109,6 +109,7 @@ Route::get('/teste/osc/logo/{id_osc}', 'TesteController@testeLogo');
 Route::get('/teste/json', 'TesteController@testeEstruturaJson');
 Route::get('/teste/objetivos_metas', 'TesteController@objetivosMetas');
 Route::get('/search/atividade_economica/autocomplete/{search}', 'TesteController@atividadeEconomica');
+Route::get('/menu/osc/certificado/', 'TesteController@certificados');
 ////////////////
 
 

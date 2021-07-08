@@ -26,7 +26,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/certificado',
+            //url: getBaseUrl+'menu/osc/certificado',
+            url: 'menu/osc/certificado',
             success: function (data) {
                 this.setState({loading: false, certificados: data, button:true})
             }.bind(this),

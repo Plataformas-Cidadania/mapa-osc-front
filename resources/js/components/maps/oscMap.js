@@ -823,6 +823,9 @@ class OscMap extends React.Component{
     getLogos(){
         let logos = this.state.logos;
         for(let i in this.state.dataOscList){
+            if(i > 30){
+                break;
+            }
             let id_osc = this.state.dataOscList[i].id_osc;
             //console.log(id_osc);
             $.ajax({
@@ -832,8 +835,10 @@ class OscMap extends React.Component{
                 contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
                 cache: false,
                 success: function(data){
-                    //console.log(data);
-                    logos[id_osc] = data;
+                    console.log(data);
+                    if(typeof data === 'string'){
+                        logos[id_osc] = data;
+                    }
                     this.setState({logos: logos});
                     //this.setState({logo: data});
                 }.bind(this),
@@ -1890,28 +1895,30 @@ class OscMap extends React.Component{
         if(this.state.dataOscList) {
 
             //console.log('***', this.state.data);
-            tableOsc = this.state.dataOscList.map(function (item, index) {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
-                return (
-                    <tr key={'tabela' + index}>
-                        <td className="capitalize">
-                            <div className="img-upload img-upload-p">
-                                <img src={logo}
-                                     alt=""/>
-                                {/*<img src="img/sem-imagem.png"
+            //if(this.state.dataOscList.length < 50){
+                tableOsc = this.state.dataOscList.map(function (item, index) {
+                    let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                    return (
+                        <tr key={'tabela' + index}>
+                            <td className="capitalize">
+                                <div className="img-upload img-upload-p">
+                                    <img src={logo}
+                                         alt=""/>
+                                    {/*<img src="img/sem-imagem.png"
                                      alt=""/>*/}
-                            </div>
-                            {item.tx_nome_osc.toLowerCase()}</td>
-                        <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
-                        <td className="text-center">{item.tx_nome_osc}</td>
-                        <td className="capitalize">{item.tx_natureza_juridica_osc.toLowerCase()}</td>
-                        <td>
-                            <a href={'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc)}><i
-                                className="fas fa-share-square"/></a>
-                        </td>
-                    </tr>
-                );
-            }.bind(this));
+                                </div>
+                                {item.tx_nome_osc.toLowerCase()}</td>
+                            <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
+                            <td className="text-center">{item.tx_nome_osc}</td>
+                            <td className="capitalize">{item.tx_natureza_juridica_osc.toLowerCase()}</td>
+                            <td>
+                                <a href={'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc)}><i
+                                    className="fas fa-share-square"/></a>
+                            </td>
+                        </tr>
+                    );
+                }.bind(this));
+            //}
         }
 
         //MONTANDO A PAGINAÇÃO

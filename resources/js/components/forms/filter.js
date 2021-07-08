@@ -102,6 +102,7 @@ class Filter extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
+        this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
 
 
         this.filter = this.filter.bind(this);
@@ -252,12 +253,32 @@ class Filter extends React.Component{
         this.setState({json: json});
     }
 
+    setJsonTitulacaoCertificacao(name, value){
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('titulacoesCertificacoes')){
+            json.avancado.titulacoesCertificacoes = {};
+        }
+        if(value){
+            json.avancado.titulacoesCertificacoes[name] = value;
+            this.setState({json: json});
+            return;
+        }
+        delete json.avancado.titulacoesCertificacoes[name];
+        this.setState({json: json});
+    }
+
     handleCheckChange(event){
         const target = event.target;
         const id = target.id;
         if(this.state.camposDadosGerais.includes(id)){
             this.setJsonDadosGerais(id, target.checked, 'checkbox');
         }
+    }
+
+    handleCheckChangeTitulacaoCertificacao(event){
+        const target = event.target;
+        const id = target.id;
+        this.setJsonTitulacaoCertificacao(id, target.checked);
     }
 
     handleInputChange(event) {
@@ -424,7 +445,9 @@ class Filter extends React.Component{
     handleSearchCnae(e){
         let search = e.target.value ? e.target.value : ' ';
         this.setState({searchCnae: search}, function(){
-            this.listCnae(search);
+            if(search.length > 2){
+                this.listCnae(search);
+            }
         });
     }
     clickSearchCnae(){
@@ -436,7 +459,8 @@ class Filter extends React.Component{
         $.ajax({
             method: 'GET',
             //url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
-            url: 'search/atividade_economica/autocomplete/'+search,
+            url: getBaseUrl2 + 'classe_economica/autocomplete/'+search,
+            //url: 'search/atividade_economica/autocomplete/'+search,
             cache: false,
             success: function(data){
                 this.setState({listCnae: data, loadingList: false});
@@ -964,6 +988,17 @@ class Filter extends React.Component{
     ////////////////////////////////////////
 
 
+    padronizarTexto(str){
+        str = str.normalize("NFD");
+        str = str.replace(/[^a-zA-Zs ]/g, "");
+        let array = str.split(" ");
+        let newStr = array[0].toLowerCase();
+        for(let i = 1; i < array.length; i++){
+            newStr += array[i];
+        }
+        //str = str[0].toLowerCase() + str.slice(1);
+        return newStr;
+    }
 
 
     render(){
@@ -978,11 +1013,14 @@ class Filter extends React.Component{
             certificados = this.state.certificados.map(function (item) {
                return (
                    <div className="custom-control custom-checkbox"  key={"cert_"+item.cd_certificado}>
-                       <input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_certificado} required/>
-                       <label className="custom-control-label" htmlFor={"cert_"+item.cd_certificado}>{item.tx_nome_certificado}</label>
+                       <input type="checkbox" className="custom-control-input" id={"titulacao_"+this.padronizarTexto(item.tx_nome_certificado)} required onChange={this.handleCheckChangeTitulacaoCertificacao}/>
+                       <label className="custom-control-label" htmlFor={"titulacao_"+this.padronizarTexto(item.tx_nome_certificado)}>{item.tx_nome_certificado}</label>
+                       {/*<input type="checkbox" className="custom-control-input" id={"cert_"+item.cd_certificado} required />*/}
+                       {/*<label className="custom-control-label" htmlFor={"cert_"+item.cd_certificado}>{item.tx_nome_certificado}</label>*/}
+
                    </div>
                );
-            });
+            }.bind(this));
         }
 
 
@@ -1161,11 +1199,14 @@ class Filter extends React.Component{
 
                 let sizeSearch = this.state.searchCnae ? this.state.searchCnae.length : 0;
                 let firstPiece = null;
-                let secondPiece = item.tx_atividade_economica;
+                //let secondPiece = item.tx_atividade_economica;
+                let secondPiece = item.tx_nome_classe_atividade_economica;
 
                 if (this.state.searchCnae) {
-                    firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
-                    secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+                    //firstPiece = item.tx_atividade_economica.substr(0, sizeSearch);
+                    firstPiece = item.tx_nome_classe_atividade_economica.substr(0, sizeSearch);
+                    //secondPiece = item.tx_atividade_economica.substr(sizeSearch);
+                    secondPiece = item.tx_nome_classe_atividade_economica.substr(sizeSearch);
                 }
                 return (
                     <li key={'cat_' + item.cd_classe_atividade_economica}
@@ -1511,7 +1552,7 @@ class Filter extends React.Component{
                                                 <input type="text" className="form-control" name="tx_atividade_economica2"
                                                        style={{display: (this.state.filters.cnae ? '' : 'none')}}
                                                        readOnly={this.state.filters.cnae}
-                                                       defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_atividade_economica : ''}/>
+                                                       defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_nome_classe_atividade_economica : ''}/>
 
                                                 <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
                                                     <i className="fas fa-search" style={{top: '-28px'}}/>

@@ -798,6 +798,9 @@ class OscMap extends React.Component {
     getLogos() {
         let logos = this.state.logos;
         for (let i in this.state.dataOscList) {
+            if (i > 30) {
+                break;
+            }
             let id_osc = this.state.dataOscList[i].id_osc;
             //console.log(id_osc);
             $.ajax({
@@ -807,8 +810,10 @@ class OscMap extends React.Component {
                 contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
                 cache: false,
                 success: function (data) {
-                    //console.log(data);
-                    logos[id_osc] = data;
+                    console.log(data);
+                    if (typeof data === 'string') {
+                        logos[id_osc] = data;
+                    }
                     this.setState({ logos: logos });
                     //this.setState({logo: data});
                 }.bind(this),
@@ -1816,6 +1821,7 @@ class OscMap extends React.Component {
         if (this.state.dataOscList) {
 
             //console.log('***', this.state.data);
+            //if(this.state.dataOscList.length < 50){
             tableOsc = this.state.dataOscList.map(function (item, index) {
                 let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return React.createElement(
@@ -1859,6 +1865,7 @@ class OscMap extends React.Component {
                     )
                 );
             }.bind(this));
+            //}
         }
 
         //MONTANDO A PAGINAÇÃO
