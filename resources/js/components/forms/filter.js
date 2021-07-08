@@ -101,6 +101,7 @@ class Filter extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
+        this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
 
 
         this.filter = this.filter.bind(this);
@@ -165,6 +166,7 @@ class Filter extends React.Component{
         this.abrangenciaProjeto = this.abrangenciaProjeto.bind(this);
 
         this.setJsonDadosGerais = this.setJsonDadosGerais.bind(this);
+        this.setJsonAtividadeEconomica = this.setJsonAtividadeEconomica.bind(this);
     }
 
 
@@ -223,6 +225,33 @@ class Filter extends React.Component{
 
     }
 
+    setJsonAtividadeEconomica(value){
+        console.log(value);
+        let json = this.state.json;
+        if(value){
+            console.log('-----------');
+            json.avancado.atividadeEconomica = value;
+            this.setState({json: json});
+            return;
+        }
+        delete json.avancado.atividadeEconomica;
+        this.setState({json: json});
+    }
+
+    setJsonAreasSubareasAtuacao(name, value){
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('areasSubareasAtuacao')){
+            json.avancado.areasSubareasAtuacao = {};
+        }
+        if(value){
+            json.avancado.areasSubareasAtuacao[name] = value;
+            this.setState({json: json});
+            return;
+        }
+        delete json.avancado.areasSubareasAtuacao[name];
+        this.setState({json: json});
+    }
+
     handleCheckChange(event){
         const target = event.target;
         const id = target.id;
@@ -259,6 +288,10 @@ class Filter extends React.Component{
         form[name] = value;
 
         this.setState({form: form});
+    }
+
+    handleSubAreaAtuacao(codigo, value){
+        this.setJsonAreasSubareasAtuacao('cd_subarea_atuacao-'+codigo, value)
     }
 
     /*Regiao*/
@@ -403,7 +436,7 @@ class Filter extends React.Component{
         $.ajax({
             method: 'GET',
             //url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
-            url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
+            url: 'search/atividade_economica/autocomplete/'+search,
             cache: false,
             success: function(data){
                 this.setState({listCnae: data, loadingList: false});
@@ -415,11 +448,13 @@ class Filter extends React.Component{
         });
     }
     setCnae(item){
+        this.setJsonAtividadeEconomica(item);
         let filters = this.state.filters;
         filters.cnae = item;
         this.setState({filters: filters});
     }
     removeCnae(){
+        this.setJsonAtividadeEconomica(null);
         let filters = this.state.filters;
         filters.cnae = null;
         this.setState({filters: filters})
@@ -500,7 +535,7 @@ class Filter extends React.Component{
                         return item.cd_area_atuacao === subitem.cd_area_atuacao;
                     });
                 });
-                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id})
+                this.setState({loading: false, areaAtuacao: areaAtuacao, id_area:id, button: true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -1012,15 +1047,21 @@ class Filter extends React.Component{
                     subarea = item.subareas.map(function(subitem){
                         return(
                             <div key={"subarea_"+subitem.cd_subarea_atuacao}>
-                                <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_subarea_atuacao)}>
+                                <div className="custom-control custom-checkbox"
+                                     onChange={() => this.handleSubAreaAtuacao(
+                                         subitem.cd_subarea_atuacao,
+                                         document.getElementById("subarea_"+subitem.cd_subarea_atuacao).checked
+                                     )
+                                     }>
                                     <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
                                     <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_subarea_atuacao} >{subitem.tx_nome_subarea_atuacao}</label>
                                 </div>
                                 <br />
                             </div>
                         );
-                    });
+                    }.bind(this));
                 }
+
 
                 subAreaAtuacao.push(
                     <div key={"divArea_"+item.cd_area_atuacao} className="card" style={{display: item.checked ? '' : 'none'}}>

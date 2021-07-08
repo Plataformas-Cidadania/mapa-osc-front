@@ -74,7 +74,7 @@ class TesteController extends Controller{
         $data = curl_exec( $ch );
         curl_close( $ch );
 
-        Log::info($data);
+        //Log::info($data);
         $data = json_decode($data, true);
 
         return $data;
@@ -124,6 +124,23 @@ class TesteController extends Controller{
 
         return $objetivos;
         //return $data;
+    }
+
+    public function atividadeEconomica($search){
+
+        $url = "https://mapaosc.ipea.gov.br/api/search/atividade_economica/autocomplete/$search";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
     }
 
 }
