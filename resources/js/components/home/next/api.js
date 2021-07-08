@@ -250,7 +250,6 @@ class NextOsc extends React.Component {
             [330, -330],
         ]
 
-
         if(this.state.nextsOsc){
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
                 let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
