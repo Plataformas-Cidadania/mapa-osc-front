@@ -4,15 +4,18 @@ class OscsRecentes extends React.Component {
         super(props);
         this.state = {
             oscs: [],
-            loading: false
+            loading: false,
+            logos: [],
         };
 
         this.load = this.load.bind(this);
+        this.getLogos = this.getLogos.bind(this);
 
     }
 
     componentDidMount(){
         this.load();
+
     }
 
     load(){
@@ -24,8 +27,9 @@ class OscsRecentes extends React.Component {
             },
             cache: false,
             success: function(data){
-                console.log(data);
-                this.setState({oscs: data, loading: false});
+                this.setState({oscs: data, loading: false}, function (){
+                    this.getLogos();
+                });
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -33,19 +37,40 @@ class OscsRecentes extends React.Component {
             }.bind(this)
         });
     }
+    getLogos(){
+        let logos = this.state.logos;
+        for(let i in this.state.oscs){
+            let id_osc = this.state.oscs[i].id_osc;
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2+'osc/logo/'+id_osc,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data){
+                    console.log('data', data);
+                    logos[id_osc] = data;
+                    this.setState({logos: logos});
+                }.bind(this),
+                error: function(xhr, status, err){
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+
+    }
 
     render() {
 
         let oscs = null;
         if(this.state.oscs){
             oscs = this.state.oscs.map((item, index) => {
+                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return (
                     <div key={"recente"+index} className="col-md-4">
                         <a href={"detalhar/"+item.id_osc+"/"+clean(item.tx_nome_osc)}>
                             <div className="list-user list-lgt">
-                                <img src="img/sem-imagem.png" alt=""
-                                     className="rounded-circle float-left" width="50" style={{backgroundColor: '#FFFFFF'}}/>
-                                {/*<img src={getBaseUrl2+"osc/logo/"+item.id_osc} alt={item.tx_nome_osc} title={item.tx_nome_osc} width="50" className="rounded-circle float-left" style={{backgroundColor: '#FFFFFF'}}/>*/}
+                                <img src={logo} alt="" className="rounded-circle float-left" width="50" height="50" style={{backgroundColor: '#FFFFFF'}}/>
                                     <h4 className="capitalize">
                                         {titleize(item.tx_nome_osc, 50)}
                                         {/*{item.tx_nome_osc.substr(1, 150)}*/}
