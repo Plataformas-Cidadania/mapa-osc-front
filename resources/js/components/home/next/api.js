@@ -60,7 +60,6 @@ class NextOsc extends React.Component {
             success: function(data){
                 this.setState({data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false}, function(){
                     this.callMenu();//carregar as oscs da primeira área de atuação.
-                    this.getLogos();
                 });
             }.bind(this),
             error: function(xhr, status, err){
@@ -95,7 +94,9 @@ class NextOsc extends React.Component {
             },
             cache: false,
             success: function(data){
-                this.setState({nextsOsc: data, loadingOscs: false});
+                this.setState({nextsOsc: data, loadingOscs: false}, function (){
+                    this.getLogos();
+                });
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
@@ -145,6 +146,7 @@ class NextOsc extends React.Component {
 
     getLogos(){
         let logos = this.state.logos;
+        console.log(this.state.nextsOsc);
         for(let i in this.state.nextsOsc){
             let id_osc = this.state.nextsOsc[i].id_osc;
             $.ajax({
@@ -247,10 +249,9 @@ class NextOsc extends React.Component {
             [330, -330],
         ]
 
-
         if(this.state.nextsOsc){
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                let logo = objTest(this.state.logos[item.id_osc]) ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 if(index <= 2){
                     const random = Math.floor(Math.random() * rotations.length);
                     const rotation = rotations[random];
@@ -258,7 +259,7 @@ class NextOsc extends React.Component {
                     return (
                         <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate"  onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src={logo} alt="" className="rounded-circle float-left" width="65" height="65" />
+                                <img src={logo} alt="" className="rounded-circle float-left" width="60" height="60" />
                                 {/*<img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>*/}
                             </div>
                         </a>
@@ -267,7 +268,7 @@ class NextOsc extends React.Component {
             }.bind(this));
 
             nextOsc2 = this.state.nextsOsc.map(function (item, index) {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                let logo = objTest(this.state.logos[item.id_osc]) ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 if(index > 2){
                     const random = Math.floor(Math.random() * rotations.length);
                     const rotation = rotations[random];
@@ -275,7 +276,7 @@ class NextOsc extends React.Component {
                     return (
                         <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext2'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src={logo} alt="" className="rounded-circle float-left" width="65" height="65"/>
+                                <img src={logo} alt="" className="rounded-circle float-left" width="60" height="60"/>
                                 {/*<img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>*/}
                             </div>
                         </a>
@@ -287,14 +288,13 @@ class NextOsc extends React.Component {
                     return (
                         <li id={'txt' + index}>
                             <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} className="circle-item" key={'listnext3'+index}>
-                                {index + 1} {item.tx_nome_osc} <i className="fas fa-file-import"/>
+                                {index + 1} {item.tx_nome_osc} <i className="fas fa-share-square"/>
                             </a>
                             <hr/>
                         </li>
                     )
             }.bind(this));
         }
-
 
 
         return (

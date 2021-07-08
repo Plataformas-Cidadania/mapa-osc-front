@@ -45,7 +45,6 @@ class OscsRecentes extends React.Component {
                 contentType: false,
                 cache: false,
                 success: function (data) {
-                    console.log('data', data);
                     logos[id_osc] = data;
                     this.setState({ logos: logos });
                 }.bind(this),
@@ -61,7 +60,8 @@ class OscsRecentes extends React.Component {
         let oscs = null;
         if (this.state.oscs) {
             oscs = this.state.oscs.map((item, index) => {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+
+                let logo = objTest(this.state.logos[item.id_osc]) ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return React.createElement(
                     'div',
                     { key: "recente" + index, className: 'col-md-4' },

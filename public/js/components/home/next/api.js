@@ -58,7 +58,6 @@ class NextOsc extends React.Component {
             success: function (data) {
                 this.setState({ data: data, areaAtuacao: data[0].cd_area_atuacao, loadingAreas: false }, function () {
                     this.callMenu(); //carregar as oscs da primeira área de atuação.
-                    this.getLogos();
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -92,7 +91,9 @@ class NextOsc extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                this.setState({ nextsOsc: data, loadingOscs: false });
+                this.setState({ nextsOsc: data, loadingOscs: false }, function () {
+                    this.getLogos();
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(status, err.toString());
@@ -140,6 +141,7 @@ class NextOsc extends React.Component {
 
     getLogos() {
         let logos = this.state.logos;
+        console.log(this.state.nextsOsc);
         for (let i in this.state.nextsOsc) {
             let id_osc = this.state.nextsOsc[i].id_osc;
             $.ajax({
@@ -236,7 +238,7 @@ class NextOsc extends React.Component {
 
         if (this.state.nextsOsc) {
             nextOsc1 = this.state.nextsOsc.map(function (item, index) {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                let logo = objTest(this.state.logos[item.id_osc]) ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 if (index <= 2) {
                     const random = Math.floor(Math.random() * rotations.length);
                     const rotation = rotations[random];
@@ -247,14 +249,14 @@ class NextOsc extends React.Component {
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "65", height: "65" })
+                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "60", height: "60" })
                         )
                     );
                 }
             }.bind(this));
 
             nextOsc2 = this.state.nextsOsc.map(function (item, index) {
-                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
+                let logo = objTest(this.state.logos[item.id_osc]) ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 if (index > 2) {
                     const random = Math.floor(Math.random() * rotations.length);
                     const rotation = rotations[random];
@@ -265,7 +267,7 @@ class NextOsc extends React.Component {
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "65", height: "65" })
+                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "60", height: "60" })
                         )
                     );
                 }
@@ -282,7 +284,7 @@ class NextOsc extends React.Component {
                         " ",
                         item.tx_nome_osc,
                         " ",
-                        React.createElement("i", { className: "fas fa-file-import" })
+                        React.createElement("i", { className: "fas fa-share-square" })
                     ),
                     React.createElement("hr", null)
                 );
