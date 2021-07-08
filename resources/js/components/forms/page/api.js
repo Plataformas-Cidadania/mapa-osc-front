@@ -40,7 +40,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/area_atuacao',
+            //url: getBaseUrl+'menu/osc/area_atuacao',
+            url: getBaseUrl2+'area_atuacao',
             success: function (data) {
                 data.find(function(item){
                     item.checked = false;
@@ -71,7 +72,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/objetivo_projeto',
+            //url: getBaseUrl+'menu/osc/objetivo_projeto',
+            url: getBaseUrl2+'objetivos',
             success: function (data) {
                 this.setState({loading: false, form: data, button:true})
             }.bind(this),

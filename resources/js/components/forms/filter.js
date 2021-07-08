@@ -402,6 +402,7 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
+            //url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
             url: getBaseUrl + 'search/atividade_economica/autocomplete/'+search,
             cache: false,
             success: function(data){
@@ -485,7 +486,8 @@ class Filter extends React.Component{
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl+'menu/osc/subarea_atuacao',
+            //url: getBaseUrl+'menu/osc/subarea_atuacao',
+            url: getBaseUrl2+'subarea_atuacao',
             success: function (data) {
 
                 let areaAtuacao = this.state.areaAtuacao;

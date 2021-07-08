@@ -763,8 +763,8 @@ class OscMap extends React.Component {
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
             let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
-            //rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
-            rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
+            rota = 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado; //PARA TESTAR LOCALMENTE
+            //rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
@@ -782,7 +782,7 @@ class OscMap extends React.Component {
                     }
                     this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false }, function () {
                         console.log('loadOscList', this.state.dataOscList);
-                        //this.getLogos();
+                        this.getLogos();
                     });
                     //this.populateMap();
                 }.bind(this),
@@ -1817,7 +1817,7 @@ class OscMap extends React.Component {
 
             //console.log('***', this.state.data);
             tableOsc = this.state.dataOscList.map(function (item, index) {
-
+                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return React.createElement(
                     'tr',
                     { key: 'tabela' + index },
@@ -1827,7 +1827,7 @@ class OscMap extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'img-upload img-upload-p' },
-                            React.createElement('img', { src: 'img/sem-imagem.png',
+                            React.createElement('img', { src: logo,
                                 alt: '' })
                         ),
                         item.tx_nome_osc.toLowerCase()
@@ -1858,7 +1858,7 @@ class OscMap extends React.Component {
                         )
                     )
                 );
-            });
+            }.bind(this));
         }
 
         //MONTANDO A PAGINAÇÃO
