@@ -202,7 +202,8 @@ function clearMoeda(e) {
 }
 
 function objTest(obj) {
-    if(JSON.stringify(obj) === '{}' || JSON.stringify(obj) === undefined) {
+    console.log('obj',obj);
+    if(JSON.stringify(obj) === '{}' || JSON.stringify(obj) === undefined || obj.substr(0, 17)==="file_get_contents") {
         obj = false;
     }
     return obj;
