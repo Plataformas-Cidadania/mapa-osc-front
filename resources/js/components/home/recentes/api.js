@@ -45,7 +45,6 @@ class OscsRecentes extends React.Component {
                             <div className="list-user list-lgt">
                                 <img src="img/sem-imagem.png" alt=""
                                      className="rounded-circle float-left" width="50" style={{backgroundColor: '#FFFFFF'}}/>
-                                {/*<img src={getBaseUrl2+"osc/logo/"+item.id_osc} alt={item.tx_nome_osc} title={item.tx_nome_osc} width="50" className="rounded-circle float-left" style={{backgroundColor: '#FFFFFF'}}/>*/}
                                     <h4 className="capitalize">
                                         {titleize(item.tx_nome_osc, 50)}
                                         {/*{item.tx_nome_osc.substr(1, 150)}*/}
