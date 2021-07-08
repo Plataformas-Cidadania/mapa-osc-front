@@ -4,10 +4,12 @@ class OscsRecentes extends React.Component {
         super(props);
         this.state = {
             oscs: [],
-            loading: false
+            loading: false,
+            logos: []
         };
 
         this.load = this.load.bind(this);
+        this.getLogos = this.getLogos.bind(this);
     }
 
     componentDidMount() {
@@ -22,7 +24,7 @@ class OscsRecentes extends React.Component {
             data: {},
             cache: false,
             success: function (data) {
-                console.log(data);
+                this.getLogos();
                 this.setState({ oscs: data, loading: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -31,12 +33,36 @@ class OscsRecentes extends React.Component {
             }.bind(this)
         });
     }
+    getLogos() {
+        let logos = this.state.logos;
+        for (let i in this.state.dataOscList) {
+            let id_osc = this.state.dataOscList[i].id_osc;
+            //console.log(id_osc);
+            $.ajax({
+                method: 'GET',
+                url: getBaseUrl2 + 'osc/logo/' + id_osc,
+                processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+                contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+                cache: false,
+                success: function (data) {
+                    //console.log(data);
+                    logos[id_osc] = data;
+                    this.setState({ logos: logos });
+                    //this.setState({logo: data});
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log(status, err.toString());
+                }.bind(this)
+            });
+        }
+    }
 
     render() {
 
         let oscs = null;
         if (this.state.oscs) {
             oscs = this.state.oscs.map((item, index) => {
+                let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return React.createElement(
                     'div',
                     { key: "recente" + index, className: 'col-md-4' },
@@ -46,7 +72,7 @@ class OscsRecentes extends React.Component {
                         React.createElement(
                             'div',
                             { className: 'list-user list-lgt' },
-                            React.createElement('img', { src: 'img/sem-imagem.png', alt: '',
+                            React.createElement('img', { src: logo, alt: '',
                                 className: 'rounded-circle float-left', width: '50', style: { backgroundColor: '#FFFFFF' } }),
                             React.createElement(
                                 'h4',
