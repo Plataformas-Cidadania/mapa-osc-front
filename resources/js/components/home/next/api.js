@@ -259,7 +259,7 @@ class NextOsc extends React.Component {
                     return (
                         <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate"  onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src={logo} alt="" className="rounded-circle float-left" width="65" height="65" />
+                                <img src={logo} alt="" className="rounded-circle float-left" width="60" height="60" />
                                 {/*<img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>*/}
                             </div>
                         </a>
@@ -276,7 +276,7 @@ class NextOsc extends React.Component {
                     return (
                         <a href={"detalhar/" + item.id_osc + "/" + clean(item.tx_nome_osc)} id={'icon'+index} className="rotate" onClick={() => this.callMenu2(item.id_osc)} style={{transform: "rotate("+rotation[0]+"deg)"}} key={'listnext2'+index}>
                             <div className="circle-item" style={{transform: "rotate("+rotation[1]+"deg)"}}>
-                                <img src={logo} alt="" className="rounded-circle float-left" width="65" height="65"/>
+                                <img src={logo} alt="" className="rounded-circle float-left" width="60" height="60"/>
                                 {/*<img src="img/sem-imagem.png" alt={item.tx_nome_osc} width="65"/>*/}
                             </div>
                         </a>

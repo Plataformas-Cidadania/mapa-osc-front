@@ -249,7 +249,7 @@ class NextOsc extends React.Component {
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "65", height: "65" })
+                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "60", height: "60" })
                         )
                     );
                 }
@@ -267,7 +267,7 @@ class NextOsc extends React.Component {
                         React.createElement(
                             "div",
                             { className: "circle-item", style: { transform: "rotate(" + rotation[1] + "deg)" } },
-                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "65", height: "65" })
+                            React.createElement("img", { src: logo, alt: "", className: "rounded-circle float-left", width: "60", height: "60" })
                         )
                     );
                 }
