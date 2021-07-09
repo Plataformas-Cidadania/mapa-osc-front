@@ -2,20 +2,7 @@
 
     {{--CEL--}}
     <div class="menu-cel-footer bg-lgt menu-cel-login-hide" style="display: none;">
-        <div class="text-center">
-            <br>
-            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle" width="80">
-            <h4>Nome OSC</h4>
-        </div>
-        <hr>
-        <div>
-            <ul class="menu-cel-login">
-                <li><a href=""><i class="far fa-address-card"></i> Minha Conta</a></li>
-                <li><a href=""><i class="far fa-edit"></i> Editar OSC</a></li>
-                <li><a href=""><i class="fas fa-puzzle-piece"></i> Colabore</a></li>
-                <li class="float-right"><a><i class="fas fa-sign-out-alt"></i> Sair </a></li>
-            </ul>
-        </div>
+        <div id="menu-usuario-mobile"></div>
     </div>
     {{--CEL--}}
     <div class="footer-cel d-block d-sm-none">
@@ -27,11 +14,11 @@
                 </div>
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-archive" aria-hidden="true"></i>
-                    <p><a href="/mapa">Mapa</a></p>
+                    <p><a href="mapa">Mapa</a></p>
                 </div>
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-paper-plane"></i>
-                    <p><a href="/contato">Contato</a></p>
+                    <p><a href="contato">Contato</a></p>
                 </div>
                 <div class="col-3 col-md-3 text-center">
                     <i class="fa fa-user"></i>
@@ -56,7 +43,7 @@
 
     <div class="bg-lgt" style="position: relative;">
         {{----}}
-        <div class="row rp-menu" >
+        <div class="rp-menu" >
             <div class="container">
                 <br>
                 <div class="row">

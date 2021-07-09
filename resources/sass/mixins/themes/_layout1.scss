@@ -208,3 +208,30 @@
 .box-item-model h2{
     font-size: 18px;
 }
+@media  only screen and (max-width : 768px) {
+    .circle {
+        height: 350px!important;
+        width: 350px!important;
+        margin-left: -7px!important;
+    }
+    .circle2 {
+        height: 220px!important;
+        width: 220px!important;
+        margin: -284px auto 93px auto!important;
+    }
+    .icon-next {
+        margin-top: 138px!important;
+        margin-left: 130px!important;
+    }
+    .top-ipea{
+        width: 39%;
+    }
+    .top-icons{
+        width: 61%;
+    }
+    .top-links{
+        margin-top: -18px;
+    }
+}
+
+

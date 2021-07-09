@@ -64,7 +64,7 @@ cmsApp.controller('alterarPostCtrl', ['$scope', '$http', 'Upload', '$timeout', f
                 //$scope.fileArquivo = null;//limpa o file
                 $scope.mensagemSalvar =  "Gravado com sucesso!";
                 $scope.removerImagem = false;
-                $scope.imagemBD = '/imagens/posts/'+response.data;
+                $scope.imagemBD = 'imagens/posts/'+response.data;
                 $scope.processandoSalvar = false;
 
             }, function (response) {

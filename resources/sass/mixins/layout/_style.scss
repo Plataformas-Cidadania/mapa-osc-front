@@ -371,14 +371,12 @@ figcaption{
     border-style: solid;
     border-color: black transparent transparent transparent;
 }
-
 .tooltips:hover .tooltiptext {
     visibility: visible;
 }
-
 .box-help{
     position: absolute;
-    width: 382px;
+    width: 347px;
     top: -100px;
     padding: 15px;
     color: #FFFFFF;
@@ -413,4 +411,11 @@ figcaption{
     position: absolute;
     left: 22px;
     margin-top: -31px;
+}
+.user-mobile{
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    padding-top: 7px;
+    color: #FFFFFF;
 }

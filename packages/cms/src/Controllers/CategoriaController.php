@@ -20,7 +20,7 @@ class CategoriaController extends Controller
     {
         $this->categoria = new \App\Categoria;
         $this->campos = [
-            'imagem', 'titulo', 'origin', 'cmsuser_id', 'midia_id',
+            'imagem', 'titulo', 'origin', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/categorias';
         $this->sizesImagem = [
