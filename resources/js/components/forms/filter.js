@@ -117,6 +117,7 @@ class Filter extends React.Component{
 
             dataObjetivos:[],
             dataObjetivosMetas:[],
+            dataObjetivosMetasProjetos:[],
             dataConselhos:[],
             dataParticipacoes:[],
             dataConferencias:[],
@@ -484,8 +485,11 @@ class Filter extends React.Component{
         }
 
 
-        if(target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText'){
+        if(target.name == 'cd_objetivo_osc'){
             this.objetivosMetas(target.value);
+        }
+        if(target.name == 'cd_objetivo_projeto'){
+            this.objetivosMetasProjetos(target.value);
         }
 
         /*if(target.name==='cel'){
@@ -1104,6 +1108,24 @@ class Filter extends React.Component{
         });
     }
 
+    objetivosMetasProjetos(id){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/'+id,
+            cache: false,
+            success: function(data){
+                //console.log('data', data);
+                this.setState({dataObjetivosMetasProjetos: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
     ////////////////////////////////////////
 
     conselhos(){
@@ -1510,7 +1532,16 @@ class Filter extends React.Component{
         if(this.state.dataObjetivosMetas){
             objetivosMetas = this.state.dataObjetivosMetas.map(function (item) {
                 return (
-                    <option value={item.cd_meta_projeto} key={"cert_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
+                    <option value={item.cd_meta_projeto} key={"meta_osc_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
+                );
+            });
+        }
+
+        let objetivosMetasProjetos = null;
+        if(this.state.dataObjetivosMetasProjetos){
+            objetivosMetasProjetos = this.state.dataObjetivosMetasProjetos.map(function (item) {
+                return (
+                    <option value={item.cd_meta_projeto} key={"meta_projeto_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
                 );
             });
         }
@@ -2202,7 +2233,7 @@ class Filter extends React.Component{
                                         <div className="col-md-9">
                                             <select className="custom-select" name="cd_meta_projeto" onChange={this.handleInputChange}>
                                                 <option selected>Metas Relacionadas ao ODS</option>
-                                                {objetivosMetas}
+                                                {objetivosMetasProjetos}
                                             </select>
                                             <br/><br/>
                                         </div>

@@ -52,6 +52,7 @@ class Filter extends React.Component {
 
             dataObjetivos: [],
             dataObjetivosMetas: [],
+            dataObjetivosMetasProjetos: [],
             dataConselhos: [],
             dataParticipacoes: [],
             dataConferencias: [],
@@ -406,8 +407,11 @@ class Filter extends React.Component {
             this.setJsonProjetos(name, value, 'input');
         }
 
-        if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
+        if (target.name == 'cd_objetivo_osc') {
             this.objetivosMetas(target.value);
+        }
+        if (target.name == 'cd_objetivo_projeto') {
+            this.objetivosMetasProjetos(target.value);
         }
 
         /*if(target.name==='cel'){
@@ -1015,6 +1019,24 @@ class Filter extends React.Component {
         });
     }
 
+    objetivosMetasProjetos(id) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
+            cache: false,
+            success: function (data) {
+                //console.log('data', data);
+                this.setState({ dataObjetivosMetasProjetos: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     ////////////////////////////////////////
 
     conselhos() {
@@ -1454,7 +1476,18 @@ class Filter extends React.Component {
             objetivosMetas = this.state.dataObjetivosMetas.map(function (item) {
                 return React.createElement(
                     'option',
-                    { value: item.cd_meta_projeto, key: "cert_" + item.cd_meta_projeto },
+                    { value: item.cd_meta_projeto, key: "meta_osc_" + item.cd_meta_projeto },
+                    item.tx_nome_meta_projeto
+                );
+            });
+        }
+
+        let objetivosMetasProjetos = null;
+        if (this.state.dataObjetivosMetasProjetos) {
+            objetivosMetasProjetos = this.state.dataObjetivosMetasProjetos.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_meta_projeto, key: "meta_projeto_" + item.cd_meta_projeto },
                     item.tx_nome_meta_projeto
                 );
             });
@@ -2602,7 +2635,7 @@ class Filter extends React.Component {
                                                 { selected: true },
                                                 'Metas Relacionadas ao ODS'
                                             ),
-                                            objetivosMetas
+                                            objetivosMetasProjetos
                                         ),
                                         React.createElement('br', null),
                                         React.createElement('br', null)
