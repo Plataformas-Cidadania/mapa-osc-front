@@ -1,4 +1,4 @@
-<link rel="alternate" hreflang="pt-br" href=”http://<?php echo $_SERVER['HTTP_HOST'];?>” />
+<link rel="alternate" hreflang="pt-br" href="http://<?php echo $_SERVER['HTTP_HOST'];?>" />
 <link rel="icon" href="/img/favicons/icon_16x16.png" sizes="16x16">
 <link rel="icon" href="/img/favicons/icon_32x32.png" sizes="32x32">
 <link rel="icon" href="/img/favicons/icon_48x48.png" sizes="48x48">

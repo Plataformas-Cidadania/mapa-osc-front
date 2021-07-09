@@ -3,7 +3,6 @@
 <?php
     $setting = DB::table('settings')->orderBy('id', 'desc')->first();
     $base_href = config('app.url');
-    #$protocol = env('APP_PROTOCOL', 'http://');
     $barra = "";
 
     $mnPortal = DB::table('modulos')->where('tipo_id', 1)->where('status', 1)->orderBy('titulo')->get();
@@ -11,9 +10,6 @@
     $mnAjuda = DB::table('modulos')->where('tipo_id', 3)->where('status', 1)->orderBy('titulo')->get();
     $midias = DB::table('midias')->where('status', 1)->where('id','!=', 1)->orderBy('titulo')->get();
 ?>
-
-    <?php ?>
-
 
 <!doctype html>
 <html lang="pt-br">
@@ -23,12 +19,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{$setting->titulo}} - @yield('title')</title>
         <base href="{{$base_href}}{{$barra}}">
-        {{--@include('layouts.metas')
-        @include('layouts.richCards')
-        @include('layouts.links')--}}
+        @include('layouts.metas')
+        @include('layouts.links')
         @include('conexoes.css')
      </head>
-    <body {{--class="acessibilidade"--}} id="contrast" >
+    <body id="contrast" >
         @include('layouts.layout1')
     </body>
 </html>
