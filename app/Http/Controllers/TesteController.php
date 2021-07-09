@@ -160,4 +160,72 @@ class TesteController extends Controller{
         return $data;
     }
 
+    public function situacaoProjeto(){
+
+        $url = "https://mapaosc.ipea.gov.br/api/menu/osc/status_projeto";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
+    }
+
+    public function origemFonteRecursosProjeto(){
+
+        $url = "https://mapaosc.ipea.gov.br/api/menu/osc/origem_fonte_recursos_projeto";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
+    }
+
+    public function origemZonaAtuacaoProjeto(){
+
+        $url = "https://mapaosc.ipea.gov.br/api/menu/osc/zona_atuacao_projeto";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
+    }
+
+    public function abrangenciaProjeto(){
+
+        $url = "https://mapaosc.ipea.gov.br/api/menu/osc/abrangencia_projeto";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
+    }
+
 }

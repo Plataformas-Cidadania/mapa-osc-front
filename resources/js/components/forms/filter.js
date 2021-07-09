@@ -50,6 +50,27 @@ class Filter extends React.Component{
                 "anoRealizacaoConferenciaMIN",
                 "anoRealizacaoConferenciaMAX",
             ],
+            camposProjetos: [
+                "tx_nome_projeto",
+                "cd_status_projeto",
+                "dt_data_inicio_projeto",
+                "dt_data_fim_projeto",
+                "cd_abrangencia_projeto",
+                "cd_zona_atuacao_projeto",
+                "cd_origem_fonte_recursos_projeto",
+                "tx_nome_financiador",
+                "tx_nome_regiao_localizacao_projeto",
+                "tx_nome_publico_beneficiado",
+                "tx_nome_osc_parceira_projeto",
+                "totalBeneficiariosMIN",
+                "totalBeneficiariosMAX",
+                "cd_objetivo_projeto",
+                "valorTotalMIN",
+                "valorTotalMAX",
+                "cd_meta_projeto",
+                "valorRecebidoMIN",
+                "valorRecebidoMAX",
+            ],
             form: {
                 name: '',
                 email: '',
@@ -194,6 +215,7 @@ class Filter extends React.Component{
         this.setJsonAtividadeEconomica = this.setJsonAtividadeEconomica.bind(this);
         this.setJsonTitulacaoCertificacao = this.setJsonTitulacaoCertificacao.bind(this);
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
+        this.setJsonProjetos = this.setJsonProjetos.bind(this);
     }
 
 
@@ -332,6 +354,31 @@ class Filter extends React.Component{
 
     }
 
+    setJsonProjetos(name, value, type){
+
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('projetos')){
+            json.avancado.projetos = {};
+        }
+
+        if(type==='input' || type==='search' || type==='range'){
+            json.avancado.projetos[name] = value;
+            this.setState({json: json});
+            return;
+        }
+
+        if(type==='checkbox'){
+            if(value){
+                json.avancado.projetos[name] = value;
+                this.setState({json: json});
+                return;
+            }
+            delete json.avancado.projetos[name];
+            this.setState({json: json});
+        }
+
+    }
+
     handleCheckChange(event){
         const target = event.target;
         const id = target.id;
@@ -360,6 +407,12 @@ class Filter extends React.Component{
         }
         if(this.state.camposEspacosParticipacaoSocial.includes(name)){
             this.setJsonEspacosParticipacaoSocial(name, value, 'input');
+        }
+        if(this.state.camposEspacosParticipacaoSocial.includes(name)){
+            this.setJsonEspacosParticipacaoSocial(name, value, 'input');
+        }
+        if(this.state.camposProjetos.includes(name)){
+            this.setJsonProjetos(name, value, 'input');
         }
 
 
@@ -868,6 +921,8 @@ class Filter extends React.Component{
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('totalBeneficiariosMIN', start, 'range');
+        this.setJsonProjetos('totalBeneficiariosMAX', end, 'range');
         this.setState({filters: filters});
     }
 
@@ -875,6 +930,8 @@ class Filter extends React.Component{
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('valorTotalMIN', start, 'range');
+        this.setJsonProjetos('valorTotalMAX', end, 'range');
         this.setState({filters: filters});
     }
 
@@ -882,6 +939,8 @@ class Filter extends React.Component{
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('valorRecebidoMIN', start, 'range');
+        this.setJsonProjetos('valorRecebidoMAX', end, 'range');
         this.setState({filters: filters});
     }
 
@@ -1004,7 +1063,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            //url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            url: 'menu/osc/origem_fonte_recursos_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1021,7 +1081,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/status_projeto',
+            //url: getBaseUrl + 'menu/osc/status_projeto',
+            url: 'menu/osc/status_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1038,7 +1099,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            //url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            url: 'menu/osc/zona_atuacao_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1055,7 +1117,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            //url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            url: 'menu/osc/abrangencia_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1400,7 +1463,7 @@ class Filter extends React.Component{
                     <a onClick={() => {
                         console.log(this.state.json);
                         console.log(JSON.stringify(this.state.json));
-                    }} style={{cursor: 'pointer'}}>json</a>
+                    }} style={{cursor: 'pointer'}}>.</a>
                 </div>
                 <form>
                     <div className="accordion" id="accordionExample">
@@ -1890,7 +1953,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_status_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_status_projeto" defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Situação do projeto</option>
                                                     {listStatusProjeto}
                                                 </select>
@@ -1915,7 +1978,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_abrangencia_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_abrangencia_projeto" defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Abrangência de atuação</option>
                                                     {listAbrangenciaProjeto}
                                                 </select>
@@ -1924,7 +1987,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-2">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_zona_atuacao_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_zona_atuacao_projeto" defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Zona de Atuação</option>
                                                     {listZonaAtuacaoProjeto}
                                                 </select>
@@ -1934,7 +1997,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_origem_fonte_recursos_projetoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_origem_fonte_recursos_projeto" defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Fontes de Recursos</option>
                                                     {listFonteRecursosProjeto}
                                                 </select>
@@ -1975,7 +2038,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <Range
-                                                title="Ano"
+                                                title="Total de Beneficiários"
                                                 min="0"
                                                 max="100"
                                                 step="1"
@@ -1986,7 +2049,7 @@ class Filter extends React.Component{
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_objetivo_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_objetivo_projeto" onChange={this.handleInputChange}>
                                                 <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
                                                 {objetivos}
                                             </select>
@@ -1994,7 +2057,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <Range
-                                                title="Ano"
+                                                title="Valor total"
                                                 min="0"
                                                 max="100"
                                                 step="1"
@@ -2005,7 +2068,7 @@ class Filter extends React.Component{
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_meta_projetoSelectBoxItText" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_meta_projeto" onChange={this.handleInputChange}>
                                                 <option selected>Metas Relacionadas ao ODS</option>
                                                 {objetivosMetas}
                                             </select>
@@ -2013,7 +2076,7 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <Range
-                                                title="Ano"
+                                                title="Valor Recebido"
                                                 min="0"
                                                 max="100"
                                                 step="1"

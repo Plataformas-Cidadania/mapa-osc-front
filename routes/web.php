@@ -110,6 +110,10 @@ Route::get('/teste/json', 'TesteController@testeEstruturaJson');
 Route::get('/teste/objetivos_metas', 'TesteController@objetivosMetas');
 Route::get('/search/atividade_economica/autocomplete/{search}', 'TesteController@atividadeEconomica');
 Route::get('/menu/osc/certificado/', 'TesteController@certificados');
+Route::get('/menu/osc/status_projeto', 'TesteController@situacaoProjeto');
+Route::get('/menu/osc/origem_fonte_recursos_projeto', 'TesteController@origemFonteRecursosProjeto');
+Route::get('/menu/osc/zona_atuacao_projeto', 'TesteController@origemZonaAtuacaoProjeto');
+Route::get('/menu/osc/abrangencia_projeto', 'TesteController@abrangenciaProjeto');
 ////////////////
 
 

@@ -8,6 +8,7 @@ class Filter extends React.Component {
             camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
             camposRelacoesTrabalhoGovernanca: ["tx_nome_dirigente", "tx_cargo_dirigente", "tx_nome_conselheiro", "totalTrabalhadoresMIN", "totalTrabalhadoresMAX", "totalEmpregadosMIN", "totalEmpregadosMAX", "trabalhadoresDeficienciaMIN", "trabalhadoresDeficienciaMAX", "trabalhadoresVoluntariosMIN", "trabalhadoresVoluntariosMAX"],
             camposEspacosParticipacaoSocial: ["cd_conselho", "dt_data_inicio_conselho", "tx_nome_representante_conselho", "cd_tipo_participacao", "dt_data_fim_conselho", "cd_conferencia", "cd_forma_participacao_conferencia", "anoRealizacaoConferenciaMIN", "anoRealizacaoConferenciaMAX"],
+            camposProjetos: ["tx_nome_projeto", "cd_status_projeto", "dt_data_inicio_projeto", "dt_data_fim_projeto", "cd_abrangencia_projeto", "cd_zona_atuacao_projeto", "cd_origem_fonte_recursos_projeto", "tx_nome_financiador", "tx_nome_regiao_localizacao_projeto", "tx_nome_publico_beneficiado", "tx_nome_osc_parceira_projeto", "totalBeneficiariosMIN", "totalBeneficiariosMAX", "cd_objetivo_projeto", "valorTotalMIN", "valorTotalMAX", "cd_meta_projeto", "valorRecebidoMIN", "valorRecebidoMAX"],
             form: {
                 name: '',
                 email: '',
@@ -148,6 +149,7 @@ class Filter extends React.Component {
         this.setJsonAtividadeEconomica = this.setJsonAtividadeEconomica.bind(this);
         this.setJsonTitulacaoCertificacao = this.setJsonTitulacaoCertificacao.bind(this);
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
+        this.setJsonProjetos = this.setJsonProjetos.bind(this);
     }
 
     componentDidMount() {
@@ -279,6 +281,30 @@ class Filter extends React.Component {
         }
     }
 
+    setJsonProjetos(name, value, type) {
+
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('projetos')) {
+            json.avancado.projetos = {};
+        }
+
+        if (type === 'input' || type === 'search' || type === 'range') {
+            json.avancado.projetos[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+
+        if (type === 'checkbox') {
+            if (value) {
+                json.avancado.projetos[name] = value;
+                this.setState({ json: json });
+                return;
+            }
+            delete json.avancado.projetos[name];
+            this.setState({ json: json });
+        }
+    }
+
     handleCheckChange(event) {
         const target = event.target;
         const id = target.id;
@@ -307,6 +333,12 @@ class Filter extends React.Component {
         }
         if (this.state.camposEspacosParticipacaoSocial.includes(name)) {
             this.setJsonEspacosParticipacaoSocial(name, value, 'input');
+        }
+        if (this.state.camposEspacosParticipacaoSocial.includes(name)) {
+            this.setJsonEspacosParticipacaoSocial(name, value, 'input');
+        }
+        if (this.state.camposProjetos.includes(name)) {
+            this.setJsonProjetos(name, value, 'input');
         }
 
         if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
@@ -803,6 +835,8 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('totalBeneficiariosMIN', start, 'range');
+        this.setJsonProjetos('totalBeneficiariosMAX', end, 'range');
         this.setState({ filters: filters });
     }
 
@@ -810,6 +844,8 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('valorTotalMIN', start, 'range');
+        this.setJsonProjetos('valorTotalMAX', end, 'range');
         this.setState({ filters: filters });
     }
 
@@ -817,6 +853,8 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonProjetos('valorRecebidoMIN', start, 'range');
+        this.setJsonProjetos('valorRecebidoMAX', end, 'range');
         this.setState({ filters: filters });
     }
 
@@ -936,7 +974,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            //url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
+            url: 'menu/osc/origem_fonte_recursos_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -953,7 +992,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/status_projeto',
+            //url: getBaseUrl + 'menu/osc/status_projeto',
+            url: 'menu/osc/status_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -970,7 +1010,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            //url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
+            url: 'menu/osc/zona_atuacao_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -987,7 +1028,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            //url: getBaseUrl + 'menu/osc/abrangencia_projeto',
+            url: 'menu/osc/abrangencia_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -1387,7 +1429,7 @@ class Filter extends React.Component {
                             console.log(this.state.json);
                             console.log(JSON.stringify(this.state.json));
                         }, style: { cursor: 'pointer' } },
-                    'json'
+                    '.'
                 )
             ),
             React.createElement(
@@ -2216,7 +2258,7 @@ class Filter extends React.Component {
                                             { className: 'label-float' },
                                             React.createElement(
                                                 'select',
-                                                { className: 'custom-select', name: 'cd_status_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                { className: 'custom-select', name: 'cd_status_projeto', defaultValue: 0, onChange: this.handleInputChange },
                                                 React.createElement(
                                                     'option',
                                                     { value: '0' },
@@ -2266,7 +2308,7 @@ class Filter extends React.Component {
                                             { className: 'label-float' },
                                             React.createElement(
                                                 'select',
-                                                { className: 'custom-select', name: 'cd_abrangencia_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                { className: 'custom-select', name: 'cd_abrangencia_projeto', defaultValue: 0, onChange: this.handleInputChange },
                                                 React.createElement(
                                                     'option',
                                                     { value: '0' },
@@ -2286,7 +2328,7 @@ class Filter extends React.Component {
                                             { className: 'label-float' },
                                             React.createElement(
                                                 'select',
-                                                { className: 'custom-select', name: 'cd_zona_atuacao_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                { className: 'custom-select', name: 'cd_zona_atuacao_projeto', defaultValue: 0, onChange: this.handleInputChange },
                                                 React.createElement(
                                                     'option',
                                                     { value: '0' },
@@ -2306,7 +2348,7 @@ class Filter extends React.Component {
                                             { className: 'label-float' },
                                             React.createElement(
                                                 'select',
-                                                { className: 'custom-select', name: 'cd_origem_fonte_recursos_projetoSelectBoxItText', defaultValue: 0, onChange: this.handleInputChange },
+                                                { className: 'custom-select', name: 'cd_origem_fonte_recursos_projeto', defaultValue: 0, onChange: this.handleInputChange },
                                                 React.createElement(
                                                     'option',
                                                     { value: '0' },
@@ -2382,7 +2424,7 @@ class Filter extends React.Component {
                                         'div',
                                         { className: 'col-md-3' },
                                         React.createElement(Range, {
-                                            title: 'Ano',
+                                            title: 'Total de Benefici\xE1rios',
                                             min: '0',
                                             max: '100',
                                             step: '1',
@@ -2396,7 +2438,7 @@ class Filter extends React.Component {
                                         { className: 'col-md-9' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_objetivo_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_objetivo_projeto', onChange: this.handleInputChange },
                                             React.createElement(
                                                 'option',
                                                 { selected: true },
@@ -2411,7 +2453,7 @@ class Filter extends React.Component {
                                         'div',
                                         { className: 'col-md-3' },
                                         React.createElement(Range, {
-                                            title: 'Ano',
+                                            title: 'Valor total',
                                             min: '0',
                                             max: '100',
                                             step: '1',
@@ -2425,7 +2467,7 @@ class Filter extends React.Component {
                                         { className: 'col-md-9' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_meta_projetoSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_meta_projeto', onChange: this.handleInputChange },
                                             React.createElement(
                                                 'option',
                                                 { selected: true },
@@ -2440,7 +2482,7 @@ class Filter extends React.Component {
                                         'div',
                                         { className: 'col-md-3' },
                                         React.createElement(Range, {
-                                            title: 'Ano',
+                                            title: 'Valor Recebido',
                                             min: '0',
                                             max: '100',
                                             step: '1',
