@@ -145,16 +145,12 @@ class FormEditCertificate extends React.Component{
             }
 
 
-            console.log('--->', this.state.form.cd_certificado);
-            if(this.state.form.cd_certificado===8){
-                console.log('Municipal');
 
+            if(this.state.form.cd_certificado===8){
                 data.cd_municipio = this.state.form.cd_municipio;
                 data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
             if(this.state.form.cd_certificado===7){
-                console.log('Estadual');
-                //data.cd_municipio = '';
                 data.cd_uf = this.state.form.cd_uf;
             }
             $.ajax({
@@ -210,7 +206,9 @@ class FormEditCertificate extends React.Component{
             this.setState({loadingList: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'menu/geo/' + type + '/' + search,
+                //url: getBaseUrl + 'menu/geo/' + type + '/' + search,
+                url: getBaseUrl2 + 'busca/' + type + '/' + search,
+
                 cache: false,
                 success: function (data) {
                     this.setState({listUf: data, loadingList: false});
@@ -251,7 +249,7 @@ class FormEditCertificate extends React.Component{
             this.setState({loadingList: true});
             $.ajax({
                 method: 'GET',
-                url: getBaseUrl + 'menu/geo/municipio/' + search,
+                url: getBaseUrl2 + 'busca/municipio/' + search,
                 cache: false,
                 success: function (data) {
                     this.setState({listMunicipio: data, loadingList: false});
