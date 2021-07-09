@@ -353,6 +353,7 @@ class OscController extends Controller{
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec( $ch );
+        Log::info(curl_error($ch));
         curl_close( $ch );
 
         //Log::info($data);
@@ -384,6 +385,7 @@ class OscController extends Controller{
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec( $ch );
+        Log::info(curl_error($ch));
         curl_close( $ch );
 
         //Log::info($data);

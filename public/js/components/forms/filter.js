@@ -87,6 +87,7 @@ class Filter extends React.Component {
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
         this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
         this.handleCheckChangeIDH = this.handleCheckChangeIDH.bind(this);
+        this.handleCheckChangeAdicionais = this.handleCheckChangeAdicionais.bind(this);
 
         this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
@@ -154,6 +155,7 @@ class Filter extends React.Component {
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
         this.setJsonIDH = this.setJsonIDH.bind(this);
+        this.setJsonAdicionais = this.setJsonAdicionais.bind(this);
     }
 
     componentDidMount() {
@@ -341,6 +343,20 @@ class Filter extends React.Component {
         this.setState({ json: json });
     }
 
+    setJsonAdicionais(name, value) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('Adicionais')) {
+            json.avancado.Adicionais = {};
+        }
+        if (value) {
+            json.avancado.Adicionais[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+        delete json.avancado.Adicionais[name];
+        this.setState({ json: json });
+    }
+
     handleCheckChange(event) {
         const target = event.target;
         const id = target.id;
@@ -359,6 +375,13 @@ class Filter extends React.Component {
         const target = event.target;
         const id = target.id;
         this.setJsonIDH(id, target.checked);
+    }
+
+    handleCheckChangeAdicionais(event) {
+        console.log(event.target.id, event.target.value);
+        const target = event.target;
+        const id = target.id;
+        this.setJsonAdicionais(id, target.checked);
     }
 
     handleInputChange(event) {
@@ -1211,20 +1234,20 @@ class Filter extends React.Component {
                 let indices = item.indices.map(function (subitem) {
                     return React.createElement(
                         'div',
-                        { key: "subarea_" + subitem.cd_indice },
+                        { key: "cd_indice-" + subitem.cd_indice },
                         React.createElement(
                             'div',
-                            { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_indice) },
-                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_indice, required: true }),
+                            { className: 'custom-control custom-checkbox' },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "cd_indice-" + subitem.cd_indice, required: true, onChange: this.handleCheckChangeAdicionais }),
                             React.createElement(
                                 'label',
-                                { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_indice },
+                                { className: 'custom-control-label', htmlFor: "cd_indice-" + subitem.cd_indice },
                                 subitem.tx_nome_indice
                             )
                         ),
                         React.createElement('br', null)
                     );
-                });
+                }.bind(this));
 
                 return React.createElement(
                     'div',
@@ -1238,7 +1261,7 @@ class Filter extends React.Component {
                     indices,
                     React.createElement('br', null)
                 );
-            });
+            }.bind(this));
         }
 
         let areaAtuacao = null;
