@@ -3203,7 +3203,9 @@ class Filter extends React.Component {
                                     { className: 'mn-accordion-icon mn-accordion-icon-p' },
                                     React.createElement('i', { className: 'far fa-file-alt' })
                                 ),
-                                'Indicadores Socioecon\xF4micos Adicionais  ',
+                                'Indicadores Socioecon\xF4micos Adicionais ',
+                                React.createElement('i', { className: 'fas fa-info-circle', title: 'Vari\xE1veis adicionais para exporta\xE7\xE3o' }),
+                                '  ',
                                 React.createElement('i', { className: 'fas fa-angle-down float-right' })
                             )
                         ),

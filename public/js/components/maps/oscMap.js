@@ -1105,34 +1105,28 @@ class OscMap extends React.Component {
                 //method:'GET',
                 method: 'POST',
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
-                //url: 'osc/busca_avancada/geo/10/0/'+this.props.strJson,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
                 url: 'osc/busca_avancada/geo',
                 data: {
                     busca: this.props.strJson
                 },
-                /*data:JSON.stringify({
-                    avancado: {
-                        dadosGerais: {
-                            tx_razao_social_osc: origem
-                        }
-                    }
-                }),*/
                 cache: false,
                 success: function (data) {
-                    //console.log('loadPontosPorTerritorio', data);
-                    //data = JSON.parse(data);
+                    if (!data) {
+                        $('#modalAvancada').modal('show');
+                        console.log('sem resultados');
+                        this.setState({ processingOscPontos: false });
+                        return;
+                    }
+                    console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
                     for (let i in data) {
-                        //if(parseInt(i) > 0){ //ESSE IF PRECISAVA NA API ANTIGA PQ O INDICE ZERO VINHA COM OS DADOS VAZIOS
                         data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
-                        //}
                     }
                     data = data2;
                     console.log(data);
                     /////////////////////////////////////////////
-                    //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({ dataOscCluster: data, processingOscPontos: false }, function () {
                         this.populateMapCluster();
                     });
@@ -2005,6 +1999,68 @@ class OscMap extends React.Component {
         return React.createElement(
             'div',
             null,
+            React.createElement(
+                'div',
+                { 'class': 'modal fade', id: 'modalAvancada', tabindex: '-1', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+                React.createElement(
+                    'div',
+                    { 'class': 'modal-dialog' },
+                    React.createElement(
+                        'div',
+                        { 'class': 'modal-content' },
+                        React.createElement(
+                            'div',
+                            { 'class': 'modal-header' },
+                            React.createElement(
+                                'h5',
+                                { 'class': 'modal-title', id: 'exampleModalLabel' },
+                                'Consulta Avan\xE7ada'
+                            ),
+                            React.createElement(
+                                'button',
+                                { type: 'button', 'class': 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                React.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { 'class': 'modal-body' },
+                            React.createElement(
+                                'div',
+                                { className: 'container' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement(
+                                            'h4',
+                                            { className: 'text-center' },
+                                            'Sua consulta n\xE3o retornou resultados!'
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            React.createElement(
+                                'button',
+                                { className: 'btn btn-info', onClick: () => {
+                                        window.history.back();
+                                    } },
+                                'Voltar'
+                            )
+                        )
+                    )
+                )
+            ),
             React.createElement(
                 'div',
                 { className: 'col-md-12' },

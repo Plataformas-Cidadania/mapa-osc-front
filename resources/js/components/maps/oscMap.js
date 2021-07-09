@@ -1144,34 +1144,28 @@ class OscMap extends React.Component{
                 //method:'GET',
                 method:'POST',
                 //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
-                //url: 'osc/busca_avancada/geo/10/0/'+this.props.strJson,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
                 url: 'osc/busca_avancada/geo',
                 data:{
                     busca: this.props.strJson,
                 },
-                /*data:JSON.stringify({
-                    avancado: {
-                        dadosGerais: {
-                            tx_razao_social_osc: origem
-                        }
-                    }
-                }),*/
                 cache: false,
                 success: function(data) {
-                    //console.log('loadPontosPorTerritorio', data);
-                    //data = JSON.parse(data);
+                    if(!data){
+                        $('#modalAvancada').modal('show');
+                        console.log('sem resultados');
+                        this.setState({processingOscPontos: false});
+                        return;
+                    }
+                    console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
                     for (let i in data) {
-                        //if(parseInt(i) > 0){ //ESSE IF PRECISAVA NA API ANTIGA PQ O INDICE ZERO VINHA COM OS DADOS VAZIOS
                         data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
-                        //}
                     }
                     data = data2;
                     console.log(data);
                     /////////////////////////////////////////////
-                    //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
                         this.populateMapCluster();
                     });
@@ -2017,6 +2011,34 @@ class OscMap extends React.Component{
 
         return(
             <div>
+
+                {/*Modal*/}
+                <div class="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Consulta Avançada</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <h4 className="text-center">Sua consulta não retornou resultados!</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-info" onClick={() => {window.history.back();}}>Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div className="col-md-12">
                     <div className="box-qtd">
                         <p>Quantidade de OSCs: </p>
