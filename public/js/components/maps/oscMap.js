@@ -996,7 +996,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1005,7 +1005,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1846,12 +1846,12 @@ class OscMap extends React.Component {
                     React.createElement(
                         'td',
                         { className: 'text-center' },
-                        item.tx_nome_osc
+                        item.tx_natureza_juridica_osc
                     ),
                     React.createElement(
                         'td',
                         { className: 'capitalize' },
-                        item.tx_natureza_juridica_osc.toLowerCase()
+                        item.tx_endereco_osc.toLowerCase()
                     ),
                     React.createElement(
                         'td',

@@ -1909,8 +1909,8 @@ class OscMap extends React.Component{
                                 </div>
                                 {item.tx_nome_osc.toLowerCase()}</td>
                             <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
-                            <td className="text-center">{item.tx_nome_osc}</td>
-                            <td className="capitalize">{item.tx_natureza_juridica_osc.toLowerCase()}</td>
+                            <td className="text-center">{item.tx_natureza_juridica_osc}</td>
+                            <td className="capitalize">{item.tx_endereco_osc.toLowerCase()}</td>
                             <td>
                                 <a href={'detalhar/' + item.id_osc + '/' + removeAccent(item.tx_nome_osc)}><i
                                     className="fas fa-share-square"/></a>
