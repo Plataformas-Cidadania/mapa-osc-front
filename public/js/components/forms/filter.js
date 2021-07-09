@@ -314,6 +314,10 @@ class Filter extends React.Component {
             json.avancado.fontesRecursos = {};
         }
 
+        if (type === 'range') {
+            value = this.formatValue(value);
+        }
+
         if (type === 'input' || type === 'search' || type === 'range') {
             json.avancado.fontesRecursos[name] = value;
             this.setState({ json: json });
@@ -550,10 +554,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -561,8 +565,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
@@ -1128,6 +1132,13 @@ class Filter extends React.Component {
         }
         //str = str[0].toLowerCase() + str.slice(1);
         return newStr;
+    }
+
+    formatValue(value) {
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
     }
 
     render() {

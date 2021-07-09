@@ -390,6 +390,10 @@ class Filter extends React.Component{
             json.avancado.fontesRecursos = {};
         }
 
+        if(type==='range'){
+            value = this.formatValue(value);
+        }
+
         if(type==='input' || type==='search' || type==='range'){
             json.avancado.fontesRecursos[name] = value;
             this.setState({json: json});
@@ -1220,6 +1224,13 @@ class Filter extends React.Component{
         }
         //str = str[0].toLowerCase() + str.slice(1);
         return newStr;
+    }
+
+    formatValue(value){
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value)
     }
 
 
