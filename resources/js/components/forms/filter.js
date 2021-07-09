@@ -71,6 +71,9 @@ class Filter extends React.Component{
                 "valorRecebidoMIN",
                 "valorRecebidoMAX",
             ],
+            camposFontesRecursos: [
+
+            ],
             form: {
                 name: '',
                 email: '',
@@ -216,6 +219,7 @@ class Filter extends React.Component{
         this.setJsonTitulacaoCertificacao = this.setJsonTitulacaoCertificacao.bind(this);
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
+        this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
     }
 
 
@@ -375,6 +379,21 @@ class Filter extends React.Component{
             }
             delete json.avancado.projetos[name];
             this.setState({json: json});
+        }
+
+    }
+
+    setJsonFontesRecursos(name, value, type){
+
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('fontesRecursos')){
+            json.avancado.fontesRecursos = {};
+        }
+
+        if(type==='input' || type==='search' || type==='range'){
+            json.avancado.fontesRecursos[name] = value;
+            this.setState({json: json});
+            return;
         }
 
     }
@@ -752,168 +771,224 @@ class Filter extends React.Component{
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('anoFonteRecursoMIN', start, 'range');
+        this.setJsonFontesRecursos('anoFonteRecursoMAX', end, 'range');
         this.setState({filters: filters});
     }
     setRendimentosFinanceirosReservas(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('rendimentosFinanceirosReservasContasCorrentesPropriasMIN', start, 'range');
+        this.setJsonFontesRecursos('rendimentosFinanceirosReservasContasCorrentesPropriasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setRendimentosFundosPatrimoniais(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('rendimentosFundosPatrimoniaisMIN', start, 'range');
+        this.setJsonFontesRecursos('rendimentosFundosPatrimoniaisMAX', end, 'range');
         this.setState({filters: filters});
     }
     setMensalidadesContribuicoes(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('mensalidadesContribuicoesAssociadosMIN', start, 'range');
+        this.setJsonFontesRecursos('mensalidadesContribuicoesAssociadosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setVendaBensDireitos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('vendaBensDireitosMIN', start, 'range');
+        this.setJsonFontesRecursos('vendaBensDireitosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setPremiosRecebidos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('premiosRecebidosMIN', start, 'range');
+        this.setJsonFontesRecursos('premiosRecebidosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setVendaProdutos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('vendaProdutosMIN', start, 'range');
+        this.setJsonFontesRecursos('vendaProdutosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setPrestacaoServicos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('prestacaoServicosMIN', start, 'range');
+        this.setJsonFontesRecursos('prestacaoServicosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setEmpresasPublicasSociedadesEconomia(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('empresasPublicasSociedadesEconomiaMistaMIN', start, 'range');
+        this.setJsonFontesRecursos('empresasPublicasSociedadesEconomiaMistaMAX', end, 'range');
         this.setState({filters: filters});
     }
     setAcordoOrganismosMultilaterais(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('acordoOrganismosMultilateraisMIN', start, 'range');
+        this.setJsonFontesRecursos('acordoOrganismosMultilateraisMAX', end, 'range');
         this.setState({filters: filters});
     }
     setAcordoGovernosEstrangeiros(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('acordoGovernosEstrangeirosMIN', start, 'range');
+        this.setJsonFontesRecursos('acordoGovernosEstrangeirosMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaGovernoEstadual(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoEstadualMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoEstadualMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaGovernoMunicipal(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoMunicipalMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoMunicipalMAX', end, 'range');
         this.setState({filters: filters});
     }
     setTransferenciasFederaisRecebidas(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoFederalMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoFederalMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaBrasileiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOscBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOscBrasileirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaEstrangeiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOscEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOscEstrangeirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaOrganizacoesReligiosasBrasileiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasBrasileirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setParceriaOrganizacoesReligiosasEstrangeiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasEstrangeirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setEmpresasPrivadasBrasileiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('empresasPrivadasBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('empresasPrivadasBrasileirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setEmpresasEstrangeiras(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('EmpresasEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('EmpresasEstrangeirasMAX', end, 'range');
         this.setState({filters: filters});
     }
     setDoacoesPessoaJuridica(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesPessoaJuridicaMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesPessoaJuridicaMAX', end, 'range');
         this.setState({filters: filters});
     }
     setDoacoesPessoaFisica(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesPessoaFisicaMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesPessoaFisicaMAX', end, 'range');
         this.setState({filters: filters});
     }
     setDoacoesFormaProdutosServicos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosComNFMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosComNFMAX', end, 'range');
         this.setState({filters: filters});
     }
     setVoluntariado(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('voluntariadoMIN', start, 'range');
+        this.setJsonFontesRecursos('voluntariadoMAX', end, 'range');
         this.setState({filters: filters});
     }
     setIsencoes(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('isencoesMIN', start, 'range');
+        this.setJsonFontesRecursos('isencoesMAX', end, 'range');
         this.setState({filters: filters});
     }
     setImunidades(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('imunidadesMIN', start, 'range');
+        this.setJsonFontesRecursos('imunidadesMAX', end, 'range');
         this.setState({filters: filters});
     }
     setBensRecebidosDireito(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('bensRecebidosDireitoUsoMIN', start, 'range');
+        this.setJsonFontesRecursos('bensRecebidosDireitoUsoMAX', end, 'range');
         this.setState({filters: filters});
     }
     setDoacoesRecebidasFormaProdutosServicos(start, end){
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosSemNFMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosSemNFMAX', end, 'range');
         this.setState({filters: filters});
     }
 
@@ -1007,7 +1082,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/tipo_participacao',
+            //url: getBaseUrl + 'menu/osc/tipo_participacao',
+            url: getBaseUrl2 + 'tipo_participacao',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1063,8 +1139,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
-            url: 'menu/osc/origem_fonte_recursos_projeto',
+            url: getBaseUrl2 + 'origem_fonte_recurso_projeto',
+            //url: 'menu/osc/origem_fonte_recursos_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1081,8 +1157,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/status_projeto',
-            url: 'menu/osc/status_projeto',
+            url: getBaseUrl2 + 'status_projeto',
+            //url: 'menu/osc/status_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1099,8 +1175,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
-            url: 'menu/osc/zona_atuacao_projeto',
+            url: getBaseUrl2 + 'zona_atuacao_projeto',
+            //url: 'menu/osc/zona_atuacao_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -1117,8 +1193,8 @@ class Filter extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/abrangencia_projeto',
-            url: 'menu/osc/abrangencia_projeto',
+            url: getBaseUrl2 + 'abrangencia_projeto',
+            //url: 'menu/osc/abrangencia_projeto',
             cache: false,
             success: function(data){
                 //console.log('data', data);
@@ -2129,10 +2205,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Rendimentos financeiros de reservas ou contas correntes próprias"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setRendimentosFinanceirosReservas}
                                                     />
                                                 </div>
@@ -2140,10 +2216,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Rendimentos de fundos patrimoniais"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setRendimentosFundosPatrimoniais}
                                                     />
                                                 </div>
@@ -2151,10 +2227,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Mensalidades ou contribuições de associados"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setMensalidadesContribuicoes}
                                                     />
                                                 </div>
@@ -2162,10 +2238,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Venda de bens e direitos"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setVendaBensDireitos}
                                                     />
                                                 </div>
@@ -2173,10 +2249,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Prêmios recebidos"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setPremiosRecebidos}
                                                     />
                                                 </div>
@@ -2184,10 +2260,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Venda de produtos"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setVendaProdutos}
                                                     />
                                                 </div>
@@ -2195,10 +2271,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Prestação de serviços"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setPrestacaoServicos}
                                                     />
                                                 </div>
@@ -2211,10 +2287,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Empresas públicas ou sociedades de economia mista"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setEmpresasPublicasSociedadesEconomia}
                                                     />
                                                 </div>
@@ -2222,10 +2298,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Acordo com organismos multilaterais"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setAcordoOrganismosMultilaterais}
                                                     />
                                                 </div>
@@ -2233,10 +2309,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Acordo com governos estrangeiros"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setAcordoGovernosEstrangeiros}
                                                     />
                                                 </div>
@@ -2244,10 +2320,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com o governo estadual"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaGovernoEstadual}
                                                     />
                                                 </div>
@@ -2255,10 +2331,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com o governo municipal"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaGovernoMunicipal}
                                                     />
                                                 </div>
@@ -2266,10 +2342,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Transferências federais recebidas pela OSC"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setTransferenciasFederaisRecebidas}
                                                     />
                                                 </div>
@@ -2285,10 +2361,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com OSCs brasileiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaBrasileiras}
                                                     />
                                                 </div>
@@ -2296,10 +2372,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com OSCs estrangeiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaEstrangeiras}
                                                     />
                                                 </div>
@@ -2307,10 +2383,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com organizações religiosas brasileiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaOrganizacoesReligiosasBrasileiras}
                                                     />
                                                 </div>
@@ -2318,10 +2394,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Parceria com organizações religiosas estrangeiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setParceriaOrganizacoesReligiosasEstrangeiras}
                                                     />
                                                 </div>
@@ -2329,10 +2405,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Empresas privadas brasileiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setEmpresasPrivadasBrasileiras}
                                                     />
                                                 </div>
@@ -2340,10 +2416,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Empresas estrangeiras"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setEmpresasEstrangeiras}
                                                     />
                                                 </div>
@@ -2351,10 +2427,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Doações de pessoa jurídica"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setDoacoesPessoaJuridica}
                                                     />
                                                 </div>
@@ -2362,10 +2438,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Doações de pessoa física"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setDoacoesPessoaFisica}
                                                     />
                                                 </div>
@@ -2373,10 +2449,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Doações recebidas na forma de produtos e serviços (com NF)"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setDoacoesFormaProdutosServicos}
                                                     />
                                                 </div>
@@ -2389,10 +2465,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Voluntariado"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setVoluntariado}
                                                     />
                                                 </div>
@@ -2400,10 +2476,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Isenções"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setIsencoes}
                                                     />
                                                 </div>
@@ -2411,10 +2487,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Imunidades"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setImunidades}
                                                     />
                                                 </div>
@@ -2422,10 +2498,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Bens recebidos em direito de uso"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setBensRecebidosDireito}
                                                     />
                                                 </div>
@@ -2433,10 +2509,10 @@ class Filter extends React.Component{
                                                     <Range
                                                         title="Doações recebidas na forma de produtos e serviços (sem NF)"
                                                         min="0"
-                                                        max="100"
+                                                        max="1000000"
                                                         step="1"
                                                         defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueEnd="1000000"
                                                         setValue={this.setDoacoesRecebidasFormaProdutosServicos}
                                                     />
                                                 </div>

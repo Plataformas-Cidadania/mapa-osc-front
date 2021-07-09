@@ -114,6 +114,7 @@ Route::get('/menu/osc/status_projeto', 'TesteController@situacaoProjeto');
 Route::get('/menu/osc/origem_fonte_recursos_projeto', 'TesteController@origemFonteRecursosProjeto');
 Route::get('/menu/osc/zona_atuacao_projeto', 'TesteController@origemZonaAtuacaoProjeto');
 Route::get('/menu/osc/abrangencia_projeto', 'TesteController@abrangenciaProjeto');
+Route::get('/menu/osc/ipeadata', 'TesteController@ipeadata');
 ////////////////
 
 

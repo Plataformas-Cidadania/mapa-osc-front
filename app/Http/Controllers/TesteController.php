@@ -228,4 +228,21 @@ class TesteController extends Controller{
         return $data;
     }
 
+    public function ipeadata(){
+
+        $url = "https://mapaosc.ipea.gov.br/api/menu/osc/ipeadata";
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+        //Log::info($data);
+        $data = json_decode($data);
+
+        return $data;
+    }
+
 }

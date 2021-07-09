@@ -26,8 +26,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl+'menu/osc/certificado',
-            url: 'menu/osc/certificado',
+            url: getBaseUrl2 + 'certificado',
+            //url: 'menu/osc/certificado',
             success: function (data) {
                 this.setState({ loading: false, certificados: data, button: true });
             }.bind(this),
@@ -59,7 +59,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/situacao_imovel',
+            //url: getBaseUrl+'menu/osc/situacao_imovel',
+            url: getBaseUrl2 + 'situacao_imovel',
             success: function (data) {
                 this.setState({ loading: false, form: data, button: true });
             }.bind(this),
@@ -88,7 +89,8 @@ class Api extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            url: getBaseUrl + 'menu/osc/ipeadata',
+            url: getBaseUrl2 + 'indice_ipeadata',
+            //url: 'menu/osc/ipeadata',
             success: function (data) {
 
                 this.setState({ loading: false, ipeaData: data, button: true });

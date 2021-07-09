@@ -9,6 +9,7 @@ class Filter extends React.Component {
             camposRelacoesTrabalhoGovernanca: ["tx_nome_dirigente", "tx_cargo_dirigente", "tx_nome_conselheiro", "totalTrabalhadoresMIN", "totalTrabalhadoresMAX", "totalEmpregadosMIN", "totalEmpregadosMAX", "trabalhadoresDeficienciaMIN", "trabalhadoresDeficienciaMAX", "trabalhadoresVoluntariosMIN", "trabalhadoresVoluntariosMAX"],
             camposEspacosParticipacaoSocial: ["cd_conselho", "dt_data_inicio_conselho", "tx_nome_representante_conselho", "cd_tipo_participacao", "dt_data_fim_conselho", "cd_conferencia", "cd_forma_participacao_conferencia", "anoRealizacaoConferenciaMIN", "anoRealizacaoConferenciaMAX"],
             camposProjetos: ["tx_nome_projeto", "cd_status_projeto", "dt_data_inicio_projeto", "dt_data_fim_projeto", "cd_abrangencia_projeto", "cd_zona_atuacao_projeto", "cd_origem_fonte_recursos_projeto", "tx_nome_financiador", "tx_nome_regiao_localizacao_projeto", "tx_nome_publico_beneficiado", "tx_nome_osc_parceira_projeto", "totalBeneficiariosMIN", "totalBeneficiariosMAX", "cd_objetivo_projeto", "valorTotalMIN", "valorTotalMAX", "cd_meta_projeto", "valorRecebidoMIN", "valorRecebidoMAX"],
+            camposFontesRecursos: [],
             form: {
                 name: '',
                 email: '',
@@ -150,6 +151,7 @@ class Filter extends React.Component {
         this.setJsonTitulacaoCertificacao = this.setJsonTitulacaoCertificacao.bind(this);
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
+        this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
     }
 
     componentDidMount() {
@@ -302,6 +304,20 @@ class Filter extends React.Component {
             }
             delete json.avancado.projetos[name];
             this.setState({ json: json });
+        }
+    }
+
+    setJsonFontesRecursos(name, value, type) {
+
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('fontesRecursos')) {
+            json.avancado.fontesRecursos = {};
+        }
+
+        if (type === 'input' || type === 'search' || type === 'range') {
+            json.avancado.fontesRecursos[name] = value;
+            this.setState({ json: json });
+            return;
         }
     }
 
@@ -666,168 +682,224 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('anoFonteRecursoMIN', start, 'range');
+        this.setJsonFontesRecursos('anoFonteRecursoMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setRendimentosFinanceirosReservas(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('rendimentosFinanceirosReservasContasCorrentesPropriasMIN', start, 'range');
+        this.setJsonFontesRecursos('rendimentosFinanceirosReservasContasCorrentesPropriasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setRendimentosFundosPatrimoniais(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('rendimentosFundosPatrimoniaisMIN', start, 'range');
+        this.setJsonFontesRecursos('rendimentosFundosPatrimoniaisMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setMensalidadesContribuicoes(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('mensalidadesContribuicoesAssociadosMIN', start, 'range');
+        this.setJsonFontesRecursos('mensalidadesContribuicoesAssociadosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setVendaBensDireitos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('vendaBensDireitosMIN', start, 'range');
+        this.setJsonFontesRecursos('vendaBensDireitosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setPremiosRecebidos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('premiosRecebidosMIN', start, 'range');
+        this.setJsonFontesRecursos('premiosRecebidosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setVendaProdutos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('vendaProdutosMIN', start, 'range');
+        this.setJsonFontesRecursos('vendaProdutosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setPrestacaoServicos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('prestacaoServicosMIN', start, 'range');
+        this.setJsonFontesRecursos('prestacaoServicosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setEmpresasPublicasSociedadesEconomia(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('empresasPublicasSociedadesEconomiaMistaMIN', start, 'range');
+        this.setJsonFontesRecursos('empresasPublicasSociedadesEconomiaMistaMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setAcordoOrganismosMultilaterais(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('acordoOrganismosMultilateraisMIN', start, 'range');
+        this.setJsonFontesRecursos('acordoOrganismosMultilateraisMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setAcordoGovernosEstrangeiros(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('acordoGovernosEstrangeirosMIN', start, 'range');
+        this.setJsonFontesRecursos('acordoGovernosEstrangeirosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaGovernoEstadual(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoEstadualMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoEstadualMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaGovernoMunicipal(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoMunicipalMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoMunicipalMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setTransferenciasFederaisRecebidas(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaGovernoFederalMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaGovernoFederalMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaBrasileiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOscBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOscBrasileirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaEstrangeiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOscEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOscEstrangeirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaOrganizacoesReligiosasBrasileiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasBrasileirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setParceriaOrganizacoesReligiosasEstrangeiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('parceriaOrganizacoesReligiosasEstrangeirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setEmpresasPrivadasBrasileiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('empresasPrivadasBrasileirasMIN', start, 'range');
+        this.setJsonFontesRecursos('empresasPrivadasBrasileirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setEmpresasEstrangeiras(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('EmpresasEstrangeirasMIN', start, 'range');
+        this.setJsonFontesRecursos('EmpresasEstrangeirasMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setDoacoesPessoaJuridica(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesPessoaJuridicaMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesPessoaJuridicaMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setDoacoesPessoaFisica(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesPessoaFisicaMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesPessoaFisicaMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setDoacoesFormaProdutosServicos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosComNFMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosComNFMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setVoluntariado(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('voluntariadoMIN', start, 'range');
+        this.setJsonFontesRecursos('voluntariadoMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setIsencoes(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('isencoesMIN', start, 'range');
+        this.setJsonFontesRecursos('isencoesMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setImunidades(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('imunidadesMIN', start, 'range');
+        this.setJsonFontesRecursos('imunidadesMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setBensRecebidosDireito(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('bensRecebidosDireitoUsoMIN', start, 'range');
+        this.setJsonFontesRecursos('bensRecebidosDireitoUsoMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setDoacoesRecebidasFormaProdutosServicos(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosSemNFMIN', start, 'range');
+        this.setJsonFontesRecursos('doacoesRecebidasFormaProdutosServicosSemNFMAX', end, 'range');
         this.setState({ filters: filters });
     }
 
@@ -918,7 +990,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/osc/tipo_participacao',
+            //url: getBaseUrl + 'menu/osc/tipo_participacao',
+            url: getBaseUrl2 + 'tipo_participacao',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -974,8 +1047,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/origem_fonte_recursos_projeto',
-            url: 'menu/osc/origem_fonte_recursos_projeto',
+            url: getBaseUrl2 + 'origem_fonte_recurso_projeto',
+            //url: 'menu/osc/origem_fonte_recursos_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -992,8 +1065,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/status_projeto',
-            url: 'menu/osc/status_projeto',
+            url: getBaseUrl2 + 'status_projeto',
+            //url: 'menu/osc/status_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -1010,8 +1083,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/zona_atuacao_projeto',
-            url: 'menu/osc/zona_atuacao_projeto',
+            url: getBaseUrl2 + 'zona_atuacao_projeto',
+            //url: 'menu/osc/zona_atuacao_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -1028,8 +1101,8 @@ class Filter extends React.Component {
         this.setState({ loadingList: true });
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/abrangencia_projeto',
-            url: 'menu/osc/abrangencia_projeto',
+            url: getBaseUrl2 + 'abrangencia_projeto',
+            //url: 'menu/osc/abrangencia_projeto',
             cache: false,
             success: function (data) {
                 //console.log('data', data);
@@ -2565,10 +2638,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Rendimentos financeiros de reservas ou contas correntes pr\xF3prias',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setRendimentosFinanceirosReservas
                                                 })
                                             ),
@@ -2578,10 +2651,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Rendimentos de fundos patrimoniais',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setRendimentosFundosPatrimoniais
                                                 })
                                             ),
@@ -2591,10 +2664,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Mensalidades ou contribui\xE7\xF5es de associados',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setMensalidadesContribuicoes
                                                 })
                                             ),
@@ -2604,10 +2677,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Venda de bens e direitos',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setVendaBensDireitos
                                                 })
                                             ),
@@ -2617,10 +2690,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Pr\xEAmios recebidos',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setPremiosRecebidos
                                                 })
                                             ),
@@ -2630,10 +2703,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Venda de produtos',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setVendaProdutos
                                                 })
                                             ),
@@ -2643,10 +2716,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Presta\xE7\xE3o de servi\xE7os',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setPrestacaoServicos
                                                 })
                                             )
@@ -2666,10 +2739,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Empresas p\xFAblicas ou sociedades de economia mista',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setEmpresasPublicasSociedadesEconomia
                                                 })
                                             ),
@@ -2679,10 +2752,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Acordo com organismos multilaterais',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setAcordoOrganismosMultilaterais
                                                 })
                                             ),
@@ -2692,10 +2765,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Acordo com governos estrangeiros',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setAcordoGovernosEstrangeiros
                                                 })
                                             ),
@@ -2705,10 +2778,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com o governo estadual',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaGovernoEstadual
                                                 })
                                             ),
@@ -2718,10 +2791,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com o governo municipal',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaGovernoMunicipal
                                                 })
                                             ),
@@ -2731,10 +2804,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Transfer\xEAncias federais recebidas pela OSC',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setTransferenciasFederaisRecebidas
                                                 })
                                             )
@@ -2754,10 +2827,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com OSCs brasileiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaBrasileiras
                                                 })
                                             ),
@@ -2767,10 +2840,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com OSCs estrangeiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaEstrangeiras
                                                 })
                                             ),
@@ -2780,10 +2853,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com organiza\xE7\xF5es religiosas brasileiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaOrganizacoesReligiosasBrasileiras
                                                 })
                                             ),
@@ -2793,10 +2866,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Parceria com organiza\xE7\xF5es religiosas estrangeiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setParceriaOrganizacoesReligiosasEstrangeiras
                                                 })
                                             ),
@@ -2806,10 +2879,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Empresas privadas brasileiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setEmpresasPrivadasBrasileiras
                                                 })
                                             ),
@@ -2819,10 +2892,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Empresas estrangeiras',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setEmpresasEstrangeiras
                                                 })
                                             ),
@@ -2832,10 +2905,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Doa\xE7\xF5es de pessoa jur\xEDdica',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setDoacoesPessoaJuridica
                                                 })
                                             ),
@@ -2845,10 +2918,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Doa\xE7\xF5es de pessoa f\xEDsica',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setDoacoesPessoaFisica
                                                 })
                                             ),
@@ -2858,10 +2931,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (com NF)',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setDoacoesFormaProdutosServicos
                                                 })
                                             )
@@ -2881,10 +2954,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Voluntariado',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setVoluntariado
                                                 })
                                             ),
@@ -2894,10 +2967,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Isen\xE7\xF5es',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setIsencoes
                                                 })
                                             ),
@@ -2907,10 +2980,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Imunidades',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setImunidades
                                                 })
                                             ),
@@ -2920,10 +2993,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Bens recebidos em direito de uso',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setBensRecebidosDireito
                                                 })
                                             ),
@@ -2933,10 +3006,10 @@ class Filter extends React.Component {
                                                 React.createElement(Range, {
                                                     title: 'Doa\xE7\xF5es recebidas na forma de produtos e servi\xE7os (sem NF)',
                                                     min: '0',
-                                                    max: '100',
+                                                    max: '1000000',
                                                     step: '1',
                                                     defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueEnd: '1000000',
                                                     setValue: this.setDoacoesRecebidasFormaProdutosServicos
                                                 })
                                             )
