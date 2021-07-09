@@ -39,6 +39,17 @@ class Filter extends React.Component{
                 "trabalhadoresVoluntariosMIN",
                 "trabalhadoresVoluntariosMAX",
             ],
+            camposEspacosParticipacaoSocial: [
+                "cd_conselho",
+                "dt_data_inicio_conselho",
+                "tx_nome_representante_conselho",
+                "cd_tipo_participacao",
+                "dt_data_fim_conselho",
+                "cd_conferencia",
+                "cd_forma_participacao_conferencia",
+                "anoRealizacaoConferenciaMIN",
+                "anoRealizacaoConferenciaMAX",
+            ],
             form: {
                 name: '',
                 email: '',
@@ -296,6 +307,31 @@ class Filter extends React.Component{
 
     }
 
+    setJsonEspacosParticipacaoSocial(name, value, type){
+
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('espacosParticipacaoSocial')){
+            json.avancado.espacosParticipacaoSocial = {};
+        }
+
+        if(type==='input' || type==='search' || type==='range'){
+            json.avancado.espacosParticipacaoSocial[name] = value;
+            this.setState({json: json});
+            return;
+        }
+
+        if(type==='checkbox'){
+            if(value){
+                json.avancado.espacosParticipacaoSocial[name] = value;
+                this.setState({json: json});
+                return;
+            }
+            delete json.avancado.espacosParticipacaoSocial[name];
+            this.setState({json: json});
+        }
+
+    }
+
     handleCheckChange(event){
         const target = event.target;
         const id = target.id;
@@ -321,6 +357,9 @@ class Filter extends React.Component{
         }
         if(this.state.camposRelacoesTrabalhoGovernanca.includes(name)){
             this.setJsonRelacoesTrabalhoGovernanca(name, value, 'input');
+        }
+        if(this.state.camposEspacosParticipacaoSocial.includes(name)){
+            this.setJsonEspacosParticipacaoSocial(name, value, 'input');
         }
 
 
@@ -611,6 +650,8 @@ class Filter extends React.Component{
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonEspacosParticipacaoSocial('anoRealizacaoConferenciaMIN', start, 'range');
+        this.setJsonEspacosParticipacaoSocial('anoRealizacaoConferenciaMAX', end, 'range');
         this.setState({filters: filters});
     }
 
@@ -1750,31 +1791,34 @@ class Filter extends React.Component{
                                     <div className="row">
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange}>
-                                                {/*<option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>*/}
+                                            <select className="custom-select" name="cd_conselho" onChange={this.handleInputChange}>
+                                                <option value="0" selected >Nome do Conselho</option>
                                                 {conselhos}
                                             </select>
                                             <br/><br/>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control"} type="date" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="tx_nome_dirigente">Data de Início de Vigência</label>
+                                                <input className={"form-control"} type="date" name="dt_data_inicio_conselho" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="dt_data_inicio_conselho">Data de Início de Vigência</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="cd_conselhoSelectBoxItText">Nome de representante conselho</label>
+                                                <input className={"form-control form-g "} type="text" name="tx_nome_representante_conselho" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="tx_nome_representante_conselho">Nome de representante conselho</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
                                                 <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
-                                                    <option value="0">Situação do Imóvel</option>
+                                                    <option value="0">Titularidade</option>
+                                                    <option value="1">Titular</option>
+                                                    <option value="2">Suplente</option>
+                                                    <option value="3">Convidado</option>
                                                     {participacoes}
                                                 </select>
                                                 <br/><br/>
@@ -1783,21 +1827,23 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="date" name="cd_conselhoSelectBoxItText" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="cd_conselhoSelectBoxItText">Data de Fim de Vigência</label>
+                                                <input className={"form-control form-g "} type="date" name="dt_data_fim_conselho" onChange={this.handleInputChange} placeholder=" " />
+                                                <label htmlFor="dt_data_fim_conselho">Data de Fim de Vigência</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_conferencia" onChange={this.handleInputChange}>
+                                                <option value="0" selected >Nome da Conferência</option>
                                                 {conferencias}
                                             </select>
                                             <br/><br/>
                                         </div>
 
                                         <div className="col-md-6">
-                                            <select className="custom-select" name="cd_forma_participacao_conferenciaSelectBoxItText" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_forma_participacao_conferencia" onChange={this.handleInputChange}>
+                                                <option value="0" selected >Forma de participacao na Conferẽncia</option>
                                                 {formaParticipacoes}
                                             </select>
                                             <br/><br/>
@@ -1806,11 +1852,11 @@ class Filter extends React.Component{
                                         <div className="col-md-3">
                                             <Range
                                                 title="Ano de Realização da Conferência"
-                                                min="0"
-                                                max="100"
+                                                min="1900"
+                                                max={ano}
                                                 step="1"
-                                                defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueStart="1900"
+                                                defaultValueEnd={ano}
                                                 setValue={this.setAnoRealizacao}
                                             />
                                         </div>
@@ -2003,11 +2049,11 @@ class Filter extends React.Component{
                                                 <div className="col-md-3">
                                                     <Range
                                                         title="Ano"
-                                                        min="0"
-                                                        max="100"
+                                                        min="1900"
+                                                        max={ano}
                                                         step="1"
-                                                        defaultValueStart="0"
-                                                        defaultValueEnd="100"
+                                                        defaultValueStart="1900"
+                                                        defaultValueEnd={ano}
                                                         setValue={this.setAnoFonteRecurso}
                                                     />
                                                 </div>

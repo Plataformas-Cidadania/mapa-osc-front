@@ -7,6 +7,7 @@ class Filter extends React.Component {
             },
             camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
             camposRelacoesTrabalhoGovernanca: ["tx_nome_dirigente", "tx_cargo_dirigente", "tx_nome_conselheiro", "totalTrabalhadoresMIN", "totalTrabalhadoresMAX", "totalEmpregadosMIN", "totalEmpregadosMAX", "trabalhadoresDeficienciaMIN", "trabalhadoresDeficienciaMAX", "trabalhadoresVoluntariosMIN", "trabalhadoresVoluntariosMAX"],
+            camposEspacosParticipacaoSocial: ["cd_conselho", "dt_data_inicio_conselho", "tx_nome_representante_conselho", "cd_tipo_participacao", "dt_data_fim_conselho", "cd_conferencia", "cd_forma_participacao_conferencia", "anoRealizacaoConferenciaMIN", "anoRealizacaoConferenciaMAX"],
             form: {
                 name: '',
                 email: '',
@@ -254,6 +255,30 @@ class Filter extends React.Component {
         }
     }
 
+    setJsonEspacosParticipacaoSocial(name, value, type) {
+
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('espacosParticipacaoSocial')) {
+            json.avancado.espacosParticipacaoSocial = {};
+        }
+
+        if (type === 'input' || type === 'search' || type === 'range') {
+            json.avancado.espacosParticipacaoSocial[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+
+        if (type === 'checkbox') {
+            if (value) {
+                json.avancado.espacosParticipacaoSocial[name] = value;
+                this.setState({ json: json });
+                return;
+            }
+            delete json.avancado.espacosParticipacaoSocial[name];
+            this.setState({ json: json });
+        }
+    }
+
     handleCheckChange(event) {
         const target = event.target;
         const id = target.id;
@@ -279,6 +304,9 @@ class Filter extends React.Component {
         }
         if (this.state.camposRelacoesTrabalhoGovernanca.includes(name)) {
             this.setJsonRelacoesTrabalhoGovernanca(name, value, 'input');
+        }
+        if (this.state.camposEspacosParticipacaoSocial.includes(name)) {
+            this.setJsonEspacosParticipacaoSocial(name, value, 'input');
         }
 
         if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
@@ -557,6 +585,8 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonEspacosParticipacaoSocial('anoRealizacaoConferenciaMIN', start, 'range');
+        this.setJsonEspacosParticipacaoSocial('anoRealizacaoConferenciaMAX', end, 'range');
         this.setState({ filters: filters });
     }
 
@@ -1994,7 +2024,12 @@ class Filter extends React.Component {
                                         { className: 'col-md-9' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_conselho', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0', selected: true },
+                                                'Nome do Conselho'
+                                            ),
                                             conselhos
                                         ),
                                         React.createElement('br', null),
@@ -2006,10 +2041,10 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control", type: 'date', name: 'tx_nome_dirigente', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement('input', { className: "form-control", type: 'date', name: 'dt_data_inicio_conselho', onChange: this.handleInputChange, placeholder: ' ' }),
                                             React.createElement(
                                                 'label',
-                                                { htmlFor: 'tx_nome_dirigente' },
+                                                { htmlFor: 'dt_data_inicio_conselho' },
                                                 'Data de In\xEDcio de Vig\xEAncia'
                                             ),
                                             React.createElement('div', { className: 'label-box-info-off' })
@@ -2021,10 +2056,10 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_representante_conselho', onChange: this.handleInputChange, placeholder: ' ' }),
                                             React.createElement(
                                                 'label',
-                                                { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                                { htmlFor: 'tx_nome_representante_conselho' },
                                                 'Nome de representante conselho'
                                             ),
                                             React.createElement('div', { className: 'label-box-info-off' })
@@ -2042,7 +2077,22 @@ class Filter extends React.Component {
                                                 React.createElement(
                                                     'option',
                                                     { value: '0' },
-                                                    'Situa\xE7\xE3o do Im\xF3vel'
+                                                    'Titularidade'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '1' },
+                                                    'Titular'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '2' },
+                                                    'Suplente'
+                                                ),
+                                                React.createElement(
+                                                    'option',
+                                                    { value: '3' },
+                                                    'Convidado'
                                                 ),
                                                 participacoes
                                             ),
@@ -2056,10 +2106,10 @@ class Filter extends React.Component {
                                         React.createElement(
                                             'div',
                                             { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'cd_conselhoSelectBoxItText', onChange: this.handleInputChange, placeholder: ' ' }),
+                                            React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_fim_conselho', onChange: this.handleInputChange, placeholder: ' ' }),
                                             React.createElement(
                                                 'label',
-                                                { htmlFor: 'cd_conselhoSelectBoxItText' },
+                                                { htmlFor: 'dt_data_fim_conselho' },
                                                 'Data de Fim de Vig\xEAncia'
                                             ),
                                             React.createElement('div', { className: 'label-box-info-off' })
@@ -2070,7 +2120,12 @@ class Filter extends React.Component {
                                         { className: 'col-md-9' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_conferenciaSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_conferencia', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0', selected: true },
+                                                'Nome da Confer\xEAncia'
+                                            ),
                                             conferencias
                                         ),
                                         React.createElement('br', null),
@@ -2081,7 +2136,12 @@ class Filter extends React.Component {
                                         { className: 'col-md-6' },
                                         React.createElement(
                                             'select',
-                                            { className: 'custom-select', name: 'cd_forma_participacao_conferenciaSelectBoxItText', onChange: this.handleInputChange },
+                                            { className: 'custom-select', name: 'cd_forma_participacao_conferencia', onChange: this.handleInputChange },
+                                            React.createElement(
+                                                'option',
+                                                { value: '0', selected: true },
+                                                'Forma de participacao na Confer\u1EBDncia'
+                                            ),
                                             formaParticipacoes
                                         ),
                                         React.createElement('br', null),
@@ -2092,11 +2152,11 @@ class Filter extends React.Component {
                                         { className: 'col-md-3' },
                                         React.createElement(Range, {
                                             title: 'Ano de Realiza\xE7\xE3o da Confer\xEAncia',
-                                            min: '0',
-                                            max: '100',
+                                            min: '1900',
+                                            max: ano,
                                             step: '1',
-                                            defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueStart: '1900',
+                                            defaultValueEnd: ano,
                                             setValue: this.setAnoRealizacao
                                         })
                                     )
@@ -2439,11 +2499,11 @@ class Filter extends React.Component {
                                                 { className: 'col-md-3' },
                                                 React.createElement(Range, {
                                                     title: 'Ano',
-                                                    min: '0',
-                                                    max: '100',
+                                                    min: '1900',
+                                                    max: ano,
                                                     step: '1',
-                                                    defaultValueStart: '0',
-                                                    defaultValueEnd: '100',
+                                                    defaultValueStart: '1900',
+                                                    defaultValueEnd: ano,
                                                     setValue: this.setAnoFonteRecurso
                                                 })
                                             )
