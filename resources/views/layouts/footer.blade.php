@@ -4,22 +4,6 @@
     <div class="menu-cel-footer bg-lgt menu-cel-login-hide" style="display: none;">
         <div id="menu-usuario-mobile"></div>
     </div>
-<!--    <div class="menu-cel-footer bg-lgt menu-cel-login-hide" style="display: none;">
-        <div class="text-center">
-            <br>
-            <img src="http://www.jardindemeriem.com/images/temoin/2.jpg" alt="" class="rounded-circle" width="80">
-            <h4>Nome OSC</h4>
-        </div>
-        <hr>
-        <div>
-            <ul class="menu-cel-login">
-                <li><a href="oscs-user"><i class="far fa-address-card"></i> Minha Conta</a></li>
-                <li><a href="dados-user"><i class="far fa-edit"></i> Editar OSC</a></li>
-                <li><a href="register"><i class="fas fa-user"></i> Cadastre-se</a></li>
-                <li class="float-right"><a href="logout-user"><i class="fas fa-sign-out-alt"></i> Sair </a></li>
-            </ul>
-        </div>
-    </div>-->
     {{--CEL--}}
     <div class="footer-cel d-block d-sm-none">
         <div class="container">
