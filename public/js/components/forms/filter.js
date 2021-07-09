@@ -6,6 +6,7 @@ class Filter extends React.Component {
                 avancado: {}
             },
             camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
+            camposRelacoesTrabalhoGovernanca: ["tx_nome_dirigente", "tx_cargo_dirigente", "tx_nome_conselheiro", "totalTrabalhadoresMIN", "totalTrabalhadoresMAX", "totalEmpregadosMIN", "totalEmpregadosMAX", "trabalhadoresDeficienciaMIN", "trabalhadoresDeficienciaMAX", "trabalhadoresVoluntariosMIN", "trabalhadoresVoluntariosMAX"],
             form: {
                 name: '',
                 email: '',
@@ -144,6 +145,8 @@ class Filter extends React.Component {
 
         this.setJsonDadosGerais = this.setJsonDadosGerais.bind(this);
         this.setJsonAtividadeEconomica = this.setJsonAtividadeEconomica.bind(this);
+        this.setJsonTitulacaoCertificacao = this.setJsonTitulacaoCertificacao.bind(this);
+        this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
     }
 
     componentDidMount() {
@@ -180,7 +183,7 @@ class Filter extends React.Component {
             json.avancado.dadosGerais = {};
         }
 
-        if (type === 'input' || type === 'search') {
+        if (type === 'input' || type === 'search' || type === 'range') {
             json.avancado.dadosGerais[name] = value;
             this.setState({ json: json });
             return;
@@ -238,6 +241,19 @@ class Filter extends React.Component {
         this.setState({ json: json });
     }
 
+    setJsonRelacoesTrabalhoGovernanca(name, value, type) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('relacoesTrabalhoGovernanca')) {
+            json.avancado.relacoesTrabalhoGovernanca = {};
+        }
+
+        if (type === 'input' || type === 'search' || type === 'range') {
+            json.avancado.relacoesTrabalhoGovernanca[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+    }
+
     handleCheckChange(event) {
         const target = event.target;
         const id = target.id;
@@ -260,6 +276,9 @@ class Filter extends React.Component {
         //console.log(name);
         if (this.state.camposDadosGerais.includes(name)) {
             this.setJsonDadosGerais(name, value, 'input');
+        }
+        if (this.state.camposRelacoesTrabalhoGovernanca.includes(name)) {
+            this.setJsonRelacoesTrabalhoGovernanca(name, value, 'input');
         }
 
         if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
@@ -313,8 +332,8 @@ class Filter extends React.Component {
     setRegiao(item) {
         let filters = this.state.filters;
         filters.regiao = item;
-        this.setJsonDadosGerais('tx_nome_regiao', item.edre_nm_regiao);
-        this.setJsonDadosGerais('cd_regiao', item.edre_cd_regiao);
+        this.setJsonDadosGerais('tx_nome_regiao', item.edre_nm_regiao, 'search');
+        this.setJsonDadosGerais('cd_regiao', item.edre_cd_regiao), 'search';
 
         this.setState({ filters: filters, searchRegiao: null });
     }
@@ -402,6 +421,8 @@ class Filter extends React.Component {
     setMunicipio(item) {
         let filters = this.state.filters;
         filters.municipio = item;
+        this.setJsonDadosGerais('tx_nome_municipio', item.eduf_nm_uf, 'search');
+        this.setJsonDadosGerais('cd_municipio', item.eduf_cd_uf, 'search');
         this.setState({ filters: filters });
     }
     removeMunicipio() {
@@ -543,32 +564,40 @@ class Filter extends React.Component {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
-        this.setJsonDadosGerais('anoFundacaoMIN', start);
-        this.setJsonDadosGerais('anoFundacaoMAX', end);
+        this.setJsonDadosGerais('anoFundacaoMIN', start, 'range');
+        this.setJsonDadosGerais('anoFundacaoMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setTotalTrabalhadores(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonRelacoesTrabalhoGovernanca('totalTrabalhadoresMIN', start, 'range');
+        this.setJsonRelacoesTrabalhoGovernanca('totalTrabalhadoresMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setTotalEmpregados(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonRelacoesTrabalhoGovernanca('totalEmpregadosMIN', start, 'range');
+        this.setJsonRelacoesTrabalhoGovernanca('totalEmpregadosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setTrabalhadoresDeficiencia(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonRelacoesTrabalhoGovernanca('trabalhadoresDeficienciaMIN', start, 'range');
+        this.setJsonRelacoesTrabalhoGovernanca('trabalhadoresDeficienciaMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setTrabalhadoresVoluntarios(start, end) {
         let filters = this.state.filters;
         filters.ano_fundacao.start = start;
         filters.ano_fundacao.end = end;
+        this.setJsonRelacoesTrabalhoGovernanca('trabalhadoresVoluntariosMIN', start, 'range');
+        this.setJsonRelacoesTrabalhoGovernanca('trabalhadoresVoluntariosMAX', end, 'range');
         this.setState({ filters: filters });
     }
     setAnoFonteRecurso(start, end) {
