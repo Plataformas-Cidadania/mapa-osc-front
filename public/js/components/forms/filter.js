@@ -501,8 +501,8 @@ class Filter extends React.Component {
     setMunicipio(item) {
         let filters = this.state.filters;
         filters.municipio = item;
-        this.setJsonDadosGerais('tx_nome_municipio', item.eduf_nm_uf, 'search');
-        this.setJsonDadosGerais('cd_municipio', item.eduf_cd_uf, 'search');
+        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio, 'search');
+        this.setJsonDadosGerais('cd_municipio', item.edmu_cd_municipio, 'search');
         this.setState({ filters: filters });
     }
     removeMunicipio() {
