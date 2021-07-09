@@ -117,6 +117,7 @@ class Filter extends React.Component{
 
             dataObjetivos:[],
             dataObjetivosMetas:[],
+            dataObjetivosMetasProjetos:[],
             dataConselhos:[],
             dataParticipacoes:[],
             dataConferencias:[],
@@ -151,6 +152,8 @@ class Filter extends React.Component{
         this.handleCheckChange = this.handleCheckChange.bind(this);
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
         this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
+        this.handleCheckChangeIDH = this.handleCheckChangeIDH.bind(this);
+        this.handleCheckChangeAdicionais = this.handleCheckChangeAdicionais.bind(this);
 
 
         this.filter = this.filter.bind(this);
@@ -220,6 +223,8 @@ class Filter extends React.Component{
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
+        this.setJsonIDH = this.setJsonIDH.bind(this);
+        this.setJsonAdicionais = this.setJsonAdicionais.bind(this);
     }
 
 
@@ -390,12 +395,44 @@ class Filter extends React.Component{
             json.avancado.fontesRecursos = {};
         }
 
+        if(type==='range'){
+            value = this.formatValue(value);
+        }
+
         if(type==='input' || type==='search' || type==='range'){
             json.avancado.fontesRecursos[name] = value;
             this.setState({json: json});
             return;
         }
 
+    }
+
+    setJsonIDH(name, value){
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('IDH')){
+            json.avancado.IDH = {};
+        }
+        if(value){
+            json.avancado.IDH[name] = value;
+            this.setState({json: json});
+            return;
+        }
+        delete json.avancado.IDH[name];
+        this.setState({json: json});
+    }
+
+    setJsonAdicionais(name, value){
+        let json = this.state.json;
+        if(!json.avancado.hasOwnProperty('Adicionais')){
+            json.avancado.Adicionais = {};
+        }
+        if(value){
+            json.avancado.Adicionais[name] = value;
+            this.setState({json: json});
+            return;
+        }
+        delete json.avancado.Adicionais[name];
+        this.setState({json: json});
     }
 
     handleCheckChange(event){
@@ -410,6 +447,19 @@ class Filter extends React.Component{
         const target = event.target;
         const id = target.id;
         this.setJsonTitulacaoCertificacao(id, target.checked);
+    }
+
+    handleCheckChangeIDH(event){
+        const target = event.target;
+        const id = target.id;
+        this.setJsonIDH(id, target.checked);
+    }
+
+    handleCheckChangeAdicionais(event){
+        console.log(event.target.id, event.target.value);
+        const target = event.target;
+        const id = target.id;
+        this.setJsonAdicionais(id, target.checked);
     }
 
     handleInputChange(event) {
@@ -435,11 +485,12 @@ class Filter extends React.Component{
         }
 
 
-        if(target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText'){
+        if(target.name == 'cd_objetivo_osc'){
             this.objetivosMetas(target.value);
         }
-
-
+        if(target.name == 'cd_objetivo_projeto'){
+            this.objetivosMetasProjetos(target.value);
+        }
 
         /*if(target.name==='cel'){
             value = maskCel(value);
@@ -577,8 +628,8 @@ class Filter extends React.Component{
     setMunicipio(item){
         let filters = this.state.filters;
         filters.municipio = item;
-        this.setJsonDadosGerais('tx_nome_municipio', item.eduf_nm_uf, 'search');
-        this.setJsonDadosGerais('cd_municipio', item.eduf_cd_uf, 'search');
+        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio, 'search');
+        this.setJsonDadosGerais('cd_municipio', item.edmu_cd_municipio, 'search');
         this.setState({filters: filters});
     }
     removeMunicipio(){
@@ -1057,6 +1108,24 @@ class Filter extends React.Component{
         });
     }
 
+    objetivosMetasProjetos(id){
+        this.setState({loadingList: true});
+        $.ajax({
+            method: 'GET',
+            //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/'+id,
+            cache: false,
+            success: function(data){
+                //console.log('data', data);
+                this.setState({dataObjetivosMetasProjetos: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log(status, err.toString());
+                this.setState({loadingList: false});
+            }.bind(this)
+        });
+    }
+
     ////////////////////////////////////////
 
     conselhos(){
@@ -1222,6 +1291,13 @@ class Filter extends React.Component{
         return newStr;
     }
 
+    formatValue(value){
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value)
+    }
+
 
     render(){
 
@@ -1271,15 +1347,17 @@ class Filter extends React.Component{
             indicadores = indicadores.map(function(item, index){
                 let indices = item.indices.map(function(subitem){
                     return(
-                        <div key={"subarea_"+subitem.cd_indice}>
-                            <div className="custom-control custom-checkbox" onChange={() => console.log(subitem.cd_indice)}>
-                                <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required/>
-                                <label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                        <div key={"cd_indice-"+subitem.cd_indice}>
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" className="custom-control-input" id={"cd_indice-"+subitem.cd_indice} required onChange={this.handleCheckChangeAdicionais}/>
+                                <label className="custom-control-label" htmlFor={"cd_indice-"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>
+                                {/*<input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_indice} required}
+                                {/*<label className="custom-control-label" htmlFor={"subarea_"+subitem.cd_indice} >{subitem.tx_nome_indice}</label>*/}
                             </div>
                             <br />
                         </div>
                     );
-                });
+                }.bind(this));
 
                 return (
                     <div key={"ipeaData_"+index} className="col-md-6">
@@ -1289,7 +1367,7 @@ class Filter extends React.Component{
                         <br/>
                     </div>
                 );
-            });
+            }.bind(this));
 
 
 
@@ -1454,7 +1532,16 @@ class Filter extends React.Component{
         if(this.state.dataObjetivosMetas){
             objetivosMetas = this.state.dataObjetivosMetas.map(function (item) {
                 return (
-                    <option value={item.cd_meta_projeto} key={"cert_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
+                    <option value={item.cd_meta_projeto} key={"meta_osc_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
+                );
+            });
+        }
+
+        let objetivosMetasProjetos = null;
+        if(this.state.dataObjetivosMetasProjetos){
+            objetivosMetasProjetos = this.state.dataObjetivosMetasProjetos.map(function (item) {
+                return (
+                    <option value={item.cd_meta_projeto} key={"meta_projeto_"+item.cd_meta_projeto}>{item.tx_nome_meta_projeto}</option>
                 );
             });
         }
@@ -2146,7 +2233,7 @@ class Filter extends React.Component{
                                         <div className="col-md-9">
                                             <select className="custom-select" name="cd_meta_projeto" onChange={this.handleInputChange}>
                                                 <option selected>Metas Relacionadas ao ODS</option>
-                                                {objetivosMetas}
+                                                {objetivosMetasProjetos}
                                             </select>
                                             <br/><br/>
                                         </div>
@@ -2537,7 +2624,7 @@ class Filter extends React.Component{
 
 
                                     <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
-                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required/>
+                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required onChange={this.handleCheckChangeIDH}/>
                                         <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
                                     </div>
 
@@ -2546,15 +2633,15 @@ class Filter extends React.Component{
                                         <strong> Faixas de IDHM:</strong>
                                         <br/>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="baixo" required/>
+                                            <input type="checkbox" className="custom-control-input" id="baixo" required onChange={this.handleCheckChangeIDH}/>
                                             <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
                                         </div>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="medio" required/>
+                                            <input type="checkbox" className="custom-control-input" id="medio" required onChange={this.handleCheckChangeIDH}/>
                                             <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
                                         </div>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="alto" required/>
+                                            <input type="checkbox" className="custom-control-input" id="alto" required onChange={this.handleCheckChangeIDH}/>
                                             <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
                                         </div>
                                     </div>

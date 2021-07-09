@@ -52,6 +52,7 @@ class Filter extends React.Component {
 
             dataObjetivos: [],
             dataObjetivosMetas: [],
+            dataObjetivosMetasProjetos: [],
             dataConselhos: [],
             dataParticipacoes: [],
             dataConferencias: [],
@@ -86,6 +87,8 @@ class Filter extends React.Component {
         this.handleCheckChange = this.handleCheckChange.bind(this);
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
         this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
+        this.handleCheckChangeIDH = this.handleCheckChangeIDH.bind(this);
+        this.handleCheckChangeAdicionais = this.handleCheckChangeAdicionais.bind(this);
 
         this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
@@ -152,6 +155,8 @@ class Filter extends React.Component {
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
+        this.setJsonIDH = this.setJsonIDH.bind(this);
+        this.setJsonAdicionais = this.setJsonAdicionais.bind(this);
     }
 
     componentDidMount() {
@@ -314,11 +319,43 @@ class Filter extends React.Component {
             json.avancado.fontesRecursos = {};
         }
 
+        if (type === 'range') {
+            value = this.formatValue(value);
+        }
+
         if (type === 'input' || type === 'search' || type === 'range') {
             json.avancado.fontesRecursos[name] = value;
             this.setState({ json: json });
             return;
         }
+    }
+
+    setJsonIDH(name, value) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('IDH')) {
+            json.avancado.IDH = {};
+        }
+        if (value) {
+            json.avancado.IDH[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+        delete json.avancado.IDH[name];
+        this.setState({ json: json });
+    }
+
+    setJsonAdicionais(name, value) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('Adicionais')) {
+            json.avancado.Adicionais = {};
+        }
+        if (value) {
+            json.avancado.Adicionais[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+        delete json.avancado.Adicionais[name];
+        this.setState({ json: json });
     }
 
     handleCheckChange(event) {
@@ -333,6 +370,19 @@ class Filter extends React.Component {
         const target = event.target;
         const id = target.id;
         this.setJsonTitulacaoCertificacao(id, target.checked);
+    }
+
+    handleCheckChangeIDH(event) {
+        const target = event.target;
+        const id = target.id;
+        this.setJsonIDH(id, target.checked);
+    }
+
+    handleCheckChangeAdicionais(event) {
+        console.log(event.target.id, event.target.value);
+        const target = event.target;
+        const id = target.id;
+        this.setJsonAdicionais(id, target.checked);
     }
 
     handleInputChange(event) {
@@ -357,8 +407,11 @@ class Filter extends React.Component {
             this.setJsonProjetos(name, value, 'input');
         }
 
-        if (target.name == 'cd_objetivo_osc' || target.name == 'cd_objetivo_projetoSelectBoxItText') {
+        if (target.name == 'cd_objetivo_osc') {
             this.objetivosMetas(target.value);
+        }
+        if (target.name == 'cd_objetivo_projeto') {
+            this.objetivosMetasProjetos(target.value);
         }
 
         /*if(target.name==='cel'){
@@ -497,8 +550,8 @@ class Filter extends React.Component {
     setMunicipio(item) {
         let filters = this.state.filters;
         filters.municipio = item;
-        this.setJsonDadosGerais('tx_nome_municipio', item.eduf_nm_uf, 'search');
-        this.setJsonDadosGerais('cd_municipio', item.eduf_cd_uf, 'search');
+        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio, 'search');
+        this.setJsonDadosGerais('cd_municipio', item.edmu_cd_municipio, 'search');
         this.setState({ filters: filters });
     }
     removeMunicipio() {
@@ -550,10 +603,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -561,8 +614,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
@@ -966,6 +1019,24 @@ class Filter extends React.Component {
         });
     }
 
+    objetivosMetasProjetos(id) {
+        this.setState({ loadingList: true });
+        $.ajax({
+            method: 'GET',
+            //url: getBaseUrl + 'componente/metas_objetivo_projeto/'+id,
+            url: getBaseUrl2 + 'objetivos/metas/' + id,
+            cache: false,
+            success: function (data) {
+                //console.log('data', data);
+                this.setState({ dataObjetivosMetasProjetos: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(status, err.toString());
+                this.setState({ loadingList: false });
+            }.bind(this)
+        });
+    }
+
     ////////////////////////////////////////
 
     conselhos() {
@@ -1130,6 +1201,13 @@ class Filter extends React.Component {
         return newStr;
     }
 
+    formatValue(value) {
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
+    }
+
     render() {
 
         //console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes)
@@ -1178,20 +1256,20 @@ class Filter extends React.Component {
                 let indices = item.indices.map(function (subitem) {
                     return React.createElement(
                         'div',
-                        { key: "subarea_" + subitem.cd_indice },
+                        { key: "cd_indice-" + subitem.cd_indice },
                         React.createElement(
                             'div',
-                            { className: 'custom-control custom-checkbox', onChange: () => console.log(subitem.cd_indice) },
-                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "subarea_" + subitem.cd_indice, required: true }),
+                            { className: 'custom-control custom-checkbox' },
+                            React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: "cd_indice-" + subitem.cd_indice, required: true, onChange: this.handleCheckChangeAdicionais }),
                             React.createElement(
                                 'label',
-                                { className: 'custom-control-label', htmlFor: "subarea_" + subitem.cd_indice },
+                                { className: 'custom-control-label', htmlFor: "cd_indice-" + subitem.cd_indice },
                                 subitem.tx_nome_indice
                             )
                         ),
                         React.createElement('br', null)
                     );
-                });
+                }.bind(this));
 
                 return React.createElement(
                     'div',
@@ -1205,7 +1283,7 @@ class Filter extends React.Component {
                     indices,
                     React.createElement('br', null)
                 );
-            });
+            }.bind(this));
         }
 
         let areaAtuacao = null;
@@ -1398,7 +1476,18 @@ class Filter extends React.Component {
             objetivosMetas = this.state.dataObjetivosMetas.map(function (item) {
                 return React.createElement(
                     'option',
-                    { value: item.cd_meta_projeto, key: "cert_" + item.cd_meta_projeto },
+                    { value: item.cd_meta_projeto, key: "meta_osc_" + item.cd_meta_projeto },
+                    item.tx_nome_meta_projeto
+                );
+            });
+        }
+
+        let objetivosMetasProjetos = null;
+        if (this.state.dataObjetivosMetasProjetos) {
+            objetivosMetasProjetos = this.state.dataObjetivosMetasProjetos.map(function (item) {
+                return React.createElement(
+                    'option',
+                    { value: item.cd_meta_projeto, key: "meta_projeto_" + item.cd_meta_projeto },
                     item.tx_nome_meta_projeto
                 );
             });
@@ -2546,7 +2635,7 @@ class Filter extends React.Component {
                                                 { selected: true },
                                                 'Metas Relacionadas ao ODS'
                                             ),
-                                            objetivosMetas
+                                            objetivosMetasProjetos
                                         ),
                                         React.createElement('br', null),
                                         React.createElement('br', null)
@@ -3048,7 +3137,7 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox', onChange: this.clickIdh },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true, onChange: this.handleCheckChangeIDH }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: 'IDH_Municipal' },
@@ -3068,7 +3157,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'baixo' },
@@ -3078,7 +3167,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'medio' },
@@ -3088,7 +3177,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'alto' },
