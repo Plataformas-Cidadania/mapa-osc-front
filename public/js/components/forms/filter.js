@@ -86,6 +86,7 @@ class Filter extends React.Component {
         this.handleCheckChange = this.handleCheckChange.bind(this);
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
         this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
+        this.handleCheckChangeIDH = this.handleCheckChangeIDH.bind(this);
 
         this.filter = this.filter.bind(this);
         this.clickIdh = this.clickIdh.bind(this);
@@ -152,6 +153,7 @@ class Filter extends React.Component {
         this.setJsonRelacoesTrabalhoGovernanca = this.setJsonRelacoesTrabalhoGovernanca.bind(this);
         this.setJsonProjetos = this.setJsonProjetos.bind(this);
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
+        this.setJsonIDH = this.setJsonIDH.bind(this);
     }
 
     componentDidMount() {
@@ -325,6 +327,20 @@ class Filter extends React.Component {
         }
     }
 
+    setJsonIDH(name, value) {
+        let json = this.state.json;
+        if (!json.avancado.hasOwnProperty('IDH')) {
+            json.avancado.IDH = {};
+        }
+        if (value) {
+            json.avancado.IDH[name] = value;
+            this.setState({ json: json });
+            return;
+        }
+        delete json.avancado.IDH[name];
+        this.setState({ json: json });
+    }
+
     handleCheckChange(event) {
         const target = event.target;
         const id = target.id;
@@ -337,6 +353,12 @@ class Filter extends React.Component {
         const target = event.target;
         const id = target.id;
         this.setJsonTitulacaoCertificacao(id, target.checked);
+    }
+
+    handleCheckChangeIDH(event) {
+        const target = event.target;
+        const id = target.id;
+        this.setJsonIDH(id, target.checked);
     }
 
     handleInputChange(event) {
@@ -3059,7 +3081,7 @@ class Filter extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'custom-control custom-checkbox', onChange: this.clickIdh },
-                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true }),
+                                    React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'IDH_Municipal', required: true, onChange: this.handleCheckChangeIDH }),
                                     React.createElement(
                                         'label',
                                         { className: 'custom-control-label', htmlFor: 'IDH_Municipal' },
@@ -3079,7 +3101,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'baixo', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'baixo' },
@@ -3089,7 +3111,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'medio', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'medio' },
@@ -3099,7 +3121,7 @@ class Filter extends React.Component {
                                     React.createElement(
                                         'div',
                                         { className: 'custom-control custom-checkbox ' },
-                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true }),
+                                        React.createElement('input', { type: 'checkbox', className: 'custom-control-input', id: 'alto', required: true, onChange: this.handleCheckChangeIDH }),
                                         React.createElement(
                                             'label',
                                             { className: 'custom-control-label', htmlFor: 'alto' },
