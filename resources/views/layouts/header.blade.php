@@ -17,7 +17,7 @@
                 <ul id="atalhos">
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodoconteudo" accesskey="1">Ir para o Conteúdo [1]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodomenu" accesskey="2">Ir para o Menu [2]</a></li>
-                    <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#busca" accesskey="3">Ir para a busca [3]</a></li>
+                    <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#search" accesskey="3">Ir para a busca [3]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
@@ -105,7 +105,7 @@
     </div>
 </div>
 
-<div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide" style="display: none;">
+<div class="menu-cel hidden-lg hidden-md hidden-sm menu-cel-hide" style="display: none;" id="iniciodomenu">
     <?php /*?>
  <div class="menu-cel-redes">
         {{--@if($setting->pinterest!="")<a href="{{$setting->pinterest}}" target="_blank"><i class="fab fa-pinterest-square font-color" aria-hidden="true"></i></a>@endif
@@ -121,23 +121,23 @@
     </div>
  <?php */?>
     <ul>
-        <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
-        <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
-        <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
+        <li role="presentation"><a href="" @if($rota=='/') class="corrente" @endif>Home</a></li>
+        <li role="presentation"><a href="sobre" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
+        <li role="presentation"><a href="mapa" @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
 
-        <li role="presentation"><a accesskey="q" @if($rota=='quem') class="corrente" @endif>Dados</a></li>
-        <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Base de Dados</a></li>
-        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Dados e Indicadores</a></li>
-        <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
+        <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Dados</a></li>
+        <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Base de Dados</a></li>
+        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Dados e Indicadores</a></li>
+        <li role="presentation"><a href="posts/1/analises" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
 
-        <li role="presentation"><a accesskey="a" @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
-        <li role="presentation"><a href="posts/3/analises" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
-        <li role="presentation"><a href="posts/2/noticias" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Notícias</a></li>
-        <li role="presentation"><a href="editais" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Editais</a></li>
-        <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Vídeos</a></li>
+        <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
+        <li role="presentation"><a href="posts/3/analises" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
+        <li role="presentation"><a href="posts/2/noticias" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Notícias</a></li>
+        <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Editais</a></li>
+        <li role="presentation"><a href="videos" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Vídeos</a></li>
 
 
-        <li role="presentation"><a accesskey="c" href="glossario"  @if($rota=='contato') class="corrente" @endif>Ajuda</a></li>
+        <li role="presentation"><a href="glossario"  @if($rota=='contato') class="corrente" @endif>Ajuda</a></li>
     </ul>
 </div>
 <div class="box-menu menu-cel-hide" style="display: none;"></div>
@@ -165,29 +165,29 @@
                                 <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
-                                <li role="presentation"><a accesskey="c" @if($rota=='contato') class="corrente" @endif>Dados</a>
+                                <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
-                                        <li role="presentation"><a href="base-dados" accesskey="q" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
-                                        <li role="presentation"><a href="indicadores" accesskey="h" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
-                                        <li role="presentation"><a href="posts/1/analises" accesskey="h" @if($rota=='/') class="corrente " @endif>Análises</a></li>
+                                        <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
+                                        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
+                                        <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente " @endif>Análises</a></li>
                                     </ul>
                                 </li>
-                                <li role="presentation"><a accesskey="a" @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
+                                <li role="presentation"><a  @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($midias as $midia)
-                                            <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
+                                            <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
                                         @endforeach
-                                        <li role="presentation"><a href="editais" accesskey="a" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
-                                        <li role="presentation"><a href="videos" accesskey="a" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
+                                        <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
+                                        <li role="presentation"><a href="videos" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>
 
-                                <li role="presentation"><a accesskey="c" @if($rota=='contato') class="corrente" @endif>Ajuda</a>
+                                <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Ajuda</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($mnAjuda as $ajuda)
                                             <li role="presentation"><a href="{{$ajuda->slug}}">{{$ajuda->titulo}}</a></li>
                                         @endforeach
-                                        <li role="presentation"><a href="contato" accesskey="a" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
+                                        <li role="presentation"><a href="contato" accesskey="c" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
                                     </ul>
                                 </li>
                             </ul>
