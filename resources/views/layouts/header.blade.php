@@ -14,17 +14,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <ul id="atalhos">
+                <ul id="atalhos" class="top-links">
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodoconteudo" accesskey="1">Ir para o Conteúdo [1]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodomenu" accesskey="2">Ir para o Menu [2]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#search" accesskey="3">Ir para a busca [3]</a></li>
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right top-ipea">
                 <a href="https://www.ipea.gov.br" target="_blank" alt="Link externo para o IPEA." title="Link externo para o IPEA."><img src="img/logo-ipea.png" width="150"/></a>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right">
+            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right top-icons">
                 <ul id="botoes" >
                     <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
@@ -121,6 +121,7 @@
     </div>
  <?php */?>
     <ul>
+        <br>
         <li role="presentation"><a href="" @if($rota=='/') class="corrente" @endif>Home</a></li>
         <li role="presentation"><a href="sobre" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
         <li role="presentation"><a href="mapa" @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>

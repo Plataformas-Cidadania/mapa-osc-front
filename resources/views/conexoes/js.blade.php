@@ -100,6 +100,7 @@
 </script>
 
 <script src="js/components/login/menuUsuario.js"></script>
+<script src="js/components/login/menuUsuarioMobile.js"></script>
 
 @if($rota=='detalhar/{id}/{title}' || $rota=='detalhar/{id}')
     <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
