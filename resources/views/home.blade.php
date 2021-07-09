@@ -1,13 +1,12 @@
 @extends('layout')
-@section('title', 'Seja Bem Vindo')
+@section('title', 'Seja bem-vind@')
+@section('description', 'Uma plataforma de transparência pública colaborativa, que reúne dados das organizações da sociedade civil de todo o Brasil')
 @section('content')
 
 
 <div class="container">
-
     <div id="search"></div>
     <br><br><br>
-
     <section>
         <div class="row">
             @foreach($teasers as $teaser)
@@ -26,7 +25,6 @@
                 </a>
             </div>
             @endforeach
-
         </div>
     </section>
 </div>
@@ -66,31 +64,17 @@
     <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
-<!--            <div class="col-md-12">
-                <div class="title-style">
-                    <h2>5 OSCs mais próximas de você, por área de atuação</h2>
-                    <div class="line line-fix block" data-move-x="980px"></div>
-                    <hr/>
-                </div>
-            </div>-->
             <div class="col-md-12">
-                {{--OSCs proximas--}}
                 <div id="nextOsc"></div>
             </div>
-
-
         </div>
     </div>
 
-    {{--Chapa chart react--}}
     <div style="background-color: #F9F9F9;">
         <br><br><br>
         <div id="home"></div>
     </div>
 
-
-
-    {{--<div class="space">&nbsp;</div>--}}
     <br><br>
     <div class="container">
         <div class="row">
@@ -127,16 +111,7 @@
                     </a>
                 </div>
             @endforeach
-<!--            <div class="col-md-12 text-center">
-                <br>
-                <br>
-                <div>
-                    Visualize:
-                    @foreach($midiasMenu as $midia)
-                        <button type="button" class="btn btn-outline-primary"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q"  class="corrente">{{$midia->titulo}}</a></button>
-                    @endforeach
-                </div>
-            </div>-->
+
         </div>
     </div>
     <div class="space">&nbsp;</div>

@@ -1,8 +1,6 @@
 @extends('layout')
-@section('title', '')
-@section('keywords', '')
-@section('description', '')
-@section('image', '')
+@section('title', 'DEPEN')
+@section('description', 'Cadastro Nacional de Participação Social na Execução Penal')
 @section('content')
 
     <style>

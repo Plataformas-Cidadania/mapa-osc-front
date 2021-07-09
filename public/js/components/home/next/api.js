@@ -82,7 +82,7 @@ class NextOsc extends React.Component {
             let lon = geo.lon.toString();
             lat = lat.replace(".", ",");
             lon = lon.replace(".", ",");
-            url = getBaseUrl + 'lista_por_area_atuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
+            url = getBaseUrl2 + 'lista_por_area_atuacao/' + this.state.areaAtuacao + "/geolocalizacao/" + lat + '/' + lon;
         }
 
         $.ajax({
@@ -99,14 +99,14 @@ class NextOsc extends React.Component {
                 console.log(status, err.toString());
             }.bind(this)
         });
-
         $("#txtNext").hide(1000);
     }
 
     loadMunicipios() {
         $.ajax({
             method: 'GET',
-            url: getBaseUrl + 'menu/geo/municipio/' + this.state.searchMunicipio + '/10/0',
+            //url: getBaseUrl2 + 'menu/geo/municipio/'+this.state.searchMunicipio+'/10/0',
+            url: getBaseUrl2 + 'busca/municipio/' + this.state.searchMunicipio,
             data: {},
             cache: false,
             success: function (data) {

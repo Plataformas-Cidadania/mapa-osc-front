@@ -1,9 +1,10 @@
 @extends('layout')
-@section('title', '')
-@section('keywords', '')
-@section('description', '')
-@section('image', '')
+@section('title', $cabecalho->tx_razao_social_osc)
+@section('keywords', keywords($cabecalho->tx_razao_social_osc." ".$descricao->tx_historico, 2))
+@section('description', description($descricao->tx_historico))
 @section('content')
+
+
 
     <?php
     $txt_alert = "Não constam informações nas bases de dados do Mapa";

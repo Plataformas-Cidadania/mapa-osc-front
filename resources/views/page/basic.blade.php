@@ -4,16 +4,18 @@
     $items = \App\Item::where('modulo_id', $page->id)->where('status', 1)->orderBy('posicao')->get();
 ?>
 @extends('layout')
-@section('title', '')
-@section('keywords', '')
-@section('description', '')
-@section('image', '')
+@section('title', $page->titulo)
+@section('keywords', keywords($page->titulo." ".$page->descricao, 2))
+@section('description', description($page->descricao))
+@section('image', "/imagens/modulos/lg-".$page->imagem)
 @section('content')
+
+
+
 
     <style>
         .mb-0{
             background-color: #FFFFFF !important;
-            /*border-bottom: solid 1px #3490dc;*/
             font-weight: bold;
             color: #333333;
             margin: 0 0 5px 0 !important;
@@ -74,7 +76,7 @@
                     <br><br>
                     @endif
 
-                    <p {{--data-message="{!! $page->descricao !!}"--}} tabindex="0">{!! $page->descricao !!}</p>
+                    <p tabindex="0">{!! $page->descricao !!}</p>
                     {{--<p data-message="{!! $page->descricao !!}" tabindex="0">{!! $page->descricao !!}</p>--}}
 
 
