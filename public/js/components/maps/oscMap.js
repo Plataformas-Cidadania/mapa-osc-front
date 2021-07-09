@@ -798,6 +798,9 @@ class OscMap extends React.Component {
     getLogos() {
         let logos = this.state.logos;
         for (let i in this.state.dataOscList) {
+            if (i > 30) {
+                break;
+            }
             let id_osc = this.state.dataOscList[i].id_osc;
             //console.log(id_osc);
             $.ajax({
@@ -807,8 +810,10 @@ class OscMap extends React.Component {
                 contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
                 cache: false,
                 success: function (data) {
-                    //console.log(data);
-                    logos[id_osc] = data;
+                    console.log(data);
+                    if (typeof data === 'string') {
+                        logos[id_osc] = data;
+                    }
                     this.setState({ logos: logos });
                     //this.setState({logo: data});
                 }.bind(this),
@@ -991,7 +996,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1000,7 +1005,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1816,6 +1821,7 @@ class OscMap extends React.Component {
         if (this.state.dataOscList) {
 
             //console.log('***', this.state.data);
+            //if(this.state.dataOscList.length < 50){
             tableOsc = this.state.dataOscList.map(function (item, index) {
                 let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                 return React.createElement(
@@ -1840,12 +1846,12 @@ class OscMap extends React.Component {
                     React.createElement(
                         'td',
                         { className: 'text-center' },
-                        item.tx_nome_osc
+                        item.tx_natureza_juridica_osc
                     ),
                     React.createElement(
                         'td',
                         { className: 'capitalize' },
-                        item.tx_natureza_juridica_osc.toLowerCase()
+                        item.tx_endereco_osc.toLowerCase()
                     ),
                     React.createElement(
                         'td',
@@ -1859,6 +1865,7 @@ class OscMap extends React.Component {
                     )
                 );
             }.bind(this));
+            //}
         }
 
         //MONTANDO A PAGINAÇÃO
