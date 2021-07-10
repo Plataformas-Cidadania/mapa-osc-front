@@ -9,6 +9,8 @@ class OscMap extends React.Component{
             processingOscPontos: false,
             processingHeatMap: false,
             processingList: false,
+            processingExportacao: false,
+            textoProcessingExportacao: "",
             mapId: props.mapId,
             firstTimeLoad: true,
             origem: props.origem,
@@ -25,6 +27,7 @@ class OscMap extends React.Component{
             dataOscList: [],
             paginaOscList: 0,
             totalOscList: 0,
+            dataExportacao: [],
             logos: [],
             //year:props.year,
             //month:props.month,
@@ -98,6 +101,9 @@ class OscMap extends React.Component{
         this.changeTileLayer = this.changeTileLayer.bind(this);
         this.removeMarkersGroup = this.removeMarkersGroup.bind(this);
         this.addMarkersGroup = this.addMarkersGroup.bind(this);
+
+        this.exportar = this.exportar.bind(this);
+        this.gerarCsvExportacao = this.gerarCsvExportacao.bind(this);
 
         this.highlightFeature = this.highlightFeature.bind(this);
         //this.resetHighlight = this.resetHighlight.bind(this);
@@ -1853,6 +1859,66 @@ class OscMap extends React.Component{
                         '#AD3735';
     }
 
+    exportar(){
+        $('#modalExportar').modal('show');
+        if(this.state.origem === 'busca-avancada'){
+            console.log('exportar');
+            this.setState({processingExportacao: true, textoProcessingExportacao: 'buscando dados'});
+            $.ajax({
+                method: 'POST',
+                url: 'osc/busca_avancada/lista',
+                data:{
+                    busca: this.props.strJson,
+                    pagina: 0
+                },
+                cache: false,
+                success: function(data) {
+                    console.log(data);
+                    this.setState({dataExportacao: data, processingExportacao: false}, function(){
+                        this.gerarCsvExportacao();
+                    });
+                    //this.populateMap();
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({processingExportacao: false});
+                }.bind(this)
+            });
+        }
+    }
+
+    gerarCsvExportacao(){
+        console.log('gerar csv');
+        this.setState({textoProcessingExportacao: 'gerando csv'});
+        let firstRow = this.state.dataExportacao[0];
+        let firsRowCsv = '';
+        for(let column in firstRow){
+            if(column !== 'im_logo'){
+                firsRowCsv += column+';';
+            }
+        }
+        firsRowCsv = firsRowCsv.slice(0, -1);
+        let columns = firsRowCsv.split(';');
+        let csv = firsRowCsv+'\n';
+
+        this.state.dataExportacao.forEach(function (item){
+            let row = '';
+            columns.forEach(function (column){
+                row += item[column]+';';
+            });
+            row = row.slice(0, -1);
+            csv += row+'\n';
+        });
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'exportacao.csv';
+        hiddenElement.click();
+        this.setState({processingExportacao: false, textoProcessingExportacao: ''});
+        $('#modalExportar').modal('hide');
+    }
+
     render(){
 
         //console.log(this.state.mapElements.map);
@@ -2012,17 +2078,17 @@ class OscMap extends React.Component{
         return(
             <div>
 
-                {/*Modal*/}
-                <div class="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Consulta Avançada</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {/*Modal Sem Resultados Busca Avancada*/}
+                <div className="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Consulta Avançada</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-md-12">
@@ -2039,25 +2105,70 @@ class OscMap extends React.Component{
                 </div>
 
 
-                <div className="col-md-12">
-                    <div className="box-qtd">
-                        <p>Quantidade de OSCs: </p>
-                        <h2>{this.state.totalOscList}</h2>
-                    </div>
-                <div  style={{margin: '0 15px 0 0'}}>
-                    <div style={{margin: '0 -15px 0 -15px'}}>
-                        <div>
-                            <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
-                            >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
-                        </div>
-                        <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
-                            <div id={this.state.mapId} className="map" />
-                            <div id="controls-map" className="control-container" />
-                            <div id="controls-map2" className="control-container" />
+                {/*Modal Exportar*/}
+                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Exportar</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="text-center" style={{display: this.state.origem === 'busca-avancada' ? '' : 'none'}}>
+                                                <img src="img/load.gif" alt="Load"/><br/>
+                                                <h3 className="text-center">{this.state.textoProcessingExportacao}</h3>
+                                            </div>
+                                            <div className="text-center" style={{display: this.state.origem === 'busca-avancada' ? 'none' : ''}}>
+                                                <h3 className="text-center">Utilize a consulta avançada para exportar os dados</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="box-qtd">
+                            <p>Quantidade de OSCs: </p>
+                            <h2>{this.state.totalOscList}</h2>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="text-right" style={{margin: '0 -30px 0 0'}}>
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={this.exportar}
+                                    title={this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'}
+                                >
+                                    Exportar
+                                </button>
+                            </div>
+                            <br/>
+                        </div>
+                        <div  style={{margin: '0 15px 0 0'}}>
+                            <div style={{margin: '0 -15px 0 -15px'}}>
+                                <div>
+                                    <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
+                                    >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
+                                </div>
+                                <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
+                                    <div id={this.state.mapId} className="map" />
+                                    <div id="controls-map" className="control-container" />
+                                    <div id="controls-map2" className="control-container" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <br/>
                 <div className="row">
