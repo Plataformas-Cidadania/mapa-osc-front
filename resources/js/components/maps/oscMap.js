@@ -29,6 +29,28 @@ class OscMap extends React.Component{
             totalOscList: 0,
             dataExportacao: [],
             logos: [],
+            labelsPesquisaAvancada:{
+                //Dados Gerais
+                'tx_razao_social_osc': 'Nome da Osc',
+                'tx_nome_regiao': 'Regiao',
+                'tx_nome_fantasia_osc': 'Nome Fantasia',
+                'tx_nome_uf': 'UF',
+                'cd_identificador_osc': 'CNPJ',
+                'cd_situacao_imovel_osc': '',
+                'anoFundacaoMIN': 'Ano fundação maior que',
+                'anoFundacaoMAX': 'menor que',
+                'tx_nome_municipio': 'Municipio',
+                'cd_objetivo_osc': 'Objetivo OSC',
+                'cd_meta_osc': 'Meta Osc',
+                'cd_regiao': null,
+                'cd_uf': null,
+                'cd_municipio': null,
+                'naturezaJuridica_associacaoPrivada': 'Associação Privada',
+                'naturezaJuridica_fundacaoPrivada': 'Fundação Privada',
+                'naturezaJuridica_organizacaoReligiosa': 'Organização Religiosa',
+                'naturezaJuridica_organizacaoSocial': 'Organização Social',
+                'naturezaJuridica_outra': 'Jurídica Outra',
+            },
             //year:props.year,
             //month:props.month,
             //filters: props.filters,
@@ -102,6 +124,7 @@ class OscMap extends React.Component{
         this.removeMarkersGroup = this.removeMarkersGroup.bind(this);
         this.addMarkersGroup = this.addMarkersGroup.bind(this);
 
+        //this.itensPesquisadosAvancada = this.itensPesquisadosAvancada.bind(this);
         this.exportar = this.exportar.bind(this);
         this.gerarCsvExportacao = this.gerarCsvExportacao.bind(this);
 
@@ -804,7 +827,6 @@ class OscMap extends React.Component{
                 data:data,
                 cache: false,
                 success: function(data) {
-                    console.log(data);
                     if(pesquisaPorOsc || buscaAvancada){
                         data = {
                             lista: data,
@@ -841,7 +863,7 @@ class OscMap extends React.Component{
                 contentType: false,//NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
                 cache: false,
                 success: function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(typeof data === 'string'){
                         logos[id_osc] = data;
                     }
@@ -1096,7 +1118,7 @@ class OscMap extends React.Component{
                         //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
                     }
                     data = data2;
-                    console.log(data);
+                    //console.log(data);
                     /////////////////////////////////////////////
                     //this.setState({data: data, processingOscPontos: false}, function(){
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
@@ -1143,7 +1165,7 @@ class OscMap extends React.Component{
     }
 
     loadDataPontosOscPesquisaAvancada(){
-        console.log('CARREGAR PONTOS OSC POR PESQUISA AVANCADA');
+        //console.log('CARREGAR PONTOS OSC POR PESQUISA AVANCADA');
         //console.log(this.props.strJson);
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
@@ -1162,7 +1184,7 @@ class OscMap extends React.Component{
                         this.setState({processingOscPontos: false});
                         return;
                     }
-                    console.log('loadPontosPorTerritorio', data);
+                    //console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
@@ -1170,7 +1192,7 @@ class OscMap extends React.Component{
                         data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
                     }
                     data = data2;
-                    console.log(data);
+                    //console.log(data);
                     /////////////////////////////////////////////
                     this.setState({dataOscCluster: data, processingOscPontos: false}, function(){
                         this.populateMapCluster();
@@ -1873,7 +1895,7 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     this.setState({dataExportacao: data, processingExportacao: false}, function(){
                         this.gerarCsvExportacao();
                     });
@@ -1919,8 +1941,29 @@ class OscMap extends React.Component{
         $('#modalExportar').modal('hide');
     }
 
-    render(){
+    /*itensPesquisadosAvancada(){
+        let pesquisa = JSON.parse(this.props.strJson);
+        console.log(pesquisa);
+        let itens = [
+            (<span><strong><u>Filtros utilizados:</u>&nbsp;</strong></span>)
+        ];
+        let avancado = pesquisa.avancado;
+        for(let i in avancado){
+            for(let j in avancado[i]){
+                itens.push(
+                    <span>
+                        <strong><i>{j}: </i></strong> {avancado[i][j]},&nbsp;
+                    </span>
+                )
+            }
+        }
 
+        itens.push(<div><br/></div>);
+
+        return itens;
+    }*/
+
+    render(){
         //console.log(this.state.mapElements.map);
 
         let tableOsc = null;
@@ -1957,6 +2000,9 @@ class OscMap extends React.Component{
             //console.log('***', this.state.data);
             //if(this.state.dataOscList.length < 50){
                 tableOsc = this.state.dataOscList.map(function (item, index) {
+                    if(index > 30){
+                        return;
+                    }
                     let logo = this.state.logos[item.id_osc] ? this.state.logos[item.id_osc] : 'img/sem-imagem.png';
                     return (
                         <tr key={'tabela' + index}>
@@ -2152,6 +2198,9 @@ class OscMap extends React.Component{
                                 </button>
                             </div>
                             <br/>
+                        </div>
+                        <div className="col-md-12">
+                            <VisualizarFiltros strJson={this.props.strJson} />
                         </div>
                         <div  style={{margin: '0 15px 0 0'}}>
                             <div style={{margin: '0 -15px 0 -15px'}}>

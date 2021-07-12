@@ -168,6 +168,7 @@
 @if($rota=='mapa' || $rota=='mapa/{origem}' || $rota=='mapa-busca-avancada')
     <script src="js/components/forms/search.js"></script>
     <script src="js/leaflet.js"></script>
+    <script src="js/components/maps/visualizarFiltros.js"></script>
     <script src="js/components/maps/oscMap.js"></script>
     <script src="js/components/maps/page/page.js"></script>
 @endif
