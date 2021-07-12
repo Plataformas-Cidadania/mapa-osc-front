@@ -59,7 +59,7 @@ class MembersFilter extends React.Component{
                 //console.log('membersSelected', membersSelected);
                 //console.log('membersUrl', this.props.membersUrl);
                 ////////////////////////////////////////////////////
-                console.log('data', data);
+                this.props.qtdMen(data.length);
 
                 this.setState({members: data, membersSelected: membersSelected, loading: false});
                 //this.setState({loading: false, ads:data})

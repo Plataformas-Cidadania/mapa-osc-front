@@ -21,6 +21,7 @@ class List extends React.Component {
                 archives: 'archivesSelected'
             },
             search: ''
+
         };
 
         this.load = this.load.bind(this);
@@ -54,8 +55,6 @@ class List extends React.Component {
     }
 
     load() {
-
-        console.log('midia_id', midia_id);
 
         $.ajax({
             method: 'POST',
@@ -313,6 +312,7 @@ class List extends React.Component {
                             membersUrl: this.state.membersSelected,
                             archivesUrl: this.state.archivesSelected,
                             setSearch: this.setSearch
+
                         })
                     )
                 )

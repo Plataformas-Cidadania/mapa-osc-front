@@ -60,6 +60,7 @@ class CategoriesFilter extends React.Component {
                 //console.log('categoriesSelected', categoriesSelected);
                 //console.log('categoriesUrl', this.props.categoriesUrl);
                 ////////////////////////////////////////////////////
+                this.props.qtdCat(data.length);
 
                 this.setState({ categories: data, categoriesSelected: categoriesSelected, loading: false });
                 //this.setState({loading: false, ads:data})

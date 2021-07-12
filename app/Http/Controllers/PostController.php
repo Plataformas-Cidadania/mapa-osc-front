@@ -28,7 +28,7 @@ class PostController extends Controller
             ->select('integrantes.titulo', 'integrantes.imagem')
             ->join('integrantes_posts', 'integrantes_posts.integrante_id', 'integrantes.id')
             ->join('posts', 'integrantes_posts.post_id', 'posts.id')
-            ->where('posts.id', '!=', $id)
+            ->where('posts.id', $id)
             ->get();
 
         return view('post.detail', [
@@ -71,14 +71,6 @@ class PostController extends Controller
 
         $members = \App\Integrante::
             select(
-            /*DB::Raw("integrantes.*,
-                integrantes.id,
-                integrantes.titulo,
-                count(integrantes.id) as qtd,
-                max(integrantes.imagem) as imagem,
-                midias.id as midia_id,
-                categorias.id as categorias_id
-            ")*/
             DB::Raw("
                 integrantes.id,
                 integrantes.titulo,
@@ -98,6 +90,7 @@ class PostController extends Controller
             ->groupBy('integrantes.id', 'integrantes.titulo', 'midias.id', 'categorias.id')
             ->get();
 
+
         return $members;
     }
 
@@ -106,11 +99,13 @@ class PostController extends Controller
         $archives = \App\Post::
             select(
                 DB::Raw("
-                to_char(data, 'YYYY-MM') as date_menu,
-                count(data) as qtd,
-                to_char(data, 'TMMonth') as month,
-                to_char(data, 'YYYY') as year
+                to_char(posts.data, 'YYYY-MM') as date_menu,
+                count(posts.data) as qtd,
+                to_char(posts.data, 'TMMonth') as month,
+                to_char(posts.data, 'YYYY') as year
                 "))
+            ->join('categorias', 'posts.categoria_id', 'categorias.id')
+            ->where('categorias.midia_id', $request->midia_id)
             ->groupBy('date_menu', 'month', 'year')
             ->orderby('date_menu')
             ->distinct('date_menu')

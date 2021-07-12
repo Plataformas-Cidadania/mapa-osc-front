@@ -74,21 +74,23 @@
                     @endforeach
 
                 </div>
-                <div class="float-none">
-                    <br><br>
-                    <div class="line-color"></div>
-                    <h2><i class="far fa-user"></i> Autores do artigo</h2>
-                    <hr>
-                    @foreach($members as $member)
-                        <div class="list-user">
-                            <img src="imagens/integrantes/md-{{$member->imagem}}" alt="" class="rounded-circle float-left" width="40"/>
-                            <h4>{{$member->titulo}}</h4>
-                            <hr/>
-                        </div>
-                    @endforeach
 
+                @if(count($members)>0)
+                    <div class="float-none">
+                        <br><br>
+                        <div class="line-color"></div>
+                        <h2><i class="far fa-user"></i> Autores</h2>
+                        <hr>
+                        @foreach($members as $member)
+                            <div class="list-user">
+                                <img src="imagens/integrantes/md-{{$member->imagem}}" alt="" class="rounded-circle float-left" width="40"/>
+                                <h4>{{$member->titulo}}</h4>
+                                <hr/>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
 
-                </div>
             </div>
         </div>
 
