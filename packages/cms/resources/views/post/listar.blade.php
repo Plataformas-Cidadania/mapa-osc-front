@@ -106,6 +106,7 @@
                                     {{--<a href="cms/items/<% post.id %>"><i class="fa fa-sitemap fa-2x" title="Itens"></i></a>&nbsp;&nbsp;--}}
                                     <a href="cms/post/<% post.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a  ng-class="<% post.status %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(post.id);"></i></a>
+                                    <a  ng-class="<% post.destaque %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-star fa-2x" aria-hidden="true" ng-click="destaque(post.id);"></i></a>
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(post.id, post.titulo, post.imagem)"></i></a>
                                 </div>
                             </td>

@@ -124,6 +124,7 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-post/{id}', 'Cms\Controllers\PostController@alterar');
         Route::get('/cms/excluir-post/{id}', 'Cms\Controllers\PostController@excluir');
         Route::get('/cms/status-post/{id}', 'Cms\Controllers\PostController@status');
+        Route::get('/cms/destaque-post/{id}', 'Cms\Controllers\PostController@destaque');
 
         //PUBLICATIONS
         Route::get('/cms/publications', 'Cms\Controllers\PublicationController@index');

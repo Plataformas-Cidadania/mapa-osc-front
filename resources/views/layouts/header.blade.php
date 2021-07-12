@@ -128,7 +128,7 @@
 
         <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Dados</a></li>
         <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Base de Dados</a></li>
-        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Dados e Indicadores</a></li>
+        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Indicadores</a></li>
         <li role="presentation"><a href="posts/1/analises" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
 
         <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
@@ -169,7 +169,7 @@
                                 <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
-                                        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>Dados e Indicadores</a></li>
+                                        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>Indicadores</a></li>
                                         <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente " @endif>Análises</a></li>
                                     </ul>
                                 </li>

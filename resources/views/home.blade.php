@@ -47,19 +47,6 @@
     </div>
 
 
-     <style>
-         .bg-map{
-             background-size: 100%;
-             background-position: center -50px;
-             background-repeat: no-repeat;
-         }
-         .bg-line{
-             background-image: url("img/bg-line.png");
-             background-repeat: no-repeat;
-             background-position: right;
-             background-size: 40%;
-         }
-     </style>
 
     <div class="space">&nbsp;</div>
     <div class="container">
@@ -90,18 +77,20 @@
                     <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
                         <div class="img-box">
                             @if($item->imagem!="")
-                            <picture>
-                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
-                                <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
-                                <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
-                                <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
-                            </picture>
+                                <div class="thumbs">
+                                    <picture>
+                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
+                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
+                                        <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
+                                        <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
+                                    </picture>
+                                </div>
                             @endif
-                            <div class="img-rede">
+                           {{-- <div class="img-rede">
                                 <i class="fab fa-facebook-f"></i>
                                 <i class="fab fa-instagram"></i>
                                 <i class="fab fa-twitter"></i>
-                            </div>
+                            </div>--}}
                         </div>
                         <br>
                         <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->data, 'ext')}} </time>
@@ -128,50 +117,6 @@
     nextOscImg = "imagens/texts/{{$text->imagem}}";
 
 </script>
-<style>
-    .icon-next{
-        background-color: #FFFFFF;
-        border: solid 4px #1C4969;
-        width: 70px;
-        height: 70px;
-        margin: auto;
-        margin-top: 161px;
-        margin-left: 271px;
-        border-radius: 50%;
-        text-align: center;
-        position: absolute;
-    }
-    .icon-next svg{
-        color: #1C4969;
-        font-size: 45px;
-        margin-top: 7px;
-
-    }
-</style>
-
-    <style>
-        .menu-items-basic{
-            margin: 0;
-            padding: 0;
-        }
-        .menu-items-basic li{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .menu-items-basic svg{
-            float: right;
-        }
-        .menu-items-basic hr{
-            margin: 0;
-            padding: 3px 0;
-        }
-        .owl-height{
-            height: 122px !important;
-        }
-    </style>
-
-
 
 <script>
 

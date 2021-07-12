@@ -7,7 +7,7 @@ cmsApp.controller('postCtrl', ['$scope', '$http', 'Upload', '$timeout', function
     $scope.maxSize = 5;
     $scope.itensPerPage = 10;
     $scope.dadoPesquisa = '';
-    $scope.campos = "id, titulo, imagem, status";
+    $scope.campos = "id, titulo, imagem, status, destaque";
     $scope.campoPesquisa = "titulo";
     $scope.processandoListagem = false;
     $scope.processandoExcluir = false;
@@ -211,6 +211,28 @@ cmsApp.controller('postCtrl', ['$scope', '$http', 'Upload', '$timeout', function
             $scope.message = "Ocorreu um erro: "+data;
             $scope.processandoStatus = false;
             $scope.mensagemStatus = "Erro ao tentar status!";
+        });
+    };
+    //////////////////////////////////
+    $scope.destaque = function(id){
+        //console.log(id);
+        $scope.mensagemDestaque = '';
+        $scope.idDestaque = '';
+        $scope.processandoDestaque = true;
+        $http({
+            url: 'cms/destaque-post/'+id,
+            method: 'GET'
+        }).success(function(data, destaque, headers, config){
+            //console.log(data);
+            $scope.processandoDestaque = false;
+            //$scope.excluido = true;
+            $scope.mensagemDestaque = 'color-success';
+            $scope.idDestaque = id;
+            listarPosts();
+        }).error(function(data){
+            $scope.message = "Ocorreu um erro: "+data;
+            $scope.processandoDestaque = false;
+            $scope.mensagemDestaque = "Erro ao tentar destaque!";
         });
     };
 

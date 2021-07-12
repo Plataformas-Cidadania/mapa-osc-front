@@ -1,0 +1,66 @@
+/*/////////*/
+.thumbs {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+}
+.thumbs img {
+    width: 100%;
+    transform: scale(1.2);
+    border-radius: 5px 5px 0 0;
+}
+
+.thumbs-circle img {
+    transform: scale(1.1)!important;
+    margin-top: 0;
+}
+/*/////////////////////////////////////////*/
+.icon-next{
+    background-color: #FFFFFF;
+    border: solid 4px #1C4969;
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    margin-top: 161px;
+    margin-left: 271px;
+    border-radius: 50%;
+    text-align: center;
+    position: absolute;
+}
+.icon-next svg{
+    color: #1C4969;
+    font-size: 45px;
+    margin-top: 7px;
+
+}
+.menu-items-basic{
+    margin: 0;
+    padding: 0;
+}
+.menu-items-basic li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.menu-items-basic svg{
+    float: right;
+}
+.menu-items-basic hr{
+    margin: 0;
+    padding: 3px 0;
+}
+.owl-height{
+    height: 122px !important;
+}
+
+.bg-map{
+    background-size: 100%;
+    background-position: center -50px;
+    background-repeat: no-repeat;
+}
+.bg-line{
+    background-image: url("img/bg-line.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 40%;
+}
