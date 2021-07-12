@@ -16,10 +16,31 @@ class ToolController extends Controller{
 
     public function seal($id){
 
-        $dados_gerais = DB::connection('map')->table('portal.vw_osc_dados_gerais')->where('id_osc', $id)->first();
+
+        $dados_gerais = curlSelo('cabecalho', $id);
+        $dados= curlSelo('dados_gerais', $id);
+
+
+        ////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////
+        $url = env('APP_API_ROUTE')."osc/indice_preenchimento/".$id;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+        $data = json_decode($data, true);
+        ////////////////////////////////////////////////////////
+
+        //return $dados_gerais;
 
         return view('tool.seal', [
             'dados_gerais' => $dados_gerais,
+            'dados' => $dados,
+            'indice' => $data,
+            'id_osc' => $id,
         ]);
     }
 
