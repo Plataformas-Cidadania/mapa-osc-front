@@ -17,7 +17,7 @@ class HomeController extends Controller
         $text = \App\Text::where('slug', 'osc-proximas')->first();
 
         $midiasMenu = DB::table('midias')->orderBy('titulo')->get();
-        $midias = \App\Post::orderBy('id', 'desc')->take(3)->get();
+        $midias = \App\Post::orderBy('id', 'desc')->where('destaque', 1)->take(3)->get();
 
         if(!empty($text)){
             return view('home', [
