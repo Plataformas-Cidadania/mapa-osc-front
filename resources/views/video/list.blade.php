@@ -20,6 +20,8 @@
         </div>
     </div>
 
+
+    @if(count($lists)>0)
     <div class="container">
         <br>
         <br>
@@ -77,6 +79,7 @@
         <div>{{ $lists->links() }}</div>
         <br><br>
     </div>
+    @endif
 
     <style>
         .box-video h2{
