@@ -390,12 +390,25 @@ class VisualizarFiltros extends React.Component {
             }
         }
 
-        return null;
-
         let atividadeEconomica = json_filtro.atividadeEconomica;
 
         if (atividadeEconomica) {
-            txt += "<b><i>Atividade Econômica (CNAE):</i></b> " + atividadeEconomica.tx_atividade_economica + ", ";
+            txt.push(React.createElement(
+                'span',
+                null,
+                React.createElement(
+                    'b',
+                    null,
+                    React.createElement(
+                        'i',
+                        null,
+                        'Atividade Econ\xF4mica (CNAE):'
+                    )
+                ),
+                atividadeEconomica.tx_atividade_economica,
+                ', '
+            ));
+            //txt += "<b><i>Atividade Econômica (CNAE):</i></b> " + atividadeEconomica.tx_atividade_economica + ", ";
         }
 
         let areasSubareasAtuacao = json_filtro.areasSubareasAtuacao;
@@ -403,7 +416,7 @@ class VisualizarFiltros extends React.Component {
             let nomes_area_sub_atuacao = [];
 
             $.ajax({
-                url: rotas.AreaAtuacao(),
+                url: getBaseUrl2 + 'area_atuacao',
                 type: 'GET',
                 async: false,
                 dataType: 'json',
@@ -411,9 +424,11 @@ class VisualizarFiltros extends React.Component {
                     console.log("Erro no ajax: ");
                 },
                 success: function (data) {
+                    console.log(data);
+                    console.log(areasSubareasAtuacao);
                     for (let key in areasSubareasAtuacao) {
                         let cd_area_atuacao = parseInt(key.split('cd_area_atuacao-')[1]);
-
+                        console.log(key);
                         if (cd_area_atuacao != undefined) {
                             $.each(data, function (k, value) {
                                 if (cd_area_atuacao == value.cd_area_atuacao) {
@@ -426,7 +441,8 @@ class VisualizarFiltros extends React.Component {
                     }
 
                     $.ajax({
-                        url: rotas.SubAreaAtuacao(),
+                        url: getBaseUrl2 + 'subarea_atuacao',
+                        //url: rotas.SubAreaAtuacao(),
                         type: 'GET',
                         async: false,
                         dataType: 'json',
@@ -434,7 +450,7 @@ class VisualizarFiltros extends React.Component {
                             console.log("Erro no ajax: ");
                         },
                         success: function (data) {
-                            for (key in areasSubareasAtuacao) {
+                            for (let key in areasSubareasAtuacao) {
                                 let cd_subarea_atuacao = parseInt(key.split('cd_subarea_atuacao-')[1]);
 
                                 if (cd_subarea_atuacao != undefined) {
@@ -449,13 +465,37 @@ class VisualizarFiltros extends React.Component {
                             }
 
                             if (nomes_area_sub_atuacao.length > 0) {
-                                txt += "<b><i>Área e Subárea de Atuação:</i></b> " + nomes_area_sub_atuacao.join(', ') + ", ";
+                                let area_subarea = nomes_area_sub_atuacao.map(function (item) {
+                                    return React.createElement(
+                                        'span',
+                                        null,
+                                        item,
+                                        ', '
+                                    );
+                                });
+                                txt.push(React.createElement(
+                                    'span',
+                                    null,
+                                    React.createElement(
+                                        'b',
+                                        null,
+                                        React.createElement(
+                                            'i',
+                                            null,
+                                            '\xC1rea e Sub\xE1rea de Atua\xE7\xE3o:'
+                                        )
+                                    ),
+                                    area_subarea
+                                ));
+                                //txt += "<b><i>Área e Subárea de Atuação:</i></b> " + nomes_area_sub_atuacao.join(', ') + ", ";
                             }
                         }
                     });
                 }
             });
         }
+
+        return null;
 
         let titulacoesCertificacoes = json_filtro.titulacoesCertificacoes;
 

@@ -150,6 +150,7 @@ class Filter extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
+        this.handleAreaAtuacao = this.handleAreaAtuacao.bind(this);
         this.handleSubAreaAtuacao = this.handleSubAreaAtuacao.bind(this);
         this.handleCheckChangeTitulacaoCertificacao = this.handleCheckChangeTitulacaoCertificacao.bind(this);
         this.handleCheckChangeIDH = this.handleCheckChangeIDH.bind(this);
@@ -287,8 +288,14 @@ class Filter extends React.Component{
         console.log(value);
         let json = this.state.json;
         if(value){
-            console.log('-----------');
-            json.avancado.atividadeEconomica = value;
+            //console.log('-----------');
+            //console.log(value);
+            json.avancado.atividadeEconomica = {
+                tx_atividade_economica: value.tx_nome_classe_atividade_economica,
+                cd_classe_atividade_economica: value.cd_classe_atividade_economica,
+            }
+            //console.log(json);
+            //json.avancado.atividadeEconomica = value;
             this.setState({json: json});
             return;
         }
@@ -296,11 +303,55 @@ class Filter extends React.Component{
         this.setState({json: json});
     }
 
-    setJsonAreasSubareasAtuacao(name, value){
+    setJsonAreasSubareasAtuacao(name, value, area){
+        console.log(name, value, area);
         let json = this.state.json;
         if(!json.avancado.hasOwnProperty('areasSubareasAtuacao')){
             json.avancado.areasSubareasAtuacao = {};
         }
+
+        //clicou em subarea
+        if(area){
+            if(value){
+                json.avancado.areasSubareasAtuacao[name] = value;
+                //console.log(json.avancado.areasSubareasAtuacao);
+                delete json.avancado.areasSubareasAtuacao[area];//deleta a área por ter especificado uma subarea
+                this.setState({json: json});
+                return;
+            }
+            delete json.avancado.areasSubareasAtuacao[name];
+
+            //Irá verificar se ainda existe subáreas da área. Se não existir adicionar a área novamente ao json
+            let partesArea = area.split('-');
+            let codigoArea = partesArea[1];
+            let areaSelecionada = this.state.areaAtuacao.find(function(item){
+                //console.log(item.cd_area_atuacao, codigoArea);
+                return parseInt(item.cd_area_atuacao) === parseInt(codigoArea);
+            });
+            //console.log('areaSelecionada', areaSelecionada);
+            let existSubareaArea = false;
+            for(let i in areaSelecionada.subareas){
+                for(let subarea in json.avancado.areasSubareasAtuacao){
+                    let partesArea = subarea.split('-');
+                    let codigoSubarea = partesArea[1];
+                    //console.log(areaSelecionada.subareas[i].cd_subarea_atuacao, codigoSubarea);
+                    if(parseInt(areaSelecionada.subareas[i].cd_subarea_atuacao) === parseInt(codigoSubarea)){
+                        existSubareaArea = true;
+                        break;
+                    }
+                }
+            }
+            if(!existSubareaArea){
+                json.avancado.areasSubareasAtuacao[area] = true;//recoloca a área não existir subareas marcadas
+            }
+            //////////////////////////////
+
+
+            this.setState({json: json});
+            return;
+        }
+
+        //clicou em area
         if(value){
             json.avancado.areasSubareasAtuacao[name] = value;
             this.setState({json: json});
@@ -308,6 +359,7 @@ class Filter extends React.Component{
         }
         delete json.avancado.areasSubareasAtuacao[name];
         this.setState({json: json});
+
     }
 
     setJsonTitulacaoCertificacao(name, value){
@@ -505,8 +557,12 @@ class Filter extends React.Component{
         this.setState({form: form});
     }
 
-    handleSubAreaAtuacao(codigo, value){
-        this.setJsonAreasSubareasAtuacao('cd_subarea_atuacao-'+codigo, value)
+    handleAreaAtuacao(codigo, value){
+        this.setJsonAreasSubareasAtuacao('cd_area_atuacao-'+codigo, value, null);
+    }
+
+    handleSubAreaAtuacao(codigo, value, cd_area_atuacao){
+        this.setJsonAreasSubareasAtuacao('cd_subarea_atuacao-'+codigo, value, 'cd_area_atuacao-'+cd_area_atuacao);
     }
 
     /*Regiao*/
@@ -1388,7 +1444,8 @@ class Filter extends React.Component{
                                 <div className="custom-control custom-checkbox"
                                      onChange={() => this.handleSubAreaAtuacao(
                                          subitem.cd_subarea_atuacao,
-                                         document.getElementById("subarea_"+subitem.cd_subarea_atuacao).checked
+                                         document.getElementById("subarea_"+subitem.cd_subarea_atuacao).checked,
+                                         item.cd_area_atuacao,
                                      )
                                      }>
                                     <input type="checkbox" className="custom-control-input" id={"subarea_"+subitem.cd_subarea_atuacao} required/>
@@ -1411,7 +1468,10 @@ class Filter extends React.Component{
                 );
 
                return (
-                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => this.callSubAreaAtuacao(item.cd_area_atuacao)}>
+                   <div className="custom-control custom-checkbox" key={"area_"+item.cd_area_atuacao} onChange={() => {
+                       this.callSubAreaAtuacao(item.cd_area_atuacao);
+                       this.handleAreaAtuacao(item.cd_area_atuacao, document.getElementById("area_"+item.cd_area_atuacao).checked);
+                   }}>
                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_area_atuacao} required/>
                        <label className="custom-control-label" htmlFor={"area_"+item.cd_area_atuacao} >{item.tx_nome_area_atuacao}</label>
                    </div>
