@@ -38,7 +38,7 @@ class VisualizarFiltros extends React.Component {
         ));
         let nj = false;
 
-        console.log(txt);
+        //console.log(txt);
         this.setState({ filtros: txt });
 
         if (dadosgerais) {
@@ -495,15 +495,14 @@ class VisualizarFiltros extends React.Component {
             });
         }
 
-        return null;
-
         let titulacoesCertificacoes = json_filtro.titulacoesCertificacoes;
 
         if (titulacoesCertificacoes) {
             let nomes_titulacoesCertificacoes = [];
 
             $.ajax({
-                url: rotas.Busca_Certificado(),
+                url: getBaseUrl2 + 'certificado',
+                //url: rotas.Busca_Certificado(),
                 type: 'GET',
                 async: false,
                 dataType: 'json',
@@ -539,7 +538,21 @@ class VisualizarFiltros extends React.Component {
                     }
 
                     if (nomes_titulacoesCertificacoes.length > 0) {
-                        txt += "<b><i>Titulações e Certificações:</i></b> " + nomes_titulacoesCertificacoes.join(', ') + ", ";
+                        txt.push(React.createElement(
+                            'span',
+                            null,
+                            React.createElement(
+                                'b',
+                                null,
+                                React.createElement(
+                                    'i',
+                                    null,
+                                    'Titula\xE7\xF5es e Certifica\xE7\xF5es:'
+                                )
+                            ),
+                            nomes_titulacoesCertificacoes
+                        ));
+                        //txt += "<b><i>Titulações e Certificações:</i></b> " + nomes_titulacoesCertificacoes.join(', ') + ", ";
                     }
                 }
             });
@@ -549,65 +562,286 @@ class VisualizarFiltros extends React.Component {
 
         if (relacoesTrabalhoGovernanca) {
             if (relacoesTrabalhoGovernanca.tx_nome_dirigente) {
-                txt += "<b><i>Nome do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_dirigente + ", ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Nome do Dirigente: '
+                        )
+                    ),
+                    relacoesTrabalhoGovernanca.tx_nome_dirigente,
+                    ', '
+                ));
+                //txt += "<b><i>Nome do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_dirigente + ", ";
             }
 
             if (relacoesTrabalhoGovernanca.tx_cargo_dirigente) {
-                txt += "<b><i>Cargo do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_cargo_dirigente + ", ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Cargo do Dirigente: '
+                        )
+                    ),
+                    relacoesTrabalhoGovernanca.tx_cargo_dirigente,
+                    ', '
+                ));
+                //txt += "<b><i>Cargo do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_cargo_dirigente + ", ";
             }
 
             if (relacoesTrabalhoGovernanca.tx_nome_conselheiro) {
-                txt += "<b><i>Nome do Membro do Conselho Fiscal:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_conselheiro + ", ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Nome do Membro do Conselho Fiscal: '
+                        )
+                    ),
+                    relacoesTrabalhoGovernanca.tx_nome_conselheiro,
+                    ', '
+                ));
+                //txt += "<b><i>Nome do Membro do Conselho Fiscal:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_conselheiro + ", ";
             }
 
             if (relacoesTrabalhoGovernanca.totalTrabalhadoresMIN || relacoesTrabalhoGovernanca.totalTrabalhadoresMAX) {
-                txt += "<b><i>Total de Trabalhadores</i></b> ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Total de Trabalhadores '
+                        )
+                    )
+                ));
+                //txt += "<b><i>Total de Trabalhadores</i></b>;
 
                 if (relacoesTrabalhoGovernanca.totalTrabalhadoresMIN) {
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMIN + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'maior que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.totalTrabalhadoresMIN,
+                        ', '
+                    ));
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMIN  + ", ";
                 }
 
                 if (relacoesTrabalhoGovernanca.totalTrabalhadoresMAX) {
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMAX + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'menor que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.totalTrabalhadoresMAX,
+                        ', '
+                    ));
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMAX  + ", ";
                 }
             }
 
             if (relacoesTrabalhoGovernanca.totalEmpregadosMIN || relacoesTrabalhoGovernanca.totalEmpregadosMAX) {
-                txt += "<b><i>Total de Empregados</i></b> ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Total de Empregados '
+                        )
+                    )
+                ));
+                //txt += "<b><i>Total de Empregados</i></b> ";
 
                 if (relacoesTrabalhoGovernanca.totalEmpregadosMIN) {
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMIN + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'maior que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.totalEmpregadosMIN,
+                        ', '
+                    ));
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMIN  + ", ";
                 }
 
                 if (relacoesTrabalhoGovernanca.totalEmpregadosMAX) {
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMAX + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'menor que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.totalEmpregadosMAX,
+                        ', '
+                    ));
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMAX  + ", ";
                 }
             }
 
             if (relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN || relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX) {
-                txt += "<b><i>Trabalhadores com Deficiência</i></b> ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Trabalhadores com Defici\xEAncia '
+                        )
+                    )
+                ));
+                //txt += "<b><i>Trabalhadores com Deficiência</i></b> ";
 
                 if (relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN) {
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'maior que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN,
+                        ', '
+                    ));
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN  + ", ";
                 }
 
                 if (relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX) {
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX + ", ";
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'menor que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX,
+                        ', '
+                    ));
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX  + ", ";
                 }
             }
 
             if (relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN || relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX) {
-                txt += "<b><i>Trabalhadores voluntários</i></b> ";
+                txt.push(React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'b',
+                        null,
+                        React.createElement(
+                            'i',
+                            null,
+                            'Trabalhadores volunt\xE1rios '
+                        )
+                    )
+                ));
+                //txt += "<b><i>Trabalhadores voluntários</i></b> ";
 
-                if (relacoesTrabalhoGovernanca.totalTrabalhadoresMIN) {
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN + ", ";
+                //if(relacoesTrabalhoGovernanca.totalTrabalhadoresMIN){
+                if (relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN) {
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'maior que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN,
+                        ', '
+                    ));
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN  + ", ";
                 }
 
-                if (relacoesTrabalhoGovernanca.totalTrabalhadoresMAX) {
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX + ", ";
+                //if(relacoesTrabalhoGovernanca.totalTrabalhadoresMAX){
+                if (relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX) {
+                    txt.push(React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'b',
+                            null,
+                            React.createElement(
+                                'i',
+                                null,
+                                'menor que: '
+                            )
+                        ),
+                        relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX,
+                        ', '
+                    ));
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX  + ", ";
                 }
             }
         }
+
+        return null;
 
         let espacosParticipacaoSocial = json_filtro.espacosParticipacaoSocial;
 

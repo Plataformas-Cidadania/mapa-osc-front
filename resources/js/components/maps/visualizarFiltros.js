@@ -32,7 +32,7 @@ class VisualizarFiltros extends React.Component{
         txt.push(<b><u>Filtros utilizados:</u></b>);
         let nj = false;
 
-        console.log(txt);
+        //console.log(txt);
         this.setState({filtros: txt});
 
         if(dadosgerais){
@@ -253,15 +253,14 @@ class VisualizarFiltros extends React.Component{
             });
         }
 
-        return null;
-
         let titulacoesCertificacoes = json_filtro.titulacoesCertificacoes;
 
         if(titulacoesCertificacoes){
             let nomes_titulacoesCertificacoes = []
 
             $.ajax({
-                url: rotas.Busca_Certificado(),
+                url: getBaseUrl2+'certificado',
+                //url: rotas.Busca_Certificado(),
                 type: 'GET',
                 async:false,
                 dataType: 'json',
@@ -297,75 +296,97 @@ class VisualizarFiltros extends React.Component{
                     }
 
                     if(nomes_titulacoesCertificacoes.length > 0){
-                        txt += "<b><i>Titulações e Certificações:</i></b> " + nomes_titulacoesCertificacoes.join(', ') + ", ";
+                        txt.push(<span><b><i>Titulações e Certificações:</i></b>{nomes_titulacoesCertificacoes}</span>);
+                        //txt += "<b><i>Titulações e Certificações:</i></b> " + nomes_titulacoesCertificacoes.join(', ') + ", ";
                     }
                 }
             });
         }
 
+
+
         let relacoesTrabalhoGovernanca = json_filtro.relacoesTrabalhoGovernanca;
 
         if(relacoesTrabalhoGovernanca){
             if(relacoesTrabalhoGovernanca.tx_nome_dirigente){
-                txt += "<b><i>Nome do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_dirigente + ", ";
+                txt.push(<span><b><i>Nome do Dirigente: </i></b>{relacoesTrabalhoGovernanca.tx_nome_dirigente}, </span>);
+                //txt += "<b><i>Nome do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_dirigente + ", ";
             }
 
             if(relacoesTrabalhoGovernanca.tx_cargo_dirigente){
-                txt += "<b><i>Cargo do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_cargo_dirigente + ", ";
+                txt.push(<span><b><i>Cargo do Dirigente: </i></b>{relacoesTrabalhoGovernanca.tx_cargo_dirigente}, </span>);
+                //txt += "<b><i>Cargo do Dirigente:</i></b> " + relacoesTrabalhoGovernanca.tx_cargo_dirigente + ", ";
             }
 
             if(relacoesTrabalhoGovernanca.tx_nome_conselheiro){
-                txt += "<b><i>Nome do Membro do Conselho Fiscal:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_conselheiro + ", ";
+                txt.push(<span><b><i>Nome do Membro do Conselho Fiscal: </i></b>{relacoesTrabalhoGovernanca.tx_nome_conselheiro}, </span>);
+                //txt += "<b><i>Nome do Membro do Conselho Fiscal:</i></b> " + relacoesTrabalhoGovernanca.tx_nome_conselheiro + ", ";
             }
 
             if(relacoesTrabalhoGovernanca.totalTrabalhadoresMIN ||  relacoesTrabalhoGovernanca.totalTrabalhadoresMAX){
-                txt += "<b><i>Total de Trabalhadores</i></b> ";
+                txt.push(<span><b><i>Total de Trabalhadores </i></b></span>);
+                //txt += "<b><i>Total de Trabalhadores</i></b>;
 
                 if(relacoesTrabalhoGovernanca.totalTrabalhadoresMIN){
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMIN  + ", ";
+                    txt.push(<span><b><i>maior que: </i></b>{relacoesTrabalhoGovernanca.totalTrabalhadoresMIN}, </span>);
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMIN  + ", ";
                 }
 
                 if(relacoesTrabalhoGovernanca.totalTrabalhadoresMAX){
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMAX  + ", ";
+                    txt.push(<span><b><i>menor que: </i></b>{relacoesTrabalhoGovernanca.totalTrabalhadoresMAX}, </span>);
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalTrabalhadoresMAX  + ", ";
                 }
             }
 
             if(relacoesTrabalhoGovernanca.totalEmpregadosMIN ||  relacoesTrabalhoGovernanca.totalEmpregadosMAX){
-                txt += "<b><i>Total de Empregados</i></b> ";
+                txt.push(<span><b><i>Total de Empregados </i></b></span>);
+                //txt += "<b><i>Total de Empregados</i></b> ";
 
                 if(relacoesTrabalhoGovernanca.totalEmpregadosMIN){
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMIN  + ", ";
+                    txt.push(<span><b><i>maior que: </i></b>{relacoesTrabalhoGovernanca.totalEmpregadosMIN}, </span>);
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMIN  + ", ";
                 }
 
                 if(relacoesTrabalhoGovernanca.totalEmpregadosMAX){
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMAX  + ", ";
+                    txt.push(<span><b><i>menor que: </i></b>{relacoesTrabalhoGovernanca.totalEmpregadosMAX}, </span>);
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.totalEmpregadosMAX  + ", ";
                 }
             }
 
             if(relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN ||  relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX){
-                txt += "<b><i>Trabalhadores com Deficiência</i></b> ";
+                txt.push(<span><b><i>Trabalhadores com Deficiência </i></b></span>);
+                //txt += "<b><i>Trabalhadores com Deficiência</i></b> ";
 
                 if(relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN){
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN  + ", ";
+                    txt.push(<span><b><i>maior que: </i></b>{relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN}, </span>);
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMIN  + ", ";
                 }
 
                 if(relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX){
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX  + ", ";
+                    txt.push(<span><b><i>menor que: </i></b>{relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX}, </span>);
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresDeficienciaMAX  + ", ";
                 }
             }
 
             if(relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN ||  relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX){
-                txt += "<b><i>Trabalhadores voluntários</i></b> ";
+                txt.push(<span><b><i>Trabalhadores voluntários </i></b></span>);
+                //txt += "<b><i>Trabalhadores voluntários</i></b> ";
 
-                if(relacoesTrabalhoGovernanca.totalTrabalhadoresMIN){
-                    txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN  + ", ";
+                //if(relacoesTrabalhoGovernanca.totalTrabalhadoresMIN){
+                if(relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN){
+                    txt.push(<span><b><i>maior que: </i></b>{relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN}, </span>);
+                    //txt += "<b><i>maior que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMIN  + ", ";
                 }
 
-                if(relacoesTrabalhoGovernanca.totalTrabalhadoresMAX){
-                    txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX  + ", ";
+                //if(relacoesTrabalhoGovernanca.totalTrabalhadoresMAX){
+                if(relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX){
+                    txt.push(<span><b><i>menor que: </i></b>{relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX}, </span>);
+                    //txt += "<b><i>menor que:</i></b> " + relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX  + ", ";
                 }
             }
         }
+
+        return null;
 
         let espacosParticipacaoSocial = json_filtro.espacosParticipacaoSocial;
 
