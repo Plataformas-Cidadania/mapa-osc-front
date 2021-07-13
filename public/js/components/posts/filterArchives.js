@@ -29,7 +29,8 @@ class ArchivesFilter extends React.Component {
             },
             data: {
                 city: this.props.city,
-                search: this.state.search
+                search: this.state.search,
+                midia_id: midia_id
             },
             cache: false,
             success: function (data) {
@@ -91,7 +92,7 @@ class ArchivesFilter extends React.Component {
         if (add) {
             let archivesSelected = this.state.archivesSelected;
             archivesSelected.push(item);
-            console.log('addArchive - archivesSelected', archivesSelected);
+
             this.setState({ showArchives: false });
             this.setState({ archivesSelected: archivesSelected }, function () {
                 this.props.filterArchives(this.state.archivesSelected);

@@ -4,14 +4,18 @@ class Filters extends React.Component {
         this.state = {
             categories: [],
             members: [],
-            archives: []
-
+            archives: [],
+            qtdCat: 0,
+            qtdMen: 0
         };
 
         this.load = this.load.bind(this);
         this.filterCategories = this.filterCategories.bind(this);
         this.filterMembers = this.filterMembers.bind(this);
         this.filterArchives = this.filterArchives.bind(this);
+
+        this.qtdCat = this.qtdCat.bind(this);
+        this.qtdMen = this.qtdMen.bind(this);
     }
 
     componentDidMount() {
@@ -29,11 +33,9 @@ class Filters extends React.Component {
             },
             cache: false,
             success: function (data) {
-                //console.log(data);
                 this.setState({ loading: false, ads: data });
             }.bind(this),
             error: function (xhr, status, err) {
-                //console.error(status, err.toString());
                 this.setState({ loading: false });
             }.bind(this)
         });
@@ -41,23 +43,28 @@ class Filters extends React.Component {
 
     filterCategories(categories) {
         this.setState({ categories: categories }, function () {
-            //console.log(this.state.categories);
             this.props.filterCategories(categories);
         });
     }
 
     filterMembers(members) {
         this.setState({ members: members }, function () {
-            //console.log(this.state.members);
             this.props.filterMembers(members);
         });
     }
 
     filterArchives(archives) {
         this.setState({ archives: archives }, function () {
-            //console.log(this.state.archives);
             this.props.filterArchives(archives);
         });
+    }
+
+    qtdCat(qtd) {
+        this.setState({ qtdCat: qtd });
+    }
+
+    qtdMen(qtd) {
+        this.setState({ qtdMen: qtd });
     }
 
     render() {
@@ -83,7 +90,7 @@ class Filters extends React.Component {
             ),
             React.createElement(
                 'div',
-                null,
+                { style: { display: parseInt(this.state.qtdCat) < 1 ? 'none' : '' } },
                 React.createElement('br', null),
                 React.createElement('br', null),
                 React.createElement('div', { className: 'line-color' }),
@@ -93,11 +100,15 @@ class Filters extends React.Component {
                     React.createElement('i', { className: 'far fa-folder-open' }),
                     ' Categorias'
                 ),
-                React.createElement(CategoriesFilter, { filterCategories: this.filterCategories, categoriesUrl: this.props.categoriesUrl })
+                React.createElement(CategoriesFilter, {
+                    filterCategories: this.filterCategories,
+                    categoriesUrl: this.props.categoriesUrl,
+                    qtdCat: this.qtdCat
+                })
             ),
             React.createElement(
                 'div',
-                { className: 'float-none' },
+                { className: 'float-none', style: { display: parseInt(this.state.qtdMen) <= 0 ? 'none' : '' } },
                 React.createElement('br', null),
                 React.createElement('br', null),
                 React.createElement('div', { className: 'line-color' }),
@@ -107,7 +118,11 @@ class Filters extends React.Component {
                     React.createElement('i', { className: 'far fa-user' }),
                     ' Autores'
                 ),
-                React.createElement(MembersFilter, { filterMembers: this.filterMembers, membersUrl: this.props.membersUrl })
+                React.createElement(MembersFilter, {
+                    filterMembers: this.filterMembers,
+                    membersUrl: this.props.membersUrl,
+                    qtdMen: this.qtdMen
+                })
             ),
             React.createElement('br', null)
         );

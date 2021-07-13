@@ -14,6 +14,7 @@ class CategoriesFilter extends React.Component{
         this.handleSearch = this.handleSearch.bind(this);
         this.addCategory = this.addCategory.bind(this);
         this.removeCategory = this.removeCategory.bind(this);
+
     }
 
     componentDidMount(){
@@ -60,6 +61,7 @@ class CategoriesFilter extends React.Component{
                 //console.log('categoriesSelected', categoriesSelected);
                 //console.log('categoriesUrl', this.props.categoriesUrl);
                 ////////////////////////////////////////////////////
+                this.props.qtdCat(data.length);
 
                 this.setState({categories: data, categoriesSelected: categoriesSelected, loading: false});
                 //this.setState({loading: false, ads:data})
@@ -77,6 +79,8 @@ class CategoriesFilter extends React.Component{
             this.load();
         })
     }
+
+
 
     handleSearch(e){
         this.setState({search: e.target.value}, function(){
@@ -124,6 +128,7 @@ class CategoriesFilter extends React.Component{
 
         let qtdItems = this.state.categories.length;
         let showQtdItems = 5;
+
 
         let firstCategories = this.state.categories.map(function (item, index){
             if(index < showQtdItems){

@@ -113,7 +113,9 @@
         </div>
     </div>
     <div class="bg-pri">
+        @if(env('APP_URL')!="http://mapa-osc-laravel.local/")
         <script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        @endif
         <div id="footer-brasil"></div>
         <style>
             div#wrapper-barra-brasil {
