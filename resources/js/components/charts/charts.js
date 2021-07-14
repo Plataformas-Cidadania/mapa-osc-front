@@ -34,7 +34,7 @@ class Charts extends React.Component{
         let charts = [];
 
         for(let chart in data){
-            //console.log("######"+i+"######");
+
             let dataChart = data[chart].series_1;
 
             let labels = [];
@@ -100,7 +100,6 @@ class Charts extends React.Component{
 
                     for(let k in values) {
                         labels.push(values[k][colLabel]);
-
                         serie.data.push(values[k][colValue]);
                     }
 
@@ -117,18 +116,23 @@ class Charts extends React.Component{
                         data: []
                     };
                 }
-                labels.push(dataChart[j].label)
+
+
+                labels.push(dataChart[j].label.split(' '))
+
+
                 //labels.push("")
                 series[0].name = "";
                 series[0].type = tipoGrafico;
                 series[0].data.push(dataChart[j].value);
+
 
                 ///////////////////////////////////////////////
             }
             charts.push({chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico});
         }
 
-        console.log(charts);
+
 
         this.setState({
             charts: charts,
@@ -144,7 +148,7 @@ class Charts extends React.Component{
         let tables = [];
 
         for(let chart in data) {
-            //console.log("######"+i+"######");
+
             let dataTable = data[chart].series_2;
             if(!dataTable){
                 dataTable = data[chart].series_1;
@@ -201,7 +205,7 @@ class Charts extends React.Component{
         let modal = this.state.modal;
 
         let table = this.state.tables[chart];
-        //console.log(table);
+
         modal.name = table.name;
         modal.fontes = table.fontes;
 
@@ -291,9 +295,13 @@ class Charts extends React.Component{
         let menu = null;
         let modal = this.modal();
 
+
         if(this.state.charts){
 
+
             charts = this.state.charts.map(function(item, index){
+
+
 
                 let chart = null;
                 switch (item.type) {
@@ -336,7 +344,6 @@ class Charts extends React.Component{
                         <a onClick={() => this.callMenu(index)}>{index + 1} - {item}</a>
                     </li>
                 )
-                console.log(this.callMenu());
             }.bind(this));
         }
 

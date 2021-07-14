@@ -8,7 +8,7 @@ class BarChart extends React.Component {
                 chart: {
                     events: {
                         click: function (chart, w, e) {
-                            console.log(chart, w, e)
+                            //console.log(chart, w, e)
                         }
                     },
                     id: props.id
