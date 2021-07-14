@@ -142,8 +142,8 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        console.log('cd_objetivo_osc', dadosgerais.cd_objetivo_osc);
-                        console.log('objetivos', data);
+                        //console.log('cd_objetivo_osc', dadosgerais.cd_objetivo_osc);
+                        //console.log('objetivos', data);
                         if(data.length > 0){
                             let objetivo = data.find(function (item){
                                 return item.cd_objetivo_projeto === parseInt(dadosgerais.cd_objetivo_osc);
@@ -167,7 +167,7 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        console.log('metas', data);
+                        //console.log('metas', data);
                         if(data.length > 0){
                             let meta = data.find(function (item){
                                 return item.cd_meta_projeto === parseInt(dadosgerais.cd_meta_osc);
@@ -386,14 +386,13 @@ class VisualizarFiltros extends React.Component{
             }
         }
 
-        return null;
-
         let espacosParticipacaoSocial = json_filtro.espacosParticipacaoSocial;
 
         if(espacosParticipacaoSocial){
             if(espacosParticipacaoSocial.cd_conselho){
                 $.ajax({
-                    url: rotas.Conselho_id(espacosParticipacaoSocial.cd_conselho),
+                    url: getBaseUrl2 + 'ps_conselhos/' + espacosParticipacaoSocial.cd_conselho,
+                    //url: rotas.Conselho_id(espacosParticipacaoSocial.cd_conselho),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -401,8 +400,10 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt += "<b><i>Nome do Conselho:</i></b> " + data[0].tx_nome_conselho + ", ";
+                        //if(data.length > 0){
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Nome do Conselho: </i></b>{data.tx_nome_conselho}, </span>);
+                            //txt += "<b><i>Nome do Conselho:</i></b> " + data[0].tx_nome_conselho + ", ";
                         }
                     }
                 });
@@ -415,7 +416,8 @@ class VisualizarFiltros extends React.Component{
 
             if(espacosParticipacaoSocial.cd_tipo_participacao){
                 $.ajax({
-                    url: rotas.Titularidade_id(espacosParticipacaoSocial.cd_tipo_participacao),
+                    url: getBaseUrl2 + 'tipo_participacao/' + espacosParticipacaoSocial.cd_tipo_participacao,
+                    //url: rotas.Titularidade_id(espacosParticipacaoSocial.cd_tipo_participacao),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -423,8 +425,10 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt += "<b><i>Titularidade:</i></b> " + data[0].tx_nome_tipo_participacao + ", ";
+                        //if(data.length > 0){
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Titularidade: </i></b>{data.tx_nome_tipo_participacao}, </span>);
+                            //txt += "<b><i>Titularidade:</i></b> " + data[0].tx_nome_tipo_participacao + ", ";
                         }
                     }
                 });
@@ -440,9 +444,12 @@ class VisualizarFiltros extends React.Component{
                 //txt += "<b><i>Data de Fim de Vigência:</i></b> " + espacosParticipacaoSocial.dt_data_fim_conselho + ", ";
             }
 
+            //return null;
+
             if(espacosParticipacaoSocial.cd_conferencia){
                 $.ajax({
-                    url: rotas.Conferencia_id(espacosParticipacaoSocial.cd_conferencia),
+                    url: getUrlBase2 + 'ps_conferencia/' + espacosParticipacaoSocial.cd_conferencia,
+                    //url: rotas.Conferencia_id(espacosParticipacaoSocial.cd_conferencia),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -450,8 +457,9 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt += "<b><i>Nome da Conferência:</i></b> " + data[0].tx_nome_conferencia + ", ";
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Nome da Conferência: </i></b>{data.tx_nome_conferencia}, </span>);
+                            //txt += "<b><i>Nome da Conferência:</i></b> " + data[0].tx_nome_conferencia + ", ";
                         }
                     }
                 });
@@ -459,7 +467,8 @@ class VisualizarFiltros extends React.Component{
 
             if(espacosParticipacaoSocial.cd_forma_participacao_conferencia){
                 $.ajax({
-                    url: rotas.FormaParticipacaoConferencia_id(espacosParticipacaoSocial.cd_forma_participacao_conferencia),
+                    url: getBaseUrl2 + 'ps_conferencia_forma/' +espacosParticipacaoSocial.cd_forma_participacao_conferencia,
+                    //url: rotas.FormaParticipacaoConferencia_id(espacosParticipacaoSocial.cd_forma_participacao_conferencia),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -467,8 +476,8 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt.push(<span><b><i>Forma de Participação na Conferência: </i></b>{data[0].tx_nome_forma_participacao_conferencia}, </span>);
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Forma de Participação na Conferência: </i></b>{data.tx_nome_forma_participacao_conferencia}, </span>);
                             //txt += "<b><i>Forma de Participação na Conferência:</i></b> " + data[0].tx_nome_forma_participacao_conferencia + ", ";
                         }
                     }
@@ -501,7 +510,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_status_projeto){
                 $.ajax({
-                    url: rotas.SituacaoProjeto_id(projetos.cd_status_projeto),
+                    url: getUrlBase2 + 'status_projeto/' + projetos.cd_status_projeto,
+                    //url: rotas.SituacaoProjeto_id(projetos.cd_status_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -509,8 +519,9 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt += "<b><i>Situação do projeto:</i></b> " + data[0].tx_nome_status_projeto + ", ";
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Situação do projeto: </i></b>{data.tx_nome_status_projeto}, </span>);
+                            //txt += "<b><i>Situação do projeto:</i></b> " + data[0].tx_nome_status_projeto + ", ";
                         }
                     }
                 });
@@ -528,7 +539,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_abrangencia_projeto){
                 $.ajax({
-                    url: rotas.AbrangenciaProjeto_id(projetos.cd_abrangencia_projeto),
+                    url: getUrlBase2 + 'abrangencia_projeto/' + projetos.cd_abrangencia_projeto,
+                    //url: rotas.AbrangenciaProjeto_id(projetos.cd_abrangencia_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -536,8 +548,9 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt += "<b><i>Abrangência de atuação:</i></b> " + data[0].tx_nome_abrangencia_projeto + ", ";
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Abrangência de atuação: </i></b>{data.tx_nome_status_projeto}, </span>);
+                            //txt += "<b><i>Abrangência de atuação:</i></b> " + data[0].tx_nome_abrangencia_projeto + ", ";
                         }
                     }
                 });
@@ -545,7 +558,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_zona_atuacao_projeto){
                 $.ajax({
-                    url: rotas.ZonaAtuacaoProjeto_id(projetos.cd_zona_atuacao_projeto),
+                    url: getBaseUrl2 + 'zona_atuacao_projeto' + projetos.cd_zona_atuacao_projeto,
+                    //url: rotas.ZonaAtuacaoProjeto_id(projetos.cd_zona_atuacao_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -553,8 +567,8 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt.push(<span><b><i>Zona de Atuação: </i></b>{data[0].tx_nome_zona_atuacao}, </span>);
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Zona de Atuação: </i></b>{data.tx_nome_zona_atuacao}, </span>);
                             //txt += "<b><i>Zona de Atuação:</i></b> " + data[0].tx_nome_zona_atuacao + ", ";
                         }
                     }
@@ -563,7 +577,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_origem_fonte_recursos_projeto){
                 $.ajax({
-                    url: rotas.FontesRecursosProjeto_id(projetos.cd_origem_fonte_recursos_projeto),
+                    url: getBaseUrl2 + 'origem_fonte_recurso_projeto/' + projetos.cd_origem_fonte_recursos_projeto,
+                    //url: rotas.FontesRecursosProjeto_id(projetos.cd_origem_fonte_recursos_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -571,8 +586,8 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data.length > 0){
-                            txt.push(<span><b><i>Fontes de Recursos: </i></b>{data[0].tx_nome_origem_fonte_recursos_projeto}, </span>);
+                        if(Object.keys(data).length > 0){
+                            txt.push(<span><b><i>Fontes de Recursos: </i></b>{data.tx_nome_origem_fonte_recursos_projeto}, </span>);
                             //txt += "<b><i>Fontes de Recursos:</i></b> " + data[0].tx_nome_origem_fonte_recursos_projeto + ", ";
                         }
                     }
@@ -581,7 +596,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_objetivo_projeto){
                 $.ajax({
-                    url: rotas.Objetivos_ODS_id(projetos.cd_objetivo_projeto),
+                    url: getBaseUrl2 + 'objetivos',
+                    //url: rotas.Objetivos_ODS_id(projetos.cd_objetivo_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -589,8 +605,12 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data){
-                            txt.push(<span><b><i>Objetivos do Desenvolvimento Sustentável - ODS para Projeto: </i></b>{data.tx_nome_objetivo_projeto}, </span>);
+                        //if(data){
+                        if(data.length > 0){
+                            let objetivo = data.find(function (item){
+                                return item.cd_objetivo_projeto === parseInt(dadosgerais.cd_objetivo_osc);
+                            });
+                            txt.push(<span><b><i>Objetivos do Desenvolvimento Sustentável - ODS para Projeto: </i></b>{objetivo.tx_nome_objetivo_projeto}, </span>);
                             //txt += "<b><i>Objetivos do Desenvolvimento Sustentável - ODS para Projeto:</i></b> " + data.tx_nome_objetivo_projeto + ", ";
                         }
                     }
@@ -599,7 +619,8 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_meta_projeto){
                 $.ajax({
-                    url: rotas.MetasById(projetos.cd_meta_projeto),
+                    url: getBaseUrl2 + 'objetivos/metas/'+dadosgerais.cd_objetivo_osc,
+                    //url: rotas.MetasById(projetos.cd_meta_projeto),
                     type: 'GET',
                     async:false,
                     dataType: 'json',
@@ -607,8 +628,12 @@ class VisualizarFiltros extends React.Component{
                         console.log("ERRO no AJAX :" + e);
                     },
                     success: function(data){
-                        if(data){
-                            txt.push(<span><b><i>Metas Relacionadas ao ODS para projeto: </i></b>{data.tx_nome_meta_projeto}, </span>);
+                        //if(data){
+                        if(data.length > 0){
+                            let meta = data.find(function (item){
+                                return item.cd_meta_projeto === parseInt(dadosgerais.cd_meta_osc);
+                            });
+                            txt.push(<span><b><i>Metas Relacionadas ao ODS para projeto: </i></b>{meta.tx_nome_meta_projeto}, </span>);
                             //txt += "<b><i>Metas Relacionadas ao ODS para projeto:</i></b> " + data.tx_nome_meta_projeto + ", ";
                         }
                     }
