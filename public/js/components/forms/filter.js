@@ -657,10 +657,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -668,8 +668,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
@@ -2201,10 +2201,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Total de trabalhadores',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setTotalTrabalhadores
                                         })
                                     ),
@@ -2214,10 +2214,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Total de empregados',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setTotalEmpregados
                                         })
                                     ),
@@ -2227,10 +2227,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Trabalhadores com defici\xEAncia',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setTrabalhadoresDeficiencia
                                         })
                                     ),
@@ -2240,10 +2240,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Trabalhadores volunt\xE1rios',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setTrabalhadoresVoluntarios
                                         })
                                     )
@@ -2645,10 +2645,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Total de Benefici\xE1rios',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setTotalBeneficiarios
                                         })
                                     ),
@@ -2674,10 +2674,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Valor total',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setValorTotal
                                         })
                                     ),
@@ -2703,10 +2703,10 @@ class Filter extends React.Component {
                                         React.createElement(Range, {
                                             title: 'Valor Recebido',
                                             min: '0',
-                                            max: '100',
+                                            max: '1000',
                                             step: '1',
                                             defaultValueStart: '0',
-                                            defaultValueEnd: '100',
+                                            defaultValueEnd: '1000',
                                             setValue: this.setValorRecebido
                                         })
                                     )

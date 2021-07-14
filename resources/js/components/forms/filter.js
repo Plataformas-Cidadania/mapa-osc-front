@@ -2018,10 +2018,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Total de trabalhadores"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setTotalTrabalhadores}
                                             />
                                         </div>
@@ -2029,10 +2029,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Total de empregados"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setTotalEmpregados}
                                             />
                                         </div>
@@ -2040,10 +2040,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Trabalhadores com deficiência"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setTrabalhadoresDeficiencia}
                                             />
                                         </div>
@@ -2051,10 +2051,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Trabalhadores voluntários"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setTrabalhadoresVoluntarios}
                                             />
                                         </div>
@@ -2263,10 +2263,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Total de Beneficiários"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setTotalBeneficiarios}
                                             />
                                         </div>
@@ -2282,10 +2282,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Valor total"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setValorTotal}
                                             />
                                         </div>
@@ -2301,10 +2301,10 @@ class Filter extends React.Component{
                                             <Range
                                                 title="Valor Recebido"
                                                 min="0"
-                                                max="100"
+                                                max="1000"
                                                 step="1"
                                                 defaultValueStart="0"
-                                                defaultValueEnd="100"
+                                                defaultValueEnd="1000"
                                                 setValue={this.setValorRecebido}
                                             />
                                         </div>

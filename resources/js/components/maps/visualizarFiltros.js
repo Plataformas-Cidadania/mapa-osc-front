@@ -444,11 +444,10 @@ class VisualizarFiltros extends React.Component{
                 //txt += "<b><i>Data de Fim de Vigência:</i></b> " + espacosParticipacaoSocial.dt_data_fim_conselho + ", ";
             }
 
-            //return null;
 
             if(espacosParticipacaoSocial.cd_conferencia){
                 $.ajax({
-                    url: getUrlBase2 + 'ps_conferencia/' + espacosParticipacaoSocial.cd_conferencia,
+                    url: getBaseUrl2 + 'ps_conferencia/' + espacosParticipacaoSocial.cd_conferencia,
                     //url: rotas.Conferencia_id(espacosParticipacaoSocial.cd_conferencia),
                     type: 'GET',
                     async:false,
@@ -504,13 +503,13 @@ class VisualizarFiltros extends React.Component{
 
         if(projetos){
             if(projetos.tx_nome_projeto){
-                txt.push(<span><b><i>menor que: </i></b>{relacoesTrabalhoGovernanca.trabalhadoresVoluntariosMAX}, </span>);
-                txt += "<b><i>Nome do Projeto:</i></b> " + projetos.tx_nome_projeto + ", ";
+                txt.push(<span><b><i>menor que: </i></b>{projetos.trabalhadoresVoluntariosMAX}, </span>);
+                //txt += "<b><i>Nome do Projeto:</i></b> " + projetos.tx_nome_projeto + ", ";
             }
 
             if(projetos.cd_status_projeto){
                 $.ajax({
-                    url: getUrlBase2 + 'status_projeto/' + projetos.cd_status_projeto,
+                    url: getBaseUrl2 + 'status_projeto/' + projetos.cd_status_projeto,
                     //url: rotas.SituacaoProjeto_id(projetos.cd_status_projeto),
                     type: 'GET',
                     async:false,
@@ -534,12 +533,13 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.dt_data_fim_projeto){
                 txt.push(<span><b><i>Data de Fim Projeto: </i></b>{projetos.dt_data_fim_projeto}, </span>);
-                txt += "<b><i>Data de Fim Projeto:</i></b> " + projetos.dt_data_fim_projeto + ", ";
+                //txt += "<b><i>Data de Fim Projeto:</i></b> " + projetos.dt_data_fim_projeto + ", ";
             }
+
 
             if(projetos.cd_abrangencia_projeto){
                 $.ajax({
-                    url: getUrlBase2 + 'abrangencia_projeto/' + projetos.cd_abrangencia_projeto,
+                    url: getBaseUrl2 + 'abrangencia_projeto/' + projetos.cd_abrangencia_projeto,
                     //url: rotas.AbrangenciaProjeto_id(projetos.cd_abrangencia_projeto),
                     type: 'GET',
                     async:false,
@@ -608,7 +608,7 @@ class VisualizarFiltros extends React.Component{
                         //if(data){
                         if(data.length > 0){
                             let objetivo = data.find(function (item){
-                                return item.cd_objetivo_projeto === parseInt(dadosgerais.cd_objetivo_osc);
+                                return item.cd_objetivo_projeto === parseInt(projetos.cd_objetivo_projeto);
                             });
                             txt.push(<span><b><i>Objetivos do Desenvolvimento Sustentável - ODS para Projeto: </i></b>{objetivo.tx_nome_objetivo_projeto}, </span>);
                             //txt += "<b><i>Objetivos do Desenvolvimento Sustentável - ODS para Projeto:</i></b> " + data.tx_nome_objetivo_projeto + ", ";
@@ -619,7 +619,7 @@ class VisualizarFiltros extends React.Component{
 
             if(projetos.cd_meta_projeto){
                 $.ajax({
-                    url: getBaseUrl2 + 'objetivos/metas/'+dadosgerais.cd_objetivo_osc,
+                    url: getBaseUrl2 + 'objetivos/metas/'+projetos.cd_objetivo_projeto,
                     //url: rotas.MetasById(projetos.cd_meta_projeto),
                     type: 'GET',
                     async:false,
@@ -631,7 +631,7 @@ class VisualizarFiltros extends React.Component{
                         //if(data){
                         if(data.length > 0){
                             let meta = data.find(function (item){
-                                return item.cd_meta_projeto === parseInt(dadosgerais.cd_meta_osc);
+                                return item.cd_meta_projeto === parseInt(projetos.cd_meta_projeto);
                             });
                             txt.push(<span><b><i>Metas Relacionadas ao ODS para projeto: </i></b>{meta.tx_nome_meta_projeto}, </span>);
                             //txt += "<b><i>Metas Relacionadas ao ODS para projeto:</i></b> " + data.tx_nome_meta_projeto + ", ";
@@ -671,7 +671,7 @@ class VisualizarFiltros extends React.Component{
 
                 if(projetos.totalBeneficiariosMIN){
                     txt.push(<span><b><i>menor que: </i></b>{projetos.totalBeneficiariosMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + projetos.totalBeneficiariosMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + projetos.totalBeneficiariosMIN  + ", ";
                 }
 
                 if(projetos.totalBeneficiariosMAX){
@@ -761,7 +761,7 @@ class VisualizarFiltros extends React.Component{
 
             if(fontesRecursos.mensalidadesContribuicoesAssociadosMIN || fontesRecursos.mensalidadesContribuicoesAssociadosMAX){
                 txt.push(<span><b><i>Mensalidades ou contribuições de associados </i></b></span>);
-                txt += "<b><i>Mensalidades ou contribuições de associados</i></b> ";
+                //txt += "<b><i>Mensalidades ou contribuições de associados</i></b> ";
 
                 if(fontesRecursos.mensalidadesContribuicoesAssociadosMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.mensalidadesContribuicoesAssociadosMIN}, </span>);
@@ -881,279 +881,281 @@ class VisualizarFiltros extends React.Component{
 
             if(fontesRecursos.parceriaGovernoEstadualMIN || fontesRecursos.parceriaGovernoEstadualMAX){
                 txt.push(<span><b><i>Parceria com o governo estadual </i></b></span>);
-                txt += "<b><i>Parceria com o governo estadual</i></b> ";
+                //txt += "<b><i>Parceria com o governo estadual</i></b> ";
 
                 if(fontesRecursos.parceriaGovernoEstadualMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaGovernoEstadualMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaGovernoEstadualMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaGovernoEstadualMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaGovernoEstadualMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaGovernoEstadualMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaGovernoEstadualMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaGovernoEstadualMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.parceriaGovernoMunicipalMIN || fontesRecursos.parceriaGovernoMunicipalMAX){
                 txt.push(<span><b><i>Parceria com o governo municipal </i></b></span>);
-                txt += "<b><i>Parceria com o governo municipal</i></b> ";
+                //txt += "<b><i>Parceria com o governo municipal</i></b> ";
 
                 if(fontesRecursos.parceriaGovernoMunicipalMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaGovernoMunicipalMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaGovernoMunicipalMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaGovernoMunicipalMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaGovernoMunicipalMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaGovernoMunicipalMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaGovernoMunicipalMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaGovernoMunicipalMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.acordoGovernosEstrangeirosMIN || fontesRecursos.acordoGovernosEstrangeirosMAX){
                 txt.push(<span><b><i>Acordo com governos estrangeiros </i></b></span>);
-                txt += "<b><i>Acordo com governos estrangeiros</i></b> ";
+                //txt += "<b><i>Acordo com governos estrangeiros</i></b> ";
 
                 if(fontesRecursos.acordoGovernosEstrangeirosMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.acordoGovernosEstrangeirosMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.acordoGovernosEstrangeirosMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.acordoGovernosEstrangeirosMIN  + ", ";
                 }
 
                 if(fontesRecursos.acordoGovernosEstrangeirosMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.acordoGovernosEstrangeirosMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.acordoGovernosEstrangeirosMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.acordoGovernosEstrangeirosMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.parceriaOscBrasileirasMIN || fontesRecursos.parceriaOscBrasileirasMAX){
                 txt.push(<span><b><i>Parceria com OSCs brasileiras </i></b></span>);
-                txt += "<b><i>Parceria com OSCs brasileiras</i></b> ";
+                //txt += "<b><i>Parceria com OSCs brasileiras</i></b> ";
 
                 if(fontesRecursos.parceriaOscBrasileirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaOscBrasileirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOscBrasileirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOscBrasileirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaOscBrasileirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaOscBrasileirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOscBrasileirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOscBrasileirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.parceriaOscEstrangeirasMIN || fontesRecursos.parceriaOscEstrangeirasMAX){
                 txt.push(<span><b><i>Parceria com OSCs estrangeiras </i></b></span>);
-                txt += "<b><i>Parceria com OSCs estrangeiras</i></b> ";
+                //txt += "<b><i>Parceria com OSCs estrangeiras</i></b> ";
 
                 if(fontesRecursos.parceriaOscEstrangeirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaOscEstrangeirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOscEstrangeirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOscEstrangeirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaOscEstrangeirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaOscEstrangeirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOscEstrangeirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOscEstrangeirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMIN || fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMAX){
                 txt.push(<span><b><i>Parceria com organizações religiosas brasileiras </i></b></span>);
-                txt += "<b><i>Parceria com organizações religiosas brasileiras</i></b> ";
+                //txt += "<b><i>Parceria com organizações religiosas brasileiras</i></b> ";
 
                 if(fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasBrasileirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMIN || fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMAX){
                 txt.push(<span><b><i>Parceria com organizações religiosas estrangeiras </i></b></span>);
-                txt += "<b><i>Parceria com organizações religiosas estrangeiras</i></b> ";
+                //txt += "<b><i>Parceria com organizações religiosas estrangeiras</i></b> ";
 
                 if(fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.parceriaOrganizacoesReligiosasEstrangeirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.empresasPrivadasBrasileirasMIN || fontesRecursos.empresasPrivadasBrasileirasMAX){
                 txt.push(<span><b><i>Empresas privadas brasileiras </i></b></span>);
-                txt += "<b><i>Empresas privadas brasileiras</i></b> ";
+                //txt += "<b><i>Empresas privadas brasileiras</i></b> ";
 
                 if(fontesRecursos.empresasPrivadasBrasileirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.empresasPrivadasBrasileirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.empresasPrivadasBrasileirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.empresasPrivadasBrasileirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.empresasPrivadasBrasileirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.empresasPrivadasBrasileirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.empresasPrivadasBrasileirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.empresasPrivadasBrasileirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.EmpresasEstrangeirasMIN || fontesRecursos.EmpresasEstrangeirasMAX){
                 txt.push(<span><b><i>Empresas estrangeiras </i></b></span>);
-                txt += "<b><i>Empresas estrangeiras</i></b> ";
+                //txt += "<b><i>Empresas estrangeiras</i></b> ";
 
                 if(fontesRecursos.EmpresasEstrangeirasMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.EmpresasEstrangeirasMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.EmpresasEstrangeirasMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.EmpresasEstrangeirasMIN  + ", ";
                 }
 
                 if(fontesRecursos.EmpresasEstrangeirasMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.EmpresasEstrangeirasMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.EmpresasEstrangeirasMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.EmpresasEstrangeirasMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.doacoesPessoaJuridicaMIN || fontesRecursos.doacoesPessoaJuridicaMAX){
                 txt.push(<span><b><i>Doações de pessoa jurídica </i></b></span>);
-                txt += "<b><i>Doações de pessoa jurídica</i></b> ";
+                //txt += "<b><i>Doações de pessoa jurídica</i></b> ";
 
                 if(fontesRecursos.doacoesPessoaJuridicaMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.doacoesPessoaJuridicaMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesPessoaJuridicaMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesPessoaJuridicaMIN  + ", ";
                 }
 
                 if(fontesRecursos.doacoesPessoaJuridicaMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.doacoesPessoaJuridicaMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesPessoaJuridicaMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesPessoaJuridicaMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.doacoesPessoaFisicaMIN || fontesRecursos.doacoesPessoaFisicaMAX){
                 txt.push(<span><b><i>Doações de pessoa física </i></b></span>);
-                txt += "<b><i>Doações de pessoa física</i></b> ";
+                //txt += "<b><i>Doações de pessoa física</i></b> ";
 
                 if(fontesRecursos.doacoesPessoaFisicaMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.doacoesPessoaFisicaMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesPessoaFisicaMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesPessoaFisicaMIN  + ", ";
                 }
 
                 if(fontesRecursos.doacoesPessoaFisicaMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.doacoesPessoaFisicaMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesPessoaFisicaMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesPessoaFisicaMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMIN || fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMAX){
                 txt.push(<span><b><i>Doações recebidas na forma de produtos e serviços (com NF) </i></b></span>);
-                txt += "<b><i>Doações recebidas na forma de produtos e serviços (com NF)</i></b> ";
+                //txt += "<b><i>Doações recebidas na forma de produtos e serviços (com NF)</i></b> ";
 
                 if(fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMIN  + ", ";
                 }
 
                 if(fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosComNFMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.voluntariadoMIN || fontesRecursos.voluntariadoMAX){
                 txt.push(<span><b><i>Voluntariado </i></b></span>);
-                txt += "<b><i>Voluntariado</i></b> ";
+                //txt += "<b><i>Voluntariado</i></b> ";
 
                 if(fontesRecursos.voluntariadoMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.voluntariadoMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.voluntariadoMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.voluntariadoMIN  + ", ";
                 }
 
                 if(fontesRecursos.voluntariadoMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.voluntariadoMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.voluntariadoMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.voluntariadoMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.isencoesMIN || fontesRecursos.isencoesMAX){
                 txt.push(<span><b><i>Isenções: </i></b></span>);
-                txt += "<b><i>Isenções:</i></b> ";
+                //txt += "<b><i>Isenções:</i></b> ";
 
                 if(fontesRecursos.isencoesMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.isencoesMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.isencoesMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.isencoesMIN  + ", ";
                 }
 
                 if(fontesRecursos.isencoesMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.isencoesMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.isencoesMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.isencoesMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.imunidadesMIN || fontesRecursos.imunidadesMAX){
                 txt.push(<span><b><i>Imunidades </i></b></span>);
-                txt += "<b><i>Imunidades</i></b> ";
+                //txt += "<b><i>Imunidades</i></b> ";
 
                 if(fontesRecursos.imunidadesMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.imunidadesMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.imunidadesMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.imunidadesMIN  + ", ";
                 }
 
                 if(fontesRecursos.imunidadesMAX ){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.imunidadesMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.imunidadesMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.imunidadesMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.bensRecebidosDireitoUsoMIN || fontesRecursos.bensRecebidosDireitoUsoMAX){
                 txt.push(<span><b><i>Bens recebidos em direito de uso </i></b></span>);
-                txt += "<b><i>Bens recebidos em direito de uso</i></b> ";
+                //txt += "<b><i>Bens recebidos em direito de uso</i></b> ";
 
                 if(fontesRecursos.bensRecebidosDireitoUsoMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.bensRecebidosDireitoUsoMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.bensRecebidosDireitoUsoMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.bensRecebidosDireitoUsoMIN  + ", ";
                 }
 
                 if(fontesRecursos.bensRecebidosDireitoUsoMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.bensRecebidosDireitoUsoMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.bensRecebidosDireitoUsoMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.bensRecebidosDireitoUsoMAX  + ", ";
                 }
             }
 
             if(fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMIN || fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMAX){
                 txt.push(<span><b><i>Doações recebidas na forma de produtos e serviços (sem NF) </i></b></span>);
-                txt += "<b><i>Doações recebidas na forma de produtos e serviços (sem NF)</i></b> ";
+                //txt += "<b><i>Doações recebidas na forma de produtos e serviços (sem NF)</i></b> ";
 
                 if(fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMIN){
                     txt.push(<span><b><i>maior que: </i></b>{fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMIN}, </span>);
-                    txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMIN  + ", ";
+                    //txt += "<b><i>maior que:</i></b> " + fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMIN  + ", ";
                 }
 
                 if(fontesRecursos.doacoesRecebidasFormaProdutosServicosSemNFMAX){
                     txt.push(<span><b><i>menor que: </i></b>{fontesRecursos.valorMAX}, </span>);
-                    txt += "<b><i>menor que:</i></b> " + fontesRecursos.valorMAX  + ", ";
+                    //txt += "<b><i>menor que:</i></b> " + fontesRecursos.valorMAX  + ", ";
                 }
             }
         }
+
+        //return null;
 
         let idh_json = json_filtro.IDH;
 
         if(idh_json){
             if(idh_json.IDH_Municipal){
                 txt.push(<span><b><i>Índice de Desenvolvimento Humano</i></b>IDH Municipal - Faixa: </span>);
-                txt += "<b><i>Índice de Desenvolvimento Humano:</i></b> IDH Municipal - Faixa: ";
+                //txt += "<b><i>Índice de Desenvolvimento Humano:</i></b> IDH Municipal - Faixa: ";
 
                 if(idh_json.baixo){
                     txt.push(<span>baixa, </span>);
-                    txt += "baixa, ";
+                    //txt += "baixa, ";
                 }
 
                 if(idh_json.medio){
                     txt.push(<span>médio, </span>);
-                    txt += "médio, ";
+                    //txt += "médio, ";
                 }
                 if(idh_json.alto){
                     txt.push(<span>alto, </span>);
-                    txt += "alto, ";
+                    //txt += "alto, ";
                 }
             }
         }
