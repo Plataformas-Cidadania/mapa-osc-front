@@ -103,6 +103,9 @@
                     <a href="cms/links"><i class="fa fa-fw fa-link"></i> Links</a>
                 </li>
                 <li>
+                    <a href="cms/texts"><i class="fa fa-fw fa-link"></i> Textos</a>
+                </li>
+                <li>
                     <a href="cms/apoios"><i class="fa fa-fw fa-anchor"></i> Apoio</a>
                 </li>
                 <li>
@@ -110,6 +113,9 @@
                 </li>
                 <li>
                     <a href="cms/midias"><i class="fa fa-fw fa-anchor"></i> Mídias</a>
+                </li>
+                <li>
+                    <a href="cms/graficos"><i class="fa fa-fw fa-file-text-o"></i> Gráficos</a>
                 </li>
 
 <!--                <li>

@@ -1,7 +1,4 @@
-{!! Form::label('tipo_grafico', 'Tipo') !!}<br>
-{!! Form::select('tipo_grafico',
-        $tiposGraficos,
-null, ['class'=>"form-control width-medio <% validar(grafico.tipo_grafico) %>", 'ng-model'=>'grafico.tipo_grafico', 'init-model'=>'grafico.tipo_grafico', 'placeholder' => 'Sem Tipo']) !!}<br>
+
 
 
 {!! Form::label('slug', 'Slug *') !!}<br>
@@ -9,6 +6,13 @@ null, ['class'=>"form-control width-medio <% validar(grafico.tipo_grafico) %>", 
 
 {!! Form::label('titulo', 'Título *') !!}<br>
 {!! Form::text('titulo', null, ['class'=>"form-control width-grande <% validar(grafico.titulo) %>", 'ng-model'=>'grafico.titulo', 'ng-required'=>'true', 'init-model'=>'grafico.titulo', 'placeholder' => '']) !!}<br>
+
+
+<div style="display: none">
+{!! Form::label('tipo_grafico', 'Tipo') !!}<br>
+{!! Form::select('tipo_grafico',
+        $tiposGraficos,
+null, ['class'=>"form-control width-medio <% validar(grafico.tipo_grafico) %>", 'ng-model'=>'grafico.tipo_grafico', 'init-model'=>'grafico.tipo_grafico', 'placeholder' => 'Sem Tipo']) !!}<br>
 
 {!! Form::label('legenda', 'Legenda *') !!}<br>
 {!! Form::text('legenda', null, ['class'=>"form-control width-grande <% validar(grafico.legenda) %>", 'ng-model'=>'grafico.legenda', 'ng-required'=>'true', 'init-model'=>'grafico.legenda', 'placeholder' => '']) !!}<br>
@@ -40,7 +44,6 @@ null, ['class'=>"form-control width-medio <% validar(grafico.inverter_label) %>"
 
 {!! Form::label('inverter_label', 'Inverter label *') !!}<br>
 {!! Form::checkbox('inverter_label', true, null, ['class'=>"form-control width-medio <% validar(grafico.inverter_label) %>", 'ng-model'=>'grafico.inverter_label', 'init-model'=>'grafico.inverter_label', 'placeholder' => '', 'style' => 'height: 20px; width: 20px;']) !!}
-
-<?php //print_r($grafico);?>
+</div>
 
 <br><br>
