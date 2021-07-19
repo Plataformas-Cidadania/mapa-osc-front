@@ -342,9 +342,9 @@ class OscController extends Controller{
         }
 
         $url = $api."osc/busca_avancada/geo/10/0";
-        if(env('LOCALHOST_DOCKER') == 1) {
-            $url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/geo/10/0";//PARA TESTAR LOCALMENTE
-        }
+        /*if(env('LOCALHOST_DOCKER') == 1) {
+            $url = "";
+        }*/
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
@@ -374,9 +374,11 @@ class OscController extends Controller{
         }
 
         $url = $api."osc/busca_avancada/lista/10/$pagina";
-        if(env('LOCALHOST_DOCKER') == 1) {
-            $url = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/osc/busca_avancada/lista/10/$pagina";//PARA TESTAR LOCALMENTE
-        }
+        /*if(env('LOCALHOST_DOCKER') == 1) {
+            $url = "";
+        }*/
+
+        //Log::info($url);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);

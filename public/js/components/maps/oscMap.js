@@ -808,7 +808,11 @@ class OscMap extends React.Component {
                             total: data.length
                         };
                     }
-                    this.setState({ dataOscList: data.lista, totalOscList: data.total, processingList: false }, function () {
+                    let dadosState = { dataOscList: data.lista, processingList: false };
+                    if (this.state.origem !== 'busca-avancada') {
+                        dadosState.totalOscList = data.total;
+                    }
+                    this.setState(dadosState, function () {
                         console.log('loadOscList', this.state.dataOscList);
                         this.getLogos();
                     });
@@ -1155,7 +1159,7 @@ class OscMap extends React.Component {
                     data = data2;
                     //console.log(data);
                     /////////////////////////////////////////////
-                    this.setState({ dataOscCluster: data, processingOscPontos: false }, function () {
+                    this.setState({ dataOscCluster: data, totalOscList: data.length, processingOscPontos: false }, function () {
                         this.populateMapCluster();
                     });
                 }.bind(this),
