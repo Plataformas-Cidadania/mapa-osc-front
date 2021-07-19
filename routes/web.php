@@ -96,6 +96,7 @@ Route::get('/get-idhm/{cod_uf}', 'OscController@getIDHM');
 Route::get('/search/osc/geo/{osc}', 'OscController@getGeoOscSearch');
 Route::post('/osc/busca_avancada/geo', 'OscController@buscaAvancadaOscGeo');
 Route::post('/osc/busca_avancada/lista', 'OscController@buscaAvancadaOscLista');
+Route::post('/osc/exportar', 'OscController@exportarAvancadaOsc');
 
 //testando rota direta
 Route::get('/geo/regioes', 'TesteController@geoRegioes');

@@ -1028,7 +1028,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1037,7 +1037,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1819,10 +1819,10 @@ class OscMap extends React.Component {
             this.setState({ processingExportacao: true, textoProcessingExportacao: 'buscando dados' });
             $.ajax({
                 method: 'POST',
-                url: 'osc/busca_avancada/lista',
+                //url: 'osc/busca_avancada/lista',
+                url: 'osc/exportar',
                 data: {
-                    busca: this.props.strJson,
-                    pagina: 0
+                    busca: this.props.strJson
                 },
                 cache: false,
                 success: function (data) {
@@ -1888,8 +1888,8 @@ class OscMap extends React.Component {
                 )
             }
         }
-          itens.push(<div><br/></div>);
-          return itens;
+         itens.push(<div><br/></div>);
+         return itens;
     }*/
 
     render() {

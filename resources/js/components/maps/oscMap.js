@@ -1892,10 +1892,10 @@ class OscMap extends React.Component{
             this.setState({processingExportacao: true, textoProcessingExportacao: 'buscando dados'});
             $.ajax({
                 method: 'POST',
-                url: 'osc/busca_avancada/lista',
+                //url: 'osc/busca_avancada/lista',
+                url: 'osc/exportar',
                 data:{
-                    busca: this.props.strJson,
-                    pagina: 0
+                    busca: this.props.strJson
                 },
                 cache: false,
                 success: function(data) {
