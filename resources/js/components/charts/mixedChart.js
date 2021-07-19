@@ -74,9 +74,10 @@ class MixedChart extends React.Component {
                     tickAmount: 10,
                     labels: {
                         rotate: 0,
-                        rotateAlways: true,
+                        /*rotateAlways: true,
                         offsetX: 0,
-                        offsetY: 10,
+                        offsetY: 10,*/
+                        trim: false,
                     }
                     //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
                 },

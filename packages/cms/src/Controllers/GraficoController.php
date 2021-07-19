@@ -13,8 +13,8 @@ use Intervention\Image\Facades\Image;
 
 class GraficoController extends Controller
 {
-    
-    
+
+
 
     public function __construct()
     {
@@ -46,10 +46,10 @@ class GraficoController extends Controller
     {
         $tiposGraficos = \App\TipoGrafico::pluck('nome_tipo_grafico', 'id_grafico')->all();
         $graficos = \App\Grafico::all();
-        $idiomas = \App\Idioma::lists('titulo', 'id')->all();
 
 
-        return view('cms::grafico.listar', ['graficos' => $graficos, 'idiomas' => $idiomas, 'tiposGraficos' => $tiposGraficos]);
+
+        return view('cms::grafico.listar', ['graficos' => $graficos, 'tiposGraficos' => $tiposGraficos]);
     }
 
     public function listar(Request $request)
@@ -141,7 +141,7 @@ class GraficoController extends Controller
 
 
         $tiposGraficos = \App\TipoGrafico::pluck('nome_tipo_grafico', 'id_grafico')->all();
-        $idiomas = \App\Idioma::lists('titulo', 'id')->all();
+
         $grafico->configuracao = str_replace("','", "'|'", ($grafico->configuracao));
         $grafico->configuracao = str_replace("'", "", ($grafico->configuracao));
         $grafico->titulo_colunas = str_replace("','", "'|'", ($grafico->titulo_colunas));
@@ -149,7 +149,7 @@ class GraficoController extends Controller
 
 
 
-        return view('cms::grafico.detalhar', ['grafico' => $grafico, 'idiomas' => $idiomas, 'tiposGraficos' => $tiposGraficos]);
+        return view('cms::grafico.detalhar', ['grafico' => $grafico, 'tiposGraficos' => $tiposGraficos]);
     }
 
     /*public function alterar(Request $request, $id)
@@ -290,7 +290,7 @@ class GraficoController extends Controller
             ['id_analise', '=', $id],
         ])->firstOrFail();
 
-        //remover imagens        
+        //remover imagens
         if(!empty($grafico->imagem)){
             //remover imagens
             $imagemCms = new ImagemCms();

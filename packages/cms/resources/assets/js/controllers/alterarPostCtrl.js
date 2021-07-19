@@ -11,7 +11,6 @@ cmsApp.controller('alterarPostCtrl', ['$scope', '$http', 'Upload', '$timeout', f
     $scope.removerImagem = 0;
     $scope.removerArquivo = 0;
 
-
     $scope.stringToDate = stringToDate;
 
     $scope.alterar = function (file, arquivo){
@@ -112,8 +111,6 @@ cmsApp.controller('alterarPostCtrl', ['$scope', '$http', 'Upload', '$timeout', f
         return "";
     };
     /////////////////////////////////
-
-
 
 
 }]);
