@@ -141,7 +141,7 @@ class Oscs extends React.Component{
                         <th scope="row">{index+1}</th>
                         <td>
                            {/* <img src={"/imagens/oscs/md-"+item.imagem} className="box-item-theme-img" alt="" width="100%" />*/}
-                            {item.tx_nome_osc}
+                            {item.tx_razao_social_osc}
                         </td>
                         <td width="500" className="text-right">
                             <div className="btn btn-outline-primary">
@@ -157,7 +157,7 @@ class Oscs extends React.Component{
                             </div>
                             &nbsp;
                             <div className="btn btn-outline-primary">
-                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_nome_osc}>
+                                <a href={"detalhar/"+item.id_osc+"/"+item.tx_razao_social_osc}>
                                     <i className="fas fa-binoculars"/> Visualizar
                                 </a>
                             </div>
