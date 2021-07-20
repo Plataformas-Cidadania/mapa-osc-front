@@ -48,14 +48,14 @@ class ContactController extends Controller{
         $request = $request->all();
         $data =  $request['form'];
 
-        Config::set('mail.host', 'in-v3.mailjet.com');
+        Config::set('mail.host', '');
         Config::set('mail.port', '2525');
         //Config::set('mail.address', $settings->email);
         //Config::set('mail.name', $settings->titulo);
         Config::set('mail.address', 'admin@cms.com.br');
         Config::set('mail.name', 'Eu');
-        Config::set('mail.username', 'fd8cb8ad9fa769f7180f7ba7e5cee288');
-        Config::set('mail.password', '4139e727907608a7e113cbea20c66cee');
+        Config::set('mail.username', '');
+        Config::set('mail.password', '');
         Config::set('mail.encryption', 'tls');
 
         //verifica se o index telefone existe no array. Sen�o existir ir� criar um para evitar um erro.
