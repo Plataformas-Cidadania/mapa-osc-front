@@ -217,7 +217,7 @@ class PostController extends Controller
         $dadosAuthorArtigo = Array();
         $dadosAuthorArtigo['post_id'] = $id;
 
-        Log::info(in_array("true", $data["integrante_post"]));
+        //Log::info(in_array("true", $data["integrante_post"]));
 
         //if($data['artigo']['publicacao_atlas']!=1) {
             foreach ($data["integrante_post"] as $autor => $marcado) {
