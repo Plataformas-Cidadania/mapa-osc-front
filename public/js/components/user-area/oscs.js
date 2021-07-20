@@ -147,7 +147,7 @@ class Oscs extends React.Component {
                 React.createElement(
                     'td',
                     null,
-                    item.tx_nome_osc
+                    item.tx_razao_social_osc
                 ),
                 React.createElement(
                     'td',
@@ -178,7 +178,7 @@ class Oscs extends React.Component {
                         { className: 'btn btn-outline-primary' },
                         React.createElement(
                             'a',
-                            { href: "detalhar/" + item.id_osc + "/" + item.tx_nome_osc },
+                            { href: "detalhar/" + item.id_osc + "/" + item.tx_razao_social_osc },
                             React.createElement('i', { className: 'fas fa-binoculars' }),
                             ' Visualizar'
                         )
