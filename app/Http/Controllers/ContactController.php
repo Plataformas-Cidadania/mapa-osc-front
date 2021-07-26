@@ -14,16 +14,13 @@ use Illuminate\Support\Facades\Route;
 
 class ContactController extends Controller{
 
-    private $obj;
     private $module;
     private $table;
 
 
     public function __construct(){
-        //$this->obj = new \App\Contact();
         $this->module = 'forms';
         $this->table = 'contacts';
-
     }
 
     public function email(){
@@ -43,54 +40,45 @@ class ContactController extends Controller{
     }
 
     public function send(Request $request){
-
+        $settings = \App\Setting::first();
 
         $request = $request->all();
         $data =  $request['form'];
 
-        Config::set('mail.host', '');
-        Config::set('mail.port', '2525');
-        //Config::set('mail.address', $settings->email);
-        //Config::set('mail.name', $settings->titulo);
-        Config::set('mail.address', 'admin@cms.com.br');
-        Config::set('mail.name', 'Eu');
+        Config::set('mail.host', env('MAIL_HOST'));
+        Config::set('mail.port', env('MAIL_PORT'));
+        Config::set('mail.address', $settings->email);
+        Config::set('mail.name', $settings->titulo);
         Config::set('mail.username', '');
         Config::set('mail.password', '');
         Config::set('mail.encryption', 'tls');
 
-        //verifica se o index telefone existe no array. Sen�o existir ir� criar um para evitar um erro.
+        //verifica se o index telefone existe no array. Se nao existir ira criar um para evitar um erro.
         if (!array_key_exists("cel", $data)) {
             $data += ['cel' => ''];
         }
 
         //mensagem para o site///////////////////////////////////////////////////////////////////////
-        Mail::send('emails.contact.message', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.message', ['data' => $data, 'settings' => $settings], function($message) use (/*$settings,*/ $data)
         {
-            /*$message->from($settings->email, $settings->titulo);
+            $message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);
-            $message->to($settings->email, $data['name']);*/
-            $message->from('admin@cms.com.br', 'Eu');
-            $message->sender('admin@cms.com.br', 'Eu');
-            $message->to('admin@cms.com.br', $data['name']);
-            //$message->bcc($address, $name = null);
+            $message->to($settings->email, $data['name']);
             $message->replyTo($data['email'], $data['name']);
-           //$message->subject('Contato - '.$settings->titulo);
-            $message->subject('Contato - '.'Eu');
+            $message->subject('Contato - '.$settings->titulo);
+
             //$message->priority($level);
             //$message->attach($pathToFile, array $options = []);
         });
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         //resposta para o remetente/////////////////////////////////////////////////////////////////
-        Mail::send('emails.contact.response', ['data' => $data/*, 'settings' => $settings*/], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.response', ['data' => $data, 'settings' => $settings], function($message) use (/*$settings,*/ $data)
         {
-            /*$message->from($settings->email, $settings->titulo);
-            $message->sender($settings->email, $settings->titulo);*/
-            $message->from('admin@cms.com.br', 'Eu');
-            $message->sender('admin@cms.com.br', 'Eu');
+            $message->from($settings->email, $settings->titulo);
+            $message->sender($settings->email, $settings->titulo);
             $message->to($data['email'], $data['name']);
-            //$message->subject('Contato - '.$settings->titulo);
-            $message->subject('Contato - '.'Eu');
+            $message->subject('Contato - '.$settings->titulo);
         });
         ////////////////////////////////////////////////////////////////////////////////////////////
 
