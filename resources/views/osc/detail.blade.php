@@ -55,7 +55,7 @@
                         <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;
                         <div class="fa-svg float-right" style="margin-top: -25px;" >
                             <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
-                            <a href="declaracao/{{--{{$dados_gerais->id_osc}}--}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
+                            <a href="declaracao/{{$id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
                         </div>
                         <br>
                     </header>
@@ -74,14 +74,14 @@
                     <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
                     <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" ></i>
                     <ul class="menu-icons menu-right">
-                        <li><a href="detalhar/974758#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
-                        <li><a href="detalhar/974758#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
-                        <li><a href="detalhar/974758#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
-                        <li><a href="detalhar/974758#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e certificações</p></a></li>
-                        <li><a href="detalhar/974758#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
-                        <li><a href="detalhar/974758#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
-                        <li><a href="detalhar/974758#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
-                        <li style="border-bottom: 0;"><a href="detalhar/974758#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e certificações</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
+                        <li><a href="detalhar/{{$id_osc}}#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
+                        <li style="border-bottom: 0;"><a href="detalhar/{{$id_osc}}#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
                     </ul>
                     <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
                 </div>
