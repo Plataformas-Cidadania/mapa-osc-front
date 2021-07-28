@@ -1,4 +1,4 @@
-<div class="row" id="fontesRecursos"  data-toggle="collapse" href="#multiCollapse8" role="button" aria-expanded="false" aria-controls="multiCollapse8">
+<div class="row" id="fontes-recursos"  data-toggle="collapse" href="#multiCollapse8" role="button" aria-expanded="false" aria-controls="multiCollapse8">
     <div class="col-md-12">
         <br><br>
         <div class="title-style">

@@ -81,7 +81,7 @@
                         <li><a href="detalhar/{{$id_osc}}#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
                         <li><a href="detalhar/{{$id_osc}}#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
                         <li><a href="detalhar/{{$id_osc}}#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
-                        <li style="border-bottom: 0;"><a href="detalhar/{{$id_osc}}#fontes"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
+                        <li style="border-bottom: 0;"><a href="detalhar/{{$id_osc}}#fontes-recursos"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
                     </ul>
                     <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
                 </div>
