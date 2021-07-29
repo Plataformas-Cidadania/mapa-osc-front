@@ -40,7 +40,7 @@
                         <div class="col-md-6 item-calendar">
                             <time pubdate class="item-calendar" data-message="Imagem sobre {{formatBr($detail->date, 'ext', 'hs')}}" tabindex="0"><i class="far fa-clock"></i> {{formatBr($detail->data, 'run')}}{{-- {{formatBr($detail->date, 'ext', 'hs')}}--}}</time>
                         </div>
-<!--                        <div class="col-md-6 text-right fa-svg">
+                        <!--<div class="col-md-6 text-right fa-svg">
                             <i class="fab fa-facebook-f"></i>
                             <i class="fab fa-instagram"></i>
                             <i class="fab fa-twitter"></i>
@@ -52,6 +52,9 @@
                     <br>
 
                 </article>
+                @if($detail->arquivo!="")
+                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000"></iframe>
+                @endif
 
 
 
