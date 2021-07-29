@@ -53,7 +53,7 @@
 
                 </article>
                 @if($detail->arquivo!="")
-                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000"></iframe>
+                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000" width="100%"></iframe>
                 @endif
 
 
