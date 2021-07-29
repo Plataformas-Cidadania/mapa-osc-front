@@ -53,7 +53,8 @@
 
                 </article>
                 @if($detail->arquivo!="")
-                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000" width="100%"></iframe>
+                    <a href="arquivos/posts/{{$detail->arquivo}}" target="_blank" class="btn btn-outline-primary"><i class="far fa-file-pdf"></i> Baixar a arquivo - PDF</a>
+<!--                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000" width="100%"></iframe>-->
                 @endif
 
 
