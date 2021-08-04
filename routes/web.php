@@ -160,6 +160,9 @@ Route::post('change-forget-password', 'UserLoginController@changeForgetPassword'
 Route::post('/register', 'RegisterUserController@index');
 Route::get('/register', 'RegisterUserController@index2');
 Route::get('/register-login', 'RegisterUserController@register');
+Route::get('/aviso-pendente-ativacao', 'RegisterUserController@avisoPendenteAtivacao');
+Route::get('/usuario-ativado', 'RegisterUserController@usuarioAtivado');
+Route::get('/ativacao-invalida', 'RegisterUserController@ativacaoInvalida');
 
 /// //AREA USER///////////////////////////////////////////////////////////////////////////////////
 //views

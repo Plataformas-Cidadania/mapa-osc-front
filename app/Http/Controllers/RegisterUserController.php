@@ -103,7 +103,16 @@ class RegisterUserController extends Controller
         return ['addresses' => $userAddresses, 'maxAddresses' => $maxAddresses];
     }
 
+    public function avisoPendenteAtivacao(){
+        return view('join.aviso-pendente-ativacao');
+    }
 
+    public function usuarioAtivado(){
+        return view('join.usuario-ativado');
+    }
 
+    public function ativacaoInvalida(){
+        return view('join.ativacao-invalida');
+    }
 
 }

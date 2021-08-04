@@ -10,6 +10,7 @@ class Login extends React.Component {
             target: this.props.target,
             msg: '',
             msgShow: false,
+            invalido: false,
             loading: false
         };
 
@@ -64,37 +65,43 @@ class Login extends React.Component {
             return;
         }
 
-        this.setState({ loading: true, msgShow: false });
+        this.setState({ loading: true, msgShow: false, invalido: false }, function () {
+            $.ajax({
+                method: 'POST',
+                //url: 'login',
+                url: getBaseUrl2 + 'oauth/token',
+                data: {
+                    grant_type: 'password',
+                    client_id: '2',
+                    client_secret: 'QYDGG3kPaK3ubJhCE3a6EHup9etYfd2hDrY4JbnL',
+                    username: this.state.form.email,
+                    password: this.state.form.password,
+                    scope: ''
+                },
+                cache: false,
+                success: function (data) {
+                    console.log(data);
 
-        $.ajax({
-            method: 'POST',
-            //url: 'login',
-            url: getBaseUrl2 + 'oauth/token',
-            data: {
-                grant_type: 'password',
-                client_id: '2',
-                client_secret: 'QYDGG3kPaK3ubJhCE3a6EHup9etYfd2hDrY4JbnL',
-                username: this.state.form.email,
-                password: this.state.form.password,
-                scope: ''
-            },
-            cache: false,
-            success: function (data) {
-                console.log(data);
+                    if (data.access_token) {
+                        //location.href = this.state.target;
+                        localStorage.setItem('@App:token', data.access_token);
+                        //location.href = 'area-user';
+                        location.href = 'oscs-user';
+                    }
 
-                if (data.access_token) {
-                    //location.href = this.state.target;
-                    localStorage.setItem('@App:token', data.access_token);
-                    //location.href = 'area-user';
-                    location.href = 'oscs-user';
-                }
-
-                this.setState({ loading: false, msgShow: true, msg: data.msg });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loading: false });
-            }.bind(this)
+                    this.setState({ loading: false, msgShow: true, msg: data.msg });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('xhr', xhr);
+                    console.log('status', status);
+                    console.log('err', err);
+                    if (err === 'Unauthorized') {
+                        this.setState({ invalido: true });
+                    }
+                    console.error(status, err.toString());
+                    this.setState({ loading: false });
+                }.bind(this)
+            });
         });
     }
 
@@ -195,6 +202,12 @@ class Login extends React.Component {
                                         { style: { display: this.state.msgShow ? 'block' : 'none' } },
                                         React.createElement('br', null),
                                         this.state.msg
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { style: { display: this.state.invalido ? 'block' : 'none' } },
+                                        React.createElement('br', null),
+                                        'Usu\xE1rio inv\xE1lido ou inativo!'
                                     )
                                 ),
                                 React.createElement('br', null),
