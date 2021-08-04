@@ -14,6 +14,7 @@ cmsApp.controller('alterarPostCtrl', ['$scope', '$http', 'Upload', '$timeout', f
     $scope.stringToDate = stringToDate;
 
     $scope.alterar = function (file, arquivo){
+        $scope.progress = 0;
         $scope.processandoSalvar = true;
         $scope.mensagemSalvar = "";
 

@@ -100,6 +100,7 @@ cmsApp.controller('postCtrl', ['$scope', '$http', 'Upload', '$timeout', function
 
         if(file==null && arquivo==null){
             $scope.processandoInserir = true;
+            $scope.progress = 0;
 
             //console.log($scope.post);
             $http.post("cms/inserir-post", {post: $scope.post, integrante_post: $scope.integrante_post}).success(function (data){
