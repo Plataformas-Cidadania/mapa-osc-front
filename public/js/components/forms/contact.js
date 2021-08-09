@@ -6,16 +6,18 @@ class Contact extends React.Component {
                 name: '',
                 email: '',
                 cel: '',
-                whatsapp: ''
+                whatsapp: '',
+                mensagem: ''
             },
             button: true,
             loading: false,
             requireds: {
                 name: true,
                 email: true,
-                cel: true
+                cel: true,
+                mensagem: true
             },
-            showMsg: false,
+            showMsg: 0,
             msg: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -113,7 +115,7 @@ class Contact extends React.Component {
             return;
         }
 
-        this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
+        this.setState({ loading: true, button: false, showMsg: 0, msg: '' }, function () {
 
             $.ajax({
                 method: 'POST',
@@ -126,11 +128,11 @@ class Contact extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-                    this.setState({ loading: false });
+                    this.setState({ loading: false, showMsg: 1, msg: 'Enviado com sucesso!' });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({ loading: false });
+                    this.setState({ loading: false, showMsg: 2, msg: 'Ocorreu um erro. Tente novamente!' });
                 }.bind(this)
             });
         });
@@ -283,6 +285,34 @@ class Contact extends React.Component {
                     )
                 )
             ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    React.createElement(
+                        'div',
+                        { className: 'label-float-tx' },
+                        React.createElement('textarea', { className: 'form-control', name: 'mensagem', onChange: this.handleInputChange, value: this.state.form.mensagem,
+                            rows: '5', placeholder: ' ' }),
+                        React.createElement(
+                            'label',
+                            { htmlFor: 'mensagem' },
+                            'Mansagem'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'label-box-info-tx-off' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    )
+                )
+            ),
             React.createElement('div', { className: 'clear-float' }),
             React.createElement(
                 'button',
@@ -292,7 +322,12 @@ class Contact extends React.Component {
             React.createElement('br', null),
             React.createElement(
                 'div',
-                { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'text-danger' },
+                { style: { display: this.state.showMsg === 1 ? '' : 'none' }, className: 'text-success' },
+                this.state.msg
+            ),
+            React.createElement(
+                'div',
+                { style: { display: this.state.showMsg === 2 ? '' : 'none' }, className: 'text-danger' },
                 this.state.msg
             ),
             React.createElement(

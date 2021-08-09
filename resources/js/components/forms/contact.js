@@ -7,6 +7,7 @@ class Contact extends React.Component{
                 email: '',
                 cel: '',
                 whatsapp: '',
+                mensagem: '',
             },
             button: true,
             loading: false,
@@ -14,8 +15,9 @@ class Contact extends React.Component{
                 name: true,
                 email: true,
                 cel: true,
+                mensagem: true,
             },
-            showMsg: false,
+            showMsg: 0,
             msg: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -114,7 +116,7 @@ class Contact extends React.Component{
             return;
         }
 
-        this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+        this.setState({loading: true, button: false, showMsg: 0, msg: ''}, function(){
 
             $.ajax({
                 method:'POST',
@@ -127,11 +129,11 @@ class Contact extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    this.setState({loading: false});
+                    this.setState({loading: false, showMsg: 1, msg: 'Enviado com sucesso!'});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
-                    this.setState({loading: false});
+                    this.setState({loading: false, showMsg: 2, msg: 'Ocorreu um erro. Tente novamente!'});
                 }.bind(this)
             });
         });
@@ -187,7 +189,20 @@ class Contact extends React.Component{
                                 <div className="label-float">
                                     <input className={"form-control"} type="text" name="whatsapp" onChange={this.handleInputChange} value={this.state.form.whatsapp} placeholder=" " maxLength="15"/>
                                     <label htmlFor="name">Whatsapp<span className={"label-float-optional"}> - Opicional</span></label>
-                                    <div className="label-box-info"></div>
+                                    <div className="label-box-info"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="label-float-tx">
+                                   <textarea className="form-control" name="mensagem" onChange={this.handleInputChange} value={this.state.form.mensagem}
+                                                      rows="5" placeholder=" "/>
+                                    <label htmlFor="mensagem">Mansagem</label>
+                                    <div className="label-box-info-tx-off">
+                                        <p>&nbsp;</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +212,8 @@ class Contact extends React.Component{
                         <button type="button" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary" onClick={this.contact}>Cadastrar</button>
                         <br/>
 
-                        <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
+                        <div style={{display: this.state.showMsg === 1 ? '' : 'none'}} className="text-success">{this.state.msg}</div>
+                        <div style={{display: this.state.showMsg === 2 ? '' : 'none'}} className="text-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                     </form>
 
