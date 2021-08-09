@@ -3,16 +3,16 @@
         <tr>
             <td>
                 <div style="background-color: #FFFFFF; width: 600px; margin: 20px; padding: 30px;">
-                    <div></div>
+                    <div><img src="http://<?php echo $_SERVER['HTTP_HOST'];?>/imagens/settings/sm-{{$settings->imagem}}" alt="{{$settings->titulo}}" title="{{$settings->titulo}}" class="logo"></div>
                     <div style="height: 1px; background-color: #CCCCCC; margin: 10px;"></div>
                     <h2>{{$data['name']}},</h2>
                     <p>Obrigado por entrar em contato conosco. Em breve iremos responder.</p>
                     <br>
                     <p><strong>Nossos contatos:</strong></p>
-                    <p>E-mail: </p>
-                    <p>Telefone: </p>
+                    <p>E-mail: {{$settings->email}}</p>
+                    <p>Telefone: {{$settings->telefone}}</p>
                     <br><br>
-                    <p style="float: right">Atenciosamente </p>
+                    <p style="float: right">Atenciosamente {{$settings->titulo}}</p>
                     <br>
                 </div>
             </td>

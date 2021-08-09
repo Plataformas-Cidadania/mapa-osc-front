@@ -42,6 +42,8 @@ class ContactController extends Controller{
     public function send(Request $request){
         $settings = \App\Setting::first();
 
+        //Log::info($settings);
+
         $request = $request->all();
         $data =  $request['form'];
 
@@ -59,7 +61,7 @@ class ContactController extends Controller{
         }
 
         //mensagem para o site///////////////////////////////////////////////////////////////////////
-        Mail::send('emails.contact.message', ['data' => $data, 'settings' => $settings], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.message', ['data' => $data, 'settings' => $settings], function($message) use ($settings, $data)
         {
             $message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);
@@ -73,7 +75,7 @@ class ContactController extends Controller{
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         //resposta para o remetente/////////////////////////////////////////////////////////////////
-        Mail::send('emails.contact.response', ['data' => $data, 'settings' => $settings], function($message) use (/*$settings,*/ $data)
+        Mail::send('emails.contact.response', ['data' => $data, 'settings' => $settings], function($message) use ($settings, $data)
         {
             $message->from($settings->email, $settings->titulo);
             $message->sender($settings->email, $settings->titulo);
