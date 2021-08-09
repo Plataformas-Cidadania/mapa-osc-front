@@ -140,6 +140,7 @@ class Contact extends React.Component{
     render(){
         return (
                     <form>
+                        <meta name="csrf-token" content="{{ csrf_token() }}"/>
                         <div>
 
                             <select className="form-control" id="assunto">
@@ -199,8 +200,6 @@ class Contact extends React.Component{
                         <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                         <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                     </form>
-
-
 
         );
     }

@@ -175,23 +175,23 @@ class Objetivos extends React.Component {
 
     /*callSubobjetivos(id){
         this.setState({button:false, loading: true, loadingSave: false});
-         $.ajax({
+          $.ajax({
             method: 'GET',
             cache: false,
             url: getBaseUrl2+'objetivos/metas/'+id,
             success: function (data) {
-                 let objetivos = this.state.objetivos;
+                  let objetivos = this.state.objetivos;
                 let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                 data.find(function(item){
+                  data.find(function(item){
                     item.display = true;
                     item.checked = false;
-                 });
+                  });
                 objetivos.find(function(item){
                     if(item.metas){
                         item.metas.find(function(itemMeta){
                             itemMeta.display = false;
                         });
-                         if(item.cd_objetivo_projeto === id){
+                          if(item.cd_objetivo_projeto === id){
                             item.metas.find(function(itemMeta){
                                 itemMeta.display = true;
                             });
@@ -201,7 +201,7 @@ class Objetivos extends React.Component {
                         item.metas = data;
                     }
                 });
-                 this.setState({objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo, loading: false, loadingSave: true})
+                  this.setState({objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo, loading: false, loadingSave: true})
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());

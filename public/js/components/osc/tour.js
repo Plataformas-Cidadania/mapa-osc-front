@@ -12,8 +12,8 @@ class Tour extends React.Component {
     componentDidMount() {}
 
     /* storeCampo(cd, value, id, ano){
-          value = clearMoeda(value);
-          if(id>0){
+           value = clearMoeda(value);
+           if(id>0){
              this.setState({loading: true, button: false}, function(){
                  $.ajax({
                      method:'PUT',

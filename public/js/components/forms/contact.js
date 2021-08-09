@@ -140,6 +140,7 @@ class Contact extends React.Component {
         return React.createElement(
             'form',
             null,
+            React.createElement('meta', { name: 'csrf-token', content: '{{ csrf_token() }}' }),
             React.createElement(
                 'div',
                 null,
