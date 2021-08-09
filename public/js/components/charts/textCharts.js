@@ -66,18 +66,18 @@ class TextCharts extends React.Component {
                 /* if(tipoGrafico === "pie"){
                      labels.push(dataChart[j].label);
                      series.push(dataChart[j].value);
-                         continue;
+                       continue;
                  }*/
 
                 //Quando tiver o key///////////////////////////////
                 /*if(dataChart[j].hasOwnProperty('key') && data[chart].tipo_grafico === "MultiBarChart"){
-                        labels.push(dataChart[j].key);
+                      labels.push(dataChart[j].key);
                     let values = dataChart[j].values;
-                      for(let k in values){
-                          if(!series[k]){
+                     for(let k in values){
+                         if(!series[k]){
                             series[k] = {};
                         }
-                          series[k].name = values[k].label;
+                         series[k].name = values[k].label;
                         series[k].type = tipoGrafico;
                         if(!series[k].hasOwnProperty('data')){
                             series[k].data = [];
@@ -90,20 +90,20 @@ class TextCharts extends React.Component {
 
                 //Quando tiver o key///////////////////////////////
                 /* if(dataChart[j].hasOwnProperty('key') && (data[chart].tipo_grafico === "LineChart" || data[chart].tipo_grafico === "LinePlusBarChart")){
-                         let colLabel = data[chart].tipo_grafico === "LineChart" ? 'x' : 'label';
+                       let colLabel = data[chart].tipo_grafico === "LineChart" ? 'x' : 'label';
                      let colValue = data[chart].tipo_grafico === "LineChart" ? 'y' : 'value';
-                       let values = dataChart[j].values;
-                       let serie = {
+                      let values = dataChart[j].values;
+                      let serie = {
                          name: dataChart[j].key,
                          type: tipoGrafico,
                          data: []
                      };
-                       for(let k in values) {
+                      for(let k in values) {
                          labels.push(values[k][colLabel]);
-                           serie.data.push(values[k][colValue]);
+                          serie.data.push(values[k][colValue]);
                      }
-                       series.push(serie);
-                       continue;
+                      series.push(serie);
+                      continue;
                  }*/
                 ///////////////////////////////////////////////////
 
