@@ -122,7 +122,7 @@ class Register extends React.Component {
                 data: this.state.form,
                 cache: false,
                 success: function (data) {
-                    //console.log('reg', data);
+                    console.log('reg', data);
 
                     let msg = 'Já existe cadastro com esse';
 
@@ -138,7 +138,7 @@ class Register extends React.Component {
                     }
 
                     //location.href = 'login';
-                    location.href = 'aviso-pendente-ativacao';
+                    //location.href = 'aviso-pendente-ativacao';
 
                     this.setState({ loading: false });
                 }.bind(this),
