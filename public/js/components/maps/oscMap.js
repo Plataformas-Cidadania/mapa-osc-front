@@ -791,9 +791,14 @@ class OscMap extends React.Component {
         } else {
             pesquisaPorOsc = true;
             let origemOsc = this.state.origem;
-            let avancado = '{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}';
-            //rota = 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;//PARA TESTAR LOCALMENTE
-            rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/' + this.state.paginaOscList + '/' + avancado;
+            let avancado = '{"avancado":{"dadosGerais":{"tx_razao_social_osc":"' + origemOsc + '"}}}';
+            //rota = getBaseUrl2 + 'osc/busca_avancada/lista/10/'+this.state.paginaOscList+'/'+avancado;
+            method = 'POST';
+            rota = 'osc/busca_avancada/lista';
+            data = {
+                busca: avancado,
+                pagina: this.state.paginaOscList
+            };
         }
         this.setState({ processingList: true }, function () {
             $.ajax({
