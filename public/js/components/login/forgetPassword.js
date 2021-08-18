@@ -27,7 +27,7 @@ class ForgetPassword extends React.Component {
 
         $.ajax({
             method: 'POST',
-            url: 'forget-password',
+            url: getBaseUrl2 + 'esqueci-senha',
             data: {
                 email: this.state.email
             },
@@ -35,7 +35,7 @@ class ForgetPassword extends React.Component {
             success: function (data) {
                 console.log(data);
 
-                this.setState({ loading: false, msgShow: true, msg: data.msg });
+                this.setState({ loading: false, msgShow: true, msg: data.Resposta });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -53,7 +53,7 @@ class ForgetPassword extends React.Component {
                 { className: 'text-right' },
                 React.createElement(
                     'a',
-                    { href: '#', onClick: this.show },
+                    { style: { cursor: 'pointer' }, onClick: this.show },
                     'Esqueci minha senha'
                 )
             ),

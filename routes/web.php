@@ -40,13 +40,13 @@ foreach ($routesSearch as $route) {
 //Route::get('sobre', 'PageController@details');
 
 #if(env('DYNAMIC_ROUTES')=='true'){
-    $modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
+    /*$modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
 
     foreach ($modulos as $modulo) {
         if(!empty($modulo->slug)){
             Route::get($modulo->slug.'/', 'ModuloController@details');
         }
-    }
+    }*/
 #}
 
 Route::get('editar-osc', 'OscController@edit');
@@ -153,9 +153,11 @@ Route::get('produtos/{categoria_id}/{subcategoria_id}', ucfirst($rota).'Controll
 Route::get('login/{carrinho}', 'UserLoginController@index');//pg de login vindo da seleção do carrinho
 Route::get('login', 'UserLoginController@index');//pg de login rota direta
 Route::post('login', 'UserLoginController@login');//autenticação de login
-Route::post('forget-password', 'UserLoginController@forgetPassword');
-Route::get('reset-password/{token}/{email}', 'UserLoginController@resetPassword');
-Route::post('change-forget-password', 'UserLoginController@changeForgetPassword');
+//Route::post('forget-password', 'UserLoginController@forgetPassword');
+//Route::get('reset-password/{token}/{email}', 'UserLoginController@resetPassword');
+//Route::post('change-forget-password', 'UserLoginController@changeForgetPassword');
+Route::get('/redefinir-senha/{id_usuario}/{hash}', 'UserLoginController@redefinirSenha');
+
 ///////////////////////////////////////////////////////////////////////////////////////
 Route::post('/register', 'RegisterUserController@index');
 Route::get('/register', 'RegisterUserController@index2');

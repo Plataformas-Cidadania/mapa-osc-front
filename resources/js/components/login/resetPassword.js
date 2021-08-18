@@ -3,8 +3,9 @@ class ResetPassword extends React.Component{
         super(props);
         this.state = {
             form: {
-                email: '',
-                password: '',
+                id_usuario: props.id_usuario,
+                hash: props.hash,
+                tx_senha_usuario: '',
             },
             token: this.props.token,
             button: true,
@@ -12,8 +13,8 @@ class ResetPassword extends React.Component{
             msg: '',
             msgShow: false,
             requireds: {
-                email: true,
-                password: true,
+                /*email: true,*/
+                tx_senha_usuario: true,
             },
 
 
@@ -68,15 +69,16 @@ class ResetPassword extends React.Component{
         this.setState({loading: true, button: false, msgShow: false, msg: ''}, function(){
             $.ajax({
                 method:'POST',
-                url: 'change-forget-password',
+                url: getBaseUrl2 + 'trocar-senha-user',
                 data:{
                     form: this.state.form,
-                    token: this.props.token
+                    /*token: this.props.token*/
                 },
                 cache: false,
                 success: function(data) {
 
                     this.setState({msg: data.msg, msgShow: true, loading: false, button: true});
+                    location.href = 'login';
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -91,8 +93,6 @@ class ResetPassword extends React.Component{
     render(){
         return(
             <div>
-
-
                 <div className="container">
                     <div className="title-box">
                         <br/><br/><br/>
@@ -104,9 +104,9 @@ class ResetPassword extends React.Component{
                             <div className="row box-margin">
                                 <div className="col-md-12">
                                     <form>
-                                        <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')}/>
-                                        <input type="email" name="email" className={"form-control "+(this.state.requireds.email ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite o e-mail"/><br/>
-                                        <input type="password" name="password" className={"form-control "+(this.state.requireds.password ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite a nova senha"/><br/>
+                                        {/*<input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')}/>*/}
+                                        {/*<input type="email" name="email" className={"form-control "+(this.state.requireds.email ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite o e-mail"/><br/>*/}
+                                        <input type="password" name="tx_senha_usuario" className={"form-control "+(this.state.requireds.password ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite a nova senha"/><br/>
                                         <button className="btn btn-style-primary" onClick={this.save}>Continuar</button>
                                         <div style={{display: this.state.loading ? 'block' : 'none'}}><br/><i className="fa fa-spin fa-spinner"/> Processando</div>
                                         <div style={{display: this.state.msgShow ? 'block' : 'none'}}><br/>{this.state.msg}</div>
@@ -127,6 +127,6 @@ class ResetPassword extends React.Component{
 
 
 ReactDOM.render(
-    <ResetPassword token={token}/>,
+    <ResetPassword hash={hash} id_usuario={id_usuario}/>,
     document.getElementById('reset-password')
 );

@@ -32,7 +32,7 @@ class UserLoginController extends Controller
         return ['status' => 0, 'msg' => 'E-mail e/ou senha Inválido'];
     }
 
-    public function forgetPassword(Request $request){
+    /*public function forgetPassword(Request $request){
 
         $email = $request->email;
 
@@ -47,9 +47,9 @@ class UserLoginController extends Controller
         }
 
         return ['msg' => 'Ocorreu um erro ao tentar enviar o e-mail. Tente novamente mais tarde!'];
-    }
+    }*/
 
-    public function sendEmailForgetPassword($user){
+    /*public function sendEmailForgetPassword($user){
 
         $reset_token = strtolower(str_random(64));
         DB::table('password_resets')->insert([
@@ -61,9 +61,9 @@ class UserLoginController extends Controller
         $sendEmail = new SendEmailController();
 
         return $sendEmail->forgetPassword($user, $reset_token);
-    }
+    }*/
 
-    public function resetPassword($token, $email){
+    /*public function resetPassword($token, $email){
         $reset = DB::table('password_resets')->where('token', $token)->where('email', $email)->first();
 
         if(empty($reset)){
@@ -71,9 +71,9 @@ class UserLoginController extends Controller
         }
 
         return view('reset-password', ['email' => $email, 'token' => $token]);
-    }
+    }*/
 
-    public function changeForgetPassword(Request $request){
+    /*public function changeForgetPassword(Request $request){
 
         $data = $request->all();
 
@@ -91,12 +91,17 @@ class UserLoginController extends Controller
 
         return ['status' => 2, 'msg' => 'Senha trocada com sucesso!'];
 
-    }
+    }*/
 
     public function logout(){
         auth()->logout();
 
         return redirect('/login');
+    }
+
+
+    public function redefinirSenha($id_usuario, $hash){
+        return view('reset-password', ['id_usuario' => $id_usuario, 'hash' => $hash]);
     }
 
 }

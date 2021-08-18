@@ -3,8 +3,9 @@ class ResetPassword extends React.Component {
         super(props);
         this.state = {
             form: {
-                email: '',
-                password: ''
+                id_usuario: props.id_usuario,
+                hash: props.hash,
+                tx_senha_usuario: ''
             },
             token: this.props.token,
             button: true,
@@ -12,8 +13,8 @@ class ResetPassword extends React.Component {
             msg: '',
             msgShow: false,
             requireds: {
-                email: true,
-                password: true
+                /*email: true,*/
+                tx_senha_usuario: true
             }
 
         };
@@ -66,15 +67,16 @@ class ResetPassword extends React.Component {
         this.setState({ loading: true, button: false, msgShow: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: 'change-forget-password',
+                url: getBaseUrl2 + 'trocar-senha-user',
                 data: {
-                    form: this.state.form,
-                    token: this.props.token
+                    form: this.state.form
+                    /*token: this.props.token*/
                 },
                 cache: false,
                 success: function (data) {
 
                     this.setState({ msg: data.msg, msgShow: true, loading: false, button: true });
+                    location.href = 'login';
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err.toString());
@@ -119,10 +121,7 @@ class ResetPassword extends React.Component {
                                 React.createElement(
                                     'form',
                                     null,
-                                    React.createElement('input', { type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content') }),
-                                    React.createElement('input', { type: 'email', name: 'email', className: "form-control " + (this.state.requireds.email ? '' : 'invalid-field'), onChange: this.handleInputChange, placeholder: 'Digite o e-mail' }),
-                                    React.createElement('br', null),
-                                    React.createElement('input', { type: 'password', name: 'password', className: "form-control " + (this.state.requireds.password ? '' : 'invalid-field'), onChange: this.handleInputChange, placeholder: 'Digite a nova senha' }),
+                                    React.createElement('input', { type: 'password', name: 'tx_senha_usuario', className: "form-control " + (this.state.requireds.password ? '' : 'invalid-field'), onChange: this.handleInputChange, placeholder: 'Digite a nova senha' }),
                                     React.createElement('br', null),
                                     React.createElement(
                                         'button',
@@ -154,4 +153,4 @@ class ResetPassword extends React.Component {
     }
 }
 
-ReactDOM.render(React.createElement(ResetPassword, { token: token }), document.getElementById('reset-password'));
+ReactDOM.render(React.createElement(ResetPassword, { hash: hash, id_usuario: id_usuario }), document.getElementById('reset-password'));

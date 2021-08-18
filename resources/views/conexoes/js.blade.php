@@ -323,7 +323,8 @@
     <script src="js/components/login/forgetPassword.js"></script>
     <script src="js/components/login/login.js"></script>
 @endif
-@if($rota=="reset-password/{token}/{email}")
+{{--@if($rota=="reset-password/{token}/{email}")--}}
+@if($rota=="redefinir-senha/{id_usuario}/{hash}")
     <script src="js/components/login/resetPassword.js"></script>
 @endif
 @if($rota=="osc-user/{id}")
