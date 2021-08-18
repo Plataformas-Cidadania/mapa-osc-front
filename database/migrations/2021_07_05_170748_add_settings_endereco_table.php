@@ -26,6 +26,8 @@ class AddSettingsEnderecoTable extends Migration
         });
     }
 
+    //teste build jenkings
+
     /**
      * Reverse the migrations.
      *

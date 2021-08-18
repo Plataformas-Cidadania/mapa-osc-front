@@ -18,6 +18,8 @@ class AddPostsTable extends Migration
         });
     }
 
+    //teste build jenkings
+
     /**
      * Reverse the migrations.
      *
