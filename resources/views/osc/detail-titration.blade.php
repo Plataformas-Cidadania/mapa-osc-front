@@ -23,7 +23,13 @@
             <tr>
                 <td>{{$certificado->dc_certificado->tx_nome_certificado}}</td>
                 <td>{{formatBr($certificado->dt_inicio_certificado, 'num')}}</td>
-                <td>{{formatBr($certificado->dt_fim_certificado, 'num')}}</td>
+                <td class="text-center">
+                    @if($certificado->dt_fim_certificado==null)
+                        {{formatBr($certificado->dt_fim_certificado, 'num')}}
+                    @else
+                        -
+                    @endif
+                </td>
             </tr>
         @endforeach
         </tbody>
