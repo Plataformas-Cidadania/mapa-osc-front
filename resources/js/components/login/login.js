@@ -151,7 +151,7 @@ class Login extends React.Component{
                                         <button className="btn btn-primary" onClick={this.login}>Continuar</button>
                                         <div style={{display: this.state.loading ? 'block' : 'none'}}><br/><i className="fa fa-spin fa-spinner"/> Processando</div>
                                         <div style={{display: this.state.msgShow ? 'block' : 'none'}}><br/>{this.state.msg}</div>
-                                        <div style={{display: this.state.invalido ? 'block' : 'none'}}><br/>Usuário inválido ou inativo!</div>
+                                        <div style={{display: this.state.invalido ? 'block' : 'none'}} className="text-danger"><br/>Usuário inválido ou inativo!</div>
                                     </form>
                                     <br/><br/>
                                     <div className="text-center">

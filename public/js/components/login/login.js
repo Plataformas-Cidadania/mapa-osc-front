@@ -205,7 +205,7 @@ class Login extends React.Component {
                                     ),
                                     React.createElement(
                                         'div',
-                                        { style: { display: this.state.invalido ? 'block' : 'none' } },
+                                        { style: { display: this.state.invalido ? 'block' : 'none' }, className: 'text-danger' },
                                         React.createElement('br', null),
                                         'Usu\xE1rio inv\xE1lido ou inativo!'
                                     )
