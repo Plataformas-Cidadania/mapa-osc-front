@@ -157,10 +157,11 @@ class OscController extends Controller{
         }
 
         $pgOsc = $api."geo/estados";
+        Log::info($pgOsc);
 
         $pgIdh = $api."ipeadata/uffs";
         if(env('LOCALHOST_DOCKER') == 1) {
-            $pgIdh = "https://mapaosc.ipea.gov.br/novomapaosc/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
+            $pgIdh = "https://mapaosc.ipea.gov.br/api/api/ipeadata/uffs";//PARA TESTAR LOCALMENTE
         }
 
         $ch = curl_init();
