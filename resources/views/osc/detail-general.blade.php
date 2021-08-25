@@ -35,6 +35,9 @@
                         $logo = substr($logo, 0, -1);
                         $logo = str_replace("\\", "", $logo);
                     }
+                    if($logo==""){
+                        $logo = "img/sem-imagem.png";
+                    }
                 ?>
                 <img src="{{$logo}}" alt="{{$cabecalho->tx_razao_social_osc}}" title="{{$cabecalho->tx_razao_social_osc}}">
                 <br><br>
