@@ -16,7 +16,8 @@ class Objetivos extends React.Component {
             loading: false,
             loadingSave: false,
             metaSelected: 0,
-            maxObjetivos: false
+            maxObjetivos: 0,
+            maxObjetivosExist: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -57,24 +58,12 @@ class Objetivos extends React.Component {
         }
     }
 
-    handleInputChange(event) {
-        const target = event.target;
-        //const value = target.type === 'checkbox' ? target.checked : target.value;
-        //const name = target.name;
-
-        //let form = this.state.form;
-        //let txt = this.state.txt;
-        //form[name] = value;
-
-        //this.setState({form: form, txt: txt});
-    }
+    handleInputChange(event) {}
 
     validate() {
         let valid = true;
 
         let requireds = this.state.requireds;
-        //let form = this.state.form;
-        //let txt = this.state.txt;
 
         this.setState({ requireds: requireds });
         return valid;
@@ -84,7 +73,6 @@ class Objetivos extends React.Component {
         $.ajax({
             method: 'GET',
             cache: false,
-            //url: getBaseUrl+'menu/osc/objetivo_projeto',
             url: getBaseUrl2 + 'objetivos',
             success: function (data) {
                 data.find(function (item) {
@@ -122,12 +110,15 @@ class Objetivos extends React.Component {
 
     callSubobjetivos(id) {
 
-        let maxObjetivos = false;
+        let maxObjetivosExist = false;
         if (this.state.datalistObjetivos.indexOf(id) !== -1) {
-            maxObjetivos = true;
+            maxObjetivosExist = true;
         }
 
-        this.setState({ maxObjetivos: maxObjetivos });
+        this.setState({
+            maxObjetivos: this.state.datalistObjetivos.length,
+            maxObjetivosExist: maxObjetivosExist
+        });
 
         $.ajax({
             method: 'GET',
@@ -172,42 +163,6 @@ class Objetivos extends React.Component {
             }.bind(this)
         });
     }
-
-    /*callSubobjetivos(id){
-        this.setState({button:false, loading: true, loadingSave: false});
-         $.ajax({
-            method: 'GET',
-            cache: false,
-            url: getBaseUrl2+'objetivos/metas/'+id,
-            success: function (data) {
-                 let objetivos = this.state.objetivos;
-                let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                 data.find(function(item){
-                    item.display = true;
-                    item.checked = false;
-                 });
-                objetivos.find(function(item){
-                    if(item.metas){
-                        item.metas.find(function(itemMeta){
-                            itemMeta.display = false;
-                        });
-                         if(item.cd_objetivo_projeto === id){
-                            item.metas.find(function(itemMeta){
-                                itemMeta.display = true;
-                            });
-                        }
-                    }
-                    if(item.cd_objetivo_projeto === id && !item.metas){
-                        item.metas = data;
-                    }
-                });
-                 this.setState({objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo, loading: false, loadingSave: true})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-            }.bind(this)
-        });
-    }*/
 
     listChkboxMetas() {
 
@@ -291,6 +246,9 @@ class Objetivos extends React.Component {
     }
 
     render() {
+
+        /*console.log('maxObjetivos ----->', this.state.maxObjetivos);
+        console.log('maxObjetivosExist', this.state.maxObjetivosExist);*/
 
         function padDigits(number, digits) {
             return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
@@ -461,12 +419,12 @@ class Objetivos extends React.Component {
                                         }),
                                         React.createElement(
                                             "div",
-                                            { style: { display: this.state.maxObjetivos ? '' : 'none' } },
+                                            { style: { display: this.state.maxObjetivosExist === false && this.state.maxObjetivos >= 3 ? 'none' : '' } },
                                             metas
                                         ),
                                         React.createElement(
                                             "div",
-                                            { className: "alert alert-info", style: { display: this.state.maxObjetivos ? 'none' : '' } },
+                                            { className: "alert alert-info", style: { display: this.state.maxObjetivosExist === true && this.state.maxObjetivos >= 3 ? 'none' : '' } },
                                             React.createElement(
                                                 "p",
                                                 null,
