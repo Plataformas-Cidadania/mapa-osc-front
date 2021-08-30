@@ -39,7 +39,7 @@ class Seal extends React.Component{
                     <h3><i className="fa fa-home" aria-hidden="true"/> Selo para seu site</h3>
                     <hr/>
                 </div>
-                <p>Nessa área você encontrara selo que identificam que sua instituição se encontra em nosso banco de dados, copie o script e cole em seu site!</p>
+                <p>Essa área contém o código de um selo para ambientes virtuais que identifica que sua instituição se encontra em nosso banco de dados. Copie o script e cole em seu site.</p>
                 <br/>
 
                 <div className="row">
@@ -51,7 +51,7 @@ class Seal extends React.Component{
                         <div className="label-float-tx">
                         <textarea className="form-control form-g"
                                   name="tx_historico"
-                                  value={"<a href='"+this.props.app_url+"selo-osc/www.ipea.gov.br/"+this.props.id_osc+"'>" +
+                                  value={"<a href='"+this.props.app_url+"selo-osc/"+this.props.id_osc+"'>" +
                                   "<img src='"+this.props.app_url+"img/logo.png'>" +
                                   "</a>"}
                                   rows="3"  />

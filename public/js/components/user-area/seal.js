@@ -50,7 +50,7 @@ class Seal extends React.Component {
             React.createElement(
                 'p',
                 null,
-                'Nessa \xE1rea voc\xEA encontrara selo que identificam que sua institui\xE7\xE3o se encontra em nosso banco de dados, copie o script e cole em seu site!'
+                'Essa \xE1rea cont\xE9m o c\xF3digo de um selo para ambientes virtuais que identifica que sua institui\xE7\xE3o se encontra em nosso banco de dados. Copie o script e cole em seu site.'
             ),
             React.createElement('br', null),
             React.createElement(
@@ -79,7 +79,7 @@ class Seal extends React.Component {
                         { className: 'label-float-tx' },
                         React.createElement('textarea', { className: 'form-control form-g',
                             name: 'tx_historico',
-                            value: "<a href='" + this.props.app_url + "selo-osc/www.ipea.gov.br/" + this.props.id_osc + "'>" + "<img src='" + this.props.app_url + "img/logo.png'>" + "</a>",
+                            value: "<a href='" + this.props.app_url + "selo-osc/" + this.props.id_osc + "'>" + "<img src='" + this.props.app_url + "img/logo.png'>" + "</a>",
                             rows: '3' }),
                         React.createElement(
                             'label',
