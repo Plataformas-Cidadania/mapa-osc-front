@@ -186,7 +186,7 @@ class Governancas extends React.Component{
         }
 
         this.setState({loadingVoluntario: true, buttonVoluntario: false, showMsgVoluntario: false, msgVoluntario: ''}, function(){
-            console.log('**', this.state.form.nr_trabalhadores_voluntarios);
+            //console.log('**', this.state.form.nr_trabalhadores_voluntarios);
             $.ajax({
                 method:'PUT',
                 url: getBaseUrl2 + 'osc/rel_trabalho/'+this.state.editIdOsc,
@@ -197,7 +197,14 @@ class Governancas extends React.Component{
                 cache: false,
                 success: function(data) {
                     let msgVoluntario = "Dados alterados com sucesso!";
-                    this.setState({loadingVoluntario: false, msgVoluntario: msgVoluntario, showMsgVoluntario: true,  updateOkVoluntario: true, buttonVoluntario: true});
+                    this.setState({
+                        loadingVoluntario: false,
+                        msgVoluntario: msgVoluntario,
+                        showMsgVoluntario: true,
+                        updateOkVoluntario: true,
+                        buttonVoluntario: true,
+                        totalTrabalhadores: this.state.form.nr_trabalhadores_voluntarios,
+                    });
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -210,7 +217,6 @@ class Governancas extends React.Component{
     }
 
     callModal(id, type, txt){
-        console.log('3', id);
         let modal = this.state.modal;
         this.setState({
             modal: modal,
