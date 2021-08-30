@@ -15,7 +15,9 @@ class Charts extends React.Component {
                 head: [],
                 rows: []
             },
-            menu: []
+            menu: [],
+            tooltip: 'Ocultar menu',
+            tooltip2: 'Visualizar menu'
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -199,7 +201,7 @@ class Charts extends React.Component {
 
         modal.head = table.data.head.map(function (item, index) {
             return React.createElement(
-                "th",
+                'th',
                 { key: 'thModal' + index },
                 item
             );
@@ -207,20 +209,20 @@ class Charts extends React.Component {
 
         modal.rows = table.data.rows.map(function (item, index) {
             return React.createElement(
-                "tr",
+                'tr',
                 { key: 'trModal' + index },
                 React.createElement(
-                    "td",
+                    'td',
                     null,
                     item[0]
                 ),
                 React.createElement(
-                    "td",
+                    'td',
                     null,
                     item[1]
                 ),
                 React.createElement(
-                    "td",
+                    'td',
                     null,
                     item[2]
                 )
@@ -235,79 +237,79 @@ class Charts extends React.Component {
     modal() {
 
         return React.createElement(
-            "div",
-            { id: "modalTable", className: "modal fade bd-example-modal-lg", tabIndex: "-1", role: "dialog", "aria-labelledby": "myLargeModalLabel", "aria-hidden": "true" },
+            'div',
+            { id: 'modalTable', className: 'modal fade bd-example-modal-lg', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel', 'aria-hidden': 'true' },
             React.createElement(
-                "div",
-                { className: "modal-dialog modal-lg" },
+                'div',
+                { className: 'modal-dialog modal-lg' },
                 React.createElement(
-                    "div",
-                    { className: "modal-content" },
+                    'div',
+                    { className: 'modal-content' },
                     React.createElement(
-                        "div",
-                        { className: "modal-header" },
+                        'div',
+                        { className: 'modal-header' },
                         React.createElement(
-                            "h4",
-                            { className: "modal-title", id: "exampleModalLabel" },
+                            'h4',
+                            { className: 'modal-title', id: 'exampleModalLabel' },
                             React.createElement(
-                                "strong",
+                                'strong',
                                 null,
                                 this.state.modal.name
                             )
                         ),
                         React.createElement(
-                            "button",
-                            { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Fechar" },
+                            'button',
+                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Fechar' },
                             React.createElement(
-                                "span",
-                                { "aria-hidden": "true" },
-                                "\xD7"
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                '\xD7'
                             )
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "modal-body" },
+                        'div',
+                        { className: 'modal-body' },
                         React.createElement(
-                            "table",
-                            { className: "table table-hover" },
+                            'table',
+                            { className: 'table table-hover' },
                             React.createElement(
-                                "thead",
-                                { className: "thead-light" },
+                                'thead',
+                                { className: 'thead-light' },
                                 React.createElement(
-                                    "tr",
+                                    'tr',
                                     null,
                                     this.state.modal.head
                                 )
                             ),
                             React.createElement(
-                                "tbody",
+                                'tbody',
                                 null,
                                 this.state.modal.rows
                             )
                         ),
                         React.createElement(
-                            "div",
-                            { className: "bd-callout bd-callout-warning" },
+                            'div',
+                            { className: 'bd-callout bd-callout-warning' },
                             React.createElement(
-                                "h5",
-                                { id: "incompatibilidade-jquery" },
-                                "Fonte:"
+                                'h5',
+                                { id: 'incompatibilidade-jquery' },
+                                'Fonte:'
                             ),
                             React.createElement(
-                                "p",
-                                { className: "box-chart-model-font" },
+                                'p',
+                                { className: 'box-chart-model-font' },
                                 this.state.modal.fontes
                             )
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "modal-footer" },
+                        'div',
+                        { className: 'modal-footer' },
                         React.createElement(
-                            "button",
-                            { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
-                            "Fechar"
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                            'Fechar'
                         )
                     )
                 )
@@ -354,41 +356,41 @@ class Charts extends React.Component {
                 }
 
                 return React.createElement(
-                    "div",
-                    { className: "box-chart divOff", key: "divChart" + item.chart, id: "divChart" + index, style: { display: index === 0 ? 'block' : '' } },
+                    'div',
+                    { className: 'box-chart divOff', key: "divChart" + item.chart, id: "divChart" + index, style: { display: index === 0 ? 'block' : '' } },
                     React.createElement(
-                        "div",
-                        { className: "title-style", style: { perspective: '1000px' } },
+                        'div',
+                        { className: 'title-style', style: { perspective: '1000px' } },
                         React.createElement(
-                            "h2",
+                            'h2',
                             null,
                             index + 1,
-                            " - ",
+                            ' - ',
                             item.name
                         ),
-                        React.createElement("div", { className: "line line-fix block", "data-move-x": "980px",
+                        React.createElement('div', { className: 'line line-fix block', 'data-move-x': '980px',
                             style: { opacity: '1', transition: 'all 1s ease 0s, opacity 1.5s ease 0s' } }),
-                        React.createElement("hr", null)
+                        React.createElement('hr', null)
                     ),
                     chart,
                     React.createElement(
-                        "p",
-                        { className: "box-chart-font bg-lgt" },
+                        'p',
+                        { className: 'box-chart-font bg-lgt' },
                         React.createElement(
-                            "strong",
+                            'strong',
                             null,
-                            "Fonte:"
+                            'Fonte:'
                         ),
-                        " ",
+                        ' ',
                         item.fontes
                     ),
                     React.createElement(
-                        "div",
-                        { className: "btn btn-outline-primary float-right", onClick: () => this.callModal(item.chart) },
-                        "Visualize os dados em tabela"
+                        'div',
+                        { className: 'btn btn-outline-primary float-right', onClick: () => this.callModal(item.chart) },
+                        'Visualize os dados em tabela'
                     ),
-                    React.createElement("br", null),
-                    React.createElement("br", null)
+                    React.createElement('br', null),
+                    React.createElement('br', null)
                 );
             }.bind(this));
         }
@@ -396,13 +398,13 @@ class Charts extends React.Component {
         if (this.state.menu) {
             menu = this.state.menu.map(function (item, index) {
                 return React.createElement(
-                    "li",
+                    'li',
                     { className: index === 0 ? 'menu-left-active' : '', key: 'menu' + index, id: "divMenuChart" + index, style: { cursor: 'pointer' } },
                     React.createElement(
-                        "a",
+                        'a',
                         { onClick: () => this.callMenu(index) },
                         index + 1,
-                        " - ",
+                        ' - ',
                         item
                     )
                 );
@@ -410,42 +412,54 @@ class Charts extends React.Component {
         }
 
         return React.createElement(
-            "div",
+            'div',
             null,
             React.createElement(
-                "div",
-                { className: "container" },
+                'div',
+                { className: 'container' },
                 React.createElement(
-                    "div",
-                    { className: "row" },
+                    'div',
+                    { className: 'row' },
                     React.createElement(
-                        "div",
-                        { className: "col-md-12", style: { margin: '-20px 0 0 0' } },
+                        'div',
+                        { className: 'col-md-12', style: { margin: '-20px 0 0 0' } },
                         React.createElement(
-                            "a",
-                            { onClick: () => this.showHideLine() },
-                            React.createElement("i", { id: "iconLine", className: "fas fa-bars fa-2x float-right icons-top curso-poite cursor" })
+                            'a',
+                            { className: 'tooltips float-right cursor', onClick: () => this.showHideLine() },
+                            React.createElement('div', { style: { height: '10px' } }),
+                            React.createElement('i', { id: 'iconLine', className: 'fas fa-bars fa-2x float-right icons-top curso-poite ' }),
+                            React.createElement(
+                                'span',
+                                { className: 'tooltiptext' },
+                                this.state.tooltip
+                            )
                         ),
                         React.createElement(
-                            "a",
-                            { onClick: () => this.showHideColumn() },
-                            React.createElement("i", { id: "iconColumn", className: "fas fa-columns fa-2x float-right icons-top icons-top-active cursor" })
+                            'a',
+                            { className: 'tooltips float-right cursor', onClick: () => this.showHideColumn() },
+                            React.createElement('div', { style: { height: '10px' } }),
+                            React.createElement('i', { id: 'iconColumn', className: 'fas fa-columns fa-2x float-right icons-top icons-top-active ' }),
+                            React.createElement(
+                                'span',
+                                { className: 'tooltiptext', style: { marginTop: '-20px' } },
+                                this.state.tooltip2
+                            )
                         ),
-                        React.createElement("br", null),
-                        React.createElement("br", null)
+                        React.createElement('br', null),
+                        React.createElement('br', null)
                     ),
                     React.createElement(
-                        "div",
-                        { id: "column", className: "col-md-3" },
+                        'div',
+                        { id: 'column', className: 'col-md-3' },
                         React.createElement(
-                            "ul",
-                            { className: "menu-left menu-left-chart" },
+                            'ul',
+                            { className: 'menu-left menu-left-chart' },
                             menu
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { id: "line", className: "col-md-9" },
+                        'div',
+                        { id: 'line', className: 'col-md-9' },
                         charts
                     )
                 ),

@@ -16,6 +16,8 @@ class Charts extends React.Component{
                 rows: []
             },
             menu: [],
+            tooltip: 'Ocultar menu',
+            tooltip2: 'Visualizar menu',
         };
 
         this.loadChart = this.loadChart.bind(this);
@@ -353,8 +355,18 @@ class Charts extends React.Component{
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12" style={{margin: '-20px 0 0 0'}}>
-                            <a onClick={() => this.showHideLine()}><i id="iconLine" className="fas fa-bars fa-2x float-right icons-top curso-poite cursor"/></a>
-                            <a onClick={() => this.showHideColumn()}><i id="iconColumn" className="fas fa-columns fa-2x float-right icons-top icons-top-active cursor"/></a>
+                            <a className="tooltips float-right cursor" onClick={() => this.showHideLine()}>
+                                <div style={{height:'10px'}}/>
+                                <i id="iconLine" className="fas fa-bars fa-2x float-right icons-top curso-poite "/>
+                                <span className="tooltiptext">{this.state.tooltip}</span>
+                            </a>
+                            <a className="tooltips float-right cursor" onClick={() => this.showHideColumn()}>
+                                <div style={{height:'10px'}}/>
+                                <i id="iconColumn" className="fas fa-columns fa-2x float-right icons-top icons-top-active "/>
+                                <span className="tooltiptext" style={{marginTop:'-20px'}}>{this.state.tooltip2}</span>
+                            </a>
+
+
                             <br/><br/>
                         </div>
                         <div id="column" className="col-md-3">
