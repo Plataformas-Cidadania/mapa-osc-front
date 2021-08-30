@@ -107,16 +107,10 @@ class FormEditParticipacaoConselho extends React.Component {
     }
 
     updateConselho(e) {
-        console.log('aaaaaa');
         e.preventDefault();
-        console.log('bbbb');
         if (!this.validate()) {
             return;
         }
-
-        console.log('ccc');
-
-        console.log('id 1:', this.state.editId);
 
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
@@ -140,7 +134,6 @@ class FormEditParticipacaoConselho extends React.Component {
                 cache: false,
                 success: function (data) {
                     this.props.list();
-                    console.log('ddddd');
 
                     //this.cleanFormConselho();
                     //this.props.showHideFormConselho();

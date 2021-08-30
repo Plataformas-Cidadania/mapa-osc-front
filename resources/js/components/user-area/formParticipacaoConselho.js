@@ -3,10 +3,10 @@ class FormParticipacaoConselho extends React.Component{
         super(props);
         this.state = {
             form: {
-                tx_nome_conselho: '',
-                tx_nome_tipo_participacao: '',
+                tx_nome_conselho: 0,
+                //tx_nome_tipo_participacao: 0,
                 //tx_nome_representante_conselho: '',
-                tx_periodicidade_reuniao: '',
+                tx_periodicidade_reuniao: 0,
                 dt_data_inicio_conselho: '',
                 dt_data_fim_conselho: '',
             },
@@ -100,10 +100,12 @@ class FormParticipacaoConselho extends React.Component{
     }
 
     cleanFormConselho(){
-        let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }
+        let form = {
+                tx_nome_conselho: 0,
+                tx_periodicidade_reuniao: 0,
+                dt_data_inicio_conselho: '',
+                dt_data_fim_conselho: '',
+        };
         this.setState({form: form});
     }
 
@@ -157,7 +159,7 @@ class FormParticipacaoConselho extends React.Component{
                     this.props.list();
 
                     this.cleanFormConselho();
-                    //this.props.showHideFormConselho();
+                    this.props.showHideFormConselho();
 
                     this.setState({participacoes: data.participacoes, loading: false})
                 }.bind(this),
@@ -176,7 +178,6 @@ class FormParticipacaoConselho extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/conselho',
             url: getBaseUrl2 + 'ps_conselhos',
             data: {
 
@@ -197,7 +198,6 @@ class FormParticipacaoConselho extends React.Component{
         this.setState({loadingList: true});
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl + 'menu/osc/periodicidade_reuniao',
             url: getBaseUrl2 + 'ps_conselhos_periodicidade',
             data: {
 
@@ -216,7 +216,6 @@ class FormParticipacaoConselho extends React.Component{
 
 
     render(){
-
 
         let listConselhos = this.state.listConselhos.map(function(item, index){
             return (
@@ -239,12 +238,9 @@ class FormParticipacaoConselho extends React.Component{
                 <div className="col-md-12">
                     <form>
 
-
                         <div className="label-float">
-
-
                             <select  className={"form-control "}
-                                name="tx_nome_conselho" onChange={this.handleInputChange} defaultValue={this.state.form.tx_nome_conselho}>
+                                name="tx_nome_conselho" onChange={this.handleInputChange} value={this.state.form.tx_nome_conselho}>
                                 <option value="0">Selecione</option>
                                 {listConselhos}
                             </select><br/>
@@ -253,7 +249,7 @@ class FormParticipacaoConselho extends React.Component{
 
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="tx_periodicidade_reuniao" onChange={this.handleInputChange} defaultValue={this.state.form.tx_periodicidade_reuniao}>
+                                     name="tx_periodicidade_reuniao" onChange={this.handleInputChange} value={this.state.form.tx_periodicidade_reuniao}>
                                 <option value="0">Selecione</option>
                                 {listReuniao}
                             </select><br/>

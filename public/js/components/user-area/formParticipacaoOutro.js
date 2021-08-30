@@ -22,7 +22,7 @@ class FormParticipacaoOutro extends React.Component {
         this.register = this.register.bind(this);
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
+        this.cleanFormOutro = this.cleanFormOutro.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -34,7 +34,7 @@ class FormParticipacaoOutro extends React.Component {
                     this.edit();
                 }
                 if (this.state.action == 'new') {
-                    this.cleanForm();
+                    this.cleanFormOutro();
                 }
             });
         }
@@ -68,11 +68,10 @@ class FormParticipacaoOutro extends React.Component {
         this.setState({ form: form });
     }
 
-    cleanForm() {
-        let form = this.state.form;
-        for (let i in form) {
-            form[i] = '';
-        }
+    cleanFormOutro() {
+        let form = {
+            tx_nome_participacao_social_outra: ''
+        };
         this.setState({ form: form });
     }
 
@@ -131,8 +130,8 @@ class FormParticipacaoOutro extends React.Component {
 
                     this.props.list();
 
-                    this.cleanForm();
-                    //this.props.showHideFormOutro();
+                    this.cleanFormOutro();
+                    this.props.showHideFormOutro();
 
                     this.setState({ participacoes: data.participacoes, loading: false });
                 }.bind(this),

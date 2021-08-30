@@ -40,7 +40,7 @@ class FormParticipacaoConferencia extends React.Component{
         this.register = this.register.bind(this);
         this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
-        this.cleanForm = this.cleanForm.bind(this);
+        this.cleanFormConferencia = this.cleanFormConferencia.bind(this);
     }
 
     componentDidMount(){
@@ -57,7 +57,7 @@ class FormParticipacaoConferencia extends React.Component{
                     this.edit();
                 }
                 if(this.state.action=='new'){
-                    this.cleanForm();
+                    this.cleanFormConferencia();
                 }
             });
         }
@@ -93,11 +93,12 @@ class FormParticipacaoConferencia extends React.Component{
         this.setState({form: form});
     }
 
-    cleanForm(){
-        let form = this.state.form;
-        for(let i in form){
-            form[i] = '';
-        }
+    cleanFormConferencia(){
+        let form = {
+            cd_conferencia: 0,
+            dt_ano_realizacao: 0,
+            cd_forma_participacao_conferencia: 0,
+        };
         this.setState({form: form});
     }
 
@@ -160,8 +161,8 @@ class FormParticipacaoConferencia extends React.Component{
                 cache: false,
                 success: function(data) {
                     this.props.list();
-                    this.cleanForm();
-
+                    this.cleanFormConferencia();
+                    this.props.showHideFormConferencia();
 
                     this.setState({conferencias: data.conferencias, loading: false})
                 }.bind(this),
@@ -250,7 +251,7 @@ class FormParticipacaoConferencia extends React.Component{
 
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_conferencia}>
+                                     name="cd_conferencia" onChange={this.handleInputChange} value={this.state.form.cd_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listConferencia}
                             </select><br/>
@@ -258,14 +259,14 @@ class FormParticipacaoConferencia extends React.Component{
                         <div className="label-float">
 
                             <select  className={"form-control "}
-                                     name="dt_ano_realizacao" onChange={this.handleInputChange} defaultValue={this.state.form.dt_ano_realizacao}>
-                                <option value="2020-01-01">2020</option>
+                                     name="dt_ano_realizacao" onChange={this.handleInputChange} value={this.state.form.dt_ano_realizacao}>
+                                <option value="0">Selecione</option>
                                 {anosLista}
                             </select><br/>
                         </div>
                         <div className="label-float">
                             <select  className={"form-control "}
-                                     name="cd_forma_participacao_conferencia" onChange={this.handleInputChange} defaultValue={this.state.form.cd_forma_participacao_conferencia}>
+                                     name="cd_forma_participacao_conferencia" onChange={this.handleInputChange} value={this.state.form.cd_forma_participacao_conferencia}>
                                 <option value="0">Selecione</option>
                                 {listForma}
                             </select><br/>
