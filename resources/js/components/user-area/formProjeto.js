@@ -70,6 +70,7 @@ class FormProjeto extends React.Component{
         //this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+        this.cleanForm2 = this.cleanForm2.bind(this);
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
@@ -140,6 +141,15 @@ class FormProjeto extends React.Component{
         };
 
         this.setState({form: form});
+        this.cleanForm2();
+    }
+
+    cleanForm2(){
+
+
+        let form = {};
+
+        this.setState({form: form});
     }
 
     validate(){
@@ -148,7 +158,7 @@ class FormProjeto extends React.Component{
         let requireds = this.state.requireds;
         let form = this.state.form;
 
-        console.log('****', requireds);
+        //console.log('****', requireds);
 
         for(let index in requireds){
             if(!form[index] || form[index]==''){
@@ -1193,8 +1203,14 @@ class FormProjeto extends React.Component{
                         <div className="row box-menu-nav" style={{display: this.state.boxMenuNav ? 'none': ''}}>
                             <div className="col-md-12">
                                 <strong>Parabéns!</strong>
-                                <p>Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens. </p>
+                                <p>Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens ou
+                                    <button className="btn btn-outline-primary btn-xs"  data-dismiss="modal" aria-label="Fechar" onClick={() => this.menuNavClose()} style={{float: 'none'}}>
+                                    completar cadastro mais tarde.
+                                </button>
+                                </p>
+
                                 <br/>
+
                             </div>
 
                             <div className="col-md-2 text-center" onClick={() => this.menuNav(1)}>
@@ -1505,7 +1521,7 @@ class FormProjeto extends React.Component{
                                         <button className="btn btn-success float-left" onClick={() => this.menuNav(5)}>
                                             Anterior
                                         </button>
-                                        <button className="btn btn-danger float-right"  data-dismiss="modal" aria-label="Fechar" onClick={() => this.menuNavClose()}>
+                                        <button className="btn btn-primary float-right"  data-dismiss="modal" aria-label="Fechar" onClick={() => this.menuNavClose()}>
                                             Finalizar
                                         </button>
                                     </div>

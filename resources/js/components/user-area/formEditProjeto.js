@@ -1041,7 +1041,7 @@ class FormEditProjeto extends React.Component{
                                 </div>
 
                                 <div className="col-md-4">
-                                    <select className={"form-control form-m "+(this.state.form.cd_status_projeto ? '' : 'invalid-field')}
+                                    <select className={"form-control form-m "}
                                             name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Arquivado, cancelado ou indeferido</option>
@@ -1150,7 +1150,7 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="col-md-4">
                                     {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
-                                    <select className={"form-control form-m "+(this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field')}
+                                    <select className={"form-control form-m "}
                                             name="cd_abrangencia_projeto" onChange={this.handleInputChange} value={this.state.form.cd_abrangencia_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Municipal</option>
@@ -1161,7 +1161,7 @@ class FormEditProjeto extends React.Component{
                                 </div>
 
                                 <div className="col-md-4">
-                                    <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
+                                    <select className={"form-control form-m "}
                                             name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} value={this.state.form.cd_zona_atuacao_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Rural</option>

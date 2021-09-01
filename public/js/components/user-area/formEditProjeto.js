@@ -1144,7 +1144,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.form.cd_status_projeto ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_status_projeto', onChange: this.handleInputChange, value: this.state.form.cd_status_projeto },
                                     React.createElement(
                                         'option',
@@ -1384,7 +1384,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_abrangencia_projeto', onChange: this.handleInputChange, value: this.state.form.cd_abrangencia_projeto },
                                     React.createElement(
                                         'option',
@@ -1419,7 +1419,7 @@ class FormEditProjeto extends React.Component {
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_zona_atuacao_projeto', onChange: this.handleInputChange, value: this.state.form.cd_zona_atuacao_projeto },
                                     React.createElement(
                                         'option',
