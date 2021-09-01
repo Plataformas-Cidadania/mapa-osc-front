@@ -13020,6 +13020,15 @@ label, input, .btn-number {
   margin-right: 12px;
 }
 
+.label-select {
+  font-size: 12px;
+  top: -49px;
+  color: #1a73e8;
+  background: #FFFFFF;
+  position: relative;
+  margin-left: 11px;
+}
+
 .fa-svg svg {
   font-size: 25px;
   margin: 0 4px 15px 0;

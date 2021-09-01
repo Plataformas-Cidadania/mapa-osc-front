@@ -3,6 +3,7 @@ class FormProjeto extends React.Component{
         super(props);
         this.state = {
             form: {
+                tx_nome_projeto: '',
                 dt_inicio_projeto: '',
                 dt_fim_projeto: '',
                 cd_uf: '',
@@ -11,7 +12,7 @@ class FormProjeto extends React.Component{
             btnContinue: false,
             loading: false,
             requireds: {
-
+                tx_nome_projeto: true,
             },
             showMsg: false,
             msg: '',
@@ -69,6 +70,7 @@ class FormProjeto extends React.Component{
         //this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+        this.cleanForm2 = this.cleanForm2.bind(this);
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
@@ -90,6 +92,7 @@ class FormProjeto extends React.Component{
         this.addList = this.addList.bind(this);
 
         this.menuNav = this.menuNav.bind(this);
+        this.menuNavClose = this.menuNavClose.bind(this);
 
         this.checkRecurso = this.checkRecurso.bind(this);
 
@@ -117,10 +120,35 @@ class FormProjeto extends React.Component{
     }
 
     cleanForm(){
-        let form = this.state.form;
+        /*let form = this.state.form;
         for(let i in form){
             form[i] = '';
-        }
+        }*/
+
+        let form = {
+            tx_nome_projeto: '',
+            cd_status_projeto: 0,
+            dt_data_inicio_projeto: '',
+            dt_data_fim_projeto: '',
+            tx_link_projeto: '',
+            nr_total_beneficiarios: '',
+            nr_valor_total_projeto: '',
+            nr_valor_captado_projeto: '',
+            tx_descricao_projeto: '',
+            tx_metodologia_monitoramento: '',
+            cd_abrangencia_projeto: 0,
+            cd_zona_atuacao_projeto: 0,
+        };
+
+        this.setState({form: form});
+        this.cleanForm2();
+    }
+
+    cleanForm2(){
+
+
+        let form = {};
+
         this.setState({form: form});
     }
 
@@ -130,6 +158,8 @@ class FormProjeto extends React.Component{
         let requireds = this.state.requireds;
         let form = this.state.form;
 
+        //console.log('****', requireds);
+
         for(let index in requireds){
             if(!form[index] || form[index]==''){
                 requireds[index] = false;
@@ -138,6 +168,7 @@ class FormProjeto extends React.Component{
                 requireds[index] = true;
             }
         }
+
 
         this.setState({requireds: requireds});
         return valid;
@@ -191,8 +222,6 @@ class FormProjeto extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-
-                    console.log('data', data);
 
                     this.props.list();
 
@@ -810,6 +839,13 @@ class FormProjeto extends React.Component{
         this.setState({menuNavSelected: id});
     }
 
+    menuNavClose(){
+        this.setState({
+            boxMenuNav: true,
+            menuNavSelected: 0
+        });
+    }
+
 
     render(){
 
@@ -1004,32 +1040,38 @@ class FormProjeto extends React.Component{
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_nome_projeto}
-                                               placeholder="Nome do projeto, atividade ou programa" />
+                                        <input className={"form-control form-g "+(this.state.requireds.tx_nome_projeto ? '' : 'invalid-field')} type="text" name="tx_nome_projeto" onChange={this.handleInputChange}
+                                               value={this.state.form.tx_nome_projeto}
+                                               placeholder="Nome do projeto, atividade ou programa"
+                                               required={this.state.requireds.tx_nome_projeto ? '' : 'required'}
+                                        />
                                         <label htmlFor="tx_nome_projeto">Nome do projeto, atividade ou programa</label>
                                         <div className="label-box-info-off">
-                                            <p>&nbsp;</p>
+                                            <p style={{display: this.state.requireds.tx_nome_projeto ? 'none' : 'block'}}><i className="fas fa-exclamation-circle"/> Digite o nome do projeto</p>
                                         </div>
                                     </div>
+                                    <br/>
                                 </div>
 
+
                                 <div className="col-md-4">
-                                    <select className={"form-control form-m "+(this.state.form.cd_status_projeto ? '' : 'invalid-field')}
-                                            name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}>
-                                        <option value="-1">Selecione</option>
-                                        <option value="1">Arquivado, cancelado ou indeferido</option>
-                                        <option value="3">Proposta</option>
-                                        <option value="3">Projeto em andamento</option>
-                                        <option value="2">Finalizado</option>
-                                        <option value="5">Outro</option>
-                                    </select><br/>
+
+                                        <select className={"form-control form-m "}
+                                                name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}  >
+                                            <option value="-1">Selecione</option>
+                                            <option value="1">Arquivado, cancelado ou indeferido</option>
+                                            <option value="3">Proposta</option>
+                                            <option value="3">Projeto em andamento</option>
+                                            <option value="2">Finalizado</option>
+                                            <option value="5">Outro</option>
+                                        </select>
+                                        <label htmlFor="cd_status_projeto" className="label-select">Status</label>
                                 </div>
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.dt_data_inicio_projeto}
+                                               value={this.state.form.dt_data_inicio_projeto}
                                                placeholder="Data de Início" />
                                         <label htmlFor="dt_data_inicio_projeto">Data de Início</label>
                                         <div className="label-box-info-off">
@@ -1041,7 +1083,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.dt_data_fim_projeto}
+                                               value={this.state.form.dt_data_fim_projeto}
                                                placeholder="Data de Fim" />
                                         <label htmlFor="dt_data_fim_projeto">Data de Fim</label>
                                         <div className="label-box-info-off">
@@ -1053,7 +1095,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-8">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_link_projeto}
+                                               value={this.state.form.tx_link_projeto}
                                                placeholder="Link para o projeto" />
                                         <label htmlFor="tx_link_projeto">Link para o projeto</label>
                                         <div className="label-box-info-off">
@@ -1065,7 +1107,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_total_beneficiarios" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_total_beneficiarios}
+                                               value={this.state.form.nr_total_beneficiarios}
                                                placeholder="Total de Beneficiários" />
                                         <label htmlFor="nr_total_beneficiarios">Total de Beneficiários</label>
                                         <div className="label-box-info-off">
@@ -1077,7 +1119,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_valor_total_projeto}
+                                               value={this.state.form.nr_valor_total_projeto}
                                                placeholder="Valor Total" />
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
@@ -1089,7 +1131,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_valor_captado_projeto}
+                                               value={this.state.form.nr_valor_captado_projeto}
                                                placeholder="Valor Recebido" />
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">
@@ -1101,7 +1143,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_descricao_projeto" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_descricao_projeto}
+                                               value={this.state.form.tx_descricao_projeto}
                                                placeholder="Descrição do Projeto, atividade e/ou programa" />
                                         <label htmlFor="tx_descricao_projeto">Descrição do Projeto, atividade e/ou programa</label>
                                         <div className="label-box-info-off">
@@ -1113,7 +1155,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_metodologia_monitoramento" onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.tx_metodologia_monitoramento}
+                                               value={this.state.form.tx_metodologia_monitoramento}
                                                placeholder="Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa" />
                                         <label htmlFor="tx_metodologia_monitoramento">Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa</label>
                                         <div className="label-box-info-off">
@@ -1124,23 +1166,25 @@ class FormProjeto extends React.Component{
 
                                 <div className="col-md-4">
                                     {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
-                                    <select className={"form-control form-m "+(this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field')}
+                                    <select className={"form-control form-m "}
                                             name="cd_abrangencia_projeto" onChange={this.handleInputChange} value={this.state.form.cd_abrangencia_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Municipal</option>
                                         <option value="2">Estadual</option>
                                         <option value="3">Regional</option>
                                         <option value="4">Nacional</option>
-                                    </select><br/>
+                                    </select>
+                                    <label htmlFor="cd_abrangencia_projeto" className="label-select">Abrangência</label>
                                 </div>
 
                                 <div className="col-md-4">
-                                    <select className={"form-control form-m "+(this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field')}
+                                    <select className={"form-control form-m "}
                                             name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} value={this.state.form.cd_zona_atuacao_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Rural</option>
                                         <option value="2">Urbana</option>
-                                    </select><br/>
+                                    </select>
+                                    <label htmlFor="cd_zona_atuacao_projeto" className="label-select">Atuação</label>
                                 </div>
 
                                 <div className="col-md-12">
@@ -1159,8 +1203,14 @@ class FormProjeto extends React.Component{
                         <div className="row box-menu-nav" style={{display: this.state.boxMenuNav ? 'none': ''}}>
                             <div className="col-md-12">
                                 <strong>Parabéns!</strong>
-                                <p>Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens. </p>
+                                <p>Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens ou
+                                    <button className="btn btn-outline-primary btn-xs"  data-dismiss="modal" aria-label="Fechar" onClick={() => this.menuNavClose()} style={{float: 'none'}}>
+                                    completar cadastro mais tarde.
+                                </button>
+                                </p>
+
                                 <br/>
+
                             </div>
 
                             <div className="col-md-2 text-center" onClick={() => this.menuNav(1)}>
@@ -1207,97 +1257,7 @@ class FormProjeto extends React.Component{
 
 
                         <div className="row" style={{display: this.state.menuNavSelected === 1 ? '' : 'none'}}>
-                            {/*<div className={this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'col-md-12' : 'col-md-6'} >
-                                <br/>
-                                <p><strong>Fontes de Recursos</strong></p>
-                                <hr/>
 
-                                <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"}  defaultChecked={this.state.ft_recursos_publico} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_publico"} >Recursos públicos</label>
-                                    </div>
-                                    <div className="float-right" style={{display: this.state.active === false ? 'none' : '', margin: '8px -20px 0 0'}}>
-                                        <i className="fas fa-chevron-right " />
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_privado"}  defaultChecked={this.state.ft_recursos_privado} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_privado"} >Recursos privados</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_proprio"} defaultChecked={this.state.ft_recursos_proprio} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_proprio"} >Recursos próprios</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_nao_financeiro"} defaultChecked={this.state.ft_recursos_nao_financeiro} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_nao_financeiro"} >Recursos não financeiros</label>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div className="col-md-6" style={{display: this.state.ft_recursos_publico !== 'chkbox' && this.state.active === false ? 'none' : ''}}>
-                                <br/>
-                                <p><strong>Tipo de Parceria</strong></p>
-                                <hr/>
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_cooperacao_tecnica"}  defaultChecked={this.state.tp_cooperacao_tecnica} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_cooperacao_tecnica"} >Acordo de cooperação técnica</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_fomento"}  defaultChecked={this.state.tp_termo_fomento} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_fomento"} >Termo de fomento</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_colaboracao"}  defaultChecked={this.state.tp_termo_colaboracao} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_colaboracao"} >Termo de colaboração</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_parceria"}  defaultChecked={this.state.tp_termo_parceria} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_parceria"} >Termo de parceria</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_contrato_gestao"}  defaultChecked={this.state.tp_contrato_gestao} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_contrato_gestao"} >Contrato de gestão</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_convenio"}  defaultChecked={this.state.tp_convenio} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_convenio"} >Convênio</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id={"tp_outro"}  defaultChecked={this.state.tp_outro} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_outro"} >Outro</label>
-                                    </div>
-                                </div>
-                            </div>*/}
 
                             {/*Fontes recursos*/}
                             <div className={this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6'}>
@@ -1529,7 +1489,7 @@ class FormProjeto extends React.Component{
                                         <div>
                                             <br/>
                                             <button className="btn btn-success float-left" onClick={() => this.menuNav(4)}>
-                                                Próximo
+                                                Anterior
                                             </button>
                                             <button className="btn btn-success float-right" onClick={() => this.menuNav(6)}>
                                                 Próximo
@@ -1560,6 +1520,9 @@ class FormProjeto extends React.Component{
                                         <br/>
                                         <button className="btn btn-success float-left" onClick={() => this.menuNav(5)}>
                                             Anterior
+                                        </button>
+                                        <button className="btn btn-primary float-right"  data-dismiss="modal" aria-label="Fechar" onClick={() => this.menuNavClose()}>
+                                            Finalizar
                                         </button>
                                     </div>
                                 </div>

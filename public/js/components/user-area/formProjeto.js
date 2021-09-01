@@ -3,6 +3,7 @@ class FormProjeto extends React.Component {
         super(props);
         this.state = {
             form: {
+                tx_nome_projeto: '',
                 dt_inicio_projeto: '',
                 dt_fim_projeto: '',
                 cd_uf: ''
@@ -10,7 +11,9 @@ class FormProjeto extends React.Component {
             button: true,
             btnContinue: false,
             loading: false,
-            requireds: {},
+            requireds: {
+                tx_nome_projeto: true
+            },
             showMsg: false,
             msg: '',
             projetos: [],
@@ -62,6 +65,7 @@ class FormProjeto extends React.Component {
         //this.edit = this.edit.bind(this);
         this.validate = this.validate.bind(this);
         this.cleanForm = this.cleanForm.bind(this);
+        this.cleanForm2 = this.cleanForm2.bind(this);
 
         this.checkMetas = this.checkMetas.bind(this);
         this.listArea = this.listArea.bind(this);
@@ -83,6 +87,7 @@ class FormProjeto extends React.Component {
         this.addList = this.addList.bind(this);
 
         this.menuNav = this.menuNav.bind(this);
+        this.menuNavClose = this.menuNavClose.bind(this);
 
         this.checkRecurso = this.checkRecurso.bind(this);
     }
@@ -107,10 +112,34 @@ class FormProjeto extends React.Component {
     }
 
     cleanForm() {
-        let form = this.state.form;
-        for (let i in form) {
+        /*let form = this.state.form;
+        for(let i in form){
             form[i] = '';
-        }
+        }*/
+
+        let form = {
+            tx_nome_projeto: '',
+            cd_status_projeto: 0,
+            dt_data_inicio_projeto: '',
+            dt_data_fim_projeto: '',
+            tx_link_projeto: '',
+            nr_total_beneficiarios: '',
+            nr_valor_total_projeto: '',
+            nr_valor_captado_projeto: '',
+            tx_descricao_projeto: '',
+            tx_metodologia_monitoramento: '',
+            cd_abrangencia_projeto: 0,
+            cd_zona_atuacao_projeto: 0
+        };
+
+        this.setState({ form: form });
+        this.cleanForm2();
+    }
+
+    cleanForm2() {
+
+        let form = {};
+
         this.setState({ form: form });
     }
 
@@ -119,6 +148,8 @@ class FormProjeto extends React.Component {
 
         let requireds = this.state.requireds;
         let form = this.state.form;
+
+        //console.log('****', requireds);
 
         for (let index in requireds) {
             if (!form[index] || form[index] == '') {
@@ -181,8 +212,6 @@ class FormProjeto extends React.Component {
                 },
                 cache: false,
                 success: function (data) {
-
-                    console.log('data', data);
 
                     this.props.list();
 
@@ -774,6 +803,13 @@ class FormProjeto extends React.Component {
         this.setState({ menuNavSelected: id });
     }
 
+    menuNavClose() {
+        this.setState({
+            boxMenuNav: true,
+            menuNavSelected: 0
+        });
+    }
+
     render() {
 
         let financiador_projeto = null;
@@ -1104,9 +1140,11 @@ class FormProjeto extends React.Component {
                                 React.createElement(
                                     'div',
                                     { className: 'label-float' },
-                                    React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_nome_projeto,
-                                        placeholder: 'Nome do projeto, atividade ou programa' }),
+                                    React.createElement('input', { className: "form-control form-g " + (this.state.requireds.tx_nome_projeto ? '' : 'invalid-field'), type: 'text', name: 'tx_nome_projeto', onChange: this.handleInputChange,
+                                        value: this.state.form.tx_nome_projeto,
+                                        placeholder: 'Nome do projeto, atividade ou programa',
+                                        required: this.state.requireds.tx_nome_projeto ? '' : 'required'
+                                    }),
                                     React.createElement(
                                         'label',
                                         { htmlFor: 'tx_nome_projeto' },
@@ -1117,18 +1155,20 @@ class FormProjeto extends React.Component {
                                         { className: 'label-box-info-off' },
                                         React.createElement(
                                             'p',
-                                            null,
-                                            '\xA0'
+                                            { style: { display: this.state.requireds.tx_nome_projeto ? 'none' : 'block' } },
+                                            React.createElement('i', { className: 'fas fa-exclamation-circle' }),
+                                            ' Digite o nome do projeto'
                                         )
                                     )
-                                )
+                                ),
+                                React.createElement('br', null)
                             ),
                             React.createElement(
                                 'div',
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.form.cd_status_projeto ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_status_projeto', onChange: this.handleInputChange, value: this.state.form.cd_status_projeto },
                                     React.createElement(
                                         'option',
@@ -1161,7 +1201,11 @@ class FormProjeto extends React.Component {
                                         'Outro'
                                     )
                                 ),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'cd_status_projeto', className: 'label-select' },
+                                    'Status'
+                                )
                             ),
                             React.createElement(
                                 'div',
@@ -1170,7 +1214,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_inicio_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.dt_data_inicio_projeto,
+                                        value: this.state.form.dt_data_inicio_projeto,
                                         placeholder: 'Data de In\xEDcio' }),
                                     React.createElement(
                                         'label',
@@ -1195,7 +1239,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_data_fim_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.dt_data_fim_projeto,
+                                        value: this.state.form.dt_data_fim_projeto,
                                         placeholder: 'Data de Fim' }),
                                     React.createElement(
                                         'label',
@@ -1220,7 +1264,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_link_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_link_projeto,
+                                        value: this.state.form.tx_link_projeto,
                                         placeholder: 'Link para o projeto' }),
                                     React.createElement(
                                         'label',
@@ -1245,7 +1289,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_total_beneficiarios', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_total_beneficiarios,
+                                        value: this.state.form.nr_total_beneficiarios,
                                         placeholder: 'Total de Benefici\xE1rios' }),
                                     React.createElement(
                                         'label',
@@ -1270,7 +1314,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_total_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_valor_total_projeto,
+                                        value: this.state.form.nr_valor_total_projeto,
                                         placeholder: 'Valor Total' }),
                                     React.createElement(
                                         'label',
@@ -1295,7 +1339,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'nr_valor_captado_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.nr_valor_captado_projeto,
+                                        value: this.state.form.nr_valor_captado_projeto,
                                         placeholder: 'Valor Recebido' }),
                                     React.createElement(
                                         'label',
@@ -1320,7 +1364,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_descricao_projeto', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_descricao_projeto,
+                                        value: this.state.form.tx_descricao_projeto,
                                         placeholder: 'Descri\xE7\xE3o do Projeto, atividade e/ou programa' }),
                                     React.createElement(
                                         'label',
@@ -1345,7 +1389,7 @@ class FormProjeto extends React.Component {
                                     'div',
                                     { className: 'label-float' },
                                     React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_metodologia_monitoramento', onChange: this.handleInputChange,
-                                        defaultValue: this.state.form.tx_metodologia_monitoramento,
+                                        value: this.state.form.tx_metodologia_monitoramento,
                                         placeholder: 'Metodologia de Monitoramento e Avalia\xE7\xE3o do Projeto, atividade e/ou programa' }),
                                     React.createElement(
                                         'label',
@@ -1368,7 +1412,7 @@ class FormProjeto extends React.Component {
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.requireds.tx_nome_abrangencia_projeto ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_abrangencia_projeto', onChange: this.handleInputChange, value: this.state.form.cd_abrangencia_projeto },
                                     React.createElement(
                                         'option',
@@ -1396,14 +1440,18 @@ class FormProjeto extends React.Component {
                                         'Nacional'
                                     )
                                 ),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'cd_abrangencia_projeto', className: 'label-select' },
+                                    'Abrang\xEAncia'
+                                )
                             ),
                             React.createElement(
                                 'div',
                                 { className: 'col-md-4' },
                                 React.createElement(
                                     'select',
-                                    { className: "form-control form-m " + (this.state.requireds.tx_nome_zona_atuacao ? '' : 'invalid-field'),
+                                    { className: "form-control form-m ",
                                         name: 'cd_zona_atuacao_projeto', onChange: this.handleInputChange, value: this.state.form.cd_zona_atuacao_projeto },
                                     React.createElement(
                                         'option',
@@ -1421,7 +1469,11 @@ class FormProjeto extends React.Component {
                                         'Urbana'
                                     )
                                 ),
-                                React.createElement('br', null)
+                                React.createElement(
+                                    'label',
+                                    { htmlFor: 'cd_zona_atuacao_projeto', className: 'label-select' },
+                                    'Atua\xE7\xE3o'
+                                )
                             ),
                             React.createElement(
                                 'div',
@@ -1463,7 +1515,12 @@ class FormProjeto extends React.Component {
                             React.createElement(
                                 'p',
                                 null,
-                                'Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens. '
+                                'Seu projeto foi cadastrado com sucesso, complete os dados do mesmo abaixo, navegando pelos itens ou',
+                                React.createElement(
+                                    'button',
+                                    { className: 'btn btn-outline-primary btn-xs', 'data-dismiss': 'modal', 'aria-label': 'Fechar', onClick: () => this.menuNavClose(), style: { float: 'none' } },
+                                    'completar cadastro mais tarde.'
+                                )
                             ),
                             React.createElement('br', null)
                         ),
@@ -1978,7 +2035,7 @@ class FormProjeto extends React.Component {
                                         React.createElement(
                                             'button',
                                             { className: 'btn btn-success float-left', onClick: () => this.menuNav(4) },
-                                            'Pr\xF3ximo'
+                                            'Anterior'
                                         ),
                                         React.createElement(
                                             'button',
@@ -2038,6 +2095,11 @@ class FormProjeto extends React.Component {
                                         'button',
                                         { className: 'btn btn-success float-left', onClick: () => this.menuNav(5) },
                                         'Anterior'
+                                    ),
+                                    React.createElement(
+                                        'button',
+                                        { className: 'btn btn-primary float-right', 'data-dismiss': 'modal', 'aria-label': 'Fechar', onClick: () => this.menuNavClose() },
+                                        'Finalizar'
                                     )
                                 )
                             )
