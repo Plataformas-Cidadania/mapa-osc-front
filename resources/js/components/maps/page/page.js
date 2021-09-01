@@ -87,7 +87,7 @@ class Page extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({dataOscUf: data['osc'], dataIdhUf: data['idh'], processingOscIdhUfs: false});
                 },
                 error: function (xhr, status, err) {

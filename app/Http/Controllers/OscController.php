@@ -425,7 +425,7 @@ class OscController extends Controller{
         curl_close( $ch );
 
         //Log::info($data);
-        $data = json_decode($data, true);
+        //$data = json_decode($data, true);
 
         return $data;
     }
