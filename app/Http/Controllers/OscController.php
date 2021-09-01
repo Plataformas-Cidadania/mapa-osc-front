@@ -343,6 +343,7 @@ class OscController extends Controller{
         }
 
         $url = $api."osc/busca_avancada/geo/10/0";
+        //$url = "https://mapaosc.ipea.gov.br/api/api/osc/busca_avancada/geo/10/0";
         /*if(env('LOCALHOST_DOCKER') == 1) {
             $url = "";
         }*/
@@ -358,7 +359,8 @@ class OscController extends Controller{
         curl_close( $ch );
 
         //Log::info($data);
-        $data = json_decode($data, true);
+        //$data = json_decode($data, true);
+
 
         return $data;
     }

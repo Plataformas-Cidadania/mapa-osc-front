@@ -1033,7 +1033,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-          });
+         });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1042,7 +1042,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-          $.ajax({
+         $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1154,15 +1154,15 @@ class OscMap extends React.Component {
                         this.setState({ processingOscPontos: false });
                         return;
                     }
-                    //console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
-                    //for ($data as $key => $item) {
+                    data = JSON.parse(data);
                     for (let i in data) {
-                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        if (data[i].geo_lat && data[i].geo_lng) {
+                            data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        }
                     }
                     data = data2;
-                    //console.log(data);
                     /////////////////////////////////////////////
                     this.setState({ dataOscCluster: data, totalOscList: data.length, processingOscPontos: false }, function () {
                         this.populateMapCluster();
@@ -1893,8 +1893,8 @@ class OscMap extends React.Component {
                 )
             }
         }
-          itens.push(<div><br/></div>);
-          return itens;
+         itens.push(<div><br/></div>);
+         return itens;
     }*/
 
     render() {

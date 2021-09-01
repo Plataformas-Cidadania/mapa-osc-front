@@ -171,6 +171,7 @@ Route::get('/ativacao-invalida', 'RegisterUserController@ativacaoInvalida');
 Route::get('/area-user', 'UserAreaController@index');//->middleware('auth');
 Route::get('/dashboard-user', 'UserAreaController@index');//->middleware('auth');
 Route::get('/dados-user', 'UserAreaController@data');//->middleware('auth');
+Route::get('/trocar-senha', 'UserAreaController@trocarSenha');//->middleware('auth');
 Route::get('/oscs-user', 'UserAreaController@oscs');//->middleware('auth');
 Route::get('/osc-user/{id}', 'UserAreaController@osc');//->middleware('auth');
 Route::get('/objetivos-user', 'UserAreaController@objetivos');//->middleware('auth');
