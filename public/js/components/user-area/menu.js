@@ -59,6 +59,16 @@ class Menu extends React.Component {
                         null,
                         React.createElement(
                             'a',
+                            { href: 'trocar-senha' },
+                            React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+                            ' Trocar Senha'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        null,
+                        React.createElement(
+                            'a',
                             { href: 'logout-user' },
                             React.createElement('i', { className: 'fa fa-power-off', 'aria-hidden': 'true' }),
                             ' Sair'
