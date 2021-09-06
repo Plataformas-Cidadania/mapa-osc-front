@@ -34,6 +34,9 @@ class UserAreaController extends Controller
     public function data(){
         return view('user-area', ['pgUserArea' => 'data']);
     }
+    public function trocarSenha(){
+        return view('user-area', ['pgUserArea' => 'trocar-senha']);
+    }
     public function seal(){
         return view('user-area', ['pgUserArea' => 'seal']);
     }

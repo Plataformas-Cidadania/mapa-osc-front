@@ -58,7 +58,7 @@
         }
     });
 
-    <?php if($rota == "area-user" || $rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user" || $rota == "selo-user"){ ?>
+    <?php if($rota == "area-user" || $rota == "oscs-user" || $rota == "dashboard-user" || $rota == "dados-user"  || $rota == "trocar-senha" || $rota == "selo-user"){ ?>
         pageRoute = false;
     <?php }else{?>
         pageRoute = true;
@@ -343,6 +343,7 @@
     $rota=="objetivos-user" ||
     $rota=="dados-arquivo/{id}" ||
     $rota=="dados-user" ||
+    $rota=="trocar-senha" ||
     $rota=="videos-privados" ||
     $rota=="areas-atuacao-user" ||
     $rota=="descricao-user" ||
@@ -409,6 +410,9 @@
 @if($rota=="dados-user")
     <script src="js/components/user-area/data.js"></script>
 @endif
+@if($rota=="trocar-senha")
+    <script src="js/components/user-area/trocar-senha.js"></script>
+@endif
 @if($rota=="descricao-user")
     <script src="js/components/user-area/descricao.js"></script>
 @endif
@@ -444,7 +448,7 @@
 @endif
 
 @if(
-    $rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-user" || $rota=="oscs-user" || $rota=="osc-user/{id}" ||
+    $rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-user"  || $rota=="trocar-senha" || $rota=="oscs-user" || $rota=="osc-user/{id}" ||
     $rota=="objetivos-user" || $rota=="selo-user" || $rota=="certificates-user" || $rota=="projetos-user" ||
     $rota=="governancas-user" || $rota=="areas-atuacao-user" || $rota=="descricao-user" || $rota=="participacoes-user" ||
     $rota=="recursos-user" || $rota=="logout-user" || $rota=="dados-arquivos" || $rota=="dados-arquivo/{id}" || $rota=="videos-privados"

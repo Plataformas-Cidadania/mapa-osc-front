@@ -70,9 +70,9 @@ class Page extends React.Component {
                     console.error(status, err.toString());
                     _this.setState({loading: false});
                 }
-              });
+             });
         })
-      }*/
+     }*/
 
     loadOscUf() {
         let _this = this;
@@ -83,7 +83,7 @@ class Page extends React.Component {
                 data: {},
                 cache: false,
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     _this.setState({ dataOscUf: data['osc'], dataIdhUf: data['idh'], processingOscIdhUfs: false });
                 },
                 error: function (xhr, status, err) {

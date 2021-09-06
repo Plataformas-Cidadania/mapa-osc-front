@@ -604,7 +604,7 @@ class Filter extends React.Component {
     setMunicipio(item) {
         let filters = this.state.filters;
         filters.municipio = item;
-        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio, 'search');
+        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf, 'search');
         this.setJsonDadosGerais('cd_municipio', item.edmu_cd_municipio, 'search');
         this.setState({ filters: filters });
     }
@@ -657,10 +657,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-          let valid = true;
-          let requireds = this.state.requireds;
-          let form = this.state.form;
-          for(let index in requireds){
+         let valid = true;
+         let requireds = this.state.requireds;
+         let form = this.state.form;
+         for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -668,8 +668,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-            this.setState({requireds: requireds});
-          return valid;
+          this.setState({requireds: requireds});
+         return valid;
     }*/
 
     filter(e) {
@@ -1462,26 +1462,20 @@ class Filter extends React.Component {
         if (this.state.listMunicipio) {
             municipios = this.state.listMunicipio.map(function (item, index) {
 
-                let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
+                /*let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;
                 let secondPiece = item.edmu_nm_municipio;
-
-                if (this.state.searchMunicipio) {
+                 if (this.state.searchMunicipio) {
                     firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
                     secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
-                }
+                }*/
                 return React.createElement(
                     'li',
                     { key: 'cat_' + item.edmu_cd_municipio,
                         className: 'list-group-item d-flex ',
                         onClick: () => this.setMunicipio(item)
                     },
-                    React.createElement(
-                        'u',
-                        null,
-                        firstPiece
-                    ),
-                    secondPiece
+                    item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf
                 );
             }.bind(this));
         }

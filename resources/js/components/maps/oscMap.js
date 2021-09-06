@@ -1193,15 +1193,15 @@ class OscMap extends React.Component{
                         this.setState({processingOscPontos: false});
                         return;
                     }
-                    //console.log('loadPontosPorTerritorio', data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
-                    //for ($data as $key => $item) {
+                    data = JSON.parse(data);
                     for (let i in data) {
-                        data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        if(data[i].geo_lat && data[i].geo_lng){
+                            data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
+                        }
                     }
                     data = data2;
-                    //console.log(data);
                     /////////////////////////////////////////////
                     this.setState({dataOscCluster: data, totalOscList: data.length, processingOscPontos: false}, function(){
                         this.populateMapCluster();
@@ -1896,15 +1896,20 @@ class OscMap extends React.Component{
             console.log('exportar');
             this.setState({processingExportacao: true, textoProcessingExportacao: 'buscando dados'});
             $.ajax({
+                //contentType: 'application/json',
+                //dataType: 'json',
                 method: 'POST',
                 //url: 'osc/busca_avancada/lista',
+                //url: getBaseUrl2 + 'osc/exportar',
                 url: 'osc/exportar',
+                //data: this.props.strJson,
                 data:{
                     busca: this.props.strJson
                 },
                 cache: false,
                 success: function(data) {
                     //console.log(data);
+                    data = JSON.parse(data);
                     this.setState({dataExportacao: data, processingExportacao: false}, function(){
                         this.gerarCsvExportacao();
                     });

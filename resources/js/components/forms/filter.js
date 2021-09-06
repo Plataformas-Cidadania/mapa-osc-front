@@ -684,7 +684,7 @@ class Filter extends React.Component{
     setMunicipio(item){
         let filters = this.state.filters;
         filters.municipio = item;
-        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio, 'search');
+        this.setJsonDadosGerais('tx_nome_municipio', item.edmu_nm_municipio+' - '+item.eduf_sg_uf, 'search');
         this.setJsonDadosGerais('cd_municipio', item.edmu_cd_municipio, 'search');
         this.setState({filters: filters});
     }
@@ -1534,20 +1534,21 @@ class Filter extends React.Component{
         if(this.state.listMunicipio) {
             municipios = this.state.listMunicipio.map(function (item, index) {
 
-                let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
+                /*let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;
                 let secondPiece = item.edmu_nm_municipio;
 
                 if (this.state.searchMunicipio) {
                     firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
                     secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
-                }
+                }*/
                 return (
                     <li key={'cat_' + item.edmu_cd_municipio}
                         className="list-group-item d-flex "
                         onClick={() => this.setMunicipio(item)}
                     >
-                        <u>{firstPiece}</u>{secondPiece}
+                        {/*<u>{firstPiece}</u>{secondPiece}*/}
+                        {item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf}
                     </li>
                 )
             }.bind(this));
