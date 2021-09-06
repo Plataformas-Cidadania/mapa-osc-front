@@ -226,6 +226,10 @@ class Filter extends React.Component{
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
         this.setJsonIDH = this.setJsonIDH.bind(this);
         this.setJsonAdicionais = this.setJsonAdicionais.bind(this);
+
+        this.exportar = this.exportar.bind(this);
+        this.gerarCsvExportacao = this.gerarCsvExportacao.bind(this);
+
     }
 
 
@@ -1354,6 +1358,75 @@ class Filter extends React.Component{
         }).format(value)
     }
 
+    exportar(){
+        let strJson = JSON.stringify(this.state.json);
+        $('#modalExportar').modal('show');
+        console.log(Object.keys(this.state.json.avancado).length);
+        if(Object.keys(this.state.json.avancado).length === 0 ){
+            return;
+        }
+        //if(this.state.origem === 'busca-avancada'){
+            console.log('exportar');
+            this.setState({processingExportacao: true, textoProcessingExportacao: 'buscando dados'});
+            $.ajax({
+                //contentType: 'application/json',
+                //dataType: 'json',
+                method: 'POST',
+                //url: 'osc/busca_avancada/lista',
+                //url: getBaseUrl2 + 'osc/exportar',
+                url: 'osc/exportar',
+                //data: this.props.strJson,
+                data:{
+                    busca: strJson
+                },
+                cache: false,
+                success: function(data) {
+                    //console.log(data);
+                    data = JSON.parse(data);
+                    this.setState({dataExportacao: data, processingExportacao: false}, function(){
+                            this.gerarCsvExportacao();
+                    });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    this.setState({processingExportacao: false});
+                }.bind(this)
+            });
+        //}
+    }
+
+    gerarCsvExportacao(){
+        console.log('gerar csv');
+        this.setState({textoProcessingExportacao: 'gerando csv'});
+        let firstRow = this.state.dataExportacao[0];
+        let firsRowCsv = '';
+        for(let column in firstRow){
+            if(column !== 'im_logo'){
+                firsRowCsv += column+';';
+            }
+        }
+        firsRowCsv = firsRowCsv.slice(0, -1);
+        let columns = firsRowCsv.split(';');
+        let csv = firsRowCsv+'\n';
+
+        this.state.dataExportacao.forEach(function (item){
+            let row = '';
+            columns.forEach(function (column){
+                row += item[column]+';';
+            });
+            row = row.slice(0, -1);
+            csv += row+'\n';
+        });
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'exportacao.csv';
+        hiddenElement.click();
+        this.setState({processingExportacao: false, textoProcessingExportacao: ''});
+        $('#modalExportar').modal('hide');
+    }
+
 
     render(){
 
@@ -1683,6 +1756,36 @@ class Filter extends React.Component{
 
 
             <div>
+
+                {/*Modal Exportar*/}
+                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Exportar</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="text-center" style={{display: Object.keys(this.state.json.avancado).length !== 0 ? '' : 'none'}}>
+                                                <img src="img/load.gif" alt="Load"/><br/>
+                                                <h3 className="text-center">{this.state.textoProcessingExportacao}</h3>
+                                            </div>
+                                            <div className="text-center" style={{display: Object.keys(this.state.json.avancado).length === 0  ? '' : 'none'}}>
+                                                <h3 className="text-center">Informe dados para filtro!</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="text-right">
                     <a onClick={() => {
                         console.log(this.state.json);
@@ -2747,7 +2850,9 @@ class Filter extends React.Component{
                 <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST">
                     {/*<input type="hidden" name="csrf-token" value={this.props.csrf_token}/>*/}
                     <input type="hidden" id="json" name="json" value={JSON.stringify(this.state.json)}/>
-                    <button type="submit" style={{display: this.state.button ? 'block' : 'none'}} className="btn btn-primary">Filtrar</button>
+                    <button type="submit" style={{display: this.state.button ? 'block' : 'none', float:'left'}} className="btn btn-primary">Filtrar</button>
+                    <button type="button" style={{display: this.state.button ? 'block' : 'none', float:'left', marginLeft: '20px'}} className="btn btn-primary" onClick={this.exportar}>Exportar</button>
+                    <div style={{clear: 'both'}}><br/></div>
                 </form>
             </div>
 

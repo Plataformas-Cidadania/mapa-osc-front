@@ -158,6 +158,9 @@ class Filter extends React.Component {
         this.setJsonFontesRecursos = this.setJsonFontesRecursos.bind(this);
         this.setJsonIDH = this.setJsonIDH.bind(this);
         this.setJsonAdicionais = this.setJsonAdicionais.bind(this);
+
+        this.exportar = this.exportar.bind(this);
+        this.gerarCsvExportacao = this.gerarCsvExportacao.bind(this);
     }
 
     componentDidMount() {
@@ -1262,6 +1265,75 @@ class Filter extends React.Component {
         }).format(value);
     }
 
+    exportar() {
+        let strJson = JSON.stringify(this.state.json);
+        $('#modalExportar').modal('show');
+        console.log(Object.keys(this.state.json.avancado).length);
+        if (Object.keys(this.state.json.avancado).length === 0) {
+            return;
+        }
+        //if(this.state.origem === 'busca-avancada'){
+        console.log('exportar');
+        this.setState({ processingExportacao: true, textoProcessingExportacao: 'buscando dados' });
+        $.ajax({
+            //contentType: 'application/json',
+            //dataType: 'json',
+            method: 'POST',
+            //url: 'osc/busca_avancada/lista',
+            //url: getBaseUrl2 + 'osc/exportar',
+            url: 'osc/exportar',
+            //data: this.props.strJson,
+            data: {
+                busca: strJson
+            },
+            cache: false,
+            success: function (data) {
+                //console.log(data);
+                data = JSON.parse(data);
+                this.setState({ dataExportacao: data, processingExportacao: false }, function () {
+                    this.gerarCsvExportacao();
+                });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                this.setState({ processingExportacao: false });
+            }.bind(this)
+        });
+        //}
+    }
+
+    gerarCsvExportacao() {
+        console.log('gerar csv');
+        this.setState({ textoProcessingExportacao: 'gerando csv' });
+        let firstRow = this.state.dataExportacao[0];
+        let firsRowCsv = '';
+        for (let column in firstRow) {
+            if (column !== 'im_logo') {
+                firsRowCsv += column + ';';
+            }
+        }
+        firsRowCsv = firsRowCsv.slice(0, -1);
+        let columns = firsRowCsv.split(';');
+        let csv = firsRowCsv + '\n';
+
+        this.state.dataExportacao.forEach(function (item) {
+            let row = '';
+            columns.forEach(function (column) {
+                row += item[column] + ';';
+            });
+            row = row.slice(0, -1);
+            csv += row + '\n';
+        });
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'exportacao.csv';
+        hiddenElement.click();
+        this.setState({ processingExportacao: false, textoProcessingExportacao: '' });
+        $('#modalExportar').modal('hide');
+    }
+
     render() {
 
         //console.log('dataFormaParticipacoes', this.state.dataFormaParticipacoes)
@@ -1633,6 +1705,72 @@ class Filter extends React.Component {
         return React.createElement(
             'div',
             null,
+            React.createElement(
+                'div',
+                { className: 'modal fade', id: 'modalExportar', tabindex: '-1', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-dialog' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        React.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            React.createElement(
+                                'h5',
+                                { className: 'modal-title', id: 'exampleModalLabel' },
+                                'Exportar'
+                            ),
+                            React.createElement(
+                                'button',
+                                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                React.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'modal-body' },
+                            React.createElement(
+                                'div',
+                                { className: 'container' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'col-md-12' },
+                                        React.createElement(
+                                            'div',
+                                            { className: 'text-center', style: { display: Object.keys(this.state.json.avancado).length !== 0 ? '' : 'none' } },
+                                            React.createElement('img', { src: 'img/load.gif', alt: 'Load' }),
+                                            React.createElement('br', null),
+                                            React.createElement(
+                                                'h3',
+                                                { className: 'text-center' },
+                                                this.state.textoProcessingExportacao
+                                            )
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'text-center', style: { display: Object.keys(this.state.json.avancado).length === 0 ? '' : 'none' } },
+                                            React.createElement(
+                                                'h3',
+                                                { className: 'text-center' },
+                                                'Informe dados para filtro!'
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
             React.createElement(
                 'div',
                 { className: 'text-right' },
@@ -3297,8 +3435,18 @@ class Filter extends React.Component {
                 React.createElement('input', { type: 'hidden', id: 'json', name: 'json', value: JSON.stringify(this.state.json) }),
                 React.createElement(
                     'button',
-                    { type: 'submit', style: { display: this.state.button ? 'block' : 'none' }, className: 'btn btn-primary' },
+                    { type: 'submit', style: { display: this.state.button ? 'block' : 'none', float: 'left' }, className: 'btn btn-primary' },
                     'Filtrar'
+                ),
+                React.createElement(
+                    'button',
+                    { type: 'button', style: { display: this.state.button ? 'block' : 'none', float: 'left', marginLeft: '20px' }, className: 'btn btn-primary', onClick: this.exportar },
+                    'Exportar'
+                ),
+                React.createElement(
+                    'div',
+                    { style: { clear: 'both' } },
+                    React.createElement('br', null)
                 )
             )
         );
