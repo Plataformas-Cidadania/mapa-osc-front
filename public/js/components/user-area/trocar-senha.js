@@ -59,7 +59,7 @@ class TrocarSenha extends React.Component {
         this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
             $.ajax({
                 method: 'POST',
-                url: getBaseUrl2 + 'trocar-senha-na-area-restrita/',
+                url: getBaseUrl2 + 'trocar-senha-na-area-restrita',
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
