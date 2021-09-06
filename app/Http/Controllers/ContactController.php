@@ -53,7 +53,7 @@ class ContactController extends Controller{
         Config::set('mail.name', $settings->titulo);
         Config::set('mail.username', env('MAIL_USERNAME'));
         Config::set('mail.password', env('MAIL_PASSWORD'));
-        Config::set('mail.encryption', env('MAIL_ENCRYPTION'));
+        //Config::set('mail.encryption', env('MAIL_ENCRYPTION'));
 
         //verifica se o index telefone existe no array. Se nao existir ira criar um para evitar um erro.
         if (!array_key_exists("cel", $data)) {
