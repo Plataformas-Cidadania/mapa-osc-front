@@ -206,10 +206,14 @@ class ArchivesFilter extends React.Component {
         return React.createElement(
             'div',
             null,
-            archivesSelected,
+            React.createElement(
+                'div',
+                null,
+                archivesSelected
+            ),
             React.createElement(
                 'ul',
-                { className: 'list-group' },
+                { className: 'list-group', style: { clear: 'both' } },
                 firstArchives,
                 otherArchives
             ),

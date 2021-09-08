@@ -107,7 +107,7 @@ class PostController extends Controller
             ->join('categorias', 'posts.categoria_id', 'categorias.id')
             ->where('categorias.midia_id', $request->midia_id)
             ->groupBy('date_menu', 'month', 'year')
-            ->orderby('date_menu')
+            ->orderby('date_menu', 'desc')
             ->distinct('date_menu')
             ->get();
 

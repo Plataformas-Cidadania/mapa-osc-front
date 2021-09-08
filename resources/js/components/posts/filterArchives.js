@@ -190,8 +190,8 @@ class ArchivesFilter extends React.Component{
 
         return(
             <div>
-                {archivesSelected}
-                <ul className="list-group">
+                <div>{archivesSelected}</div>
+                <ul className="list-group" style={{clear: 'both'}}>
                     {firstArchives}
                     {otherArchives}
                 </ul>
