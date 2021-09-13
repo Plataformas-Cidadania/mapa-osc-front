@@ -1157,12 +1157,12 @@ class OscMap extends React.Component {
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     data = JSON.parse(data);
-                    for (let i in data) {
-                        if (data[i].geo_lat && data[i].geo_lng) {
+                    /*for (let i in data) {
+                        if(data[i].geo_lat && data[i].geo_lng){
                             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
                         }
                     }
-                    data = data2;
+                    data = data2;*/
                     /////////////////////////////////////////////
                     this.setState({ dataOscCluster: data, totalOscList: data.length, processingOscPontos: false }, function () {
                         this.populateMapCluster();
