@@ -62,6 +62,9 @@ class Oscs extends React.Component {
     listSearch(search) {
         if (search.length >= 4) {
             this.setState({ loadingSearch: true, oscsSearch: [] });
+            search = search.replace('/', '');
+            search = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            console.log(search);
             $.ajax({
                 method: 'GET',
                 //url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
