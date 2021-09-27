@@ -1289,9 +1289,11 @@ class Filter extends React.Component {
             cache: false,
             success: function (data) {
                 //console.log(data);
-                data = JSON.parse(data);
-                this.setState({ dataExportacao: data, processingExportacao: false }, function () {
-                    this.gerarCsvExportacao();
+                //data = JSON.parse(data);
+                //this.setState({dataExportacao: data, processingExportacao: false}, function(){
+                this.setState({ processingExportacao: false }, function () {
+                    //this.gerarCsvExportacao();
+                    this.gerarCsvExportacao(data);
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -1302,28 +1304,28 @@ class Filter extends React.Component {
         //}
     }
 
-    gerarCsvExportacao() {
+    //gerarCsvExportacao(){
+    gerarCsvExportacao(csv) {
         console.log('gerar csv');
         this.setState({ textoProcessingExportacao: 'gerando csv' });
-        let firstRow = this.state.dataExportacao[0];
+        /*let firstRow = this.state.dataExportacao[0];
         let firsRowCsv = '';
-        for (let column in firstRow) {
-            if (column !== 'im_logo') {
-                firsRowCsv += column + ';';
+        for(let column in firstRow){
+            if(column !== 'im_logo'){
+                firsRowCsv += column+';';
             }
         }
         firsRowCsv = firsRowCsv.slice(0, -1);
         let columns = firsRowCsv.split(';');
-        let csv = firsRowCsv + '\n';
-
-        this.state.dataExportacao.forEach(function (item) {
+        let csv = firsRowCsv+'\n';
+         this.state.dataExportacao.forEach(function (item){
             let row = '';
-            columns.forEach(function (column) {
-                row += item[column] + ';';
+            columns.forEach(function (column){
+                row += item[column]+';';
             });
             row = row.slice(0, -1);
-            csv += row + '\n';
-        });
+            csv += row+'\n';
+        });*/
 
         let hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);

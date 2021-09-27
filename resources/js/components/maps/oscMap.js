@@ -1909,9 +1909,11 @@ class OscMap extends React.Component{
                 cache: false,
                 success: function(data) {
                     //console.log(data);
-                    data = JSON.parse(data);
-                    this.setState({dataExportacao: data, processingExportacao: false}, function(){
-                        this.gerarCsvExportacao();
+                    //data = JSON.parse(data);
+                    //this.setState({dataExportacao: data, processingExportacao: false}, function(){
+                    this.setState({processingExportacao: false}, function(){
+                        //this.gerarCsvExportacao();
+                        this.gerarCsvExportacao(data);
                     });
                     //this.populateMap();
                 }.bind(this),
@@ -1923,10 +1925,11 @@ class OscMap extends React.Component{
         }
     }
 
-    gerarCsvExportacao(){
+    //gerarCsvExportacao(){
+    gerarCsvExportacao(csv){
         console.log('gerar csv');
         this.setState({textoProcessingExportacao: 'gerando csv'});
-        let firstRow = this.state.dataExportacao[0];
+        /*let firstRow = this.state.dataExportacao[0];
         let firsRowCsv = '';
         for(let column in firstRow){
             if(column !== 'im_logo'){
@@ -1944,7 +1947,7 @@ class OscMap extends React.Component{
             });
             row = row.slice(0, -1);
             csv += row+'\n';
-        });
+        });*/
 
         let hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
