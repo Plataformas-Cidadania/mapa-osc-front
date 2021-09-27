@@ -60,7 +60,8 @@ class Oscs extends React.Component {
         this.listSearch(search);
     }
     listSearch(search) {
-        if (search.length >= 8) {
+        if (search.length >= 4) {
+            this.setState({ loadingSearch: true, oscsSearch: [] });
             $.ajax({
                 method: 'GET',
                 //url: getBaseUrl2 + 'search/cnpj/autocomplete/' + search,
@@ -240,26 +241,20 @@ class Oscs extends React.Component {
         console.log(this.state.listSearch);
 
         let listSearch = this.state.oscsSearch.map(function (item, index) {
-            let sizeSearch = this.state.search ? this.state.search.length : 0;
+            /*let sizeSearch = this.state.search ? this.state.search.length : 0;
             let firstPiece = null;
             let secondPiece = item.tx_nome_osc;
-
-            if (this.state.search) {
+             if (this.state.search) {
                 firstPiece = item.tx_nome_osc.substr(0, sizeSearch);
                 secondPiece = item.tx_nome_osc.substr(sizeSearch);
-            }
+            }*/
             return React.createElement(
                 'li',
                 { key: 'cat_' + item.id_osc,
                     className: 'list-group-item d-flex ',
                     onClick: () => this.addOsc(item.id_osc)
                 },
-                React.createElement(
-                    'u',
-                    null,
-                    firstPiece
-                ),
-                secondPiece
+                item.tx_nome_osc
             );
         }.bind(this));
 
