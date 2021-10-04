@@ -84,7 +84,7 @@ class Oscs extends React.Component {
     addOsc(id_osc) {
         $.ajax({
             method: 'POST',
-            url: getBaseUrl2 + 'osc/representacao/',
+            url: getBaseUrl2 + 'osc/representacao',
             data: {
                 id_osc: id_osc
             },
