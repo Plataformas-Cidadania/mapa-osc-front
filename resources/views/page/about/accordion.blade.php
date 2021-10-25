@@ -11,17 +11,20 @@
                 <div class="card-body">
                     {!! $item->descricao !!}
                     @if($item->video!="")
-                    <div class="row">
-                        <div class="col-md-8">
-                            <iframe width="100%" height="300" src="https://www.youtube.com/embed/{{substr($item->video, 32, 11)}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <iframe width="100%" height="300" src="https://www.youtube.com/embed/{{substr($item->video, 32, 11)}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
                         </div>
-                        <div class="col-md-4 text-center btn-file">
-                            <br><br>
-                            <i class="far fa-file-pdf fa-4x"></i><br><br>
-                            Baixar o Tutorial em PDF
-                        </div>
-                    </div>
                     @endif
+                    <br>
+                    @if($item->arquivo!="")
+                        <a href="arquivos/items/{{$item->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
+                            <i class="far fa-file-pdf fa-2x" style="padding-top: 10px;"></i>
+                            Baixar o arquivo em PDF
+                        </a>
+                    @endif
+                    <br><br><br>
                 </div>
             </div>
         </div>
