@@ -63,7 +63,7 @@
                                                 <div class="col-md-4">
                                                     <div class="line-items line-add">
                                                         <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
-                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc']/100, 2, ',', '.')}}</h2>
                                                     </div>
                                                 </div>
                                             @endif
@@ -92,7 +92,7 @@
                                                 <div class="col-md-4">
                                                     <div class="line-items line-add">
                                                         <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
-                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc']/100, 2, ',', '.')}}</h2>
                                                     </div>
                                                 </div>
                                             @endif
@@ -121,7 +121,7 @@
                                                 <div class="col-md-4">
                                                     <div class="line-items line-add">
                                                         <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
-                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc']/100, 2, ',', '.')}}</h2>
                                                     </div>
                                                 </div>
                                             @endif
@@ -150,7 +150,7 @@
                                                 <div class="col-md-4">
                                                     <div class="line-items line-add">
                                                         <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
-                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc'], 2, ',', '.')}}</h2>
+                                                        <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc']/100, 2, ',', '.')}}</h2>
                                                     </div>
                                                 </div>
                                             @endif
