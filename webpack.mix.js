@@ -192,4 +192,7 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarPrintingCtrl.js
 //Settings
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarSettingCtrl.js', 'public/assets-cms/js/controllers/alterarSettingCtrl.js');
 
+//Usuário OSC
+mix.scripts('packages/cms/resources/assets/js/controllers/usuarioCtrl.js', 'public/assets-cms/js/controllers/usuarioCtrl.js');
+
 //FIM CMS///////////////////////////////////////////////////////////////////

@@ -180,6 +180,10 @@
                 </li>
 
                 <li>
+                    <a href="cms/usuarios-oscs"><i class="fa fa-fw fa-users"></i> Usuários OSCs</a>
+                </li>
+
+                <li>
                     <a href="cms/setting"><i class="fa fa-fw fa-users"></i> Configurações</a>
                 </li>
 

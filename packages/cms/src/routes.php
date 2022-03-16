@@ -283,7 +283,10 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-printing/{id}', 'Cms\Controllers\PrintingController@alterar');
         Route::get('/cms/excluir-printing/{id}', 'Cms\Controllers\PrintingController@excluir');
 
-
+        //USUARIOS
+        Route::get('/cms/usuarios-oscs', 'Cms\Controllers\UsuarioController@index');
+        Route::get('/cms/listar-usuarios-oscs', 'Cms\Controllers\UsuarioController@listar');
+        Route::get('/cms/status-usuario-osc/{id}', 'Cms\Controllers\UsuarioController@status');
     });
 
 });
