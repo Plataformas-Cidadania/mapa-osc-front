@@ -22,6 +22,16 @@
         @include('layouts.metas')
         @include('layouts.links')
         @include('conexoes.css')
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V71TNRPC27"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-V71TNRPC27');
+        </script>
      </head>
     <body id="contrast" >
         @include('layouts.layout1')
