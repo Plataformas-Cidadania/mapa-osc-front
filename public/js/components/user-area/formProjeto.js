@@ -1480,7 +1480,7 @@ class FormProjeto extends React.Component {
                                 { className: 'col-md-12' },
                                 React.createElement(
                                     'button',
-                                    { className: 'btn btn-success', onClick: this.register },
+                                    { className: 'btn btn-success', disabled: this.state.loading, onClick: this.register },
                                     'Atualizar'
                                 ),
                                 React.createElement('br', null),
