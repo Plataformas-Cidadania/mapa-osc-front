@@ -23,41 +23,8 @@
 
     @if(count($lists)>0)
     <div class="container">
-        <br>
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title-style">
-                    <h2>Mais Visualizados</h2>
-                    <div class="line line-fix block" data-move-x="980px"></div>
-                    <hr/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($listsTop as $list)
-            <div class="col-md-3 box-video">
-                <a href="video/{{$list->id}}/{{clean($list->titulo)}}">
-                    <img src="http://img.youtube.com/vi/{{substr($list->link_video, 32, 11)}}/0.jpg" alt="" width="100%">
-                    <kbd class="float-right">{{substr($list->time, 0, -3)}}</kbd>
-                    <h2>{{$list->titulo}} ...</h2>
-                    <p>{{$list->views}} visualizações</p>
-                    <p>{{formatBr($list->data, 'ext')}}</p>
-                </a>
-                <br><br>
-            </div>
-            @endforeach
-        </div>
-        <br><br><br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title-style">
-                    <h2>Últimos vídeos</h2>
-                    <div class="line line-fix block" data-move-x="980px"></div>
-                    <hr/>
-                </div>
-            </div>
-        </div>
+
+        <br><br>
         <div class="row">
             @foreach($lists as $list)
 
