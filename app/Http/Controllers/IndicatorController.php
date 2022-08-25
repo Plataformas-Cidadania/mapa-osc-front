@@ -16,19 +16,19 @@ class IndicatorController extends Controller{
     public function chart(){
 
         $text = \App\Text::where('slug', 'dados-indicadores')->first();
-        $areas_atuacao = DB::connection('map')
+        /*$areas_atuacao = DB::connection('map')
             ->table('analysis.vw_perfil_localidade_area_atuacao')
             ->select(DB::Raw("
                    count(quantidade_oscs) as series,
                    area_atuacao as labels
             "))
             ->groupBy('area_atuacao')
-            ->get();
+            ->get();*/
 
         if(!empty($text)){
             return view('indicator.chart', [
                 'text' => $text,
-                'areas_atuacao' => $areas_atuacao,
+                //'areas_atuacao' => $areas_atuacao,
             ]);
         }
 
@@ -37,6 +37,10 @@ class IndicatorController extends Controller{
                     <strong>dados-indicadores</strong>
                 </div>";
 
+    }
+
+    public function analises(){
+        return DB::table("portal.tb_analise")->where('status', 1)->orderBy('id_analise')->get();
     }
 
     public function getIndicator(){
