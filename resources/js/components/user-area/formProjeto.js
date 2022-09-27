@@ -161,7 +161,7 @@ class FormProjeto extends React.Component{
         //console.log('****', requireds);
 
         for(let index in requireds){
-            if(!form[index] || form[index]==''){
+            if(!form[index] || form[index]=='' || form[index].trim().length === 0){
                 requireds[index] = false;
                 valid = false;
             }else{
