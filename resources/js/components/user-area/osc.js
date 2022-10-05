@@ -22,7 +22,7 @@ class Osc extends React.Component{
                 email: true,
                 tx_razao_social_osc: true,
                 tx_sigla_osc: true,
-                tx_nome_situacao_imovel_osc: true,
+                cd_situacao_imovel_osc: true,
                 tx_nome_responsavel_legal: true,
                 cnpj: true,
             },
@@ -145,7 +145,7 @@ class Osc extends React.Component{
                     id_osc: this.props.id,
                     tx_sigla_osc: this.state.form.tx_sigla_osc,
                     tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-                    tx_nome_situacao_imovel_osc: this.state.form.tx_nome_situacao_imovel_osc,
+                    cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
                     dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
                     dt_fundacao_osc: this.state.form.dt_fundacao_osc,
                     tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
@@ -568,12 +568,12 @@ class Osc extends React.Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputEstado">Situação do Imóvel</label>
-                                            <select name="tx_nome_situacao_imovel_osc" className={"form-control"} value={this.state.form.tx_nome_situacao_imovel_osc} onChange={this.handleInputChange}>
+                                            <select name="cd_situacao_imovel_osc" className={"form-control"} value={this.state.form.cd_situacao_imovel_osc} onChange={this.handleInputChange}>
                                                 <option value="-1">Selecione</option>
-                                                <option value="Próprio">Próprio</option>
-                                                <option value="Alugado">Alugado</option>
-                                                <option value="Cedido">Cedido</option>
-                                                <option value="Comodato">Comodato</option>
+                                                <option value="1">Próprio</option>
+                                                <option value="2">Alugado</option>
+                                                <option value="3">Cedido</option>
+                                                <option value="4">Comodato</option>
                                             </select>
                                         </div>
                                         <div className="form-group col-md-4">
