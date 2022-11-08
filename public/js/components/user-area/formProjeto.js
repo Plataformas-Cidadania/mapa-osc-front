@@ -152,7 +152,7 @@ class FormProjeto extends React.Component {
         //console.log('****', requireds);
 
         for (let index in requireds) {
-            if (!form[index] || form[index] == '') {
+            if (!form[index] || form[index] == '' || form[index].trim().length === 0) {
                 requireds[index] = false;
                 valid = false;
             } else {
@@ -1480,7 +1480,7 @@ class FormProjeto extends React.Component {
                                 { className: 'col-md-12' },
                                 React.createElement(
                                     'button',
-                                    { className: 'btn btn-success', onClick: this.register },
+                                    { className: 'btn btn-success', disabled: this.state.loading, onClick: this.register },
                                     'Atualizar'
                                 ),
                                 React.createElement('br', null),

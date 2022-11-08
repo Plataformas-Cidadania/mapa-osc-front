@@ -161,7 +161,7 @@ class FormProjeto extends React.Component{
         //console.log('****', requireds);
 
         for(let index in requireds){
-            if(!form[index] || form[index]==''){
+            if(!form[index] || form[index]=='' || form[index].trim().length === 0){
                 requireds[index] = false;
                 valid = false;
             }else{
@@ -1188,7 +1188,7 @@ class FormProjeto extends React.Component{
                                 </div>
 
                                 <div className="col-md-12">
-                                    <button className="btn btn-success" onClick={this.register}>
+                                    <button className="btn btn-success" disabled={this.state.loading} onClick={this.register}>
                                         Atualizar
                                     </button>
                                     <br/>

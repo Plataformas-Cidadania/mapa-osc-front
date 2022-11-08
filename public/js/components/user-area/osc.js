@@ -22,7 +22,7 @@ class Osc extends React.Component {
                 email: true,
                 tx_razao_social_osc: true,
                 tx_sigla_osc: true,
-                tx_nome_situacao_imovel_osc: true,
+                cd_situacao_imovel_osc: true,
                 tx_nome_responsavel_legal: true,
                 cnpj: true
             },
@@ -143,7 +143,7 @@ class Osc extends React.Component {
                     id_osc: this.props.id,
                     tx_sigla_osc: this.state.form.tx_sigla_osc,
                     tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-                    tx_nome_situacao_imovel_osc: this.state.form.tx_nome_situacao_imovel_osc,
+                    cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
                     dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
                     dt_fundacao_osc: this.state.form.dt_fundacao_osc,
                     tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
@@ -650,7 +650,7 @@ class Osc extends React.Component {
                                     ),
                                     React.createElement(
                                         'select',
-                                        { name: 'tx_nome_situacao_imovel_osc', className: "form-control", value: this.state.form.tx_nome_situacao_imovel_osc, onChange: this.handleInputChange },
+                                        { name: 'cd_situacao_imovel_osc', className: "form-control", value: this.state.form.cd_situacao_imovel_osc, onChange: this.handleInputChange },
                                         React.createElement(
                                             'option',
                                             { value: '-1' },
@@ -658,22 +658,22 @@ class Osc extends React.Component {
                                         ),
                                         React.createElement(
                                             'option',
-                                            { value: 'Pr\xF3prio' },
+                                            { value: '1' },
                                             'Pr\xF3prio'
                                         ),
                                         React.createElement(
                                             'option',
-                                            { value: 'Alugado' },
+                                            { value: '2' },
                                             'Alugado'
                                         ),
                                         React.createElement(
                                             'option',
-                                            { value: 'Cedido' },
+                                            { value: '3' },
                                             'Cedido'
                                         ),
                                         React.createElement(
                                             'option',
-                                            { value: 'Comodato' },
+                                            { value: '4' },
                                             'Comodato'
                                         )
                                     )

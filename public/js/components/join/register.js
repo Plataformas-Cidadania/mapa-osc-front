@@ -137,8 +137,9 @@ class Register extends React.Component {
                         return;
                     }
 
-                    //location.href = 'login';
-                    location.href = 'aviso-pendente-ativacao';
+                    location.href = 'login';
+                    //location.href = 'aviso-pendente-ativacao';
+
 
                     this.setState({ loading: false });
                 }.bind(this),

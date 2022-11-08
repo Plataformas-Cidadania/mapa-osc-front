@@ -12,7 +12,8 @@ class Search extends React.Component {
             searchOsc: '',
             searchOscId: 1,
             searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
-            searchOscRota: 'busca/osc/',
+            searchOscRota: 'busca/osc-autocomplete/',
+            //searchOscRota: 'busca/osc/',
             searchOscQtd: '10',
             searchNameCampo: 'tx_nome_osc',
 
@@ -59,10 +60,13 @@ class Search extends React.Component {
 
     load(){
         this.setState({loadingList: true});
+        console.log(this.state.searchOsc);
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc,
+            //url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc,
+            url: getBaseUrl2 + this.state.searchOscRota,
             data: {
+                texto_busca: this.state.searchOsc
             },
             cache: false,
             success: function(data){

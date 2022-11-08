@@ -5,6 +5,7 @@ class Indicator extends React.Component {
             data: [],
         };
         this.load = this.load.bind(this);
+        this.loadCharts = this.loadCharts.bind(this);
    }
 
     componentDidMount(){
@@ -14,22 +15,40 @@ class Indicator extends React.Component {
 
     load(){
         let _this = this;
-
-
-        let charts = [1,2,3,4,5,6,7,8]
+        //let charts = [1,2,3,4,5,6,7,8]
 
         let data = _this.state.data;
-        data = this.loadCharts(charts, 0, data);
+
+        //data = this.loadCharts(charts, 0, data);
+
         //console.log(data);
-        this.setState({data: data});
+        //this.setState({data: data});
+        $.ajax({
+            method: 'GET',
+            //url: getBaseUrl2+'osc/grafico/'+charts[i],
+            url: 'indicadores/analises/',
+            data: {},
+            cache: false,
+            async: false,
+            success: function (result) {
+                //console.log("=============", result);
+                _this.loadCharts(result, 0, data);
+            },
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+                _this.setState({loading: false});
+            }
+        });
 
     }
 
     loadCharts(charts, i, data){
+        //console.log("----------------", charts);
        let _this = this;
         $.ajax({
             method:'GET',
-            url: getBaseUrl2+'osc/grafico/'+charts[i],
+            //url: getBaseUrl2+'osc/grafico/'+charts[i],
+            url: getBaseUrl2+'osc/grafico/'+charts[i]['id_analise'],
             data:{
 
             },
@@ -40,11 +59,11 @@ class Indicator extends React.Component {
 
                 data.push(result);
                 i++;
-                if(i < charts.length){
-                    data = _this.loadCharts(charts, i, data);
-                }
-
-
+                _this.setState({data: data}, function(){
+                    if(i < charts.length){
+                        _this.loadCharts(charts, i, data);
+                    }
+                });
             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
@@ -52,7 +71,7 @@ class Indicator extends React.Component {
             }
         });
 
-        return data;
+        //return data;
     }
 
     render(){
@@ -69,7 +88,7 @@ class Indicator extends React.Component {
 }
 
 ReactDOM.render(
-    <Indicator/>,
+    <Indicator />,
     document.getElementById('indicator')
 );
 

@@ -61,6 +61,7 @@ Route::get('metodologia', 'PageController@details');*/
 
 
 Route::get('indicadores', 'IndicatorController@chart');
+Route::get('indicadores/analises', 'IndicatorController@analises');
 Route::get('get-indicador/', 'IndicatorController@getIndicator');
 
 
