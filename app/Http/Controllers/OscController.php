@@ -430,4 +430,36 @@ class OscController extends Controller{
         return $data;
     }
 
+    public function listar($page=0){
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $pagina = $api."lista_osc/".$page;
+
+        //return $pagina;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_URL, $pagina );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        curl_close( $ch );
+
+
+        //Log::info(var_dump($data));
+        $data = json_decode($data, true);
+        //return $data->lista;
+        //return $data['lista'];
+        //return $data["total"];
+
+        return view('osc.listar', [
+            'data' => $data,
+            'page' => $page
+        ]);
+
+    }
+
 }

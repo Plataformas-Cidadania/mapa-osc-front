@@ -127,6 +127,8 @@ Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');
 Route::get('declaracao/{id_osc}', 'OscController@declaration');
 Route::get('selo-osc-user/{id_osc}', 'OscController@seal');
 
+Route::get('listar-oscs', 'OscController@listar');
+Route::get('listar-oscs/{page}', 'OscController@listar');
 
 Route::get('selo-osc/{osc_id}', 'ToolController@seal');
 
