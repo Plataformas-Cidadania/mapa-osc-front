@@ -311,11 +311,12 @@ class FormCertificate extends React.Component{
                         className="list-group-item d-flex "
                         onClick={() => this.setMunicipio(item)}
                     >
-                        <u>{firstPiece}</u>{secondPiece}
+                        <u>{firstPiece}</u>{secondPiece} - {item.eduf_sg_uf}
                     </li>
                 )
             }.bind(this));
         }
+
 
         return(
             <div className="row">
@@ -346,8 +347,7 @@ class FormCertificate extends React.Component{
                                     <input type="text" className="form-control" name="cd_municipio2"
                                            style={{display: (this.state.filters.municipio ? '' : 'none')}}
                                            autoComplete="off"
-                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
-
+                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio + ' - ' + this.state.filters.municipio.eduf_sg_uf : ''}/>
 
                                     <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
                                         <i className="fas fa-search" style={{top: '-28px'}}/>

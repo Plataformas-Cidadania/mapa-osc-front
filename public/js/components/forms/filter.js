@@ -660,10 +660,10 @@ class Filter extends React.Component {
     }
     /*************************************/
     /*validate(){
-         let valid = true;
-         let requireds = this.state.requireds;
-         let form = this.state.form;
-         for(let index in requireds){
+          let valid = true;
+          let requireds = this.state.requireds;
+          let form = this.state.form;
+          for(let index in requireds){
             if(!form[index] || form[index]===''){
                 requireds[index] = false;
                 valid = false;
@@ -671,8 +671,8 @@ class Filter extends React.Component {
                 requireds[index] = true;
             }
         }
-          this.setState({requireds: requireds});
-         return valid;
+            this.setState({requireds: requireds});
+          return valid;
     }*/
 
     filter(e) {
@@ -1318,7 +1318,7 @@ class Filter extends React.Component {
         firsRowCsv = firsRowCsv.slice(0, -1);
         let columns = firsRowCsv.split(';');
         let csv = firsRowCsv+'\n';
-         this.state.dataExportacao.forEach(function (item){
+          this.state.dataExportacao.forEach(function (item){
             let row = '';
             columns.forEach(function (column){
                 row += item[column]+';';
@@ -1539,7 +1539,7 @@ class Filter extends React.Component {
                 /*let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;
                 let secondPiece = item.edmu_nm_municipio;
-                 if (this.state.searchMunicipio) {
+                  if (this.state.searchMunicipio) {
                     firstPiece = item.edmu_nm_municipio.substr(0, sizeSearch);
                     secondPiece = item.edmu_nm_municipio.substr(sizeSearch);
                 }*/
