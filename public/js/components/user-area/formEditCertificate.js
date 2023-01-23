@@ -147,7 +147,6 @@ class FormEditCertificate extends React.Component {
             if (this.state.form.cd_certificado === 7) {
                 data.cd_uf = this.state.form.cd_uf;
                 data.cd_municipio = "NULL";
-                console.log('UF');
                 //data.cd_municipio = 3303302;
                 //data.cd_municipio = null
             }
