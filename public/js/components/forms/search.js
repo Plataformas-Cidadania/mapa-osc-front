@@ -3,7 +3,7 @@ class Search extends React.Component {
         super(props);
         this.state = {
             loadingList: false,
-            menu: [{ id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
+            menu: [{ id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc-autocomplete/', qtd: '10', campo: 'tx_nome_osc' }, { id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio' }, { id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf' }, { id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao' }],
             searchOsc: '',
             searchOscId: 1,
             searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -51,14 +51,21 @@ class Search extends React.Component {
 
     load() {
         this.setState({ loadingList: true });
-        console.log(this.state.searchOsc);
+
+        let url = getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc;
+        let data = null;
+        //a forma de requisição pra busca pelo nome da osc precisa ser diferente por conta da busca com acentos.
+        if (this.state.searchOscRota === "busca/osc-autocomplete/") {
+            url = getBaseUrl2 + this.state.searchOscRota;
+            data = {
+                texto_busca: this.state.searchOsc
+            };
+        }
+
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc,
-            url: getBaseUrl2 + this.state.searchOscRota,
-            data: {
-                texto_busca: this.state.searchOsc
-            },
+            url: url,
+            data: data,
             cache: false,
             success: function (data) {
                 this.setState({ listMenuItem: data, loadingList: false }, function () {});
