@@ -18,6 +18,7 @@ class HomeController extends Controller
 
         $midiasMenu = DB::table('midias')->orderBy('titulo')->get();
         $midias = \App\Post::orderBy('id', 'desc')->where('destaque', 1)->take(3)->get();
+        $popup = \App\Popup::where('status', 1)->orderBy('id', 'desc')->first();
 
         if(!empty($text)){
             return view('home', [
@@ -26,6 +27,7 @@ class HomeController extends Controller
                 'text' => $text,
                 'midias' => $midias,
                 'midiasMenu' => $midiasMenu,
+                'popup' => $popup,
             ]);
         }
 

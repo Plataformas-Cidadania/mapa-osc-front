@@ -195,4 +195,8 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarSettingCtrl.js'
 //Usuário OSC
 mix.scripts('packages/cms/resources/assets/js/controllers/usuarioCtrl.js', 'public/assets-cms/js/controllers/usuarioCtrl.js');
 
+//Popups
+mix.scripts('packages/cms/resources/assets/js/controllers/popupCtrl.js', 'public/assets-cms/js/controllers/popupCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarPopupCtrl.js', 'public/assets-cms/js/controllers/alterarPopupCtrl.js');
+
 //FIM CMS///////////////////////////////////////////////////////////////////

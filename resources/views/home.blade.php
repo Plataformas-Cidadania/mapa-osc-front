@@ -3,7 +3,6 @@
 @section('description', 'Uma plataforma de transparência pública colaborativa, que reúne dados das organizações da sociedade civil de todo o Brasil')
 @section('content')
 
-
 <div class="container">
     <div id="search"></div>
     <br><br><br>
@@ -145,5 +144,73 @@
     })
 
 </script>
+
+    <!-- Modal -->
+
+    <!-- Button trigger modal -->
+<!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>-->
+
+    <!-- Modal -->
+<!--
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+
+
+
+    @if(!empty($popup->status))
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">{{-- modal-lg--}}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{$popup->url}}" target="_blank">
+                                    <img srcset="/imagens/popups/lg-{{$popup->imagem}}" alt="{{$popup->titulo}}" title="{{$popup->titulo}}" width="100%">
+                                    {!! $popup->descricao !!}
+                                </a>
+
+                                <ul>
+                                    <li> Membro e/ou representante de OSC</li>
+                                    <li><i class="fa fa-circle" aria-hidden="true"></i> Gestor e/ou servidor público</li>
+                                    <li> Pesquisador e/ou estudante</li>
+                                    <li> Jornalista e/ou profissional de mídia</li>
+                                    <li> Outros</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+
+
 
 @endsection

@@ -187,6 +187,10 @@
                     <a href="cms/setting"><i class="fa fa-fw fa-users"></i> Configurações</a>
                 </li>
 
+                <li>
+                    <a href="cms/popups"><i class="fa fa-fw fa-briefcase"></i> Pop-up</a>
+                </li>
+
 
             </ul>
         </div>

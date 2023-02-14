@@ -124,7 +124,13 @@
     <script>
         app_url = "{{env('APP_URL')}}";
     </script>
-<script src="js/home.js" ></script>
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            $('#exampleModal').modal('show');
+        });
+    </script>
+
+    <script src="js/home.js" ></script>
 <script src="js/conf-owl-carousel.js"></script>
 {{--<script src="js/chart.js"></script>
 <script src="js/charts/mixed.js"></script>--}}
