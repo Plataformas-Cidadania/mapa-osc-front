@@ -49,7 +49,6 @@ const Page = () => {
         }
     }*/
 
-
     const Update = async () => {
 
         $.ajax({
