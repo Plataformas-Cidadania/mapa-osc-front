@@ -121,6 +121,10 @@
     <script src="js/components/osc/selo.js"></script>
 @endif
 @if($rota=='/')
+
+    <script src="js/components/enquete/page.js"></script>
+    <script src="js/components/enquete/index.js"></script>
+
     <script>
         app_url = "{{env('APP_URL')}}";
     </script>

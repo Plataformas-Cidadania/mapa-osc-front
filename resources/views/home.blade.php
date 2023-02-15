@@ -184,7 +184,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -194,13 +194,12 @@
                                     {!! $popup->descricao !!}
                                 </a>
 
-                                <ul>
-                                    <li> Membro e/ou representante de OSC</li>
-                                    <li><i class="fa fa-circle" aria-hidden="true"></i> Gestor e/ou servidor público</li>
-                                    <li> Pesquisador e/ou estudante</li>
-                                    <li> Jornalista e/ou profissional de mídia</li>
-                                    <li> Outros</li>
-                                </ul>
+                                @if($popup->posicao === 0)
+                                    <div id="enquete"></div>
+                                @endif
+
+
+
                             </div>
                         </div>
                     </div>
