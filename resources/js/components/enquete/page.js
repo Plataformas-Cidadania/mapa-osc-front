@@ -49,11 +49,12 @@ const Page = () => {
         }
     }*/
 
+
     const Update = async () => {
 
         $.ajax({
             method:'POST',
-            url: getBaseUrl2 + 'dados_perfil_de_acesso/',
+            url: getBaseUrl2 + 'dados_perfil_de_acesso',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
