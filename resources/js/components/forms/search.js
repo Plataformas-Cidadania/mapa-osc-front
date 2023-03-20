@@ -63,11 +63,12 @@ class Search extends React.Component {
 
         let url = getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc;
         let data = null;
+        let searchOsc = this.state.searchOsc.substring(0,1) === '0' ? this.state.searchOsc.substring(1) : this.state.searchOsc;
         //a forma de requisição pra busca pelo nome da osc precisa ser diferente por conta da busca com acentos.
         if(this.state.searchOscRota === "busca/osc-autocomplete/"){
             url = getBaseUrl2 + this.state.searchOscRota;
             data = {
-                texto_busca: this.state.searchOsc
+                texto_busca: searchOsc
             };
         }
 
