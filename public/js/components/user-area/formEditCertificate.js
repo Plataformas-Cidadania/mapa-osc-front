@@ -73,7 +73,7 @@ class FormEditCertificate extends React.Component {
     }
 
     edit() {
-        console.log('edit: ', this.state.editId);
+        //console.log('edit: ', this.state.editId);
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/certificado/' + this.state.editId,
@@ -140,11 +140,15 @@ class FormEditCertificate extends React.Component {
             };
 
             if (this.state.form.cd_certificado === 8) {
+                //console.log('--->', this.state.form.cd_municipio, this.state.form.cd_municipio.slice(0, 2))
                 data.cd_municipio = this.state.form.cd_municipio;
                 data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
             if (this.state.form.cd_certificado === 7) {
                 data.cd_uf = this.state.form.cd_uf;
+                data.cd_municipio = "NULL";
+                //data.cd_municipio = 3303302;
+                //data.cd_municipio = null
             }
             $.ajax({
                 method: 'PUT',
@@ -300,6 +304,8 @@ class FormEditCertificate extends React.Component {
         if (this.state.listMunicipio) {
             municipios = this.state.listMunicipio.map(function (item, index) {
 
+                //console.log(item)
+
                 let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;
                 let secondPiece = item.edmu_nm_municipio;
@@ -319,7 +325,9 @@ class FormEditCertificate extends React.Component {
                         null,
                         firstPiece
                     ),
-                    secondPiece
+                    secondPiece,
+                    ' - ',
+                    item.eduf_sg_uf
                 );
             }.bind(this));
         }
@@ -388,7 +396,7 @@ class FormEditCertificate extends React.Component {
                                     style: { display: this.state.filters.municipio ? '' : 'none' },
                                     autoComplete: 'off',
                                     readOnly: this.state.filters.municipio,
-                                    defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                    defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio + ' - ' + this.state.filters.uf.eduf_sg_uf : '' }),
                                 React.createElement(
                                     'div',
                                     { style: { display: this.state.filters.municipio ? 'none' : '' } },

@@ -31,7 +31,7 @@ class Indicator extends React.Component {
             cache: false,
             async: false,
             success: function (result) {
-                console.log("=============", result);
+                //console.log("=============", result);
                 _this.loadCharts(result, 0, data);
             },
             error: function (xhr, status, err) {
@@ -43,7 +43,7 @@ class Indicator extends React.Component {
     }
 
     loadCharts(charts, i, data){
-        console.log("----------------", charts);
+        //console.log("----------------", charts);
        let _this = this;
         $.ajax({
             method:'GET',

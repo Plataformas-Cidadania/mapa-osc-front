@@ -318,7 +318,9 @@ class FormCertificate extends React.Component {
                         null,
                         firstPiece
                     ),
-                    secondPiece
+                    secondPiece,
+                    ' - ',
+                    item.eduf_sg_uf
                 );
             }.bind(this));
         }
@@ -388,7 +390,7 @@ class FormCertificate extends React.Component {
                                 React.createElement('input', { type: 'text', className: 'form-control', name: 'cd_municipio2',
                                     style: { display: this.state.filters.municipio ? '' : 'none' },
                                     autoComplete: 'off',
-                                    defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : '' }),
+                                    defaultValue: this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio + ' - ' + this.state.filters.municipio.eduf_sg_uf : '' }),
                                 React.createElement(
                                     'div',
                                     { style: { display: this.state.filters.municipio ? 'none' : '' } },

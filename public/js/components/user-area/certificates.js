@@ -308,8 +308,7 @@ class Certificates extends React.Component {
                     React.createElement(
                         'td',
                         null,
-                        municipio,
-                        estado
+                        item.cd_certificado === 8 ? municipio : estado
                     ),
                     React.createElement(
                         'td',

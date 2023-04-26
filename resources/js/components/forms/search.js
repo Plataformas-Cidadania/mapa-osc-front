@@ -4,7 +4,7 @@ class Search extends React.Component {
         this.state = {
             loadingList: false,
             menu:[
-                {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc/', qtd: '10', campo: 'tx_nome_osc'},
+                {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc-autocomplete/', qtd: '10', campo: 'tx_nome_osc'},
                 {id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio'},
                 {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
                 {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
@@ -60,14 +60,22 @@ class Search extends React.Component {
 
     load(){
         this.setState({loadingList: true});
-        console.log(this.state.searchOsc);
+
+        let url = getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc;
+        let data = null;
+        let searchOsc = this.state.searchOsc.substring(0,1) === '0' ? this.state.searchOsc.substring(1) : this.state.searchOsc;
+        //a forma de requisição pra busca pelo nome da osc precisa ser diferente por conta da busca com acentos.
+        if(this.state.searchOscRota === "busca/osc-autocomplete/"){
+            url = getBaseUrl2 + this.state.searchOscRota;
+            data = {
+                texto_busca: searchOsc
+            };
+        }
+
         $.ajax({
             method: 'GET',
-            //url: getBaseUrl2 + this.state.searchOscRota + this.state.searchOsc,
-            url: getBaseUrl2 + this.state.searchOscRota,
-            data: {
-                texto_busca: this.state.searchOsc
-            },
+            url: url,
+            data: data,
             cache: false,
             success: function(data){
                 this.setState({listMenuItem: data, loadingList: false}, function(){});

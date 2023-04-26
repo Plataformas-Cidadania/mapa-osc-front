@@ -12040,6 +12040,17 @@ time {
   z-index: 0;
 }
 
+.menu-enquete div {
+  border: 1px solid #CCCCCC;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.menu-enquete div:hover {
+  background-color: #e1e1e1;
+}
+
 body {
   background-color: #FFFFFF !important;
 }

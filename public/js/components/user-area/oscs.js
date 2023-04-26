@@ -64,6 +64,7 @@ class Oscs extends React.Component {
             this.setState({ loadingSearch: true, oscsSearch: [] });
             search = search.replace('/', '');
             search = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            search = search.substring(0, 1) === '0' ? search.substring(1) : search;
             console.log(search);
             $.ajax({
                 method: 'GET',

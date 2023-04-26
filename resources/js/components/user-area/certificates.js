@@ -247,7 +247,9 @@ class Certificates extends React.Component{
                         <td>{item.dc_certificado.tx_nome_certificado}</td>
                         <td>{formatDate(item.dt_inicio_certificado, 'pt-br')}</td>
                         <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
-                        <td>{municipio}{estado}</td>
+                        <td>{/*{municipio}{estado}*/}
+                            {item.cd_certificado === 8 ? municipio : estado}
+                        </td>
                         <td width="70">
                             <div style={{display: (item.cd_certificado==7 || item.cd_certificado==8 ? '' : 'none')}}>
                                 <a onClick={() => this.callModal(item.id_certificado, 'edit', 'Alterar')}><i className="far fa-edit text-primary cursor"/></a>&nbsp;&nbsp;

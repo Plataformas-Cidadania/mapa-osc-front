@@ -124,10 +124,16 @@
                 <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'y')}}</p>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="item-detail">
                 <h4>E-mail:</h4>
                 <p>{{$dados_gerais->tx_email == null ? $txt_alert_abb : $dados_gerais->tx_email}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="item-detail">
+                <h4>Site oficial:</h4>
+                <p>{{$dados_gerais->tx_site == null ? $txt_alert_abb : $dados_gerais->tx_site}}</p>
             </div>
         </div>
         <div class="col-md-12">

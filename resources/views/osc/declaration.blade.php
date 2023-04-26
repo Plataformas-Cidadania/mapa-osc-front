@@ -1,3 +1,13 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Declaração - {{$osc->tx_razao_social_osc}}</title>
+</head>
+<body>
 <div id="printDivCertificate" class="conteudoCertificate" style="padding-left: 0;">
     <div class="row printOff">
         <div class="col-md-12 text-center">
@@ -5,7 +15,7 @@
                 <br>
                 <h2 id="title">Declaração</h2>
                 <p>
-                  Declaramos que {{$osc->tx_razao_social_osc}} (CNPJ {{$osc->cd_identificador_osc}}) está cadastrada
+                    Declaramos que {{$osc->tx_razao_social_osc}} (CNPJ {{$osc->cd_identificador_osc}}) está cadastrada
                     no Mapa das Organizações da Sociedade Civil até a data de {{date('d/m/Y')}}.
                 </p>
                 <div>{!! QrCode::size(250)->generate(env('APP_URL').'detalhar/'.$id_osc.'/'.clean($osc->tx_razao_social_osc)); !!}</div>
@@ -79,3 +89,7 @@
 <script>
     window.print();
 </script>
+</body>
+</html>
+
+

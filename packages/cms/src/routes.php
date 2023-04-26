@@ -287,6 +287,17 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/usuarios-oscs', 'Cms\Controllers\UsuarioController@index');
         Route::get('/cms/listar-usuarios-oscs', 'Cms\Controllers\UsuarioController@listar');
         Route::get('/cms/status-usuario-osc/{id}', 'Cms\Controllers\UsuarioController@status');
+
+        //POPUPS
+        Route::get('/cms/popups', 'Cms\Controllers\PopupController@index');
+        Route::get('/cms/listar-popups', 'Cms\Controllers\PopupController@listar');
+        Route::post('/cms/inserir-popup', 'Cms\Controllers\PopupController@inserir');
+        Route::get('/cms/popup/{id}', 'Cms\Controllers\PopupController@detalhar');
+        Route::post('/cms/alterar-popup/{id}', 'Cms\Controllers\PopupController@alterar');
+        Route::get('/cms/excluir-popup/{id}', 'Cms\Controllers\PopupController@excluir');
+        Route::get('/cms/status-popup/{id}', 'Cms\Controllers\PopupController@status');
+        Route::get('/cms/positionUp-popup/{id}', 'Cms\Controllers\PopupController@positionUp');
+        Route::get('/cms/positionDown-popup/{id}', 'Cms\Controllers\PopupController@positionDown');
     });
 
 });

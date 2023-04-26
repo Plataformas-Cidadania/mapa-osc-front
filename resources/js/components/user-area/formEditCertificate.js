@@ -74,7 +74,7 @@ class FormEditCertificate extends React.Component{
     }
 
     edit(){
-        console.log('edit: ', this.state.editId);
+        //console.log('edit: ', this.state.editId);
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'osc/certificado/'+this.state.editId,
@@ -135,6 +135,8 @@ class FormEditCertificate extends React.Component{
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
 
+
+
             let data = {
                 //id_osc: '455128',
                 id_osc: this.props.id_osc,
@@ -144,14 +146,16 @@ class FormEditCertificate extends React.Component{
                 cd_certificado: this.state.form.cd_certificado,
             }
 
-
-
             if(this.state.form.cd_certificado===8){
+                //console.log('--->', this.state.form.cd_municipio, this.state.form.cd_municipio.slice(0, 2))
                 data.cd_municipio = this.state.form.cd_municipio;
                 data.cd_uf = this.state.form.cd_municipio.slice(0, 2);
             }
             if(this.state.form.cd_certificado===7){
                 data.cd_uf = this.state.form.cd_uf;
+                data.cd_municipio = "NULL";
+                //data.cd_municipio = 3303302;
+                //data.cd_municipio = null
             }
             $.ajax({
                 method: 'PUT',
@@ -304,6 +308,8 @@ class FormEditCertificate extends React.Component{
         if(this.state.listMunicipio) {
             municipios = this.state.listMunicipio.map(function (item, index) {
 
+                //console.log(item)
+
                 let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;
                 let secondPiece = item.edmu_nm_municipio;
@@ -317,11 +323,12 @@ class FormEditCertificate extends React.Component{
                         className="list-group-item d-flex "
                         onClick={() => this.setMunicipio(item)}
                     >
-                        <u>{firstPiece}</u>{secondPiece}
+                        <u>{firstPiece}</u>{secondPiece} - {item.eduf_sg_uf}
                     </li>
                 )
             }.bind(this));
         }
+
 
         return(
             <div className="row">
@@ -347,11 +354,12 @@ class FormEditCertificate extends React.Component{
                                            autoComplete="off"
                                            onClick={this.clickSearchMunicipio}
                                            onChange={this.handleSearchMunicipio}/>
+
                                     <input type="text" className="form-control" name="cd_municipio2"
                                            style={{display: (this.state.filters.municipio ? '' : 'none')}}
                                            autoComplete="off"
                                            readOnly={this.state.filters.municipio}
-                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio : ''}/>
+                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio + ' - ' + this.state.filters.uf.eduf_sg_uf : ''}/>
 
 
                                     <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
