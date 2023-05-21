@@ -134,8 +134,9 @@
         <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
         <li role="presentation"><a href="posts/3/analises" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
         <li role="presentation"><a href="posts/2/noticias" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Notícias</a></li>
-        <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Editais</a></li>
         <li role="presentation"><a href="videos" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Vídeos</a></li>
+        <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
+
 
 
         <li role="presentation"><a href="glossario"  @if($rota=='contato') class="corrente" @endif>Ajuda</a></li>
@@ -178,10 +179,11 @@
                                         @foreach($midias as $midia)
                                             <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
                                         @endforeach
-                                        <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
                                         <li role="presentation"><a href="videos" @if($rota=='quem') class="corrente" @endif>Vídeos</a></li>
                                     </ul>
                                 </li>
+
+                                <li role="presentation"><a href="editais" @if($rota=='quem') class="corrente" @endif>Editais</a></li>
 
                                 <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Ajuda</a>
                                     <ul class="noJS menu-desk-sub">
