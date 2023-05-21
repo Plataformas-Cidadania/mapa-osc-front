@@ -47,14 +47,14 @@
 
 
 
-    <div class="space">&nbsp;</div>
+<!--    <div class="space">&nbsp;</div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div id="nextOsc"></div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div style="background-color: #F9F9F9;">
         <br><br><br>
