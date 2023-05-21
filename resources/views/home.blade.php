@@ -6,6 +6,48 @@
 <div class="container">
     <div id="search"></div>
     <br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-style">
+                    <h2>Destaques</h2>
+                    <div class="line line-fix block" data-move-x="980px"></div>
+                    <hr/>
+                </div>
+            </div>
+            @foreach($midias as $item)
+                <div class="col-md-4">
+                    <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
+                        <div class="img-box">
+                            @if($item->imagem!="")
+                                <div class="thumbs">
+                                    <picture>
+                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
+                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
+                                        <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
+                                        <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
+                                    </picture>
+                                </div>
+                            @endif
+                            {{-- <div class="img-rede">
+                                 <i class="fab fa-facebook-f"></i>
+                                 <i class="fab fa-instagram"></i>
+                                 <i class="fab fa-twitter"></i>
+                             </div>--}}
+                        </div>
+                        <br>
+                        <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->data, 'ext')}} </time>
+                        <h2>{{$item->titulo}}</h2>
+                        <p>{{$item->resumida}}</p>
+                        <h4 class="btn-plus">Continue lendo</h4>
+                    </a>
+                </div>
+            @endforeach
+
+        </div>
+    </div>
+    <br><br><br>
+
     <section>
         <div class="row">
             @foreach($teasers as $teaser)
@@ -27,6 +69,8 @@
         </div>
     </section>
 </div>
+
+
 
     <div class="bg-pri space bg-line">
         <div class="container">
@@ -61,48 +105,7 @@
         <div id="home"></div>
     </div>
 
-    <br><br>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title-style">
-                    <h2>Destaques</h2>
-                    <div class="line line-fix block" data-move-x="980px"></div>
-                    <hr/>
-                </div>
-            </div>
-            @foreach($midias as $item)
-                <div class="col-md-4">
-                    <a href="post/{{$item->id}}/{{clean($item->titulo)}}">
-                        <div class="img-box">
-                            @if($item->imagem!="")
-                                <div class="thumbs">
-                                    <picture>
-                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 468px)">
-                                        <source srcset="imagens/posts/sm-{{$item->imagem}}" media="(max-width: 768px)">
-                                        <source srcset="imagens/posts/md-{{$item->imagem}}" class="img-responsive">
-                                        <img src="img/loading.gif" data-src="imagens/posts/md-{{$item->imagem}}" alt="Imagem sobre {{$item->titulo}}" title="Imagem sobre {{$item->titulo}}" width="100%" class="img-fluid img-hover lazyload">
-                                    </picture>
-                                </div>
-                            @endif
-                           {{-- <div class="img-rede">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-instagram"></i>
-                                <i class="fab fa-twitter"></i>
-                            </div>--}}
-                        </div>
-                        <br>
-                        <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->data, 'ext')}} </time>
-                        <h2>{{$item->titulo}}</h2>
-                        <p>{{$item->resumida}}</p>
-                        <h4 class="btn-plus">Continue lendo</h4>
-                    </a>
-                </div>
-            @endforeach
 
-        </div>
-    </div>
-    <div class="space">&nbsp;</div>
 
 <script>
     //Barra carregamento
