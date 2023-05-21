@@ -122,7 +122,7 @@
  <?php */?>
     <ul>
         <br>
-        <li role="presentation"><a href="" @if($rota=='/') class="corrente" @endif>Home</a></li>
+<!--        <li role="presentation"><a href="" @if($rota=='/') class="corrente" @endif>Home</a></li>-->
         <li role="presentation"><a href="sobre" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
         <li role="presentation"><a href="mapa" @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
 
