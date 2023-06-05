@@ -229,6 +229,10 @@
         border-radius: 2px;
         margin: 0 5px 8px 8px;
     }
+
+    .owl-prev, .owl-next{
+        opacity: 0.5;
+    }
 </style>
 
     @if($rota=='/')
