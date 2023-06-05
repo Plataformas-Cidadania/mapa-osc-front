@@ -47,7 +47,7 @@
             <div class="container">
                 <br>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div>
                             <h3>O Portal</h3>
                             <ul>
@@ -57,7 +57,14 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-2">
+                        <div>
+                            <h3><a href="mapa">Mapa</a></h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
                         <div>
                             <h3>Dados</h3>
                             <ul>
@@ -70,21 +77,26 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div>
                             <h3>Biblioteca</h3>
                             <ul>
                                 @foreach($midias as $midia)
                                     <li role="presentation"><a href="posts/{{$midia->id}}/{{clean($midia->titulo)}}" accesskey="q" @if($rota=='quem') class="corrente" @endif>{{$midia->titulo}}</a></li>
                                 @endforeach
-                                <li><a href="editais">Editais</a></li>
                                 <li><a href="videos">Vídeos</a></li>
                             </ul>
                         </div>
                     </div>
 
+                    <div class="col-md-2">
+                        <div>
+                            <h3><a href="editais">Editais</a></h3>
+                        </div>
+                    </div>
+
                     @if($setting->twitter!="" || $setting->youtube!="" || $setting->facebook!="" || $setting->pinterest!="")
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div>
                                 <h3>Ajuda</h3>
                                 <ul>
