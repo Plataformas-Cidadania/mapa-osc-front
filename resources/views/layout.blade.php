@@ -5,7 +5,7 @@
     $base_href = config('app.url');
     $barra = "";
 
-    $mnPortal = DB::table('modulos')->where('tipo_id', 1)->where('status', 1)->orderBy('titulo')->get();
+    $mnPortal = DB::table('modulos')->where('tipo_id', 1)->where('status', 1)->orderBy('id')->get();
     $mnDados = DB::table('modulos')->where('tipo_id', 5)->where('status', 1)->orderBy('titulo')->get();
     $mnAjuda = DB::table('modulos')->where('tipo_id', 3)->where('status', 1)->orderBy('titulo')->get();
     $midias = DB::table('midias')->where('status', 1)->where('id','!=', 1)->orderBy('titulo')->get();

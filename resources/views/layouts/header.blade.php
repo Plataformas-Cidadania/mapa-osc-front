@@ -165,7 +165,13 @@
                         <div class="btn-group">
                             <ul id="menu-desk">
 <!--                                <li role="presentation"><a href="" accesskey="h" @if($rota=='/') class="corrente" @endif>Home</a></li>-->
-                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a></li>
+                                <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a>
+                                    <ul class="noJS menu-desk-sub">
+                                        @foreach($mnPortal as $portal)
+                                            <li role="presentation"><a href="/{{clean($portal->slug)}}" @if($rota=='quem') class="corrente" @endif>{{$portal->titulo}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                                 <li role="presentation"><a href="mapa" a @if($rota=='mapa') class="corrente" @endif>Mapa</a></li>
                                 <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
