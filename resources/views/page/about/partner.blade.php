@@ -1,6 +1,7 @@
 <?php
     $partners = DB::table('apoios')->where('status', 1)->orderBy('id', 'desc')->paginate(23);
     $modulo = ['apoio', 'apoios', 'Apoio', 'Apoios'];
+    // use a string dentro de enable-for-modal-option e descomente o modal para voltar a ativar modal
 ?>
 
     <div class="container">
@@ -9,7 +10,8 @@
                 @foreach($partners as $key => $partner)
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
                         <div class="items-img text-center">
-                            <a href="{{$partner->url}}" target="_blank" data-toggle="modal" data-target="#myModal{{$key}}">
+
+                            <a href="{{$partner->url}}" enable-for-modal-option='target="_blank" data-toggle="modal" data-target="#myModal{{$key}}"' >
                                 <picture>
                                     <source srcset="imagens/{{$modulo[1]}}/sm-{{$partner->imagem}}" media="(max-width: 468px)">
                                     <source srcset="imagens/{{$modulo[1]}}/md-{{$partner->imagem}}" media="(max-width: 768px)">
@@ -20,7 +22,7 @@
                         </div>
                     </div>
 
-                    <!-- Modal -->
+                    <!-- Modal
                     <div class="modal fade" id="myModal{{$key}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -48,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 @endforeach
             </div>
             <div>{{ $partners->links() }}</div>
