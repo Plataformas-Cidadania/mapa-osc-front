@@ -5,7 +5,8 @@ class Home extends React.Component {
             data: [],
         };
         this.load = this.load.bind(this);
-           }
+        this.loadCharts = this.loadCharts.bind(this);
+    }
 
     componentDidMount(){
         this.load();
@@ -14,17 +15,18 @@ class Home extends React.Component {
 
     load(){
         let _this = this;
-        let charts = [9,10,11,12]
+        //let charts = [1,2,3,4,5,6,7,8]
 
         let data = _this.state.data;
-        data = this.loadCharts(charts, 0, data);
+
+        //data = this.loadCharts(charts, 0, data);
 
         //console.log(data);
-        this.setState({data: data});
-        /*$.ajax({
+        //this.setState({data: data});
+        $.ajax({
             method: 'GET',
             //url: getBaseUrl2+'osc/grafico/'+charts[i],
-            url: 'indicadores/analises/',
+            url: 'indicadores/analises-home/',
             data: {},
             cache: false,
             async: false,
@@ -36,38 +38,40 @@ class Home extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-        });*/
+        });
 
     }
 
     loadCharts(charts, i, data){
+        //console.log("----------------", charts);
         let _this = this;
         $.ajax({
             method:'GET',
-            url: getBaseUrl2+'osc/grafico/'+charts[i],
-            //url: getBaseUrl2+'osc/grafico/'+charts[i]['id_analise'],
+            //url: getBaseUrl2+'osc/grafico/'+charts[i],
+            url: getBaseUrl2+'osc/grafico/'+charts[i]['id_analise'],
             data:{
+
             },
             cache: false,
             async: false,
             success: function(result) {
+                //console.log(result);
+
                 data.push(result);
                 i++;
-                if(i < charts.length){
-                    data = _this.loadCharts(charts, i, data);
-                }
-                /*_this.setState({data: data}, function(){
+                _this.setState({data: data}, function(){
                     if(i < charts.length){
                         _this.loadCharts(charts, i, data);
                     }
-                });*/
+                });
             },
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
         });
-        return data;
+
+        //return data;
     }
 
     render(){
@@ -78,6 +82,7 @@ class Home extends React.Component {
                     data={this.state.data}
                 />
             </div>
+
         );
     }
 }

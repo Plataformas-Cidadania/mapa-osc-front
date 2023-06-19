@@ -42,6 +42,12 @@ class IndicatorController extends Controller{
     public function analises(){
         return DB::table("portal.tb_analise")->where('status', 1)->orderBy('id_analise')->get();
     }
+    public function analisesHome(){
+        return DB::table("portal.tb_analise")
+            ->where('status', 1)
+            ->where('slug','home')
+            ->orderBy('id_analise')->get();
+    }
 
     public function getIndicator(){
 

@@ -39,7 +39,7 @@ foreach ($routesSearch as $route) {
 ///////////////////////////////////////////////////////////////////////
 //Route::get('sobre', 'PageController@details');
 
-#if(env('DYNAMIC_ROUTES')=='true'){
+if(env('DYNAMIC_ROUTES')=='true'){
     $modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
 
     foreach ($modulos as $modulo) {
@@ -47,7 +47,7 @@ foreach ($routesSearch as $route) {
             Route::get($modulo->slug.'/', 'ModuloController@details');
         }
     }
-#}
+}
 
 Route::get('editar-osc', 'OscController@edit');
 
@@ -62,6 +62,7 @@ Route::get('metodologia', 'PageController@details');*/
 
 Route::get('indicadores', 'IndicatorController@chart');
 Route::get('indicadores/analises', 'IndicatorController@analises');
+Route::get('indicadores/analises-home', 'IndicatorController@analisesHome');
 Route::get('get-indicador/', 'IndicatorController@getIndicator');
 
 
