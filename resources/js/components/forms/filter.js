@@ -2170,7 +2170,7 @@ class Filter extends React.Component{
                             </div>
                         </div>
 
-                        <div className="card">
+                        <div className="card" style={{display: 'none'}}>
                             <div className="card-header" id="item-5">
                                 <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
                                      aria-controls="collapse5">

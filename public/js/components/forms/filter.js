@@ -2387,7 +2387,7 @@ class Filter extends React.Component {
                     ),
                     React.createElement(
                         'div',
-                        { className: 'card' },
+                        { className: 'card', style: { display: 'none' } },
                         React.createElement(
                             'div',
                             { className: 'card-header', id: 'item-5' },
