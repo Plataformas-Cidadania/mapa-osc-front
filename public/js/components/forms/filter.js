@@ -3304,23 +3304,25 @@ class Filter extends React.Component {
                         { className: 'card' },
                         React.createElement(
                             'div',
-                            { className: 'card-header', id: 'item-8' },
+                            { className: 'card-header', id: 'item-9' },
                             React.createElement(
                                 'div',
-                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse8', 'aria-expanded': 'true',
-                                    'aria-controls': 'collapse8' },
+                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse9', 'aria-expanded': 'true',
+                                    'aria-controls': 'collapse9' },
                                 React.createElement(
                                     'div',
                                     { className: 'mn-accordion-icon mn-accordion-icon-p' },
                                     React.createElement('i', { className: 'far fa-file-alt' })
                                 ),
-                                '\xCDndice de Desenvolvimento Humano ',
+                                'Indicadores Sociais ',
+                                React.createElement('i', { className: 'fas fa-info-circle', title: 'Vari\xE1veis adicionais para exporta\xE7\xE3o' }),
+                                '  ',
                                 React.createElement('i', { className: 'fas fa-angle-down float-right' })
                             )
                         ),
                         React.createElement(
                             'div',
-                            { id: 'collapse8', className: 'collapse', 'aria-labelledby': 'heading8',
+                            { id: 'collapse9', className: 'collapse', 'aria-labelledby': 'heading9',
                                 'data-parent': '#accordionExample' },
                             React.createElement(
                                 'div',
@@ -3375,38 +3377,9 @@ class Filter extends React.Component {
                                             'Alto (0,700 ou mais)'
                                         )
                                     )
-                                )
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'card' },
-                        React.createElement(
-                            'div',
-                            { className: 'card-header', id: 'item-9' },
-                            React.createElement(
-                                'div',
-                                { className: 'mb-0', 'data-toggle': 'collapse', 'data-target': '#collapse9', 'aria-expanded': 'true',
-                                    'aria-controls': 'collapse9' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'mn-accordion-icon mn-accordion-icon-p' },
-                                    React.createElement('i', { className: 'far fa-file-alt' })
                                 ),
-                                'Indicadores Socioecon\xF4micos Adicionais ',
-                                React.createElement('i', { className: 'fas fa-info-circle', title: 'Vari\xE1veis adicionais para exporta\xE7\xE3o' }),
-                                '  ',
-                                React.createElement('i', { className: 'fas fa-angle-down float-right' })
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { id: 'collapse9', className: 'collapse', 'aria-labelledby': 'heading9',
-                                'data-parent': '#accordionExample' },
-                            React.createElement(
-                                'div',
-                                { className: 'card-body' },
+                                React.createElement('br', null),
+                                React.createElement('br', null),
                                 React.createElement(
                                     'div',
                                     { className: 'row' },
