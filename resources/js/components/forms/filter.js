@@ -2170,7 +2170,7 @@ class Filter extends React.Component{
                             </div>
                         </div>
 
-                        <div className="card">
+                        <div className="card" style={{display: 'none'}}>
                             <div className="card-header" id="item-5">
                                 <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
                                      aria-controls="collapse5">
@@ -2777,7 +2777,7 @@ class Filter extends React.Component{
                             </div>
                         </div>
 
-                        <div className="card">
+                        {/*<div className="card">
                             <div className="card-header" id="item-8">
                                 <div className="mb-0" data-toggle="collapse" data-target="#collapse8" aria-expanded="true"
                                      aria-controls="collapse8">
@@ -2816,7 +2816,7 @@ class Filter extends React.Component{
 
                                 </div>
                             </div>
-                        </div>
+                        </div>*/}
 
 
                         <div className="card">
@@ -2824,12 +2824,37 @@ class Filter extends React.Component{
                                 <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
                                      aria-controls="collapse9">
                                     <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                    Indicadores Socioeconômicos Adicionais <i className="fas fa-info-circle" title="Variáveis adicionais para exportação"/>  <i className="fas fa-angle-down float-right"/>
+                                    Indicadores Sociais <i className="fas fa-info-circle" title="Variáveis adicionais para exportação"/>  <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
                             <div id="collapse9" className="collapse" aria-labelledby="heading9"
                                  data-parent="#accordionExample">
                                 <div className="card-body">
+
+                                    <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
+                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required onChange={this.handleCheckChangeIDH}/>
+                                        <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+                                    </div>
+
+                                    <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
+                                        <br/>
+                                        <strong> Faixas de IDHM:</strong>
+                                        <br/>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="baixo" required onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
+                                        </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="medio" required onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
+                                        </div>
+                                        <div className="custom-control custom-checkbox ">
+                                            <input type="checkbox" className="custom-control-input" id="alto" required onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
+                                        </div>
+                                    </div>
+                                    <br/><br/>
+
                                     <div className="row">
                                         {indicadores}
                                     </div>
