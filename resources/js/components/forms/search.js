@@ -1,3 +1,5 @@
+import {trim} from "lodash/string";
+
 class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -5,9 +7,9 @@ class Search extends React.Component {
             loadingList: false,
             menu:[
                 {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc-autocomplete/', qtd: '10', campo: 'tx_nome_osc'},
-                {id: 2, title: "Município", txt: 'Digite o nome do município...', rota: 'busca/municipio/', qtd: '25', campo: 'edmu_nm_municipio'},
-                {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
-                {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
+                {id: 2, title: "Localização", txt: 'Digite o nome de um município, estado ou região...', rota: 'busca/todas_localizacoes/', qtd: '25', campo: 'todos'},
+              //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
+              //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
             ],
             searchOsc: '',
             searchOscId: 1,
@@ -19,6 +21,7 @@ class Search extends React.Component {
 
             listMenuItem: [],
             msg: '',
+
         };
 
         this.load = this.load.bind(this);
@@ -104,26 +107,25 @@ class Search extends React.Component {
         }.bind(this));
 
         let menuList = this.state.listMenuItem.map(function (item, index) {
-
             let tx_nome = '';
             let origem_id = 0;
-            if(this.state.searchNameCampo==='tx_nome_osc'){
+            if(this.state.searchNameCampo==='tx_nome_osc') {
                 tx_nome = item.tx_nome_osc;
                 origem_id = item.tx_nome_osc;
-            }else if(this.state.searchNameCampo==='edmu_nm_municipio'){
-                if(item.edmu_nm_municipio!==undefined){
-                    tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
-                    origem_id = item.edmu_cd_municipio;
+            }else if(this.state.searchNameCampo==='todos') {
+                if (item.hasOwnProperty('edmu_nm_municipio')) {
+                    if (item.edmu_nm_municipio !== undefined) {
+                        tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
+                        origem_id = item.edmu_cd_municipio;
+                    }
+                } else if (item.hasOwnProperty('eduf_nm_uf')) {
+                    tx_nome = item.eduf_nm_uf;
+                    origem_id = item.eduf_cd_uf;
+                } else if (item.hasOwnProperty('edre_nm_regiao')) {
+                    tx_nome = item.edre_nm_regiao;
+                    origem_id = item.edre_cd_regiao;
                 }
-
-            }else if(this.state.searchNameCampo==='eduf_nm_uf'){
-                tx_nome = item.eduf_nm_uf;
-                origem_id = item.eduf_cd_uf;
-            }else if(this.state.searchNameCampo==='edre_nm_regiao'){
-                tx_nome = item.edre_nm_regiao;
-                origem_id = item.edre_cd_regiao;
             }
-
 
             return (
                 <li
@@ -137,7 +139,16 @@ class Search extends React.Component {
             )
         }.bind(this));
 
-
+        // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa
+        if (this.state.searchOsc != '' && this.state.msg === '' && this.state.listMenuItem.length === 0) {
+            menuList.push(
+            <li key={'menuList' + this.state.listMenuItem.length} className="list-group-item d-flex">
+                <a href={"mapa/" + this.state.searchOsc}>
+                    <p>Buscar por "{this.state.searchOsc}" no mapa</p>
+                </a>
+            </li>
+            );
+        }
 
         return (
             <div className="row justify-content-md-center">
