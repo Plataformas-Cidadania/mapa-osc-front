@@ -2261,20 +2261,6 @@ class OscMap extends React.Component {
                     { className: 'col-md-12' },
                     React.createElement(
                         'div',
-                        { className: 'box-qtd' },
-                        React.createElement(
-                            'p',
-                            null,
-                            'Quantidade de OSCs: '
-                        ),
-                        React.createElement(
-                            'h2',
-                            null,
-                            this.state.totalOscList
-                        )
-                    ),
-                    React.createElement(
-                        'div',
                         { className: 'col-md-12' },
                         React.createElement(
                             'div',
@@ -2289,7 +2275,25 @@ class OscMap extends React.Component {
                                 'Exportar'
                             )
                         ),
-                        React.createElement('br', null)
+                        React.createElement('br', null),
+                        React.createElement(
+                            'div',
+                            { className: 'text-center' },
+                            React.createElement(
+                                'h3',
+                                null,
+                                'Quantidade de OSCs encontradas'
+                            ),
+                            React.createElement(
+                                'h1',
+                                null,
+                                React.createElement(
+                                    'strong',
+                                    null,
+                                    this.state.totalOscList
+                                )
+                            )
+                        )
                     ),
                     React.createElement(
                         'div',

@@ -2200,10 +2200,10 @@ class OscMap extends React.Component{
 
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="box-qtd">
-                            <p>Quantidade de OSCs: </p>
+                        {/*<div className="box-qtd">
+                            <p>Quantidade de OSCs</p>
                             <h2>{this.state.totalOscList}</h2>
-                        </div>
+                        </div>*/}
                         <div className="col-md-12">
                             <div className="text-right" style={{margin: '0 -30px 0 0'}}>
                                 <button
@@ -2215,6 +2215,10 @@ class OscMap extends React.Component{
                                 </button>
                             </div>
                             <br/>
+                            <div className="text-center">
+                                <h3>Quantidade de OSCs encontradas</h3>
+                                <h1><strong>{this.state.totalOscList}</strong></h1>
+                            </div>
                         </div>
                         <div className="col-md-12">
                             <VisualizarFiltros strJson={this.props.strJson} />
