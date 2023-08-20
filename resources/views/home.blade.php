@@ -76,6 +76,48 @@
 
 
 
+<!--    <div class="space">&nbsp;</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="nextOsc"></div>
+            </div>
+        </div>
+    </div>-->
+
+    <div style="background-color: #F9F9F9;">
+        <br><br><br>
+        <div id="home"></div>
+    </div>
+
+    <br>
+
+    <div class="container" style="display:none;">
+        <div class="row">
+            <div class="owl-carousel owl-theme">
+                @foreach($analises as $analise)
+                    <div class="col-md-12">
+                        <a href="arquivos/posts/{{$analise->arquivo}}" target="_blank">
+                            <div class="img-box">
+                                @if($analise->imagem!="")
+                                    <div class="thumbs">
+                                        <picture>
+                                            <source class="owl-lazy" srcset="imagens/posts/sm-{{$analise->imagem}}" media="(max-width: 468px)">
+                                            <source class="owl-lazy" srcset="imagens/posts/sm-{{$analise->imagem}}" media="(max-width: 768px)">
+                                            <source class="owl-lazy" srcset="imagens/posts/lg-{{$analise->imagem}}" class="img-responsive">
+                                            <img class="owl-lazy" src="img/loading.gif" data-src="imagens/posts/lg-{{$analise->imagem}}" alt="Imagem sobre {{$analise->titulo}}" title="Imagem sobre {{$analise->titulo}}" width="100%" class="img-fluid img-hover lazyload">
+                                        </picture>
+                                    </div>
+                                @endif
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+
     <div class="bg-pri space bg-line">
         <div class="container">
             <div class="row">
@@ -92,23 +134,6 @@
             <div id="oscsRecentes"></div>
         </div>
     </div>
-
-
-
-<!--    <div class="space">&nbsp;</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="nextOsc"></div>
-            </div>
-        </div>
-    </div>-->
-
-    <div style="background-color: #F9F9F9;">
-        <br><br><br>
-        <div id="home"></div>
-    </div>
-
 
 
 <script>

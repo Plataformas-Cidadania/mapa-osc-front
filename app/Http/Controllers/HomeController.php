@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class HomeController extends Controller
@@ -20,6 +21,15 @@ class HomeController extends Controller
         $midias = \App\Post::orderBy('id', 'desc')->where('destaque', 1)->take(3)->get();
         $popup = \App\Popup::where('status', 1)->orderBy('id', 'desc')->first();
 
+        //posts da mídia analises
+        $analises = DB::table('posts')->select('posts.*')
+            ->join('categorias', 'categorias.id', '=', 'posts.categoria_id')
+            ->join('midias', 'midias.id', '=', 'categorias.midia_id')
+            ->where('midias.id', 1)
+            ->where('posts.status', 1)
+            ->take(6)->get();
+
+
         if(!empty($text)){
             return view('home', [
                 'webdoors' => $webdoors,
@@ -28,6 +38,7 @@ class HomeController extends Controller
                 'midias' => $midias,
                 'midiasMenu' => $midiasMenu,
                 'popup' => $popup,
+                'analises' => $analises
             ]);
         }
 
