@@ -48,7 +48,9 @@
                                 {{$setting->endereco}} {{$setting->numero}} - {{$setting->complemento}}
                                 {{$setting->bairro}} - {{$setting->cidade}} - {{$setting->estado}}<br>
                                 CEP.: {{$setting->cep}}<br>
+                                @if($setting->telefone)
                                 <abbr title="Phone"> <i class="fas fa-phone-alt"></i>{{$setting->telefone}}</abbr>
+                                @endif
                             </div>
                         </address>
                         <address class="address">
@@ -57,7 +59,9 @@
                                 {{$setting->endereco2}} {{$setting->numero2}} - {{$setting->complemento2}}
                                 {{$setting->bairro2}} - {{$setting->cidade2}} - {{$setting->estado2}}<br>
                                 CEP.: {{$setting->cep2}}<br>
+                                @if($setting->telefone2)
                                 <abbr title="Phone"> <i class="fas fa-phone-alt"></i>{{$setting->telefone2}}</abbr>
+                                @endif
                             </div>
                         </address>
                     </div>
