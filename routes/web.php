@@ -39,7 +39,7 @@ foreach ($routesSearch as $route) {
 ///////////////////////////////////////////////////////////////////////
 //Route::get('sobre', 'PageController@details');
 
-if(env('DYNAMIC_ROUTES')=='true'){
+if(env('DYNAMIC_ROUTES')=='false'){
     $modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
 
     foreach ($modulos as $modulo) {
