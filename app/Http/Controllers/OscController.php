@@ -366,20 +366,20 @@ class OscController extends Controller{
     }
 
     public function buscaAvancadaOscLista(Request $request){
-
+        $offset = 10;
         $data = $request->all();
         $busca = $data['busca'];
-        $pagina = $data['pagina'];
+        $pagina = $data['pagina']*$offset;
 
         $api = env('APP_API_ROUTE');
         if(env('LOCALHOST_DOCKER') == 1){
             $api = env('HOST_DOCKER')."api/";
         }
-
-        $url = $api."osc/busca_avancada/lista/10/$pagina";
+        $url = $api."osc/busca_avancada/lista/$offset/$pagina";
         /*if(env('LOCALHOST_DOCKER') == 1) {
             $url = "";
         }*/
+
 
         //Log::info($url);
 
@@ -392,7 +392,6 @@ class OscController extends Controller{
         $data = curl_exec( $ch );
         Log::info(curl_error($ch));
         curl_close( $ch );
-
         //Log::info($data);
         $data = json_decode($data, true);
 

@@ -2050,7 +2050,7 @@ class OscMap extends React.Component{
         let pages = [];//paginas q serão mostradas
         let n_paginas = Math.ceil(this.state.totalOscList/10);
         //console.log('pagina', pagina);
-        let qtdPages = 5;
+        let qtdPages = n_paginas;
         for (let i=0; i < n_paginas; i++){
             let active = this.state.paginaOscList === i ? 'active' : '';
             p[i] = (
