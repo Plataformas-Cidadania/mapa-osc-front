@@ -4,6 +4,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            cooldownTimer: null,
             loadingList: false,
             menu:[
                 {id: 1, title: "Organização", txt: 'Encontre uma OSC, digite o nome ou CNPJ...', rota: 'busca/osc-autocomplete/', qtd: '10', campo: 'tx_nome_osc'},
@@ -39,7 +40,14 @@ class Search extends React.Component {
         let search = e.target.value ? e.target.value : ' ';
         this.setState({searchOsc: search}, function(){
             if(search.length > 2){
-                this.load(search);
+                // Timer de 1s para iniciar a pesquisa
+                if (this.state.cooldownTimer) {
+                    clearTimeout(this.state.cooldownTimer);
+                }
+                const timer = setTimeout(() => {
+                    this.load(search);
+                }, 300);
+                this.setState({ cooldownTimer: timer });
             }
         });
 

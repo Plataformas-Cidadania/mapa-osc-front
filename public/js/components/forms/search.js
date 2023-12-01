@@ -22,7 +22,8 @@ var Search = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Search);
     _this = _super.call(this, props);
     _this.state = {
-      loadingList: false,
+        cooldownTimer: null,
+        loadingList: false,
       menu: [{
         id: 1,
         title: "Organização",
@@ -71,7 +72,13 @@ var Search = /*#__PURE__*/function (_React$Component) {
         searchOsc: search
       }, function () {
         if (search.length > 2) {
-          this.load(search);
+            if (this.state.cooldownTimer) {
+                clearTimeout(this.state.cooldownTimer);
+            }
+            const timer = setTimeout(() => {
+                this.load(search);
+            }, 300);
+            this.setState({ cooldownTimer: timer });
         }
       });
     }
