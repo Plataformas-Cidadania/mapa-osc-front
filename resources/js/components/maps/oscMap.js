@@ -2009,7 +2009,22 @@ class OscMap extends React.Component{
             return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
         }
         ////////////////////////////////////////////
+        function identificarFilialMatriz(cnpj) {
+            // Remover caracteres não numéricos
+            cnpj = cnpj.replace(/\D/g, '');
 
+            // Verificar se a string possui 14 dígitos
+            if (cnpj.length !== 14) {
+                return "CNPJ inválido";
+            }
+
+            // Verificar se a identificação da filial é diferente de zero
+            if (cnpj.slice(8, 12) !== '0001') {
+                return "Filial";
+            } else {
+                return "Matriz";
+            }
+        }
 
 
         if(this.state.dataOscList) {
@@ -2031,7 +2046,10 @@ class OscMap extends React.Component{
                                      alt=""/>*/}
                                 </div>
                                 {item.tx_nome_osc.toLowerCase()}</td>
-                            <td>{formatCnpjCpf(item.cd_identificador_osc)}</td>
+                            <td>
+                                {formatCnpjCpf(item.cd_identificador_osc)}
+                                <p style={{padding: '2px 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 12}}><strong>{identificarFilialMatriz(item.cd_identificador_osc)}</strong></p>
+                            </td>
                             <td className="text-center">{item.tx_natureza_juridica_osc}</td>
                             <td className="capitalize">{item.tx_endereco_osc.toLowerCase()}</td>
                             <td>

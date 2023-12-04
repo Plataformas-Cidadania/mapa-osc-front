@@ -1168,6 +1168,15 @@ class Filter extends React.Component{
         });
     }
 
+
+    handleKeyPress (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Evita que o formulário seja submetido normalmente
+            this.handleSubmit(); // Substitua pelo método que manipula a submissão do formulário
+        }
+    }
+
+
     objetivosMetasProjetos(id){
         this.setState({loadingList: true});
         $.ajax({
@@ -1753,6 +1762,8 @@ class Filter extends React.Component{
             });
         }
         ////////////////////////////////////////////////////
+
+
 
 
         return (
@@ -2875,10 +2886,10 @@ class Filter extends React.Component{
                     <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
                     <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
                 </form>
-                <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST">
+                <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST" onKeypress={this.handleKeyPress}>
                     {/*<input type="hidden" name="csrf-token" value={this.props.csrf_token}/>*/}
                     <input type="hidden" id="json" name="json" value={JSON.stringify(this.state.json)}/>
-                    <button type="submit" style={{display: this.state.button ? 'block' : 'none', float:'left'}} className="btn btn-primary">Filtrar</button>
+                    <button type="submit" style={{display: this.state.button ? 'block' : 'none', float:'left'}} className="btn btn-primary">Pesquisar</button>
                     <button type="button" style={{display: this.state.button ? 'block' : 'none', float:'left', marginLeft: '20px'}} className="btn btn-primary" onClick={this.exportar}>Exportar</button>
                     <div style={{clear: 'both'}}><br/></div>
                 </form>

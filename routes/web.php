@@ -72,6 +72,7 @@ Route::post('mapa-busca-avancada', 'MapController@buscaAvancada');
 Route::get('mapa-busca-avancada', 'MapController@buscaAvancada');
 Route::get('contato', 'ContactController@email');
 Route::get('filtro', 'FilterController@search');
+Route::get('filtro/{search}', 'FilterController@search');
 Route::get('localidade/{id}', 'LocalidadeController@localidade');
 
 Route::get('pagina/depen', 'PageController@depen');

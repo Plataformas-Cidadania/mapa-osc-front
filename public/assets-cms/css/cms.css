@@ -53,8 +53,7 @@
   float: none;
   position: relative;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   border: solid 1px #e5e5e5;
 }
 .container-thumb {

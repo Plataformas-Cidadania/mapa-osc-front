@@ -24,7 +24,7 @@
         for (var a = 0; a < words.length; a++) {
             if(words[a] != "de" && words[a] != "da" && words[a] != "do" && words[a] != "dos" && words[a] != "das"){
                 var w = words[a];
-                words[a] = w[0].toUpperCase() + w.slice(1);
+                words[a] = w[0]?.toUpperCase() + w.slice(1);
             }
         }
         words = words.join(" ");
@@ -496,3 +496,19 @@
         $('.box-busca').toggle();
     });
 </script>
+
+<!--NOVA BUSCA-->
+<script>
+    document.addEventListener('click', function (event) {
+        var dropdown = document.getElementById('myDropdownSearch');
+        var input = document.getElementById('searchInput');
+
+        if (event.target === input) {
+            dropdown.style.display = 'block';
+        } else if (!dropdown.contains(event.target) && event.target !== input) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+</script>
+<!--NOVA BUSCA-->

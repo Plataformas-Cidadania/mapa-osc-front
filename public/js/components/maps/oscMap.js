@@ -1033,7 +1033,7 @@ class OscMap extends React.Component {
                 console.error(status, err.toString());
                 _this.setState({loading: false});
             }
-         });
+          });
     }*/
 
     /*loadDataTotalPorTerritorio(){
@@ -1042,7 +1042,7 @@ class OscMap extends React.Component {
         if(!this.state.start || !this.state.end){
             return;
         }
-         $.ajax({
+          $.ajax({
             method:'POST',
             url: "total-transito-territorio",
             data:{
@@ -1866,7 +1866,7 @@ class OscMap extends React.Component {
         firsRowCsv = firsRowCsv.slice(0, -1);
         let columns = firsRowCsv.split(';');
         let csv = firsRowCsv+'\n';
-         this.state.dataExportacao.forEach(function (item){
+          this.state.dataExportacao.forEach(function (item){
             let row = '';
             columns.forEach(function (column){
                 row += item[column]+';';
@@ -1900,8 +1900,8 @@ class OscMap extends React.Component {
                 )
             }
         }
-         itens.push(<div><br/></div>);
-         return itens;
+          itens.push(<div><br/></div>);
+          return itens;
     }*/
 
     render() {
@@ -1933,7 +1933,22 @@ class OscMap extends React.Component {
             return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
         }
         ////////////////////////////////////////////
+        function identificarFilialMatriz(cnpj) {
+            // Remover caracteres não numéricos
+            cnpj = cnpj.replace(/\D/g, '');
 
+            // Verificar se a string possui 14 dígitos
+            if (cnpj.length !== 14) {
+                return "CNPJ inválido";
+            }
+
+            // Verificar se a identificação da filial é diferente de zero
+            if (cnpj.slice(8, 12) !== '0001') {
+                return "Filial";
+            } else {
+                return "Matriz";
+            }
+        }
 
         if (this.state.dataOscList) {
 
@@ -1961,7 +1976,16 @@ class OscMap extends React.Component {
                     React.createElement(
                         'td',
                         null,
-                        formatCnpjCpf(item.cd_identificador_osc)
+                        formatCnpjCpf(item.cd_identificador_osc),
+                        React.createElement(
+                            'p',
+                            { style: { padding: '2px 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 12 } },
+                            React.createElement(
+                                'strong',
+                                null,
+                                identificarFilialMatriz(item.cd_identificador_osc)
+                            )
+                        )
                     ),
                     React.createElement(
                         'td',

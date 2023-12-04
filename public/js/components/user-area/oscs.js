@@ -248,7 +248,7 @@ class Oscs extends React.Component {
             /*let sizeSearch = this.state.search ? this.state.search.length : 0;
             let firstPiece = null;
             let secondPiece = item.tx_nome_osc;
-             if (this.state.search) {
+              if (this.state.search) {
                 firstPiece = item.tx_nome_osc.substr(0, sizeSearch);
                 secondPiece = item.tx_nome_osc.substr(sizeSearch);
             }*/

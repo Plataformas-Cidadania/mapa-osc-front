@@ -17,6 +17,7 @@ class VisualizarFiltros extends React.Component {
 
         console.log('visualizar filtro busca');
         console.log(this.props.strJson);
+        console.log(this.props.filtros);
 
         if (!this.props.strJson) {
             return;
@@ -424,8 +425,8 @@ class VisualizarFiltros extends React.Component {
                     console.log("Erro no ajax: ");
                 },
                 success: function (data) {
-                    console.log(data);
-                    console.log(areasSubareasAtuacao);
+                    //console.log(data);
+                    //console.log(areasSubareasAtuacao);
                     for (let key in areasSubareasAtuacao) {
                         let cd_area_atuacao = parseInt(key.split('cd_area_atuacao-')[1]);
                         console.log(key);
@@ -3221,6 +3222,13 @@ class VisualizarFiltros extends React.Component {
             'div',
             null,
             this.state.filtros,
+            ' ',
+            this.state.filtros !== null && Object.keys(this.state.filtros).length !== 0 ? React.createElement(
+                'a',
+                { href: '/mapa' },
+                React.createElement('i', { className: 'fas fa-times', style: { color: 'red' } }),
+                ' Limpar'
+            ) : null,
             React.createElement('br', null),
             React.createElement('br', null)
         );

@@ -1,5 +1,3 @@
-import {trim} from "lodash/string";
-
 class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -106,38 +104,43 @@ class Search extends React.Component {
             )
         }.bind(this));
 
-        let menuList = this.state.listMenuItem.map(function (item, index) {
-            let tx_nome = '';
-            let origem_id = 0;
-            if(this.state.searchNameCampo==='tx_nome_osc') {
-                tx_nome = item.tx_nome_osc;
-                origem_id = item.tx_nome_osc;
-            }else if(this.state.searchNameCampo==='todos') {
-                if (item.hasOwnProperty('edmu_nm_municipio')) {
-                    if (item.edmu_nm_municipio !== undefined) {
-                        tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
-                        origem_id = item.edmu_cd_municipio;
+        let menuList;
+        if (Array.isArray(this.state.listMenuItem)) {
+            menuList = this.state.listMenuItem.map(function (item, index) {
+                let tx_nome = '';
+                let origem_id = 0;
+                let cod_cnpj = '';
+                if (this.state.searchNameCampo === 'tx_nome_osc') {
+                    tx_nome = item.tx_nome_osc;
+                    cod_cnpj = item.cd_identificador_osc;
+                    origem_id = item.tx_nome_osc;
+                } else if (this.state.searchNameCampo === 'todos') {
+                    if (item.hasOwnProperty('edmu_nm_municipio')) {
+                        if (item.edmu_nm_municipio !== undefined) {
+                            tx_nome = item.edmu_nm_municipio + ' - ' + item.eduf_sg_uf;
+                            origem_id = item.edmu_cd_municipio;
+                        }
+                    } else if (item.hasOwnProperty('eduf_nm_uf')) {
+                        tx_nome = item.eduf_nm_uf;
+                        origem_id = item.eduf_cd_uf;
+                    } else if (item.hasOwnProperty('edre_nm_regiao')) {
+                        tx_nome = item.edre_nm_regiao;
+                        origem_id = item.edre_cd_regiao;
                     }
-                } else if (item.hasOwnProperty('eduf_nm_uf')) {
-                    tx_nome = item.eduf_nm_uf;
-                    origem_id = item.eduf_cd_uf;
-                } else if (item.hasOwnProperty('edre_nm_regiao')) {
-                    tx_nome = item.edre_nm_regiao;
-                    origem_id = item.edre_cd_regiao;
                 }
-            }
 
-            return (
-                <li
-                    key={'menuList' + index}
-                    className="list-group-item d-flex"
-                >
-                    <a href={"mapa/"+origem_id}>
-                        {tx_nome}
-                    </a>
-                </li>
-            )
-        }.bind(this));
+                return (
+                    <li
+                        key={'menuList' + index}
+                        className="list-group-item d-flex"
+                    >
+                        <a href={"mapa/" + origem_id}>
+                            {tx_nome} <p style={{padding: '0 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 10}}>{identificarFilialMatriz(cod_cnpj)}</p>
+                        </a>
+                    </li>
+                )
+            }.bind(this));
+        }
 
         // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa
         if (this.state.searchOsc != '' && this.state.msg === '' && this.state.listMenuItem.length === 0) {
@@ -150,6 +153,16 @@ class Search extends React.Component {
             );
         }
 
+        function identificarFilialMatriz(cnpj) {
+            cnpj = cnpj.replace(/\D/g, '');
+
+            if (cnpj.slice(8, 12) !== '0001') {
+                return "Filial";
+            } else {
+                return "Matriz";
+            }
+        }
+
         return (
             <div className="row justify-content-md-center">
                 <div className="col-md-5">
@@ -158,8 +171,32 @@ class Search extends React.Component {
                         <ul className="menu-small mb-2">
                             {menu}
                         </ul>
-                        <div className="input-icon">
-                            <input id="ativarBox" type="text" className="form-control"
+                        {/*NOVA BUSCA*/}
+                        <div className="search-container">
+                            <i className="fa fa-search search-icon" aria-hidden="true"/>
+                            <input type="text" id="searchInput"  placeholder={this.state.searchOscTxt} onChange={this.handleSearchOsc}/>
+                                <div className="dropdownSearch" id="myDropdownSearch" >
+                                    <div>
+                                        <div className="text-center">
+                                            <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingList ? '' : 'none'}}/>
+                                        </div>
+                                        <ul style={{display: this.state.msg === '' ? '' : 'none'}}>
+                                            {menuList}
+                                        </ul>
+                                        <div style={{display: this.state.msg === '' ? 'none' : ''}} className="p-2 text-center">
+                                            {this.state.msg}
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*<i class="fa fa-spinner search-icon-spinner fa-spin" aria-hidden="true" />*/}
+                        </div>
+                        {/*NOVA BUSCA*/}
+                    <br/>
+                    <br/>
+
+
+                        {/*<div className="input-icon">
+                            <input id="ativarBox" type="search" className="form-control"
                                    placeholder={this.state.searchOscTxt} onChange={this.handleSearchOsc}/>
                                 <i className="fas fa-search"/>
                         </div>
@@ -173,8 +210,11 @@ class Search extends React.Component {
                             <div style={{display: this.state.msg === '' ? 'none' : ''}} className="p-2 text-center">
                                 {this.state.msg}
                             </div>
-                        </ul>
-                    <a className="btn btn-outline-primary btn-sm" href="filtro" style={{marginTop: '8px'}}><i className="fas fa-search"/> Consulta avançada</a>
+                        </ul>*/}
+
+                    <div className="text-center">
+                        <a className="btn btn-outline-primary btn-sm" href="filtro" style={{marginTop: '8px'}}><i className="fas fa-search"/> Utilize a Consulta Avançada</a>
+                    </div>
 
 
                 </div>
