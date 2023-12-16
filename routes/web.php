@@ -40,6 +40,7 @@ foreach ($routesSearch as $route) {
 //Route::get('sobre', 'PageController@details');
 
 //if(env('DYNAMIC_ROUTES')==false){
+if (Schema::hasTable('modulos')) {
     $modulos = \Illuminate\Support\Facades\DB::table('modulos')->select('slug')->get();
 
     foreach ($modulos as $modulo) {
@@ -47,6 +48,7 @@ foreach ($routesSearch as $route) {
             Route::get($modulo->slug.'/', 'ModuloController@details');
         }
     }
+}
 //}
 
 Route::get('editar-osc', 'OscController@edit');

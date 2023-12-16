@@ -23,7 +23,11 @@
                     if(substr($cabecalho->im_logo, 0, 10)=='data:image'){
                         $logo =  $cabecalho->im_logo;
                     }else{
-                        $pagina = env('APP_API_ROUTE')."osc/logo/".$id_osc;
+                        $api = env('APP_API_ROUTE');
+                        if(env('LOCALHOST_DOCKER') == 1){
+                            $api = env('HOST_DOCKER')."api/";
+                        }
+                        $pagina = $api."osc/logo/".$id_osc;
                         $ch = curl_init();
                         curl_setopt($ch, CURLOPT_URL, $pagina);
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
