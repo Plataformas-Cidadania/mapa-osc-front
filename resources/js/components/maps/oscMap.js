@@ -2222,16 +2222,20 @@ class OscMap extends React.Component{
                             <p>Quantidade de OSCs</p>
                             <h2>{this.state.totalOscList}</h2>
                         </div>*/}
+
                         <div className="col-md-12">
-                            <div className="text-right" style={{margin: '0 -30px 0 0'}}>
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={this.exportar}
-                                    title={this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'}
-                                >
-                                    Exportar
-                                </button>
-                            </div>
+                            {this.state.origem === 'busca-avancada' ?
+                                <div className="text-right" style={{margin: '0 -30px 0 0'}}>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={this.exportar}
+                                        title={this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'}
+                                    >
+                                        Exportar
+                                    </button>
+                                </div>
+                                : null}
+
                             <br/>
                             <div className="text-center">
                                 <h3>Quantidade de OSCs encontradas</h3>

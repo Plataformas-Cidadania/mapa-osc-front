@@ -1174,7 +1174,7 @@ class VisualizarFiltros extends React.Component{
                 {this.state.filtros} {/*{this.state.filtros !== null ? <a href="/mapa"><i className="fas fa-times" style={{color: 'red'}}/> Limpar</a> : null}*/}
 
                 {this.state.filtros !== null && Object.keys(this.state.filtros).length !== 0 ? (
-                    <a href="/mapa">
+                    <a href="/mapa" style={{position: 'absolute', right: 0}}>
                         <i className="fas fa-times" style={{ color: 'red' }} /> Limpar
                     </a>
                 ) : null}

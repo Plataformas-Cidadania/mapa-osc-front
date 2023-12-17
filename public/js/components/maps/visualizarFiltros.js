@@ -3225,7 +3225,7 @@ class VisualizarFiltros extends React.Component {
             ' ',
             this.state.filtros !== null && Object.keys(this.state.filtros).length !== 0 ? React.createElement(
                 'a',
-                { href: '/mapa' },
+                { href: '/mapa', style: { position: 'absolute', right: 0 } },
                 React.createElement('i', { className: 'fas fa-times', style: { color: 'red' } }),
                 ' Limpar'
             ) : null,

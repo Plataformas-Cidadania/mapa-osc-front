@@ -2286,7 +2286,7 @@ class OscMap extends React.Component {
                     React.createElement(
                         'div',
                         { className: 'col-md-12' },
-                        React.createElement(
+                        this.state.origem === 'busca-avancada' ? React.createElement(
                             'div',
                             { className: 'text-right', style: { margin: '0 -30px 0 0' } },
                             React.createElement(
@@ -2298,7 +2298,7 @@ class OscMap extends React.Component {
                                 },
                                 'Exportar'
                             )
-                        ),
+                        ) : null,
                         React.createElement('br', null),
                         React.createElement(
                             'div',
