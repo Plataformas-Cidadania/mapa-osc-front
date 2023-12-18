@@ -156,6 +156,12 @@ class Charts extends React.Component{
                 dataTable = data[chart].series_1;
             }
 
+            /*console.log('||||||||||||||||')
+            console.log('data', chart)
+            console.log('data', data[chart].series_2)
+            console.log('data', data[chart].series_1)
+            console.log('||||||||||||||||')*/
+
             let name = data[chart].titulo;
             let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
             let head = data[chart].titulo_colunas;
@@ -167,18 +173,36 @@ class Charts extends React.Component{
 
             for(let j in dataTable){
                 let table = dataTable[j];
+
                 //Quando tiver o key///////////////////////////////
                 if(table.hasOwnProperty('key')){
                     for(let k in table.values){
                         if(!rows[j]){
                             rows[j] = [];
                         }
-                        rows.push([table.key, table.values[k].label, table.values[k].value]);
+                        if(table.values[k].label){
+                            rows.push([table.key, table.values[k].label, table.values[k].value]);
+                        }else {
+                            rows.push([table.key, table.values[k].x, table.values[k].y]);
+                        }
+
+                        //console.log('----------', table.values[k].value)
                     }
+                    console.log('table', chart, table)
                     continue;
+                } else {
+                    //console.log('table', chart, table)
+                    rows.push([table.label, table.value]);
                 }
             }
+            /*console.log('||||||||||||||||')
+            console.log('table', chart)
+            console.log('table', tables)
+            console.log('||||||||||||||||')*/
+
             tables.push({data: {head: head, rows: rows}, name: name, fontes: fontes});
+
+            //console.log('table', tables)
         }
         this.setState({tables: tables});
     }
@@ -212,7 +236,7 @@ class Charts extends React.Component{
         modal.fontes = table.fontes;
 
         modal.head = table.data.head.map(function (item, index){
-            return (<th key={'thModal'+index}>{item}</th>);
+            return (<th key={'thModal'+index}>{item?.replace(/^"(.*)"$/, '$1')}</th>);
         })
 
         modal.rows = table.data.rows.map(function (item, index){

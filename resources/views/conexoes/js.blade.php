@@ -503,11 +503,14 @@
         var dropdown = document.getElementById('myDropdownSearch');
         var input = document.getElementById('searchInput');
 
-        if (event.target === input) {
-            dropdown.style.display = 'block';
-        } else if (!dropdown.contains(event.target) && event.target !== input) {
-            dropdown.style.display = 'none';
+        if(dropdown){
+            if (event.target === input) {
+                dropdown.style.display = 'block';
+            } else if (!dropdown?.contains(event.target) && event?.target !== input) {
+                dropdown.style.display = 'none';
+            }
         }
+
     });
 
 </script>
