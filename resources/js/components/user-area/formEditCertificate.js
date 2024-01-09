@@ -323,7 +323,7 @@ class FormEditCertificate extends React.Component{
                         className="list-group-item d-flex "
                         onClick={() => this.setMunicipio(item)}
                     >
-                        <u>{firstPiece}</u>{secondPiece} - {item.eduf_sg_uf}
+                        <u>{firstPiece}</u>{secondPiece} - {item?.eduf_sg_uf}
                     </li>
                 )
             }.bind(this));
@@ -359,7 +359,7 @@ class FormEditCertificate extends React.Component{
                                            style={{display: (this.state.filters.municipio ? '' : 'none')}}
                                            autoComplete="off"
                                            readOnly={this.state.filters.municipio}
-                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio.edmu_nm_municipio + ' - ' + this.state.filters.uf.eduf_sg_uf : ''}/>
+                                           defaultValue={this.state.filters.municipio ? this.state.filters.municipio?.edmu_nm_municipio + ' - ' + this.state.filters.uf?.eduf_sg_uf : ''}/>
 
 
                                     <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>

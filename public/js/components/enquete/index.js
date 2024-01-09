@@ -1,5 +1,4 @@
 const Enquete = () => {
-    return React.createElement(Page, null);
+  return /*#__PURE__*/React.createElement(Page, null);
 };
-
-ReactDOM.render(React.createElement(Enquete, null), document.getElementById('enquete'));
+ReactDOM.render( /*#__PURE__*/React.createElement(Enquete, null), document.getElementById('enquete'));

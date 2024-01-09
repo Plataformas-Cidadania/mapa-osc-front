@@ -234,12 +234,13 @@ class Certificates extends React.Component{
         if(this.state.certificates.Resposta!='Nenhum Certificado foi encontrado para essa OSC!'){
             certificates = this.state.certificates.map(function(item, index){
                 let municipio = '';
-                if(item.municipio!=null){
+                if(item?.municipio!=null){
                     municipio = item.municipio.edmu_nm_municipio + ' - ' + this.state.uf[item.municipio.eduf_cd_uf];
                 }
+
                 let estado = '';
-                if(item.uf!=null){
-                    estado = item.uf.eduf_sg_uf;
+                if(item?.uf!=null){
+                    estado = item.uf?.eduf_sg_uf;
                 }
 
                 return (
