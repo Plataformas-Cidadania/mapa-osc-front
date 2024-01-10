@@ -130,6 +130,24 @@ class Osc extends React.Component {
     if (!this.validate()) {
       return;
     }
+    const data = {
+      id_osc: this.props.id,
+      tx_sigla_osc: this.state.form.tx_sigla_osc,
+      tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
+      cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc === null ? -1 : this.state.form.cd_situacao_imovel_osc,
+      dt_fundacao_osc: this.state.form.dt_fundacao_osc,
+      tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
+      tx_email: this.state.form.tx_email,
+      tx_site: this.state.form.tx_site,
+      tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
+      tx_resumo_osc: this.state.form.tx_resumo_osc
+    };
+    if (this.state.form.dt_ano_cadastro_cnpj !== null) {
+      data.dt_ano_cadastro_cnpj = this.state.form.dt_ano_cadastro_cnpj;
+    }
+    if (this.state.form.dt_fundacao_osc !== null) {
+      data.dt_fundacao_osc = this.state.form.dt_fundacao_osc;
+    }
     this.setState({
       loading: true,
       button: false,
@@ -143,21 +161,21 @@ class Osc extends React.Component {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('@App:token')
         },
-        //data: this.state.form,
-        data: {
-          //id_osc: 455128,
-          id_osc: this.props.id,
-          tx_sigla_osc: this.state.form.tx_sigla_osc,
-          tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-          cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
-          dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
-          dt_fundacao_osc: this.state.form.dt_fundacao_osc,
-          tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
-          tx_email: this.state.form.tx_email,
-          tx_site: this.state.form.tx_site,
-          tx_telefone: this.state.form.tx_telefone,
-          tx_resumo_osc: this.state.form.tx_resumo_osc
-        },
+        data: data,
+        /*data:{
+            //id_osc: 455128,
+            id_osc: this.props.id,
+            tx_sigla_osc: this.state.form.tx_sigla_osc,
+            tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
+            cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
+            dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
+            dt_fundacao_osc: this.state.form.dt_fundacao_osc,
+            tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
+            tx_email: this.state.form.tx_email,
+            tx_site: this.state.form.tx_site,
+            tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
+            tx_resumo_osc: this.state.form.tx_resumo_osc,
+        },*/
         cache: false,
         success: function (data) {
           let msg = 'Dados alterados com sucesso!';
