@@ -143,7 +143,7 @@
         <div class="col-md-12">
             <div class="item-detail">
                 <h4>O que a OSC faz:</h4>
-                <p>{{$dados_gerais->ft_resumo_osc == null ? $txt_alert_abb : $dados_gerais->tx_resumo_osc}}</p>
+                <p>{{$dados_gerais->tx_resumo_osc == null ? $txt_alert_abb : $dados_gerais->tx_resumo_osc}}</p>
             </div>
         </div>
         <div class="col-md-12">
