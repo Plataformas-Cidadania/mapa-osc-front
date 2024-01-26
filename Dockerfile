@@ -24,7 +24,7 @@ ENV NVM_DIR="/root/.nvm"
 RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # Install Node.js 12
-RUN nvm install 12 && nvm use 12
+RUN nvm install 12.16.2 && nvm use 12.16.2
     
 # Install PHP extensions
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \

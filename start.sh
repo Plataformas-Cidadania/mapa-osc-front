@@ -7,4 +7,4 @@ composer install
 php artisan key:generate
 php artisan config:clear
 php artisan migrate
-npm run watch & php -S 0.0.0.0:8000 -t public/
+npx babel --watch resources/js/components --out-dir public/js/components --presets @babel/preset-react && npm run watch & php -S 0.0.0.0:8000 -t public/
