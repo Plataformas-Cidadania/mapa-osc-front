@@ -130,10 +130,13 @@ class Search extends React.Component {
                 let tx_nome = '';
                 let origem_id = 0;
                 let cod_cnpj = '';
+                let origem_url = '';
+                console.log(item);
                 if (this.state.searchNameCampo === 'tx_nome_osc') {
                     tx_nome = item.tx_nome_osc;
-                    cod_cnpj = item.cd_identificador_osc;
-                    origem_id = item.tx_nome_osc;
+                    cod_cnpj = item.cd_identificador_osc.padStart(14, "0");  // fix cnpj
+                    origem_id = item.id_osc;
+                    origem_url = "detalhar/" + origem_id;
                 } else if (this.state.searchNameCampo === 'todos') {
                     if (item.hasOwnProperty('edmu_nm_municipio')) {
                         if (item.edmu_nm_municipio !== undefined) {
@@ -147,6 +150,7 @@ class Search extends React.Component {
                         tx_nome = item.edre_nm_regiao;
                         origem_id = item.edre_cd_regiao;
                     }
+                    origem_url = "mapa/" + origem_id;
                 }
 
                 return (
@@ -154,8 +158,9 @@ class Search extends React.Component {
                         key={'menuList' + index}
                         className="list-group-item d-flex"
                     >
-                        <a href={"mapa/" + origem_id}>
-                            {tx_nome} <p style={{padding: '0 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 10}}>{identificarFilialMatriz(cod_cnpj)}</p>
+                        <a href={origem_url}>
+                            {tx_nome} <p style={{padding: '0 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 10, margin: 0}}>{identificarFilialMatriz(cod_cnpj)}</p>
+                            <span style={{display: 'block', fontSize: 10}}>{cod_cnpj} </span>
                         </a>
                     </li>
                 )
