@@ -22,7 +22,6 @@ class Search extends React.Component {
       //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
       //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
       ],
-
       searchOsc: '',
       searchOscId: 1,
       searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -39,7 +38,18 @@ class Search extends React.Component {
   }
   componentDidMount() {
     //this.load();
+    const input = document.getElementById('searchInput');
+    input.addEventListener('keyup', this.handleEnterKeyPress);
   }
+  handleEnterKeyPress = event => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      const searchOsc = this.state.searchOsc.trim();
+      if (searchOsc) {
+        window.location.href = "mapa/" + searchOsc;
+      }
+    }
+  };
   handleSearchOsc(e) {
     //this.setState({searchOsc: ''});
     let search = e.target.value ? e.target.value : ' ';
@@ -161,16 +171,17 @@ class Search extends React.Component {
       }.bind(this));
     }
 
-    // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa
-    if (this.state.searchOsc != '' && this.state.msg === '' && this.state.listMenuItem.length === 0) {
-      menuList.push( /*#__PURE__*/React.createElement("li", {
+    // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa, apenas para "Organizacao"
+    if (this.state.searchOsc != '' && this.state.msg === '' && this.state.searchOsc.length > 2 && this.state.searchOscId == 1) {
+      menuList.unshift( /*#__PURE__*/React.createElement("li", {
         key: 'menuList' + this.state.listMenuItem.length,
         className: "list-group-item d-flex"
       }, /*#__PURE__*/React.createElement("a", {
         href: "mapa/" + this.state.searchOsc
-      }, /*#__PURE__*/React.createElement("p", null, "Buscar por \"", this.state.searchOsc, "\" no mapa"))));
+      }, /*#__PURE__*/React.createElement("p", null, "Pressioner ENTER para buscar por \"", this.state.searchOsc, "\" no mapa"))));
     }
     function identificarFilialMatriz(cnpj) {
+      if (!cnpj || cnpj == "") return "";
       cnpj = cnpj.replace(/\D/g, '');
       if (cnpj.slice(8, 12) !== '0001') {
         return "Filial";

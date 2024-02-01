@@ -32,7 +32,19 @@ class Search extends React.Component {
 
     componentDidMount(){
         //this.load();
+        const input = document.getElementById('searchInput');
+        input.addEventListener('keyup', this.handleEnterKeyPress);
     }
+    handleEnterKeyPress = (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            const searchOsc = this.state.searchOsc.trim();
+            if (searchOsc) {
+                window.location.href = "mapa/" + searchOsc;
+            }
+        }
+    }
+    
     handleSearchOsc(e){
         //this.setState({searchOsc: ''});
         let search = e.target.value ? e.target.value : ' ';
@@ -150,20 +162,21 @@ class Search extends React.Component {
             }.bind(this));
         }
 
-        // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa
-        if (this.state.searchOsc != '' && this.state.msg === '' && this.state.listMenuItem.length === 0) {
-            menuList.push(
+        // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa, apenas para "Organizacao"
+        if (this.state.searchOsc != '' && this.state.msg === '' && this.state.searchOsc.length > 2  && this.state.searchOscId == 1) {
+            menuList.unshift(
             <li key={'menuList' + this.state.listMenuItem.length} className="list-group-item d-flex">
                 <a href={"mapa/" + this.state.searchOsc}>
-                    <p>Buscar por "{this.state.searchOsc}" no mapa</p>
+                    <p>Pressioner ENTER para buscar por "{this.state.searchOsc}" no mapa</p>
                 </a>
             </li>
             );
         }
 
         function identificarFilialMatriz(cnpj) {
+            if(!cnpj || cnpj == "")
+                return "";
             cnpj = cnpj.replace(/\D/g, '');
-
             if (cnpj.slice(8, 12) !== '0001') {
                 return "Filial";
             } else {
