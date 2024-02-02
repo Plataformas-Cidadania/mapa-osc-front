@@ -2222,10 +2222,24 @@ class OscMap extends React.Component{
                             <p>Quantidade de OSCs</p>
                             <h2>{this.state.totalOscList}</h2>
                         </div>*/}
-
                         <div className="col-md-12">
-                            {this.state.origem === 'busca-avancada' ?
-                                <div className="text-right" style={{margin: '0 -30px 0 0'}}>
+                            <div className="text-right" style={{margin: '0 -30px 0 0'}}>
+                            {this.state.origem != 0 && (
+                                <a href="" id="novaBuscaLink">
+                                <button
+                                    style={{float: 'inline-start'}}
+                                    onClick={() => {
+                                          const novaBuscaLink = document.querySelector('#novaBuscaLink');
+                                          novaBuscaLink.href = document.referrer;
+                                          novaBuscaLink.click();
+                                      }}
+                                    className="btn btn-outline-primary"
+                                >
+                                    <i className="fas fa-search"/>  Nova busca
+                                </button>
+                                </a>
+                                )}
+                            {this.state.origem === 'busca-avancada' && (
                                     <button
                                         className="btn btn-primary"
                                         onClick={this.exportar}
@@ -2233,9 +2247,8 @@ class OscMap extends React.Component{
                                     >
                                         Exportar
                                     </button>
-                                </div>
-                                : null}
-
+                                )}
+                            </div>
                             <br/>
                             <div className="text-center">
                                 <h3>Quantidade de OSCs encontradas</h3>
