@@ -19,7 +19,7 @@
 
 
     ?>
-
+    
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
@@ -42,10 +42,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div id="search"></div>
+                @if($origem == '0')
+                    <div id="search"></div>
+                @endif
             </div>
         </div>
     </div>
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
