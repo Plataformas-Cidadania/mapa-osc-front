@@ -26,6 +26,8 @@ class Search extends React.Component {
         this.load = this.load.bind(this);
         this.handleSearchOsc = this.handleSearchOsc.bind(this);
         this.btnSearch = this.btnSearch.bind(this);
+        this.handleSearchOsc = this.handleSearchOsc.bind(this);
+
 
     }
 
@@ -40,7 +42,7 @@ class Search extends React.Component {
             event.preventDefault();
             const searchOsc = this.state.searchOsc.trim();
             if (searchOsc) {
-                window.location.href = "mapa/" + searchOsc;
+                this.startAdvancedSearch(searchOsc)
             }
         }
     }
@@ -62,6 +64,28 @@ class Search extends React.Component {
         });
 
     }
+    
+    // Cria um elemento form shadow para permitir o browser fazer o redirecionamento pra nós. Fiz isso para evitar problemas de criar url post, criptografia e token
+    startAdvancedSearch(oscName) {
+        const shadowForm = document.createElement('form');
+        shadowForm.action = 'mapa-busca-avancada'; 
+        shadowForm.method = 'POST';
+      
+        const jsonInput = document.createElement('input');
+        jsonInput.type = 'hidden';
+        jsonInput.name = 'json';
+        jsonInput.value = JSON.stringify({
+          avancado: {
+            dadosGerais: {
+              tx_razao_social_osc: oscName
+            }
+          }
+        });
+        shadowForm.appendChild(jsonInput);
+        document.body.appendChild(shadowForm);
+        shadowForm.submit();
+      }
+      
     btnSearch(id, txt, rota, qtd, campo){
         this.setState({
             msg: '',
@@ -131,8 +155,7 @@ class Search extends React.Component {
                 let origem_id = 0;
                 let cod_cnpj = '';
                 let origem_url = '';
-                console.log(item);
-                if (this.state.searchNameCampo === 'tx_nome_osc') {
+                if (this.state.searchNameCampo === 'tx_nome_osc' && !item.hasOwnProperty('edmu_nm_municipio')) {
                     tx_nome = item.tx_nome_osc;
                     cod_cnpj = item.cd_identificador_osc.padStart(14, "0");  // fix cnpj
                     origem_id = item.id_osc;
@@ -160,7 +183,7 @@ class Search extends React.Component {
                     >
                         <a href={origem_url}>
                             {tx_nome} <p style={{padding: '0 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 10, margin: 0}}>{identificarFilialMatriz(cod_cnpj)}</p>
-                            <span style={{display: 'block', fontSize: 10}}>{cod_cnpj} </span>
+                            <span style={{display: 'block', fontSize: 10}}>{return_cnpj(cod_cnpj)} </span>
                         </a>
                     </li>
                 )
@@ -171,13 +194,18 @@ class Search extends React.Component {
         if (this.state.searchOsc != '' && this.state.msg === '' && this.state.searchOsc.length > 2  && this.state.searchOscId == 1) {
             menuList.unshift(
             <li key={'menuList' + this.state.listMenuItem.length} className="list-group-item d-flex">
-                <a href={"mapa/" + this.state.searchOsc}>
+                <a onClick={() => this.startAdvancedSearch(this.state.searchOsc)}>
                     <p>Pressioner ENTER para buscar por "{this.state.searchOsc}" no mapa</p>
                 </a>
             </li>
             );
         }
-
+        function return_cnpj(cnpj){
+            if(!cnpj || cnpj == "")
+                return "";
+            else
+                return "CNPJ:" + cnpj
+        }
         function identificarFilialMatriz(cnpj) {
             if(!cnpj || cnpj == "")
                 return "";
