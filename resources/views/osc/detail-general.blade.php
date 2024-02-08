@@ -16,7 +16,13 @@
 </div>
 <div id="multiCollapse1" class="collapse multi-collapse show">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
+            <p>
+                <strong>CNPJ:</strong> {{$cabecalho->cd_identificador_osc}}<br>
+                <strong>Natureza jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
+            </p>
+            <br>
+
             <div class="img-upload">
                 <?php
                     $logo = "img/sem-imagem.png";
@@ -53,20 +59,23 @@
             <a href="https://gife.org.br/indicadores-gife-de-governanca/autoavaliacao/" target="_blank">
                 <img src="img/gife.png" alt="" width="80" style="margin-left: 20px;">
             </a>
+
+
         </div>
-        <div class="col-md-5">
-            <p>
-                <strong>CNPJ:</strong> {{$cabecalho->cd_identificador_osc}}<br>
-                <strong>Natureza jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
-            </p>
-            <br>
-        </div>
-        <div class="col-md-4 text-center">
+
+        <div class="col-md-8 text-center">
             <p>Índice de preenchimento</p>
             <div id="preenchimento"></div>
             <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999; margin-top: -30px;"><a href="/metodologia">Metodologia</a></p>
         </div>
     </div>
+    <br><br>
+
+    <style>
+        .apexcharts-legend {
+            text-align: left;
+        }
+    </style>
 
     <div class="row">
 

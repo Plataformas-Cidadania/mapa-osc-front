@@ -13330,7 +13330,7 @@ label, input, .btn-number {
 
 .indice-total {
   position: relative;
-  top: -113px;
+  top: -120px;
   background: #3A559B;
   border-radius: 50%;
   width: 35px;
@@ -13338,6 +13338,7 @@ label, input, .btn-number {
   margin: auto;
   color: #FFFFFF;
   padding-top: 6px;
+  left: -133px;
 }
 
 .not-info {

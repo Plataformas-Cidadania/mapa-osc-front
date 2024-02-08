@@ -7,9 +7,15 @@ class PolarChart extends React.Component {
         chart: {
           type: 'polarArea'
         },
+        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8000', '#8000ff', '#0080ff'],
         labels: props.data.labels,
+        /*legend: {
+            show: false,
+        },*/
         legend: {
-          show: false
+          onItemClick: {
+            toggleDataSeries: false
+          }
         },
         responsive: [{
           breakpoint: 480,
@@ -18,7 +24,7 @@ class PolarChart extends React.Component {
               width: 200
             },
             legend: {
-              position: 'bottom'
+              position: 'left'
             }
           }
         }]
