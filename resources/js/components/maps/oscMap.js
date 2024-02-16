@@ -2266,6 +2266,7 @@ class OscMap extends React.Component{
                                 <button className="nav-link" id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Análises {localidade} </button>
                             </li>
                         </ul>
+
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                 {/*MAPA*/}

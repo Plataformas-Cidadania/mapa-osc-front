@@ -610,11 +610,7 @@ class Perfil extends React.Component {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("h1", null, this.state.localidade), /*#__PURE__*/React.createElement("h5", null, /*#__PURE__*/React.createElement("a", {
-      href: "/"
-    }, "Home"), "/ ", /*#__PURE__*/React.createElement("a", {
-      href: "/mapa/" + this.state.localidade_id
-    }, "Mapa"), " / ", this.state.localidade), /*#__PURE__*/React.createElement("br", null)))))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("h1", null, this.state.localidade)))))), /*#__PURE__*/React.createElement("div", {
       className: "text-center"
     }, /*#__PURE__*/React.createElement("img", {
       src: "/img/load.gif",
