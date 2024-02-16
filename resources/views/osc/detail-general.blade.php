@@ -50,9 +50,9 @@
                 <div id="selo"></div>
             </a>
 
-            <a href="https://gife.org.br/indicadores-gife-de-governanca/autoavaliacao/" target="_blank">
+            <!--<a href="https://gife.org.br/indicadores-gife-de-governanca/autoavaliacao/" target="_blank">
                 <img src="img/gife.png" alt="" width="80" style="margin-left: 20px;">
-            </a>
+            </a>-->
         </div>
         <div class="col-md-5">
             <p>
