@@ -170,18 +170,16 @@
 @endif
 
 
-@if($rota=='localidade/{id}')
+
+@if($rota=='localidade/{id}' || $rota=='mapa/{origem}')
     <script src="js/lib/apexcharts/prop-types.min.js"></script>
     <script src="js/lib/apexcharts/apexcharts.js"></script>
     <script src="js/lib/apexcharts/react-apexcharts.iife.min.js"></script>
 
-<script src="js/components/charts/mixedChart.js"></script>
-<script src="js/components/charts/columnChart.js"></script>
-<script src="js/components/charts/pieChart.js"></script>
-    <!--
-    <script src="js/components/charts/textCharts.js"></script>
-    <script src="js/components/charts/page/textChart.js"></script>-->
-<script src="js/components/localidade/perfil.js"></script>
+    <script src="js/components/charts/mixedChart.js"></script>
+    <script src="js/components/charts/columnChart.js"></script>
+    <script src="js/components/charts/pieChart.js"></script>
+    <script src="js/components/localidade/perfil.js"></script>
 @endif
 
 
