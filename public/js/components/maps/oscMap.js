@@ -2130,6 +2130,7 @@ class OscMap extends React.Component {
     let processingOscUfs = this.state.processingOscUfs;
     let processingOscPontos = this.state.processingOscPontos;
     let processingHeatMap = this.state.processingHeatMap;
+    console.log('origem:::::::::::::', origem);
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
@@ -2247,7 +2248,7 @@ class OscMap extends React.Component {
       style: {
         clear: 'both'
       }
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), /*#__PURE__*/React.createElement("ul", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), origem != 0 ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3",
       id: "pills-tab",
       role: "tablist"
@@ -2275,7 +2276,7 @@ class OscMap extends React.Component {
       role: "tab",
       "aria-controls": "pills-profile",
       "aria-selected": "false"
-    }, "An\xE1lises ", localidade, " "))), /*#__PURE__*/React.createElement("div", {
+    }, "An\xE1lises ", localidade, " "))) : null, /*#__PURE__*/React.createElement("div", {
       className: "tab-content",
       id: "pills-tabContent"
     }, /*#__PURE__*/React.createElement("div", {
@@ -2357,6 +2358,6 @@ class OscMap extends React.Component {
       id: "pills-profile",
       role: "tabpanel",
       "aria-labelledby": "pills-profile-tab"
-    }, /*#__PURE__*/React.createElement(Perfil, null))))));
+    }, origem != 0 ? /*#__PURE__*/React.createElement(Perfil, null) : null)))));
   }
 }
