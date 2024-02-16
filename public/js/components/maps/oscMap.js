@@ -2220,10 +2220,8 @@ class OscMap extends React.Component {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "text-right",
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      className: "text-center",
       style: {
         margin: '0 -30px 0 0'
       }
@@ -2231,9 +2229,7 @@ class OscMap extends React.Component {
       href: "",
       id: "novaBuscaLink"
     }, /*#__PURE__*/React.createElement("button", {
-      style: {
-        float: 'inline-start'
-      },
+      /*style={{float: 'inline-start'}}*/
       onClick: () => {
         const novaBuscaLink = document.querySelector('#novaBuscaLink');
         novaBuscaLink.href = document.referrer;

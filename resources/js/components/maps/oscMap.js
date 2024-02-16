@@ -2222,12 +2222,12 @@ class OscMap extends React.Component{
                             <p>Quantidade de OSCs</p>
                             <h2>{this.state.totalOscList}</h2>
                         </div>*/}
-                        <div className="col-md-12">
-                            <div className="text-right" style={{margin: '0 -30px 0 0'}}>
+                        <div>
+                            <div className="text-center" style={{margin: '0 -30px 0 0'}}>
                             {this.state.origem != 0 && (
                                 <a href="" id="novaBuscaLink">
                                 <button
-                                    style={{float: 'inline-start'}}
+                                    /*style={{float: 'inline-start'}}*/
                                     onClick={() => {
                                           const novaBuscaLink = document.querySelector('#novaBuscaLink');
                                           novaBuscaLink.href = document.referrer;
