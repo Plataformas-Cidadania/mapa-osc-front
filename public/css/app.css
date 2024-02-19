@@ -13353,6 +13353,11 @@ label, input, .btn-number {
   }
 }
 
+.nav-pills .nav-link {
+  background-color: #f3f2f2;
+  margin-left: 10px;
+}
+
 #chart {
   max-width: 100%;
   margin: 35px auto;
