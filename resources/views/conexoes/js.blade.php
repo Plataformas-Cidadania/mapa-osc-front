@@ -171,7 +171,7 @@
 
 
 
-@if($rota=='localidade/{id}' || $rota=='mapa/{origem}')
+@if($rota=='localidade/{id}' || $rota=='mapa/{origem}' || $rota=='mapa-busca-avancada')
     <script src="js/lib/apexcharts/prop-types.min.js"></script>
     <script src="js/lib/apexcharts/apexcharts.js"></script>
     <script src="js/lib/apexcharts/react-apexcharts.iife.min.js"></script>
