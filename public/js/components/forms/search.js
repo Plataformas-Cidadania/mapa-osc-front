@@ -22,7 +22,6 @@ class Search extends React.Component {
       //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
       //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
       ],
-
       searchOsc: '',
       searchOscId: 1,
       searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -159,11 +158,13 @@ class Search extends React.Component {
         let origem_id = 0;
         let cod_cnpj = '';
         let origem_url = '';
+        let razao_social_osc = '';
         if (this.state.searchNameCampo === 'tx_nome_osc' && !item.hasOwnProperty('edmu_nm_municipio')) {
           tx_nome = item.tx_nome_osc;
           cod_cnpj = item.cd_identificador_osc.padStart(14, "0"); // fix cnpj
           origem_id = item.id_osc;
           origem_url = "detalhar/" + origem_id;
+          razao_social_osc = item.tx_razao_social_osc;
         } else if (this.state.searchNameCampo === 'todos') {
           if (item.hasOwnProperty('edmu_nm_municipio')) {
             if (item.edmu_nm_municipio !== undefined) {
@@ -183,7 +184,8 @@ class Search extends React.Component {
           key: 'menuList' + index,
           className: "list-group-item d-flex"
         }, /*#__PURE__*/React.createElement("a", {
-          href: origem_url
+          href: origem_url,
+          title: razao_social_osc ? 'RAZÃO SOCIAL : ' + razao_social_osc : ''
         }, tx_nome, " ", /*#__PURE__*/React.createElement("p", {
           style: {
             padding: '0 5px',
