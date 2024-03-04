@@ -1824,7 +1824,7 @@ class Filter extends React.Component{
                                         <div className="col-md-9">
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="name">Nome da OSC</label>
+                                                <label htmlFor="name">Nome da OSC (Razão social)</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>

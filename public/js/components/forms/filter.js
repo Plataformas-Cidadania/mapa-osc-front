@@ -1927,7 +1927,7 @@ class Filter extends React.Component {
       placeholder: " "
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "name"
-    }, "Nome da OSC"), /*#__PURE__*/React.createElement("div", {
+    }, "Nome da OSC (Raz\xE3o social)"), /*#__PURE__*/React.createElement("div", {
       className: "label-box-info-off"
     }))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3"

@@ -134,12 +134,14 @@ class OscMap extends React.Component {
     this.zoomToFeature = this.zoomToFeature.bind(this);
     //this.onEachFeature = this.onEachFeature.bind(this);
   }
+
   componentDidMount() {
     this.loadFirstMap();
     this.loadMap();
     this.loadOscList();
     //this.loadAllUfs();
   }
+
   componentWillReceiveProps(props) {
     //console.log('will receve props');
     //console.log(props.data);
@@ -203,6 +205,7 @@ class OscMap extends React.Component {
         });
     }*/
   }
+
   makeInfoOsc() {
     //console.log('make info');
     let mapElements = this.state.mapElements;
@@ -434,6 +437,7 @@ class OscMap extends React.Component {
       //this.loadMap();
     });
   }
+
   controlBasicMap(thisReact) {
     return L.Control.extend({
       options: {
@@ -1022,7 +1026,7 @@ class OscMap extends React.Component {
               console.error(status, err.toString());
               _this.setState({loading: false});
           }
-       });
+        });
   }*/
 
   /*loadDataTotalPorTerritorio(){
@@ -1031,7 +1035,7 @@ class OscMap extends React.Component {
       if(!this.state.start || !this.state.end){
           return;
       }
-       $.ajax({
+        $.ajax({
           method:'POST',
           url: "total-transito-territorio",
           data:{
@@ -1079,6 +1083,7 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
+
           data = data2;
           //console.log(data);
           /////////////////////////////////////////////
@@ -1115,6 +1120,7 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
+
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1216,6 +1222,7 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //}
           }
+
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1425,6 +1432,7 @@ class OscMap extends React.Component {
         _this.dataOSC(item[0], marker);
         //this.openPopup();
       });
+
       markers.addLayer(marker);
     });
     //mapElements.map.addLayer(markers);
@@ -1473,6 +1481,7 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
+
     mapElements.areaIdhGroup.addLayer(areaIdh);
     this.setState({
       mapElements: mapElements
@@ -1514,6 +1523,7 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
+
     mapElements.areaIdhGroup.addLayer(areaIDHM);
     this.setState({
       mapElements: mapElements
@@ -1660,6 +1670,7 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
+
     mapElements.areaOscGroup.addLayer(areaOsc);
     this.setState({
       mapElements: mapElements
@@ -1882,7 +1893,7 @@ class OscMap extends React.Component {
     firsRowCsv = firsRowCsv.slice(0, -1);
     let columns = firsRowCsv.split(';');
     let csv = firsRowCsv+'\n';
-     this.state.dataExportacao.forEach(function (item){
+      this.state.dataExportacao.forEach(function (item){
         let row = '';
         columns.forEach(function (column){
             row += item[column]+';';
@@ -1919,8 +1930,8 @@ class OscMap extends React.Component {
               )
           }
       }
-       itens.push(<div><br/></div>);
-       return itens;
+        itens.push(<div><br/></div>);
+        return itens;
   }*/
 
   render() {
@@ -2119,7 +2130,6 @@ class OscMap extends React.Component {
     let processingOscUfs = this.state.processingOscUfs;
     let processingOscPontos = this.state.processingOscPontos;
     let processingHeatMap = this.state.processingHeatMap;
-    console.log('origem:::::::::::::', origem);
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
@@ -2210,8 +2220,10 @@ class OscMap extends React.Component {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      className: "text-center",
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "text-right",
       style: {
         margin: '0 -30px 0 0'
       }
@@ -2219,7 +2231,9 @@ class OscMap extends React.Component {
       href: "",
       id: "novaBuscaLink"
     }, /*#__PURE__*/React.createElement("button", {
-      /*style={{float: 'inline-start'}}*/
+      style: {
+        float: 'inline-start'
+      },
       onClick: () => {
         const novaBuscaLink = document.querySelector('#novaBuscaLink');
         novaBuscaLink.href = document.referrer;
@@ -2233,47 +2247,11 @@ class OscMap extends React.Component {
       onClick: this.exportar,
       title: this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'
     }, "Exportar")), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-      className: "text-center",
+      className: "text-center ",
       style: {
         clear: 'both'
       }
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
-      className: "nav nav-pills mb-3",
-      id: "pills-tab",
-      role: "tablist"
-    }, /*#__PURE__*/React.createElement("li", {
-      className: "nav-item",
-      role: "presentation"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "nav-link active",
-      id: "pills-home-tab",
-      "data-toggle": "pill",
-      "data-target": "#pills-home",
-      type: "button",
-      role: "tab",
-      "aria-controls": "pills-home",
-      "aria-selected": "true"
-    }, "Mapa")), /*#__PURE__*/React.createElement("li", {
-      className: "nav-item",
-      role: "presentation"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "nav-link",
-      id: "pills-profile-tab",
-      "data-toggle": "pill",
-      "data-target": "#pills-profile",
-      type: "button",
-      role: "tab",
-      "aria-controls": "pills-profile",
-      "aria-selected": "false"
-    }, "An\xE1lises ", localidade, " "))) : null, /*#__PURE__*/React.createElement("div", {
-      className: "tab-content",
-      id: "pills-tabContent"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "tab-pane fade show active",
-      id: "pills-home",
-      role: "tabpanel",
-      "aria-labelledby": "pills-home-tab"
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement(VisualizarFiltros, {
       strJson: this.props.strJson
@@ -2308,7 +2286,7 @@ class OscMap extends React.Component {
     }), /*#__PURE__*/React.createElement("div", {
       id: "controls-map2",
       className: "control-container"
-    }))))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+    })))))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
@@ -2342,11 +2320,6 @@ class OscMap extends React.Component {
       "aria-label": "..."
     }, pagination)), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }))), /*#__PURE__*/React.createElement("div", {
-      class: "tab-pane fade",
-      id: "pills-profile",
-      role: "tabpanel",
-      "aria-labelledby": "pills-profile-tab"
-    }, origem != 0 ? /*#__PURE__*/React.createElement(Perfil, null) : null)))));
+    })));
   }
 }

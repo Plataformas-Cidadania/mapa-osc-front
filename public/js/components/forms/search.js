@@ -22,7 +22,6 @@ class Search extends React.Component {
       //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
       //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
       ],
-
       searchOsc: '',
       searchOscId: 1,
       searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -36,10 +35,22 @@ class Search extends React.Component {
     this.load = this.load.bind(this);
     this.handleSearchOsc = this.handleSearchOsc.bind(this);
     this.btnSearch = this.btnSearch.bind(this);
+    this.handleSearchOsc = this.handleSearchOsc.bind(this);
   }
   componentDidMount() {
     //this.load();
+    const input = document.getElementById('searchInput');
+    input.addEventListener('keyup', this.handleEnterKeyPress);
   }
+  handleEnterKeyPress = event => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      const searchOsc = this.state.searchOsc.trim();
+      if (searchOsc) {
+        this.startAdvancedSearch(searchOsc);
+      }
+    }
+  };
   handleSearchOsc(e) {
     //this.setState({searchOsc: ''});
     let search = e.target.value ? e.target.value : ' ';
@@ -59,6 +70,26 @@ class Search extends React.Component {
         });
       }
     });
+  }
+
+  // Cria um elemento form shadow para permitir o browser fazer o redirecionamento pra nós. Fiz isso para evitar problemas de criar url post, criptografia e token
+  startAdvancedSearch(oscName) {
+    const shadowForm = document.createElement('form');
+    shadowForm.action = 'mapa-busca-avancada';
+    shadowForm.method = 'POST';
+    const jsonInput = document.createElement('input');
+    jsonInput.type = 'hidden';
+    jsonInput.name = 'json';
+    jsonInput.value = JSON.stringify({
+      avancado: {
+        dadosGerais: {
+          tx_razao_social_osc: oscName
+        }
+      }
+    });
+    shadowForm.appendChild(jsonInput);
+    document.body.appendChild(shadowForm);
+    shadowForm.submit();
   }
   btnSearch(id, txt, rota, qtd, campo) {
     this.setState({
@@ -126,10 +157,14 @@ class Search extends React.Component {
         let tx_nome = '';
         let origem_id = 0;
         let cod_cnpj = '';
-        if (this.state.searchNameCampo === 'tx_nome_osc') {
+        let origem_url = '';
+        let razao_social_osc = '';
+        if (this.state.searchNameCampo === 'tx_nome_osc' && !item.hasOwnProperty('edmu_nm_municipio')) {
           tx_nome = item.tx_nome_osc;
-          cod_cnpj = item.cd_identificador_osc;
-          origem_id = item.tx_nome_osc;
+          cod_cnpj = item.cd_identificador_osc.padStart(14, "0"); // fix cnpj
+          origem_id = item.id_osc;
+          origem_url = "detalhar/" + origem_id;
+          razao_social_osc = item.tx_razao_social_osc;
         } else if (this.state.searchNameCampo === 'todos') {
           if (item.hasOwnProperty('edmu_nm_municipio')) {
             if (item.edmu_nm_municipio !== undefined) {
@@ -143,34 +178,46 @@ class Search extends React.Component {
             tx_nome = item.edre_nm_regiao;
             origem_id = item.edre_cd_regiao;
           }
+          origem_url = "mapa/" + origem_id;
         }
         return /*#__PURE__*/React.createElement("li", {
           key: 'menuList' + index,
           className: "list-group-item d-flex"
         }, /*#__PURE__*/React.createElement("a", {
-          href: "mapa/" + origem_id
+          href: origem_url,
+          title: razao_social_osc ? 'RAZÃO SOCIAL : ' + razao_social_osc : ''
         }, tx_nome, " ", /*#__PURE__*/React.createElement("p", {
           style: {
             padding: '0 5px',
             borderRadius: 5,
             backgroundColor: '#ebe7e7',
             display: 'inline-block',
+            fontSize: 10,
+            margin: 0
+          }
+        }, identificarFilialMatriz(cod_cnpj)), /*#__PURE__*/React.createElement("span", {
+          style: {
+            display: 'block',
             fontSize: 10
           }
-        }, identificarFilialMatriz(cod_cnpj))));
+        }, return_cnpj(cod_cnpj), " ")));
       }.bind(this));
     }
 
-    // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa
-    if (this.state.searchOsc != '' && this.state.msg === '' && this.state.listMenuItem.length === 0) {
-      menuList.push( /*#__PURE__*/React.createElement("li", {
+    // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa, apenas para "Organizacao"
+    if (this.state.searchOsc != '' && this.state.msg === '' && this.state.searchOsc.length > 2 && this.state.searchOscId == 1) {
+      menuList.unshift( /*#__PURE__*/React.createElement("li", {
         key: 'menuList' + this.state.listMenuItem.length,
         className: "list-group-item d-flex"
       }, /*#__PURE__*/React.createElement("a", {
-        href: "mapa/" + this.state.searchOsc
-      }, /*#__PURE__*/React.createElement("p", null, "Buscar por \"", this.state.searchOsc, "\" no mapa"))));
+        onClick: () => this.startAdvancedSearch(this.state.searchOsc)
+      }, /*#__PURE__*/React.createElement("p", null, "Pressioner ENTER para buscar por \"", this.state.searchOsc, "\" no mapa"))));
+    }
+    function return_cnpj(cnpj) {
+      if (!cnpj || cnpj == "") return "";else return "CNPJ:" + cnpj;
     }
     function identificarFilialMatriz(cnpj) {
+      if (!cnpj || cnpj == "") return "";
       cnpj = cnpj.replace(/\D/g, '');
       if (cnpj.slice(8, 12) !== '0001') {
         return "Filial";

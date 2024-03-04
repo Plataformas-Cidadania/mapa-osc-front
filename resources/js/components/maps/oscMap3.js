@@ -2156,8 +2156,6 @@ class OscMap extends React.Component{
         let processingOscPontos =  this.state.processingOscPontos;
         let processingHeatMap =  this.state.processingHeatMap;
 
-        console.log('origem:::::::::::::', origem)
-
         return(
             <div>
 
@@ -2224,12 +2222,12 @@ class OscMap extends React.Component{
                             <p>Quantidade de OSCs</p>
                             <h2>{this.state.totalOscList}</h2>
                         </div>*/}
-                        <div>
-                            <div className="text-center" style={{margin: '0 -30px 0 0'}}>
+                        <div className="col-md-12">
+                            <div className="text-right" style={{margin: '0 -30px 0 0'}}>
                             {this.state.origem != 0 && (
                                 <a href="" id="novaBuscaLink">
                                 <button
-                                    /*style={{float: 'inline-start'}}*/
+                                    style={{float: 'inline-start'}}
                                     onClick={() => {
                                           const novaBuscaLink = document.querySelector('#novaBuscaLink');
                                           novaBuscaLink.href = document.referrer;
@@ -2253,97 +2251,64 @@ class OscMap extends React.Component{
                             </div>
                             <br/>
 
-                            <div className="text-center" style={{clear: 'both'}}>
+                            <div className="text-center " style={{clear: 'both'}}>
                                 <h3>Quantidade de OSCs encontradas</h3>
                                 <h1><strong>{this.state.totalOscList}</strong></h1>
                             </div>
                         </div>
-
-                        {/*/////////////////////*/}
-
-                        {origem != 0 && origem != 'busca-avancada' ?
-                            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                    <button className="nav-link active" id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Mapa</button>
-                                </li>
-                                <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" >Análises {localidade} </button>
-                                </li>
-                            </ul>
-                        : null}
-
-
-                        <div className="tab-content" id="pills-tabContent">
-                            <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                {/*MAPA*/}
+                        <div className="col-md-12">
+                            <VisualizarFiltros strJson={this.props.strJson} />
+                        </div>
+                        <div  style={{margin: '0 15px 0 0'}}>
+                            <div style={{margin: '0 -15px 0 -15px'}}>
                                 <div>
-                                    <div className="col-md-12">
-                                        <VisualizarFiltros strJson={this.props.strJson} />
-                                    </div>
-                                    <div  style={{margin: '0 15px 0 0'}}>
-                                        <div style={{margin: '0 -15px 0 -15px'}}>
-                                            <div>
-                                                <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
-                                                >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
-                                            </div>
-                                            <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
-                                                <div id={this.state.mapId} className="map" />
-                                                <div id="controls-map" className="control-container" />
-                                                <div id="controls-map2" className="control-container" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
+                                    >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
                                 </div>
-                                <br/>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="text-center" style={{display: this.state.processingList ? '' : 'none'}}>
-                                            <img src="img/load.gif" alt="loading" title="loading"/>
-                                            {/*<i className="fa fa-spinner fa-spin fa-3x"/>*/}
-                                        </div>
-                                        <div className="table-responsive-sm" style={{display: this.state.processingList ? 'none' : ''}}>
-                                            <p style={{fontSize: '12px'}}>Obs: Algumas OSCs com dados de endereço ausentes ou incompletos.</p>
-                                            <table className="table">
-                                                <thead className="bg-pri text-light">
-                                                <tr>
-                                                    <th>Nome da OSC</th>
-                                                    <th width="180">CNPJ</th>
-                                                    <th width="220">N. Juridica</th>
-                                                    <th>Endereço</th>
-                                                    <th>Ações</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {tableOsc}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <nav aria-label="...">
-                                            {pagination}
-                                        </nav>
-                                    </div>
-
-                                    <div className="col-md-12">
-
-                                    </div>
+                                <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
+                                    <div id={this.state.mapId} className="map" />
+                                    <div id="controls-map" className="control-container" />
+                                    <div id="controls-map2" className="control-container" />
                                 </div>
-                                {/*MAPA*/}
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                {/*ANALISE*/}
-                                {origem != 0 ? <Perfil /> : null}
-                                {/*ANALISE*/}
                             </div>
                         </div>
-                        {/*/////////////////////*/}
-
-
-
                     </div>
                 </div>
 
 
+                <br/>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="text-center" style={{display: this.state.processingList ? '' : 'none'}}>
+                            <img src="img/load.gif" alt="loading" title="loading"/>
+                            {/*<i className="fa fa-spinner fa-spin fa-3x"/>*/}
+                        </div>
+                        <div className="table-responsive-sm" style={{display: this.state.processingList ? 'none' : ''}}>
+                            <p style={{fontSize: '12px'}}>Obs: Algumas OSCs com dados de endereço ausentes ou incompletos.</p>
+                            <table className="table">
+                                <thead className="bg-pri text-light">
+                                <tr>
+                                    <th>Nome da OSC</th>
+                                    <th width="180">CNPJ</th>
+                                    <th width="220">N. Juridica</th>
+                                    <th>Endereço</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {tableOsc}
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="...">
+                            {pagination}
+                        </nav>
+                    </div>
 
+                    <div className="col-md-12">
+
+                    </div>
+                </div>
 
             </div>
 

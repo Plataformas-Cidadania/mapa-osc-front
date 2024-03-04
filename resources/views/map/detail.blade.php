@@ -6,28 +6,34 @@
 @section('content')
     <?php
 
-    $intOrigem = (int)$origem;
+    $intOrigem = (int) $origem;
     $localidade = 'localidade';
     if($intOrigem >= 1 && $intOrigem <= 5){
-        $localidade = "Região";
+        $localidade = "da região";
     }else if($intOrigem >= 11 && $intOrigem <= 53){
-        $localidade = "Estado";
+        $localidade = "do estado";
     }else{
-        $localidade = "Município";
+        $localidade = "do município";
     }
 
 
 
     ?>
 
+    <script>
+        origem = <?php echo $intOrigem;?>;
+        localidade = "<?php echo $localidade;?>";
+    </script>
+
+
     <div class="bg-lgt">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <header>
-                        @if(!empty($intOrigem))
-                            <a href="localidade/{{$intOrigem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise da {{$localidade}}</a>
-                        @endif
+                        {{--@if(!empty($intOrigem))
+                            <a href="localidade/{{$intOrigem}}" class="btn btn-outline-primary float-right" style="margin-top: 40px;"><i class="fas fa-chart-bar"></i> Análise {{$localidade}}</a>
+                        @endif--}}
                         <br>
                         <h1>Mapa</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">Mapa das OSCs</a> </h5>
@@ -42,10 +48,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div id="search"></div>
+                @if($origem == '0')
+                    <div id="search"></div>
+                @endif
             </div>
         </div>
     </div>
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -187,5 +197,27 @@
         </div>
     </div>
 
+<!--    <div id="perfil"></div>-->
+
+    <style>
+        .box-itens-hover{
+            background-color: #EEEEEE;
+        }
+        .box-itens-hover:hover{
+            background-color: #3A559B;
+            color: #FFFFFF;
+        }
+        .box-itens-hover h2{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .box-itens-hover h3{
+            font-size: 17px;
+        }
+        .apexcharts-xaxis-label{
+            width: 100px;
+            max-width: 100px;
+        }
+    </style>
 
 @endsection
