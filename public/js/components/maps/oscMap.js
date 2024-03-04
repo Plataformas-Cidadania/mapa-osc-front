@@ -134,14 +134,12 @@ class OscMap extends React.Component {
     this.zoomToFeature = this.zoomToFeature.bind(this);
     //this.onEachFeature = this.onEachFeature.bind(this);
   }
-
   componentDidMount() {
     this.loadFirstMap();
     this.loadMap();
     this.loadOscList();
     //this.loadAllUfs();
   }
-
   componentWillReceiveProps(props) {
     //console.log('will receve props');
     //console.log(props.data);
@@ -205,7 +203,6 @@ class OscMap extends React.Component {
         });
     }*/
   }
-
   makeInfoOsc() {
     //console.log('make info');
     let mapElements = this.state.mapElements;
@@ -437,7 +434,6 @@ class OscMap extends React.Component {
       //this.loadMap();
     });
   }
-
   controlBasicMap(thisReact) {
     return L.Control.extend({
       options: {
@@ -1026,7 +1022,7 @@ class OscMap extends React.Component {
               console.error(status, err.toString());
               _this.setState({loading: false});
           }
-        });
+       });
   }*/
 
   /*loadDataTotalPorTerritorio(){
@@ -1035,7 +1031,7 @@ class OscMap extends React.Component {
       if(!this.state.start || !this.state.end){
           return;
       }
-        $.ajax({
+       $.ajax({
           method:'POST',
           url: "total-transito-territorio",
           data:{
@@ -1083,7 +1079,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
-
           data = data2;
           //console.log(data);
           /////////////////////////////////////////////
@@ -1120,7 +1115,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
-
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1222,7 +1216,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //}
           }
-
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1432,7 +1425,6 @@ class OscMap extends React.Component {
         _this.dataOSC(item[0], marker);
         //this.openPopup();
       });
-
       markers.addLayer(marker);
     });
     //mapElements.map.addLayer(markers);
@@ -1481,7 +1473,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaIdhGroup.addLayer(areaIdh);
     this.setState({
       mapElements: mapElements
@@ -1523,7 +1514,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaIdhGroup.addLayer(areaIDHM);
     this.setState({
       mapElements: mapElements
@@ -1670,7 +1660,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaOscGroup.addLayer(areaOsc);
     this.setState({
       mapElements: mapElements
@@ -1893,7 +1882,7 @@ class OscMap extends React.Component {
     firsRowCsv = firsRowCsv.slice(0, -1);
     let columns = firsRowCsv.split(';');
     let csv = firsRowCsv+'\n';
-      this.state.dataExportacao.forEach(function (item){
+     this.state.dataExportacao.forEach(function (item){
         let row = '';
         columns.forEach(function (column){
             row += item[column]+';';
@@ -1930,8 +1919,8 @@ class OscMap extends React.Component {
               )
           }
       }
-        itens.push(<div><br/></div>);
-        return itens;
+       itens.push(<div><br/></div>);
+       return itens;
   }*/
 
   render() {
@@ -2248,7 +2237,7 @@ class OscMap extends React.Component {
       style: {
         clear: 'both'
       }
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), origem != 0 ? /*#__PURE__*/React.createElement("ul", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3",
       id: "pills-tab",
       role: "tablist"
