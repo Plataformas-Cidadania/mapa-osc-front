@@ -62,9 +62,11 @@
         </div>
 
         <div class="col-md-8 text-center">
-            <p>Índice de preenchimento</p>
+<!--            <p>Índice de preenchimento</p>-->
+
+            <p>Índice de preenchimento <a class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999; margin-top: 0px;"  href="/metodologia#item-4">Metodologia</a></p>
             <div id="preenchimento"></div>
-            <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999; margin-top: -30px;"><a href="/metodologia">Metodologia</a></p>
+<!--            <p class="text-center btn btn-outline-primary btn-sm" style="position: relative; z-index: 9999; margin-top: -30px;"><a href="/metodologia">Metodologia</a></p>-->
         </div>
     </div>
     <br><br>

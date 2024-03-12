@@ -88,6 +88,7 @@ class Preenchimento extends React.Component {
     }
 
     render(){
+        console.log('this.state.data', this.state.data)
         let polarChart = null;
         if(this.state.data){
             polarChart = (
@@ -96,6 +97,9 @@ class Preenchimento extends React.Component {
                     data={this.state.data}
                 />
             )
+        }
+        if(this.state.data === null || this.state.data === []){
+            return <div></div>
         }
         return (
             <div>

@@ -22,6 +22,7 @@ class Search extends React.Component {
       //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
       //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
       ],
+
       searchOsc: '',
       searchOscId: 1,
       searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',

@@ -63,12 +63,16 @@ class Preenchimento extends React.Component {
     });
   }
   render() {
+    console.log('this.state.data', this.state.data);
     let polarChart = null;
     if (this.state.data) {
       polarChart = /*#__PURE__*/React.createElement(PolarChart, {
         polarChart: "polarChart",
         data: this.state.data
       });
+    }
+    if (this.state.data === null || this.state.data === []) {
+      return /*#__PURE__*/React.createElement("div", null);
     }
     return /*#__PURE__*/React.createElement("div", null, polarChart, /*#__PURE__*/React.createElement("div", {
       className: "indice-total"
