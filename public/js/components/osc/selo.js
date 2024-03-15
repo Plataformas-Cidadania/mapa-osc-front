@@ -32,17 +32,23 @@ class Selo extends React.Component {
           total += parseInt(numeros[i]);
         }
         let nameImg = 'sem_medalha';
+        let titleImg = 'Sem medalha';
         if (total > 50 && total < 70) {
           nameImg = 'bronze';
+          titleImg = 'Bronze';
         } else if (total > 71 && total < 90) {
           nameImg = 'prata';
+          titleImg = 'Prata';
         } else if (total > 91 && total < 99) {
           nameImg = 'ouro';
+          titleImg = 'Ouro';
         } else if (total > 100) {
           nameImg = 'diamante';
+          titleImg = 'Diamante';
         }
         _this.setState({
-          nameImg: nameImg
+          nameImg: nameImg,
+          titleImg: titleImg
         });
       },
       error: function (xhr, status, err) {
@@ -56,7 +62,8 @@ class Selo extends React.Component {
   render() {
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("img", {
       src: "img/selos/" + this.state.nameImg + ".png",
-      alt: "",
+      alt: this.state.titleImg,
+      title: this.state.titleImg,
       width: "50",
       style: {
         float: 'left',
