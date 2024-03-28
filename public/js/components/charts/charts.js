@@ -22,6 +22,7 @@ class Charts extends React.Component {
     this.loadChart = this.loadChart.bind(this);
     this.callModal = this.callModal.bind(this);
     this.callMenu = this.callMenu.bind(this);
+    this.formatFileName = this.formatFileName.bind(this);
   }
   componentDidMount() {
     //this.loadChart();
@@ -228,6 +229,30 @@ class Charts extends React.Component {
       $('#modalTable').modal('show');
     });
   }
+  downloadCSV = () => {
+    const {
+      modal
+    } = this.state;
+    const csvContent = [modal.head.map(th => th.props.children).join(','), ...modal.rows.map(row => row.props.children.map(td => td.props.children).join(','))].join('\n');
+    const blob = new Blob([csvContent], {
+      type: 'text/csv; charset=utf-8'
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${this.formatFileName(this.state.modal.name)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  formatFileName = fileName => {
+    return fileName.normalize('NFD') // Remove acentos e caracteres especiais
+    .replace(/[\u0300-\u036f]/g, '') // Remove caracteres diacríticos
+    .replace(/\s+/g, '-') // Substitui espaços por "-"
+    .replace(/,/g, '') // Remove vírgulas
+    .toLowerCase(); // Converte para minúsculas
+  };
+
   modal() {
     return /*#__PURE__*/React.createElement("div", {
       id: "modalTable",
@@ -267,6 +292,9 @@ class Charts extends React.Component {
     }, this.state.modal.fontes))), /*#__PURE__*/React.createElement("div", {
       className: "modal-footer"
     }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-outline-primary float-right",
+      onClick: this.downloadCSV
+    }, "Baixar CSV"), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "btn btn-secondary",
       "data-dismiss": "modal"

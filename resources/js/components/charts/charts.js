@@ -23,6 +23,7 @@ class Charts extends React.Component{
         this.loadChart = this.loadChart.bind(this);
         this.callModal = this.callModal.bind(this);
         this.callMenu = this.callMenu.bind(this);
+        this.formatFileName = this.formatFileName.bind(this);
     }
 
     componentDidMount(){
@@ -262,6 +263,31 @@ class Charts extends React.Component{
         });
     }
 
+    downloadCSV = () => {
+        const { modal } = this.state;
+        const csvContent = [
+            modal.head.map(th => th.props.children).join(','),
+            ...modal.rows.map(row => row.props.children.map(td => td.props.children).join(',')),
+        ].join('\n');
+
+        const blob = new Blob([csvContent], {  type: 'text/csv; charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${this.formatFileName(this.state.modal.name)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    formatFileName = (fileName) => {
+        return fileName
+            .normalize('NFD') // Remove acentos e caracteres especiais
+            .replace(/[\u0300-\u036f]/g, '') // Remove caracteres diacríticos
+            .replace(/\s+/g, '-') // Substitui espaços por "-"
+            .replace(/,/g, '') // Remove vírgulas
+            .toLowerCase(); // Converte para minúsculas
+    };
     modal(){
 
 
@@ -296,6 +322,7 @@ class Charts extends React.Component{
                         </div>
                     </div>
                     <div className="modal-footer">
+                        <button className="btn btn-outline-primary float-right" onClick={this.downloadCSV}>Baixar CSV</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
 
@@ -360,8 +387,7 @@ class Charts extends React.Component{
                         <p className="box-chart-font bg-lgt">
                             <strong>Fonte:</strong> {item.fontes}
                         </p>
-                        <div className="btn btn-outline-primary float-right" onClick={() => this.callModal(item.chart)}>Visualize os dados em tabela
-                        </div>
+                        <div className="btn btn-outline-primary float-right" onClick={() => this.callModal(item.chart)}>Visualize os dados em tabela</div>
                         <br/><br/>
                     </div>
 
