@@ -769,7 +769,7 @@ class Perfil extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="title-style">
-                                <h2>Natureza Juridica</h2>
+                                <h2>Natureza Jurídica</h2>
                                 <div className="line line-fix block" data-move-x="980px"/>
                                 <hr/>
                             </div>

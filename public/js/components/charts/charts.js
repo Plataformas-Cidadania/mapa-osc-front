@@ -207,12 +207,17 @@ class Charts extends React.Component {
     let table = this.state.tables[chart];
     modal.name = table.name;
     modal.fontes = table.fontes;
+    const compareNumeric = (a, b) => {
+      if (a === "100 ou mais") return 1; // "100 ou mais" sempre virá por último
+      if (b === "100 ou mais") return -1;
+      return parseInt(a) - parseInt(b);
+    };
     modal.head = table.data.head.map(function (item, index) {
       return /*#__PURE__*/React.createElement("th", {
         key: 'thModal' + index
       }, item?.replace(/^"(.*)"$/, '$1'));
     });
-    modal.rows = table.data.rows.map(function (item, index) {
+    modal.rows = table.data.rows.sort((a, b) => compareNumeric(a[0], b[0])).map(function (item, index) {
       return /*#__PURE__*/React.createElement("tr", {
         key: 'trModal' + index
       }, /*#__PURE__*/React.createElement("td", null, item[0]), /*#__PURE__*/React.createElement("td", null, item[1]), /*#__PURE__*/React.createElement("td", null, item[2]));

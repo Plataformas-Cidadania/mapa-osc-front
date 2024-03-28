@@ -235,11 +235,19 @@ class Charts extends React.Component{
         modal.name = table.name;
         modal.fontes = table.fontes;
 
+        const compareNumeric = (a, b) => {
+            if (a === "100 ou mais") return 1; // "100 ou mais" sempre virá por último
+            if (b === "100 ou mais") return -1;
+            return parseInt(a) - parseInt(b);
+        };
+
         modal.head = table.data.head.map(function (item, index){
             return (<th key={'thModal'+index}>{item?.replace(/^"(.*)"$/, '$1')}</th>);
         })
 
-        modal.rows = table.data.rows.map(function (item, index){
+        modal.rows = table.data.rows
+            .sort((a, b) => compareNumeric(a[0], b[0]))
+            .map(function (item, index){
             return (
                 <tr key={'trModal'+index}>
                     <td>{item[0]}</td>

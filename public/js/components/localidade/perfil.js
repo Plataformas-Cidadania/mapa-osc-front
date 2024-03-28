@@ -669,7 +669,7 @@ class Perfil extends React.Component {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("div", {
       className: "title-style"
-    }, /*#__PURE__*/React.createElement("h2", null, "Natureza Juridica"), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h2", null, "Natureza Jur\xEDdica"), /*#__PURE__*/React.createElement("div", {
       className: "line line-fix block",
       "data-move-x": "980px"
     }), /*#__PURE__*/React.createElement("hr", null))), /*#__PURE__*/React.createElement("div", {
