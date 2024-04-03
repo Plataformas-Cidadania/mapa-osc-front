@@ -52,11 +52,6 @@
                                     </picture>
                                 </div>
                             @endif
-                            {{-- <div class="img-rede">
-                                 <i class="fab fa-facebook-f"></i>
-                                 <i class="fab fa-instagram"></i>
-                                 <i class="fab fa-twitter"></i>
-                             </div>--}}
                         </div>
                         <br>
                         <time class="item-calendar"><i class="fas fa-calendar"></i> {{formatBr($item->data, 'ext')}} </time>
@@ -74,16 +69,6 @@
 
 </div>
 
-
-
-<!--    <div class="space">&nbsp;</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="nextOsc"></div>
-            </div>
-        </div>
-    </div>-->
 
     <div style="background-color: #F9F9F9;">
         <br><br><br>
@@ -239,9 +224,5 @@
             </div>
         </div>
     @endif
-
-
-
-
 
 @endsection

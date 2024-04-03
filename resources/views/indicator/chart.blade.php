@@ -31,7 +31,5 @@
         </div>
     </div>
     <div id="indicator"></div>
-
     <br>
-
 @endsection
