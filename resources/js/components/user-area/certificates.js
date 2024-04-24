@@ -245,7 +245,8 @@ class Certificates extends React.Component{
 
                 return (
                     <tr key={"certificate_"+index}>
-                        <td>{item.dc_certificado.tx_nome_certificado}</td>
+                        <td>{item.ft_inicio_certificado === 'Representante de OSC' || item.ft_inicio_certificado == null ? null :
+                            <i className="fas fa-database tx-pri"></i>} {item.dc_certificado.tx_nome_certificado} -{item.ft_inicio_certificado}-</td>
                         <td>{formatDate(item.dt_inicio_certificado, 'pt-br')}</td>
                         <td>{formatDate(item.dt_fim_certificado, 'pt-br')}</td>
                         <td>{/*{municipio}{estado}*/}

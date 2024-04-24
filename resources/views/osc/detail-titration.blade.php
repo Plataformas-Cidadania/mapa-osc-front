@@ -22,7 +22,8 @@
         @foreach($certificacoes as $certificado)
             <tr>
                 <td>
-                    @if($certificado->ft_inicio_certificado != 'Representante de OSC')
+                    @if($certificado->ft_inicio_certificado == 'Representante de OSC' || $certificado->ft_inicio_certificado == null)
+                    @else
                         <i class="fas fa-database tx-pri"></i>
                     @endif
                     {{$certificado->dc_certificado->tx_nome_certificado}}</td>

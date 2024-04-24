@@ -249,7 +249,9 @@ class Certificates extends React.Component {
         }
         return /*#__PURE__*/React.createElement("tr", {
           key: "certificate_" + index
-        }, /*#__PURE__*/React.createElement("td", null, item.dc_certificado.tx_nome_certificado), /*#__PURE__*/React.createElement("td", null, formatDate(item.dt_inicio_certificado, 'pt-br')), /*#__PURE__*/React.createElement("td", null, formatDate(item.dt_fim_certificado, 'pt-br')), /*#__PURE__*/React.createElement("td", null, item.cd_certificado === 8 ? municipio : estado), /*#__PURE__*/React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("td", null, item.ft_inicio_certificado === 'Representante de OSC' || item.ft_inicio_certificado == null ? null : /*#__PURE__*/React.createElement("i", {
+          className: "fas fa-database tx-pri"
+        }), " ", item.dc_certificado.tx_nome_certificado, " -", item.ft_inicio_certificado, "-"), /*#__PURE__*/React.createElement("td", null, formatDate(item.dt_inicio_certificado, 'pt-br')), /*#__PURE__*/React.createElement("td", null, formatDate(item.dt_fim_certificado, 'pt-br')), /*#__PURE__*/React.createElement("td", null, item.cd_certificado === 8 ? municipio : estado), /*#__PURE__*/React.createElement("td", {
           width: "70"
         }, /*#__PURE__*/React.createElement("div", {
           style: {
