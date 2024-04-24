@@ -57,7 +57,13 @@
                         </div>
                         <div class="col-md-12">
                             <p><strong>Forma de participação na conferência:</strong></p>
-                            <p>{{$participacao_social_conferencia['dc_forma_participacao_conferencia']['tx_nome_forma_participacao_conferencia']}}</p>
+                            <p>
+                                @empty($participacao_social_conferencia['dc_forma_participacao_conferencia']['tx_nome_forma_participacao_conferencia'])
+
+                                @else
+                                    {{$participacao_social_conferencia['dc_forma_participacao_conferencia']['tx_nome_forma_participacao_conferencia']}}
+                                @endempty
+                                {{--{{$participacao_social_conferencia['dc_forma_participacao_conferencia']['tx_nome_forma_participacao_conferencia']}}--}}</p>
                         </div>
                     </div>
                 @endforeach

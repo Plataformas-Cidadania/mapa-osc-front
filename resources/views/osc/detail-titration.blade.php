@@ -21,7 +21,11 @@
         <tbody>
         @foreach($certificacoes as $certificado)
             <tr>
-                <td>{{$certificado->dc_certificado->tx_nome_certificado}}</td>
+                <td>
+                    @if($certificado->ft_inicio_certificado != 'Representante de OSC')
+                        <i class="fas fa-database tx-pri"></i>
+                    @endif
+                    {{$certificado->dc_certificado->tx_nome_certificado}}</td>
                 <td>{{formatBr($certificado->dt_inicio_certificado, 'num')}}</td>
                 <td class="text-center">
                     @if($certificado->dt_fim_certificado!=null)

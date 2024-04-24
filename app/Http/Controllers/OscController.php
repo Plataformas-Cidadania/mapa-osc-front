@@ -40,7 +40,7 @@ class OscController extends Controller{
 
         $objetivos_osc = curlList('objetivos', $id);
 
-        //Log::info($area_atuacao_rep);
+        //Log::info($certificacoes);
 
 
 
