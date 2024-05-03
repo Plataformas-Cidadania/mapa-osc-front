@@ -1,6 +1,8 @@
 class FormOscParceira extends React.Component{
     constructor(props){
+
         super(props);
+
         this.state = {
             form: {
                 id_osc: null,

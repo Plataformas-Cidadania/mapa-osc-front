@@ -296,7 +296,7 @@ class FormCertificate extends React.Component{
 
         let municipios = null
         if(this.state.listMunicipio) {
-            municipios = this.state.listMunicipio.map(function (item, index) {
+            municipios = this.state.listMunicipio?.map(function (item, index) {
 
                 let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
                 let firstPiece = null;

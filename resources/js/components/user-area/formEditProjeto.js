@@ -109,6 +109,10 @@ class FormEditProjeto extends React.Component{
                 if(lastEditId != props.id){
                     //this.props.showHideForm(this.state.action);
                     this.edit();
+                    this.listParcerias();
+                    this.listPublicos();
+                    this.listLocalizacoes();
+                    this.listFinanciadores();
                 }
                 if(this.state.action=='new'){
                     this.cleanForm();
@@ -393,7 +397,7 @@ class FormEditProjeto extends React.Component{
     }
 
     listParcerias(){
-
+        console.log('RAG::::::', this.state.editId)
         $.ajax({
             method: 'GET',
             cache: false,
