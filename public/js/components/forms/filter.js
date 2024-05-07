@@ -1655,7 +1655,7 @@ class Filter extends React.Component {
     }
     let regioes = null;
     if (this.state.listRegiao) {
-      regioes = this.state.listRegiao.map(function (item, index) {
+      regioes = this.state.listRegiao?.map(function (item, index) {
         let sizeSearch = this.state.searchRegiao ? this.state.searchRegiao.length : 0;
         let firstPiece = null;
         let secondPiece = item.edre_nm_regiao;
@@ -1672,7 +1672,7 @@ class Filter extends React.Component {
     }
     let ufs = null;
     if (this.state.listUf) {
-      ufs = this.state.listUf.map(function (item, index) {
+      ufs = this.state.listUf?.map(function (item, index) {
         let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
         let firstPiece = null;
         let secondPiece = item.eduf_nm_uf;

@@ -122,8 +122,9 @@ class FormCertificate extends React.Component{
             let data = {
                 //id_osc: '455128',
                 id_osc: this.props.id_osc,
-                dt_inicio_certificado: this.state.form.dt_inicio_certificado,
-                dt_fim_certificado: this.state.form.dt_fim_certificado,
+                dt_inicio_certificado: this.state.form.dt_inicio_certificado || null,
+                //dt_fim_certificado: this.state.form.dt_fim_certificado || null,
+                ...(this.state.form.dt_fim_certificado && { dt_fim_certificado: this.state.form.dt_fim_certificado }),
                 cd_certificado: this.state.form.cd_certificado,
             }
 
@@ -272,7 +273,8 @@ class FormCertificate extends React.Component{
 
         let ufs = null
         if(this.state.listUf) {
-            ufs = this.state.listUf.map(function (item, index) {
+        //if(Array.isArray(this.state.listUf)) {
+            ufs = this.state.listUf?.map(function (item, index) {
 
                 let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
                 let firstPiece = null;

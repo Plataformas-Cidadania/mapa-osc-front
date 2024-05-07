@@ -303,7 +303,7 @@ class FormEditCertificate extends React.Component {
   render() {
     let ufs = null;
     if (this.state.listUf) {
-      ufs = this.state.listUf.map(function (item, index) {
+      ufs = this.state.listUf?.map(function (item, index) {
         let sizeSearch = this.state.searchUf ? this.state.searchUf.length : 0;
         let firstPiece = null;
         let secondPiece = item.eduf_nm_uf;
@@ -320,7 +320,7 @@ class FormEditCertificate extends React.Component {
     }
     let municipios = null;
     if (this.state.listMunicipio) {
-      municipios = this.state.listMunicipio.map(function (item, index) {
+      municipios = this.state.listMunicipio?.map(function (item, index) {
         //console.log(item)
 
         let sizeSearch = this.state.searchMunicipio ? this.state.searchMunicipio.length : 0;
