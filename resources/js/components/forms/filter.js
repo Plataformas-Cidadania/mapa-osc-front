@@ -1376,7 +1376,7 @@ class Filter extends React.Component{
         }
         //if(this.state.origem === 'busca-avancada'){
             console.log('exportar');
-            this.setState({processingExportacao: true, textoProcessingExportacao: 'buscando dados'});
+            this.setState({processingExportacao: true, textoProcessingExportacao: 'Buscando dados. Pode ser que demore alguns minutos'});
             $.ajax({
                 //contentType: 'application/json',
                 //dataType: 'json',
