@@ -84,6 +84,9 @@
             size:A4 landscape;
             margin: 0;
         }
+        body {
+            margin: 0;
+        }
     }
 </style>
 <script>
