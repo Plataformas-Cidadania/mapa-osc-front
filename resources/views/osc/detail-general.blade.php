@@ -97,14 +97,14 @@
                     <div class="col-md-6">
                         <i class="fas fa-database float-right tx-pri"></i>
                         <strong>Endereço:</strong><br>
-                        {{$dados_gerais->tx_endereco == null ? $txt_alert_abb : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento}}<br>
+                        {{$dados_gerais->tx_endereco == null ? $txt_alert_abb : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento ? ',' : null}} {{$dados_gerais->tx_endereco_complemento}}<br>
                         {{$dados_gerais->tx_bairro}}, {{$dados_gerais->tx_nome_municipio}} - {{$dados_gerais->tx_sigla_uf}} <br>
                         <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? $txt_alert_abb : $dados_gerais->nr_cep}}<br><br>
                         <i class="fas fa-phone-alt"></i> {{$dados_gerais->tx_telefone == null ? $txt_alert_abb : $dados_gerais->tx_telefone}}
 
                         <div class="col-md-6 text-right fa-svg float-right">
                             @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank" title="E-mail de contato"><i class="far fa-envelope"></i></a>@endif
-                            @if($dados_gerais->tx_site!=null)<a href="http://{{$dados_gerais->tx_site}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
+                            @if($dados_gerais->tx_site!=null)<a href="http://{{str_replace("https://", "", str_replace("http://", "", $dados_gerais->tx_site))}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
                         </div>
                     </div>
                     <div class="col-md-6">
