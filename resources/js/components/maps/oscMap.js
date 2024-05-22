@@ -192,27 +192,6 @@ class OscMap extends React.Component{
             })
         }
 
-
-
-        /*if(props.filter==1 || (this.state.firstTimeLoad===true && props.start!=null && props.end != null)){
-            this.setState({
-                firstTimeLoad: false,
-                types: props.types,
-                typesAccident: props.typesAccident,
-                genders: props.genders,
-                tipoTerritorioSelecionado: props.tipoTerritorioAgrupamento,
-                codigoTerritorioSelecionado: props.codigoTerritorioSelecionado,
-                tipoTerritorioAgrupamento: props.tipoTerritorioAgrupamento,
-                start: props.start,
-                end: props.end,
-                filters: props.filters
-            }, function(){
-                //this.mountPer();
-                //console.log(this.state.start, this.state.end);
-                this.loadMap();
-                this.loadDataTotalPorTerritorio();
-            });
-        }*/
     }
 
     makeInfoOsc(){
@@ -429,6 +408,15 @@ class OscMap extends React.Component{
         //coloca o div do controle no div externo
         controlsMap.appendChild(divControlMarkerMap);
 
+        //Shape
+        mapElements.controlShapeMap = this.controlShape(thisReact);
+        let controlShapeMapObj = new mapElements.controlShapeMap();
+        mapElements.map.addControl(controlShapeMapObj);
+        //pega o div do controle
+        let divControlShapeMap = controlShapeMapObj.getContainer();
+        //coloca o div do controle no div externo
+        controlsMap.appendChild(divControlShapeMap);
+
         //HeatMap
         /*mapElements.controlHeatMap = this.controlHeatMap(thisReact);
         let controlHeatMapObj = new mapElements.controlHeatMap();
@@ -618,8 +606,6 @@ class OscMap extends React.Component{
         }).bind(thisReact);
     }
 
-
-
     controlMarker(thisReact){
         return L.Control.extend({
             options:{
@@ -650,6 +636,44 @@ class OscMap extends React.Component{
 
                 container.style.cursor = 'pointer';
                 container.innerHTML = '<img src="img/leaflet/controls/marker.png" title="Marcadores">';
+
+                return container;
+            }
+        }).bind(thisReact);
+    }
+    controlShape(thisReact){
+        return L.Control.extend({
+            options:{
+                position: 'topright',
+                check: true,
+            },
+            onAdd: function(){
+                let options = this.options;
+                //console.log(options.check);
+                let container = L.DomUtil.create('div');
+                container.onclick = function(){
+                    //console.log(options.check);
+                    options.check = !options.check;
+                    container.className = 'control-data-types leaflet-control';
+                    //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-off.png">';
+                    //thisReact.removeMarkersGroup();
+                    thisReact.removeAreaOscGroup();
+                    thisReact.removeAreaIdhGroup();
+                    if(options.check){
+                        thisReact.addMarkersGroup();
+                        thisReact.addAreaOscGroup();
+                        container.className = 'control-data-types check-control-data-types leaflet-control';
+                        //container.innerHTML = '<img width="24px" height="32px" src="img/leaflet/marker-on.png">';
+                    }
+                }.bind(options, thisReact);
+
+                container.className = 'control-data-types leaflet-control';
+                if(options.check){
+                    container.className = 'control-data-types check-control-data-types leaflet-control';
+                }
+
+                container.style.cursor = 'pointer';
+                container.innerHTML = '<img src="img/leaflet/controls/shape.png" title="Contorno">';
 
                 return container;
             }
@@ -1051,61 +1075,7 @@ class OscMap extends React.Component{
         });
     }
 
-    /*loadAllUfs(){
-        let _this = this;
-        $.ajax({
-            method:'GET',
-            url: 'get-osc-all-ufs/',
-            data:{
-            },
-            cache: false,
-            success: function(data) {
-                //console.log(data);
-                _this.setState({totalUfs: data});
-                //_this.populateMap();
-            },
-            error: function(xhr, status, err) {
-                console.error(status, err.toString());
-                _this.setState({loading: false});
-            }
 
-        });
-    }*/
-
-    /*loadDataTotalPorTerritorio(){
-        //console.log('types', this.state.types);
-        //console.log('períodos', this.state.start, this.state.end);
-        if(!this.state.start || !this.state.end){
-            return;
-        }
-
-        $.ajax({
-            method:'POST',
-            url: "total-transito-territorio",
-            data:{
-                serie_id: this.props.id,
-                start: this.state.start,
-                end: this.state.end,
-                filters: this.state.filters,
-                types: this.state.types,
-                typesAccident: this.state.typesAccident,
-                genders: this.state.genders,
-                tipoTerritorioSelecionado: this.state.tipoTerritorioSelecionado, // tipo de territorio selecionado
-                codigoTerritorioSelecionado: this.state.codigoTerritorioSelecionado, //codigo do territorio, que pode ser codigo do país, regiao, uf, etc...
-                tipoTerritorioAgrupamento: this.state.tipoTerritorioAgrupamento // tipo de territorio em que os dados são agrupados
-            },
-            cache: false,
-            success: function(data) {
-                //console.log(data);
-                this.setState({data: data.valores}, function(){
-                    this.populateMap();
-                });
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.log('erro');
-            }.bind(this)
-        });
-    }*/
 
     loadDataPontosPorTerritorio(){
         this.setState({processingOscPontos: true}, function (){
@@ -1223,11 +1193,7 @@ class OscMap extends React.Component{
         this.setState({processingOscPontos: true}, function (){
             $.ajax({
                 method:'GET',
-                //method:'POST',
-                //url: getBaseUrl2 + 'osc/busca_avancada/geo/10/0?avancado='+avancado,// O que estava sendo usado
-                //url: 'osc/busca_avancada/geo/10/0/'+avancado,//USANSO ROTA DO FRONT PRA TESTES LOCAIS
-                //url: getBaseUrl2 + 'osc/busca_avancada/geo/0/0',
-                //url: 'search/osc/geo/'+origem,
+
                 url: getBaseUrl2 + 'osc/busca/geo/'+origem,
                 data:{},
                 /*data:JSON.stringify({
@@ -1239,8 +1205,6 @@ class OscMap extends React.Component{
                 }),*/
                 cache: false,
                 success: function(data) {
-                    //console.log('loadPontosPorTerritorio', data);
-                    //data = JSON.parse(data);
                     //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
                     let data2 = [];
                     //for ($data as $key => $item) {
@@ -1422,9 +1386,7 @@ class OscMap extends React.Component{
 
         let markers = L.markerClusterGroup({ spiderfyOnMaxZoom: true, showCoverageOnHover: true, zoomToBoundsOnClick: true });
 
-        //let data = null;
-        //data = this.state.data;
-        //console.log(data['territorio']);
+
 
         //let territorios = this.state.dataTerritorio['territorios'];
         let territorios = this.state.dataOscCluster;
@@ -1440,15 +1402,6 @@ class OscMap extends React.Component{
                 iconAnchor:   [16, 16], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -30] // point from which the popup should open relative to the iconAnchor
             });
-
-            //console.log(data[i]);
-            //console.log(this.props.allFilters);
-
-            /*let allFilters = this.props.allFilters;
-            let filterInfo = "";
-            for(let j in allFilters){
-                filterInfo += '<strong>'+allFilters[j]['titulo']+':</strong> '+data[i][allFilters[j]['slug']]+'<br>'
-            }*/
 
 
             let marker = L.marker(L.latLng(item[1], item[2]), {icon: icon})
@@ -1654,28 +1607,11 @@ class OscMap extends React.Component{
 
         this.state.info.update(layer.feature.properties);
     }
-    /*resetHighlight(e) {
-        let layer = e.target;
-        this.state.mapElements.areaIdhGroup.resetStyle(e.target);
-        //this.state.geojson.resetStyle(e.target);
-        this.state.info.update();
-    }*/
+
     zoomToFeature(e) {
-        //console.log('zoom');
-        //console.log(e);
-        //this.state.mapElements.map.fitBounds(e.target.getBounds);
-        //this.state.mymap.fitBounds(e.target.getBounds());
+
     }
-    /*onEachFeature(feature, layer) {
-        //console.log('feature', feature);
-        //console.log('layer', layer);
-        //console.log('this', this); //this do react. No constructor: this.onEachFeature = this.onEachFeature.bind(this);
-        layer.on({
-            mouseover: this.highlightFeature,
-            mouseout: this.resetHighlight,
-            click: this.zoomToFeature
-        });
-    }*/
+
 
 
     areaOscMap(){
@@ -1927,27 +1863,9 @@ class OscMap extends React.Component{
 
     //gerarCsvExportacao(){
     gerarCsvExportacao(csv){
-        console.log('gerar csv');
-        this.setState({textoProcessingExportacao: 'gerando csv'});
-        /*let firstRow = this.state.dataExportacao[0];
-        let firsRowCsv = '';
-        for(let column in firstRow){
-            if(column !== 'im_logo'){
-                firsRowCsv += column+';';
-            }
-        }
-        firsRowCsv = firsRowCsv.slice(0, -1);
-        let columns = firsRowCsv.split(';');
-        let csv = firsRowCsv+'\n';
 
-        this.state.dataExportacao.forEach(function (item){
-            let row = '';
-            columns.forEach(function (column){
-                row += item[column]+';';
-            });
-            row = row.slice(0, -1);
-            csv += row+'\n';
-        });*/
+        this.setState({textoProcessingExportacao: 'gerando csv'});
+
 
         let hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
@@ -1958,27 +1876,7 @@ class OscMap extends React.Component{
         $('#modalExportar').modal('hide');
     }
 
-    /*itensPesquisadosAvancada(){
-        let pesquisa = JSON.parse(this.props.strJson);
-        console.log(pesquisa);
-        let itens = [
-            (<span><strong><u>Filtros utilizados:</u>&nbsp;</strong></span>)
-        ];
-        let avancado = pesquisa.avancado;
-        for(let i in avancado){
-            for(let j in avancado[i]){
-                itens.push(
-                    <span>
-                        <strong><i>{j}: </i></strong> {avancado[i][j]},&nbsp;
-                    </span>
-                )
-            }
-        }
 
-        itens.push(<div><br/></div>);
-
-        return itens;
-    }*/
 
     render(){
         //console.log(this.state.mapElements.map);
@@ -2155,8 +2053,6 @@ class OscMap extends React.Component{
         let processingOscUfs =  this.state.processingOscUfs;
         let processingOscPontos =  this.state.processingOscPontos;
         let processingHeatMap =  this.state.processingHeatMap;
-
-        console.log('origem:::::::::::::', origem)
 
         return(
             <div>
