@@ -158,8 +158,7 @@ class Charts extends React.Component {
 
             //console.log('----------', table.values[k].value)
           }
-
-          console.log('table', chart, table);
+          //console.log('table', chart, table)
           continue;
         } else {
           //console.log('table', chart, table)
