@@ -87,6 +87,12 @@ class Charts extends React.Component{
                 }
                 ///////////////////////////////////////////////////
 
+                function formatNumber(num) {
+
+                    return num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + 'M';
+
+                }
+
                 //Quando tiver o key///////////////////////////////
                 if(dataChart[j].hasOwnProperty('key') && (data[chart].nome_tipo_grafico === "LineChart" || data[chart].nome_tipo_grafico === "LinePlusBarChart")){
 
@@ -103,7 +109,9 @@ class Charts extends React.Component{
 
                     for(let k in values) {
                         labels.push(values[k][colLabel]);
+                        //serie.data.push(formatNumber(values[k][colValue] / 1000000));
                         serie.data.push(values[k][colValue]);
+
                     }
 
                     series.push(serie);
