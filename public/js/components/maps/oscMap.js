@@ -248,7 +248,7 @@ class OscMap extends React.Component {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
-    let contrast = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png', {
+    let contrast = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
@@ -962,8 +962,25 @@ class OscMap extends React.Component {
             processingOscUfs: false
           }, function () {
             _this.populateMap();
+            let mapElements = this.state.mapElements;
+
+            //RAG DEFINIR ZOOM
+            mapElements.map._zoom = 18;
+            mapElements.map._layersMaxZoom = 18;
+            mapElements.map.setZoom(7);
+            //console.log('mapElements::::::', mapElements.map)
+            //RAG DEFINIR ZOOM
+
+            /*if (territorio.territorios.length > 0) {
+                let lat = territorio.territorios[0].geo_lat; // Latitude do centro do estado
+                let lng = territorio.territorios[0].geo_lng; // Longitude do centro do estado
+                mapElements.map?.setView([lat, lng], 7); // Ajusta o mapa para o centro do estado com zoom 7
+            } else {
+                mapElements.map?.setZoom(4); // Zoom padrão caso não haja dados
+            }*/
           });
         },
+
         error: function (xhr, status, err) {
           console.error(status, err.toString());
           _this.setState({

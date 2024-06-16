@@ -1012,6 +1012,25 @@ class OscMap extends React.Component{
                     //console.log(territorio);
                     _this.setState({dataTerritorio: territorio, processingOscUfs: false}, function(){
                         _this.populateMap();
+
+                        let mapElements = this.state.mapElements;
+
+                        //RAG DEFINIR ZOOM
+                        mapElements.map._zoom = 18
+                        mapElements.map._layersMaxZoom = 18
+                        mapElements.map.setZoom(7)
+                        //console.log('mapElements::::::', mapElements.map)
+                        //RAG DEFINIR ZOOM
+
+
+
+                        /*if (territorio.territorios.length > 0) {
+                            let lat = territorio.territorios[0].geo_lat; // Latitude do centro do estado
+                            let lng = territorio.territorios[0].geo_lng; // Longitude do centro do estado
+                            mapElements.map?.setView([lat, lng], 7); // Ajusta o mapa para o centro do estado com zoom 7
+                        } else {
+                            mapElements.map?.setZoom(4); // Zoom padrão caso não haja dados
+                        }*/
                     });
                 },
                 error: function(xhr, status, err) {
