@@ -24,13 +24,13 @@
         @include('conexoes.css')
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V71TNRPC27"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KX3DW5V6TJ"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-V71TNRPC27');
+            gtag('config', 'G-KX3DW5V6TJ');
         </script>
      </head>
     <body id="contrast" >
