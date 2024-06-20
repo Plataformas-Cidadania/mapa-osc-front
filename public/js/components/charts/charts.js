@@ -12,6 +12,7 @@ class Charts extends React.Component {
       modal: {
         name: null,
         fontes: null,
+        legenda: null,
         head: [],
         rows: []
       },
@@ -36,6 +37,7 @@ class Charts extends React.Component {
       let series = [];
       let name = data[chart].titulo;
       let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
+      let legenda = data[chart].legenda ? data[chart].legenda : "";
       let tituloX = data[chart].titulo_colunas[0];
       let tituloY = data[chart].titulo_colunas[1];
 
@@ -110,11 +112,11 @@ class Charts extends React.Component {
 
         ///////////////////////////////////////////////
       }
-
       charts.push({
         chart: chart,
         name: name,
         fontes: fontes,
+        legenda: legenda,
         labels: labels,
         series: series,
         type: tipoGrafico
@@ -144,6 +146,7 @@ class Charts extends React.Component {
 
       let name = data[chart].titulo;
       let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
+      let legenda = data[chart].legenda ? data[chart].legenda : "";
       let head = data[chart].titulo_colunas;
       let rows = [];
       for (let h in head) {
@@ -184,12 +187,12 @@ class Charts extends React.Component {
           rows: rows
         },
         name: name,
-        fontes: fontes
+        fontes: fontes,
+        legenda: legenda
       });
 
       //console.log('table', tables)
     }
-
     this.setState({
       tables: tables
     });
@@ -215,6 +218,7 @@ class Charts extends React.Component {
     let table = this.state.tables[chart];
     modal.name = table.name;
     modal.fontes = table.fontes;
+    modal.legenda = table.legenda;
     const compareNumeric = (a, b) => {
       if (a === "100 ou mais") return 1; // "100 ou mais" sempre virá por último
       if (b === "100 ou mais") return -1;
@@ -259,7 +263,6 @@ class Charts extends React.Component {
     .replace(/,/g, '') // Remove vírgulas
     .toLowerCase(); // Converte para minúsculas
   };
-
   modal() {
     return /*#__PURE__*/React.createElement("div", {
       id: "modalTable",
@@ -370,7 +373,7 @@ class Charts extends React.Component {
           }
         }), /*#__PURE__*/React.createElement("hr", null)), chart, /*#__PURE__*/React.createElement("p", {
           className: "box-chart-font bg-lgt"
-        }, /*#__PURE__*/React.createElement("strong", null, "Fonte:"), " ", item.fontes), /*#__PURE__*/React.createElement("div", {
+        }, item.legenda && /*#__PURE__*/React.createElement(React.Fragment, null, item.legenda, /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("strong", null, "Fonte:"), " ", item.fontes), /*#__PURE__*/React.createElement("div", {
           className: "btn btn-outline-primary float-right",
           onClick: () => this.callModal(item.chart)
         }, "Visualize os dados em tabela"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null));

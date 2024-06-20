@@ -12,6 +12,7 @@ class Charts extends React.Component{
             modal: {
                 name: null,
                 fontes: null,
+                legenda: null,
                 head: [],
                 rows: []
             },
@@ -44,6 +45,7 @@ class Charts extends React.Component{
             let series = [];
             let name = data[chart].titulo;
             let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
+            let legenda = data[chart].legenda ? data[chart].legenda  : "";
             let tituloX = data[chart].titulo_colunas[0];
             let tituloY = data[chart].titulo_colunas[1];
 
@@ -140,7 +142,7 @@ class Charts extends React.Component{
 
                 ///////////////////////////////////////////////
             }
-            charts.push({chart: chart, name: name, fontes: fontes, labels: labels, series: series, type: tipoGrafico});
+            charts.push({chart: chart, name: name, fontes: fontes,legenda: legenda, labels: labels, series: series, type: tipoGrafico});
         }
 
 
@@ -173,6 +175,7 @@ class Charts extends React.Component{
 
             let name = data[chart].titulo;
             let fontes = data[chart].fontes ? data[chart].fontes.join(', ') : "";
+            let legenda = data[chart].legenda ? data[chart].legenda  : "";
             let head = data[chart].titulo_colunas;
             let rows = [];
 
@@ -209,7 +212,7 @@ class Charts extends React.Component{
             console.log('table', tables)
             console.log('||||||||||||||||')*/
 
-            tables.push({data: {head: head, rows: rows}, name: name, fontes: fontes});
+            tables.push({data: {head: head, rows: rows}, name: name, fontes: fontes,legenda: legenda});
 
             //console.log('table', tables)
         }
@@ -243,7 +246,7 @@ class Charts extends React.Component{
 
         modal.name = table.name;
         modal.fontes = table.fontes;
-
+        modal.legenda = table.legenda;
         const compareNumeric = (a, b) => {
             if (a === "100 ou mais") return 1; // "100 ou mais" sempre virá por último
             if (b === "100 ou mais") return -1;
@@ -393,6 +396,7 @@ class Charts extends React.Component{
                         </div>
                         {chart}
                         <p className="box-chart-font bg-lgt">
+                        {item.legenda && (<>{item.legenda}<br/></>)}
                             <strong>Fonte:</strong> {item.fontes}
                         </p>
                         <div className="btn btn-outline-primary float-right" onClick={() => this.callModal(item.chart)}>Visualize os dados em tabela</div>
