@@ -1772,7 +1772,8 @@ class Filter extends React.Component{
             <div>
 
                 {/*Modal Exportar*/}
-                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="modalExportar" tabIndex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -1785,11 +1786,13 @@ class Filter extends React.Component{
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div className="text-center" style={{display: Object.keys(this.state.json.avancado).length !== 0 ? '' : 'none'}}>
+                                            <div className="text-center"
+                                                 style={{display: Object.keys(this.state.json.avancado).length !== 0 ? '' : 'none'}}>
                                                 <img src="img/load.gif" alt="Load"/><br/>
                                                 <h3 className="text-center">{this.state.textoProcessingExportacao}</h3>
                                             </div>
-                                            <div className="text-center" style={{display: Object.keys(this.state.json.avancado).length === 0  ? '' : 'none'}}>
+                                            <div className="text-center"
+                                                 style={{display: Object.keys(this.state.json.avancado).length === 0 ? '' : 'none'}}>
                                                 <h3 className="text-center">Informe dados para filtro!</h3>
                                             </div>
                                         </div>
@@ -1810,9 +1813,11 @@ class Filter extends React.Component{
                     <div className="accordion" id="accordionExample">
                         <div className="card">
                             <div className="card-header" id="item-1">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse1"
+                                     aria-expanded="true"
                                      aria-controls="collapse1">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Dados Gerais
                                     <i className="fas fa-angle-down float-right"/>
                                 </div>
@@ -1823,16 +1828,20 @@ class Filter extends React.Component{
                                     <div className="row">
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_razao_social_osc" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_razao_social_osc" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">Nome da OSC (Razão social)</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="input-icon">
-                                                <input type="text" className="form-control" placeholder="Busque uma região" name="tx_nome_regiao"
+                                                <input type="text" className="form-control"
+                                                       placeholder="Busque uma região" name="tx_nome_regiao"
                                                        style={{display: (this.state.filters.regiao ? 'none' : '')}}
-                                                       onClick={this.clickSearchRegiao} onChange={this.handleSearchRegiao}/>
+                                                       onClick={this.clickSearchRegiao}
+                                                       onChange={this.handleSearchRegiao}/>
                                                 <input type="text" className="form-control" name="tx_nome_regiao2"
                                                        style={{display: (this.state.filters.regiao ? '' : 'none')}}
                                                        readOnly={this.state.filters.regiao}
@@ -1841,12 +1850,15 @@ class Filter extends React.Component{
                                                 <div style={{display: (this.state.filters.regiao ? 'none' : '')}}>
                                                     <i className="fas fa-search" style={{top: '-28px'}}/>
                                                 </div>
-                                                <div style={{display: (this.state.filters.regiao ? '' : 'none')}} onClick={this.removeRegiao}>
-                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.regiao ? '' : 'none')}}
+                                                     onClick={this.removeRegiao}>
+                                                    <i className="fas fa-times"
+                                                       style={{top: '-28px', cursor: 'pointer'}}/>
                                                 </div>
 
                                                 <div>
-                                                    <ul className="box-search-itens" style={{display: ((this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao) ? '' : 'none'}}>
+                                                    <ul className="box-search-itens"
+                                                        style={{display: ((this.state.searchRegiao || this.state.listRegiao) && !this.state.filters.regiao) ? '' : 'none'}}>
                                                         {regioes}
                                                     </ul>
                                                 </div>
@@ -1855,7 +1867,9 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_fantasia_osc" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">Nome Fantasia</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
@@ -1868,7 +1882,8 @@ class Filter extends React.Component{
                                         </div>*/}
 
                                             <div className="input-icon">
-                                                <input type="text" className="form-control" placeholder="Busque um estado" name="tx_nome_uf"
+                                                <input type="text" className="form-control"
+                                                       placeholder="Busque um estado" name="tx_nome_uf"
                                                        style={{display: (this.state.filters.uf ? 'none' : '')}}
                                                        onClick={this.clickSearchUf} onChange={this.handleSearchUf}/>
                                                 <input type="text" className="form-control" name="tx_nome_uf2"
@@ -1879,12 +1894,15 @@ class Filter extends React.Component{
                                                 <div style={{display: (this.state.filters.uf ? 'none' : '')}}>
                                                     <i className="fas fa-search" style={{top: '-28px'}}/>
                                                 </div>
-                                                <div style={{display: (this.state.filters.uf ? '' : 'none')}} onClick={this.removeUf}>
-                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.uf ? '' : 'none')}}
+                                                     onClick={this.removeUf}>
+                                                    <i className="fas fa-times"
+                                                       style={{top: '-28px', cursor: 'pointer'}}/>
                                                 </div>
 
                                                 <div>
-                                                    <ul className="box-search-itens" style={{display: ((this.state.searchUf || this.state.listUf) && !this.state.filters.uf) ? '' : 'none'}}>
+                                                    <ul className="box-search-itens"
+                                                        style={{display: ((this.state.searchUf || this.state.listUf) && !this.state.filters.uf) ? '' : 'none'}}>
                                                         {ufs}
                                                     </ul>
                                                 </div>
@@ -1896,7 +1914,9 @@ class Filter extends React.Component{
 
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="cd_identificador_osc" onChange={this.handleInputChange} placeholder=" "  />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="cd_identificador_osc" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">CNPJ</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
@@ -1906,7 +1926,8 @@ class Filter extends React.Component{
 
                                             <div className="label-float">
                                                 {/*<select className="custom-select" name="cd_situacao_imovel_oscSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>*/}
-                                                <select className="custom-select" name="cd_situacao_imovel_osc" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_situacao_imovel_osc"
+                                                        defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Situação do Imóvel</option>
                                                     <option value="1">Próprio</option>
                                                     <option value="2">Alugado</option>
@@ -1933,9 +1954,11 @@ class Filter extends React.Component{
 
                                         <div className="col-md-3">
                                             <div className="input-icon">
-                                                <input type="text" className="form-control" placeholder="Busque um Município" name="tx_nome_municipio"
+                                                <input type="text" className="form-control"
+                                                       placeholder="Busque um Município" name="tx_nome_municipio"
                                                        style={{display: (this.state.filters.municipio ? 'none' : '')}}
-                                                       onClick={this.clickSearchMunicipio} onChange={this.handleSearchMunicipio}/>
+                                                       onClick={this.clickSearchMunicipio}
+                                                       onChange={this.handleSearchMunicipio}/>
                                                 <input type="text" className="form-control" name="tx_nome_municipio2"
                                                        style={{display: (this.state.filters.municipio ? '' : 'none')}}
                                                        readOnly={this.state.filters.municipio}
@@ -1944,12 +1967,15 @@ class Filter extends React.Component{
                                                 <div style={{display: (this.state.filters.municipio ? 'none' : '')}}>
                                                     <i className="fas fa-search" style={{top: '-28px'}}/>
                                                 </div>
-                                                <div style={{display: (this.state.filters.municipio ? '' : 'none')}} onClick={this.removeMunicipio}>
-                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.municipio ? '' : 'none')}}
+                                                     onClick={this.removeMunicipio}>
+                                                    <i className="fas fa-times"
+                                                       style={{top: '-28px', cursor: 'pointer'}}/>
                                                 </div>
 
                                                 <div>
-                                                    <ul className="box-search-itens" style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
+                                                    <ul className="box-search-itens"
+                                                        style={{display: ((this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio) ? '' : 'none'}}>
                                                         {municipios}
                                                     </ul>
                                                 </div>
@@ -1963,38 +1989,59 @@ class Filter extends React.Component{
                                             <strong>Natureza Jurídica:</strong><br/>
 
                                             <div className="custom-control custom-checkbox ">
-                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_associacaoPrivada" required onChange={this.handleCheckChange}/>
-                                                <label className="custom-control-label" htmlFor="naturezaJuridica_associacaoPrivada">Associação Privada</label>
+                                                <input type="checkbox" className="custom-control-input"
+                                                       id="naturezaJuridica_associacaoPrivada" required
+                                                       onChange={this.handleCheckChange}/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="naturezaJuridica_associacaoPrivada">Associação
+                                                    Privada</label>
                                             </div>
                                             <div className="custom-control custom-checkbox ">
-                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_fundacaoPrivada" required onChange={this.handleCheckChange}/>
-                                                <label className="custom-control-label" htmlFor="naturezaJuridica_fundacaoPrivada">Fundação Privada</label>
+                                                <input type="checkbox" className="custom-control-input"
+                                                       id="naturezaJuridica_fundacaoPrivada" required
+                                                       onChange={this.handleCheckChange}/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="naturezaJuridica_fundacaoPrivada">Fundação
+                                                    Privada</label>
                                             </div>
                                             <div className="custom-control custom-checkbox ">
-                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoReligiosa" required onChange={this.handleCheckChange}/>
-                                                <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoReligiosa">Organização Religiosa</label>
+                                                <input type="checkbox" className="custom-control-input"
+                                                       id="naturezaJuridica_organizacaoReligiosa" required
+                                                       onChange={this.handleCheckChange}/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="naturezaJuridica_organizacaoReligiosa">Organização
+                                                    Religiosa</label>
                                             </div>
                                             <div className="custom-control custom-checkbox ">
-                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_organizacaoSocial" required onChange={this.handleCheckChange}/>
-                                                <label className="custom-control-label" htmlFor="naturezaJuridica_organizacaoSocial">Organização Social</label>
+                                                <input type="checkbox" className="custom-control-input"
+                                                       id="naturezaJuridica_organizacaoSocial" required
+                                                       onChange={this.handleCheckChange}/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="naturezaJuridica_organizacaoSocial">Organização
+                                                    Social</label>
                                             </div>
                                             <div className="custom-control custom-checkbox ">
-                                                <input type="checkbox" className="custom-control-input" id="naturezaJuridica_outra" required onChange={this.handleCheckChange}/>
-                                                <label className="custom-control-label" htmlFor="naturezaJuridica_outra">Não informado</label>
+                                                <input type="checkbox" className="custom-control-input"
+                                                       id="naturezaJuridica_outra" required
+                                                       onChange={this.handleCheckChange}/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="naturezaJuridica_outra">Não informado</label>
                                             </div>
 
                                             <br/><br/>
                                         </div>
 
                                         <div className="col-md-6">
-                                            <select className="custom-select" name="cd_objetivo_osc" onChange={this.handleInputChange}>
-                                                <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                            <select className="custom-select" name="cd_objetivo_osc"
+                                                    onChange={this.handleInputChange}>
+                                                <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
                                                 {objetivos}
                                             </select>
                                             <br/><br/>
                                         </div>
                                         <div className="col-md-6">
-                                            <select className="custom-select" name="cd_meta_osc" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_meta_osc"
+                                                    onChange={this.handleInputChange}>
                                                 <option selected>Metas Relacionadas ao ODS</option>
                                                 {objetivosMetas}
                                             </select>
@@ -2004,18 +2051,17 @@ class Filter extends React.Component{
                                     </div>
 
 
-
-
-
                                 </div>
                             </div>
                         </div>
 
                         <div className="card">
                             <div className="card-header" id="item-2">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse2"
+                                     aria-expanded="true"
                                      aria-controls="collapse2">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Áreas e Subáreas de Atuação <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2033,10 +2079,13 @@ class Filter extends React.Component{
 
 
                                             <div className="input-icon">
-                                                <input type="text" className="form-control" placeholder="Busque uma Atividade Econômica" name="tx_atividade_economica"
+                                                <input type="text" className="form-control"
+                                                       placeholder="Busque uma Atividade Econômica"
+                                                       name="tx_atividade_economica"
                                                        style={{display: (this.state.filters.cnae ? 'none' : '')}}
                                                        onClick={this.clickSearchCnae} onChange={this.handleSearchCnae}/>
-                                                <input type="text" className="form-control" name="tx_atividade_economica2"
+                                                <input type="text" className="form-control"
+                                                       name="tx_atividade_economica2"
                                                        style={{display: (this.state.filters.cnae ? '' : 'none')}}
                                                        readOnly={this.state.filters.cnae}
                                                        defaultValue={this.state.filters.cnae ? this.state.filters.cnae.tx_nome_classe_atividade_economica : ''}/>
@@ -2044,12 +2093,15 @@ class Filter extends React.Component{
                                                 <div style={{display: (this.state.filters.cnae ? 'none' : '')}}>
                                                     <i className="fas fa-search" style={{top: '-28px'}}/>
                                                 </div>
-                                                <div style={{display: (this.state.filters.cnae ? '' : 'none')}} onClick={this.removeCnae}>
-                                                    <i className="fas fa-times" style={{top: '-28px', cursor:'pointer'}}/>
+                                                <div style={{display: (this.state.filters.cnae ? '' : 'none')}}
+                                                     onClick={this.removeCnae}>
+                                                    <i className="fas fa-times"
+                                                       style={{top: '-28px', cursor: 'pointer'}}/>
                                                 </div>
 
                                                 <div>
-                                                    <ul className="box-search-itens" style={{display: ((this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae ) ? '' : 'none'}}>
+                                                    <ul className="box-search-itens"
+                                                        style={{display: ((this.state.searchCnae || this.state.listCnae) && !this.state.filters.cnae) ? '' : 'none'}}>
                                                         {cnae}
                                                     </ul>
                                                 </div>
@@ -2059,13 +2111,15 @@ class Filter extends React.Component{
 
                                         </div>
                                         <div className="col-md-12">
-                                            <strong>Área de Atuação</strong><hr/>
+                                            <strong>Área de Atuação</strong>
+                                            <hr/>
                                             <div>
                                                 {areaAtuacao}
                                                 <br/><br/>
                                             </div>
 
-                                            <strong>Subárea de Atuação</strong><hr/>
+                                            <strong>Subárea de Atuação</strong>
+                                            <hr/>
                                             <div className="card-columns">
                                                 {subAreaAtuacao}
                                             </div>
@@ -2081,9 +2135,11 @@ class Filter extends React.Component{
 
                         <div className="card">
                             <div className="card-header" id="item-3">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse3"
+                                     aria-expanded="true"
                                      aria-controls="collapse3">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Titulações e Certificações <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2101,9 +2157,11 @@ class Filter extends React.Component{
 
                         <div className="card">
                             <div className="card-header" id="item-4">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse4"
+                                     aria-expanded="true"
                                      aria-controls="collapse4">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Relações de Trabalho e Governança <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2113,21 +2171,27 @@ class Filter extends React.Component{
                                     <div className="row">
                                         <div className="col-md-4">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_dirigente" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_dirigente" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">Nome do Dirigente</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-4">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_cargo_dirigente" onChange={this.handleInputChange} placeholder=" "/>
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_cargo_dirigente" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">Cargo do Dirigente</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-4">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_conselheiro" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_conselheiro" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="name">Nome do Membro do Conselho Fiscal</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
@@ -2183,9 +2247,11 @@ class Filter extends React.Component{
 
                         <div className="card" style={{display: 'none'}}>
                             <div className="card-header" id="item-5">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse5"
+                                     aria-expanded="true"
                                      aria-controls="collapse5">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Espaços de Participação Social <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2195,30 +2261,39 @@ class Filter extends React.Component{
                                     <div className="row">
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_conselho" onChange={this.handleInputChange}>
-                                                <option value="0" selected >Nome do Conselho</option>
+                                            <select className="custom-select" name="cd_conselho"
+                                                    onChange={this.handleInputChange}>
+                                                <option value="0" selected>Nome do Conselho</option>
                                                 {conselhos}
                                             </select>
                                             <br/><br/>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control"} type="date" name="dt_data_inicio_conselho" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="dt_data_inicio_conselho">Data de Início de Vigência</label>
+                                                <input className={"form-control"} type="date"
+                                                       name="dt_data_inicio_conselho" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
+                                                <label htmlFor="dt_data_inicio_conselho">Data de Início de
+                                                    Vigência</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
 
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_representante_conselho" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="tx_nome_representante_conselho">Nome de representante conselho</label>
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_representante_conselho"
+                                                       onChange={this.handleInputChange} placeholder=" "/>
+                                                <label htmlFor="tx_nome_representante_conselho">Nome de representante
+                                                    conselho</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_tipo_participacaoSelectBoxItText" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select"
+                                                        name="cd_tipo_participacaoSelectBoxItText" defaultValue={0}
+                                                        onChange={this.handleInputChange}>
                                                     <option value="0">Titularidade</option>
                                                     <option value="1">Titular</option>
                                                     <option value="2">Suplente</option>
@@ -2231,23 +2306,27 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="date" name="dt_data_fim_conselho" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="date"
+                                                       name="dt_data_fim_conselho" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="dt_data_fim_conselho">Data de Fim de Vigência</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_conferencia" onChange={this.handleInputChange}>
-                                                <option value="0" selected >Nome da Conferência</option>
+                                            <select className="custom-select" name="cd_conferencia"
+                                                    onChange={this.handleInputChange}>
+                                                <option value="0" selected>Nome da Conferência</option>
                                                 {conferencias}
                                             </select>
                                             <br/><br/>
                                         </div>
 
                                         <div className="col-md-6">
-                                            <select className="custom-select" name="cd_forma_participacao_conferencia" onChange={this.handleInputChange}>
-                                                <option value="0" selected >Forma de participacao na Conferẽncia</option>
+                                            <select className="custom-select" name="cd_forma_participacao_conferencia"
+                                                    onChange={this.handleInputChange}>
+                                                <option value="0" selected>Forma de participacao na Conferẽncia</option>
                                                 {formaParticipacoes}
                                             </select>
                                             <br/><br/>
@@ -2273,9 +2352,11 @@ class Filter extends React.Component{
 
                         <div className="card">
                             <div className="card-header" id="item-6">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse6"
+                                     aria-expanded="true"
                                      aria-controls="collapse6">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Projetos <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2287,14 +2368,17 @@ class Filter extends React.Component{
                                     <div className="row">
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_projeto" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="tx_nome_projeto">Nome do Projeto</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_status_projeto" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_status_projeto"
+                                                        defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Situação do projeto</option>
                                                     {listStatusProjeto}
                                                 </select>
@@ -2305,21 +2389,25 @@ class Filter extends React.Component{
 
                                         <div className="col-md-2">
                                             <div className="label-float">
-                                                <input className={"form-control"} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control"} type="date"
+                                                       name="dt_data_inicio_projeto" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="dt_data_inicio_projeto">Data de início</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-2">
                                             <div className="label-float">
-                                                <input className={"form-control"} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control"} type="date" name="dt_data_fim_projeto"
+                                                       onChange={this.handleInputChange} placeholder=" "/>
                                                 <label htmlFor="dt_data_fim_projeto">Data de fim</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_abrangencia_projeto" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_abrangencia_projeto"
+                                                        defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Abrangência de atuação</option>
                                                     {listAbrangenciaProjeto}
                                                 </select>
@@ -2328,7 +2416,8 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-2">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_zona_atuacao_projeto" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select" name="cd_zona_atuacao_projeto"
+                                                        defaultValue={0} onChange={this.handleInputChange}>
                                                     <option value="0">Zona de Atuação</option>
                                                     {listZonaAtuacaoProjeto}
                                                 </select>
@@ -2338,7 +2427,9 @@ class Filter extends React.Component{
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <select className="custom-select" name="cd_origem_fonte_recursos_projeto" defaultValue={0} onChange={this.handleInputChange}>
+                                                <select className="custom-select"
+                                                        name="cd_origem_fonte_recursos_projeto" defaultValue={0}
+                                                        onChange={this.handleInputChange}>
                                                     <option value="0">Fontes de Recursos</option>
                                                     {listFonteRecursosProjeto}
                                                 </select>
@@ -2346,25 +2437,31 @@ class Filter extends React.Component{
                                             </div>
 
 
-
                                         </div>
                                         <div className="col-md-6">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_financiador" onChange={this.handleInputChange}
+                                                       placeholder=" "/>
                                                 <label htmlFor="tx_nome_financiador">Financiadores do Projeto</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange} placeholder=" " />
-                                                <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de Execução</label>
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_regiao_localizacao_projeto"
+                                                       onChange={this.handleInputChange} placeholder=" "/>
+                                                <label htmlFor="tx_nome_regiao_localizacao_projeto">Local de
+                                                    Execução</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
                                         </div>
                                         <div className="col-md-3">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_publico_beneficiado"
+                                                       onChange={this.handleInputChange} placeholder=" "/>
                                                 <label htmlFor="tx_nome_publico_beneficiado">Público Beneficiado</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
@@ -2372,7 +2469,9 @@ class Filter extends React.Component{
 
                                         <div className="col-md-9">
                                             <div className="label-float">
-                                                <input className={"form-control form-g "} type="text" name="tx_nome_osc_parceira_projeto" onChange={this.handleInputChange} placeholder=" " />
+                                                <input className={"form-control form-g "} type="text"
+                                                       name="tx_nome_osc_parceira_projeto"
+                                                       onChange={this.handleInputChange} placeholder=" "/>
                                                 <label htmlFor="tx_nome_osc_parceira_projeto">OSC Parceiras</label>
                                                 <div className="label-box-info-off"/>
                                             </div>
@@ -2390,8 +2489,9 @@ class Filter extends React.Component{
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_objetivo_projeto" onChange={this.handleInputChange}>
-                                                <option selected >Objetivos do Desenvolvimento Sustentável - ODS</option>
+                                            <select className="custom-select" name="cd_objetivo_projeto"
+                                                    onChange={this.handleInputChange}>
+                                                <option selected>Objetivos do Desenvolvimento Sustentável - ODS</option>
                                                 {objetivos}
                                             </select>
                                             <br/><br/>
@@ -2409,7 +2509,8 @@ class Filter extends React.Component{
                                         </div>
 
                                         <div className="col-md-9">
-                                            <select className="custom-select" name="cd_meta_projeto" onChange={this.handleInputChange}>
+                                            <select className="custom-select" name="cd_meta_projeto"
+                                                    onChange={this.handleInputChange}>
                                                 <option selected>Metas Relacionadas ao ODS</option>
                                                 {objetivosMetasProjetos}
                                             </select>
@@ -2436,9 +2537,11 @@ class Filter extends React.Component{
 
                         <div className="card">
                             <div className="card-header" id="item-7">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse7" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse7"
+                                     aria-expanded="true"
                                      aria-controls="collapse7">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
                                     Fontes de Recursos <i className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
@@ -2448,7 +2551,7 @@ class Filter extends React.Component{
                                     <div className="row">
                                         <div className="col-md-12">
                                             <h4>Fontes de recursos anuais da OSC</h4>
-                                            <hr />
+                                            <hr/>
                                             <div className="row">
                                                 <div className="col-md-3">
                                                     <Range
@@ -2464,7 +2567,7 @@ class Filter extends React.Component{
                                             </div>
 
                                             <h4>Recursos próprios</h4>
-                                            <hr />
+                                            <hr/>
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <Range
@@ -2546,7 +2649,7 @@ class Filter extends React.Component{
                                             </div>
 
                                             <h4>Recursos públicos</h4>
-                                            <hr />
+                                            <hr/>
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     <Range
@@ -2617,9 +2720,8 @@ class Filter extends React.Component{
                                             </div>
 
 
-
                                             <h4>Recursos privados</h4>
-                                            <hr />
+                                            <hr/>
 
                                             <div className="row">
                                                 <div className="col-md-4">
@@ -2724,7 +2826,7 @@ class Filter extends React.Component{
                                             </div>
 
                                             <h4>Recursos não financeiros</h4>
-                                            <hr />
+                                            <hr/>
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     <Range
@@ -2832,10 +2934,14 @@ class Filter extends React.Component{
 
                         <div className="card">
                             <div className="card-header" id="item-9">
-                                <div className="mb-0" data-toggle="collapse" data-target="#collapse9" aria-expanded="true"
+                                <div className="mb-0" data-toggle="collapse" data-target="#collapse9"
+                                     aria-expanded="true"
                                      aria-controls="collapse9">
-                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i className="far fa-file-alt"/></div>
-                                    Indicadores Sociais <i className="fas fa-info-circle" title="Variáveis adicionais para exportação"/>  <i className="fas fa-angle-down float-right"/>
+                                    <div className="mn-accordion-icon mn-accordion-icon-p"><i
+                                        className="far fa-file-alt"/></div>
+                                    Indicadores Sociais <i className="fas fa-info-circle"
+                                                           title="Variáveis adicionais para exportação"/> <i
+                                    className="fas fa-angle-down float-right"/>
                                 </div>
                             </div>
                             <div id="collapse9" className="collapse" aria-labelledby="heading9"
@@ -2843,25 +2949,33 @@ class Filter extends React.Component{
                                 <div className="card-body">
 
                                     <div className="custom-control custom-checkbox" onChange={this.clickIdh}>
-                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal" required onChange={this.handleCheckChangeIDH}/>
-                                        <label className="custom-control-label" htmlFor="IDH_Municipal">IDH Municipal</label>
+                                        <input type="checkbox" className="custom-control-input" id="IDH_Municipal"
+                                               required onChange={this.handleCheckChangeIDH}/>
+                                        <label className="custom-control-label" htmlFor="IDH_Municipal">IDH
+                                            Municipal</label>
                                     </div>
 
-                                    <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}} >
+                                    <div id="divIdh" style={{display: this.state.active === false ? 'none' : ''}}>
                                         <br/>
                                         <strong> Faixas de IDHM:</strong>
                                         <br/>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="baixo" required onChange={this.handleCheckChangeIDH}/>
-                                            <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de 0,600)</label>
+                                            <input type="checkbox" className="custom-control-input" id="baixo" required
+                                                   onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="baixo">Baixo (abaixo de
+                                                0,600)</label>
                                         </div>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="medio" required onChange={this.handleCheckChangeIDH}/>
-                                            <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e 0,699)</label>
+                                            <input type="checkbox" className="custom-control-input" id="medio" required
+                                                   onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="medio">Médio (entre 0,600 e
+                                                0,699)</label>
                                         </div>
                                         <div className="custom-control custom-checkbox ">
-                                            <input type="checkbox" className="custom-control-input" id="alto" required onChange={this.handleCheckChangeIDH}/>
-                                            <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou mais)</label>
+                                            <input type="checkbox" className="custom-control-input" id="alto" required
+                                                   onChange={this.handleCheckChangeIDH}/>
+                                            <label className="custom-control-label" htmlFor="alto">Alto (0,700 ou
+                                                mais)</label>
                                         </div>
                                     </div>
                                     <br/><br/>
@@ -2883,16 +2997,587 @@ class Filter extends React.Component{
                     <br/>
 
 
-                    <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="text-danger">{this.state.msg}</div>
-                    <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                    <div style={{display: this.state.showMsg ? 'block' : 'none'}}
+                         className="text-danger">{this.state.msg}</div>
+                    <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando
+                    </div>
                 </form>
-                <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST" onKeypress={this.handleKeyPress}>
+                <form id="frmMapa" name="frmMapa" action="mapa-busca-avancada" method="POST"
+                      onKeypress={this.handleKeyPress}>
                     {/*<input type="hidden" name="csrf-token" value={this.props.csrf_token}/>*/}
                     <input type="hidden" id="json" name="json" value={JSON.stringify(this.state.json)}/>
-                    <button type="submit" style={{display: this.state.button ? 'block' : 'none', float:'left'}} className="btn btn-primary">Pesquisar</button>
-                    <button type="button" style={{display: this.state.button ? 'block' : 'none', float:'left', marginLeft: '20px'}} className="btn btn-primary" onClick={this.exportar}>Exportar</button>
+                    <button type="submit" style={{display: this.state.button ? 'block' : 'none', float: 'left'}}
+                            className="btn btn-primary">Pesquisar
+                    </button>
+                    <button type="button"
+                            style={{display: this.state.button ? 'block' : 'none', float: 'left', marginLeft: '20px'}}
+                            className="btn btn-primary" onClick={this.exportar}>Exportar
+                    </button>
+                    <button type="button"
+                            style={{display: this.state.button ? 'block' : 'none', float: 'left', marginLeft: '20px'}}
+                            className="btn btn-primary"
+                            data-toggle="modal" data-target="#modalExportar2"
+                    >Dicionário de dados
+
+                    </button>
                     <div style={{clear: 'both'}}><br/></div>
                 </form>
+
+                <div className="modal  " id="modalExportar2" tabIndex="-1" aria-labelledby="exampleModalLabel2"
+                     aria-hidden="true">
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel2">Dicionário de dados</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            {/*<div className="text-center">
+                                                <h3 className="text-center">aaa</h3>
+                                            </div>*/}
+                                            <div>
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Variável</th>
+                                                        <th>Descrição</th>
+                                                        <th>Fonte</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>id_osc</td>
+                                                        <td>Código Identificador da OSC</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>cd_identificador_osc</td>
+                                                        <td>Cadastro Nacional da Pessoa Jurídica</td>
+                                                        <td>CNPJ/SRF/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_fonte_recursos_osc</td>
+                                                        <td>Nome da fonte de recursos da OSC</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_ano_recursos_osc</td>
+                                                        <td>Ano dos recursos da OSC</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>nr_valor_recursos_osc</td>
+                                                        <td>Valor do recurso da OSC</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_origem_fonte_recursos_osc</td>
+                                                        <td>Nome da origem da fonte de recursos da OSC</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_razao_social_osc</td>
+                                                        <td>Razão Social OSC</td>
+                                                        <td>CNPJ/SRF/MF, RAIS/MTE, SALICWEB/MINC, OSCIP/MJ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_fantasia_osc</td>
+                                                        <td>Nome Fantasia OSC</td>
+                                                        <td>CNPJ/SRF/MF, Representante de OSC, OSCIP/MJ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_fundacao_osc</td>
+                                                        <td>Data de Fundação da OSC</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_classe_atividade_economica</td>
+                                                        <td>Nome da classe da atividade economica</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>edmu_cd_municipio</td>
+                                                        <td>Código do municipio</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>edmu_nm_municipio</td>
+                                                        <td>Nome do municipio</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>eduf_cd_uf</td>
+                                                        <td>Código da UF</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>eduf_sg_uf</td>
+                                                        <td>Sigla da UF</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Área de atuação</td>
+                                                        <td>Nome da área de atuação</td>
+                                                        <td>Representante de OSC, Censo SUAS, LIE/MESP, CNEAS/MDS,
+                                                            CADSOL/MTE, CNPJ/SRF/MF, CNES/MS, CEBAS/MDS, CEBAS/MS,
+                                                            CEBAS/MEC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Subárea de atuação</td>
+                                                        <td>Nome da subárea de atuação</td>
+                                                        <td>Representante de OSC, Censo SUAS, LIE/MESP, CNEAS/MDS,
+                                                            CADSOL/MTE, CNPJ/SRF/MF, CNES/MS, CEBAS/MDS, CEBAS/MS,
+                                                            CEBAS/MEC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_certificado</td>
+                                                        <td>Nome do Certificado</td>
+                                                        <td>Entidade Ambientalista, CEBAS - Educação, CEBAS - Saúde,
+                                                            OSCIP,CEBAS - Assistência Social, Utilidade Pública Federal,
+                                                            Utilidade Pública Estadual, Utilidade Pública Municipal, Não
+                                                            Possui
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ft_certificado</td>
+                                                        <td>Fonte do certificado</td>
+                                                        <td>Representante de OSC, Entidade Ambientalista, CEBAS -
+                                                            Educação, CEBAS - Saúde, OSCIP,CEBAS - Assistência Social,
+                                                            Utilidade Pública Federal, Utilidade Pública Estadual,
+                                                            Utilidade Pública Municipal, Não Possui
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_inicio_certificado</td>
+                                                        <td>Data de início do certificado</td>
+                                                        <td>Representante de OSC, Entidade Ambientalista, CEBAS -
+                                                            Educação, CEBAS - Saúde, OSCIP,CEBAS - Assistência Social,
+                                                            Utilidade Pública Federal, Utilidade Pública Estadual,
+                                                            Utilidade Pública Municipal, Não Possui
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_fim_certificado</td>
+                                                        <td>Data final do certificado</td>
+                                                        <td>Representante de OSC, Entidade Ambientalista, CEBAS -
+                                                            Educação, CEBAS - Saúde, OSCIP,CEBAS - Assistência Social,
+                                                            Utilidade Pública Federal, Utilidade Pública Estadual,
+                                                            Utilidade Pública Municipal, Não Possui
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>eduf_nm_uf</td>
+                                                        <td>Nome da unidade da federação</td>
+                                                        <td>IBGE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_conferencia</td>
+                                                        <td>Nome da conferência declarada</td>
+                                                        <td>Secretaria-Geral da Presidência da República</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ft_conferencia</td>
+                                                        <td>Fonte da conferência declarada</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_ano_realizacao</td>
+                                                        <td>Ano de realização da conferência</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_forma_participacao_conferencia</td>
+                                                        <td>Nome da forma de participação em conferência</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_conselho</td>
+                                                        <td>Nome do conselho ou comissão</td>
+                                                        <td>Secretaria-Geral da Presidência da República</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_orgao_vinculado</td>
+                                                        <td>Orgão ao qual a comissão ou conselho está vinculado</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_data_inicio_conselho</td>
+                                                        <td>Data de início da participação no conselho</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_data_fim_conselho</td>
+                                                        <td>Data de fim da participação no conselho</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_periodicidade_reuniao_conselho</td>
+                                                        <td>Nome da periodicidade de reunião de conselho</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>id_projeto</td>
+                                                        <td>Código Identificador do projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_projeto</td>
+                                                        <td>Nome do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_status_projeto</td>
+                                                        <td>Status do projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_data_inicio_projeto</td>
+                                                        <td>Data do início do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>dt_data_fim_projeto</td>
+                                                        <td>Data do fim do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_link_projeto</td>
+                                                        <td>Link do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>nr_total_beneficiarios</td>
+                                                        <td>Número total de beneficiarios do projeto</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>nr_valor_captado_projeto</td>
+                                                        <td>Valor captado do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>nr_valor_total_projeto</td>
+                                                        <td>Valor total do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_abrangencia_projeto</td>
+                                                        <td>Valor de abrangência do projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_zona_atuacao</td>
+                                                        <td>Nome da zona de atução do projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_descricao_projeto</td>
+                                                        <td>Descrição do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_metodologia_monitoramento</td>
+                                                        <td>Metodologia de monitoramento do projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ft_identificador_projeto_externo</td>
+                                                        <td>Identificador externo de projeto</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_status_projeto_outro</td>
+                                                        <td>Nome do status do projeto</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_subarea_atuacao</td>
+                                                        <td>Nome da subárea de atuação do projeto</td>
+                                                        <td>Representante de OSC, Censo SUAS, LIE/MESP, CNEAS/MDS,
+                                                            CADSOL/MTE, CNPJ/SRF/MF, CNES/MS, CEBAS/MDS, CEBAS/MS,
+                                                            CEBAS/MEC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_financiador</td>
+                                                        <td>Nome do Financiador</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_orgao_concedente</td>
+                                                        <td>Nome do Órgão Concedente</td>
+                                                        <td>Representante de OSC, FINEP/FNDCT, LIE/MESP, SICONV/MPOG ,
+                                                            SALICWEB/MINC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_origem_fonte_recursos_projeto</td>
+                                                        <td>Nome da origem da fonte de recursos da OSC</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_fonte_recursos_projeto</td>
+                                                        <td>Nome da fonte de recursos de projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_regiao_localizacao_projeto</td>
+                                                        <td>Nome da região da localização do projeto</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_objetivo_projeto</td>
+                                                        <td>Nome do objetivo do projeto</td>
+                                                        <td>ONU Agenda 2030 Objetivos de Desenvolvimento Sustentável
+                                                            (ODS)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_meta_projeto</td>
+                                                        <td>Nome da meta de projeto</td>
+                                                        <td>ONU Agenda 2030 Objetivos de Desenvolvimento Sustentável
+                                                            (ODS)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>id_osc_parceira</td>
+                                                        <td>Código Identificador da OSC parceira</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_publico_beneficiado</td>
+                                                        <td>Grupo de público beneficiado do projeto</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>nr_estimativa_pessoas_atendidas</td>
+                                                        <td>Estimativa da quantidade de pessoas atendidas</td>
+                                                        <td>Representante de OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_nome_tipo_parceria</td>
+                                                        <td>Nome do tipo de parceria</td>
+                                                        <td>Mapa das OSC</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>FAM_PBF</td>
+                                                        <td>Programa Bolsa Família - nº benefícios</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>BPC_idos</td>
+                                                        <td>Benefício de Prestação Continuada idosos - nº benefícios
+                                                        </td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>BPC_defi</td>
+                                                        <td>Benefício de Prestação Continuada deficientes - nº
+                                                            benefícios
+                                                        </td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MORT1</td>
+                                                        <td>Mortalidade infantil</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MORT5</td>
+                                                        <td>Mortalidade até 05 anos</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IDHM</td>
+                                                        <td>Índice de Desenvolvimento Humano Municipal agregado</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IDHM_E</td>
+                                                        <td>Índice de Desenvolvimento Humano Municipal educacao</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IDHM_L</td>
+                                                        <td>Índice de Desenvolvimento Humano Municipal longevidade</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IDHM_R</td>
+                                                        <td>Índice de Desenvolvimento Humano Municipal renda</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MEDHAB</td>
+                                                        <td>Médicos residentes</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_ANALF15M</td>
+                                                        <td>Taxa de analfabetismo - 15 anos ou mais</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MEDUCA</td>
+                                                        <td>Anos de estudo - média - pessoas 25 anos e mais</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_FUND25M</td>
+                                                        <td>Taxa de 25 anos ou mais com fundamental completo</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_MED25M</td>
+                                                        <td>Taxa de 25 anos ou mais com médio completo</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_SUPER25M</td>
+                                                        <td>Taxa de 25 anos ou mais com superior completo</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_FORA4A5</td>
+                                                        <td>Taxa de crianças de 4 a 5 anos fora da escola</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_FORA6A14</td>
+                                                        <td>Taxa de crianças de 6 a 14 anos fora da escola</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>I_FREQ_PROP</td>
+                                                        <td>Frequência escolar</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_DES18M</td>
+                                                        <td>Taxa de desocupação - 18 anos ou mais</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TRABCC</td>
+                                                        <td>Taxa de empregados com carteira - 18 anos ou mais</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TRABSC</td>
+                                                        <td>Taxa de empregados sem carteira - 18 anos ou mais</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PMPOB</td>
+                                                        <td>População pobre (%)</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PIND</td>
+                                                        <td>População extremamente pobre (%)</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PPOB</td>
+                                                        <td>População vulneráveis a pobreza (%)</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GINI</td>
+                                                        <td>Desigualdade (Gini)</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RDPC</td>
+                                                        <td>Renda per capita (ed 2013)</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RPOB</td>
+                                                        <td>Renda per capita média dos vulneráveis a pobreza</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RMPOB</td>
+                                                        <td>Renda per capita média dos pobres</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RIND</td>
+                                                        <td>Renda per capita média dos extremamente pobres</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_AGUA</td>
+                                                        <td>Domicílios com rede de abastecimento de água</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>AGUA_ESGOTO</td>
+                                                        <td>Domicílios com água e esgotamento inadequados</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_SLUZ</td>
+                                                        <td>Domicílios sem energia elétrica</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_LUZ</td>
+                                                        <td>Domicílios com energia elétrica</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>T_MULCHEFEFIF014</td>
+                                                        <td>Mães chefes de família sem fundamental completo e com
+                                                            filhos
+                                                        </td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PESORUR</td>
+                                                        <td>População rural</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PESOURB</td>
+                                                        <td>População urbana</td>
+                                                        <td>Ipea Data</td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
 
