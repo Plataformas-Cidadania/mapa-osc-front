@@ -273,7 +273,6 @@ label, input, .btn-number {
     background-color: #CCCCCC;
     color: #000000;
 }*/
-
 .alert svg{
     vertical-align: middle;
     margin-right: 10px;
@@ -283,7 +282,7 @@ label, input, .btn-number {
 .custom-range{
     margin-top: -32px;
     position: relative;
-    z-index: 9999;
+    z-index: 2;
     width: 50%;
 }
 .custom-range-r{

@@ -12516,7 +12516,7 @@ label, input, .btn-number {
 .custom-range {
   margin-top: -32px;
   position: relative;
-  z-index: 9999;
+  z-index: 2;
   width: 50%;
 }
 

@@ -112,6 +112,7 @@ class Charts extends React.Component {
 
         ///////////////////////////////////////////////
       }
+
       charts.push({
         chart: chart,
         name: name,
@@ -193,6 +194,7 @@ class Charts extends React.Component {
 
       //console.log('table', tables)
     }
+
     this.setState({
       tables: tables
     });
@@ -263,6 +265,7 @@ class Charts extends React.Component {
     .replace(/,/g, '') // Remove vírgulas
     .toLowerCase(); // Converte para minúsculas
   };
+
   modal() {
     return /*#__PURE__*/React.createElement("div", {
       id: "modalTable",
