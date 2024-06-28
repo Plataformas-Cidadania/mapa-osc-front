@@ -2077,7 +2077,8 @@ class OscMap extends React.Component{
             <div>
 
                 {/*Modal Sem Resultados Busca Avancada*/}
-                <div className="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -2096,7 +2097,10 @@ class OscMap extends React.Component{
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-info" onClick={() => {window.history.back();}}>Voltar</button>
+                                <button className="btn btn-info" onClick={() => {
+                                    window.history.back();
+                                }}>Voltar
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -2104,7 +2108,8 @@ class OscMap extends React.Component{
 
 
                 {/*Modal Exportar*/}
-                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -2117,12 +2122,15 @@ class OscMap extends React.Component{
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div className="text-center" style={{display: this.state.origem === 'busca-avancada' ? '' : 'none'}}>
+                                            <div className="text-center"
+                                                 style={{display: this.state.origem === 'busca-avancada' ? '' : 'none'}}>
                                                 <img src="img/load.gif" alt="Load"/><br/>
                                                 <h3 className="text-center">{this.state.textoProcessingExportacao}</h3>
                                             </div>
-                                            <div className="text-center" style={{display: this.state.origem === 'busca-avancada' ? 'none' : ''}}>
-                                                <h3 className="text-center">Utilize a consulta avançada para exportar os dados</h3>
+                                            <div className="text-center"
+                                                 style={{display: this.state.origem === 'busca-avancada' ? 'none' : ''}}>
+                                                <h3 className="text-center">Utilize a consulta avançada para exportar os
+                                                    dados</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -2141,29 +2149,43 @@ class OscMap extends React.Component{
                         </div>*/}
                         <div>
                             <div className="text-center" style={{margin: '0 -30px 0 0'}}>
-                            {this.state.origem != 0 && (
-                                <a href="" id="novaBuscaLink">
-                                <button
-                                    /*style={{float: 'inline-start'}}*/
-                                    onClick={() => {
-                                          const novaBuscaLink = document.querySelector('#novaBuscaLink');
-                                          novaBuscaLink.href = document.referrer;
-                                          novaBuscaLink.click();
-                                      }}
-                                    className="btn btn-outline-primary"
-                                >
-                                    <i className="fas fa-search"/>  Nova busca
-                                </button>
-                                </a>
+                                {this.state.origem != 0 && (
+                                    <a href="" id="novaBuscaLink">
+                                        <button
+                                            /*style={{float: 'inline-start'}}*/
+                                            onClick={() => {
+                                                const novaBuscaLink = document.querySelector('#novaBuscaLink');
+                                                novaBuscaLink.href = document.referrer;
+                                                novaBuscaLink.click();
+                                            }}
+                                            className="btn btn-outline-primary"
+                                        >
+                                            <i className="fas fa-search"/> Nova busca
+                                        </button>
+                                    </a>
                                 )}
-                            {this.state.origem === 'busca-avancada' && (
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={this.exportar}
-                                        title={this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'}
-                                    >
-                                        Exportar
-                                    </button>
+                                {this.state.origem === 'busca-avancada' && (
+                                    <>
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={this.exportar}
+                                            title={this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'}
+                                            style={{
+                                                marginLeft: '5px'
+                                            }}
+                                        >
+                                            Exportar
+                                        </button>
+
+                                        <button type="button"
+                                                style={{
+                                                    marginLeft: '5px'
+                                                }}
+                                                className="btn btn-primary"
+                                                data-toggle="modal" data-target="#modalExportar2"
+                                        >Dicionário de dados
+                                        </button>
+                                    </>
                                 )}
                             </div>
                             <br/>
@@ -2179,32 +2201,41 @@ class OscMap extends React.Component{
                         {origem != 0 && origem != 'busca-avancada' ?
                             <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li className="nav-item" role="presentation">
-                                    <button className="nav-link active" id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Mapa</button>
+                                    <button className="nav-link active" id="pills-home-tab" data-toggle="pill"
+                                            data-target="#pills-home" type="button" role="tab"
+                                            aria-controls="pills-home" aria-selected="true">Mapa
+                                    </button>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" >Análises {localidade} </button>
+                                    <button className="nav-link" id="pills-profile-tab" data-toggle="pill"
+                                            data-target="#pills-profile" type="button" role="tab"
+                                            aria-controls="pills-profile"
+                                            aria-selected="false">Análises {localidade} </button>
                                 </li>
                             </ul>
-                        : null}
+                            : null}
 
 
                         <div className="tab-content" id="pills-tabContent">
-                            <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div className="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                 aria-labelledby="pills-home-tab">
                                 {/*MAPA*/}
                                 <div>
                                     <div className="col-md-12">
-                                        <VisualizarFiltros strJson={this.props.strJson} />
+                                        <VisualizarFiltros strJson={this.props.strJson}/>
                                     </div>
-                                    <div  style={{margin: '0 15px 0 0'}}>
+                                    <div style={{margin: '0 15px 0 0'}}>
                                         <div style={{margin: '0 -15px 0 -15px'}}>
                                             <div>
-                                                <div className="map-load" style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
-                                                >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img src="img/load.gif" alt="Load"/> </div>
+                                                <div className="map-load"
+                                                     style={{display: (processingOsc || processingOscIdhUfs || processingOscUfs || processingOscPontos || processingHeatMap ? '' : 'none')}}
+                                                >{/*<i className="fa fa-spinner fa-spin fa-5x"/>*/}<img
+                                                    src="img/load.gif" alt="Load"/></div>
                                             </div>
-                                            <div style={{position:"relative", zIndex:"0", marginRight: "-15px"}}>
-                                                <div id={this.state.mapId} className="map" />
-                                                <div id="controls-map" className="control-container" />
-                                                <div id="controls-map2" className="control-container" />
+                                            <div style={{position: "relative", zIndex: "0", marginRight: "-15px"}}>
+                                                <div id={this.state.mapId} className="map"/>
+                                                <div id="controls-map" className="control-container"/>
+                                                <div id="controls-map2" className="control-container"/>
                                             </div>
                                         </div>
                                     </div>
@@ -2212,12 +2243,15 @@ class OscMap extends React.Component{
                                 <br/>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="text-center" style={{display: this.state.processingList ? '' : 'none'}}>
+                                        <div className="text-center"
+                                             style={{display: this.state.processingList ? '' : 'none'}}>
                                             <img src="img/load.gif" alt="loading" title="loading"/>
                                             {/*<i className="fa fa-spinner fa-spin fa-3x"/>*/}
                                         </div>
-                                        <div className="table-responsive-sm" style={{display: this.state.processingList ? 'none' : ''}}>
-                                            <p style={{fontSize: '12px'}}>Obs: Algumas OSCs com dados de endereço ausentes ou incompletos.</p>
+                                        <div className="table-responsive-sm"
+                                             style={{display: this.state.processingList ? 'none' : ''}}>
+                                            <p style={{fontSize: '12px'}}>Obs: Algumas OSCs com dados de endereço
+                                                ausentes ou incompletos.</p>
                                             <table className="table">
                                                 <thead className="bg-pri text-light">
                                                 <tr>
@@ -2244,25 +2278,72 @@ class OscMap extends React.Component{
                                 </div>
                                 {/*MAPA*/}
                             </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                 aria-labelledby="pills-profile-tab">
                                 {/*ANALISE*/}
-                                {origem != 0 ? <Perfil /> : null}
+                                {origem != 0 ? <Perfil/> : null}
                                 {/*ANALISE*/}
                             </div>
                         </div>
                         {/*/////////////////////*/}
 
 
-
                     </div>
                 </div>
 
 
-
+                <div className="modal  " id="modalExportar2" tabIndex="-1" aria-labelledby="exampleModalLabel2"
+                     aria-hidden="true">
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel2">Dicionário de dados</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            {/*<div className="text-center">
+                                                <h3 className="text-center">aaa</h3>
+                                            </div>*/}
+                                            <div>
+                                                <table className="table">
+                                                    <tr>
+                                                        <th>Fonte Sigla</th>
+                                                        <th>Nome Completo da Fonte</th>
+                                                        <th>Fonte Órgão Responsável</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                        <td>Cadastro Público do CNPJ</td>
+                                                        <td>Receita Federal do Brasil/RFB</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Autodeclaração OSC</td>
+                                                        <td>Informações declaradas pelos representantes das OSC</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IPEA/MOSC</td>
+                                                        <td>Grupo gestor no Mapa das Organizações da Sociedade Civil -
+                                                            IPEA
+                                                        </td>
+                                                        <td>IPEA</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-
-
 
 
         );

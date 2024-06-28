@@ -2140,11 +2140,22 @@ class OscMap extends React.Component {
       className: "btn btn-outline-primary"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-search"
-    }), "  Nova busca")), this.state.origem === 'busca-avancada' && /*#__PURE__*/React.createElement("button", {
+    }), " Nova busca")), this.state.origem === 'busca-avancada' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary",
       onClick: this.exportar,
-      title: this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados'
-    }, "Exportar")), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+      title: this.state.origem === 'busca-avancada' ? '' : 'Utilize a consulta avançada para exportar os dados',
+      style: {
+        marginLeft: '5px'
+      }
+    }, "Exportar"), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      style: {
+        marginLeft: '5px'
+      },
+      className: "btn btn-primary",
+      "data-toggle": "modal",
+      "data-target": "#modalExportar2"
+    }, "Dicion\xE1rio de dados"))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "text-center",
       style: {
         clear: 'both'
@@ -2205,7 +2216,7 @@ class OscMap extends React.Component {
     }, /*#__PURE__*/React.createElement("img", {
       src: "img/load.gif",
       alt: "Load"
-    }), " ")), /*#__PURE__*/React.createElement("div", {
+    }))), /*#__PURE__*/React.createElement("div", {
       style: {
         position: "relative",
         zIndex: "0",
@@ -2259,6 +2270,38 @@ class OscMap extends React.Component {
       id: "pills-profile",
       role: "tabpanel",
       "aria-labelledby": "pills-profile-tab"
-    }, origem != 0 ? /*#__PURE__*/React.createElement(Perfil, null) : null)))));
+    }, origem != 0 ? /*#__PURE__*/React.createElement(Perfil, null) : null)))), /*#__PURE__*/React.createElement("div", {
+      className: "modal  ",
+      id: "modalExportar2",
+      tabIndex: "-1",
+      "aria-labelledby": "exampleModalLabel2",
+      "aria-hidden": "true"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-dialog modal-lg"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-content"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-header"
+    }, /*#__PURE__*/React.createElement("h5", {
+      className: "modal-title",
+      id: "exampleModalLabel2"
+    }, "Dicion\xE1rio de dados"), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "close",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }, /*#__PURE__*/React.createElement("span", {
+      "aria-hidden": "true"
+    }, "\xD7"))), /*#__PURE__*/React.createElement("div", {
+      className: "modal-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "container"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("table", {
+      className: "table"
+    }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Fonte Sigla"), /*#__PURE__*/React.createElement("th", null, "Nome Completo da Fonte"), /*#__PURE__*/React.createElement("th", null, "Fonte \xD3rg\xE3o Respons\xE1vel")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "CNPJ/RFB/MF"), /*#__PURE__*/React.createElement("td", null, "Cadastro P\xFAblico do CNPJ"), /*#__PURE__*/React.createElement("td", null, "Receita Federal do Brasil/RFB")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Autodeclara\xE7\xE3o OSC"), /*#__PURE__*/React.createElement("td", null, "Informa\xE7\xF5es declaradas pelos representantes das OSC"), /*#__PURE__*/React.createElement("td", null)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "IPEA/MOSC"), /*#__PURE__*/React.createElement("td", null, "Grupo gestor no Mapa das Organiza\xE7\xF5es da Sociedade Civil - IPEA"), /*#__PURE__*/React.createElement("td", null, "IPEA"))))))))))));
   }
 }
