@@ -3042,26 +3042,55 @@ class Filter extends React.Component{
                                             </div>*/}
                                             <div>
                                                 <table class="table">
+                                                    <thead>
                                                     <tr>
-                                                        <th>Fonte Sigla</th>
-                                                        <th>Nome Completo da Fonte</th>
-                                                        <th>Fonte Órgão Responsável</th>
+                                                        <th>Variável</th>
+                                                        <th>Descrição</th>
+                                                        <th>Fontes dos Dados</th>
                                                     </tr>
+                                                    </thead>
+                                                    <tbody>
                                                     <tr>
-                                                        <td>CNPJ/RFB/MF</td>
-                                                        <td>Cadastro Público do CNPJ</td>
-                                                        <td>Receita Federal do Brasil/RFB</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Autodeclaração OSC</td>
-                                                        <td>Informações declaradas pelos representantes das OSC</td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
+                                                        <td>id_osc</td>
+                                                        <td>Identificador da OSC</td>
                                                         <td>IPEA/MOSC</td>
-                                                        <td>Grupo gestor no Mapa das Organizações da Sociedade Civil - IPEA</td>
-                                                        <td>IPEA</td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>matriz</td>
+                                                        <td>Identifica se a OSC é matriz ou filial</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_razao_social</td>
+                                                        <td>Razão Social OSC</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_natureza_juridica</td>
+                                                        <td>Natureza jurídica</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_classe_atividade_economica</td>
+                                                        <td>Atividade Econômica da OSC (CNAE)</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_municipio</td>
+                                                        <td>Nome do município da OSC</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_estado</td>
+                                                        <td>Nome da Unidade Federativa da OSC</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tx_endereco</td>
+                                                        <td>Endereço da OSC</td>
+                                                        <td>CNPJ/RFB/MF</td>
+                                                    </tr>
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
