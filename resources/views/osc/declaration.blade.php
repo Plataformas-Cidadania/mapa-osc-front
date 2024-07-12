@@ -12,6 +12,44 @@
     <div class="row printOff">
         <div class="col-md-12 text-center">
             <div class="tx-print">
+                {{--/////////--}}
+                <div>
+                    <?php
+                    $logo = "img/sem-imagem.png";
+                    if(substr($osc->im_logo, 0, 10)=='data:image'){
+                        $logo =  $osc->im_logo;
+                    }else{
+                        $api = env('APP_API_ROUTE');
+                        if(env('LOCALHOST_DOCKER') == 1){
+                            $api = env('HOST_DOCKER')."api/";
+                        }
+                        $pagina = $api."osc/logo/".$id_osc;
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $pagina);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        $logo = curl_exec($ch);
+                        $error = curl_error($ch);
+                        curl_close($ch);
+                        $logo = substr($logo, 1);
+                        $logo = substr($logo, 0, -1);
+                        $logo = str_replace("\\", "", $logo);
+                    }
+                    /*if($logo==""){
+                        $logo = "img/sem-imagem.png";
+                    }*/
+                    ?>
+                    @if($logo!=="")
+                        <img src="{{$logo}}" alt="{{$osc->tx_razao_social_osc}}" title="{{$osc->tx_razao_social_osc}}" width="120" style="position: absolute; top: -130px; left: 600px">
+                    @endif
+
+
+
+                </div>
+                {{--/////////--}}
+
+
+
                 <br>
                 <h2 id="title">Declaração</h2>
                 <p>
@@ -22,7 +60,7 @@
                 <br>
                 <div class="text-center footer-print">mapaosc.ipea.gov.br</div>
             </div>
-            <img src="{{env('APP_URL')}}img/declaration.jpg" class="bg-print">
+            <img src="{{env('APP_URL')}}/img/declaration.jpg" class="bg-print">
             <div></div>
         </div>
     </div>
