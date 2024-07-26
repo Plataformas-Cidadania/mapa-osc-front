@@ -49,6 +49,8 @@
     "/assets-cms/js/controllers/alterarGraficoCtrl.js": "/assets-cms/js/controllers/alterarGraficoCtrl.js",
     "/assets-cms/js/controllers/itemCtrl.js": "/assets-cms/js/controllers/itemCtrl.js",
     "/assets-cms/js/controllers/alterarItemCtrl.js": "/assets-cms/js/controllers/alterarItemCtrl.js",
+    "/assets-cms/js/controllers/subitemCtrl.js": "/assets-cms/js/controllers/subitemCtrl.js",
+    "/assets-cms/js/controllers/alterarSubitemCtrl.js": "/assets-cms/js/controllers/alterarSubitemCtrl.js",
     "/assets-cms/js/controllers/mroscCtrl.js": "/assets-cms/js/controllers/mroscCtrl.js",
     "/assets-cms/js/controllers/alterarMroscCtrl.js": "/assets-cms/js/controllers/alterarMroscCtrl.js",
     "/assets-cms/js/controllers/itemMroscCtrl.js": "/assets-cms/js/controllers/itemMroscCtrl.js",

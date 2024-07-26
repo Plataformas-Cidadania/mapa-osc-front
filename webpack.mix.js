@@ -148,6 +148,10 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarGraficoCtrl.js'
 mix.scripts('packages/cms/resources/assets/js/controllers/itemCtrl.js', 'public/assets-cms/js/controllers/itemCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarItemCtrl.js', 'public/assets-cms/js/controllers/alterarItemCtrl.js');
 
+//Subitems Modulos
+mix.scripts('packages/cms/resources/assets/js/controllers/subitemCtrl.js', 'public/assets-cms/js/controllers/subitemCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarSubitemCtrl.js', 'public/assets-cms/js/controllers/alterarSubitemCtrl.js');
+
 //Mroscs
 mix.scripts('packages/cms/resources/assets/js/controllers/mroscCtrl.js', 'public/assets-cms/js/controllers/mroscCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarMroscCtrl.js', 'public/assets-cms/js/controllers/alterarMroscCtrl.js');

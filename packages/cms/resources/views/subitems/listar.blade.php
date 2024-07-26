@@ -1,16 +1,16 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script(config('app.url').'assets-cms/js/controllers/itemCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/subitemCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()
     })
 </script>
-    <div ng-controller="itemCtrl">
+    <div ng-controller="subitemCtrl">
         <div class="box-padrao">
-            <h1><a href="javascript:history.back();"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;Items</h1>
-            <button class="btn btn-primary" ng-click="mostrarForm=!mostrarForm" ng-show="!mostrarForm">Novo Item</button>
+            <h1><a href="javascript:history.back();"><i class="fa fa-arrow-circle-left"></i></a>&nbsp;Subitems</h1>
+            <button class="btn btn-primary" ng-click="mostrarForm=!mostrarForm" ng-show="!mostrarForm">Novo Subitem</button>
             <button class="btn btn-warning" ng-click="mostrarForm=!mostrarForm" ng-show="mostrarForm">Cancelar</button>
             <br><br>
             <div ng-show="mostrarForm">
@@ -40,7 +40,7 @@
 
 
                 <br><br>
-                @include('cms::item._form')
+                @include('cms::subitems._form')
                 <div class="row">
                     <div class="col-md-1 col-lg-1 col-xs-3">
                         <button class="btn btn-info" type="button" ng-click="inserir(picFile, fileArquivo)" ng-disabled="form.$invalid">Salvar</button>
@@ -76,24 +76,24 @@
                         <input class="form-control" type="text" ng-model="dadoPesquisa" placeholder="Faça sua busca"/>
                     </div>
                     <br>
-                    <div><% mensagemItemr %></div>
+                    <div><% mensagemSubitemr %></div>
                     <div ng-show="processandoListagem"><i class="fa fa-spinner fa-spin"></i> Processando...</div>
                     <h2 class="tabela_vazia" ng-show="!processandoListagem && totalItens==0">Nenhum registro encontrado!</h2>
                     <table ng-show="totalItens>0" class="table table-striped">
                         <thead>
                         <tr>
-                            <th ng-click="ordernarPor('id')" style="itemr:pointer;">
+                            <th ng-click="ordernarPor('id')" style="subitemr:pointer;">
                                 Id
                                 <i ng-if="ordem=='id' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
                                 <i ng-if="ordem=='id' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
                             <th>Imagem</th>
-                            <th ng-click="ordernarPor('item')" style="itemr:pointer;">
-                                Item
-                                <i ng-if="ordem=='item' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
-                                <i ng-if="ordem=='item' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
+                            <th ng-click="ordernarPor('subitem')" style="subitemr:pointer;">
+                                Subitem
+                                <i ng-if="ordem=='subitem' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
+                                <i ng-if="ordem=='subitem' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
-                            <th ng-click="ordernarPor('posicao')" style="itemr:pointer;">
+                            <th ng-click="ordernarPor('posicao')" style="subitemr:pointer;">
                                 Posição
                                 <i ng-if="ordem=='posicao' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
                                 <i ng-if="ordem=='posicao' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
@@ -102,23 +102,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in items">
-                            <td><% item.id %></td>
-                            <td><img ng-show="item.imagem" ng-src="imagens/items/xs-<% item.imagem %>" width="60"></td>
-                            <td><a href="cms/item/<% item.id %>"><% item.titulo %></a></td>
-                            <td><a href="cms/item/<% item.id %>"><% item.posicao %></a></td>
+                        <tr ng-repeat="subitem in subitems">
+                            <td><% subitem.id %></td>
+                            <td><img ng-show="subitem.imagem" ng-src="imagens/subitems/xs-<% subitem.imagem %>" width="60"></td>
+                            <td><a href="cms/subitem/<% subitem.id %>"><% subitem.titulo %></a></td>
+                            <td><a href="cms/subitem/<% subitem.id %>"><% subitem.posicao %></a></td>
                             <td class="text-right">
                                 <div>
-                                    <a href="cms/sub_items/<% item.id %>"><i class="fa fa-sitemap fa-2x" title="Sub itens"></i></a>&nbsp;&nbsp;
-                                    <a><i class="fa fa-arrow-circle-up fa-2x" title="Posição" ng-click="positionUp(item.id);" style="cursor: pointer;" ng-hide="<% $first %>"></i></a>
+                                    <a><i class="fa fa-arrow-circle-up fa-2x" title="Posição" ng-click="positionUp(subitem.id);" style="cursor: pointer;" ng-hide="<% $first %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $first %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
 
-                                    <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(item.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
+                                    <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(subitem.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $last %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
 
-                                    <a href="cms/item/<% item.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
-                                    <a  ng-class="<% item.status %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(item.id);"></i></a>
-                                    <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(item.id, item.titulo, item.imagem)"></i></a>
+                                    <a href="cms/subitem/<% subitem.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a  ng-class="<% subitem.status %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(subitem.id);"></i></a>
+                                    <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(subitem.id, subitem.titulo, subitem.imagem)"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -132,18 +131,18 @@
             <div class="col-md-12">
                 <!--<button class="btn btn-primary btn-block" ng-click="loadMore()" ng-hide="currentPage==lastPage">Load More</button>-->
                 <div ng-show="totalItens > 0" class="clan-paginacao">
-                    <div class="item-paginacao">
-                        <uib-pagination total-items="totalItens" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" items-per-page="itensPerPage" num-pages="numPages"></uib-pagination>
+                    <div class="subitem-paginacao">
+                        <uib-pagination total-subitems="totalItens" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" subitems-per-page="itensPerPage" num-pages="numPages"></uib-pagination>
                     </div>
-                    <div class="item-paginacao">
-                        <select class="form-control itens-por-pagina item-paginacao"  ng-model="itensPerPage">
+                    <div class="subitem-paginacao">
+                        <select class="form-control itens-por-pagina subitem-paginacao"  ng-model="itensPerPage">
                             <option ng-selected="true">10</option>
                             <option>25</option>
                             <option>50</option>
                             <option>100</option>
                         </select>
                     </div>
-                    <div class="item-paginacao">
+                    <div class="subitem-paginacao">
                         <div class="resumo-pagina">&nbsp; <% primeiroDaPagina %> - <% (ultimoDaPagina) %> de <% totalItens %></div>
                     </div>
                 </div>
@@ -162,7 +161,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <img  ng-src="imagens/items/xs-<% imagemExcluir %>" width="100">
+                                <img  ng-src="imagens/subitems/xs-<% imagemExcluir %>" width="100">
                             </div>
                             <div class="col-md-9">
                                 <p><% tituloExcluir %></p>

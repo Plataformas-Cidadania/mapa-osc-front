@@ -38,6 +38,17 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/positionUp-item/{id}', 'Cms\Controllers\ItemController@positionUp');
         Route::get('/cms/positionDown-item/{id}', 'Cms\Controllers\ItemController@positionDown');
 
+        //SUBITEMS
+        Route::get('/cms/subitems/{modulo_id}', 'Cms\Controllers\SubitemController@index');
+        Route::get('/cms/listar-subitems', 'Cms\Controllers\SubitemController@listar');
+        Route::post('/cms/inserir-subitem', 'Cms\Controllers\SubitemController@inserir');
+        Route::get('/cms/subitem/{id}', 'Cms\Controllers\SubitemController@detalhar');
+        Route::post('/cms/alterar-subitem/{id}', 'Cms\Controllers\SubitemController@alterar');
+        Route::get('/cms/excluir-subitem/{id}', 'Cms\Controllers\SubitemController@excluir');
+        Route::get('/cms/status-subitem/{id}', 'Cms\Controllers\SubitemController@status');
+        Route::get('/cms/positionUp-subitem/{id}', 'Cms\Controllers\SubitemController@positionUp');
+        Route::get('/cms/positionDown-subitem/{id}', 'Cms\Controllers\SubitemController@positionDown');
+
         //ITEMS MROSC
         Route::get('/cms/items-mrosc/{mrosc_id}', 'Cms\Controllers\ItemMroscController@index');
         Route::get('/cms/listar-items-mrosc', 'Cms\Controllers\ItemMroscController@listar');
