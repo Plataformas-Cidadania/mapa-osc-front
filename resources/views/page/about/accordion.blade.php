@@ -1,5 +1,12 @@
 <div class="accordion" id="accordionExample">
+
+
     @foreach($items as $key => $item)
+
+            <?php $subitems = \App\Subitem::where('item_id', $item->id)->where('status', 1)->orderBy('posicao')->get(); ?>
+
+
+
         <div class="card">
             <div class="card-header" id="item-{{$key}}">
                 <div class="mb-0" data-toggle="collapse" @if($page->show==0) data-target="#collapse{{$key}}" @endif aria-expanded="true" aria-controls="collapse{{$key}}">
@@ -17,14 +24,25 @@
                             </div>
                         </div>
                     @endif
-                    <br>
+
                     @if($item->arquivo!="")
                         <a href="arquivos/items/{{$item->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
                             <i class="far fa-file-pdf fa-2x" style="padding-top: 10px;"></i>
                             Baixar o arquivo em PDF
                         </a>
                     @endif
-                    <br><br><br>
+
+                    @foreach($subitems as $key => $subitem)
+                        @if($subitem->arquivo!="")
+                            <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
+                                <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
+                                {{$subitem->titulo}}
+                            </a>
+                        <br><br><br>
+                        @endif
+                    @endforeach
+
+                    <br><br>
                 </div>
             </div>
         </div>
@@ -37,7 +55,7 @@
         padding: 20px;
     }
     .btn-file:hover{
-        background-color: #e3342f;
+        background-color: #3A559B ;
         color: #FFFFFF;
     }
 </style>

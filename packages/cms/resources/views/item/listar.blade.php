@@ -109,7 +109,7 @@
                             <td><a href="cms/item/<% item.id %>"><% item.posicao %></a></td>
                             <td class="text-right">
                                 <div>
-                                    <a href="cms/subitem/<% item.id %>"><i class="fa fa-sitemap fa-2x" title="Sub itens"></i></a>&nbsp;&nbsp;
+                                    <a href="cms/subitems/<% item.id %>"><i class="fa fa-sitemap fa-2x" title="Sub itens"></i></a>&nbsp;&nbsp;
                                     <a><i class="fa fa-arrow-circle-up fa-2x" title="Posição" ng-click="positionUp(item.id);" style="cursor: pointer;" ng-hide="<% $first %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $first %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
 
