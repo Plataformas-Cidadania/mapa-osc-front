@@ -501,3 +501,35 @@ if ( ! function_exists('my_array_unique') ) {
         return $keep_key_assoc ? $array : array_values($array);
     }
 }
+
+if ( ! function_exists('iconType') ) {
+    function iconType($value, $size=12) {
+        $newSize = $size.'px';
+        if($value==""){
+            return "<i class='fas fa-question-circle tx-pri float-right' style='font-size: $newSize' title='Não informado'></i>";
+        }
+        return $value === 'Representante de OSC' ? "<i class='fas fa-user tx-pri float-right' style='font-size: $newSize' title=\"$value\"></i>" : "<i class='fas fa-database tx-pri float-right' style='font-size: $newSize' title=\"$value\"></i>";
+    }
+}
+
+if (!function_exists('cnpjFormat')) {
+    function cnpjFormat($value) {
+        // Remove tudo que não for número
+        $cnpj = preg_replace('/\D/', '', $value);
+
+        // Verifica se o CNPJ tem 14 dígitos
+        if (strlen($cnpj) === 14) {
+            // Aplica a formatação
+            $formattedCnpj = preg_replace(
+                '/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/',
+                '$1.$2.$3/$4-$5',
+                $cnpj
+            );
+            return $formattedCnpj;
+        }
+
+        // Retorna o valor original se não puder ser formatado
+        return $value;
+    }
+}
+

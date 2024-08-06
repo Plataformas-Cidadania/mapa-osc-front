@@ -40,9 +40,7 @@ class OscController extends Controller{
 
         $objetivos_osc = curlList('objetivos', $id);
 
-        //Log::info($certificacoes);
-
-
+        $logData = json_encode($cabecalho);
 
         $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
         $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
