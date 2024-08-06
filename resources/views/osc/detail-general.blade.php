@@ -85,13 +85,13 @@
 
         <div class="col-md-8">
             <div class="item-detail">
-                <h4>Nome fantasia:</h4>
+                <h4>Nome fantasia:  <?php echo iconType($dados_gerais->ft_nome_fantasia_osc); ?></h4>
                 <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_fantasia_osc}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Sigla OSC:</h4>
+                <h4>Sigla OSC:  <?php echo iconType($dados_gerais->ft_sigla_osc); ?></h4>
                 <p>{{$dados_gerais->tx_sigla_osc == null ? $txt_alert_abb : $dados_gerais->tx_sigla_osc}}</p>
             </div>
         </div>

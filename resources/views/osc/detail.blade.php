@@ -56,6 +56,7 @@
                         <div class="fa-svg float-right" style="margin-top: -25px;" >
                             <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
                             <a href="declaracao/{{$id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
+                            <button onclick="generateTable()">Gerar Tabela</button>
                         </div>
                         <br>
                     </header>
@@ -69,6 +70,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+
+                <div id="data-table-container"></div>
 
                 <div class="alert alert-secondary box-floating d-print-none"  style="z-index: 9999999; padding: 10px 5px; width: 45px;">
                     <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
@@ -118,6 +121,22 @@
             .bindPopup('{{$cabecalho->tx_razao_social_osc == null ? $txt_alert_abb : $cabecalho->tx_razao_social_osc}}')
 
 
+        function generateTable() {
+            var tableData = @json($dados_gerais);
+            var tableContainer = document.getElementById('data-table-container');
+
+            var table = '<table class="table">';
+            table += '<thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>';
+
+            for (var key in tableData) {
+                if (tableData.hasOwnProperty(key)) {
+                    table += '<tr><td>' + key + '</td><td>' + tableData[key] + '</td></tr>';
+                }
+            }
+
+            table += '</tbody></table>';
+            tableContainer.innerHTML = table;
+        }
     </script>
 <?php ?>
 
