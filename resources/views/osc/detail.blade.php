@@ -51,7 +51,6 @@
                     <header>
 
                         <br>
-                        <h1>{{$cabecalho->tx_razao_social_osc}}</h1>
                         <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;
                         <div class="fa-svg float-right" style="margin-top: -25px;" >
                             <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
@@ -120,23 +119,6 @@
         L.marker([{{$dados_gerais->geo_localizacao[1]}}, {{$dados_gerais->geo_localizacao[0]}}]).addTo(map)
             .bindPopup('{{$cabecalho->tx_razao_social_osc == null ? $txt_alert_abb : $cabecalho->tx_razao_social_osc}}')
 
-
-        function generateTable() {
-            var tableData = @json($dados_gerais);
-            var tableContainer = document.getElementById('data-table-container');
-
-            var table = '<table class="table">';
-            table += '<thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>';
-
-            for (var key in tableData) {
-                if (tableData.hasOwnProperty(key)) {
-                    table += '<tr><td>' + key + '</td><td>' + tableData[key] + '</td></tr>';
-                }
-            }
-
-            table += '</tbody></table>';
-            tableContainer.innerHTML = table;
-        }
     </script>
 <?php ?>
 
