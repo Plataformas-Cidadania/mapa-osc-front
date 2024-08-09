@@ -16,6 +16,7 @@
                 <h2>Quadro de dirigentes</h2>
                 @foreach($governancas as $governanca)
                     <div>
+                        <?php echo iconType($governanca['ft_nome_dirigente']); ?>
                         <p>{{$governanca['tx_cargo_dirigente']}}</p>
                         <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
                     </div>
@@ -43,6 +44,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
+                            <?php //echo iconType($relacoes_trabalho_governanca['ft_tipo_relacao_trabalho']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores']}}</h2>
                             @else
@@ -55,6 +57,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
+                            <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo']}}</h2>
                             @else
@@ -67,6 +70,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
+                            <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']}}</h2>
                             @else
@@ -79,6 +83,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
+                            <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']}}</h2>
                             @else

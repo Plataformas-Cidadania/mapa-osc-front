@@ -12,30 +12,35 @@
 <div id="multiCollapse3" class="collapse multi-collapse show">
     <div class="row">
         <div class="col-md-12">
+            <?php echo iconType('Representante de OSC'); ?>
             <div class="item-detail">
                 <h4>Como surgiu a OSC:</h4>
                 <p>{{$descricao->tx_historico == null ? $txt_alert_abb : $descricao->tx_historico}}</p>
             </div>
         </div>
         <div class="col-md-12">
+            <?php echo iconType('Representante de OSC'); ?>
             <div class="item-detail">
                 <h4>Missão da OSC:</h4>
                 <p>{{$descricao->tx_missao_osc == null ? $txt_alert_abb : $descricao->tx_missao_osc}}</p>
             </div>
         </div>
         <div class="col-md-12">
+            <?php echo iconType('Representante de OSC'); ?>
             <div class="item-detail">
                 <h4>Visão da OSC:</h4>
                 <p>{{$descricao->tx_visao_osc == null ? $txt_alert_abb : $descricao->tx_visao_osc}}</p>
             </div>
         </div>
         <div class="col-md-12">
+            <?php echo iconType('Representante de OSC'); ?>
             <div class="item-detail">
                 <h4>Finalidades Estatutárias da OSC:</h4>
                 <p>{{$descricao->tx_finalidades_estatutarias == null ? $txt_alert_abb : $descricao->tx_finalidades_estatutarias}}</p>
             </div>
         </div>
         <div class="col-md-12">
+            <?php echo iconType('Representante de OSC'); ?>
             <div class="item-detail">
                 <h4>Link para o Estatuto da OSC:</h4>
                 <p>

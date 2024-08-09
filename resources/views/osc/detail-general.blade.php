@@ -162,6 +162,7 @@
         </div>
         <div class="col-md-12">
             <div class="item-detail alert alert-secondary" >
+                <?php echo iconType('Representante de OSC', 20); ?>
                 <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>
                 <br>
                 <div class="item-obj">
