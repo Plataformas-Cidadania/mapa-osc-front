@@ -38,59 +38,69 @@
                                 <div class="row box-itens-m">
                                     <!--////////////////////////////////////////////-->
                                     <div class="col-md-12 line-add">
+                                        <?php echo iconType($projetos_descricao->ft_descricao_projeto); ?>
                                         <h2>Descrição do projeto, atividade e/ou programa</h2>
                                         <p>{{$projetos_descricao->tx_descricao_projeto == null ? $txt_alert_abb : $projetos_descricao->tx_descricao_projeto}}</p>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                            <?php echo iconType($projetos_descricao->ft_status_projeto); ?>
                                             <h2>Situação do projeto</h2>
                                             <p>{{$projetos_descricao->cd_status_projeto == null ? $txt_alert_abb : $projetos_descricao->cd_status_projeto}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_data_inicio_projeto); ?>
                                             <h2>Ano de início</h2>
                                             <p>{{$projetos_descricao->dt_data_inicio_projeto == null ? $txt_alert_abb : formatBr($projetos_descricao->dt_data_inicio_projeto, 'num')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_data_fim_projeto); ?>
                                             <h2>Ano de conclusão:</h2>
                                             <p>{{$projetos_descricao->dt_data_fim_projeto == null ? $txt_alert_abb : formatBr($projetos_descricao->dt_data_fim_projeto, 'num')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_link_projeto); ?>
                                             <h2>Link para o projeto</h2>
                                             <p><a href="{{$projetos_descricao->tx_link_projeto == null ? $txt_alert_abb : $projetos_descricao->tx_link_projeto}}" class="btn btn-outline-primary" target="_blank">Clique aqui</a></p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_total_beneficiarios); ?>
                                             <h2>Total de beneficiários</h2>
                                             <p>{{$projetos_descricao->nr_total_beneficiarios == null ? $txt_alert_abb : $projetos_descricao->nr_total_beneficiarios}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_valor_total_projeto); ?>
                                             <h2>Valor total</h2>
                                             <p>{{$projetos_descricao->nr_valor_total_projeto == null ? $txt_alert_abb : "R$ ".number_format($projetos_descricao->nr_valor_total_projeto, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_valor_captado_projeto); ?>
                                             <h2>Valor recebido</h2>
                                             <p>{{$projetos_descricao->nr_valor_captado_projeto == null ? $txt_alert_abb : "R$ ".number_format($projetos_descricao->nr_valor_captado_projeto, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_zona_atuacao_projeto); ?>
                                             <h2>Zona de atuação</h2>
                                             <p>{{$projetos_descricao->cd_zona_atuacao_projeto == null ? $txt_alert_abb : $zonaAtuacao[$projetos_descricao->cd_zona_atuacao_projeto]}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
+                                                <?php echo iconType($projetos_descricao->ft_abrangencia_projeto); ?>
                                             <h2>Abrangência de atuação</h2>
                                             <p>{{$projetos_descricao->cd_abrangencia_projeto == null ? $txt_alert_abb : $abrangencia[$projetos_descricao->cd_abrangencia_projeto]}}</p>
                                         </div>
@@ -109,7 +119,7 @@
                                                         @else
                                                             <ul>
                                                             @foreach($projetos_localizacao as $projeto_localizacao)
-                                                                <li>{{$projeto_localizacao->tx_nome_regiao_localizacao_projeto}}</li>
+                                                                <li>{{$projeto_localizacao->tx_nome_regiao_localizacao_projeto}} <?php echo iconType($projeto_localizacao->ft_nome_regiao_localizacao_projeto); ?></li>
                                                             @endforeach
                                                             </ul>
                                                         @endif
@@ -125,7 +135,7 @@
                                                     @else
                                                         <ul>
                                                         @foreach($projetos_beneficiado as $projeto_beneficiado)
-                                                            <li>{{$projeto_beneficiado->tx_nome_publico_beneficiado}}</li>
+                                                            <li>{{$projeto_beneficiado->tx_nome_publico_beneficiado}} <?php echo iconType($projeto_beneficiado->ft_nome_publico_beneficiado); ?></li>
                                                         @endforeach
                                                          </ul>
                                                     @endif
@@ -139,7 +149,7 @@
                                                     @else
                                                         <ul>
                                                         @foreach($projetos_recurso as $projeto_recurso)
-                                                            <li>{{$projeto_recurso->dc_origem_fonte_recursos_projeto->tx_nome_origem_fonte_recursos_projeto}}</li>
+                                                            <li>{{$projeto_recurso->dc_origem_fonte_recursos_projeto->tx_nome_origem_fonte_recursos_projeto}} <?php  //print_r($projeto_recurso->dc_origem_fonte_recursos_projeto) //echo iconType($projeto_recurso->dc_origem_fonte_recursos_projeto->ft_fonte_recursos_projeto); ?></li>
                                                         @endforeach
                                                         </ul>
                                                     @endif
@@ -157,7 +167,7 @@
                                             @else
                                                 <ul>
                                                     @foreach($projetos_parceira as $projeto_parceira)
-                                                        <li>{{$projeto_parceira->tx_nome_fantasia_osc}}</li>
+                                                        <li>{{$projeto_parceira->tx_nome_fantasia_osc}}  <?php echo iconType($projeto_parceira->ft_osc_parceira_projeto); ?></li>
                                                     @endforeach
                                                 </ul>
                                             @endif
@@ -172,7 +182,7 @@
                                             @else
                                                 <ul>
                                                     @foreach($projetos_financiador as $projeto_financiador)
-                                                        <li>{{$projeto_financiador->tx_nome_financiador}}</li>
+                                                        <li>{{$projeto_financiador->tx_nome_financiador}} <?php  echo iconType($projeto_financiador->ft_nome_financiador);?></li>
                                                     @endforeach
                                                 </ul>
                                             @endif
@@ -187,7 +197,7 @@
                                             @else
                                                 <ul>
                                                     @foreach($projetos_tipo_parceria as $projeto_tipo_parceria)
-                                                        <li>{{$projeto_tipo_parceria->dc_tipo_parceria->tx_nome_tipo_parceria}}</li>
+                                                        <li>{{$projeto_tipo_parceria->dc_tipo_parceria->tx_nome_tipo_parceria}} <?php  //print_r($projeto_tipo_parceria->dc_tipo_parceria)//echo iconType($projeto_tipo_parceria->ft_nome_financiador);?></li>
                                                     @endforeach
                                                 </ul>
                                             @endif
@@ -235,7 +245,7 @@
                                                                 <br>
                                                             @endif
                                                             <h3><strong class="objetivo_color{{$objetivo['cd_objetivo_projeto']}}">{{$objetivo_title[$objetivo['cd_objetivo_projeto']]}}</strong></h3>
-                                                            <p>{{$objetivo['tx_nome_objetivo_projeto']}}</p>
+                                                            <p>{{$objetivo['tx_nome_objetivo_projeto']}}<?php  //print_r($objetivo)//echo iconType($objetivo['ft_objetivo_projeto']);?></p>
                                                             <div style="clear: both;"></div>
                                                         </div>
                                                         <br>
@@ -243,7 +253,7 @@
                                                             <div class="item-detail">
                                                                 <h4>Metas Relacionadas ao ODS:</h4>
                                                                 @foreach($objetivo['metas'] as $meta)
-                                                                    <p>{{$objetivo['cd_objetivo_projeto']}}.{{$meta['cd_meta_projeto']}}. {{$meta['tx_nome_meta_projeto']}}</p>
+                                                                    <p>{{$objetivo['cd_objetivo_projeto']}}.{{$meta['cd_meta_projeto']}}. {{$meta['tx_nome_meta_projeto']}}<?php  //print_r($meta)//echo iconType($objetivo['ft_objetivo_projeto']);?></p>
                                                                 @endforeach
                                                             </div>
                                                         </div>
