@@ -17,6 +17,7 @@
                 @foreach($participacao_social_conselhos as $participacao_social_conselho)
                     <div class="row bg-lgt">
                         <div class="col-md-12">
+                            <p style="margin-top: 10px;"> <?php echo iconType($participacao_social_conselho['ft_conselho']); ?></p>
                             <br>
                             <p><strong>Nome do Conselho:</strong></p>
                             <p>{{$participacao_social_conselho['dc_conselho']['tx_nome_conselho']}}</p>
@@ -43,6 +44,7 @@
         <div class="col-md-12">
             <div class="box-itens-g">
                 <h2>Conferências de Políticas Públicas</h2>
+
                 @foreach($participacao_social_conferencia as $participacao_social_conferencia)
                     <div class="row bg-lgt">
                         <div class="col-md-9">
@@ -51,6 +53,7 @@
                             <p>{{$participacao_social_conferencia['dc_conferencia']['tx_nome_conferencia']}}</p>
                         </div>
                         <div class="col-md-3">
+                           <p style="margin-top: 10px;"> <?php echo iconType($participacao_social_conferencia['ft_conferencia']); ?></p>
                             <br class="d-none d-sm-block">
                             <p><strong>Ano de realização da conferência:</strong></p>
                             <p>{{formatBr($participacao_social_conferencia['dt_ano_realizacao'], 'num')}}</p>
@@ -77,6 +80,7 @@
                 @foreach($participacao_social_outros as $participacao_social_outros)
                     <div class="row bg-lgt">
                         <div class="col-md-9">
+                            <p style="margin-top: 10px;"> <?php echo iconType($participacao_social_outros['ft_articipacao_social_outra']); ?></p>
                             <br>
                             <p><strong>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</strong></p>
                             <p>{{$participacao_social_outros['tx_nome_participacao_social_outra']}}</p>

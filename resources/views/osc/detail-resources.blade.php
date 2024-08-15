@@ -62,6 +62,8 @@
                                             @if(is_numeric($key))
                                                 <div class="col-md-4">
                                                     <div class="line-items line-add">
+                                                            <?php //echo iconType($recurso_nome['ft_fonte_recursos_osc']); ?>
+
                                                         <p>{{$recurso_nome['tx_nome_fonte_recursos_osc']}}</p>
                                                         <h2>{{"R$ ".number_format($recurso_nome['nr_valor_recursos_osc']/100, 2, ',', '.')}}</h2>
                                                     </div>

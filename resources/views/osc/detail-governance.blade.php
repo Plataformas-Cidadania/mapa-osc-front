@@ -28,6 +28,7 @@
                 <h2>Conselho fiscal</h2>
                 @foreach($conselhos_fiscais as $conselho_fiscal)
                     <div>
+                        <?php echo iconType($conselho_fiscal['ft_nome_conselheiro']); ?>
                         <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
                     </div>
                 @endforeach
@@ -44,7 +45,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
-                            <?php //echo iconType($relacoes_trabalho_governanca['ft_tipo_relacao_trabalho']); ?>
+                            <?php //echo iconType($relacoes_trabalho_governanca['ft_trabalhadores']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores']}}</h2>
                             @else
