@@ -149,7 +149,7 @@
                                                     @else
                                                         <ul>
                                                         @foreach($projetos_recurso as $projeto_recurso)
-                                                            <li>{{$projeto_recurso->dc_origem_fonte_recursos_projeto->tx_nome_origem_fonte_recursos_projeto}} <?php  //print_r($projeto_recurso->dc_origem_fonte_recursos_projeto) //echo iconType($projeto_recurso->dc_origem_fonte_recursos_projeto->ft_fonte_recursos_projeto); ?></li>
+                                                            <li>{{$projeto_recurso->dc_origem_fonte_recursos_projeto->tx_nome_origem_fonte_recursos_projeto}} <?php  echo iconType($projeto_recurso->ft_fonte_recursos_projeto); ?></li>
                                                         @endforeach
                                                         </ul>
                                                     @endif
