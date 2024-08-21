@@ -45,7 +45,8 @@
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
-                            <?php //echo iconType($relacoes_trabalho_governanca['ft_trabalhadores']); ?>
+
+                            <?php //print_r($relacoes_trabalho_governanca)//echo iconType($relacoes_trabalho_governanca['ft_trabalhadores']); ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores']}}</h2>
                             @else

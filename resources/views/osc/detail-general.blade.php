@@ -162,7 +162,7 @@
         </div>
         <div class="col-md-12">
             <div class="item-detail alert alert-secondary" >
-                <?php echo iconType('Representante de OSC', 20); ?>
+
                 <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>
                 <br>
                 <div class="item-obj">
@@ -183,8 +183,9 @@
                             ]);
                         }
                     ?>
-                    @foreach($objetivos as $objetivo)
+                    @foreach($objetivos as $key => $objetivo)
                         <div class="col-md-12">
+                            <?php  echo iconType($objetivos_osc[$key]->ft_objetivo_osc, 20); ?>
                             @if($objetivo['cd_objetivo_projeto'] <= 10)
                                 <img src="img/ods/0{{$objetivo['cd_objetivo_projeto']}}.png" alt="">
                                 <br>
