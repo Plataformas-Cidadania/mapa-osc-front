@@ -197,7 +197,7 @@
                                             @else
                                                 <ul>
                                                     @foreach($projetos_tipo_parceria as $projeto_tipo_parceria)
-                                                        <li>{{$projeto_tipo_parceria->dc_tipo_parceria->tx_nome_tipo_parceria}} <?php  //print_r($projeto_tipo_parceria->dc_tipo_parceria)//echo iconType($projeto_tipo_parceria->ft_nome_financiador);?></li>
+                                                        <li>{{$projeto_tipo_parceria->dc_tipo_parceria->tx_nome_tipo_parceria}} <?php  echo iconType($projeto_tipo_parceria->ft_tipo_parceria_projeto);?></li>
                                                     @endforeach
                                                 </ul>
                                             @endif
@@ -206,7 +206,7 @@
 
                                     <div class="col-md-12">
                                         <div class="line-add">
-                                            <h2>Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa</h2>
+                                            <h2>Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa <?php  echo iconType($projetos_descricao->ft_metodologia_monitoramento);?></h2>
                                             <p>{{$projetos_descricao->tx_metodologia_monitoramento == null ? $txt_alert_abb : $projetos_descricao->tx_metodologia_monitoramento}}</p>
                                         </div>
                                     </div>
@@ -237,6 +237,7 @@
                                                     ?>
                                                     @foreach($objetivos_projeto as $objetivo)
                                                         <div class="col-md-12">
+                                                                <?php echo iconType($projetos_objetivo[0]->ft_objetivo_projeto, 20);?>
                                                             @if($objetivo['cd_objetivo_projeto'] <= 10)
                                                                 <img src="img/ods/0{{$objetivo['cd_objetivo_projeto']}}.png" alt="">
                                                                 <br>
@@ -245,7 +246,10 @@
                                                                 <br>
                                                             @endif
                                                             <h3><strong class="objetivo_color{{$objetivo['cd_objetivo_projeto']}}">{{$objetivo_title[$objetivo['cd_objetivo_projeto']]}}</strong></h3>
-                                                            <p>{{$objetivo['tx_nome_objetivo_projeto']}}<?php  //print_r($objetivo)//echo iconType($objetivo['ft_objetivo_projeto']);?></p>
+                                                            <p>{{$objetivo['tx_nome_objetivo_projeto']}}
+                                                               {{-- {{print_r($objetivo)}}--}}
+
+                                                            </p>
                                                             <div style="clear: both;"></div>
                                                         </div>
                                                         <br>
@@ -254,6 +258,7 @@
                                                                 <h4>Metas Relacionadas ao ODS:</h4>
                                                                 @foreach($objetivo['metas'] as $meta)
                                                                     <p>{{$objetivo['cd_objetivo_projeto']}}.{{$meta['cd_meta_projeto']}}. {{$meta['tx_nome_meta_projeto']}}<?php  //print_r($meta)//echo iconType($objetivo['ft_objetivo_projeto']);?></p>
+                                                                    {{--{{print_r($meta)}}--}}
                                                                 @endforeach
                                                             </div>
                                                         </div>
