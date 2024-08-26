@@ -32,15 +32,17 @@
                         </a>
                     @endif
 
-                    @foreach($subitems as $key => $subitem)
-                        @if($subitem->arquivo!="")
-                            <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
-                                <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
-                                {{$subitem->titulo}}
-                            </a>
-                        <br><br><br>
-                        @endif
-                    @endforeach
+                    @if(isset($subitems) && $subitems->isNotEmpty())
+                        @foreach($subitems as $key => $subitem)
+                            @if($subitem->arquivo!="")
+                                <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
+                                    <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
+                                    {{$subitem->titulo}}
+                                </a>
+                            <br><br><br>
+                            @endif
+                        @endforeach
+                    @endif
 
                     <br><br>
                 </div>
