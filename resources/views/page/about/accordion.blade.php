@@ -1,11 +1,8 @@
+@php use Illuminate\Support\Facades\Schema; @endphp
 <div class="accordion" id="accordionExample">
 
 
     @foreach($items as $key => $item)
-
-            <?php $subitems = \App\Subitem::where('item_id', $item->id)->where('status', 1)->orderBy('posicao')->get(); ?>
-
-
 
         <div class="card">
             <div class="card-header" id="item-{{$key}}">
@@ -32,17 +29,30 @@
                         </a>
                     @endif
 
-                    @if(isset($subitems) && $subitems->isNotEmpty())
-                        @foreach($subitems as $key => $subitem)
-                            @if($subitem->arquivo!="")
+                        <?php
+                            if (Schema::hasTable('subitems')) {
+                                $subitems = \App\Subitem::where('item_id', $item->id)
+                                    ->where('status', 1)
+                                    ->orderBy('posicao')
+                                    ->get();
+                            } else {
+                                $subitems = collect();
+                            }
+                        ?>
+                        @if(isset($subitems) && $subitems->isNotEmpty())
+                            @foreach($subitems as $subitem)
+                                @if($subitem->arquivo!="")
                                 <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
                                     <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
                                     {{$subitem->titulo}}
                                 </a>
-                            <br><br><br>
-                            @endif
-                        @endforeach
-                    @endif
+                                <br><br><br>
+                                 @endif
+                            @endforeach
+                       @endif
+
+
+
 
                     <br><br>
                 </div>
