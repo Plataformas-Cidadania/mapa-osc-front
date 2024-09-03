@@ -18,8 +18,12 @@
     <div class="row">
         <div class="col-md-4">
             <p>
-                <strong>CNPJ:</strong> {{$cabecalho->cd_identificador_osc}}<br>
-                <strong>Natureza jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}<br>
+                <strong>CNPJ:</strong> {{cnpjFormat($cabecalho->cd_identificador_osc)}}
+                <?php echo iconType($cabecalho->ft_identificador_osc); ?>
+                <br>
+                <strong>Natureza jurídica:</strong> {{$cabecalho->tx_nome_natureza_juridica_osc}}
+                <?php echo iconType($cabecalho->ft_natureza_juridica_osc); ?>
+                <br>
             </p>
             <br>
 
@@ -81,13 +85,13 @@
 
         <div class="col-md-8">
             <div class="item-detail">
-                <h4>Nome fantasia:</h4>
+                <h4>Nome fantasia:  <?php echo iconType($dados_gerais->ft_nome_fantasia_osc); ?></h4>
                 <p>{{$dados_gerais->tx_nome_fantasia_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_fantasia_osc}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Sigla OSC:</h4>
+                <h4>Sigla OSC:  <?php echo iconType($dados_gerais->ft_sigla_osc); ?></h4>
                 <p>{{$dados_gerais->tx_sigla_osc == null ? $txt_alert_abb : $dados_gerais->tx_sigla_osc}}</p>
             </div>
         </div>
@@ -115,48 +119,50 @@
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Situação do imóvel:<i class="fas fa-database float-right tx-pri"></i></h4>
+                <h4>Situação do imóvel:<?php echo iconType($dados_gerais->ft_situacao_imovel_osc); ?></h4>
                 <p>{{$dados_gerais->tx_nome_situacao_imovel_osc == null ? $txt_alert_abb : $dados_gerais->tx_nome_situacao_imovel_osc}}</p>
+
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Responsável legal:</h4>
+                <h4>Responsável legal:<?php echo iconType($dados_gerais->ft_nome_responsavel_legal); ?></h4>
                 <p>{{$dados_gerais->tx_nome_responsavel_legal == null ? $txt_alert_abb : $dados_gerais->tx_nome_responsavel_legal}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Ano de cadastro de CNPJ:</h4>
+                <h4>Ano de cadastro de CNPJ:<?php echo iconType($dados_gerais->ft_ano_cadastro_cnpj); ?></h4>
                 <p>{{$dados_gerais->dt_ano_cadastro_cnpj == null ? $txt_alert_abb : formatBr($dados_gerais->dt_ano_cadastro_cnpj, 'y')}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Ano de fundação:</h4>
+                <h4>Ano de fundação:<?php echo iconType($dados_gerais->ft_fundacao_osc); ?></h4>
                 <p>{{$dados_gerais->dt_fundacao_osc == null ? $txt_alert_abb : formatBr($dados_gerais->dt_fundacao_osc, 'y')}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>E-mail:</h4>
+                <h4>E-mail:<?php echo iconType($dados_gerais->ft_email); ?></h4>
                 <p>{{$dados_gerais->tx_email == null ? $txt_alert_abb : $dados_gerais->tx_email}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Site oficial:</h4>
+                <h4>Site oficial:<?php echo iconType($dados_gerais->ft_site); ?></h4>
                 <p>{{$dados_gerais->tx_site == null ? $txt_alert_abb : $dados_gerais->tx_site}}</p>
             </div>
         </div>
         <div class="col-md-12">
             <div class="item-detail">
-                <h4>O que a OSC faz:</h4>
+                <h4>O que a OSC faz:<?php echo iconType($dados_gerais->ft_email); ?></h4>
                 <p>{{$dados_gerais->tx_resumo_osc == null ? $txt_alert_abb : $dados_gerais->tx_resumo_osc}}</p>
             </div>
         </div>
         <div class="col-md-12">
             <div class="item-detail alert alert-secondary" >
+
                 <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>
                 <br>
                 <div class="item-obj">
@@ -177,8 +183,9 @@
                             ]);
                         }
                     ?>
-                    @foreach($objetivos as $objetivo)
+                    @foreach($objetivos as $key => $objetivo)
                         <div class="col-md-12">
+                            <?php  echo iconType($objetivos_osc[$key]->ft_objetivo_osc, 20); ?>
                             @if($objetivo['cd_objetivo_projeto'] <= 10)
                                 <img src="img/ods/0{{$objetivo['cd_objetivo_projeto']}}.png" alt="">
                                 <br>

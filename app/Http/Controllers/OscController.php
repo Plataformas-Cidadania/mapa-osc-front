@@ -33,6 +33,8 @@ class OscController extends Controller{
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
 
+        //Log::info([$descricao]);
+
         $certificacoes = curlList('certificados', $id);
         $area_atuacao = curlList('areas_atuacao', $id);
         $area_atuacao_rep = curlList('areas_atuacao_rep', $id);
@@ -40,9 +42,7 @@ class OscController extends Controller{
 
         $objetivos_osc = curlList('objetivos', $id);
 
-        //Log::info($certificacoes);
-
-
+        $logData = json_encode($cabecalho);
 
         $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
         $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
