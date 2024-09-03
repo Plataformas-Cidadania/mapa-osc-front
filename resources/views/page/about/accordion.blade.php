@@ -51,7 +51,7 @@
                                         $subitem->file_extension = 'N/A';
                                     }
                                 ?>
-                               {{-- @if($subitem->arquivo!="")--}}
+                                @if($subitem->arquivo!="")
                                 <p style="padding-top: 20px">
                                     <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle;">
                                         <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
@@ -65,7 +65,7 @@
                                     </a>
                                 </p>
 
-                                 {{--@endif--}}
+                                 @endif
                             @endforeach
                        @endif
 
