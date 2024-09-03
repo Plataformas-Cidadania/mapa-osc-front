@@ -41,13 +41,31 @@
                         ?>
                         @if(isset($subitems) && $subitems->isNotEmpty())
                             @foreach($subitems as $subitem)
-                                @if($subitem->arquivo!="")
-                                <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
-                                    <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
-                                    {{$subitem->titulo}}
-                                </a>
-                                <br><br><br>
-                                 @endif
+                                <?php
+                                    $path = public_path('arquivos/subitems/' . $subitem->arquivo);
+                                    if (file_exists($path)) {
+                                        $subitem->file_size = filesize($path);
+                                        $subitem->file_extension = pathinfo($path, PATHINFO_EXTENSION);
+                                    } else {
+                                        $subitem->file_size = 0; // ou null se preferir
+                                        $subitem->file_extension = 'N/A';
+                                    }
+                                ?>
+                               {{-- @if($subitem->arquivo!="")--}}
+                                <p style="padding-top: 20px">
+                                    <a href="arquivos/subitems/{{$subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle;">
+                                        <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
+                                        {{$subitem->titulo}}
+                                        Atualizado em: {{formatBr($subitem->updated_at, 'num')}}
+                                        @if($subitem->file_size > 0)
+                                            <span> ({{ strtoupper($subitem->file_extension) }} - {{ round($subitem->file_size / 1024, 2) }} KB)</span>
+                                        @else
+                                            <span> (Informações indisponíveis)</span>
+                                        @endif
+                                    </a>
+                                </p>
+
+                                 {{--@endif--}}
                             @endforeach
                        @endif
 
