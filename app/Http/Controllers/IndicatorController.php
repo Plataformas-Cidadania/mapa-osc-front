@@ -44,6 +44,43 @@ class IndicatorController extends Controller{
         $text = \App\Text::where('slug', 'dados-indicadores')->first();
         $ChartCategorias = \App\ChartCategoria::orderBy('posicao')->get();
 
+
+        /*/////////////////////////////////////*/
+        $chartType = 'column';
+
+        $data = DB::table('public.dados_charts')
+            ->select('data', 'label', 'valor', 'slug', 'grupo_id')
+            //->where('slug', $chartType)
+            ->orderBy('data')
+            ->get();
+
+        // Organize the data into an appropriate structure
+        $groups = $data->groupBy('grupo_id');
+
+        $organizedData = [];
+
+        foreach ($groups as $grupoId => $dataGroup) {
+            $labels = $dataGroup->pluck('data')->unique()->sort()->values();
+            $series = [];
+
+            foreach ($dataGroup->groupBy('label') as $label => $values) {
+                $series[] = [
+                    'name' => $label,
+                    'data' => $values->pluck('valor')->values()
+                ];
+            }
+
+            $organizedData[$grupoId] = [
+                'labels' => $labels,
+                'series' => $series,
+            ];
+        }
+
+        return response()->json($organizedData);
+        /*/////////////////////////////////////*/
+
+
+
         if(!empty($text)){
             return view('indicator-new.chart', [
                 'text' => $text,
