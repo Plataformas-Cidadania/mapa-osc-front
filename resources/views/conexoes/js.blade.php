@@ -166,6 +166,16 @@
 <script src="js/components/charts/charts.js"></script>
 <script src="js/components/charts/page/indicator.js"></script>
 @endif
+
+@if($rota=='indicadores-new')
+    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+
+    <script src="js/components/charts/apex/apexMixed.js"></script>
+    <script src="js/components/charts/apex/accordion.js"></script>
+    <script src="js/components/charts/page/indicatorNew.js"></script>
+@endif
 @if($rota=='pagina/depen')
     <script src="js/components/pages/depen.js"></script>
 @endif

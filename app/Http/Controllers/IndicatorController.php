@@ -49,7 +49,7 @@ class IndicatorController extends Controller{
         $chartType = 'column';
 
         $data = DB::table('public.dados_charts')
-            ->select('data', 'label', 'valor', 'slug', 'grupo_id')
+            ->select('data', 'label', 'valor', 'slug', 'type', 'grupo_id')
             //->where('slug', $chartType)
             ->orderBy('data')
             ->get();
@@ -60,12 +60,14 @@ class IndicatorController extends Controller{
         $organizedData = [];
 
         foreach ($groups as $grupoId => $dataGroup) {
+            Log::info($dataGroup->pluck('type'));
             $labels = $dataGroup->pluck('data')->unique()->sort()->values();
             $series = [];
 
             foreach ($dataGroup->groupBy('label') as $label => $values) {
                 $series[] = [
                     'name' => $label,
+                    'type' => $values->first()->type,
                     'data' => $values->pluck('valor')->values()
                 ];
             }
@@ -76,15 +78,14 @@ class IndicatorController extends Controller{
             ];
         }
 
-        return response()->json($organizedData);
+        //return response()->json($organizedData);
         /*/////////////////////////////////////*/
-
 
 
         if(!empty($text)){
             return view('indicator-new.chart', [
                 'text' => $text,
-                'chartCategorias' => $ChartCategorias,
+                'chart' => response()->json($organizedData),
             ]);
         }
 

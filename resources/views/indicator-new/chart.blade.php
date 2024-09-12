@@ -35,8 +35,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="accordion" id="accordionExample">
 
+                <div id="indicator-new"></div>
+
+                {{--<div class="accordion" id="accordionExample">
                     @foreach($chartCategorias as $key => $chartCategoria)
                         <div class="card">
                             <div class="card-header" id="chart{{$key}}">
@@ -54,8 +56,9 @@
                             </div>
                         </div>
                     @endforeach
+                </div>--}}
 
-                </div>
+
             </div>
         </div>
     </div>
