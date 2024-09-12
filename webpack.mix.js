@@ -112,6 +112,10 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarMidiaCtrl.js', 
 mix.scripts('packages/cms/resources/assets/js/controllers/categoriaCtrl.js', 'public/assets-cms/js/controllers/categoriaCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarCategoriaCtrl.js', 'public/assets-cms/js/controllers/alterarCategoriaCtrl.js');
 
+//Charts
+mix.scripts('packages/cms/resources/assets/js/controllers/chartCtrl.js', 'public/assets-cms/js/controllers/chartCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarChartCtrl.js', 'public/assets-cms/js/controllers/alterarChartCtrl.js');
+
 //Posts
 mix.scripts('packages/cms/resources/assets/js/controllers/postCtrl.js', 'public/assets-cms/js/controllers/postCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarPostCtrl.js', 'public/assets-cms/js/controllers/alterarPostCtrl.js');

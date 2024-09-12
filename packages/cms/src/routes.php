@@ -126,6 +126,15 @@ Route::group(['middleware' => 'cms'], function () {
         Route::post('/cms/alterar-categoria/{id}', 'Cms\Controllers\CategoriaController@alterar');
         Route::get('/cms/excluir-categoria/{id}', 'Cms\Controllers\CategoriaController@excluir');
 
+        //CHARTS
+        Route::get('/cms/charts', 'Cms\Controllers\ChartController@index');
+        Route::get('/cms/charts/{chart_categoria_id}', 'Cms\Controllers\ChartController@index');
+        Route::get('/cms/listar-charts', 'Cms\Controllers\ChartController@listar');
+        Route::post('/cms/inserir-chart', 'Cms\Controllers\ChartController@inserir');
+        Route::get('/cms/chart/{id}', 'Cms\Controllers\ChartController@detalhar');
+        Route::post('/cms/alterar-chart/{id}', 'Cms\Controllers\ChartController@alterar');
+        Route::get('/cms/excluir-chart/{id}', 'Cms\Controllers\ChartController@excluir');
+
         //POSTS
         Route::get('/cms/posts', 'Cms\Controllers\PostController@index');
         Route::get('/cms/posts/{categoria_id}', 'Cms\Controllers\PostController@index');

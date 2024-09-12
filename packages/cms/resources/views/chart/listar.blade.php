@@ -1,23 +1,23 @@
 @extends('cms::layouts.app')
 
 @section('content')
-    {!! Html::script(config('app.url').'assets-cms/js/controllers/chartCategoriaCtrl.js') !!}
+    {!! Html::script(config('app.url').'assets-cms/js/controllers/chartCtrl.js') !!}
 <script>
     $(function () {
         $('[data-toggle="popover"]').popover()
     })
 </script>
-    <div ng-controller="chartCategoriaCtrl">
+    <div ng-controller="chartCtrl" ng-init="chart_categoria_id({{$chart_categoria_id}})">
         <div class="box-padrao">
-            <h1><i class="fa fa-chartCategoria" aria-hidden="true"></i>&nbsp;Chart Categorias</h1>
-            <button class="btn btn-primary" ng-click="mostrarForm=!mostrarForm" ng-show="!mostrarForm">Adicionar</button>
+            <h1><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Charts</h1>
+            <button class="btn btn-primary" ng-click="mostrarForm=!mostrarForm" ng-show="!mostrarForm">Nova Chart</button>
             <button class="btn btn-warning" ng-click="mostrarForm=!mostrarForm" ng-show="mostrarForm">Cancelar</button>
             <br><br>
             <div ng-show="mostrarForm">
                 <span class="texto-obrigatorio" ng-show="form.$invalid">* campos obrigatórios</span><br><br>
                 {!! Form::open(['name' =>'form']) !!}
 
-                <div  style="display: none">
+                <div style="display: none;">
                     <div class="container-thumb">
                         <div class="box-thumb" name="fileDrop" ngf-drag-over-class="'box-thumb-hover'" ngf-drop ngf-select ng-model="picFile"
                              ng-show="!picFile" accept="image/*" ngf-max-size="2MB">Solte uma imagem aqui!</div>
@@ -34,18 +34,10 @@
                     </i>
                 </div>
                 <br><br>
-
-                <span class="btn btn-primary btn-file" ng-show="!fileArquivo" style="display: none">
-                    Escolher Arquivo <input  type="file" ngf-select ng-model="fileArquivo" name="fileArquivo" accept="application/pdf,.zip,.rar,.doc,.docx,.xlsx,.xls" ngf-max-size="100MB" ngf-model-invalid="errorFile">
-                </span>
-                <a ng-show="fileArquivo"><% fileArquivo.name %></a>
-
-
-                <br><br>
-                @include('cms::chart_categoria._form')
+                @include('cms::chart._form')
                 <div class="row">
                     <div class="col-md-1 col-lg-1 col-xs-3">
-                        <button class="btn btn-info" type="button" ng-click="inserir(picFile, fileArquivo)" ng-disabled="form.$invalid">Salvar</button>
+                        <button class="btn btn-info" type="button" ng-click="inserir(picFile)" ng-disabled="form.$invalid">Salvar</button>
                     </div>
                     <div class="col-md-2 col-lg-2 col-xs-6">
                         <span class="progress" ng-show="picFile.progress >= 0">
@@ -62,9 +54,6 @@
                 <br><br><br>
 
 
-
-
-
                 {!! Form::close()!!}
             </div>
         </div>
@@ -75,53 +64,39 @@
                 <div class="box-padrao">
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                        <input class="form-control" type="text" ng-model="dadoPesquisa" placeholder="Faça sua busca"/>
+                        <input class="form-control" type="text" ng-model="dadoChart" placeholder="Faça sua busca"/>
                     </div>
                     <br>
-                    <div><% mensagemChartCategoriar %></div>
+                    <div><% mensagemChartr %></div>
                     <div ng-show="processandoListagem"><i class="fa fa-spinner fa-spin"></i> Processando...</div>
                     <h2 class="tabela_vazia" ng-show="!processandoListagem && totalItens==0">Nenhum registro encontrado!</h2>
                     <table ng-show="totalItens>0" class="table table-striped">
                         <thead>
                         <tr>
-                            <th ng-click="ordernarPor('id')" style="chartCategoriar:pointer;">
+                            <th ng-click="ordernarPor('id')" style="chartr:pointer;">
                                 Id
                                 <i ng-if="ordem=='id' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
                                 <i ng-if="ordem=='id' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
                             <th>Imagem</th>
-                            <th ng-click="ordernarPor('chartCategoria')" style="chartCategoriar:pointer;">
-                                ChartCategoria
-                                <i ng-if="ordem=='chartCategoria' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
-                                <i ng-if="ordem=='chartCategoria' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
-                            </th>
-                            <th ng-click="ordernarPor('posicao')" style="apoior:pointer;">
-                                Posição
-                                <i ng-if="ordem=='posicao' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
-                                <i ng-if="ordem=='posicao' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
+                            <th ng-click="ordernarPor('chart')" style="chartr:pointer;">
+                                Chart
+                                <i ng-if="ordem=='chart' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
+                                <i ng-if="ordem=='chart' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="chartCategoria in chartCategorias">
-                            <td><% chartCategoria.id %></td>
-                            <td><img ng-show="chartCategoria.imagem" ng-src="imagens/chartCategorias/xs-<% chartCategoria.imagem %>" width="60"></td>
-                            <td><a href="cms/chartCategoria/<% chartCategoria.id %>"><% chartCategoria.titulo %></a></td>
-                            <td><a href="cms/apoio/<% chartCategoria.id %>"><% chartCategoria.posicao %></a></td>
+                        <tr ng-repeat="chart in charts">
+                            <td><% chart.id %></td>
+                            <td><img ng-show="chart.imagem" ng-src="/imagens/charts/xs-<% chart.imagem %>" width="60"></td>
+                            <td><a href="cms/chart/<% chart.id %>"><% chart.titulo %></a></td>
                             <td class="text-right">
                                 <div>
-                                    <a href="cms/charts/<% chartCategoria.id %>"><i class="fa fa-sitemap fa-2x" title="Charts"></i></a>&nbsp;&nbsp;
-                                    <a><i class="fa fa-arrow-circle-up fa-2x" title="Posição" ng-click="positionUp(chartCategoria.id);" style="cursor: pointer;" ng-hide="<% $first %>"></i></a>
-                                    <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $first %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>&nbsp;&nbsp;
-
-                                    <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(chartCategoria.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
-                                    <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $last %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>
-
-                                    {{--<a href="cms/items/<% chartCategoria.id %>"><i class="fa fa-sitemap fa-2x" title="Itens"></i></a>&nbsp;&nbsp;--}}
-                                    <a href="cms/chart_categoria/<% chartCategoria.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
-                                    <a  ng-class="<% chartCategoria.status %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(chartCategoria.id);"></i></a>
-                                    <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(chartCategoria.id, chartCategoria.titulo, chartCategoria.imagem)"></i></a>
+                                    <a href="cms/posts/<% chart.id %>"><i class="fa fa-plus fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a href="cms/chart/<% chart.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(chart.id, chart.titulo, chart.imagem)"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -136,7 +111,7 @@
                 <!--<button class="btn btn-primary btn-block" ng-click="loadMore()" ng-hide="currentPage==lastPage">Load More</button>-->
                 <div ng-show="totalItens > 0" class="clan-paginacao">
                     <div class="item-paginacao">
-                        <uib-pagination total-items="totalItens" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-chartCategorias="true" force-ellipses="true" items-per-page="itensPerPage" num-pages="numPages"></uib-pagination>
+                        <uib-pagination total-items="totalItens" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" items-per-page="itensPerPage" num-pages="numPages"></uib-pagination>
                     </div>
                     <div class="item-paginacao">
                         <select class="form-control itens-por-pagina item-paginacao"  ng-model="itensPerPage">
@@ -165,7 +140,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <img  ng-src="imagens/chartCategorias/xs-<% imagemExcluir %>" width="100">
+                                <img  ng-src="/imagens/charts/xs-<% imagemExcluir %>" width="100">
                             </div>
                             <div class="col-md-9">
                                 <p><% tituloExcluir %></p>
