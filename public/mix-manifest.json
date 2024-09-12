@@ -37,6 +37,8 @@
     "/assets-cms/js/controllers/alterarPublicationCtrl.js": "/assets-cms/js/controllers/alterarPublicationCtrl.js",
     "/assets-cms/js/controllers/linkCtrl.js": "/assets-cms/js/controllers/linkCtrl.js",
     "/assets-cms/js/controllers/alterarLinkCtrl.js": "/assets-cms/js/controllers/alterarLinkCtrl.js",
+    "/assets-cms/js/controllers/chartCategoriaCtrl.js": "/assets-cms/js/controllers/chartCategoriaCtrl.js",
+    "/assets-cms/js/controllers/alterarChartCategoriaCtrl.js": "/assets-cms/js/controllers/alterarChartCategoriaCtrl.js",
     "/assets-cms/js/controllers/apoioCtrl.js": "/assets-cms/js/controllers/apoioCtrl.js",
     "/assets-cms/js/controllers/alterarApoioCtrl.js": "/assets-cms/js/controllers/alterarApoioCtrl.js",
     "/assets-cms/js/controllers/equipeCtrl.js": "/assets-cms/js/controllers/equipeCtrl.js",

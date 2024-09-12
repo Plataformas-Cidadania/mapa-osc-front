@@ -124,6 +124,10 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarPublicationCtrl
 mix.scripts('packages/cms/resources/assets/js/controllers/linkCtrl.js', 'public/assets-cms/js/controllers/linkCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarLinkCtrl.js', 'public/assets-cms/js/controllers/alterarLinkCtrl.js');
 
+//ChartCategorias
+mix.scripts('packages/cms/resources/assets/js/controllers/chartCategoriaCtrl.js', 'public/assets-cms/js/controllers/chartCategoriaCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarChartCategoriaCtrl.js', 'public/assets-cms/js/controllers/alterarChartCategoriaCtrl.js');
+
 //Apoios
 mix.scripts('packages/cms/resources/assets/js/controllers/apoioCtrl.js', 'public/assets-cms/js/controllers/apoioCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarApoioCtrl.js', 'public/assets-cms/js/controllers/alterarApoioCtrl.js');

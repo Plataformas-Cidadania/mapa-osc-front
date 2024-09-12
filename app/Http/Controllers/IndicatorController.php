@@ -39,6 +39,25 @@ class IndicatorController extends Controller{
 
     }
 
+    public function chartNew(){
+
+        $text = \App\Text::where('slug', 'dados-indicadores')->first();
+        $ChartCategorias = \App\ChartCategoria::orderBy('posicao')->get();
+
+        if(!empty($text)){
+            return view('indicator-new.chart', [
+                'text' => $text,
+                'chartCategorias' => $ChartCategorias,
+            ]);
+        }
+
+        return "<div style='color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; border-radius: 5px; text-align: center;'>
+                    Ops! Cadastre no CMS em texts o slug
+                    <strong>dados-indicadores</strong>
+                </div>";
+
+    }
+
     public function analises(){
         return DB::table("portal.tb_analise")->where('status', 1)->orderBy('id_analise')->get();
     }

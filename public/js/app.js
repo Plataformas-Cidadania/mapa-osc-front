@@ -20740,3 +20740,5 @@ function numberDecimalPtBR(number, decimals){
 }
 
 
+
+

@@ -157,6 +157,17 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/positionUp-link/{id}', 'Cms\Controllers\LinkController@positionUp');
         Route::get('/cms/positionDown-link/{id}', 'Cms\Controllers\LinkController@positionDown');
 
+        //ChartCategoria
+        Route::get('/cms/chart_categorias', 'Cms\Controllers\ChartCategoriaController@index');
+        Route::get('/cms/listar-chart_categorias', 'Cms\Controllers\ChartCategoriaController@listar');
+        Route::post('/cms/inserir-chart_categoria', 'Cms\Controllers\ChartCategoriaController@inserir');
+        Route::get('/cms/chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@detalhar');
+        Route::post('/cms/alterar-chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@alterar');
+        Route::get('/cms/excluir-chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@excluir');
+        Route::get('/cms/status-chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@status');
+        Route::get('/cms/positionUp-chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@positionUp');
+        Route::get('/cms/positionDown-chart_categoria/{id}', 'Cms\Controllers\ChartCategoriaController@positionDown');
+
         //APOIOS
         Route::get('/cms/apoios', 'Cms\Controllers\ApoioController@index');
         Route::get('/cms/listar-apoios', 'Cms\Controllers\ApoioController@listar');
