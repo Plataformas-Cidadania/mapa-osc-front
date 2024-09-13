@@ -94,7 +94,6 @@
                             <td><a href="cms/chart/<% chart.id %>"><% chart.titulo %></a></td>
                             <td class="text-right">
                                 <div>
-                                    <a href="cms/posts/<% chart.id %>"><i class="fa fa-plus fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a href="cms/chart/<% chart.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(chart.id, chart.titulo, chart.imagem)"></i></a>
                                 </div>

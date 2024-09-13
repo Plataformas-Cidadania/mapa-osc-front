@@ -101,10 +101,7 @@ class ChartController extends Controller
             ['id', '=', $id],
         ])->firstOrFail();
 
-
-
-
-        return view('cms::chart.detalhar', ['chart' => $chart]);
+        return view('cms::chart.detalhar', ['chart_categoria_id' => $chart->chart_categoria_id, 'chart' => $chart]);
     }
 
     public function alterar(Request $request, $id)
