@@ -11,4 +11,9 @@ class ChartCategoria extends Model
     protected $fillable = [
         'imagem', 'titulo', 'descricao', 'arquivo', 'posicao', 'cmsuser_id',
     ];
+
+    public function charts()
+    {
+        return $this->hasMany(\App\Chart::class, 'chart_categoria_id');
+    }
 }
