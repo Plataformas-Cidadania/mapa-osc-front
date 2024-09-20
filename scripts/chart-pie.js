@@ -51,9 +51,9 @@ async function processEndpoint(endpoint, grupo_id, slug) {
 
 async function main() {
     const endpoints = [
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/3?_=1726839302168', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-area-atuacao-brasil-2023' },
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/4?_=17268393021698', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-assistencia-social-servico-brasil-2023' },*/
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/5?_=1726839302170', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' }
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/3?_=1726839302168', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-area-atuacao-brasil-2023' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/4?_=17268393021698', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-assistencia-social-servico-brasil-2023' },
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/5?_=1726839302170', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' }*/
 
         // Adicione mais endpoints conforme necessário
     ];

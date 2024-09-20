@@ -52,8 +52,8 @@ async function processEndpoint(endpoint, grupo_id, slug) {
 
 async function main() {
     const endpoints = [
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', grupo_id: 1, slug: 'total-oscs-brasil-2010-2023' },*/
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column', grupo_id: 2, slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' }
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', grupo_id: 1, slug: 'total-oscs-brasil-2010-2023' },
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column', grupo_id: 2, slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' }*/
 
         // Adicione mais endpoints conforme necessário
     ];
