@@ -1,9 +1,23 @@
+function splitLabels(labels) {
+  return labels.map(label => {
+    const words = label.split(' ');
+    if (words.length > 2) {
+      const chunked = [];
+      for (let i = 0; i < words.length; i += 2) {
+        chunked.push(words.slice(i, i + 2).join(' '));
+      }
+      return chunked;
+    }
+    return label;
+  });
+}
 class ApexMixed extends React.Component {
   constructor(props) {
     console.log('ApexMixed', props);
     super(props);
     this.state = {
       id: props?.chartId,
+      //series: props?.data?.series,
       series: props?.data?.series,
       options: {
         chart: {
@@ -12,9 +26,11 @@ class ApexMixed extends React.Component {
           stacked: false
         },
         stroke: {
-          width: [0, 2, 5],
-          curve: 'smooth'
+          width: [2, 2, 5]
+          /*width: [0, 2, 5],
+          curve: 'smooth'*/
         },
+
         plotOptions: {
           bar: {
             columnWidth: '50%'
@@ -31,13 +47,32 @@ class ApexMixed extends React.Component {
             stops: [0, 100, 100, 100]
           }
         },
-        labels: props?.data?.labels,
+        //colors: ['#008FFB', '#00E396', '#FEB019'],
+        // labels: props?.data?.labels,
+        /*labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003',
+            '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'
+        ],*/
         markers: {
           size: 0
         },
         xaxis: {
-          type: 'datetime'
+          categories: props?.data?.labels ? splitLabels(props?.data?.labels) : [],
+          tickAmount: 0,
+          labels: {
+            rotate: 0,
+            /*rotateAlways: true,
+            offsetX: 0,
+            offsetY: 10,*/
+            trim: false,
+            style: {
+              fontSize: '12px',
+              // Ajuste o tamanho da fonte
+              whiteSpace: 'normal' // Permite quebra de linha
+            }
+          }
+          //type: 'datetime'
         },
+
         yaxis: {
           title: {
             text: 'Points'
@@ -71,4 +106,3 @@ class ApexMixed extends React.Component {
     }));
   }
 }
-const domContainer = document.querySelector('#indicator-new');

@@ -121,9 +121,9 @@ class IndicatorController extends Controller{
         $chartType = 'column';
 
         $data = DB::table('public.dados_charts')
-            ->select('data', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
             //->where('slug', $chartType)
-            ->orderBy('data')
+            ->orderBy('serie')
             ->get();
 
         // Organize the data into an appropriate structure
@@ -132,14 +132,14 @@ class IndicatorController extends Controller{
         $organizedData = [];
 
         foreach ($groups as $grupoId => $dataGroup) {
-            $labels = $dataGroup->pluck('data')->unique()->sort()->values();
+            $labels = $dataGroup->pluck('serie')->unique()->sort()->values();
             $series = [];
 
             foreach ($dataGroup->groupBy('label') as $label => $values) {
                 $series[] = [
                     'name' => $label,
                     'type' => $values->first()->type,
-                    'data' => $values->pluck('valor')->values()
+                    'serie' => $values->pluck('valor')->values()
                 ];
             }
 
@@ -151,6 +151,7 @@ class IndicatorController extends Controller{
 
         //return response()->json($organizedData);
         /*/////////////////////////////////////*/
+
 
 
         if(!empty($text)){
@@ -167,49 +168,6 @@ class IndicatorController extends Controller{
 
     }
 
-    public function chartNewAPI(){
 
-        $text = \App\Text::where('slug', 'dados-indicadores')->first();
-        $ChartCategorias = \App\ChartCategoria::orderBy('posicao')->get();
-
-
-        /*/////////////////////////////////////*/
-        $chartType = 'column';
-
-        $data = DB::table('public.dados_charts')
-            ->select('data', 'label', 'valor', 'slug', 'type', 'grupo_id')
-            //->where('slug', $chartType)
-            ->orderBy('data')
-            ->get();
-
-        // Organize the data into an appropriate structure
-        $groups = $data->groupBy('grupo_id');
-
-        $organizedData = [];
-
-        foreach ($groups as $grupoId => $dataGroup) {
-            $labels = $dataGroup->pluck('data')->unique()->sort()->values();
-            $series = [];
-
-            foreach ($dataGroup->groupBy('label') as $label => $values) {
-                $series[] = [
-                    'name' => $label,
-                    'type' => $values->first()->type,
-                    'data' => $values->pluck('valor')->values()
-                ];
-            }
-
-            $organizedData[$grupoId] = [
-                'labels' => $labels,
-                'series' => $series,
-            ];
-        }
-
-        //return response()->json($organizedData);
-        /*/////////////////////////////////////*/
-        return response()->json($organizedData);
-
-
-    }
 
 }

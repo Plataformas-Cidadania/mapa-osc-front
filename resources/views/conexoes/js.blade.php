@@ -173,6 +173,7 @@
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
 
     <script src="js/components/charts/apex/apexMixed.js"></script>
+    <script src="js/components/charts/apex/apexBar.js"></script>
     <script src="js/components/charts/apex/accordion.js"></script>
     <script src="js/components/charts/page/indicatorNew.js"></script>
 @endif

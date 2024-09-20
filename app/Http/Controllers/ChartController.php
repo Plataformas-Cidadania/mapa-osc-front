@@ -13,7 +13,73 @@ use Illuminate\Support\Facades\Route;
 class ChartController extends Controller{
 
 
+
+
+
     public function chartNewAPI(){
+        $chartType = 'column';
+
+        // Carregando categorias e charts
+        $ChartCategorias = \App\ChartCategoria::with(['charts' => function ($query) use ($chartType) {
+            $query->orderBy('titulo');
+        }])->orderBy('posicao')->get();
+
+        // Pegando os slugs dos charts
+        $slugs = $ChartCategorias->pluck('charts.*.slug')->flatten()->unique();
+
+        // Buscando os dados da tabela `dados_charts`
+        $data = DB::table('public.dados_charts')
+            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->whereIn('slug', $slugs)
+            ->orderBy('serie')
+            ->get();
+
+        // Organizando os dados por grupo_id
+        $groups = $data->groupBy('grupo_id');
+
+        // Processando cada categoria
+        foreach ($ChartCategorias as $categoria) {
+            foreach ($categoria->charts as $chart) {
+                $dataForChart = $data->where('slug', $chart->slug);  // Dados específicos do chart
+
+                $groupedData = $dataForChart->groupBy('slug');
+                $chartData = [];
+
+                foreach ($groupedData as $grupoId => $dataGroup) {
+                    $labels = $dataGroup->pluck('label')->unique()->sort()->values();
+
+                    // Array de múltiplas séries
+                    $series = [];
+
+                    foreach ($dataGroup->groupBy('serie') as $serie => $values) {
+                        $series[] = [
+                            'name' => $serie,  // Nome da série
+                            'type' => $values->first()->type,  // Tipo de gráfico (ex: 'bar', 'line')
+                            'data' => $values->pluck('valor')->map(function($valor) {
+                                return (int) $valor; // Convertendo para inteiro
+                            })->all(),
+                        ];
+                    }
+
+                    $chartData[$grupoId] = [
+                        'labels' => $labels,  // Labels para o eixo X
+                        'series' => $series,  // Múltiplas séries
+                    ];
+                }
+
+                // Adicionando os dados organizados ao chart
+                $chart->chartData = $chartData;
+                Log::info($chartData);  // Log para debugging
+            }
+        }
+
+        // Retornando os dados no formato JSON
+        return response()->json($ChartCategorias);
+    }
+
+
+
+    public function chartNewAPI2(){
         $chartType = 'column';
 
         $ChartCategorias = \App\ChartCategoria::with(['charts' => function ($query) use ($chartType) {
@@ -21,37 +87,54 @@ class ChartController extends Controller{
             $query->orderBy('titulo');
         }])->orderBy('posicao')->get();
 
-// Pegando os slugs relacionados aos charts
+        // Pegando os slugs relacionados aos charts
         $slugs = $ChartCategorias->pluck('charts.*.slug')->flatten()->unique();
 
-// Buscando os dados de `dados_charts` interligados pelo slug
+        // Buscando os dados de `dados_charts` interligados pelo slug
         $data = DB::table('public.dados_charts')
-            ->select('data', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
             ->whereIn('slug', $slugs)
-            ->orderBy('data')
+            ->orderBy('serie')
             ->get();
 
         // Organizando os dados de dados_charts agrupados por grupo_id
         $groups = $data->groupBy('grupo_id');
 
+
+
         // Adicionando os dados organizados a cada chart em $ChartCategorias
         foreach ($ChartCategorias as $categoria) {
-            foreach ($categoria->charts as $chart) {
-                $dataForChart = $data->where('slug', $chart->slug);  // Dados específicos do chart pelo slug
 
+
+            foreach ($categoria->charts as $chart) {
+
+
+
+                $dataForChart = $data->where('slug', $chart->slug);  // Dados específicos do chart pelo slug
                 $groupedData = $dataForChart->groupBy('slug');
                 $chartData = [];
 
+                Log::info($chart->tipo);
+
                 foreach ($groupedData as $grupoId => $dataGroup) {
-                    $labels = $dataGroup->pluck('data')->unique()->sort()->values();
-                    $series = [];
+
+                    $labels = $dataGroup->pluck('label')->unique()->sort()->values();
+                    $series = [
+                        [
+                            'name' => '',
+                            'type' => '',
+                            'data' => []
+                        ]
+                    ];
 
                     foreach ($dataGroup->groupBy('label') as $label => $values) {
-                        $series[] = [
-                            'name' => $label,
-                            'type' => $values->first()->type,
-                            'data' => $values->pluck('valor')->values()
-                        ];
+
+                        // Adiciona todos os valores de 'valor' ao campo 'data' da série
+                        $series[0]['name'] =  '';
+                        $series[0]['type'] = $values->first()->type;
+                        $series[0]['data'] = array_merge($series[0]['data'], $values->pluck('valor')->map(function($valor) {
+                            return (int) $valor; // Convertendo para integer se necessário
+                        })->all());
                     }
 
                     $chartData[$grupoId] = [
@@ -62,62 +145,16 @@ class ChartController extends Controller{
 
                 // Adicionando o data organizado no chart
                 $chart->chartData = $chartData;
+                //Log::info($chartData);
             }
         }
 
-// Retorno da estrutura organizada
+
+        // Retorno da estrutura organizada
         return response()->json($ChartCategorias);
-
     }
-    public function chartNewAPI2(){
-
-        $ChartCategorias = \App\ChartCategoria::with(['charts' => function ($query) {
-            $query->orderBy('titulo');
-        }])->orderBy('posicao')->get();
-
-
-        return response()->json($ChartCategorias);
 
 
 
-
-        /*/////////////////////////////////////*/
-        $chartType = 'column';
-
-        $data = DB::table('public.dados_charts')
-            ->select('data', 'label', 'valor', 'slug', 'type', 'grupo_id')
-            //->where('slug', $chartType)
-            ->orderBy('data')
-            ->get();
-
-        // Organize the data into an appropriate structure
-        $groups = $data->groupBy('grupo_id');
-
-        $chartData = [];
-
-        foreach ($groups as $grupoId => $dataGroup) {
-            $labels = $dataGroup->pluck('data')->unique()->sort()->values();
-            $series = [];
-
-            foreach ($dataGroup->groupBy('label') as $label => $values) {
-                $series[] = [
-                    'name' => $label,
-                    'type' => $values->first()->type,
-                    'data' => $values->pluck('valor')->values()
-                ];
-            }
-
-            $chartData[$grupoId] = [
-                'labels' => $labels,
-                'series' => $series,
-            ];
-        }
-
-        //return response()->json($chartData);
-        /*/////////////////////////////////////*/
-        return response()->json($chartData);
-
-
-    }
 
 }

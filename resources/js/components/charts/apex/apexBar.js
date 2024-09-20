@@ -1,90 +1,69 @@
-
-
-class ApexMixed extends React.Component {
+class ApexBar extends React.Component {
     constructor(props) {
-
-        console.log('ApexMixed', props)
         super(props);
-
+        console.log('ApexBar', props)
         this.state = {
             id: props?.chartId,
-            //series: props?.data?.series,
+            /*series: [{
+                name: 'Net Profit',
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+            }, {
+                name: 'Revenue',
+                data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+            }, {
+                name: 'Free Cash Flow',
+                data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+            }],*/
             series: props?.data?.series,
             options: {
                 chart: {
-                    height: 350,
-                    type: 'line',
-                    stacked: false,
-                },
-                stroke: {
-                    width: [2, 2, 5],
-                    /*width: [0, 2, 5],
-                    curve: 'smooth'*/
+                    type: 'bar',
+                    height: 350
                 },
                 plotOptions: {
                     bar: {
-                        columnWidth: '50%'
-                    }
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
                 },
-
-                fill: {
-                    opacity: [0.85, 0.25, 1],
-                    gradient: {
-                        inverseColors: false,
-                        shade: 'light',
-                        type: "vertical",
-                        opacityFrom: 0.85,
-                        opacityTo: 0.55,
-                        stops: [0, 100, 100, 100]
-                    }
+                dataLabels: {
+                    enabled: false
                 },
-                //colors: ['#008FFB', '#00E396', '#FEB019'],
-                labels: props?.data?.labels,
-                /*labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003',
-                    '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'
-                ],*/
-                markers: {
-                    size: 0
+                stroke: {
+                    show: false, // Desabilitar para barras
                 },
                 xaxis: {
-                    //type: 'datetime'
+                    categories: props?.data?.labels,
+                    //categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
                 },
                 yaxis: {
                     title: {
-                        text: 'Points',
+                        text: '$ (thousands)'
                     }
                 },
+                fill: {
+                    opacity: 1
+                },
                 tooltip: {
-                    shared: true,
-                    intersect: false,
-                    /*y: {
-                        formatter: function (y) {
-                            if (typeof y !== "undefined") {
-                                return y.toFixed(0) + " points";
-                            }
-                            return y;
-
+                    y: {
+                        formatter: function (val) {
+                            return "$ " + val + " thousands"
                         }
-                    }*/
+                    }
                 }
             },
-
-
         };
     }
-
-
 
     render() {
         return (
             <div>
                 <div id="chart">
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
                 </div>
                 <div id="html-dist"></div>
             </div>
         );
     }
 }
-
-const domContainer = document.querySelector('#indicator-new');

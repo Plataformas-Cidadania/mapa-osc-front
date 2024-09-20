@@ -67,6 +67,9 @@ class Accordion extends React.Component {
                                                     chartId={`chart${index2}`}
                                                     data={item.chartData[item.slug]}
                                                 />
+
+                                                {/*<ApexBar  chartId={`chart${index2}`}
+                                                          data={item.chartData[item.slug]} type="bar" height={350} />*/}
                                                 <p>
                                                     <strong>Fonte: </strong>
                                                     {item.fonte}
