@@ -21,13 +21,13 @@ async function fetchDataFromEndpoint(endpoint) {
     }
 }
 
-async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type) {
+async function insertDataIntoDatabase(serie, label, valor, slug, type) {
     const query = `
-    INSERT INTO public.dados_charts (grupo_id, serie, label, valor, slug, type)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO public.dados_charts (serie, label, valor, slug, type)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING id;
   `;
-    const values = [grupo_id, serie, label, valor, slug, type];
+    const values = [serie, label, valor, slug, type];
 
     try {
         const result = await pool.query(query, values);
@@ -37,14 +37,14 @@ async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type)
     }
 }
 
-async function processEndpoint(endpoint, grupo_id, slug) {
+async function processEndpoint(endpoint, slug) {
     const data = await fetchDataFromEndpoint(endpoint);
     if (data && data.series_1) {
 
         // Processando os valores da série 1
         data?.series_1?.forEach((serie) => {
             serie?.values?.forEach((item) => {
-                insertDataIntoDatabase(grupo_id, '', item.label ? item.label : item.x, item.value ? item.value : item.y, slug, 'line');
+                insertDataIntoDatabase('', item.label ? item.label : item.x, item.value ? item.value : item.y, slug, 'line');
             });
         });
     }
@@ -52,14 +52,14 @@ async function processEndpoint(endpoint, grupo_id, slug) {
 
 async function main() {
     const endpoints = [
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', grupo_id: 1, slug: 'total-oscs-brasil-2010-2023' },
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column', grupo_id: 2, slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' }*/
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', slug: 'total-oscs-brasil-2010-2023' },
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column',  slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' }*/
 
         // Adicione mais endpoints conforme necessário
     ];
 
     for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.grupo_id, endpoint.slug);
+        await processEndpoint(endpoint.url, endpoint.slug);
     }
 
     pool.end(); // Encerra a conexão com o banco de dados após a execução

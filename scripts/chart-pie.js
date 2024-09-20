@@ -21,13 +21,13 @@ async function fetchDataFromEndpoint(endpoint) {
     }
 }
 
-async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type) {
+async function insertDataIntoDatabase(serie, label, valor, slug, type) {
     const query = `
-    INSERT INTO public.dados_charts (grupo_id, serie, label, valor, slug, type)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO public.dados_charts (serie, label, valor, slug, type)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING id;
   `;
-    const values = [grupo_id, serie, label, valor, slug, type];
+    const values = [serie, label, valor, slug, type];
 
     try {
         const result = await pool.query(query, values);
@@ -37,29 +37,29 @@ async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type)
     }
 }
 
-async function processEndpoint(endpoint, grupo_id, slug) {
+async function processEndpoint(endpoint, slug) {
     const data = await fetchDataFromEndpoint(endpoint);
     if (data && data.series_1) {
         //console.log(data.series_1)
         // Processando os valores da série 1
         data?.series_1?.forEach((serie) => {
            // console.log(serie)
-            insertDataIntoDatabase(grupo_id, '', serie.label, serie.value, slug, 'column');
+            insertDataIntoDatabase('', serie.label, serie.value, slug, 'column');
         });
     }
 }
 
 async function main() {
     const endpoints = [
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/3?_=1726839302168', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-area-atuacao-brasil-2023' },
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/4?_=17268393021698', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-assistencia-social-servico-brasil-2023' },
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/5?_=1726839302170', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' }*/
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/3?_=1726839302168', type: 'column', slug: 'distribuicao-oscs-area-atuacao-brasil-2023' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/4?_=17268393021698', type: 'column', slug: 'distribuicao-oscs-assistencia-social-servico-brasil-2023' },
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/5?_=1726839302170', type: 'column', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' }*/
 
         // Adicione mais endpoints conforme necessário
     ];
 
     for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.grupo_id, endpoint.slug);
+        await processEndpoint(endpoint.url, endpoint.slug);
     }
 
     pool.end(); // Encerra a conexão com o banco de dados após a execução

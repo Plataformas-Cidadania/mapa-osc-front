@@ -20,13 +20,13 @@ async function fetchDataFromEndpoint(endpoint) {
     }
 }
 
-async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type) {
+async function insertDataIntoDatabase(serie, label, valor, slug, type) {
     const query = `
-        INSERT INTO public.dados_charts (grupo_id, serie, label, valor, slug, type)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO public.dados_charts (serie, label, valor, slug, type)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING id;
     `;
-    const values = [grupo_id, serie, label, valor, slug, type];
+    const values = [serie, label, valor, slug, type];
 
     try {
         const result = await pool.query(query, values);
@@ -36,7 +36,7 @@ async function insertDataIntoDatabase(grupo_id, serie, label, valor, slug, type)
     }
 }
 
-async function processEndpoint(endpoint, grupo_id, slug) {
+async function processEndpoint(endpoint, slug) {
     const data = await fetchDataFromEndpoint(endpoint);
 
     if (data && data.series_1) {
@@ -44,7 +44,7 @@ async function processEndpoint(endpoint, grupo_id, slug) {
         data.series_1.forEach((serie) => {
             const region = serie.key; // 'Norte', 'Nordeste', etc.
             serie.values.forEach((item) => {
-                insertDataIntoDatabase(grupo_id, region, item.label, item.value, slug, 'bar');
+                insertDataIntoDatabase(region, item.label, item.value, slug, 'bar');
             });
         });
 
@@ -53,7 +53,7 @@ async function processEndpoint(endpoint, grupo_id, slug) {
             data.series_2.forEach((serie) => {
                 const region = serie.key; // 'Norte', 'Nordeste', etc.
                 serie.values.forEach((item) => {
-                    insertDataIntoDatabase(grupo_id, region, item.label, item.value, slug, 'bar');
+                    insertDataIntoDatabase(region, item.label, item.value, slug, 'bar');
                 });
             });
         }
@@ -62,14 +62,14 @@ async function processEndpoint(endpoint, grupo_id, slug) {
 
 async function main() {
     const endpoints = [
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', grupo_id: 1, slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },*/
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },
-       { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', grupo_id: 1, slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },*/
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },
+       { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }
         // Adicione mais endpoints conforme necessário
     ];
 
     for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.grupo_id, endpoint.slug);
+        await processEndpoint(endpoint.url, endpoint.slug);
     }
 
     pool.end(); // Encerra a conexão com o banco de dados após a execução
