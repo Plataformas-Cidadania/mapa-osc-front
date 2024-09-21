@@ -99,7 +99,7 @@ class Accordion extends React.Component {
                                                         onClick={() => this.toggleTable(index2)}
                                                         className="btn btn-primary mt-3 "
                                                     >
-                                                        {showTableIndex === index2 ? 'Visualizar Grafico' : 'Visualizar Tabela'}
+                                                        {/*{showTableIndex === index2 ? <i className="fas fa-chart-line"></i> : <i class="fas fa-table"></i>}*/} {showTableIndex === index2 ? ' Visualizar Grafico' : 'Visualizar Tabela'}
                                                     </button>
                                                 </div>
 

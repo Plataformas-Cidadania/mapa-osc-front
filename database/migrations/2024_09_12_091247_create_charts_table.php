@@ -18,7 +18,7 @@ class CreateChartsTable extends Migration
             $table->string('imagem');
             $table->string('titulo');
             $table->text('descricao')->nullable();
-            $table->string('fonte')->nullable();
+            $table->text('fonte')->nullable();
             $table->string('tipo')->nullable();
             $table->string('slug')->nullable();
             $table->string('grupo_id')->default(0);

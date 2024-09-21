@@ -95,7 +95,7 @@ class Accordion extends React.Component {
         }, /*#__PURE__*/React.createElement("button", {
           onClick: () => this.toggleTable(index2),
           className: "btn btn-primary mt-3 "
-        }, showTableIndex === index2 ? 'Visualizar Grafico' : 'Visualizar Tabela')), showTableIndex !== index2 ? /*#__PURE__*/React.createElement(ApexMixed, {
+        }, " ", showTableIndex === index2 ? ' Visualizar Grafico' : 'Visualizar Tabela')), showTableIndex !== index2 ? /*#__PURE__*/React.createElement(ApexMixed, {
           chartId: `chart${index2}`,
           data: item.chartData[item.slug]
         }) : showTableIndex === index2 && this.renderTable(item.chartData[item.slug]), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Fonte: "), item.fonte), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("hr", null));
