@@ -63,9 +63,10 @@ async function processEndpoint(endpoint, slug) {
 
 async function main() {
     const endpoints = [
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', type: 'column', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', type: 'column', slug: 'distribuicao-oscs-faixas-vinculo-formais-grandes-regioes-2020' },
         { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/10?_=1726916656296', type: 'column', slug: 'numero-oscs-natureza-juridica-grandes-regioes-2023' }
     ];
 
     try {
