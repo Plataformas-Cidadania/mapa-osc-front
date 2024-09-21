@@ -41,38 +41,37 @@ async function processEndpoint(endpoint, slug) {
 
     if (data && data.series_1) {
         // Processando os valores da série 1
-        data.series_1.forEach((serie) => {
-            const region = serie.key; // 'Norte', 'Nordeste', etc.
-            serie.values.forEach((item) => {
-                insertDataIntoDatabase(region, item.label, item.value, slug, 'bar');
-            });
-        });
+        for (const serie of data.series_1) {
+            const region = serie.key; // Pegando a região (Norte, Nordeste, etc.)
+            console.log(`Processando região: ${region}`);
 
-        // Processando os valores da série 2 (se necessário)
-        if (data.series_2) {
-            data.series_2.forEach((serie) => {
-                const region = serie.key; // 'Norte', 'Nordeste', etc.
-                serie.values.forEach((item) => {
-                    insertDataIntoDatabase(region, item.label, item.value, slug, 'bar');
-                });
-            });
+            for (const item of serie.values) {
+                console.log(`Inserindo dados: Label - ${item.label}, Região - ${region}, Valor - ${item.value}`);
+                await insertDataIntoDatabase(item.label, region, item.value, slug, 'bar'); // Inserindo com a região correta
+            }
         }
     }
 }
 
+
+
+
 async function main() {
     const endpoints = [
         { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },*/
-       /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }*/
-        // Adicione mais endpoints conforme necessário
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }
     ];
 
-    for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.slug);
+    try {
+        for (const endpoint of endpoints) {
+            await processEndpoint(endpoint.url, endpoint.slug);
+        }
+    } catch (error) {
+        console.error('Erro ao processar os endpoints', error);
+    } finally {
+        await pool.end();
     }
-
-    pool.end(); // Encerra a conexão com o banco de dados após a execução
 }
 
 main();
