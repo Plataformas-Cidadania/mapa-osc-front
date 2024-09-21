@@ -42,27 +42,36 @@ async function processEndpoint(endpoint, slug) {
     if (data && data.series_1) {
 
         // Processando os valores da série 1
-        data?.series_1?.forEach((serie) => {
-            serie?.values?.forEach((item) => {
-                insertDataIntoDatabase('', item.label ? item.label : item.x, item.value ? item.value : item.y, slug, 'line');
-            });
-        });
+        for (const serie of data.series_1) {
+            for (const item of serie.values) {
+                const label = item.label ? item.label : item.x;
+                const value = item.value ? item.value : item.y;
+                await insertDataIntoDatabase('', label, value, slug, 'line'); // Adicionando await
+            }
+        }
     }
 }
+
+
+
 
 async function main() {
     const endpoints = [
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', slug: 'total-oscs-brasil-2010-2023' },*/
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', slug: 'total-oscs-brasil-2010-2023' },
         { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column',  slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' }
-
-        // Adicione mais endpoints conforme necessário
     ];
 
-    for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.slug);
+    try {
+        for (const endpoint of endpoints) {
+            await processEndpoint(endpoint.url, endpoint.slug);
+        }
+    } catch (error) {
+        console.error('Erro ao processar os endpoints', error);
+    } finally {
+        await pool.end();
     }
-
-    pool.end(); // Encerra a conexão com o banco de dados após a execução
 }
 
 main();
+
+
