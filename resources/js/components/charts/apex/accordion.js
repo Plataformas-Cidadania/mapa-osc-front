@@ -3,9 +3,11 @@ class Accordion extends React.Component {
         super(props);
         this.state = {
             chartCategorias: [],
-            activeIndex: 0
+            activeIndex: 0,
+            showTableIndex: -1  // Estado para controlar a visibilidade da tabela
         };
         this.toggleAccordion = this.toggleAccordion.bind(this);
+        this.toggleTable = this.toggleTable.bind(this); // Função para alternar tabela
     }
 
     componentDidMount() {
@@ -23,13 +25,41 @@ class Accordion extends React.Component {
         }));
     }
 
+    toggleTable(index) {
+        this.setState(prevState => ({
+            showTableIndex: prevState.showTableIndex === index ? -1 : index
+        }));
+    }
+
+    renderTable(chartData) {
+        // Exemplo de como renderizar a tabela dependendo das séries de dados
+        const { labels, series } = chartData;
+        return (
+            <table className="table">
+                <thead>
+                <tr>
+                    <th>Categoria</th>
+                    {series.map((s, i) => <th key={i}>{s.name}</th>)}
+                </tr>
+                </thead>
+                <tbody>
+                {labels.map((label, i) => (
+                    <tr key={i}>
+                        <td>{label}</td>
+                        {series.map((s, j) => <td key={j}>{s.data[i]}</td>)}
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        );
+    }
+
     render() {
-        const { chartCategorias, activeIndex } = this.state;
+        const { chartCategorias, activeIndex, showTableIndex } = this.state;
 
         return (
             <div className="accordion" id="accordionExample">
                 {chartCategorias.map((chartCategoria, index) => {
-
                     return (
                         <div className="card" key={index}>
                             <div className="card-header" id={`chart${index}`}>
@@ -53,39 +83,52 @@ class Accordion extends React.Component {
                                 data-parent="#accordionExample"
                             >
                                 <div className="card-body">
-                                    <div dangerouslySetInnerHTML={{__html: chartCategoria.descricao}}/>
+                                    <div dangerouslySetInnerHTML={{__html: chartCategoria.descricao}} />
 
-                                    <hr/>
+                                    <hr />
 
                                     {chartCategoria?.charts?.map((item, index2) => {
-                                        console.log('-----------', item.slug, item.chartData[item.slug])
                                         return (
                                             <div key={'chart' + index2}>
-                                                <h2>{index2+1} - {item.titulo}</h2>
+                                                <h2>{index2 + 1} - {item.titulo}</h2>
                                                 <div dangerouslySetInnerHTML={{__html: item.descricao}}/>
-                                                <ApexMixed
-                                                    chartId={`chart${index2}`}
-                                                    data={item.chartData[item.slug]}
-                                                />
 
-                                                {/*<ApexBar  chartId={`chart${index2}`}
-                                                          data={item.chartData[item.slug]} type="bar" height={350} />*/}
-                                                <p>
-                                                    <strong>Fonte: </strong>
-                                                    {item.fonte}
-                                                </p>
+
+                                                <div class="mb-2" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                                    <button
+                                                        onClick={() => this.toggleTable(index2)}
+                                                        className="btn btn-primary mt-3 "
+                                                    >
+                                                        {showTableIndex === index2 ? 'Visualizar Grafico' : 'Visualizar Tabela'}
+                                                    </button>
+                                                </div>
+
+                                                {showTableIndex !== index2 ?
+                                                    <ApexMixed
+                                                        chartId={`chart${index2}`}
+                                                        data={item.chartData[item.slug]}
+                                                    />
+                                                    :
+                                                    showTableIndex === index2 && this.renderTable(item.chartData[item.slug])
+                                                }
+
+
+                                                {/* Botão para exibir/esconder tabela */}
+
+
+                                                {/* Renderizar a tabela se showTableIndex for igual ao index2 */}
+                                                {/*{showTableIndex === index2 && this.renderTable(item.chartData[item.slug])}*/}
+
+                                                <p><strong>Fonte: </strong>{item.fonte}</p>
                                                 <br/>
                                                 <hr/>
                                             </div>
-                                        )
+                                        );
                                     })}
-
-
-
                                 </div>
                             </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
         );

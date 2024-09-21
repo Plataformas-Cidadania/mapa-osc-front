@@ -29,6 +29,12 @@ class ApexMixed extends React.Component {
                     height: 350,
                     type: 'line',
                     stacked: false,
+                    toolbar: {
+                        tools: {
+                            download: '<i class="fas fa-download chart-custom-icon"/>',
+                            //reset: '<i class="fas fa-undo-alt chart-custom-icon-reset"/>',
+                        }
+                    }
                 },
                 stroke: {
                     width: [2, 2, 5],
