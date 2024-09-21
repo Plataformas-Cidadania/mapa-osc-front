@@ -43,11 +43,15 @@ async function processEndpoint(endpoint, slug) {
         // Processando os valores da série 1
         for (const serie of data.series_1) {
             const region = serie.key; // Pegando a região (Norte, Nordeste, etc.)
-            console.log(`Processando região: ${region}`);
+            console.log(`Região atual: ${region}`);
+            console.log(`Valores da série:`, serie.values);
 
+            // Processando os valores da série
             for (const item of serie.values) {
-                console.log(`Inserindo dados: Label - ${item.label}, Região - ${region}, Valor - ${item.value}`);
-                await insertDataIntoDatabase(item.label, region, item.value, slug, 'bar'); // Inserindo com a região correta
+                console.log(`Processando item - Região: ${region}, Label: ${item.label}, Valor: ${item.value}`);
+
+                // Inserindo no banco de dados com a região correta
+                await insertDataIntoDatabase(item.label, region, item.value, slug, 'bar');
             }
         }
     }
@@ -56,10 +60,11 @@ async function processEndpoint(endpoint, slug) {
 
 
 
+
 async function main() {
     const endpoints = [
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },
+        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', type: 'column', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },*/
         { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' }
     ];
 
