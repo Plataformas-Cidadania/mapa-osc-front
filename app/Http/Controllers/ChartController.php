@@ -29,13 +29,10 @@ class ChartController extends Controller{
 
         // Buscando os dados da tabela `dados_charts`
         $data = DB::table('public.dados_charts')
-            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->select('serie', 'label', 'valor', 'slug', 'type')
             ->whereIn('slug', $slugs)
             ->orderBy('serie')
             ->get();
-
-        // Organizando os dados por grupo_id
-        $groups = $data->groupBy('grupo_id');
 
         // Processando cada categoria
         foreach ($ChartCategorias as $categoria) {
@@ -92,29 +89,18 @@ class ChartController extends Controller{
 
         // Buscando os dados de `dados_charts` interligados pelo slug
         $data = DB::table('public.dados_charts')
-            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->select('serie', 'label', 'valor', 'slug', 'type')
             ->whereIn('slug', $slugs)
             ->orderBy('serie')
             ->get();
 
-        // Organizando os dados de dados_charts agrupados por grupo_id
-        $groups = $data->groupBy('grupo_id');
-
-
-
         // Adicionando os dados organizados a cada chart em $ChartCategorias
         foreach ($ChartCategorias as $categoria) {
-
-
             foreach ($categoria->charts as $chart) {
-
-
 
                 $dataForChart = $data->where('slug', $chart->slug);  // Dados específicos do chart pelo slug
                 $groupedData = $dataForChart->groupBy('slug');
                 $chartData = [];
-
-                Log::info($chart->tipo);
 
                 foreach ($groupedData as $grupoId => $dataGroup) {
 

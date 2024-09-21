@@ -121,7 +121,7 @@ class IndicatorController extends Controller{
         $chartType = 'column';
 
         $data = DB::table('public.dados_charts')
-            ->select('serie', 'label', 'valor', 'slug', 'type', 'grupo_id')
+            ->select('serie', 'label', 'valor', 'slug', 'type')
             //->where('slug', $chartType)
             ->orderBy('serie')
             ->get();
