@@ -40,49 +40,34 @@ async function insertDataIntoDatabase(serie, label, valor, slug, type) {
 async function processEndpoint(endpoint, slug) {
     const data = await fetchDataFromEndpoint(endpoint);
     if (data && data.series_1) {
-
-        // Processando os valores da série 1
-        data?.series_1?.forEach((serie) => {
-                console.log(serie)
-                insertDataIntoDatabase('', serie.label, serie.value, slug, 'column');
-        });
-
-       /* // Processando os valores da série 2, se necessário
-        if (data.series_2) {
-            data.series_2.forEach((serie) => {
-                serie?.values?.forEach((item) => {
-                    insertDataIntoDatabase(dataAtual, item.label, item.value, slug, 'series_2');
-                });
-            });
-        }*/
+        for (const serie of data.series_1) {
+            console.log('Estrutura da série:', serie);
+            if (serie.label && serie.value) {
+                await insertDataIntoDatabase('', serie.label, serie.value, slug, 'column'); // Adicionando await
+            } else {
+                console.error('Propriedades "label" ou "value" ausentes em:', serie);
+            }
+        }
     }
 }
+
 
 async function main() {
     const endpoints = [
         { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/2?_=1726839302167', type: 'column', slug: 'numero-vinculos-formais-oscs-grandes-regioes-2020' },
-        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/12?_=1726839302176', type: 'column',  slug: 'numero-organizacoes-civis-titulos-certificacoes-brasil-2019' },
-
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/1?_=1726839302166', type: 'column', slug: 'distribuicao-oscs-faixas-vinculo-formais-grandes-regioes-2020' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/2?_=1726839302167', type: 'column', slug: 'numero-vinculos-formais-oscs-grandes-regioes-2020' }, ok*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/3?_=1726839302168', type: 'column', slug: 'distribuicao-oscs-area-atuacao-brasil-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/4?_=17268393021698', type: 'column', slug: 'distribuicao-oscs-assistencia-social-servico-brasil-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/5?_=1726839302170', type: 'column', slug: 'distribuicao-oscs-saude-tipo-estabelecimento-brasil-2018' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/7?_=1726839302171', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-vinculo-grandes-regioes-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/8?_=1726839302172', type: 'column', slug: 'distribuicao-oscs-economia-solidaria-abrangencia-grandes-regioes-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/9?_=1726839302173', type: 'column', slug: 'total-oscs-brasil-2010-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/10?_=1726839302174', type: 'column', slug: 'numero-oscs-natureza-juridica-grandes-regioes-2023' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/11?_=1726839302175', type: 'column', slug: 'evolucao-recursos-publicos-oscs-brasil-2010-2018' },*/
-        /*{ url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/12?_=1726839302176', type: 'column', slug: 'numero-organizacoes-civis-titulos-certificacoes-brasil-2019' }, ok*/
-
-        // Adicione mais endpoints conforme necessário
+        { url: 'https://mapaosc.ipea.gov.br/api/api/osc/grafico/12?_=1726839302176', type: 'column', slug: 'numero-organizacoes-civis-titulos-certificacoes-brasil-2019' },
     ];
 
-    for (const endpoint of endpoints) {
-        await processEndpoint(endpoint.url, endpoint.slug);
+    try {
+        for (const endpoint of endpoints) {
+            await processEndpoint(endpoint.url, endpoint.slug);
+        }
+    } catch (error) {
+        console.error('Erro ao processar os endpoints', error);
+    } finally {
+        await pool.end();
     }
-
-    pool.end(); // Encerra a conexão com o banco de dados após a execução
 }
 
 main();
+
