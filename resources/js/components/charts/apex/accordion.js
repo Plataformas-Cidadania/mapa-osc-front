@@ -63,17 +63,15 @@ class Accordion extends React.Component {
                     return (
                         <div className="card" key={index}>
                             <div className="card-header" id={`chart${index}`}>
-                                <h2 className="mb-0">
-                                    <button
-                                        className="btn btn-link btn-block text-left"
-                                        type="button"
-                                        onClick={() => this.toggleAccordion(index)}
-                                        aria-expanded={activeIndex === index}
-                                        aria-controls={`collapse${index}`}
-                                    >
-                                        <h2>{chartCategoria.titulo}</h2>
-                                    </button>
-                                </h2>
+                                <button
+                                    className="btn btn-link btn-block text-left"
+                                    type="button"
+                                    onClick={() => this.toggleAccordion(index)}
+                                    aria-expanded={activeIndex === index}
+                                    aria-controls={`collapse${index}`}
+                                >
+                                    <h2 style={{margin: '5px 0'}}>{chartCategoria.titulo}</h2>
+                                </button>
                             </div>
 
                             <div

@@ -60,15 +60,17 @@ class Accordion extends React.Component {
       }, /*#__PURE__*/React.createElement("div", {
         className: "card-header",
         id: `chart${index}`
-      }, /*#__PURE__*/React.createElement("h2", {
-        className: "mb-0"
       }, /*#__PURE__*/React.createElement("button", {
         className: "btn btn-link btn-block text-left",
         type: "button",
         onClick: () => this.toggleAccordion(index),
         "aria-expanded": activeIndex === index,
         "aria-controls": `collapse${index}`
-      }, /*#__PURE__*/React.createElement("h2", null, chartCategoria.titulo)))), /*#__PURE__*/React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("h2", {
+        style: {
+          margin: '5px 0'
+        }
+      }, chartCategoria.titulo))), /*#__PURE__*/React.createElement("div", {
         id: `collapse${index}`,
         className: `collapse ${activeIndex === index ? 'show' : ''}`,
         "aria-labelledby": `chart${index}`,
