@@ -46,6 +46,10 @@ class OscController extends Controller{
 
         $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
         $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
+        $quadros_societarios = curlListParametros('quadro-societario-por-osc', $id, '');
+
+        //return  $quadros_societarios;
+
         $relacoes_trabalho_governanca = curlListParametros('rel_trabalho_e_governanca', $id, 'relacoes_trabalho');
 
         $participacao_social_conselhos = curlListParametros('participacao_social', $id, 'conselhos_politicas_publicas');
@@ -53,6 +57,8 @@ class OscController extends Controller{
         $participacao_social_outros = curlListParametros('participacao_social', $id, 'outros_espacos_participacao_social');
 
         $recursos = curlList('anos_recursos', $id);
+
+        //return $quadros_societarios;
 
 
         return view($this->module.'.detail', [
@@ -67,6 +73,7 @@ class OscController extends Controller{
 
             'governancas' => $governancas,
             'conselhos_fiscais' => $conselhos_fiscais,
+            'quadros_societarios' => $quadros_societarios,
             'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
 
             'participacao_social_conselhos' => $participacao_social_conselhos,

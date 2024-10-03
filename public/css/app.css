@@ -12307,7 +12307,7 @@ input[type=radio]:checked + label::after {
   transition: all 0.1s linear;
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
-  background-color: white;
+  /*background-color: white;*/
   padding: 5px;
   box-sizing: border-box;
   font-size: 14px;
@@ -12331,16 +12331,30 @@ input[type=radio]:checked + label::after {
 }
 
 .label-float input:not(:-moz-placeholder-shown) + label {
-  font-size: 12px;
-  top: -18px;
+  font-size: 11px;
+  top: -24px;
   color: #1A73E8;
+  margin-left: -26px;
+  line-height: 11px;
+  /*display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 300px;*/
 }
 
 .label-float input:focus + label,
 .label-float input:not(:placeholder-shown) + label {
-  font-size: 12px;
-  top: -18px;
+  font-size: 11px;
+  top: -24px;
   color: #1A73E8;
+  margin-left: -26px;
+  line-height: 11px;
+  /*display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 300px;*/
 }
 
 .label-box-info {

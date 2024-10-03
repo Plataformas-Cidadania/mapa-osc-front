@@ -103,13 +103,25 @@
                         <strong>Endereço:</strong><br>
                         {{$dados_gerais->tx_endereco == null ? $txt_alert_abb : $dados_gerais->tx_endereco}}{{$dados_gerais->tx_endereco_complemento ? ',' : null}} {{$dados_gerais->tx_endereco_complemento}}<br>
                         {{$dados_gerais->tx_bairro}}, {{$dados_gerais->tx_nome_municipio}} - {{$dados_gerais->tx_sigla_uf}} <br>
-                        <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? $txt_alert_abb : $dados_gerais->nr_cep}}<br><br>
-                        <i class="fas fa-phone-alt"></i> {{$dados_gerais->tx_telefone == null ? $txt_alert_abb : $dados_gerais->tx_telefone}}
+                        <strong>CEP.:</strong> {{$dados_gerais->nr_cep == null ? $txt_alert_abb : $dados_gerais->nr_cep}}<br>
 
-                        <div class="col-md-6 text-right fa-svg float-right">
-                            @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank" title="E-mail de contato"><i class="far fa-envelope"></i></a>@endif
-                            @if($dados_gerais->tx_site!=null)<a href="http://{{str_replace("https://", "", str_replace("http://", "", $dados_gerais->tx_site))}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <div style="display: flex">
+                                    <i class="fas fa-phone-alt"></i> {{$dados_gerais->tx_telefone == null ? $txt_alert_abb : $dados_gerais->tx_telefone}}
+                                    <div style="margin-left: 10px"><?php echo iconType($dados_gerais->ft_telefone); ?></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right  float-right">
+                                <div class="fa-svg">
+                                    @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank" title="E-mail de contato"><i class="far fa-envelope"></i></a>@endif
+                                    @if($dados_gerais->tx_site!=null)<a href="http://{{str_replace("https://", "", str_replace("http://", "", $dados_gerais->tx_site))}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
+                                </div>
+                                <?php echo iconType($dados_gerais->ft_email); ?>
+                            </div>
                         </div>
+
                     </div>
                     <div class="col-md-6">
                         <div id="mapPointOsc"></div>

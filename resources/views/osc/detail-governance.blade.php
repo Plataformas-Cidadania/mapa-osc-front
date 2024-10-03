@@ -11,7 +11,7 @@
 </div>
 <div id="multiCollapse5" class="collapse multi-collapse show">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             <div class="bg-lgt box-itens-g min-h">
                 <h2>Quadro de dirigentes</h2>
                 @foreach($governancas as $governanca)
@@ -23,7 +23,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col">
             <div class="bg-lgt box-itens-g min-h">
                 <h2>Conselho fiscal</h2>
                 @foreach($conselhos_fiscais as $conselho_fiscal)
@@ -34,6 +34,27 @@
                 @endforeach
             </div>
         </div>
+            <div class="col-md-4">
+                <div class="bg-lgt box-itens-g min-h">
+                    <h2>Quadro societário</h2>
+                    @if(isset($quadros_societarios['Resposta']))
+                        {{$quadros_societarios['Resposta']}}
+                    @else
+                        @foreach($quadros_societarios as $quadro_societario)
+                            <div>
+                                    <?php echo iconType($quadro_societario['ft_nome_socio']); ?>
+                                <p>{{$quadro_societario['tx_nome_socio']}}</p>
+                                {{--<p><strong>CPF: </strong>{{$quadro_societario['tx_cpf_socio']}}</p>--}}
+                                <p><strong>Data entrada:</strong> {{ \Carbon\Carbon::parse($quadro_societario['tx_data_entrada_socio'])->format('d/m/Y') }}</p>
+                                {{--<p>{{$quadro_societario['cd_tipo_socio']}}</p>
+                                <p>{{$quadro_societario['cd_qualificacao_socio']}}</p>--}}
+                            </div>
+                        @endforeach
+
+                    @endif
+                </div>
+            </div>
+
         <div class="col-md-12">
             <div class="row text-center">
                 <div class="col-md-12">

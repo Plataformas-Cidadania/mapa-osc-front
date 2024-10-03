@@ -436,7 +436,9 @@ if ( ! function_exists('curlListParametros') ) {
         curl_close($ch);
 
         $data = json_decode($string, true);
-        $data = $data[$paremetros];
+        if($paremetros){
+            $data = $data[$paremetros];
+        }
         if(!is_array($data)){
             $data = [];
         }
