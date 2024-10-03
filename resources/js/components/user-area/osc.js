@@ -562,7 +562,7 @@ class Osc extends React.Component{
                                         <div className="col-md-9">
                                             <div className="label-float">
                                                 <input className={"form-control form-g"} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange} value={this.state.form.tx_nome_fantasia_osc}
-                                                       placeholder="Insira o Nome Fantasia" />
+                                                       placeholder="Insira o Nome Fantasia" disabled/>
                                                 <label htmlFor="tx_razao_social_osc">Nome Fantasia</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
@@ -601,7 +601,7 @@ class Osc extends React.Component{
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputAddress2">Ano de inscrição do CNPJ</label>
-                                            <input className={"form-control form-g "} type="date" name="dt_ano_cadastro_cnpj" onChange={this.handleInputChange} value={this.state.form.dt_ano_cadastro_cnpj}/>
+                                            <input className={"form-control form-g "} type="date" name="dt_ano_cadastro_cnpj" onChange={this.handleInputChange} value={this.state.form.dt_ano_cadastro_cnpj} disabled/>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputCity">Ano de Fundação</label>

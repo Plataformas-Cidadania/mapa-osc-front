@@ -554,7 +554,8 @@ class Osc extends React.Component {
       name: "tx_nome_fantasia_osc",
       onChange: this.handleInputChange,
       value: this.state.form.tx_nome_fantasia_osc,
-      placeholder: "Insira o Nome Fantasia"
+      placeholder: "Insira o Nome Fantasia",
+      disabled: true
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "tx_razao_social_osc"
     }, "Nome Fantasia"), /*#__PURE__*/React.createElement("div", {
@@ -601,7 +602,8 @@ class Osc extends React.Component {
       type: "date",
       name: "dt_ano_cadastro_cnpj",
       onChange: this.handleInputChange,
-      value: this.state.form.dt_ano_cadastro_cnpj
+      value: this.state.form.dt_ano_cadastro_cnpj,
+      disabled: true
     })), /*#__PURE__*/React.createElement("div", {
       className: "form-group col-md-4"
     }, /*#__PURE__*/React.createElement("label", {
