@@ -46,8 +46,8 @@
                                 <p>{{$quadro_societario['tx_nome_socio']}}</p>
                                 {{--<p><strong>CPF: </strong>{{$quadro_societario['tx_cpf_socio']}}</p>--}}
                                 <p><strong>Data entrada:</strong> {{ \Carbon\Carbon::parse($quadro_societario['tx_data_entrada_socio'])->format('d/m/Y') }}</p>
-                                {{--<p>{{$quadro_societario['cd_tipo_socio']}}</p>
-                                <p>{{$quadro_societario['cd_qualificacao_socio']}}</p>--}}
+                                <p><strong>Tipo sócio: </strong>{{$quadro_societario['tipo_socio']['tx_tipo_socio']}}</p>
+                                <p><strong>Qualificação: </strong>{{$quadro_societario['qualificacao_socio']['tx_qualificacao_socio']}}</p>
                             </div>
                         @endforeach
 
