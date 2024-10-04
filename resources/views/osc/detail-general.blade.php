@@ -118,7 +118,9 @@
                                     @if($dados_gerais->tx_email!=null)<a href="mailto:{{$dados_gerais->tx_email}}" target="_blank" title="E-mail de contato"><i class="far fa-envelope"></i></a>@endif
                                     @if($dados_gerais->tx_site!=null)<a href="http://{{str_replace("https://", "", str_replace("http://", "", $dados_gerais->tx_site))}}" target="_blank" title="Acesse o website"><i class="fas fa-globe"></i></a>@endif
                                 </div>
-                                <?php echo iconType($dados_gerais->ft_email); ?>
+                                <div style="position: absolute; margin-top: -50px; right: 0;">
+                                    <?php echo iconType($dados_gerais->ft_email); ?>
+                                </div>
                             </div>
                         </div>
 
