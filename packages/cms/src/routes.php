@@ -134,6 +134,7 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/chart/{id}', 'Cms\Controllers\ChartController@detalhar');
         Route::post('/cms/alterar-chart/{id}', 'Cms\Controllers\ChartController@alterar');
         Route::get('/cms/excluir-chart/{id}', 'Cms\Controllers\ChartController@excluir');
+        Route::get('/cms/status-chart/{id}', 'Cms\Controllers\ChartController@status');
 
         //POSTS
         Route::get('/cms/posts', 'Cms\Controllers\PostController@index');

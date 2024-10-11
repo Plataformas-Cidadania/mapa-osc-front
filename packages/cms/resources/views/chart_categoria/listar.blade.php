@@ -107,7 +107,7 @@
                         <tr ng-repeat="chartCategoria in chartCategorias">
                             <td><% chartCategoria.id %></td>
                             <td><img ng-show="chartCategoria.imagem" ng-src="imagens/chartCategorias/xs-<% chartCategoria.imagem %>" width="60"></td>
-                            <td><a href="cms/chartCategoria/<% chartCategoria.id %>"><% chartCategoria.titulo %></a></td>
+                            <td><a href="cms/chart_categoria/<% chartCategoria.id %>"><% chartCategoria.titulo %></a></td>
                             <td><a href="cms/apoio/<% chartCategoria.id %>"><% chartCategoria.posicao %></a></td>
                             <td class="text-right">
                                 <div>
@@ -117,6 +117,7 @@
 
                                     <a><i class="fa fa-arrow-circle-down fa-2x" title="Posição" ng-click="positionDown(chartCategoria.id);"  style="cursor: pointer;" ng-hide="<% $last %>"></i></a>
                                     <a><i class="fa fa-minus-circle fa-2x" title="Posição"   ng-show="<% $last %>" style="color: #CCCCCC; margin-right: 5px;"></i></a>
+
 
                                     {{--<a href="cms/items/<% chartCategoria.id %>"><i class="fa fa-sitemap fa-2x" title="Itens"></i></a>&nbsp;&nbsp;--}}
                                     <a href="cms/chart_categoria/<% chartCategoria.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;

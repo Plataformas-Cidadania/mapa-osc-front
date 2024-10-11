@@ -20,7 +20,7 @@ class ChartController extends Controller
     {
         $this->chart = new \App\Chart;
         $this->campos = [
-            'imagem', 'titulo', 'descricao', 'tipo', 'fonte', 'slug', 'chart_categoria_id', 'cmsuser_id',
+            'imagem', 'titulo', 'descricao', 'tipo', 'fonte', 'slug', 'status', 'chart_categoria_id', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/charts';
         $this->sizesImagem = [
@@ -169,7 +169,13 @@ class ChartController extends Controller
         $chart->delete();
 
     }
+    public function status($id)
+    {
+        $tipo_atual = DB::table('charts')->where('id', $id)->first();
+        $status = $tipo_atual->status == 0 ? 1 : 0;
+        DB::table('charts')->where('id', $id)->update(['status' => $status]);
 
+    }
 
 
 

@@ -95,6 +95,7 @@
                             <td class="text-right">
                                 <div>
                                     <a href="cms/chart/<% chart.id %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;
+                                    <a  ng-class="<% chart.status %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(chart.id);"></i></a>&nbsp;&nbsp;
                                     <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(chart.id, chart.titulo, chart.imagem)"></i></a>
                                 </div>
                             </td>

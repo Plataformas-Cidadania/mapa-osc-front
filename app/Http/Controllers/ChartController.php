@@ -12,16 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 class ChartController extends Controller{
 
-
-
-
-
     public function chartNewAPI(){
         $chartType = 'column';
 
         // Carregando categorias e charts
         $ChartCategorias = \App\ChartCategoria::with(['charts' => function ($query) use ($chartType) {
-            $query->orderBy('titulo');
+            $query->where('status', 1)
+                ->orderBy('titulo');
         }])->orderBy('posicao')->get();
 
         // Pegando os slugs dos charts
@@ -67,7 +64,7 @@ class ChartController extends Controller{
                         ];
                     }
 
-                    Log::info($series);
+                    //Log::info($series);
 
                     $chartData[$grupoId] = [
                         'labels' => $labels,  // Labels para o eixo X
@@ -84,12 +81,5 @@ class ChartController extends Controller{
         // Retornando os dados no formato JSON
         return response()->json($ChartCategorias);
     }
-
-
-
-
-
-
-
 
 }
