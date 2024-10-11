@@ -20,7 +20,7 @@ class ChartController extends Controller
     {
         $this->chart = new \App\Chart;
         $this->campos = [
-            'imagem', 'titulo', 'descricao', 'tipo', 'fonte', 'slug', 'status', 'chart_categoria_id', 'cmsuser_id',
+            'imagem', 'titulo', 'descricao', 'tipo', 'fonte', 'slug', 'tipo_nome', 'formato', 'chart_categoria_id', 'cmsuser_id',
         ];
         $this->pathImagem = public_path().'/imagens/charts';
         $this->sizesImagem = [

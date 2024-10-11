@@ -105,11 +105,12 @@ class Accordion extends React.Component {
                                                     <ApexMixed
                                                         chartId={`chart${index2}`}
                                                         data={item.chartData[item.slug]}
+                                                        nome={item.tipo_nome}
+                                                        formato={item.formato}
                                                     />
                                                     :
                                                     showTableIndex === index2 && this.renderTable(item.chartData[item.slug])
                                                 }
-
 
                                                 {/* Botão para exibir/esconder tabela */}
 

@@ -16,3 +16,9 @@
 
 {!! Form::label('slug', 'Slug') !!}<br>
 {!! Form::text('slug', null, ['class'=>"form-control width-grande <% validar(chart.slug) %>", 'ng-model'=>'chart.slug', 'ng-required'=>'false', 'init-model'=>'chart.slug', 'placeholder' => '']) !!}<br>
+
+{!! Form::label('tipo_nome', 'Nome') !!}<br>
+{!! Form::text('tipo_nome', null, ['class'=>"form-control width-grande <% validar(chart.tipo_nome) %>", 'ng-model'=>'chart.tipo_nome', 'ng-required'=>'false', 'init-model'=>'chart.tipo_nome', 'placeholder' => '']) !!}<br>
+
+{!! Form::label('formato', 'Formatação') !!}<br>
+{!! Form::text('formato', null, ['class'=>"form-control width-grande <% validar(chart.formato) %>", 'ng-model'=>'chart.formato', 'ng-required'=>'false', 'init-model'=>'chart.formato', 'placeholder' => '']) !!}<br>

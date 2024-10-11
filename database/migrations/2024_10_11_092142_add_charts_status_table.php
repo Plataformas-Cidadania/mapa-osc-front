@@ -15,6 +15,8 @@ class AddChartsStatusTable extends Migration
     {
         Schema::table('charts', function (Blueprint $table) {
             $table->integer('status')->default(0);
+            $table->string('tipo_nome')->nullable();
+            $table->string('formato')->nullable();
         });
     }
 

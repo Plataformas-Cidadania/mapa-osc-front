@@ -82,24 +82,24 @@ class ApexMixed extends React.Component {
                     }
                     //type: 'datetime'
                 },
-                yaxis: {
+                yaxis: props?.nome ? {
                     title: {
-                        text: 'Points',
+                        text: props?.nome,
                     }
-                },
-                tooltip: {
-                    shared: true,
-                    intersect: false,
+                }: {},
+                tooltip:  props?.nome ? {
+                    shared: false,
+                    intersect: true,
                     y: {
                         formatter: function (y) {
                             if (typeof y !== "undefined") {
-                                return y.toFixed(0) + " points";
+                                return y.toFixed(0) + " " + props?.nome?.toLowerCase();
                             }
                             return y;
 
                         }
                     }
-                }
+                }: {},
             },
 
 
