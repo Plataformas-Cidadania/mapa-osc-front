@@ -74,6 +74,7 @@ class FormEditProjeto extends React.Component{
         this.listLocalizacoes = this.listLocalizacoes.bind(this);
         this.listRecursos = this.listRecursos.bind(this);
         this.listTipoParcerias = this.listTipoParcerias.bind(this);
+        this.listStatusProjeto = this.listStatusProjeto.bind(this);
 
         this.clickFontRecurso = this.clickFontRecurso.bind(this);
         this.showHideForm = this.showHideForm.bind(this);
@@ -100,6 +101,7 @@ class FormEditProjeto extends React.Component{
         this.listChkboxMetas();
         this.listRecursos();
         this.listTipoParcerias();
+        this.listStatusProjeto();
     }
 
     componentWillReceiveProps(props){
@@ -179,6 +181,22 @@ class FormEditProjeto extends React.Component{
             }.bind(this)
         });
     }
+
+
+    listStatusProjeto(){
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'status_projeto',
+            success: function (data) {
+                this.setState({loading: false, datalistStatusProjeto: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
 
     listTipoParcerias(){
 
@@ -815,33 +833,47 @@ class FormEditProjeto extends React.Component{
         this.setState({showAdd: rota});
     }
 
-    render(){
+    render() {
 
         let financiador_projeto = null;
-        if(this.state.datalistFinanciadores) {
+        if (this.state.datalistFinanciadores) {
             financiador_projeto = this.state.datalistFinanciadores.map(function (item, index) {
                 return (
                     <div className="label-float" key={"financiador_projeto_" + index}>
-                        <input className={"form-control form-g "} type="text" name="tx_nome_financiador" onChange={this.handleInputChange}
+                        <input className={"form-control form-g "} type="text" name="tx_nome_financiador"
+                               onChange={this.handleInputChange}
                                defaultValue={item.tx_nome_financiador}
-                               placeholder="Insica o CNPJ da OSC Parceira" />
+                               placeholder="Insica o CNPJ da OSC Parceira"/>
                         <label htmlFor="tx_nome_financiador">Financiador do projeto</label>
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
-                            <div style={{display: this.state.removeItem == 'financiador_'+item.id_financiador_projeto ? '' : 'none'}}>
-                                <div className="btn-xs btn-danger" onClick={() => this.remove('financiador', item.id_financiador_projeto)}>Excluir</div>
-                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_financiador_projeto)}>Cancelar</div>
-                            </div>
-                            <div className="float-right" style={{display: this.state.removeItem == 'financiador_'+item.id_financiador_projeto ? 'none' : ''}}>
-                                <div className="float-right cursor" onClick={() => this.removeList('financiador', item.id_financiador_projeto)}>
-                                    <i className="fas fa-trash-alt text-danger " />
+                            <div
+                                style={{display: this.state.removeItem == 'financiador_' + item.id_financiador_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger"
+                                     onClick={() => this.remove('financiador', item.id_financiador_projeto)}>Excluir
                                 </div>
-                                <div className="float-right" onClick={() => this.saveList('financiador', item.id_financiador_projeto)}  style={{margin: '0 10px'}}>
-                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? 'none' : ''}} className="cursor"><i className="far fa-save"/></div>
-                                    <div style={{display: this.state.saveLoading==='financiador_'+item.id_financiador_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                <div className="btn-xs btn-light"
+                                     onClick={() => this.removeList(item.id_financiador_projeto)}>Cancelar
+                                </div>
+                            </div>
+                            <div className="float-right"
+                                 style={{display: this.state.removeItem == 'financiador_' + item.id_financiador_projeto ? 'none' : ''}}>
+                                <div className="float-right cursor"
+                                     onClick={() => this.removeList('financiador', item.id_financiador_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger "/>
+                                </div>
+                                <div className="float-right"
+                                     onClick={() => this.saveList('financiador', item.id_financiador_projeto)}
+                                     style={{margin: '0 10px'}}>
+                                    <div
+                                        style={{display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? 'none' : ''}}
+                                        className="cursor"><i className="far fa-save"/></div>
+                                    <div
+                                        style={{display: this.state.saveLoading === 'financiador_' + item.id_financiador_projeto ? '' : 'none'}}>
+                                        <i className="fa fa-spin fa-spinner"/></div>
                                 </div>
                             </div>
                         </div>
@@ -852,30 +884,44 @@ class FormEditProjeto extends React.Component{
 
 
         let publico_projeto = null;
-        if(this.state.datalistPublicos) {
+        if (this.state.datalistPublicos) {
             publico_projeto = this.state.datalistPublicos.map(function (item, index) {
                 return (
                     <div className="label-float" key={"publico_projeto_" + index}>
-                        <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado" onChange={this.handleInputChange}
+                        <input className={"form-control form-g "} type="text" name="tx_nome_publico_beneficiado"
+                               onChange={this.handleInputChange}
                                defaultValue={item.tx_nome_publico_beneficiado}
-                               placeholder="Insica o CNPJ da OSC Parceira" />
+                               placeholder="Insica o CNPJ da OSC Parceira"/>
                         <label htmlFor="tx_nome_publico_beneficiado">Publico do projeto</label>
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
-                            <div style={{display: this.state.removeItem == 'publico_'+item.id_publico_beneficiado_projeto ? '' : 'none'}}>
-                                <div className="btn-xs btn-danger" onClick={() => this.remove('publico', item.id_publico_beneficiado_projeto)}>Excluir</div>
-                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_publico_beneficiado_projeto)}>Cancelar</div>
-                            </div>
-                            <div className="float-right" style={{display: this.state.removeItem == 'publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}>
-                                <div className="float-right cursor" onClick={() => this.removeList('publico', item.id_publico_beneficiado_projeto)}>
-                                    <i className="fas fa-trash-alt text-danger " />
+                            <div
+                                style={{display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger"
+                                     onClick={() => this.remove('publico', item.id_publico_beneficiado_projeto)}>Excluir
                                 </div>
-                                <div className="float-right" onClick={() => this.saveList('publico', item.id_publico_beneficiado_projeto)}  style={{margin: '0 10px'}}>
-                                    <div className="cursor" style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
-                                    <div style={{display: this.state.saveLoading==='publico_'+item.id_publico_beneficiado_projeto ? '' : 'none'}}><i className="fa fa-spin fa-spinner"/></div>
+                                <div className="btn-xs btn-light"
+                                     onClick={() => this.removeList(item.id_publico_beneficiado_projeto)}>Cancelar
+                                </div>
+                            </div>
+                            <div className="float-right"
+                                 style={{display: this.state.removeItem == 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : ''}}>
+                                <div className="float-right cursor"
+                                     onClick={() => this.removeList('publico', item.id_publico_beneficiado_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger "/>
+                                </div>
+                                <div className="float-right"
+                                     onClick={() => this.saveList('publico', item.id_publico_beneficiado_projeto)}
+                                     style={{margin: '0 10px'}}>
+                                    <div className="cursor"
+                                         style={{display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? 'none' : ''}}>
+                                        <i className="far fa-save"/></div>
+                                    <div
+                                        style={{display: this.state.saveLoading === 'publico_' + item.id_publico_beneficiado_projeto ? '' : 'none'}}>
+                                        <i className="fa fa-spin fa-spinner"/></div>
                                 </div>
                             </div>
                         </div>
@@ -886,27 +932,35 @@ class FormEditProjeto extends React.Component{
 
 
         let localizacao_projeto = null;
-        if(this.state.datalistLocalizacoes) {
+        if (this.state.datalistLocalizacoes) {
             localizacao_projeto = this.state.datalistLocalizacoes.map(function (item, index) {
                 return (
                     <div className="col-md-6" key={"localizacao_projeto_" + index}>
                         <div className="label-float">
-                            <input className={"form-control form-g "} type="text" name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange}
+                            <input className={"form-control form-g "} type="text"
+                                   name="tx_nome_regiao_localizacao_projeto" onChange={this.handleInputChange}
                                    defaultValue={item.tx_nome_regiao_localizacao_projeto}
-                                   placeholder="Insica o Local de execução" />
+                                   placeholder="Insica o Local de execução"/>
                             <label htmlFor="tx_nome_Localizacao">Local de execução</label>
                             <div className="label-box-info-off">
                                 <p>&nbsp;</p>
                             </div>
 
                             <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
-                                <div style={{display: this.state.removeItem == 'localizacao_'+item.id_localizacao_projeto ? '' : 'none'}}>
-                                    <div className="btn-xs btn-danger" onClick={() => this.remove('localizacao', item.id_localizacao_projeto)}>Excluir</div>
-                                    <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_localizacao_projeto)}>Cancelar</div>
+                                <div
+                                    style={{display: this.state.removeItem == 'localizacao_' + item.id_localizacao_projeto ? '' : 'none'}}>
+                                    <div className="btn-xs btn-danger"
+                                         onClick={() => this.remove('localizacao', item.id_localizacao_projeto)}>Excluir
+                                    </div>
+                                    <div className="btn-xs btn-light"
+                                         onClick={() => this.removeList(item.id_localizacao_projeto)}>Cancelar
+                                    </div>
                                 </div>
-                                <div className="float-right" style={{display: this.state.removeItem == 'localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}>
-                                    <div className="float-right cursor" onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
-                                        <i className="fas fa-trash-alt text-danger " />
+                                <div className="float-right"
+                                     style={{display: this.state.removeItem == 'localizacao_' + item.id_localizacao_projeto ? 'none' : ''}}>
+                                    <div className="float-right cursor"
+                                         onClick={() => this.removeList('localizacao', item.id_localizacao_projeto)}>
+                                        <i className="fas fa-trash-alt text-danger "/>
                                     </div>
                                     {/*<div className="float-right" onClick={() => this.saveList('localizacao', item.id_localizacao_projeto)}  style={{margin: '0 10px'}}>
                                         <div style={{display: this.state.saveLoading==='localizacao_'+item.id_localizacao_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
@@ -920,21 +974,33 @@ class FormEditProjeto extends React.Component{
                 );
             }.bind(this));
         }
+        let status_projeto = null;
+        if (this.state.datalistStatusProjeto) {
+            status_projeto = this.state.datalistStatusProjeto.map(function (item, index) {
+                return (
+                    <option value={item.cd_status_projeto}  key={"localizacao_projeto_" + index}>
+                        {item.tx_nome_status_projeto}
+                    </option>
+                );
+            }.bind(this));
+        }
+
 
         let parceira_projeto = null;
-        if(this.state.datalistParcerias) {
+        if (this.state.datalistParcerias) {
             parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
                 return (
                     <div className="label-float listItemProject" key={"parceira_projeto_" + index}>
-                        <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc" onChange={this.handleInputChange}
+                        <input className={"form-control form-g "} type="text" name="tx_nome_fantasia_osc"
+                               onChange={this.handleInputChange}
                                defaultValue={item.tx_nome_fantasia_osc}
-                               placeholder="Insica o CNPJ da OSC Parceira" />
+                               placeholder="Insica o CNPJ da OSC Parceira"/>
                         <label htmlFor="tx_nome_fantasia_osc">OSC Parceira</label>
                         <div className="label-box-info-off">
                             <p>&nbsp;</p>
                         </div>
 
-                       {/* <FormOscParceira
+                        {/* <FormOscParceira
                             action={this.state.actionForm}
                             id={this.state.editId}
                             listParcerias={this.listParcerias}
@@ -944,13 +1010,20 @@ class FormEditProjeto extends React.Component{
                         />*/}
 
                         <div className="float-right " style={{margin: '-50px 10px 0 0'}}>
-                            <div style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? '' : 'none'}}>
-                                <div className="btn-xs btn-danger" onClick={() => this.remove('parceira', item.id_osc_parceira_projeto)}>Excluir</div>
-                                <div className="btn-xs btn-light" onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar</div>
+                            <div
+                                style={{display: this.state.removeItem == 'parceira_' + item.id_osc_parceira_projeto ? '' : 'none'}}>
+                                <div className="btn-xs btn-danger"
+                                     onClick={() => this.remove('parceira', item.id_osc_parceira_projeto)}>Excluir
+                                </div>
+                                <div className="btn-xs btn-light"
+                                     onClick={() => this.removeList(item.id_osc_parceira_projeto)}>Cancelar
+                                </div>
                             </div>
-                            <div className="float-right" style={{display: this.state.removeItem == 'parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}>
-                                <div className="float-right cursor" onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
-                                    <i className="fas fa-trash-alt text-danger " />
+                            <div className="float-right"
+                                 style={{display: this.state.removeItem == 'parceira_' + item.id_osc_parceira_projeto ? 'none' : ''}}>
+                                <div className="float-right cursor"
+                                     onClick={() => this.removeList('parceira', item.id_osc_parceira_projeto)}>
+                                    <i className="fas fa-trash-alt text-danger "/>
                                 </div>
                                 {/*<div className="float-right" onClick={() => this.saveList('parceira', item.id_osc_parceira_projeto)}  style={{margin: '0 10px'}}>
                                     <div style={{display: this.state.saveLoading==='parceira_'+item.id_osc_parceira_projeto ? 'none' : ''}}><i className="far fa-save"/></div>
@@ -971,19 +1044,19 @@ class FormEditProjeto extends React.Component{
         let objetivos = null;
         let metas = [];
 
-        if(this.state.objetivos){
+        if (this.state.objetivos) {
             objetivos = this.state.objetivos.map(function (item) {
                 let checkedMetas = false;
 
-                if(this.state.datalistObjetivos){
-                    if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
-                       checkedMetas = true;
+                if (this.state.datalistObjetivos) {
+                    if (this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1) {
+                        checkedMetas = true;
                     }
                 }
 
                 let png = padDigits(item.cd_objetivo_projeto, 2);
 
-                if(item.metas){
+                if (item.metas) {
                     metas.push(item.metas.map(function (itemMeta) {
                         /*if(itemMeta.checked){
                             checkedMetas = true;
@@ -992,30 +1065,40 @@ class FormEditProjeto extends React.Component{
                         let checkedMeta2 = false;
                         let id_objetivo_projeto = 0;
                         this.state.dataChkboxMetas.find((itemChecked) => {
-                            if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto){
+                            if (itemMeta.cd_meta_projeto === itemChecked.cd_meta_projeto) {
                                 checkedMetas = true;
                                 checkedMeta2 = true;
                                 id_objetivo_projeto = itemChecked.id_objetivo_projeto;
                             }
                         });
 
-                        return(
-                            <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
-                                <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta2)}>
-                                    <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required defaultChecked={checkedMeta2} onChange={this.handleInputChange}/>
-                                    <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto} >{itemMeta.tx_nome_meta_projeto}</label>
+                        return (
+                            <div key={"subarea_" + itemMeta.cd_meta_projeto}
+                                 style={{display: itemMeta.display ? '' : 'none'}}>
+                                <div className="custom-control custom-checkbox"
+                                     onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_projeto, !checkedMeta2)}>
+                                    <input type="checkbox" className="custom-control-input"
+                                           id={"subarea_" + itemMeta.cd_meta_projeto} required
+                                           defaultChecked={checkedMeta2} onChange={this.handleInputChange}/>
+                                    <label className="custom-control-label"
+                                           htmlFor={"subarea_" + itemMeta.cd_meta_projeto}>{itemMeta.tx_nome_meta_projeto}</label>
                                 </div>
-                                <hr />
+                                <hr/>
                             </div>
                         );
                     }.bind(this)));
                 }
 
                 return (
-                    <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
-                        <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
-                        <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
-                            <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="80" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                    <div className="custom-control custom-checkbox" key={"area_" + item.cd_objetivo_projeto}
+                         onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
+                        <input type="checkbox" className="custom-control-input" id={"area_" + item.cd_objetivo_projeto}
+                               required/>
+                        <label htmlFor={"area_" + item.cd_objetivo_projeto}
+                               style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0,}}>
+                            <img src={"img/ods/" + png + ".png"} alt=""
+                                 className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos == item.cd_objetivo_projeto ? " item-focus" : "")}
+                                 width="80" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
                         </label>
                     </div>
                 );
@@ -1023,8 +1106,7 @@ class FormEditProjeto extends React.Component{
         }
 
 
-
-        return(
+        return (
 
             <div>
 
@@ -1034,9 +1116,10 @@ class FormEditProjeto extends React.Component{
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_nome_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text" name="tx_nome_projeto"
+                                               onChange={this.handleInputChange}
                                                value={this.state.form.tx_nome_projeto}
-                                               placeholder="Nome do projeto, atividade ou programa" />
+                                               placeholder="Nome do projeto, atividade ou programa"/>
                                         <label htmlFor="tx_nome_projeto">Nome do projeto, atividade ou programa</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1046,21 +1129,24 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="col-md-4">
                                     <select className={"form-control form-m "}
-                                            name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}>
+                                            name="cd_status_projeto" onChange={this.handleInputChange}
+                                            value={this.state.form.cd_status_projeto}>
                                         <option value="-1">Selecione</option>
-                                        <option value="1">Arquivado, cancelado ou indeferido</option>
+                                        {status_projeto}
+                                        {/*<option value="1">Arquivado, cancelado ou indeferido</option>
                                         <option value="3">Proposta</option>
-                                        <option value="3">Projeto em andamento</option>
+                                        <option value="4">Projeto em andamento</option>
                                         <option value="2">Finalizado</option>
-                                        <option value="5">Outro</option>
+                                        <option value="5">Outro</option>*/}
                                     </select><br/>
                                 </div>
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="date" name="dt_data_inicio_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="date"
+                                               name="dt_data_inicio_projeto" onChange={this.handleInputChange}
                                                value={this.state.form.dt_data_inicio_projeto}
-                                               placeholder="Data de Início" />
+                                               placeholder="Data de Início"/>
                                         <label htmlFor="dt_data_inicio_projeto">Data de Início</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1070,9 +1156,10 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="date" name="dt_data_fim_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="date" name="dt_data_fim_projeto"
+                                               onChange={this.handleInputChange}
                                                value={this.state.form.dt_data_fim_projeto}
-                                               placeholder="Data de Fim" />
+                                               placeholder="Data de Fim"/>
                                         <label htmlFor="dt_data_fim_projeto">Data de Fim</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1082,9 +1169,10 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-8">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_link_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text" name="tx_link_projeto"
+                                               onChange={this.handleInputChange}
                                                value={this.state.form.tx_link_projeto}
-                                               placeholder="Link para o projeto" />
+                                               placeholder="Link para o projeto"/>
                                         <label htmlFor="tx_link_projeto">Link para o projeto</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1094,9 +1182,10 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="nr_total_beneficiarios" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text"
+                                               name="nr_total_beneficiarios" onChange={this.handleInputChange}
                                                value={this.state.form.nr_total_beneficiarios}
-                                               placeholder="Total de Beneficiários" />
+                                               placeholder="Total de Beneficiários"/>
                                         <label htmlFor="nr_total_beneficiarios">Total de Beneficiários</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1106,9 +1195,10 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text"
+                                               name="nr_valor_total_projeto" onChange={this.handleInputChange}
                                                value={this.state.form.nr_valor_total_projeto}
-                                               placeholder="Valor Total" />
+                                               placeholder="Valor Total"/>
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1118,9 +1208,10 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text"
+                                               name="nr_valor_captado_projeto" onChange={this.handleInputChange}
                                                value={this.state.form.nr_valor_captado_projeto}
-                                               placeholder="Valor Recebido" />
+                                               placeholder="Valor Recebido"/>
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
@@ -1130,10 +1221,12 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_descricao_projeto" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text"
+                                               name="tx_descricao_projeto" onChange={this.handleInputChange}
                                                value={this.state.form.tx_descricao_projeto}
-                                               placeholder="Descrição do Projeto, atividade e/ou programa" />
-                                        <label htmlFor="tx_descricao_projeto">Descrição do Projeto, atividade e/ou programa</label>
+                                               placeholder="Descrição do Projeto, atividade e/ou programa"/>
+                                        <label htmlFor="tx_descricao_projeto">Descrição do Projeto, atividade e/ou
+                                            programa</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
                                         </div>
@@ -1142,10 +1235,12 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-12">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="text" name="tx_metodologia_monitoramento" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text"
+                                               name="tx_metodologia_monitoramento" onChange={this.handleInputChange}
                                                value={this.state.form.tx_metodologia_monitoramento}
-                                               placeholder="Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa" />
-                                        <label htmlFor="tx_metodologia_monitoramento">Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa</label>
+                                               placeholder="Metodologia de Monitoramento e Avaliação do Projeto, atividade e/ou programa"/>
+                                        <label htmlFor="tx_metodologia_monitoramento">Metodologia de Monitoramento e
+                                            Avaliação do Projeto, atividade e/ou programa</label>
                                         <div className="label-box-info-off">
                                             <p>&nbsp;</p>
                                         </div>
@@ -1155,7 +1250,8 @@ class FormEditProjeto extends React.Component{
                                 <div className="col-md-4">
                                     {/*<label htmlFor="cd_certificado">Abrangência de atuação*</label><br/>*/}
                                     <select className={"form-control form-m "}
-                                            name="cd_abrangencia_projeto" onChange={this.handleInputChange} value={this.state.form.cd_abrangencia_projeto}>
+                                            name="cd_abrangencia_projeto" onChange={this.handleInputChange}
+                                            value={this.state.form.cd_abrangencia_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Municipal</option>
                                         <option value="2">Estadual</option>
@@ -1166,7 +1262,8 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="col-md-4">
                                     <select className={"form-control form-m "}
-                                            name="cd_zona_atuacao_projeto" onChange={this.handleInputChange} value={this.state.form.cd_zona_atuacao_projeto}>
+                                            name="cd_zona_atuacao_projeto" onChange={this.handleInputChange}
+                                            value={this.state.form.cd_zona_atuacao_projeto}>
                                         <option value="-1">Selecione</option>
                                         <option value="1">Rural</option>
                                         <option value="2">Urbana</option>
@@ -1178,8 +1275,11 @@ class FormEditProjeto extends React.Component{
                                         Atualizar
                                     </button>
                                     <br/>
-                                    <div style={{display: this.state.showMsg ? 'block' : 'none'}} className="alert alert-danger">{this.state.msg}</div>
-                                    <div style={{display: this.state.loading ? 'block' : 'none'}}><i className="fa fa-spin fa-spinner"/>Processando</div>
+                                    <div style={{display: this.state.showMsg ? 'block' : 'none'}}
+                                         className="alert alert-danger">{this.state.msg}</div>
+                                    <div style={{display: this.state.loading ? 'block' : 'none'}}><i
+                                        className="fa fa-spin fa-spinner"/>Processando
+                                    </div>
                                 </div>
 
                             </div>
@@ -1192,89 +1292,134 @@ class FormEditProjeto extends React.Component{
                                 <h3>Fontes de Recursos</h3>
                                 <hr/>
                                 <div className="bg-lgt items-checkbox" onChange={this.clickFontRecurso}>
-                                    <div className="custom-control custom-checkbox"  onChange={() => this.checkRecurso(1, this.state.ft_recursos_publico, this.state.id_recurso_publico)}>
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_publico"}  checked={this.state.ft_recursos_publico} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_publico"} >Recursos públicos</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkRecurso(1, this.state.ft_recursos_publico, this.state.id_recurso_publico)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"fontes_recursos_publico"} checked={this.state.ft_recursos_publico}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_publico"}>Recursos
+                                            públicos</label>
                                     </div>
-                                    <div className="float-right" style={{display: this.state.ft_recursos_publico === false ? 'none' : '', margin: '8px -20px 0 0'}}>
-                                        <i className="fas fa-chevron-right " />
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkRecurso(2, this.state.ft_recursos_privado, this.state.id_recurso_privado)}>
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_privado"}  checked={this.state.ft_recursos_privado} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_privado"} >Recursos privados</label>
-                                    </div>
-                                </div>
-
-                                <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkRecurso(4, this.state.ft_recursos_proprio, this.state.id_recurso_proprio)}>
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_proprio"} checked={this.state.ft_recursos_proprio} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_proprio"} >Recursos próprios</label>
+                                    <div className="float-right" style={{
+                                        display: this.state.ft_recursos_publico === false ? 'none' : '',
+                                        margin: '8px -20px 0 0'
+                                    }}>
+                                        <i className="fas fa-chevron-right "/>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkRecurso(3,  this.state.ft_recursos_nao_financeiro, this.state.id_recurso_nao_financeiro)}>
-                                        <input type="checkbox" className="custom-control-input" id={"fontes_recursos_nao_financeiro"} checked={this.state.ft_recursos_nao_financeiro} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"fontes_recursos_nao_financeiro"} >Recursos não financeiros</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkRecurso(2, this.state.ft_recursos_privado, this.state.id_recurso_privado)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"fontes_recursos_privado"} checked={this.state.ft_recursos_privado}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_privado"}>Recursos
+                                            privados</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkRecurso(4, this.state.ft_recursos_proprio, this.state.id_recurso_proprio)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"fontes_recursos_proprio"} checked={this.state.ft_recursos_proprio}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"fontes_recursos_proprio"}>Recursos
+                                            próprios</label>
+                                    </div>
+                                </div>
+
+                                <div className="bg-lgt items-checkbox">
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkRecurso(3, this.state.ft_recursos_nao_financeiro, this.state.id_recurso_nao_financeiro)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"fontes_recursos_nao_financeiro"}
+                                               checked={this.state.ft_recursos_nao_financeiro}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label"
+                                               htmlFor={"fontes_recursos_nao_financeiro"}>Recursos não
+                                            financeiros</label>
                                     </div>
                                 </div>
                             </div>
                             {/* ******************************** */}
-                            <div className={this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6'} style={{display: this.state.ft_recursos_publico === false ? 'none' : ''}}>
+                            <div className={this.state.ft_recursos_publico === false ? 'col-md-12' : 'col-md-6'}
+                                 style={{display: this.state.ft_recursos_publico === false ? 'none' : ''}}>
                                 <br/>
                                 <h3>Tipo de Parceria</h3>
                                 <hr/>
 
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(5, this.state.tp_cooperacao_tecnica, this.state.id_tipo_parceria_cooperacao)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_cooperacao_tecnica"}  checked={this.state.tp_cooperacao_tecnica} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_cooperacao_tecnica"} >Acordo de cooperação técnica</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(5, this.state.tp_cooperacao_tecnica, this.state.id_tipo_parceria_cooperacao)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"tp_cooperacao_tecnica"} checked={this.state.tp_cooperacao_tecnica}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_cooperacao_tecnica"}>Acordo
+                                            de cooperação técnica</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(0, this.state.tp_termo_fomento, this.state.id_tipo_parceria_fomento)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_fomento"}  checked={this.state.tp_termo_fomento} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_fomento"} >Termo de fomento</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(0, this.state.tp_termo_fomento, this.state.id_tipo_parceria_fomento)}>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_fomento"}
+                                               checked={this.state.tp_termo_fomento} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_fomento"}>Termo de
+                                            fomento</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(1, this.state.tp_termo_colaboracao, this.state.id_tipo_parceria_colaboracao)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_colaboracao"}  checked={this.state.tp_termo_colaboracao} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_colaboracao"} >Termo de colaboração</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(1, this.state.tp_termo_colaboracao, this.state.id_tipo_parceria_colaboracao)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"tp_termo_colaboracao"} checked={this.state.tp_termo_colaboracao}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_colaboracao"}>Termo
+                                            de colaboração</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(2, this.state.tp_termo_parceria, this.state.id_tipo_parceria_parceria)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_parceria"}  checked={this.state.tp_termo_parceria} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_termo_parceria"} >Termo de parceria</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(2, this.state.tp_termo_parceria, this.state.id_tipo_parceria_parceria)}>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_termo_parceria"}
+                                               checked={this.state.tp_termo_parceria}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_termo_parceria"}>Termo de
+                                            parceria</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(3, this.state.tp_contrato_gestao, this.state.id_tipo_parceria_gestao)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_contrato_gestao"}  checked={this.state.tp_contrato_gestao} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_contrato_gestao"} >Contrato de gestão</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(3, this.state.tp_contrato_gestao, this.state.id_tipo_parceria_gestao)}>
+                                        <input type="checkbox" className="custom-control-input"
+                                               id={"tp_contrato_gestao"} checked={this.state.tp_contrato_gestao}
+                                               onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_contrato_gestao"}>Contrato
+                                            de gestão</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(4, this.state.tp_convenio, this.state.id_tipo_parceria_convenio)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_convenio"}  checked={this.state.tp_convenio} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_convenio"} >Convênio</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(4, this.state.tp_convenio, this.state.id_tipo_parceria_convenio)}>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_convenio"}
+                                               checked={this.state.tp_convenio} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_convenio"}>Convênio</label>
                                     </div>
                                 </div>
 
                                 <div className="bg-lgt items-checkbox">
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkParceria(6, this.state.tp_outro, this.state.id_tipo_parceria_outro)}>
-                                        <input type="checkbox" className="custom-control-input" id={"tp_outro"}  checked={this.state.tp_outro} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"tp_outro"} >Outro</label>
+                                    <div className="custom-control custom-checkbox"
+                                         onChange={() => this.checkParceria(6, this.state.tp_outro, this.state.id_tipo_parceria_outro)}>
+                                        <input type="checkbox" className="custom-control-input" id={"tp_outro"}
+                                               checked={this.state.tp_outro} onChange={this.handleInputChange}/>
+                                        <label className="custom-control-label" htmlFor={"tp_outro"}>Outro</label>
                                     </div>
                                 </div>
                             </div>
@@ -1286,16 +1431,20 @@ class FormEditProjeto extends React.Component{
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>OSCs Parceiras</strong></p>
-                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
-                                            <a className="btn-add" onClick={() => this.addList('parceira')} style={{display: this.state.showAdd==='parceira' ? "none" : "block"}}>
+                                        <div className="col-md-1 float-right"
+                                             style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('parceira')}
+                                               style={{display: this.state.showAdd === 'parceira' ? "none" : "block"}}>
                                                 <i className={"fas fa-2x fa-plus-circle"}/>
                                             </a>
-                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='parceira' ? "block" : "none"}}>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')}
+                                               style={{display: this.state.showAdd === 'parceira' ? "block" : "none"}}>
                                                 <i className={"fas fa-2x fa-times-circle"}/>
                                             </a>
                                         </div>
                                         <hr/>
-                                        <div  className="col-md-12" style={{display: this.state.showAdd==='parceira' ? 'block' : 'none'}}>
+                                        <div className="col-md-12"
+                                             style={{display: this.state.showAdd === 'parceira' ? 'block' : 'none'}}>
                                             <FormOscParceira
                                                 action={this.state.actionForm}
                                                 id={this.state.editId}
@@ -1316,16 +1465,20 @@ class FormEditProjeto extends React.Component{
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>Público Beneficiado</strong></p>
-                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
-                                            <a className="btn-add" onClick={() => this.addList('publico')} style={{display: this.state.showAdd==='publico' ? "none" : "block"}}>
+                                        <div className="col-md-1 float-right"
+                                             style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('publico')}
+                                               style={{display: this.state.showAdd === 'publico' ? "none" : "block"}}>
                                                 <i className={"fas fa-2x fa-plus-circle"}/>
                                             </a>
-                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='publico' ? "block" : "none"}}>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')}
+                                               style={{display: this.state.showAdd === 'publico' ? "block" : "none"}}>
                                                 <i className={"fas fa-2x fa-times-circle"}/>
                                             </a>
                                         </div>
                                         <hr/>
-                                        <div  className="col-md-12" style={{display: this.state.showAdd==='publico' ? 'block' : 'none'}}>
+                                        <div className="col-md-12"
+                                             style={{display: this.state.showAdd === 'publico' ? 'block' : 'none'}}>
                                             <FormProjetoPublico
                                                 id_projeto={this.state.editId}
                                                 listPublicos={this.listPublicos}
@@ -1338,16 +1491,20 @@ class FormEditProjeto extends React.Component{
                                         {/*//////////////////////Local de execução//////////////////////*/}
                                         <br/>
                                         <p><strong>Local de execução</strong></p>
-                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
-                                            <a className="btn-add" onClick={() => this.addList('localizacao')} style={{display: this.state.showAdd==='localizacao' ? "none" : "block"}}>
+                                        <div className="col-md-1 float-right"
+                                             style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('localizacao')}
+                                               style={{display: this.state.showAdd === 'localizacao' ? "none" : "block"}}>
                                                 <i className={"fas fa-2x fa-plus-circle"}/>
                                             </a>
-                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='localizacao' ? "block" : "none"}}>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')}
+                                               style={{display: this.state.showAdd === 'localizacao' ? "block" : "none"}}>
                                                 <i className={"fas fa-2x fa-times-circle"}/>
                                             </a>
                                         </div>
                                         <hr/>
-                                        <div  className="col-md-12" style={{display: this.state.showAdd==='localizacao' ? 'block' : 'none'}}>
+                                        <div className="col-md-12"
+                                             style={{display: this.state.showAdd === 'localizacao' ? 'block' : 'none'}}>
                                             <FormProjetoLocalizacao
                                                 id_projeto={this.state.editId}
                                                 listLocalizacoes={this.listLocalizacoes}
@@ -1362,16 +1519,20 @@ class FormEditProjeto extends React.Component{
                                         {/*//////////////////////Financiadores//////////////////////*/}
                                         <br/>
                                         <p><strong>Financiadores do Projeto</strong></p>
-                                        <div className="col-md-1 float-right" style={{marginTop: '15px', marginRight: '-40px'}}>
-                                            <a className="btn-add" onClick={() => this.addList('financiador')} style={{display: this.state.showAdd==='financiador' ? "none" : "block"}}>
+                                        <div className="col-md-1 float-right"
+                                             style={{marginTop: '15px', marginRight: '-40px'}}>
+                                            <a className="btn-add" onClick={() => this.addList('financiador')}
+                                               style={{display: this.state.showAdd === 'financiador' ? "none" : "block"}}>
                                                 <i className={"fas fa-2x fa-plus-circle"}/>
                                             </a>
-                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')} style={{display: this.state.showAdd==='financiador' ? "block" : "none"}}>
+                                            <a className="btn-add btn-add-warning" onClick={() => this.addList('off')}
+                                               style={{display: this.state.showAdd === 'financiador' ? "block" : "none"}}>
                                                 <i className={"fas fa-2x fa-times-circle"}/>
                                             </a>
                                         </div>
                                         <hr/>
-                                        <div  className="col-md-12" style={{display: this.state.showAdd==='financiador' ? 'block' : 'none'}}>
+                                        <div className="col-md-12"
+                                             style={{display: this.state.showAdd === 'financiador' ? 'block' : 'none'}}>
                                             <FormProjetoFinanciador
                                                 id_projeto={this.state.editId}
                                                 listFinanciadores={this.listFinanciadores}
@@ -1384,13 +1545,15 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
+                                        <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong>
+                                        <hr/>
                                         <div>
                                             {objetivos}
                                             <br/><br/>
                                         </div>
                                         <div style={{display: this.state.titleMeta ? '' : 'none'}}>
-                                            <strong>Metas Relacionadas ao ODS definido</strong><hr/>
+                                            <strong>Metas Relacionadas ao ODS definido</strong>
+                                            <hr/>
                                             <div>
                                                 <strong>{this.state.titleObjetivo}</strong><br/><br/>
                                                 {metas}

@@ -73,9 +73,11 @@ class FormProjeto extends React.Component {
     this.menuNav = this.menuNav.bind(this);
     this.menuNavClose = this.menuNavClose.bind(this);
     this.checkRecurso = this.checkRecurso.bind(this);
+    this.listStatusProjeto = this.listStatusProjeto.bind(this);
   }
   componentDidMount() {
     this.listArea();
+    this.listStatusProjeto();
   }
   componentWillReceiveProps(props) {
     this.cleanForm();
@@ -677,6 +679,22 @@ class FormProjeto extends React.Component {
       actionForm: action
     });
   }
+  listStatusProjeto() {
+    $.ajax({
+      method: 'GET',
+      cache: false,
+      url: getBaseUrl2 + 'status_projeto',
+      success: function (data) {
+        this.setState({
+          loading: false,
+          datalistStatusProjeto: data
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
+  }
   remove(rota, id) {
     $.ajax({
       method: 'DELETE',
@@ -1064,6 +1082,15 @@ class FormProjeto extends React.Component {
         })));
       }.bind(this));
     }
+    let status_projeto = null;
+    if (this.state.datalistStatusProjeto) {
+      status_projeto = this.state.datalistStatusProjeto.map(function (item, index) {
+        return /*#__PURE__*/React.createElement("option", {
+          value: item.cd_status_projeto,
+          key: "localizacao_projeto_" + index
+        }, item.tx_nome_status_projeto);
+      }.bind(this));
+    }
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
@@ -1105,17 +1132,7 @@ class FormProjeto extends React.Component {
       value: this.state.form.cd_status_projeto
     }, /*#__PURE__*/React.createElement("option", {
       value: "-1"
-    }, "Selecione"), /*#__PURE__*/React.createElement("option", {
-      value: "1"
-    }, "Arquivado, cancelado ou indeferido"), /*#__PURE__*/React.createElement("option", {
-      value: "3"
-    }, "Proposta"), /*#__PURE__*/React.createElement("option", {
-      value: "3"
-    }, "Projeto em andamento"), /*#__PURE__*/React.createElement("option", {
-      value: "2"
-    }, "Finalizado"), /*#__PURE__*/React.createElement("option", {
-      value: "5"
-    }, "Outro")), /*#__PURE__*/React.createElement("label", {
+    }, "Selecione"), status_projeto), /*#__PURE__*/React.createElement("label", {
       htmlFor: "cd_status_projeto",
       className: "label-select"
     }, "Status")), /*#__PURE__*/React.createElement("div", {

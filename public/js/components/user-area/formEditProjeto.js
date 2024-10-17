@@ -58,6 +58,7 @@ class FormEditProjeto extends React.Component {
     this.listLocalizacoes = this.listLocalizacoes.bind(this);
     this.listRecursos = this.listRecursos.bind(this);
     this.listTipoParcerias = this.listTipoParcerias.bind(this);
+    this.listStatusProjeto = this.listStatusProjeto.bind(this);
     this.clickFontRecurso = this.clickFontRecurso.bind(this);
     this.showHideForm = this.showHideForm.bind(this);
     this.remove = this.remove.bind(this);
@@ -78,6 +79,7 @@ class FormEditProjeto extends React.Component {
     this.listChkboxMetas();
     this.listRecursos();
     this.listTipoParcerias();
+    this.listStatusProjeto();
   }
   componentWillReceiveProps(props) {
     let lastEditId = this.state.editId;
@@ -148,6 +150,22 @@ class FormEditProjeto extends React.Component {
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(status, err.toString());
+      }.bind(this)
+    });
+  }
+  listStatusProjeto() {
+    $.ajax({
+      method: 'GET',
+      cache: false,
+      url: getBaseUrl2 + 'status_projeto',
+      success: function (data) {
+        this.setState({
+          loading: false,
+          datalistStatusProjeto: data
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
       }.bind(this)
     });
   }
@@ -936,6 +954,15 @@ class FormEditProjeto extends React.Component {
         }))))));
       }.bind(this));
     }
+    let status_projeto = null;
+    if (this.state.datalistStatusProjeto) {
+      status_projeto = this.state.datalistStatusProjeto.map(function (item, index) {
+        return /*#__PURE__*/React.createElement("option", {
+          value: item.cd_status_projeto,
+          key: "localizacao_projeto_" + index
+        }, item.tx_nome_status_projeto);
+      }.bind(this));
+    }
     let parceira_projeto = null;
     if (this.state.datalistParcerias) {
       parceira_projeto = this.state.datalistParcerias.map(function (item, index) {
@@ -1092,17 +1119,7 @@ class FormEditProjeto extends React.Component {
       value: this.state.form.cd_status_projeto
     }, /*#__PURE__*/React.createElement("option", {
       value: "-1"
-    }, "Selecione"), /*#__PURE__*/React.createElement("option", {
-      value: "1"
-    }, "Arquivado, cancelado ou indeferido"), /*#__PURE__*/React.createElement("option", {
-      value: "3"
-    }, "Proposta"), /*#__PURE__*/React.createElement("option", {
-      value: "3"
-    }, "Projeto em andamento"), /*#__PURE__*/React.createElement("option", {
-      value: "2"
-    }, "Finalizado"), /*#__PURE__*/React.createElement("option", {
-      value: "5"
-    }, "Outro")), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+    }, "Selecione"), status_projeto), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
       className: "form-group col-md-4"
     }, /*#__PURE__*/React.createElement("div", {
       className: "label-float"

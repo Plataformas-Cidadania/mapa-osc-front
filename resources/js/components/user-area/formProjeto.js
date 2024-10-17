@@ -95,11 +95,13 @@ class FormProjeto extends React.Component{
         this.menuNavClose = this.menuNavClose.bind(this);
 
         this.checkRecurso = this.checkRecurso.bind(this);
+        this.listStatusProjeto = this.listStatusProjeto.bind(this);
 
     }
 
     componentDidMount(){
         this.listArea();
+        this.listStatusProjeto();
     }
 
     componentWillReceiveProps(props){
@@ -750,6 +752,20 @@ class FormProjeto extends React.Component{
         this.setState({showForm: showForm, actionForm: action});
     }
 
+    listStatusProjeto(){
+        $.ajax({
+            method: 'GET',
+            cache: false,
+            url: getBaseUrl2+'status_projeto',
+            success: function (data) {
+                this.setState({loading: false, datalistStatusProjeto: data})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
 
     remove(rota, id){
         $.ajax({
@@ -1030,6 +1046,18 @@ class FormProjeto extends React.Component{
             }.bind(this));
         }
 
+
+        let status_projeto = null;
+        if (this.state.datalistStatusProjeto) {
+            status_projeto = this.state.datalistStatusProjeto.map(function (item, index) {
+                return (
+                    <option value={item.cd_status_projeto}  key={"localizacao_projeto_" + index}>
+                        {item.tx_nome_status_projeto}
+                    </option>
+                );
+            }.bind(this));
+        }
+
         return(
 
             <div>
@@ -1059,11 +1087,12 @@ class FormProjeto extends React.Component{
                                         <select className={"form-control form-m "}
                                                 name="cd_status_projeto" onChange={this.handleInputChange} value={this.state.form.cd_status_projeto}  >
                                             <option value="-1">Selecione</option>
-                                            <option value="1">Arquivado, cancelado ou indeferido</option>
+                                            {status_projeto}
+                                            {/*<option value="1">Arquivado, cancelado ou indeferido</option>
                                             <option value="3">Proposta</option>
-                                            <option value="3">Projeto em andamento</option>
+                                            <option value="4">Projeto em andamento</option>
                                             <option value="2">Finalizado</option>
-                                            <option value="5">Outro</option>
+                                            <option value="5">Outro</option>*/}
                                         </select>
                                         <label htmlFor="cd_status_projeto" className="label-select">Status</label>
                                 </div>
