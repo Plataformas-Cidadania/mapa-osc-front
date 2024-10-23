@@ -80,13 +80,16 @@
                 @foreach($participacao_social_outros as $participacao_social_outros)
                     <div class="row bg-lgt">
                         <div class="col-md-9">
-                            <p style="margin-top: 10px;"> <?php echo iconType($participacao_social_outros['ft_articipacao_social_outra']); ?></p>
+                            <p style="margin-top: 10px;">
+                                    <?php echo isset($participacao_social_outros['ft_articipacao_social_outra']) ? iconType($participacao_social_outros['ft_articipacao_social_outra']) : ''; ?>
+                            </p>
                             <br>
                             <p><strong>Atuação em Fóruns, Articulações, Coletivos e Redes de OSCs:</strong></p>
-                            <p>{{$participacao_social_outros['tx_nome_participacao_social_outra']}}</p>
+                            <p>{{ $participacao_social_outros['tx_nome_participacao_social_outra'] ?? '' }}</p>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
     </div>
