@@ -15,9 +15,9 @@
 {{--
 {!! Form::label('video', 'Video') !!}<br>
 {!! Form::text('video', null, ['class'=>"form-control width-grande <% validar(subitem.video) %>", 'ng-model'=>'subitem.video', 'init-model'=>'subitem.video', 'placeholder' => '']) !!}<br>
-
-{!! Form::label('url', 'Link') !!}<br>
+--}}
+{!! Form::label('url', 'Caminho') !!}<br>
 {!! Form::text('url', null, ['class'=>"form-control width-grande <% validar(subitem.url) %>", 'ng-model'=>'subitem.url', 'init-model'=>'subitem.url', 'placeholder' => '']) !!}<br>
 
---}}
+
 
