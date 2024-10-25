@@ -42,7 +42,7 @@
                         @if(isset($subitems) && $subitems->isNotEmpty())
                             @foreach($subitems as $subitem)
                                 <?php
-                                    $path = public_path($subitem->url!= "" ? $subitem->url . $subitem->arquivo : 'arquivos/subitems/' . $subitem->arquivo);
+                                    $path = public_path($subitem->url!= "" ? $subitem->url : 'arquivos/subitems/' . $subitem->arquivo);
                                     if (file_exists($path)) {
                                         $subitem->file_size = filesize($path);
                                         $subitem->file_extension = pathinfo($path, PATHINFO_EXTENSION);
@@ -53,7 +53,7 @@
                                 ?>
                                 @if($subitem->arquivo!="")
                                 <p style="padding-top: 20px">
-                                    <a href="{{$subitem->url!= "" ? $subitem->url . $subitem->arquivo : 'arquivos/subitems/' . $subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle;">
+                                    <a href="{{$subitem->url!= "" ? $subitem->url : 'arquivos/subitems/' . $subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle;">
                                         <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
                                         {{$subitem->titulo}}
                                         Atualizado em: {{formatBr($subitem->updated_at, 'num')}}
