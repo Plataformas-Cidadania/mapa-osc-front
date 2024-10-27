@@ -62,7 +62,7 @@
                     <strong>Trabalhadores</strong><br><br>
                 </div>
 
-                <div class="col-md-3">
+                {{--<div class="col-md-3">
                     <div class="bg-lgt box-itens">
                         <h3>Total de Trabalhadores</h3>
                         <div>
@@ -75,7 +75,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="col-md-3">
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
