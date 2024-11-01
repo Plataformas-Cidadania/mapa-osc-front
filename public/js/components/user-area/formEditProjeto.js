@@ -1105,10 +1105,11 @@ class FormEditProjeto extends React.Component {
       name: "tx_nome_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.tx_nome_projeto,
-      placeholder: "Nome do projeto, atividade ou programa"
+      placeholder: "Nome do projeto, atividade ou programa",
+      disabled: this.state.form.ft_nome_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "tx_nome_projeto"
-    }, "Nome do projeto, atividade ou programa"), /*#__PURE__*/React.createElement("div", {
+    }, "Nome do projeto, atividade ou programa "), /*#__PURE__*/React.createElement("div", {
       className: "label-box-info-off"
     }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-4"
@@ -1116,7 +1117,8 @@ class FormEditProjeto extends React.Component {
       className: "form-control form-m ",
       name: "cd_status_projeto",
       onChange: this.handleInputChange,
-      value: this.state.form.cd_status_projeto
+      value: this.state.form.cd_status_projeto,
+      disabled: this.state.form.ft_status_projeto !== 'Representante de OSC'
     }, /*#__PURE__*/React.createElement("option", {
       value: "-1"
     }, "Selecione"), status_projeto), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
@@ -1129,7 +1131,8 @@ class FormEditProjeto extends React.Component {
       name: "dt_data_inicio_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.dt_data_inicio_projeto,
-      placeholder: "Data de In\xEDcio"
+      placeholder: "Data de In\xEDcio",
+      disabled: this.state.form.ft_data_inicio_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "dt_data_inicio_projeto"
     }, "Data de In\xEDcio"), /*#__PURE__*/React.createElement("div", {
@@ -1144,7 +1147,8 @@ class FormEditProjeto extends React.Component {
       name: "dt_data_fim_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.dt_data_fim_projeto,
-      placeholder: "Data de Fim"
+      placeholder: "Data de Fim",
+      disabled: this.state.form.ft_data_fim_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "dt_data_fim_projeto"
     }, "Data de Fim"), /*#__PURE__*/React.createElement("div", {
@@ -1159,7 +1163,8 @@ class FormEditProjeto extends React.Component {
       name: "tx_link_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.tx_link_projeto,
-      placeholder: "Link para o projeto"
+      placeholder: "Link para o projeto",
+      disabled: this.state.form.ft_link_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "tx_link_projeto"
     }, "Link para o projeto"), /*#__PURE__*/React.createElement("div", {
@@ -1189,7 +1194,8 @@ class FormEditProjeto extends React.Component {
       name: "nr_valor_total_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.nr_valor_total_projeto,
-      placeholder: "Valor Total"
+      placeholder: "Valor Total",
+      disabled: this.state.form.ft_valor_total_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "nr_valor_total_projeto"
     }, "Valor Total"), /*#__PURE__*/React.createElement("div", {
@@ -1204,7 +1210,8 @@ class FormEditProjeto extends React.Component {
       name: "nr_valor_captado_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.nr_valor_captado_projeto,
-      placeholder: "Valor Recebido"
+      placeholder: "Valor Recebido",
+      disabled: this.state.form.ft_valor_captado_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "nr_valor_captado_projeto"
     }, "Valor Recebido"), /*#__PURE__*/React.createElement("div", {
@@ -1219,7 +1226,8 @@ class FormEditProjeto extends React.Component {
       name: "tx_descricao_projeto",
       onChange: this.handleInputChange,
       value: this.state.form.tx_descricao_projeto,
-      placeholder: "Descri\xE7\xE3o do Projeto, atividade e/ou programa"
+      placeholder: "Descri\xE7\xE3o do Projeto, atividade e/ou programa",
+      disabled: this.state.form.ft_descricao_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "tx_descricao_projeto"
     }, "Descri\xE7\xE3o do Projeto, atividade e/ou programa"), /*#__PURE__*/React.createElement("div", {

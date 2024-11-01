@@ -207,3 +207,14 @@ function objTest(obj) {
     }
     return obj;
 }
+function iconType(value, size = 12) {
+    const newSize = `${size}px`;
+
+    if (value === "") {
+        return `<i class='fas fa-question-circle tx-pri float-right' style='font-size: ${newSize}' title='Não informado'></i>`;
+    }
+
+    return value === 'Representante de OSC'
+        ? `<i class='fas fa-user tx-pri float-right' style='font-size: ${newSize}' title="${value}"></i>`
+        : `<i class='fas fa-database tx-pri float-right' style='font-size: ${newSize}' title="${value}"></i>`;
+}
