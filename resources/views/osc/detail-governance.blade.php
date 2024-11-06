@@ -110,7 +110,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
-                            <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']); ?>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']) : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']}}</h2>
                             @else
@@ -123,7 +123,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
-                            <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']); ?>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']}}</h2>
                             @else
