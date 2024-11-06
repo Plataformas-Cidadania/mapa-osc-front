@@ -132,7 +132,28 @@ class Governancas extends React.Component{
 
             },
             cache: false,
-            success: function(data){
+            success: function (data) {
+                this.setState({
+                    governancas: data.governanca,
+                    conselhos: data.conselho_fiscal,
+                    deficiencia: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_deficiencia != null
+                        ? data.relacoes_trabalho.nr_trabalhadores_deficiencia
+                        : 0,
+                    empregados: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_vinculo != null
+                        ? data.relacoes_trabalho.nr_trabalhadores_vinculo
+                        : 0,
+                    totalTrabalhadores: data.relacoes_trabalho ? data.relacoes_trabalho.nr_trabalhores : 0,
+                    loadingGovernanca: false,
+                    editIdOsc: data.relacoes_trabalho ? data.relacoes_trabalho.id_osc : null,
+                    form: {
+                        nr_trabalhadores_voluntarios: data.relacoes_trabalho
+                            ? data.relacoes_trabalho.nr_trabalhadores_voluntarios
+                            : 0
+                    }
+                });
+            }.bind(this),
+
+            /*success: function(data){
 
                 this.setState({
                     governancas: data.governanca,
@@ -147,7 +168,7 @@ class Governancas extends React.Component{
                         nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
                     }
                 });
-            }.bind(this),
+            }.bind(this),*/
             error: function(xhr, status, err){
                 console.log(status, err.toString());
                 this.setState({loadingGovernanca: false});
