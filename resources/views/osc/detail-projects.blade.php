@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-header" id="headingP{{$key}}">
                             <div class="mb-0" data-toggle="collapse" data-target="#collapseP{{$key}}" aria-expanded="true" aria-controls="collapseP{{$key}}">
-                                {{$projeto->titulo}} <i class="fas fa-angle-down float-right"></i>
+                                {{$projeto->titulo}} <i class="fas fa-angle-down float-right" style="margin: 0 10px"></i> <?php echo iconType($projetos_descricao->ft_nome_projeto, 18); ?>
                             </div>
                         </div>
 
