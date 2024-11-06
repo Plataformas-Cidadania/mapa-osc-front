@@ -78,11 +78,24 @@
                 </div>
                 */ ?>
 
-                <div class="col-md-4">
+                {{--<div class="col-md-4">
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
                             <?php echo iconType($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']); ?>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo']}}</h2>
+                            @else
+                                <p class='not-info'>{{$txt_alert}}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>--}}
+                <div class="col-md-4">
+                    <div class="bg-lgt box-itens">
+                        <h3>Empregados</h3>
+                        <div>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']) : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo']}}</h2>
                             @else
