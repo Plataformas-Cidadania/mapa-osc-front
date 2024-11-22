@@ -334,7 +334,7 @@ class Governancas extends React.Component {
   render() {
     let modal = this.modal();
     let modalExcluir = this.modalExcluir();
-    let governancas = this.state.governancas.map(function (item, index) {
+    let governancas = this.state?.governancas?.map(function (item, index) {
       return /*#__PURE__*/React.createElement("div", {
         className: "box-insert-governanca",
         key: "governanca_" + index
@@ -361,7 +361,7 @@ class Governancas extends React.Component {
         className: "far fa-trash-alt text-danger float-right"
       }))), /*#__PURE__*/React.createElement("p", null, item.tx_nome_dirigente), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, item.tx_cargo_dirigente)), modal);
     }.bind(this));
-    let conselhos = this.state.conselhos.map(function (item, index) {
+    let conselhos = this.state?.conselhos?.map(function (item, index) {
       return /*#__PURE__*/React.createElement("div", {
         className: "box-insert-governanca",
         key: "conselho_" + index
@@ -395,9 +395,9 @@ class Governancas extends React.Component {
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-briefcase",
       "aria-hidden": "true"
-    })), " ", /*#__PURE__*/React.createElement("h3", null, "Rela\xE7\xF5es de trabalho e governan\xE7a"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, "Voc\xEA tem ", this.state.governancas.length, " dirigentes e ", this.state.conselhos.length, " conselhos cadastrados"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("div", {
+    })), " ", /*#__PURE__*/React.createElement("h3", null, "Rela\xE7\xF5es de trabalho e governan\xE7a"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, "Voc\xEA tem ", this.state?.governancas?.length, " dirigentes e ", this.state?.conselhos?.length, " conselhos cadastrados"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("div", {
       style: {
-        display: this.state.loadingGovernanca ? 'true' : 'none'
+        display: this.state?.loadingGovernanca ? 'true' : 'none'
       }
     }, /*#__PURE__*/React.createElement("img", {
       style: {

@@ -340,7 +340,7 @@ class Governancas extends React.Component{
         let modal = this.modal();
         let modalExcluir = this.modalExcluir();
 
-        let governancas = this.state.governancas.map(function(item, index){
+        let governancas = this.state?.governancas?.map(function(item, index){
             return (
                 <div className="box-insert-governanca" key={"governanca_"+index}>
                     <div className="float-right">
@@ -362,7 +362,7 @@ class Governancas extends React.Component{
         }.bind(this));
 
 
-        let conselhos = this.state.conselhos.map(function(item, index){
+        let conselhos = this.state?.conselhos?.map(function(item, index){
 
             return (
                 <div className="box-insert-governanca" key={"conselho_"+index}>
@@ -388,12 +388,12 @@ class Governancas extends React.Component{
             <div>
                 <div className="title-user-area">
                     <div className="mn-accordion-icon"><i className="fas fa-briefcase" aria-hidden="true"/></div> <h3>Relações de trabalho e governança</h3><br/>
-                    <p>Você tem {this.state.governancas.length} dirigentes e {this.state.conselhos.length} conselhos cadastrados</p>
+                    <p>Você tem {this.state?.governancas?.length} dirigentes e {this.state?.conselhos?.length} conselhos cadastrados</p>
                     <hr/>
                 </div>
 
 
-                <div style={{display: this.state.loadingGovernanca ? 'true' : 'none'}}>
+                <div style={{display: this.state?.loadingGovernanca ? 'true' : 'none'}}>
                     <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
                 </div><br/>
                 <div className="row">
