@@ -3,20 +3,39 @@ class Accordion extends React.Component {
     super(props);
     this.state = {
       chartCategorias: [],
-      activeIndex: 0,
-      showTableIndex: -1 // Estado para controlar a visibilidade da tabela
+      activeIndex: -1,
+      showTableIndex: -1
     };
-
     this.toggleAccordion = this.toggleAccordion.bind(this);
-    this.toggleTable = this.toggleTable.bind(this); // Função para alternar tabela
+    this.toggleTable = this.toggleTable.bind(this);
   }
-
   componentDidMount() {
     fetch('/chart-api').then(response => response.json()).then(data => {
       this.setState({
         chartCategorias: data
+      }, () => {
+        this.handleURLParams();
       });
     }).catch(error => console.error('Error fetching data:', error));
+  }
+  handleURLParams() {
+    const params = new URLSearchParams(window.location.search);
+    const group = params.get('group');
+    const chart = params.get('chart');
+    if (group !== null) {
+      this.setState({
+        activeIndex: parseInt(group)
+      }, () => {
+        if (chart !== null) {
+          const chartId = `chart-title-${group}-${chart}`;
+          const chartElement = document.getElementById(chartId);
+          if (chartElement) {
+            // Usa o fragmento de URL para rolar até o elemento
+            window.location.hash = `#${chartId}`;
+          }
+        }
+      });
+    }
   }
   toggleAccordion(index) {
     this.setState(prevState => ({
@@ -29,7 +48,6 @@ class Accordion extends React.Component {
     }));
   }
   renderTable(chartData) {
-    // Exemplo de como renderizar a tabela dependendo das séries de dados
     const {
       labels,
       series
@@ -53,57 +71,59 @@ class Accordion extends React.Component {
     return /*#__PURE__*/React.createElement("div", {
       className: "accordion",
       id: "accordionExample"
-    }, chartCategorias.map((chartCategoria, index) => {
-      return /*#__PURE__*/React.createElement("div", {
-        className: "card",
-        key: index
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "card-header",
-        id: `chart${index}`
-      }, /*#__PURE__*/React.createElement("button", {
-        className: "btn btn-link btn-block text-left",
-        type: "button",
-        onClick: () => this.toggleAccordion(index),
-        "aria-expanded": activeIndex === index,
-        "aria-controls": `collapse${index}`
-      }, /*#__PURE__*/React.createElement("h2", {
-        style: {
-          margin: '5px 0'
-        }
-      }, chartCategoria.titulo))), /*#__PURE__*/React.createElement("div", {
-        id: `collapse${index}`,
-        className: `collapse ${activeIndex === index ? 'show' : ''}`,
-        "aria-labelledby": `chart${index}`,
-        "data-parent": "#accordionExample"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "card-body"
-      }, /*#__PURE__*/React.createElement("div", {
-        dangerouslySetInnerHTML: {
-          __html: chartCategoria.descricao
-        }
-      }), /*#__PURE__*/React.createElement("hr", null), chartCategoria?.charts?.map((item, index2) => {
-        return /*#__PURE__*/React.createElement("div", {
-          key: 'chart' + index2
-        }, /*#__PURE__*/React.createElement("h2", null, index2 + 1, " - ", item.titulo), /*#__PURE__*/React.createElement("div", {
-          dangerouslySetInnerHTML: {
-            __html: item.descricao
-          }
-        }), /*#__PURE__*/React.createElement("div", {
-          class: "mb-2",
-          style: {
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }
-        }, /*#__PURE__*/React.createElement("button", {
-          onClick: () => this.toggleTable(index2),
-          className: "btn btn-primary mt-3 "
-        }, " ", showTableIndex === index2 ? ' Visualizar Grafico' : 'Visualizar Tabela')), showTableIndex !== index2 ? /*#__PURE__*/React.createElement(ApexMixed, {
-          chartId: `chart${index2}`,
-          data: item.chartData[item.slug],
-          nome: item.tipo_nome,
-          formato: item.formato
-        }) : showTableIndex === index2 && this.renderTable(item.chartData[item.slug]), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Fonte: "), item.fonte), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("hr", null));
-      }))));
-    }));
+    }, chartCategorias.map((chartCategoria, groupIndex) => /*#__PURE__*/React.createElement("div", {
+      className: "card",
+      key: groupIndex
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "card-header",
+      id: `chart${groupIndex}`
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-link btn-block text-left",
+      type: "button",
+      onClick: () => this.toggleAccordion(groupIndex),
+      "aria-expanded": activeIndex === groupIndex,
+      "aria-controls": `collapse${groupIndex}`
+    }, /*#__PURE__*/React.createElement("h2", {
+      style: {
+        margin: '5px 0'
+      }
+    }, chartCategoria.titulo))), /*#__PURE__*/React.createElement("div", {
+      id: `collapse${groupIndex}`,
+      className: `collapse ${activeIndex === groupIndex ? 'show' : ''}`,
+      "aria-labelledby": `chart${groupIndex}`,
+      "data-parent": "#accordionExample"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "card-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: chartCategoria.descricao
+      }
+    }), /*#__PURE__*/React.createElement("hr", null), chartCategoria?.charts?.map((item, chartIndex) => /*#__PURE__*/React.createElement("div", {
+      key: `chart-${chartIndex}`
+    }, /*#__PURE__*/React.createElement("h2", {
+      id: `chart-title-${groupIndex}-${chartIndex}`
+    }, chartIndex + 1, " - ", item.titulo, " ", /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'none'
+      }
+    }, " (", groupIndex, "-", chartIndex, ")")), /*#__PURE__*/React.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: item.descricao
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "mb-2",
+      style: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => this.toggleTable(chartIndex),
+      className: "btn btn-primary mt-3"
+    }, showTableIndex === chartIndex ? 'Visualizar Gráfico' : 'Visualizar Tabela')), showTableIndex !== chartIndex ? /*#__PURE__*/React.createElement(ApexMixed, {
+      chartId: `chart${chartIndex}`,
+      data: item.chartData[item.slug],
+      nome: item.tipo_nome,
+      formato: item.formato
+    }) : showTableIndex === chartIndex && this.renderTable(item.chartData[item.slug]), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Fonte: "), item.fonte), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("hr", null))))))));
   }
 }

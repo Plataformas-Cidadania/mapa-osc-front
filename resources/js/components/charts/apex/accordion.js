@@ -3,50 +3,75 @@ class Accordion extends React.Component {
         super(props);
         this.state = {
             chartCategorias: [],
-            activeIndex: 0,
-            showTableIndex: -1  // Estado para controlar a visibilidade da tabela
+            activeIndex: -1,
+            showTableIndex: -1,
         };
         this.toggleAccordion = this.toggleAccordion.bind(this);
-        this.toggleTable = this.toggleTable.bind(this); // Função para alternar tabela
+        this.toggleTable = this.toggleTable.bind(this);
     }
 
     componentDidMount() {
         fetch('/chart-api')
             .then(response => response.json())
             .then(data => {
-                this.setState({ chartCategorias: data });
+                this.setState({ chartCategorias: data }, () => {
+                    this.handleURLParams();
+                });
             })
             .catch(error => console.error('Error fetching data:', error));
     }
 
+    handleURLParams() {
+        const params = new URLSearchParams(window.location.search);
+        const group = params.get('group');
+        const chart = params.get('chart');
+
+        if (group !== null) {
+            this.setState({ activeIndex: parseInt(group) }, () => {
+                if (chart !== null) {
+                    const chartId = `chart-title-${group}-${chart}`;
+                    const chartElement = document.getElementById(chartId);
+
+                    if (chartElement) {
+                        // Usa o fragmento de URL para rolar até o elemento
+                        window.location.hash = `#${chartId}`;
+                    }
+                }
+            });
+        }
+    }
+
     toggleAccordion(index) {
         this.setState(prevState => ({
-            activeIndex: prevState.activeIndex === index ? -1 : index
+            activeIndex: prevState.activeIndex === index ? -1 : index,
         }));
     }
 
     toggleTable(index) {
         this.setState(prevState => ({
-            showTableIndex: prevState.showTableIndex === index ? -1 : index
+            showTableIndex: prevState.showTableIndex === index ? -1 : index,
         }));
     }
 
     renderTable(chartData) {
-        // Exemplo de como renderizar a tabela dependendo das séries de dados
         const { labels, series } = chartData;
         return (
             <table className="table">
                 <thead>
                 <tr>
                     <th>Categoria</th>
-                    {series.map((s, i) => <th key={i}>{s.name}</th>)}
+                    {series.map((s, i) => (
+                        <th key={i}>{s.name}</th>
+                    ))}
                 </tr>
                 </thead>
                 <tbody>
                 {labels.map((label, i) => (
                     <tr key={i}>
                         <td>{label}</td>
-                        {series.map((s, j) => <td key={j}>{s.data[i]}</td>)}
+                        {series.map((s, j) => (
+                            <td key={j}>{s.data[i]}</td>
+                        ))}
                     </tr>
                 ))}
                 </tbody>
@@ -59,76 +84,76 @@ class Accordion extends React.Component {
 
         return (
             <div className="accordion" id="accordionExample">
-                {chartCategorias.map((chartCategoria, index) => {
-                    return (
-                        <div className="card" key={index}>
-                            <div className="card-header" id={`chart${index}`}>
-                                <button
-                                    className="btn btn-link btn-block text-left"
-                                    type="button"
-                                    onClick={() => this.toggleAccordion(index)}
-                                    aria-expanded={activeIndex === index}
-                                    aria-controls={`collapse${index}`}
-                                >
-                                    <h2 style={{margin: '5px 0'}}>{chartCategoria.titulo}</h2>
-                                </button>
-                            </div>
-
-                            <div
-                                id={`collapse${index}`}
-                                className={`collapse ${activeIndex === index ? 'show' : ''}`}
-                                aria-labelledby={`chart${index}`}
-                                data-parent="#accordionExample"
+                {chartCategorias.map((chartCategoria, groupIndex) => (
+                    <div className="card" key={groupIndex}>
+                        <div className="card-header" id={`chart${groupIndex}`}>
+                            <button
+                                className="btn btn-link btn-block text-left"
+                                type="button"
+                                onClick={() => this.toggleAccordion(groupIndex)}
+                                aria-expanded={activeIndex === groupIndex}
+                                aria-controls={`collapse${groupIndex}`}
                             >
-                                <div className="card-body">
-                                    <div dangerouslySetInnerHTML={{__html: chartCategoria.descricao}} />
+                                <h2 style={{ margin: '5px 0' }}>{chartCategoria.titulo}</h2>
+                            </button>
+                        </div>
 
-                                    <hr />
+                        <div
+                            id={`collapse${groupIndex}`}
+                            className={`collapse ${activeIndex === groupIndex ? 'show' : ''}`}
+                            aria-labelledby={`chart${groupIndex}`}
+                            data-parent="#accordionExample"
+                        >
+                            <div className="card-body">
+                                <div dangerouslySetInnerHTML={{ __html: chartCategoria.descricao }} />
 
-                                    {chartCategoria?.charts?.map((item, index2) => {
-                                        return (
-                                            <div key={'chart' + index2}>
-                                                <h2>{index2 + 1} - {item.titulo}</h2>
-                                                <div dangerouslySetInnerHTML={{__html: item.descricao}}/>
+                                <hr />
 
+                                {chartCategoria?.charts?.map((item, chartIndex) => (
+                                    <div key={`chart-${chartIndex}`}>
+                                        <h2 id={`chart-title-${groupIndex}-${chartIndex}`}>
+                                            {chartIndex + 1} - {item.titulo} <div style={{display: 'none'}}> ({groupIndex}-{chartIndex})</div>
+                                        </h2>
+                                        <div dangerouslySetInnerHTML={{ __html: item.descricao }} />
 
-                                                <div class="mb-2" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                                    <button
-                                                        onClick={() => this.toggleTable(index2)}
-                                                        className="btn btn-primary mt-3 "
-                                                    >
-                                                        {/*{showTableIndex === index2 ? <i className="fas fa-chart-line"></i> : <i class="fas fa-table"></i>}*/} {showTableIndex === index2 ? ' Visualizar Grafico' : 'Visualizar Tabela'}
-                                                    </button>
-                                                </div>
+                                        <div
+                                            className="mb-2"
+                                            style={{ display: 'flex', justifyContent: 'flex-end' }}
+                                        >
+                                            <button
+                                                onClick={() => this.toggleTable(chartIndex)}
+                                                className="btn btn-primary mt-3"
+                                            >
+                                                {showTableIndex === chartIndex
+                                                    ? 'Visualizar Gráfico'
+                                                    : 'Visualizar Tabela'}
+                                            </button>
+                                        </div>
 
-                                                {showTableIndex !== index2 ?
-                                                    <ApexMixed
-                                                        chartId={`chart${index2}`}
-                                                        data={item.chartData[item.slug]}
-                                                        nome={item.tipo_nome}
-                                                        formato={item.formato}
-                                                    />
-                                                    :
-                                                    showTableIndex === index2 && this.renderTable(item.chartData[item.slug])
-                                                }
+                                        {showTableIndex !== chartIndex ? (
+                                            <ApexMixed
+                                                chartId={`chart${chartIndex}`}
+                                                data={item.chartData[item.slug]}
+                                                nome={item.tipo_nome}
+                                                formato={item.formato}
+                                            />
+                                        ) : (
+                                            showTableIndex === chartIndex &&
+                                            this.renderTable(item.chartData[item.slug])
+                                        )}
 
-                                                {/* Botão para exibir/esconder tabela */}
-
-
-                                                {/* Renderizar a tabela se showTableIndex for igual ao index2 */}
-                                                {/*{showTableIndex === index2 && this.renderTable(item.chartData[item.slug])}*/}
-
-                                                <p><strong>Fonte: </strong>{item.fonte}</p>
-                                                <br/>
-                                                <hr/>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                                        <p>
+                                            <strong>Fonte: </strong>
+                                            {item.fonte}
+                                        </p>
+                                        <br />
+                                        <hr />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    );
-                })}
+                    </div>
+                ))}
             </div>
         );
     }
