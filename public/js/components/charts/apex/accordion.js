@@ -23,20 +23,32 @@ class Accordion extends React.Component {
     const group = params.get('group');
     const chart = params.get('chart');
     if (group !== null) {
+      // Expande o grupo correto
       this.setState({
         activeIndex: parseInt(group)
       }, () => {
         if (chart !== null) {
-          const chartId = `chart-title-${group}-${chart}`;
-          const chartElement = document.getElementById(chartId);
-          if (chartElement) {
-            // Usa o fragmento de URL para rolar até o elemento
-            window.location.hash = `#${chartId}`;
-          }
+          // Garante que o acordeão está renderizado antes de buscar o ID
+          setTimeout(() => {
+            const chartId = `chart-title-${group}-${chart}`;
+            const chartElement = document.getElementById(chartId);
+            if (chartElement) {
+              const topOffset = chartElement.getBoundingClientRect().top + window.scrollY;
+              // Adiciona 200px ao deslocamento calculado
+              window.scrollTo({
+                top: topOffset - 150,
+                behavior: 'smooth'
+              });
+              chartElement.focus();
+            } else {
+              console.error('Elemento não encontrado:', chartId);
+            }
+          }, 500); // Timeout maior para garantir renderização
         }
       });
     }
   }
+
   toggleAccordion(index) {
     this.setState(prevState => ({
       activeIndex: prevState.activeIndex === index ? -1 : index
