@@ -151,7 +151,7 @@ class Oscs extends React.Component{
                         <td width="500" className="text-right">
                             <div className="btn btn-outline-primary">
                                 <a href={"selo-osc-user/"+item.id_osc} >
-                                   {/* <i className="fas fa-tag"/>*/} Selo
+                                   {/* <i className="fas fa-tag"/>*/} Certificado
                                 </a>
                             </div>
                             &nbsp;

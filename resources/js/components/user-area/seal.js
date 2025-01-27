@@ -36,10 +36,10 @@ class Seal extends React.Component{
         return(
             <div>
                 <div className="title-user-area">
-                    <h3><i className="fa fa-home" aria-hidden="true"/> Selo para seu site</h3>
+                    <h3><i className="fa fa-home" aria-hidden="true"/> Certificado para seu site</h3>
                     <hr/>
                 </div>
-                <p>Essa área contém o código de um selo para ambientes virtuais que identifica que sua instituição se encontra em nosso banco de dados. Copie o script e cole em seu site.</p>
+                <p>Essa área contém o código de um certificado para ambientes virtuais que identifica que sua instituição se encontra em nosso banco de dados. Copie o script e cole em seu site.</p>
                 <br/>
 
                 <div className="row">

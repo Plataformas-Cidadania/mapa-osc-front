@@ -165,7 +165,7 @@ class Oscs extends React.Component {
         className: "btn btn-outline-primary"
       }, /*#__PURE__*/React.createElement("a", {
         href: "selo-osc-user/" + item.id_osc
-      }, " Selo")), "\xA0", /*#__PURE__*/React.createElement("div", {
+      }, " Certificado")), "\xA0", /*#__PURE__*/React.createElement("div", {
         className: "btn btn-outline-primary"
       }, /*#__PURE__*/React.createElement("a", {
         href: "declaracao/" + item.id_osc,

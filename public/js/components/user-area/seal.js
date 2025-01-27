@@ -36,7 +36,7 @@ class Seal extends React.Component {
     }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-home",
       "aria-hidden": "true"
-    }), " Selo para seu site"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("p", null, "Essa \xE1rea cont\xE9m o c\xF3digo de um selo para ambientes virtuais que identifica que sua institui\xE7\xE3o se encontra em nosso banco de dados. Copie o script e cole em seu site."), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+    }), " Certificado para seu site"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("p", null, "Essa \xE1rea cont\xE9m o c\xF3digo de um certificado para ambientes virtuais que identifica que sua institui\xE7\xE3o se encontra em nosso banco de dados. Copie o script e cole em seu site."), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
