@@ -12,6 +12,21 @@ function splitLabels(labels) {
         return label;
     });
 }
+
+function formatLargeNumbers(value) {
+    let formattedValue;
+    if (value >= 1e9) {
+        formattedValue = (value / 1e9).toFixed(2) + ' B'; // Bilhões
+    } else if (value >= 1e6) {
+        formattedValue = (value / 1e6).toFixed(2) + ' M'; // Milhões
+    } else if (value >= 1e3) {
+        formattedValue = (value / 1e3).toFixed(2) + ' K'; // Milhares
+    } else {
+        formattedValue = value.toString(); // Valor menor que mil
+    }
+    //console.log('formattedValue', formattedValue)
+    return formattedValue;
+}
 class ApexMixed extends React.Component {
 
 
@@ -82,11 +97,33 @@ class ApexMixed extends React.Component {
                     }
                     //type: 'datetime'
                 },
-                yaxis: props?.nome ? {
+                /*yaxis: props?.nome ? {
                     title: {
                         text: props?.nome,
                     }
-                }: {},
+                }: {},*/
+                /*tooltip: {
+                        shared: false,
+                        intersect: true,
+                        y: {
+                            formatter: function (y) {
+                                if (typeof y !== "undefined") {
+                                    return formatLargeNumbers(y);
+                                }
+                                return y;
+                            },
+                        },
+                    }*/
+                yaxis: {
+                        /*title: {
+                            text: props?.nome,
+                        },*/
+                        labels: {
+                            formatter: function (value) {
+                                return formatLargeNumbers(value); // Formata os valores do eixo Y
+                            },
+                        },
+                    },
                 tooltip:  props?.nome ? {
                     shared: false,
                     intersect: true,
