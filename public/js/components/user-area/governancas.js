@@ -15,10 +15,14 @@ class Governancas extends React.Component {
         2: ' '
       },
       form: {
-        nr_trabalhadores_voluntarios: ''
+        nr_trabalhadores_voluntarios: '',
+        nr_trabalhadores_deficiencia: '',
+        nr_trabalhadores_vinculo: ''
       },
       requireds: {
-        nr_trabalhadores_voluntarios: true
+        nr_trabalhadores_voluntarios: true,
+        nr_trabalhadores_deficiencia: true,
+        nr_trabalhadores_vinculo: true
       },
       loadingRemove: [],
       governanca: {},
@@ -42,6 +46,8 @@ class Governancas extends React.Component {
       modalTitle: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    /*this.handleInputChangeDeficiencia = this.handleInputChangeDeficiencia.bind(this);
+    this.handleInputChangeVinculo = this.handleInputChangeVinculo.bind(this);*/
     this.governanca = this.governanca.bind(this);
     this.showHideForm = this.showHideForm.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -49,6 +55,8 @@ class Governancas extends React.Component {
     this.showHideFormConselho = this.showHideFormConselho.bind(this);
     this.closeFormConselho = this.closeFormConselho.bind(this);
     this.updateVoluntario = this.updateVoluntario.bind(this);
+    this.updateDeficiencia = this.updateDeficiencia.bind(this);
+    this.updateVinculo = this.updateVinculo.bind(this);
     this.callModal = this.callModal.bind(this);
     this.callModalExcluir = this.callModalExcluir.bind(this);
   }
@@ -60,6 +68,7 @@ class Governancas extends React.Component {
     let form = this.state.form;
     let placeholder = this.state.placeholder;
     form[name] = value;
+
     //form[name] = defaultValue;
 
     this.setState({
@@ -67,6 +76,26 @@ class Governancas extends React.Component {
       placeholder: placeholder
     });
   }
+
+  /*handleInputChangeDeficiencia(event) {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+        let form = this.state.form;
+        let placeholder = this.state.placeholder;
+      form[name] = value;
+        this.setState({form: form, placeholder: placeholder});
+  }
+    handleInputChangeVinculo(event) {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+        let form = this.state.form;
+        let placeholder = this.state.placeholder;
+      form[name] = value;
+        this.setState({form: form, placeholder: placeholder});
+  }*/
+
   componentDidMount() {
     this.governanca();
   }
@@ -126,24 +155,12 @@ class Governancas extends React.Component {
           loadingGovernanca: false,
           editIdOsc: data.relacoes_trabalho ? data.relacoes_trabalho.id_osc : null,
           form: {
-            nr_trabalhadores_voluntarios: data.relacoes_trabalho ? data.relacoes_trabalho.nr_trabalhadores_voluntarios : 0
+            nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios ? data.relacoes_trabalho.nr_trabalhadores_voluntarios : 0,
+            nr_trabalhadores_deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia ? data.relacoes_trabalho.nr_trabalhadores_deficiencia : 0,
+            nr_trabalhadores_vinculo: data.relacoes_trabalho.nr_trabalhadores_vinculo ? data.relacoes_trabalho.nr_trabalhadores_vinculo : 0
           }
         });
       }.bind(this),
-      /*success: function(data){
-            this.setState({
-              governancas: data.governanca,
-              conselhos: data.conselho_fiscal,
-              deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_deficiencia,
-              empregados: data.relacoes_trabalho.nr_trabalhadores_vinculo == null ? 0 : data.relacoes_trabalho.nr_trabalhadores_vinculo,
-                totalTrabalhadores: data.relacoes_trabalho.nr_trabalhores,
-              loadingGovernanca: false,
-              editIdOsc: data.relacoes_trabalho.id_osc,
-              form:{
-                  nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios,
-              }
-          });
-      }.bind(this),*/
       error: function (xhr, status, err) {
         console.log(status, err.toString());
         this.setState({
@@ -152,11 +169,6 @@ class Governancas extends React.Component {
       }.bind(this)
     });
   }
-
-  /*editConselho(id){
-      this.setState({actionFormConselho: 'edit', showFormConselho: false, editIdConselho: id});
-  }*/
-
   showHideFormConselho(action) {
     let showFormConselho = !this.state.showFormConselho;
     this.setState({
@@ -206,7 +218,7 @@ class Governancas extends React.Component {
             showMsgVoluntario: true,
             updateOkVoluntario: true,
             buttonVoluntario: true,
-            totalTrabalhadores: this.state.form.nr_trabalhadores_voluntarios
+            totalTrabalhadores: Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_vinculo)
           });
         }.bind(this),
         error: function (xhr, status, err) {
@@ -218,6 +230,94 @@ class Governancas extends React.Component {
             showMsgVoluntario: true,
             updateOkVoluntario: false,
             buttonVoluntario: true
+          });
+        }.bind(this)
+      });
+    });
+  }
+  updateDeficiencia(e) {
+    e.preventDefault();
+    if (!this.validate()) {
+      return;
+    }
+    this.setState({
+      loadingDeficiencia: true,
+      buttonDeficiencia: false,
+      showMsgDeficiencia: false,
+      msgDeficiencia: ''
+    }, function () {
+      $.ajax({
+        method: 'PUT',
+        url: getBaseUrl2 + 'osc/rel_trabalho/' + this.state.editIdOsc,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+        },
+        data: this.state.form,
+        cache: false,
+        success: function (data) {
+          let msgDeficiencia = "Dados alterados com sucesso!";
+          this.setState({
+            loadingDeficiencia: false,
+            msgDeficiencia: msgDeficiencia,
+            showMsgDeficiencia: true,
+            updateOkDeficiencia: true,
+            buttonDeficiencia: true,
+            totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo)
+          });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error(status, err.toString());
+          let msgDeficiencia = "Ocorreu um erro!";
+          this.setState({
+            loadingDeficiencia: false,
+            msgDeficiencia: msgDeficiencia,
+            showMsgDeficiencia: true,
+            updateOkDeficiencia: false,
+            buttonDeficiencia: true
+          });
+        }.bind(this)
+      });
+    });
+  }
+  updateVinculo(e) {
+    e.preventDefault();
+    if (!this.validate()) {
+      return;
+    }
+    this.setState({
+      loadingVinculo: true,
+      buttonVinculo: false,
+      showMsgVinculo: false,
+      msgVinculo: ''
+    }, function () {
+      $.ajax({
+        method: 'PUT',
+        url: getBaseUrl2 + 'osc/rel_trabalho/' + this.state.editIdOsc,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+        },
+        data: this.state.form,
+        cache: false,
+        success: function (data) {
+          let msgVinculo = "Dados alterados com sucesso!";
+          this.setState({
+            loadingVinculo: false,
+            msgVinculo: msgVinculo,
+            showMsgVinculo: true,
+            updateOkVinculo: true,
+            buttonVinculo: true,
+            totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo)
+          });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error(status, err.toString());
+          let msgVinculo = "Ocorreu um erro!";
+          this.setState({
+            loadingVinculo: false,
+            msgVinculo: msgVinculo,
+            showMsgVinculo: true,
+            updateOkVinculo: false,
+            buttonVinculo: true
           });
         }.bind(this)
       });
@@ -499,23 +599,93 @@ class Governancas extends React.Component {
       className: "col-md-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "bg-lgt box-itens"
-    }, /*#__PURE__*/React.createElement("h3", null, "Empregados"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, this.state.empregados), /*#__PURE__*/React.createElement("p", {
-      className: "not-info"
-    }, /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Empregados"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
-        display: this.state.empregados > 0 ? 'none' : ''
+        clear: 'both',
+        height: '1px'
       }
-    }, "N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa."))))), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("input", {
+      className: "input-lg",
+      type: "number",
+      min: "1",
+      name: "nr_trabalhadores_vinculo",
+      onChange: this.handleInputChange,
+      defaultValue: this.state.form.nr_trabalhadores_vinculo,
+      style: {
+        float: 'left'
+      },
+      placeholder: "0"
+    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "btn btn-success",
+      onClick: this.updateVinculo
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-check-circle"
+    })), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        clear: 'both'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.loadingVinculo ? 'block' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-spin fa-spinner"
+    }), " Processando ", /*#__PURE__*/React.createElement("br", null), " ", /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.showMsgVinculo ? 'block' : 'none'
+      },
+      className: 'alert alert-' + (this.state.updateOkVinculo ? "success" : "danger")
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "far " + (this.state.updateOkVinculo ? "fa-check-circle" : "fa-times-circle")
+    }), this.state.msgVinculo), /*#__PURE__*/React.createElement("p", {
+      className: "not-info"
+    }, "Atualize suas informa\xE7\xF5es sobre Empregados")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "bg-lgt box-itens"
-    }, /*#__PURE__*/React.createElement("h3", null, "Defici\xEAncia"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, this.state.deficiencia), /*#__PURE__*/React.createElement("p", {
-      className: "not-info"
-    }, /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Defici\xEAncia"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
-        display: this.state.deficiencia > 0 ? 'none' : ''
+        clear: 'both',
+        height: '1px'
       }
-    }, "N\xE3o constam informa\xE7\xF5es nas bases de dados do Mapa."))))), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("input", {
+      className: "input-lg",
+      type: "number",
+      min: "1",
+      name: "nr_trabalhadores_deficiencia",
+      onChange: this.handleInputChange,
+      defaultValue: this.state.form.nr_trabalhadores_deficiencia,
+      style: {
+        float: 'left'
+      },
+      placeholder: "0"
+    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "btn btn-success",
+      onClick: this.updateDeficiencia
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-check-circle"
+    })), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        clear: 'both'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.loadingDeficiencia ? 'block' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-spin fa-spinner"
+    }), " Processando ", /*#__PURE__*/React.createElement("br", null), " ", /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.showMsgDeficiencia ? 'block' : 'none'
+      },
+      className: 'alert alert-' + (this.state.updateOkDeficiencia ? "success" : "danger")
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "far " + (this.state.updateOkDeficiencia ? "fa-check-circle" : "fa-times-circle")
+    }), this.state.msgDeficiencia), /*#__PURE__*/React.createElement("p", {
+      className: "not-info"
+    }, "Atualize suas informa\xE7\xF5es sobre defici\xEAncia")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "bg-lgt box-itens"
