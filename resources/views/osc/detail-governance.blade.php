@@ -92,8 +92,23 @@
                     </div>
                 </div>
   */ ?>
+                <div class="col-md-3">
+                    <div class="bg-lgt box-itens">
+                        <h3>Total de Trabalhadores</h3>
+                        <div>
 
-                <div class="col-md-4">
+                            <?php //print_r($relacoes_trabalho_governanca)//echo iconType($relacoes_trabalho_governanca['ft_trabalhadores']); ?>
+                            @if(!empty($relacoes_trabalho_governanca['nr_trabalhores']))
+                                <h2>{{$relacoes_trabalho_governanca['nr_trabalhores']}}</h2>
+                            @else
+                                <p class='not-info'>{{$txt_alert}}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
@@ -106,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
@@ -119,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
