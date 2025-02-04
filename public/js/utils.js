@@ -139,10 +139,10 @@ function maskCpf(cpf) {
 }
 function maskCel(cel) {
 
-    cel = cel.replace(/\D/g,"")
-    cel = cel.replace(/(\d\d)(\d)/,"($1) $2");
-    cel = cel.replace(/(\d)(\d{8})/,"$1-$2");
-    cel = cel.replace(/(\d{4})(\d)/,"$1-$2");
+    cel = cel?.replace(/\D/g,"")
+    cel = cel?.replace(/(\d\d)(\d)/,"($1) $2");
+    cel = cel?.replace(/(\d)(\d{8})/,"$1-$2");
+    cel = cel?.replace(/(\d{4})(\d)/,"$1-$2");
 
     return cel;
 }
@@ -175,6 +175,52 @@ function formatDate(data, formato) {
         }
     }
 
+}
+
+/*function formatCurrencyBR(value) {
+    console.log('>>>>', value, value?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
+    return value?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}*/
+
+
+function formatCurrencyBR(value) {
+    if (!value) return "0,00"; // Se for null ou undefined, retorna 0,00
+
+    // Remove todos os caracteres não numéricos
+    value = value.toString().replace(/\D/g, "");
+
+    // Converte para número e divide por 100 para obter os centavos corretamente
+    value = (parseInt(value, 10) / 100).toFixed(2);
+
+    // Substitui o ponto decimal por vírgula e adiciona separadores de milhar corretamente
+    return value.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function formatCurrencyBR2(value) {
+    console.log('value', value)
+
+    value = value?.replace(/\D/g,"")
+    value = value?.replace(/(\d\d)(\d)/,"$1$2");
+    value = value?.replace(/(\d)(\d{3})/,"$1.$2");
+    value = value?.replace(/(\d{2})(\d)/,"$1,$2");
+    return value
+
+    /*// Se o valor for uma string, remove pontos e substitui vírgula por ponto
+
+    value = value?.replace(/\./g, "")?.replace(",", ".");
+
+
+    // Converte o valor para número
+    value = parseFloat(value);
+    console.log('value parseFloat', value)
+    // Verifica se o valor é um número válido
+    if (isNaN(value)) {
+        return "Valor inválido";
+    }
+
+
+    // Formata o valor como moeda no padrão brasileiro
+    return value?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    //return value?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*/
 }
 
 ///////

@@ -56,8 +56,8 @@
                                     <a href="{{$subitem->url!= "" ? $subitem->url : 'arquivos/subitems/' . $subitem->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle;">
                                         <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
                                         {{$subitem->titulo}}
-                                        Atualizado em: {{formatBr($subitem->updated_at, 'num')}}
-                                        @if($subitem->file_size > 0)
+                                        {{--Atualizado em: {{formatBr($subitem->updated_at, 'num')}}--}} {{--Removiso MOSC-2692--}}
+                                    @if($subitem->file_size > 0)
                                             <span> ({{ strtoupper($subitem->file_extension) }} - {{ round($subitem->file_size / 1024, 2) }} KB)</span>
                                         @else
                                             <span> (Informações indisponíveis)</span>

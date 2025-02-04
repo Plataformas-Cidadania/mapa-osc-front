@@ -1148,7 +1148,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
-                                               value={this.state.form.nr_valor_total_projeto}
+                                               value={formatCurrencyBR(this.state.form.nr_valor_total_projeto)}
                                                placeholder="Valor Total" />
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
@@ -1160,7 +1160,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
-                                               value={this.state.form.nr_valor_captado_projeto}
+                                               value={formatCurrencyBR(this.state.form.nr_valor_captado_projeto)}
                                                placeholder="Valor Recebido" />
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">

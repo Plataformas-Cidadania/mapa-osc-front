@@ -262,6 +262,25 @@ class FormEditProjeto extends React.Component {
       }.bind(this)
     });
   }
+
+  /*formatValue = (value) => {
+        // Remove caracteres inválidos (deixa apenas números, pontos e vírgulas)
+      value = value.replace(/[^0-9.,]/g, '');
+        // Converte para o formato correto
+      value = value.replace(/\./g, ''); // Remove pontos existentes
+      value = value.replace(/,/g, '.'); // Substitui vírgula por ponto para valores decimais
+        // Aplica a máscara brasileira
+      let parts = value.split('.');
+      let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Formata milhar com ponto
+      let decimalPart = parts[1] ? ',' + parts[1].substring(0, 2) : '';
+        this.setState({
+          form: {
+              ...this.state.form,
+              nr_valor_total_projeto: integerPart + decimalPart
+          }
+      });
+  };*/
+
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -322,8 +341,8 @@ class FormEditProjeto extends React.Component {
           dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
           tx_link_projeto: this.state.form.tx_link_projeto,
           nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
-          nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
-          nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
+          nr_valor_total_projeto: clearMoeda(this.state.form.nr_valor_total_projeto),
+          nr_valor_captado_projeto: clearMoeda(this.state.form.nr_valor_captado_projeto),
           tx_descricao_projeto: this.state.form.tx_descricao_projeto,
           tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
           cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
@@ -1193,8 +1212,8 @@ class FormEditProjeto extends React.Component {
       type: "text",
       name: "nr_valor_total_projeto",
       onChange: this.handleInputChange,
-      value: this.state.form.nr_valor_total_projeto,
-      placeholder: "Valor Total",
+      value: formatCurrencyBR(this.state.form.nr_valor_total_projeto),
+      placeholder: "Valor Total ex.: 10.000,00",
       disabled: this.state.form.ft_valor_total_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "nr_valor_total_projeto"
@@ -1209,8 +1228,8 @@ class FormEditProjeto extends React.Component {
       type: "text",
       name: "nr_valor_captado_projeto",
       onChange: this.handleInputChange,
-      value: this.state.form.nr_valor_captado_projeto,
-      placeholder: "Valor Recebido",
+      value: formatCurrencyBR(this.state.form.nr_valor_captado_projeto),
+      placeholder: "Valor Recebido ex.: 10.000,00",
       disabled: this.state.form.ft_valor_captado_projeto !== 'Representante de OSC'
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "nr_valor_captado_projeto"
