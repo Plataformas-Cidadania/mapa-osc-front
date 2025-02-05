@@ -112,7 +112,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']) : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_vinculo']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo']}}</h2>
                             @else
@@ -125,7 +125,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']) : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_deficiencia']}}</h2>
                             @else
@@ -138,7 +138,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) ? iconType($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']}}</h2>
                             @else
