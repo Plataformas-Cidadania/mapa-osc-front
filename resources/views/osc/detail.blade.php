@@ -51,7 +51,7 @@
                     <header>
                         <br>
                         <h1>{{$cabecalho->tx_razao_social_osc}}</h1>
-                        <h5><a href="/">Home</a> / <a href="artigos">OSC</a> / </h5>&nbsp;
+                        <h5><a href="/">Home</a> / <a href="/mapa">OSC</a></h5>
                         <div class="fa-svg float-right" style="margin-top: -25px;" >
                             <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
                             <a href="declaracao/{{$id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
