@@ -16,13 +16,13 @@ class Governancas extends React.Component{
             },
             form: {
                 nr_trabalhadores_voluntarios: '',
-                nr_trabalhadores_deficiencia: '',
-                nr_trabalhadores_vinculo: '',
+                nr_trabalhadores_deficiencia_osc: '',
+                nr_trabalhadores_vinculo_osc: '',
             },
             requireds: {
                 nr_trabalhadores_voluntarios: true,
-                nr_trabalhadores_deficiencia: true,
-                nr_trabalhadores_vinculo: true,
+                nr_trabalhadores_deficiencia_osc: true,
+                nr_trabalhadores_vinculo_osc: true,
             },
 
             loadingRemove: [],
@@ -174,19 +174,19 @@ class Governancas extends React.Component{
                 this.setState({
                     governancas: data.governanca,
                     conselhos: data.conselho_fiscal,
-                    deficiencia: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_deficiencia != null
-                        ? data.relacoes_trabalho.nr_trabalhadores_deficiencia
+                    deficiencia: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_deficiencia_osc != null
+                        ? data.relacoes_trabalho.nr_trabalhadores_deficiencia_osc
                         : 0,
-                    empregados: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_vinculo != null
-                        ? data.relacoes_trabalho.nr_trabalhadores_vinculo
+                    empregados: data.relacoes_trabalho && data.relacoes_trabalho.nr_trabalhadores_vinculo_osc != null
+                        ? data.relacoes_trabalho.nr_trabalhadores_vinculo_osc
                         : 0,
                     totalTrabalhadores: data.relacoes_trabalho ? data.relacoes_trabalho.nr_trabalhores : 0,
                     loadingGovernanca: false,
                     editIdOsc: data.relacoes_trabalho ? data.relacoes_trabalho.id_osc : null,
                     form: {
                         nr_trabalhadores_voluntarios: data.relacoes_trabalho.nr_trabalhadores_voluntarios ? data.relacoes_trabalho.nr_trabalhadores_voluntarios : 0,
-                        nr_trabalhadores_deficiencia: data.relacoes_trabalho.nr_trabalhadores_deficiencia ? data.relacoes_trabalho.nr_trabalhadores_deficiencia : 0,
-                        nr_trabalhadores_vinculo: data.relacoes_trabalho.nr_trabalhadores_vinculo ? data.relacoes_trabalho.nr_trabalhadores_vinculo : 0,
+                        nr_trabalhadores_deficiencia_osc: data.relacoes_trabalho.nr_trabalhadores_deficiencia_osc ? data.relacoes_trabalho.nr_trabalhadores_deficiencia_osc : 0,
+                        nr_trabalhadores_vinculo_osc: data.relacoes_trabalho.nr_trabalhadores_vinculo_osc ? data.relacoes_trabalho.nr_trabalhadores_vinculo_osc : 0,
                     }
                 });
             }.bind(this),
@@ -242,7 +242,7 @@ class Governancas extends React.Component{
                         showMsgVoluntario: true,
                         updateOkVoluntario: true,
                         buttonVoluntario: true,
-                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_vinculo),
+                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_deficiencia_osc) + Number(this.state.form.nr_trabalhadores_vinculo_osc),
 
                     });
                 }.bind(this),
@@ -280,7 +280,7 @@ class Governancas extends React.Component{
                         showMsgDeficiencia: true,
                         updateOkDeficiencia: true,
                         buttonDeficiencia: true,
-                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo),
+                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia_osc) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo_osc),
                     });
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -317,7 +317,7 @@ class Governancas extends React.Component{
                         showMsgVinculo: true,
                         updateOkVinculo: true,
                         buttonVinculo: true,
-                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo),
+                        totalTrabalhadores: Number(this.state.form.nr_trabalhadores_deficiencia_osc) + Number(this.state.form.nr_trabalhadores_voluntarios) + Number(this.state.form.nr_trabalhadores_vinculo_osc),
                     });
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -529,6 +529,7 @@ class Governancas extends React.Component{
                         </div>
                     </div>
 
+
                     <div className="col-md-12">
                         <div className="row text-center">
                             <div className="col-md-12">
@@ -554,9 +555,9 @@ class Governancas extends React.Component{
                                         <div style={{clear: 'both', height: '1px'}}/>
 
                                         <input className="input-lg" type="number" min="1"
-                                               name="nr_trabalhadores_vinculo"
+                                               name="nr_trabalhadores_vinculo_osc"
                                                onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_trabalhadores_vinculo}
+                                               defaultValue={this.state.form.nr_trabalhadores_vinculo_osc}
                                                style={{float: 'left'}} placeholder="0"/>
                                         <div>
                                             <button type="button" className="btn btn-success"
@@ -592,9 +593,9 @@ class Governancas extends React.Component{
                                         <div style={{clear: 'both', height: '1px'}}/>
 
                                         <input className="input-lg" type="number" min="1"
-                                               name="nr_trabalhadores_deficiencia"
+                                               name="nr_trabalhadores_deficiencia_osc"
                                                onChange={this.handleInputChange}
-                                               defaultValue={this.state.form.nr_trabalhadores_deficiencia}
+                                               defaultValue={this.state.form.nr_trabalhadores_deficiencia_osc}
                                                style={{float: 'left'}} placeholder="0"/>
                                         <div>
                                             <button type="button" className="btn btn-success"

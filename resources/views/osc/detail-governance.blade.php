@@ -97,7 +97,7 @@
                         <h3>Total de Trabalhadores</h3>
                         <div>
 
-                            <?php //print_r($relacoes_trabalho_governanca)//echo iconType($relacoes_trabalho_governanca['ft_trabalhadores']); ?>
+                            <?php echo isset($relacoes_trabalho_governanca['nr_trabalhadores_vinculo_osc']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhores']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhores']}}</h2>
                             @else
@@ -112,7 +112,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Empregados</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_vinculo_osc']) ? iconType('Representante de OSC') : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['nr_trabalhadores_vinculo_osc']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_vinculo_osc']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_vinculo_osc']}}</h2>
                             @else
@@ -125,7 +125,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores com deficiência</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_deficiencia_osc']) ? iconType('Representante de OSC') : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia_osc']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_deficiencia_osc']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_deficiencia_osc']}}</h2>
                             @else
@@ -138,7 +138,7 @@
                     <div class="bg-lgt box-itens">
                         <h3>Trabalhadores voluntários</h3>
                         <div>
-                            <?php echo isset($relacoes_trabalho_governanca['ft_trabalhadores_voluntarios']) ? iconType('Representante de OSC') : ''; ?>
+                            <?php echo isset($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']) ? iconType('Representante de OSC') : ''; ?>
                             @if(!empty($relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']))
                                 <h2>{{$relacoes_trabalho_governanca['nr_trabalhadores_voluntarios']}}</h2>
                             @else
