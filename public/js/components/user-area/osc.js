@@ -659,7 +659,7 @@ class Osc extends React.Component {
       placeholder: "Ex.: http://www.seudominio.com.br"
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "tx_site"
-    }, "Site oficial"), /*#__PURE__*/React.createElement("div", {
+    }, "Website"), /*#__PURE__*/React.createElement("div", {
       className: "label-box-info-off"
     }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-6"

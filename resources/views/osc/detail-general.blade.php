@@ -164,7 +164,7 @@
         </div>
         <div class="col-md-4">
             <div class="item-detail">
-                <h4>Site oficial:<?php echo iconType($dados_gerais->ft_site); ?></h4>
+                <h4>Website:<?php echo iconType($dados_gerais->ft_site); ?></h4>
                 <p>{{$dados_gerais->tx_site == null ? $txt_alert_abb : $dados_gerais->tx_site}}</p>
             </div>
         </div>

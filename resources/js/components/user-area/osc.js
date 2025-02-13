@@ -637,7 +637,7 @@ class Osc extends React.Component{
                                             <div className="label-float">
                                                 <input className={"form-control form-g "} type="text" name="tx_site" onChange={this.handleInputChange} value={this.state.form.tx_site}
                                                        placeholder="Ex.: http://www.seudominio.com.br" />
-                                                <label htmlFor="tx_site">Site oficial</label>
+                                                <label htmlFor="tx_site">Website</label>
                                                 <div className="label-box-info-off">
                                                     <p>&nbsp;</p>
                                                 </div>
@@ -664,7 +664,6 @@ class Osc extends React.Component{
                                                 </div>
                                             </div>
                                         </div>*/}
-
                                         <div className="col-md-12">
                                             <div className="label-float-tx">
                                             <textarea className="form-control form-g" name="tx_resumo_osc" onChange={this.handleInputChange} value={this.state.form.tx_resumo_osc}
