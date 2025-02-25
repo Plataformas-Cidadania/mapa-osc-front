@@ -21,10 +21,10 @@
                     <li><a href="<?php if($rota != '/'){?>{{$rota}}<?php }?>#iniciodorodape" accesskey="4" class="link-to-menu">Ir para o rodapé [4]</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right top-ipea">
+            <div class="col-md-2 col-sm-6 col-xs-6 text-lg-right text-md-right top-ipea">
                 <a href="https://www.ipea.gov.br" target="_blank" alt="Link externo para o IPEA." title="Link externo para o IPEA."><img src="img/logo-ipea.png" width="150"/></a>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-6 text-lg-right text-md-right top-icons">
+            <div class="col-md-4 col-sm-6 col-xs-6 text-lg-right text-md-right top-icons" style="display: flex">
                 <ul id="botoes" >
                     <li class="bg-pri box-font-size rounded-circle cursor"><a id="aumenta_fonte" {{--onClick="fonte('a');"--}}>A+</a></li>
                     <li class="bg-sec box-font-size rounded-circle cursor"><a id="reset_fonte">A&nbsp;</a></li>
@@ -32,10 +32,67 @@
                     <li><a class="btn-constrat cursor"><i class="fas fa-adjust fa-2x" style="vertical-align: middle;"></i> {{--Alto contraste--}}</a></li>
                     <li><a href="acessibilidade"><i class="fas fa-universal-access fa-2x" style="vertical-align: middle;"></i> <!--Acessibilidade--></a></li>
                 </ul>
+
+                <a href="javascript:trocarIdioma('pt')" style="margin-right: 3px"><img alt="português" src="img/pt.jpg"></a>
+                <a href="javascript:trocarIdioma('es')" style="margin-right: 3px"><img alt="espanhol" src="img/es.jpg"></a>
+                <a href="javascript:trocarIdioma('en')" style="margin-right: 3px"><img alt="ingles" src="img/en.jpg"></a>
             </div>
         </div>
     </div>
 </div>
+{{--///////////////////////////////////////////////////////////////////////--}}
+<div id="google_translate_element" class="boxTradutor"></div>
+
+<script type="text/javascript">
+    var comboGoogleTradutor = null; //Varialvel global
+
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt',
+            includedLanguages: 'en,es,pt',
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+        }, 'google_translate_element');
+
+        comboGoogleTradutor = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+    }
+
+    function changeEvent(el) {
+        if (el.fireEvent) {
+            el.fireEvent('onchange');
+        } else {
+            var evObj = document.createEvent("HTMLEvents");
+
+            evObj.initEvent("change", false, true);
+            el.dispatchEvent(evObj);
+        }
+    }
+
+    function trocarIdioma(sigla) {
+        if (comboGoogleTradutor) {
+            comboGoogleTradutor.value = sigla;
+            changeEvent(comboGoogleTradutor);//Dispara a troca
+        }
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style type="text/css">
+    #google_translate_element {
+        display: none;
+    }
+
+    .skiptranslate {
+        display: none !important;
+    }
+    .goog-te-banner-frame {
+        display: none !important;
+    }
+    body {
+        position: static !important;
+        top: 0 !important;
+    }
+
+</style>
+{{--///////////////////////////////////////////////////////////////////////--}}
 
 
 <script>
