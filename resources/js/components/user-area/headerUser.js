@@ -4,7 +4,11 @@ class HeaderUser extends React.Component{
         this.state = {
 
         }
+
+
     }
+
+
 
     render(){
         return(
@@ -12,6 +16,10 @@ class HeaderUser extends React.Component{
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-12">
+                            <div className="alert alert-info" role="alert">
+                                <h2 style={{fontSize: 16}}>{text?.titulo}</h2>
+                                <p dangerouslySetInnerHTML={{__html: text?.descricao}} style={{marginTop: -10}}></p>
+                            </div>
                             <br/>
                             <h1>Minha conta</h1>
                             <h5><a href="/">Home</a></h5>

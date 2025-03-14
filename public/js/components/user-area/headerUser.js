@@ -10,7 +10,21 @@ class HeaderUser extends React.Component {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("h1", null, "Minha conta"), /*#__PURE__*/React.createElement("h5", null, /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-info",
+      role: "alert"
+    }, /*#__PURE__*/React.createElement("h2", {
+      style: {
+        fontSize: 16
+      }
+    }, text?.titulo), /*#__PURE__*/React.createElement("p", {
+      dangerouslySetInnerHTML: {
+        __html: text?.descricao
+      },
+      style: {
+        marginTop: -10
+      }
+    })), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("h1", null, "Minha conta"), /*#__PURE__*/React.createElement("h5", null, /*#__PURE__*/React.createElement("a", {
       href: "/"
     }, "Home")), /*#__PURE__*/React.createElement("div", {
       className: "line line-fix "

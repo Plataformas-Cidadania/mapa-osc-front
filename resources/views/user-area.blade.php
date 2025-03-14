@@ -1,7 +1,11 @@
 @extends('layout')
 @section('content')
 
-    <?php $rota = Route::getCurrentRoute()->uri();?>
+    <?php $rota = Route::getCurrentRoute()->uri();
+    $text = \App\Text::where('slug', 'sancoes-legais')->first();
+
+    //echo $text;
+?>
     <script>
         maxAddresses = 10;
         maxCertificates = 200;
@@ -11,6 +15,7 @@
         maxParticipacoes = 200;
         maxRecursos = 200;
         maxProjetos = 200;
+        text = <?php echo $text;?>;
     </script>
 
     <div id="header"></div>
