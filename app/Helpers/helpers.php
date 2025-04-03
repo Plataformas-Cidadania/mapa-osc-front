@@ -367,6 +367,48 @@ if ( ! function_exists('curl') ) {
     }
 }
 
+if ( ! function_exists('curlOSC') ) {
+    function curlOSC($id) {
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/".$id;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+        $data = json_decode($data);
+
+        return $data;
+    }
+}
+
+if ( ! function_exists('curlSituacao') ) {
+    function curlSituacao() {
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."situacao_cadastral";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+        $data = json_decode($data);
+
+        return $data;
+    }
+}
+
 if ( ! function_exists('curlList') ) {
     function curlList($string, $id) {
 

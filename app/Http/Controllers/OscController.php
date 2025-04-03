@@ -29,11 +29,11 @@ class OscController extends Controller{
 
     public function details($id){
 
+        $osc = curlOSC($id);
+        $situacao = curlSituacao();
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
-
-        //Log::info([$descricao]);
 
         $certificacoes = curlList('certificados', $id);
         $area_atuacao = curlList('areas_atuacao', $id);
@@ -48,8 +48,6 @@ class OscController extends Controller{
         $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
         $quadros_societarios = curlListParametros('quadro-societario-por-osc', $id, '');
 
-        //return  $quadros_societarios;
-
         $relacoes_trabalho_governanca = curlListParametros('rel_trabalho_e_governanca', $id, 'relacoes_trabalho');
 
         $participacao_social_conselhos = curlListParametros('participacao_social', $id, 'conselhos_politicas_publicas');
@@ -58,11 +56,19 @@ class OscController extends Controller{
 
         $recursos = curlList('anos_recursos', $id);
 
-        //return $quadros_societarios;
+        $situacaoArray = [];
 
+        foreach ($situacao as $item) {
+            $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
+        }
+
+        $valorSituacao = $situacaoArray[$osc->cd_stituacao_cadastral];
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
+            'stituacao_cadastral' => $valorSituacao,
+            'situacao' => $situacao,
+            'osc' => $osc,
             'cabecalho' => $cabecalho,
             'dados_gerais' => $dados_gerais,
             'descricao' => $descricao,
