@@ -561,19 +561,36 @@ if (!function_exists('cnpjFormat')) {
         // Remove tudo que não for número
         $cnpj = preg_replace('/\D/', '', $value);
 
-        // Verifica se o CNPJ tem 14 dígitos
-        if (strlen($cnpj) === 14) {
-            // Aplica a formatação
-            $formattedCnpj = preg_replace(
-                '/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/',
-                '$1.$2.$3/$4-$5',
-                $cnpj
-            );
-            return $formattedCnpj;
-        }
+        // Preenche com zeros à esquerda para garantir 14 dígitos
+        $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
 
-        // Retorna o valor original se não puder ser formatado
-        return $value;
+        // Aplica a formatação
+        return preg_replace(
+            '/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/',
+            '$1.$2.$3/$4-$5',
+            $cnpj
+        );
     }
 }
+
+//if (!function_exists('cnpjFormat')) {
+//    function cnpjFormat($value) {
+//        // Remove tudo que não for número
+//        $cnpj = preg_replace('/\D/', '', $value);
+//
+//        // Verifica se o CNPJ tem 14 dígitos
+//        if (strlen($cnpj) === 14) {
+//            // Aplica a formatação
+//            $formattedCnpj = preg_replace(
+//                '/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/',
+//                '$1.$2.$3/$4-$5',
+//                $cnpj
+//            );
+//            return $formattedCnpj;
+//        }
+//
+//        // Retorna o valor original se não puder ser formatado
+//        return $value;
+//    }
+//}
 
