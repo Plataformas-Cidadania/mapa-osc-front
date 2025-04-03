@@ -58,11 +58,13 @@ class OscController extends Controller{
 
         $situacaoArray = [];
 
-        foreach ($situacao as $item) {
-            $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
+        if (is_array($situacao) || $situacao instanceof Traversable) {
+            foreach ($situacao as $item) {
+                $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
+            }
         }
 
-        $valorSituacao = $situacaoArray[$osc->cd_stituacao_cadastral];
+        $valorSituacao = $situacaoArray[$osc->cd_stituacao_cadastral] ?? null;
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
