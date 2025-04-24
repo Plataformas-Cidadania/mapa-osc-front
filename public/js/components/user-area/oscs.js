@@ -9,6 +9,7 @@ class Oscs extends React.Component {
       loadingRemoveOsc: false,
       search: '',
       oscs: [],
+      oscsModal: [],
       oscsSearch: [],
       editId: 0,
       idOscRemove: 0,
@@ -18,12 +19,11 @@ class Oscs extends React.Component {
       // antes era loadingSign: false
       osc_id: null,
       // antes era loadingSign: false
-      representacaoId: null // antes era loadingSign: false
+      listRemove: [] // antes era loadingSign: false
     };
 
     this.list = this.list.bind(this);
     this.getModal = this.getModal.bind(this);
-    this.getRepresentante = this.getRepresentante.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.clickSearch = this.clickSearch.bind(this);
     this.listSearch = this.listSearch.bind(this);
@@ -33,13 +33,12 @@ class Oscs extends React.Component {
     this.cancelRemove = this.cancelRemove.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.signTerm = this.signTerm.bind(this);
-    this.getData = this.getData.bind(this);
     this.getAssinatuyrasTermos = this.getAssinatuyrasTermos.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
+    await this.getAssinatuyrasTermos();
     this.list();
     this.getModal();
-    this.getAssinatuyrasTermos();
   }
   getModal() {
     fetch(`${getBaseUrl2}osc/termos`).then(res => {
@@ -108,8 +107,12 @@ class Oscs extends React.Component {
       //    - array completo (já com id_representacao em cada item)
       //    - osc_id = primeiro id_osc
       //    - representacaoId = primeiro id_representacao
+
+      const listRemoveIds = this.state.listRemove.map(item => item.id_representacao);
+      const oscsModal = oscsComRep.filter(osc => !listRemoveIds.includes(osc.id_representacao));
       this.setState({
         oscs: oscsComRep,
+        oscsModal: oscsModal,
         osc_id: oscsComRep[0].id_osc,
         representacaoId: oscsComRep[0].id_representacao,
         loadingList: false
@@ -121,80 +124,6 @@ class Oscs extends React.Component {
       });
     }
   }
-  list2() {
-    this.setState({
-      loadingList: true
-    });
-    $.ajax({
-      method: 'get',
-      url: getBaseUrl2 + 'osc/list-oscs-usuario',
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
-      },
-      cache: false,
-      success: function (data) {
-        if (data[0].id_osc != null) {
-          console.log('list', data);
-          this.getData(data[0].id_osc);
-          //this.getRepresentante(data[0].id_osc);
-          this.setState({
-            oscs: data,
-            loadingList: false,
-            osc_id: data[0].id_osc
-          });
-        }
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.log(status, err.toString());
-        this.setState({
-          loadingList: false
-        });
-      }.bind(this)
-    });
-  }
-  getData(osc_id) {
-    this.setState({
-      loadingCep: true,
-      button: false
-    });
-    $.ajax({
-      method: 'GET',
-      url: getBaseUrl2 + 'get-user-auth',
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
-      },
-      cache: false,
-      success: function (data) {
-        console.log('getData', osc_id, data);
-        this.getRepresentante(osc_id, data.id_usuario);
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(status, err.toString());
-        this.setState({
-          loadingCep: false
-        });
-      }.bind(this)
-    });
-  }
-  getRepresentante(osc_id, user_id) {
-    $.ajax({
-      method: 'get',
-      url: getBaseUrl2 + `osc/representacao/${osc_id}/${user_id}`,
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
-      },
-      cache: false,
-      success: function (data) {
-        console.log('getRepresentante', osc_id, user_id, data);
-        this.setState({
-          representacaoId: data.id_representacao
-        });
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.log(status, err.toString());
-      }.bind(this)
-    });
-  }
   getAssinatuyrasTermos() {
     $.ajax({
       method: 'get',
@@ -204,6 +133,9 @@ class Oscs extends React.Component {
       },
       cache: false,
       success: function (data) {
+        this.setState({
+          listRemove: data
+        });
         console.log('getAssinatuyrasTermos', data);
       }.bind(this),
       error: function (xhr, status, err) {
@@ -215,7 +147,9 @@ class Oscs extends React.Component {
     this.setState({
       loadingSignId: idOsc
     });
-    console.log('idOsc', idOsc, 'id_termo', this.state.termo.id_termo);
+
+    //console.log('idOsc', idOsc, 'id_termo', this.state.termo.id_termo)
+
     $.ajax({
       method: 'POST',
       url: getBaseUrl2 + 'osc/assinatura-termos',
@@ -231,7 +165,7 @@ class Oscs extends React.Component {
       success: function (data) {
         this.setState(prev => {
           const signed = [...prev.signedOscs, idOsc];
-          const allSigned = signed.length === prev.oscs.length;
+          const allSigned = signed.length === prev.oscsModal.length;
           return {
             signedOscs: signed,
             loadingSignId: null,
@@ -348,7 +282,8 @@ class Oscs extends React.Component {
   render() {
     const {
       termo,
-      showModal
+      showModal,
+      oscsModal
     } = this.state;
     let oscs = this.state.oscs.map(function (item, index) {
       let hr = null;
@@ -525,7 +460,7 @@ class Oscs extends React.Component {
     })), listSearch)))))))), /*#__PURE__*/React.createElement("div", {
       className: "modal-overlay",
       style: {
-        display: showModal ? 'flex' : 'none'
+        display: showModal && oscsModal && oscsModal.length > 0 ? 'flex' : 'none'
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "modal-content"
@@ -538,7 +473,7 @@ class Oscs extends React.Component {
     }, "Nome da OSC"), /*#__PURE__*/React.createElement("th", {
       scope: "col",
       className: "text-center"
-    }, "A\xE7\xE3o"))), this.state.oscs.map(item => {
+    }, "A\xE7\xE3o"))), this.state.oscsModal.map(item => {
       const oscId = item.id_osc;
       const isSigned = this.state.signedOscs.includes(oscId);
       const isLoading = this.state.loadingSignId === oscId;

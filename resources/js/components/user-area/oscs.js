@@ -9,18 +9,19 @@ class Oscs extends React.Component{
             loadingRemoveOsc: false,
             search: '',
             oscs:[],
+            oscsModal:[],
             oscsSearch:[],
             editId: 0,
             idOscRemove: 0,
             signedOscs: [],      // já existia
             loadingSignId: null,           // antes era loadingSign: false
             osc_id: null,           // antes era loadingSign: false
-            representacaoId: null,           // antes era loadingSign: false
+            listRemove: [],           // antes era loadingSign: false
         };
 
         this.list = this.list.bind(this);
         this.getModal = this.getModal.bind(this);
-        this.getRepresentante = this.getRepresentante.bind(this);
+
         this.handleSearch = this.handleSearch.bind(this);
         this.clickSearch = this.clickSearch.bind(this);
         this.listSearch = this.listSearch.bind(this);
@@ -30,14 +31,13 @@ class Oscs extends React.Component{
         this.cancelRemove = this.cancelRemove.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.signTerm = this.signTerm.bind(this);
-        this.getData = this.getData.bind(this);
         this.getAssinatuyrasTermos = this.getAssinatuyrasTermos.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+        await this.getAssinatuyrasTermos();
         this.list();
         this.getModal();
-        this.getAssinatuyrasTermos();
     }
     getModal(){
         fetch(`${getBaseUrl2}osc/termos`)
@@ -99,11 +99,20 @@ class Oscs extends React.Component{
             //    - array completo (já com id_representacao em cada item)
             //    - osc_id = primeiro id_osc
             //    - representacaoId = primeiro id_representacao
+
+
+            const listRemoveIds = this.state.listRemove.map(item => item.id_representacao);
+
+            const oscsModal = oscsComRep.filter(osc =>
+                !listRemoveIds.includes(osc.id_representacao)
+            );
+
             this.setState({
-                oscs:               oscsComRep,
-                osc_id:             oscsComRep[0].id_osc,
-                representacaoId:    oscsComRep[0].id_representacao,
-                loadingList:        false
+                oscs: oscsComRep,
+                oscsModal: oscsModal,
+                osc_id: oscsComRep[0].id_osc,
+                representacaoId: oscsComRep[0].id_representacao,
+                loadingList: false
             });
         }
         catch (err) {
@@ -112,72 +121,9 @@ class Oscs extends React.Component{
         }
     }
 
-    list2(){
 
-        this.setState({loadingList: true});
 
-        $.ajax({
-            method: 'get',
-            url: getBaseUrl2 + 'osc/list-oscs-usuario',
-            headers: {
-                Authorization: 'Bearer '+localStorage.getItem('@App:token')
-            },
-            cache: false,
-            success: function(data){
 
-                if(data[0].id_osc!=null){
-                    console.log('list', data)
-                    this.getData(data[0].id_osc)
-                    //this.getRepresentante(data[0].id_osc);
-                    this.setState({oscs: data, loadingList: false, osc_id: data[0].id_osc});
-                }
-
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-                this.setState({loadingList: false});
-            }.bind(this)
-        });
-    }
-
-    getData(osc_id){
-        this.setState({loadingCep: true, button:false});
-        $.ajax({
-            method: 'GET',
-            url: getBaseUrl2 + 'get-user-auth',
-            headers: {
-                Authorization: 'Bearer '+localStorage.getItem('@App:token')
-            },
-            cache: false,
-            success: function (data) {
-                console.log('getData', osc_id, data)
-                this.getRepresentante(osc_id, data.id_usuario)
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(status, err.toString());
-                this.setState({ loadingCep: false });
-            }.bind(this)
-        });
-    }
-
-    getRepresentante(osc_id, user_id){
-
-        $.ajax({
-            method: 'get',
-            url: getBaseUrl2 + `osc/representacao/${osc_id}/${user_id}` ,
-            headers: {
-                Authorization: 'Bearer '+localStorage.getItem('@App:token')
-            },
-            cache: false,
-            success: function(data){
-                console.log('getRepresentante',osc_id, user_id, data)
-                this.setState({representacaoId: data.id_representacao});
-            }.bind(this),
-            error: function(xhr, status, err){
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-    }
 
     getAssinatuyrasTermos(){
 
@@ -189,6 +135,7 @@ class Oscs extends React.Component{
             },
             cache: false,
             success: function(data){
+                this.setState({ listRemove: data });
                 console.log('getAssinatuyrasTermos',data)
             }.bind(this),
             error: function(xhr, status, err){
@@ -200,7 +147,7 @@ class Oscs extends React.Component{
     signTerm(idOsc, representacaoId) {
         this.setState({ loadingSignId: idOsc });
 
-        console.log('idOsc', idOsc, 'id_termo', this.state.termo.id_termo)
+        //console.log('idOsc', idOsc, 'id_termo', this.state.termo.id_termo)
 
         $.ajax({
             method: 'POST',
@@ -216,7 +163,7 @@ class Oscs extends React.Component{
             success: function(data) {
                 this.setState(prev => {
                     const signed = [...prev.signedOscs, idOsc];
-                    const allSigned = signed.length === prev.oscs.length;
+                    const allSigned = signed.length === prev.oscsModal.length;
                     return {
                         signedOscs: signed,
                         loadingSignId: null,
@@ -319,7 +266,7 @@ class Oscs extends React.Component{
 
     render(){
 
-        const { termo, showModal } = this.state;
+        const { termo, showModal, oscsModal } = this.state;
 
         let oscs = this.state.oscs.map(function(item, index){
 
@@ -421,7 +368,8 @@ class Oscs extends React.Component{
                 <div className="title-user-area">
                     <h3><i className="fas fa-list-alt"/> Minhas OSCs</h3>
                     <p>Nessa área você pode gerenciar sua OSC ou varias</p>
-                    <a className="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" style={{marginTop: '-80px'}}><i className="fa fa-plus"/> Adicionar OSC</a>
+                    <a className="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
+                       style={{marginTop: '-80px'}}><i className="fa fa-plus"/> Adicionar OSC</a>
                     <hr/>
                     <br/>
                 </div>
@@ -443,9 +391,9 @@ class Oscs extends React.Component{
                 </div>
 
 
-
                 {/*Modal*/}
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -456,26 +404,28 @@ class Oscs extends React.Component{
                             </div>
                             <div class="modal-body">
                                 <div className="container">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <input type="text"
-                                               className="form-control float-left "
-                                               placeholder="Digite o CNPJ e clique na OSC para adicionar."
-                                               name="osc"
-                                               autoComplete="off"
-                                               onClick={this.clickSearch}
-                                               onChange={this.handleSearch}
-                                               defaultValue={this.state.search}
-                                        />
-                                        <br/><br/>
-                                        <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
-                                            <div className="col-md-12 text-center">
-                                                <img src="/img/load.gif" alt="" width="60" className="login-img" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
-                                            </div>
-                                            {listSearch}
-                                        </ul>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <input type="text"
+                                                   className="form-control float-left "
+                                                   placeholder="Digite o CNPJ e clique na OSC para adicionar."
+                                                   name="osc"
+                                                   autoComplete="off"
+                                                   onClick={this.clickSearch}
+                                                   onChange={this.handleSearch}
+                                                   defaultValue={this.state.search}
+                                            />
+                                            <br/><br/>
+                                            <ul className="box-search-itens"
+                                                style={{display: this.state.search ? '' : 'none'}}>
+                                                <div className="col-md-12 text-center">
+                                                    <img src="/img/load.gif" alt="" width="60" className="login-img"
+                                                         style={{display: this.state.loadingSearch ? '' : 'none'}}/>
+                                                </div>
+                                                {listSearch}
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
 
 
@@ -486,54 +436,60 @@ class Oscs extends React.Component{
 
                 {/* Modal */}
                 <div
-                    className="modal-overlay"
-                    style={{ display: showModal ? 'flex' : 'none' }}
+                       className="modal-overlay"
+                style={{
+                display:
+                               showModal && oscsModal && oscsModal.length > 0
+                                   ? 'flex'
+                                   : 'none'
+                }}
                 >
-                    <div className="modal-content">
-                        <h2>Termo</h2>
-                        <p>{termo?.tx_nome}</p>
-                        <table className="table">
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Nome da OSC</th>
-                                <th scope="col" className="text-center">Ação</th>
-                            </tr>
-                            </thead>
+                <div className="modal-content">
+                    <h2>Termo</h2>
+                    <p>{termo?.tx_nome}</p>
+                    <table className="table">
+                        <thead className="thead-light">
+                        <tr>
+                            <th scope="col">Nome da OSC</th>
+                            <th scope="col" className="text-center">Ação</th>
+                        </tr>
+                        </thead>
 
-                            {this.state.oscs.map(item => {
-                                const oscId = item.id_osc;
-                                const isSigned  = this.state.signedOscs.includes(oscId);
-                                const isLoading = this.state.loadingSignId === oscId;
+                        {this.state.oscsModal.map(item => {
+                            const oscId = item.id_osc;
+                            const isSigned = this.state.signedOscs.includes(oscId);
+                            const isLoading = this.state.loadingSignId === oscId;
 
-                                return (
-                                    <tr key={oscId}>
-                                        <th scope="row">{item.tx_razao_social_osc}</th>
-                                        <td className="text-center">
-                                            <button
-                                                className={` ${isSigned ? 'open-btn-sus' : 'open-btn'}`}
-                                                onClick={() => this.signTerm(oscId, item.id_representacao)}
-                                                disabled={isSigned || isLoading}
-                                                style={{ marginTop: 0 }}
-                                            >
-                                                { isSigned  ? 'Assinado'
-                                                    : isLoading ? 'Enviando…'
-                                                        : 'Aceitar termo'
-                                                }
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                            return (
+                                <tr key={oscId}>
+                                    <th scope="row">{item.tx_razao_social_osc}</th>
+                                    <td className="text-center">
+                                        <button
+                                            className={` ${isSigned ? 'open-btn-sus' : 'open-btn'}`}
+                                            onClick={() => this.signTerm(oscId, item.id_representacao)}
+                                            disabled={isSigned || isLoading}
+                                            style={{marginTop: 0}}
+                                        >
+                                            {isSigned ? 'Assinado'
+                                                : isLoading ? 'Enviando…'
+                                                    : 'Aceitar termo'
+                                            }
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
 
-                        </table>
+                    </table>
 
 
-                    </div>
                 </div>
             </div>
+    </div>
 
 
-        );
+    )
+        ;
     }
 }
 
