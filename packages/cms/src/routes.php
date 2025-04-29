@@ -283,6 +283,17 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/positionUp-teaser/{id}', 'Cms\Controllers\TeaserController@positionUp');
         Route::get('/cms/positionDown-teaser/{id}', 'Cms\Controllers\TeaserController@positionDown');
 
+
+        //TERMO
+        Route::get('/cms/termos', 'Cms\Controllers\TermoController@index');
+        Route::get('/cms/listar-termos', 'Cms\Controllers\TermoController@listar');
+        Route::post('/cms/inserir-termo', 'Cms\Controllers\TermoController@inserir');
+        Route::get('/cms/termo/{id}', 'Cms\Controllers\TermoController@detalhar');
+        Route::post('/cms/alterar-termo/{id}', 'Cms\Controllers\TermoController@alterar');
+        Route::get('/cms/excluir-termo/{id}', 'Cms\Controllers\TermoController@excluir');
+        Route::get('/cms/positionUp-termo/{id}', 'Cms\Controllers\TermoController@positionUp');
+        Route::get('/cms/positionDown-termo/{id}', 'Cms\Controllers\TermoController@positionDown');
+
         //TEXTS
         Route::get('/cms/texts', 'Cms\Controllers\TextController@index');
         Route::get('/cms/listar-texts', 'Cms\Controllers\TextController@listar');

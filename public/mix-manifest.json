@@ -67,6 +67,8 @@
     "/assets-cms/js/controllers/alterarCmsUserCtrl.js": "/assets-cms/js/controllers/alterarCmsUserCtrl.js",
     "/assets-cms/js/controllers/teaserCtrl.js": "/assets-cms/js/controllers/teaserCtrl.js",
     "/assets-cms/js/controllers/alterarTeaserCtrl.js": "/assets-cms/js/controllers/alterarTeaserCtrl.js",
+    "/assets-cms/js/controllers/termoCtrl.js": "/assets-cms/js/controllers/termoCtrl.js",
+    "/assets-cms/js/controllers/alterarTermoCtrl.js": "/assets-cms/js/controllers/alterarTermoCtrl.js",
     "/assets-cms/js/controllers/textCtrl.js": "/assets-cms/js/controllers/textCtrl.js",
     "/assets-cms/js/controllers/alterarTextCtrl.js": "/assets-cms/js/controllers/alterarTextCtrl.js",
     "/assets-cms/js/controllers/artworkCtrl.js": "/assets-cms/js/controllers/artworkCtrl.js",

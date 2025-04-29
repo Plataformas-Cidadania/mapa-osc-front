@@ -120,6 +120,9 @@
                 <li>
                     <a href="cms/chart_categorias"><i class="fa fa-fw fa-file-text-o"></i> Chart Categorias</a>
                 </li>
+                <li>
+                    <a href="cms/termos"><i class="fa fa-fw fa-file-text-o"></i> Termos</a>
+                </li>
 <!--                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>-->
