@@ -57,7 +57,7 @@ class Oscs extends React.Component {
         });
     }
 
-    loadProximoTermo() {
+    loadProximoTermo2() {
         const token = localStorage.getItem('@App:token');
         fetch(`${getBaseUrl2}osc/termos`, { headers: { Authorization: 'Bearer ' + token } })
             .then(res => {
@@ -95,7 +95,43 @@ class Oscs extends React.Component {
             .catch(err => console.error(err));
     }
 
+    loadProximoTermo() {
+        const token = localStorage.getItem('@App:token');
+        fetch(`${getBaseUrl2}osc/termos`, { headers: { Authorization: 'Bearer ' + token } })
+            .then(res => {
+                if (!res.ok) throw new Error('Erro ao buscar termos');
+                return res.json();
+            })
+            .then(data => {
+                const termos = Array.isArray(data) ? data : [data];
+                if (!termos.length) {
+                    return this.setState({ termos, termoAtual: null, oscsModal: [], showModal: false });
+                }
 
+                // Pega o último termo
+                const ultimo = termos[termos.length - 1];
+
+                // Quais assinaturas já existem para ele?
+                const assinaturasDoTermo = this.state.listRemove
+                    .filter(sig => sig.id_termo === ultimo.id_termo);
+
+                const repsAssinadas = assinaturasDoTermo
+                    .map(sig => sig.representacao.id_representacao);
+
+                // Filtra só as OSCs que AINDA NÃO assinaram
+                const oscsModal = this.state.oscs
+                    .filter(osc => !repsAssinadas.includes(osc.id_representacao));
+
+                // Atualiza o state com o modal apenas se houver pendentes
+                this.setState({
+                    termos,
+                    termoAtual: oscsModal.length ? ultimo : null,
+                    oscsModal,
+                    showModal: oscsModal.length > 0
+                });
+            })
+            .catch(err => console.error(err));
+    }
 
     getModal() {
         fetch(`${getBaseUrl2}osc/termos`, { headers: { Authorization: 'Bearer ' + localStorage.getItem('@App:token') } })
