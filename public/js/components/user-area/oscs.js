@@ -464,7 +464,11 @@ class Oscs extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "modal-content"
-    }, /*#__PURE__*/React.createElement("h2", null, "Termo"), /*#__PURE__*/React.createElement("p", null, termo?.tx_nome), /*#__PURE__*/React.createElement("table", {
+    }, /*#__PURE__*/React.createElement("h2", null, "Termo"), /*#__PURE__*/React.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: termo?.tx_nome
+      }
+    }), /*#__PURE__*/React.createElement("table", {
       className: "table"
     }, /*#__PURE__*/React.createElement("thead", {
       className: "thead-light"

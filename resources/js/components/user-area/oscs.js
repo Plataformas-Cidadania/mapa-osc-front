@@ -444,52 +444,52 @@ class Oscs extends React.Component{
                                    : 'none'
                 }}
                 >
-                <div className="modal-content">
-                    <h2>Termo</h2>
-                    <p>{termo?.tx_nome}</p>
-                    <table className="table">
-                        <thead className="thead-light">
-                        <tr>
-                            <th scope="col">Nome da OSC</th>
-                            <th scope="col" className="text-center">Ação</th>
-                        </tr>
-                        </thead>
+                    <div className="modal-content">
+                        <h2>Termo</h2>
+                        <div dangerouslySetInnerHTML={{__html: termo?.tx_nome}}/>
+                        <table className="table">
+                            <thead className="thead-light">
+                            <tr>
+                                <th scope="col">Nome da OSC</th>
+                                <th scope="col" className="text-center">Ação</th>
+                            </tr>
+                            </thead>
 
-                        {this.state.oscsModal.map(item => {
-                            const oscId = item.id_osc;
-                            const isSigned = this.state.signedOscs.includes(oscId);
-                            const isLoading = this.state.loadingSignId === oscId;
+                            {this.state.oscsModal.map(item => {
+                                const oscId = item.id_osc;
+                                const isSigned = this.state.signedOscs.includes(oscId);
+                                const isLoading = this.state.loadingSignId === oscId;
 
-                            return (
-                                <tr key={oscId}>
-                                    <th scope="row">{item.tx_razao_social_osc}</th>
-                                    <td className="text-center">
-                                        <button
-                                            className={` ${isSigned ? 'open-btn-sus' : 'open-btn'}`}
-                                            onClick={() => this.signTerm(oscId, item.id_representacao)}
-                                            disabled={isSigned || isLoading}
-                                            style={{marginTop: 0}}
-                                        >
-                                            {isSigned ? 'Assinado'
-                                                : isLoading ? 'Enviando…'
-                                                    : 'Aceitar termo'
-                                            }
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                                return (
+                                    <tr key={oscId}>
+                                        <th scope="row">{item.tx_razao_social_osc}</th>
+                                        <td className="text-center">
+                                            <button
+                                                className={` ${isSigned ? 'open-btn-sus' : 'open-btn'}`}
+                                                onClick={() => this.signTerm(oscId, item.id_representacao)}
+                                                disabled={isSigned || isLoading}
+                                                style={{marginTop: 0}}
+                                            >
+                                                {isSigned ? 'Assinado'
+                                                    : isLoading ? 'Enviando…'
+                                                        : 'Aceitar termo'
+                                                }
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
 
-                    </table>
+                        </table>
 
 
+                    </div>
                 </div>
             </div>
-    </div>
 
 
-    )
-        ;
+        )
+            ;
     }
 }
 
