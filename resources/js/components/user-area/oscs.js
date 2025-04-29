@@ -49,6 +49,7 @@ class Oscs extends React.Component{
                 const lastTermo = Array.isArray(data) && data.length
                     ? data[data.length - 1]
                     : data;
+                console.log('termos', lastTermo)
                 this.setState({ termo: lastTermo, showModal: true });
             })
             .catch(err => {
