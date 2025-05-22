@@ -2079,7 +2079,7 @@ class OscMap extends React.Component{
         let pagination = (
             <ul className="pagination">
                 <li className="page-item disabled" style={{display: this.state.pageOscList > 0 ? '' : 'none'}}>
-                    <a className="page-link" href="#" tabIndex="-1">Anterior</a>
+                    <a className="page-link" href="#" tabIndex={-1}>Anterior</a>
                 </li>
                 {pages}
                 {/*<li className="page-item"><a className="page-link" href="#">1</a></li>
@@ -2118,7 +2118,7 @@ class OscMap extends React.Component{
 
 
                 {/*Modal Sem Resultados Busca Avancada*/}
-                <div className="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div className="modal fade" id="modalAvancada" tabindex={-1} aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -2149,7 +2149,7 @@ class OscMap extends React.Component{
 
 
                 {/*Modal Exportar*/}
-                <div className="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div className="modal fade" id="modalExportar" tabindex={-1} aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -2231,17 +2231,17 @@ class OscMap extends React.Component{
                             </div>
                             <br/>
 
-                            <div class="row">
-                                <div class="col  text-center">
-                                    <div class="itens">
+                            <div className="row">
+                                <div className="col  text-center">
+                                    <div className="itens">
                                         <p>Quantidade de OSCs</p>
                                         <h1><strong>{this.state.totalOscList}</strong></h1>
                                     </div>
                                 </div>
                                 {Array.isArray(this.state.situacao) &&
                                     this.state.situacao.map((item, key) => (
-                                        <div className="col text-center" key={'situacao' + key}>
-                                            <div class="itens">
+                                        <div className="col text-center" key={'situacao'+key}>
+                                            <div className="itens">
                                                 <p>OSCs {item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]}</p>
                                                 <h1><strong>{item.total}</strong></h1>
                                             </div>
@@ -2335,7 +2335,7 @@ class OscMap extends React.Component{
                                 </div>
                                 {/*MAPA*/}
                             </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            <div className="tab-pane fade" id="pills-profile" role="tabpanel"
                                  aria-labelledby="pills-profile-tab">
                                 {/*ANALISE*/}
                                 {origem != 0 ? <Perfil/> : null}
@@ -2349,7 +2349,7 @@ class OscMap extends React.Component{
                 </div>
 
 
-                <div className="modal  " id="modalExportar2" tabIndex="-1" aria-labelledby="exampleModalLabel2"
+                <div className="modal  " id="modalExportar2" tabIndex={-1} aria-labelledby="exampleModalLabel2"
                      aria-hidden="true">
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">

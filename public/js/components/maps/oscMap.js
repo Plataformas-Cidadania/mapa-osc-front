@@ -2046,7 +2046,7 @@ class OscMap extends React.Component {
     }, /*#__PURE__*/React.createElement("a", {
       className: "page-link",
       href: "#",
-      tabIndex: "-1"
+      tabIndex: -1
     }, "Anterior")), pages, /*#__PURE__*/React.createElement("li", {
       className: "page-item",
       style: {
@@ -2076,7 +2076,7 @@ class OscMap extends React.Component {
                 `), /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
-      tabindex: "-1",
+      tabindex: -1,
       "aria-labelledby": "exampleModalLabel",
       "aria-hidden": "true"
     }, /*#__PURE__*/React.createElement("div", {
@@ -2115,7 +2115,7 @@ class OscMap extends React.Component {
     }, "Voltar"))))), /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalExportar",
-      tabindex: "-1",
+      tabindex: -1,
       "aria-labelledby": "exampleModalLabel",
       "aria-hidden": "true"
     }, /*#__PURE__*/React.createElement("div", {
@@ -2197,16 +2197,16 @@ class OscMap extends React.Component {
       "data-toggle": "modal",
       "data-target": "#modalExportar2"
     }, "Dicion\xE1rio de dados"))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-      class: "row"
+      className: "row"
     }, /*#__PURE__*/React.createElement("div", {
-      class: "col  text-center"
+      className: "col  text-center"
     }, /*#__PURE__*/React.createElement("div", {
-      class: "itens"
+      className: "itens"
     }, /*#__PURE__*/React.createElement("p", null, "Quantidade de OSCs"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), Array.isArray(this.state.situacao) && this.state.situacao.map((item, key) => /*#__PURE__*/React.createElement("div", {
       className: "col text-center",
       key: 'situacao' + key
     }, /*#__PURE__*/React.createElement("div", {
-      class: "itens"
+      className: "itens"
     }, /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3",
       id: "pills-tab",
@@ -2313,14 +2313,14 @@ class OscMap extends React.Component {
     }, pagination)), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }))), /*#__PURE__*/React.createElement("div", {
-      class: "tab-pane fade",
+      className: "tab-pane fade",
       id: "pills-profile",
       role: "tabpanel",
       "aria-labelledby": "pills-profile-tab"
     }, origem != 0 ? /*#__PURE__*/React.createElement(Perfil, null) : null)))), /*#__PURE__*/React.createElement("div", {
       className: "modal  ",
       id: "modalExportar2",
-      tabIndex: "-1",
+      tabIndex: -1,
       "aria-labelledby": "exampleModalLabel2",
       "aria-hidden": "true"
     }, /*#__PURE__*/React.createElement("div", {
