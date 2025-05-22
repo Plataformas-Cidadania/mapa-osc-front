@@ -28,6 +28,7 @@ class OscMap extends React.Component {
       paginaOscList: 0,
       totalOscList: 0,
       dataExportacao: [],
+      situacao: {},
       logos: [],
       labelsPesquisaAvancada: {
         //Dados Gerais
@@ -108,6 +109,7 @@ class OscMap extends React.Component {
     //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
     this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
     this.loadDataUf = this.loadDataUf.bind(this);
+    this.loadSituacao = this.loadSituacao.bind(this);
     this.loadOscList = this.loadOscList.bind(this);
     this.getLogos = this.getLogos.bind(this);
     this.setPageOscList = this.setPageOscList.bind(this);
@@ -139,6 +141,7 @@ class OscMap extends React.Component {
     this.loadFirstMap();
     this.loadMap();
     this.loadOscList();
+    this.loadSituacao();
     //this.loadAllUfs();
   }
 
@@ -866,6 +869,32 @@ class OscMap extends React.Component {
           _this.setState({
             data: data,
             processingOscUfs: false
+          });
+          _this.populateMap();
+        },
+        error: function (xhr, status, err) {
+          console.error(status, err.toString());
+          _this.setState({
+            loading: false
+          });
+        }
+      });
+    });
+  }
+  loadSituacao() {
+    let _this = this;
+    this.setState({
+      processingOscUfs: true
+    }, function () {
+      $.ajax({
+        method: 'GET',
+        url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral',
+        data: {},
+        cache: false,
+        success: function (data) {
+          //console.log('situacao', data);
+          _this.setState({
+            situacao: data
           });
           _this.populateMap();
         },
@@ -2032,7 +2061,19 @@ class OscMap extends React.Component {
     let processingOscUfs = this.state.processingOscUfs;
     let processingOscPontos = this.state.processingOscPontos;
     let processingHeatMap = this.state.processingHeatMap;
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("style", null, `
+                  .itens {
+                    border: solid 1px #CCCCCC;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                  }
+
+                  .itens:hover {
+                    background-color: #3A559B;
+                    color: #FFFFFF;
+                  }
+                `), /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
       tabindex: "-1",
@@ -2156,11 +2197,17 @@ class OscMap extends React.Component {
       "data-toggle": "modal",
       "data-target": "#modalExportar2"
     }, "Dicion\xE1rio de dados"))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-      className: "text-center",
-      style: {
-        clear: 'both'
-      }
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade de OSCs encontradas"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
+      class: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      class: "col  text-center"
+    }, /*#__PURE__*/React.createElement("div", {
+      class: "itens"
+    }, /*#__PURE__*/React.createElement("p", null, "Quantidade de OSCs"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), Array.isArray(this.state.situacao) && this.state.situacao.map((item, key) => /*#__PURE__*/React.createElement("div", {
+      className: "col text-center",
+      key: 'situacao' + key
+    }, /*#__PURE__*/React.createElement("div", {
+      class: "itens"
+    }, /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3",
       id: "pills-tab",
       role: "tablist"

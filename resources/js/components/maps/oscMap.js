@@ -28,6 +28,7 @@ class OscMap extends React.Component{
             paginaOscList: 0,
             totalOscList: 0,
             dataExportacao: [],
+            situacao: {},
             logos: [],
             labelsPesquisaAvancada:{
                 //Dados Gerais
@@ -106,6 +107,7 @@ class OscMap extends React.Component{
         //this.loadDataTotalPorTerritorio = this.loadDataTotalPorTerritorio.bind(this);
         this.loadDataPontosPorTerritorio = this.loadDataPontosPorTerritorio.bind(this);
         this.loadDataUf = this.loadDataUf.bind(this);
+        this.loadSituacao = this.loadSituacao.bind(this);
         this.loadOscList = this.loadOscList.bind(this);
         this.getLogos = this.getLogos.bind(this);
         this.setPageOscList = this.setPageOscList.bind(this);
@@ -139,6 +141,7 @@ class OscMap extends React.Component{
         this.loadFirstMap();
         this.loadMap();
         this.loadOscList();
+        this.loadSituacao();
         //this.loadAllUfs();
     }
 
@@ -923,6 +926,30 @@ class OscMap extends React.Component{
                 success: function(data) {
                     //console.log(data);
                     _this.setState({data: data, processingOscUfs: false});
+                    _this.populateMap();
+                },
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    _this.setState({loading: false});
+                }
+
+            });
+        });
+
+    }
+
+    loadSituacao(){
+        let _this = this;
+        this.setState({processingOscUfs: true}, function (){
+            $.ajax({
+                method:'GET',
+                url: getBaseUrl2+'osc/quantitativo/situacao-cadastral',
+                data:{
+                },
+                cache: false,
+                success: function(data) {
+                    //console.log('situacao', data);
+                    _this.setState({situacao: data});
                     _this.populateMap();
                 },
                 error: function(xhr, status, err) {
@@ -2075,6 +2102,20 @@ class OscMap extends React.Component{
 
         return(
             <div>
+                <style>{`
+                  .itens {
+                    border: solid 1px #CCCCCC;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                  }
+
+                  .itens:hover {
+                    background-color: #3A559B;
+                    color: #FFFFFF;
+                  }
+                `}</style>
+
 
                 {/*Modal Sem Resultados Busca Avancada*/}
                 <div className="modal fade" id="modalAvancada" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -2190,10 +2231,27 @@ class OscMap extends React.Component{
                             </div>
                             <br/>
 
-                            <div className="text-center" style={{clear: 'both'}}>
-                                <h3>Quantidade de OSCs encontradas</h3>
-                                <h1><strong>{this.state.totalOscList}</strong></h1>
+                            <div class="row">
+                                <div class="col  text-center">
+                                    <div class="itens">
+                                        <p>Quantidade de OSCs</p>
+                                        <h1><strong>{this.state.totalOscList}</strong></h1>
+                                    </div>
+                                </div>
+                                {Array.isArray(this.state.situacao) &&
+                                    this.state.situacao.map((item, key) => (
+                                        <div className="col text-center" key={'situacao' + key}>
+                                            <div class="itens">
+                                                <p>OSCs {item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]}</p>
+                                                <h1><strong>{item.total}</strong></h1>
+                                            </div>
+                                        </div>
+
+                                    ))
+                                }
                             </div>
+
+
                         </div>
 
                         {/*/////////////////////*/}
@@ -2214,7 +2272,6 @@ class OscMap extends React.Component{
                                 </li>
                             </ul>
                             : null}
-
 
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane fade show active" id="pills-home" role="tabpanel"
