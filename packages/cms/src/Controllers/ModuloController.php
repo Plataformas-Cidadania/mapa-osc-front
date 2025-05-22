@@ -127,6 +127,8 @@ class ModuloController extends Controller
         ])->firstOrFail();
         //$idiomas = \App\Idioma::lists('titulo', 'id')->all();
 
+        $modulo->description = html_entity_decode(str_replace("'", '"', $modulo->description), ENT_QUOTES, 'UTF-8');
+
         return view('cms::modulo.detalhar', ['modulo' => $modulo, 'tipos' => $tipos/*, 'idiomas' => $idiomas*/]);
     }
 
