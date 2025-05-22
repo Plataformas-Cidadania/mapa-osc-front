@@ -883,27 +883,18 @@ class OscMap extends React.Component {
   }
   loadSituacao() {
     let _this = this;
-    this.setState({
-      processingOscUfs: true
-    }, function () {
+    this.setState(function () {
       $.ajax({
         method: 'GET',
         url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral',
         data: {},
         cache: false,
         success: function (data) {
-          //console.log('situacao', data);
           _this.setState({
             situacao: data
           });
-          _this.populateMap();
         },
-        error: function (xhr, status, err) {
-          console.error(status, err.toString());
-          _this.setState({
-            loading: false
-          });
-        }
+        error: function (xhr, status, err) {}
       });
     });
   }
