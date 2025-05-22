@@ -147,7 +147,7 @@
         <div class="col-md-4">
             <div class="item-detail">
                 <h4>Situação cadastral:
-                    <?php echo iconType($dados_gerais->ft_nome_fantasia_osc); ?>
+                    <?php echo iconType($cabecalho->ft_identificador_osc); ?>
                 </h4>
                 <p>{{ $stituacao_cadastral ?? $txt_alert_abb }}</p>
             </div>
