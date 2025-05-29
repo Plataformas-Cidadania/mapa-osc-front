@@ -1297,6 +1297,7 @@ class FormEditProjeto extends React.Component{
                                         <option value="-1">Selecione</option>
                                         <option value="1">Rural</option>
                                         <option value="2">Urbana</option>
+                                        <option value="3">Rural/Urbana</option>
                                     </select><br/>
                                 </div>
 
@@ -1379,7 +1380,6 @@ class FormEditProjeto extends React.Component{
                                 <br/>
                                 <h3>Tipo de Parceria</h3>
                                 <hr/>
-
 
                                 <div className="bg-lgt items-checkbox">
                                     <div className="custom-control custom-checkbox"

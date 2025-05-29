@@ -59,7 +59,7 @@ class MenuUsuarioMobile extends React.Component {
       style: {
         display: this.state.tx_nome_usuario ? 'none' : ''
       }
-    }, /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("div", {
       className: "btn btn-primary btn-login-menu",
       type: "button"
     }, "Entrar"))), /*#__PURE__*/React.createElement("li", {

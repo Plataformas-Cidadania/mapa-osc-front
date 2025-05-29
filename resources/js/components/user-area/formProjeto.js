@@ -1212,6 +1212,7 @@ class FormProjeto extends React.Component{
                                         <option value="-1">Selecione</option>
                                         <option value="1">Rural</option>
                                         <option value="2">Urbana</option>
+                                        <option value="3">Rural/Urbana</option>
                                     </select>
                                     <label htmlFor="cd_zona_atuacao_projeto" className="label-select">Atuação</label>
                                 </div>
@@ -1237,7 +1238,6 @@ class FormProjeto extends React.Component{
                                     completar cadastro mais tarde.
                                 </button>
                                 </p>
-
                                 <br/>
 
                             </div>

@@ -1288,7 +1288,9 @@ class FormProjeto extends React.Component {
       value: "1"
     }, "Rural"), /*#__PURE__*/React.createElement("option", {
       value: "2"
-    }, "Urbana")), /*#__PURE__*/React.createElement("label", {
+    }, "Urbana"), /*#__PURE__*/React.createElement("option", {
+      value: "3"
+    }, "Rural/Urbana")), /*#__PURE__*/React.createElement("label", {
       htmlFor: "cd_zona_atuacao_projeto",
       className: "label-select"
     }, "Atua\xE7\xE3o")), /*#__PURE__*/React.createElement("div", {

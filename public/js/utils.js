@@ -243,7 +243,7 @@ function formatarMoeda(e) {
 }
 function clearMoeda(e) {
     var valor = e;
-    valor = parseInt(valor.replace(/[\D]+/g, ''));
+    valor = parseInt(valor?.replace(/[\D]+/g, ''));
     return valor;
 }
 

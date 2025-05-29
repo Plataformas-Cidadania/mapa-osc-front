@@ -40,6 +40,7 @@
     $zonaAtuacao = [
         1 => "Rural",
         2 => "Urbana",
+        3 => "Rural/Urbana",
     ];
 
     ?>

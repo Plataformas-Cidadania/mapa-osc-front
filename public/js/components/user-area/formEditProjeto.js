@@ -1296,7 +1296,9 @@ class FormEditProjeto extends React.Component {
       value: "1"
     }, "Rural"), /*#__PURE__*/React.createElement("option", {
       value: "2"
-    }, "Urbana")), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+    }, "Urbana"), /*#__PURE__*/React.createElement("option", {
+      value: "3"
+    }, "Rural/Urbana")), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-success",

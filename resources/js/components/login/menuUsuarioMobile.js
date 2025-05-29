@@ -60,7 +60,7 @@ class MenuUsuarioMobile extends React.Component{
                     <ul className="menu-cel-login">
                         <li>
                             <a href="login" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
-                                <a className="btn btn-primary btn-login-menu" type="button">Entrar</a>
+                                <div className="btn btn-primary btn-login-menu" type="button">Entrar</div>
                             </a>
                         </li>
                         <li style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
