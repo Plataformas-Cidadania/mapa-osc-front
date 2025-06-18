@@ -33,6 +33,10 @@ class RegisterUserController extends Controller
 
         return view('join.register', ['email' => $email, 'name' => $name]);
     }
+    public function representacoes(Request $request){
+
+        return view('join.representacoes');
+    }
     public function index2(){
         return view('join.register');
     }

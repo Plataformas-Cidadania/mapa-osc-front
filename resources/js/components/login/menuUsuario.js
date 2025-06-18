@@ -57,6 +57,7 @@ class MenuUsuario extends React.Component{
                     <a href="login" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
                         <button className="btn btn-primary btn-login-menu" type="button">Entrar</button>
                     </a>
+
                     <a href="register" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
                         <button className="dropdown-item" type="button">Cadastre-se</button>
                     </a>
@@ -72,6 +73,9 @@ class MenuUsuario extends React.Component{
                     {/*<a href="oscs-user">
                         <button className="dropdown-item " type="button">Editar</button>
                     </a>*/}
+                    <a href="representacoes" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
+                        <button className="dropdown-item" type="button">Representações</button>
+                    </a>
                     <a onClick={this.logout} style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
                         <button className="dropdown-item" type="button">Sair</button>
                     </a>
