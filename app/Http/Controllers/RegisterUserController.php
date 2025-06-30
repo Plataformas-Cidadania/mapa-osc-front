@@ -37,6 +37,10 @@ class RegisterUserController extends Controller
 
         return view('join.representacoes');
     }
+    public function buscarEmail(Request $request){
+
+        return view('join.buscar-email');
+    }
     public function index2(){
         return view('join.register');
     }

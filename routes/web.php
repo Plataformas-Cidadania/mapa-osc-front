@@ -170,6 +170,7 @@ Route::get('/redefinir-senha/{id_usuario}/{hash}', 'UserLoginController@redefini
 Route::post('/register', 'RegisterUserController@index');
 Route::get('/register', 'RegisterUserController@index2');
 Route::get('/representacoes', 'RegisterUserController@representacoes');
+Route::get('/buscar-email', 'RegisterUserController@buscarEmail');
 Route::get('/register-login', 'RegisterUserController@register');
 Route::get('/aviso-pendente-ativacao', 'RegisterUserController@avisoPendenteAtivacao');
 Route::get('/usuario-ativado', 'RegisterUserController@usuarioAtivado');

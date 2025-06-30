@@ -469,6 +469,9 @@
 @if($rota=="representacoes")
     <script src="js/components/join/representacoes.js"></script>
 @endif
+@if($rota=="buscar-email")
+    <script src="js/components/join/buscar-email.js"></script>
+@endif
 
 @if(
     $rota=="area-user" || $rota=="dashboard-user" || $rota=="dados-user"  || $rota=="trocar-senha" || $rota=="oscs-user" || $rota=="osc-user/{id}" ||
