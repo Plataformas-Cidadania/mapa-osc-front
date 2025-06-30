@@ -65,7 +65,6 @@ class BuscarEmail extends React.Component {
       msg,
       results
     } = this.state;
-    console.log('------->', results.id_usuario);
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "bg-lgt"
     }, /*#__PURE__*/React.createElement("div", {

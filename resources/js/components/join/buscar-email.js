@@ -58,8 +58,6 @@ class BuscarEmail extends React.Component {
     render() {
         const { cpf, buttonEnabled, loading, showMsg, msg, results } = this.state;
 
-        console.log('------->', results.id_usuario)
-
         return (
             <div>
                 <div className="bg-lgt">
