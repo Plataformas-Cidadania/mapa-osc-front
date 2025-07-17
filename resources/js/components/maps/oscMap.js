@@ -2111,6 +2111,7 @@ class OscMap extends React.Component{
                     background-color: #3A559B;
                     color: #FFFFFF;
                   }
+
                 `}</style>
 
 
@@ -2228,19 +2229,27 @@ class OscMap extends React.Component{
                             </div>
                             <br/>
 
+
                             <div className="row">
                                 <div className="col  text-center">
                                     <div className="itens">
                                         <p>Quantidade de OSCs</p>
                                         <h1><strong>{this.state.totalOscList}</strong></h1>
                                     </div>
+
                                 </div>
                                 {Array.isArray(this.state.situacao) &&
                                     this.state.situacao.map((item, key) => (
                                         <div className="col text-center" key={'situacao'+key}>
                                             <div className="itens">
+
+                                                <div className="tooltips float-right">
+                                                    <i className="fa fa-info-circle tx-pri"/>
+                                                    <div className="tooltiptext" style={{padding: 15, minWidth: 300, content: "none", top: -150, left: -100, border: 'solid 5px #FFFFFF'}}>{item?.tx_desc_situacao_cadastral}</div>
+                                                </div>
+
                                                 <p>OSCs {item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]}</p>
-                                                <h1><strong>{item.total}</strong></h1>
+                                                <h2><strong>{item.total}</strong></h2>
                                             </div>
                                         </div>
 

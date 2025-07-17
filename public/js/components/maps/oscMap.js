@@ -2064,6 +2064,7 @@ class OscMap extends React.Component {
                     background-color: #3A559B;
                     color: #FFFFFF;
                   }
+
                 `), /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
@@ -2198,7 +2199,21 @@ class OscMap extends React.Component {
       key: 'situacao' + key
     }, /*#__PURE__*/React.createElement("div", {
       className: "itens"
-    }, /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "tooltips float-right"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-info-circle tx-pri"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "tooltiptext",
+      style: {
+        padding: 15,
+        minWidth: 300,
+        content: "none",
+        top: -150,
+        left: -100,
+        border: 'solid 5px #FFFFFF'
+      }
+    }, item?.tx_desc_situacao_cadastral)), /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h2", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3",
       id: "pills-tab",
       role: "tablist"
