@@ -2245,7 +2245,13 @@ class OscMap extends React.Component{
 
                                                 <div className="tooltips float-right">
                                                     <i className="fa fa-info-circle tx-pri"/>
-                                                    <div className="tooltiptext" style={{padding: 15, minWidth: 300, content: "none", top: -150, left: -100, border: 'solid 5px #FFFFFF'}}>{item?.tx_desc_situacao_cadastral}</div>
+                                                    <div className="tooltiptext" style={{padding: 15, minWidth: 300, content: "none", top: -150, left: -100, border: 'solid 5px #FFFFFF'}}>{item.dc_situacao_cadastral
+                                                        ?.replace('(', '')
+                                                        ?.replace(')', '')
+                                                        ?.split(',')[2]
+                                                        ?.replace(/^"|"$/g, '')
+                                                        ?.trim()
+                                                    }</div>
                                                 </div>
 
                                                 <p>OSCs {item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]}</p>
