@@ -1,7 +1,23 @@
+// Import the formatLargeNumbers function from apexMixed.js
+function formatLargeNumbers(value) {
+  if (!value && value !== 0) return null;
+  let formattedValue;
+  if (value >= 1e9) {
+    formattedValue = (value / 1e9).toFixed(2) + ' B'; // Bilhões
+  } else if (value >= 1e6) {
+    formattedValue = (value / 1e6).toFixed(2) + ' M'; // Milhões
+  } else if (value >= 1e3) {
+    formattedValue = (value / 1e3).toFixed(2) + ' K'; // Milhares
+  } else {
+    formattedValue = value.toString(); // Valor menor que mil
+  }
+
+  return formattedValue;
+}
 class MixedChart extends React.Component {
   constructor(props) {
     super(props);
-    //console.log(props);
+    console.log('MixedChart', props);
     this.state = {
       options: {
         chart: {
@@ -83,17 +99,22 @@ class MixedChart extends React.Component {
           //categories: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '05 Jan 2001'],
         },
 
-        yaxis: [props.yaxis],
+        yaxis: [{
+          labels: {
+            formatter: function (value) {
+              return formatLargeNumbers(value);
+            }
+          },
+          ...props.yaxis
+        }],
         tooltip: {
           shared: true,
           intersect: false,
           y: {
             formatter: function (y) {
               if (typeof y !== "undefined") {
-                return y.toFixed(0) + " ";
-                //return y.toFixed(0) + " points";
+                return formatLargeNumbers(y);
               }
-
               return y;
             }
           }
@@ -103,11 +124,23 @@ class MixedChart extends React.Component {
           name: 'series1',
           data: [31, 40, 28, 51, 42, 109, 100]
       }]*/
-      series: props.series
+      series: this.formatSeriesData(props.series)
     };
   }
   componentDidMount() {
     //console.log('aaaa');
+  }
+  formatSeriesData(series) {
+    if (!series) return series;
+
+    // Create a deep copy of the series to avoid modifying the original data
+    return series.map(serie => ({
+      ...serie,
+      // Keep the original data for calculations but use formatted values for display
+      originalData: [...serie.data],
+      // Format each data point
+      data: serie.data.map(value => value)
+    }));
   }
   render() {
     if (!this.state.series) {
