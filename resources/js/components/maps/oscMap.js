@@ -2267,9 +2267,8 @@ class OscMap extends React.Component{
                         </div>
 
                         {/*/////////////////////*/}
-
                         {origem != 0 && origem != 'busca-avancada' ?
-                            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <ul className="nav nav-pills mb-3 text-center mt-2" id="pills-tab" role="tablist" style={{display: 'flex', justifyContent: 'center'}}>
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link active" id="pills-home-tab" data-toggle="pill"
                                             data-target="#pills-home" type="button" role="tab"

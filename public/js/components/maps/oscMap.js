@@ -2214,9 +2214,13 @@ class OscMap extends React.Component {
         border: 'solid 5px #FFFFFF'
       }
     }, item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[2]?.replace(/^"|"$/g, '')?.trim())), /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h2", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
-      className: "nav nav-pills mb-3",
+      className: "nav nav-pills mb-3 text-center mt-2",
       id: "pills-tab",
-      role: "tablist"
+      role: "tablist",
+      style: {
+        display: 'flex',
+        justifyContent: 'center'
+      }
     }, /*#__PURE__*/React.createElement("li", {
       className: "nav-item",
       role: "presentation"
