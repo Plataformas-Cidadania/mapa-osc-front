@@ -11,38 +11,43 @@
 </div>
 <div id="multiCollapse5" class="collapse multi-collapse show">
     <div class="row">
-        <div class="col">
-            <div class="bg-lgt box-itens-g min-h">
+        <div class="col-md-4">
+            <div class="bg-lgt box-itens-g" style="height: 440px;">
                 <h2>Quadro de dirigentes</h2>
-                @foreach($governancas as $governanca)
-                    <div>
-                        <?php echo iconType($governanca['ft_nome_dirigente']); ?>
-                        <p>{{$governanca['tx_cargo_dirigente']}}</p>
-                        <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
-                    </div>
-                @endforeach
+                <div style="height: 340px; overflow-y: auto; padding-right: 10px;">
+                    @foreach($governancas as $governanca)
+                        <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                            <?php echo iconType($governanca['ft_nome_dirigente']); ?>
+                            <p>{{$governanca['tx_cargo_dirigente']}}</p>
+                            <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="bg-lgt box-itens-g min-h">
+        <div class="col-md-4">
+            <div class="bg-lgt box-itens-g" style="height: 440px;">
                 <h2>Conselho fiscal</h2>
-                @foreach($conselhos_fiscais as $conselho_fiscal)
-                    <div>
-                        <?php echo iconType($conselho_fiscal['ft_nome_conselheiro']); ?>
-                        <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
-                    </div>
-                @endforeach
+                <div style="height: 340px; overflow-y: auto; padding-right: 10px;">
+                    @foreach($conselhos_fiscais as $conselho_fiscal)
+                        <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                            <?php echo iconType($conselho_fiscal['ft_nome_conselheiro']); ?>
+                            <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-            <div class="col-md-4">
-                <div class="bg-lgt box-itens-g min-h">
-                    <h2>Quadro societário</h2>
+        <div class="col-md-4">
+            <div class="bg-lgt box-itens-g" style="height: 440px;">
+                <h2>Quadro societário</h2>
+                <div style="height: 340px; overflow-y: auto; padding-right: 10px;">
                     @if(isset($quadros_societarios['Resposta']))
                         {{$quadros_societarios['Resposta']}}
                     @else
                         @foreach($quadros_societarios as $quadro_societario)
-                            <div>
-                                    <?php echo iconType($quadro_societario['ft_nome_socio']); ?>
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                                <?php echo iconType($quadro_societario['ft_nome_socio']); ?>
                                 <p>{{$quadro_societario['tx_nome_socio']}}</p>
                                 {{--<p><strong>CPF: </strong>{{$quadro_societario['tx_cpf_socio']}}</p>--}}
                                 <p><strong>Data entrada:</strong> {{ \Carbon\Carbon::parse($quadro_societario['tx_data_entrada_socio'])->format('d/m/Y') }}</p>
@@ -50,10 +55,10 @@
                                 <p><strong>Qualificação: </strong>{{$quadro_societario['qualificacao_socio']['tx_qualificacao_socio']}}</p>
                             </div>
                         @endforeach
-
                     @endif
                 </div>
             </div>
+        </div>
 
         <div class="col-md-12">
             <div class="row text-center">
