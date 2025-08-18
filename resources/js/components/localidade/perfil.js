@@ -888,7 +888,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} foram identificados <strong>{vinculos_deficiencia}</strong> vínculos formais de pessoas com deficiência. Além desses, as OSCS declararam <strong>{voluntarios}</strong> trabalhadores voluntários e <strong>{vinculos_formais}</strong> vínculos formais.
+                                {this.state.localidade} foram identificados <strong>{vinculos_deficiencia}</strong> vínculos formais de pessoas com deficiência. Além desses, as OSCs declararam <strong>{voluntarios}</strong> trabalhadores voluntários e <strong>{vinculos_formais}</strong> vínculos formais.
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_trabalhadores} <br/>

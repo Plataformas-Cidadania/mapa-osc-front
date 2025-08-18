@@ -762,7 +762,7 @@ class Perfil extends React.Component {
       "data-move-x": "980px"
     }), /*#__PURE__*/React.createElement("hr", null))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-6"
-    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, this.state.localidade, " foram identificados ", /*#__PURE__*/React.createElement("strong", null, vinculos_deficiencia), " v\xEDnculos formais de pessoas com defici\xEAncia. Al\xE9m desses, as OSCS declararam ", /*#__PURE__*/React.createElement("strong", null, voluntarios), " trabalhadores volunt\xE1rios e ", /*#__PURE__*/React.createElement("strong", null, vinculos_formais), " v\xEDnculos formais."), /*#__PURE__*/React.createElement("p", {
+    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, this.state.localidade, " foram identificados ", /*#__PURE__*/React.createElement("strong", null, vinculos_deficiencia), " v\xEDnculos formais de pessoas com defici\xEAncia. Al\xE9m desses, as OSCs declararam ", /*#__PURE__*/React.createElement("strong", null, voluntarios), " trabalhadores volunt\xE1rios e ", /*#__PURE__*/React.createElement("strong", null, vinculos_formais), " v\xEDnculos formais."), /*#__PURE__*/React.createElement("p", {
       className: "box-chart-font bg-lgt"
     }, /*#__PURE__*/React.createElement("strong", null, "Fonte quantidade OSCs:"), "  ", ft_trabalhadores, " ", /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
       className: "btn btn-outline-primary",
