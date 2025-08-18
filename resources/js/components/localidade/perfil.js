@@ -717,28 +717,29 @@ class Perfil extends React.Component {
                     <div className="row">
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
-                                <h3>Quantidade OSCs</h3>
+                                <h3 style={{fontSize: 14}}>Quantidade de OSCs</h3>
                                 <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
-                                <h3>Quantidade Trabalhadores</h3>
+                                <h3 style={{fontSize: 14}}>Quantidade de Trabalhadores</h3>
                                 <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
-                                <h3>Transferências federais</h3>
+                                <h3 style={{fontSize: 14}}>Transferências federais</h3>
                                 <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos,0)}</h2>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div className="box-itens-hover p-2">
-                                <h3>Quantidade Projetos</h3>
+                                <h3 style={{fontSize: 14}}>Quantidade de Projetos</h3>
                                 <h2>{numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos,0)}</h2>
                             </div>
                         </div>
+
                         <div className="col-md-12">
                             <br/>
                             <p>

@@ -642,19 +642,35 @@ class Perfil extends React.Component {
       className: "col-md-3 text-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "box-itens-hover p-2"
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade OSCs"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc, 0)))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h3", {
+      style: {
+        fontSize: 14
+      }
+    }, "Quantidade de OSCs"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_osc, 0)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3 text-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "box-itens-hover p-2"
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade Trabalhadores"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores, 0)))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h3", {
+      style: {
+        fontSize: 14
+      }
+    }, "Quantidade de Trabalhadores"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_trabalhadores, 0)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3 text-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "box-itens-hover p-2"
-    }, /*#__PURE__*/React.createElement("h3", null, "Transfer\xEAncias federais"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos, 0)))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h3", {
+      style: {
+        fontSize: 14
+      }
+    }, "Transfer\xEAncias federais"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_recursos, 0)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3 text-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "box-itens-hover p-2"
-    }, /*#__PURE__*/React.createElement("h3", null, "Quantidade Projetos"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos, 0)))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h3", {
+      style: {
+        fontSize: 14
+      }
+    }, "Quantidade de Projetos"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos, 0)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, this.state.localidade, " \xE9 o\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_colocacao_nacional, "\xBA"), " em rela\xE7\xE3o a quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o estado\xA0 (", evolucao_tx_primeiro_colocado_estado, ", ", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_primeiro_colocado_estado), ") e o munic\xEDpio\xA0 (", evolucao_tx_primeiro_colocado_municipio, ",\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_primeiro_colocado_municipio), " OSCs) s\xE3o os que cont\xEAm mais OSCs. O estado\xA0 (", evolucao_tx_ultimo_colocado_estado, ") e o munic\xEDpio\xA0 (", evolucao_tx_ultimo_colocado_municipio, ") s\xE3o os que cont\xEAm menos OSCs,\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_ultimo_colocado_estado), " e\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_ultimo_colocado_municipio), " respectivamente."), /*#__PURE__*/React.createElement("p", {
       className: "box-chart-font bg-lgt"
