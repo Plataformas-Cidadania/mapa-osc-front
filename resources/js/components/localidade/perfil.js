@@ -826,7 +826,7 @@ class Perfil extends React.Component {
                         <div className="col-md-6">
                             <br/>
                             <p>
-                                {this.state.localidade} é o&nbsp;
+                                {this.state.localidade} ocupa o&nbsp;
                                 <strong>{nr_colocacao_nacional}</strong>º em relação aos repasses de recursos para OSCs, com média de R$&nbsp;
                                 <strong>{numberDecimalPtBR(nr_repasse_media, 2)}</strong> por ano. A média nacional por {this.state.tipo} de repasse de recursos é de R$&nbsp;
                                 <strong>{numberDecimalPtBR(nr_repasse_media_nacional, 2)}</strong>. Além dos repasses federais, a categoria de recursos mais declarada foi Recursos públicos com&nbsp;
