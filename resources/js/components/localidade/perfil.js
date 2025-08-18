@@ -46,6 +46,7 @@ class Perfil extends React.Component {
             localidade_id: origem,
         };
         this.callModal = this.callModal.bind(this);
+        this.renderRankingText = this.renderRankingText.bind(this);
 
         this.evolucao_anual = this.evolucao_anual.bind(this);
         this.caracteristicas = this.caracteristicas.bind(this);
@@ -206,6 +207,31 @@ class Perfil extends React.Component {
 
 
     //////////////////////////////////////////MODAL TABELA///////////////////////////////////////////////////
+
+    renderRankingText(colocacao, primeiro_estado, qtd_primeiro_estado, primeiro_municipio, qtd_primeiro_municipio, ultimo_estado, qtd_ultimo_estado, ultimo_municipio, qtd_ultimo_municipio) {
+        const isEstado = this.state.tipo === 'estado';
+        const posicao = colocacao + (colocacao === 1 ? 'ª' : colocacao === 2 ? 'ª' : 'ª');
+
+        if (isEstado) {
+            return (
+                <p>
+                    <strong>{this.state.localidade}</strong> ocupa a <strong>{posicao}</strong> posição em relação à quantidade de OSCs no âmbito nacional.
+                    Nesse ranking, o estado de <strong>{primeiro_estado}</strong>, com <strong>{numberDecimalPtBR(qtd_primeiro_estado, 0)}</strong> OSCs,
+                    é o que possui a maior quantidade, enquanto o estado de <strong>{ultimo_estado}</strong> é o que possui a menor,
+                    com <strong>{numberDecimalPtBR(qtd_ultimo_estado, 0)}</strong> OSCs.
+                </p>
+            );
+        } else {
+            return (
+                <p>
+                    <strong>{this.state.localidade}</strong> ocupa a <strong>{posicao}</strong> posição em relação à quantidade de OSCs no âmbito nacional.
+                    Nesse ranking, o município de {primeiro_municipio}, com <strong>{numberDecimalPtBR(qtd_primeiro_municipio, 0)}</strong> OSCs,
+                    é o que possui a maior quantidade, enquanto o município de <strong>{ultimo_municipio}</strong> é o que possui a menor,
+                    com <strong>{numberDecimalPtBR(qtd_ultimo_municipio, 0)}</strong> OSC{qtd_ultimo_municipio === 1 ? '' : 's'}.
+                </p>
+            );
+        }
+    }
 
     callModal(type, chart, col){
 
@@ -743,15 +769,7 @@ class Perfil extends React.Component {
                         <div className="col-md-12">
                             <br/>
                             <p>
-                                {this.state.localidade} é o&nbsp;
-                                <strong>{evolucao_nr_colocacao_nacional}º</strong> em relação a quantidade de OSCs no âmbito nacional. Nesse ranking, o estado&nbsp;
-                                ({evolucao_tx_primeiro_colocado_estado}, <strong>{evolucao_nr_quantidade_oscs_primeiro_colocado_estado}</strong>) e o município&nbsp;
-                                ({evolucao_tx_primeiro_colocado_municipio},&nbsp;
-                                <strong>{evolucao_nr_quantidade_oscs_primeiro_colocado_municipio}</strong> OSCs) são os que contêm mais OSCs. O estado&nbsp;
-                                ({evolucao_tx_ultimo_colocado_estado}) e o município&nbsp;
-                                ({evolucao_tx_ultimo_colocado_municipio}) são os que contêm menos OSCs,&nbsp;
-                                <strong>{evolucao_nr_quantidade_oscs_ultimo_colocado_estado}</strong> e&nbsp;
-                                <strong>{evolucao_nr_quantidade_oscs_ultimo_colocado_municipio}</strong> respectivamente.
+                                {this.renderRankingText(evolucao_nr_colocacao_nacional, evolucao_tx_primeiro_colocado_estado, evolucao_nr_quantidade_oscs_primeiro_colocado_estado, evolucao_tx_primeiro_colocado_municipio, evolucao_nr_quantidade_oscs_primeiro_colocado_municipio, evolucao_tx_ultimo_colocado_estado, evolucao_nr_quantidade_oscs_ultimo_colocado_estado, evolucao_tx_ultimo_colocado_municipio, evolucao_nr_quantidade_oscs_ultimo_colocado_municipio)}
                             </p>
                             <p className="box-chart-font bg-lgt">
                                 <strong>Fonte quantidade OSCs:</strong>  {ft_quantidade_osc} <br/>

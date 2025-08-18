@@ -44,6 +44,7 @@ class Perfil extends React.Component {
       localidade_id: origem
     };
     this.callModal = this.callModal.bind(this);
+    this.renderRankingText = this.renderRankingText.bind(this);
     this.evolucao_anual = this.evolucao_anual.bind(this);
     this.caracteristicas = this.caracteristicas.bind(this);
     this.natureza_juridica = this.natureza_juridica.bind(this);
@@ -201,6 +202,15 @@ class Perfil extends React.Component {
 
   //////////////////////////////////////////MODAL TABELA///////////////////////////////////////////////////
 
+  renderRankingText(colocacao, primeiro_estado, qtd_primeiro_estado, primeiro_municipio, qtd_primeiro_municipio, ultimo_estado, qtd_ultimo_estado, ultimo_municipio, qtd_ultimo_municipio) {
+    const isEstado = this.state.tipo === 'estado';
+    const posicao = colocacao + (colocacao === 1 ? 'ª' : colocacao === 2 ? 'ª' : 'ª');
+    if (isEstado) {
+      return /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, this.state.localidade), " ocupa a ", /*#__PURE__*/React.createElement("strong", null, posicao), " posi\xE7\xE3o em rela\xE7\xE3o \xE0 quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o estado de ", /*#__PURE__*/React.createElement("strong", null, primeiro_estado), ", com ", /*#__PURE__*/React.createElement("strong", null, numberDecimalPtBR(qtd_primeiro_estado, 0)), " OSCs, \xE9 o que possui a maior quantidade, enquanto o estado de ", /*#__PURE__*/React.createElement("strong", null, ultimo_estado), " \xE9 o que possui a menor, com ", /*#__PURE__*/React.createElement("strong", null, numberDecimalPtBR(qtd_ultimo_estado, 0)), " OSCs.");
+    } else {
+      return /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, this.state.localidade), " ocupa a ", /*#__PURE__*/React.createElement("strong", null, posicao), " posi\xE7\xE3o em rela\xE7\xE3o \xE0 quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o munic\xEDpio de ", primeiro_municipio, ", com ", /*#__PURE__*/React.createElement("strong", null, numberDecimalPtBR(qtd_primeiro_municipio, 0)), " OSCs, \xE9 o que possui a maior quantidade, enquanto o munic\xEDpio de ", /*#__PURE__*/React.createElement("strong", null, ultimo_municipio), " \xE9 o que possui a menor, com ", /*#__PURE__*/React.createElement("strong", null, numberDecimalPtBR(qtd_ultimo_municipio, 0)), " OSC", qtd_ultimo_municipio === 1 ? '' : 's', ".");
+    }
+  }
   callModal(type, chart, col) {
     let ft_table = null;
     if (this.state[chart].fontes) {
@@ -672,7 +682,7 @@ class Perfil extends React.Component {
       }
     }, "Quantidade de Projetos"), /*#__PURE__*/React.createElement("h2", null, numberDecimalPtBR(this.state.caracteristicas.nr_quantidade_projetos, 0)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
-    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, this.state.localidade, " \xE9 o\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_colocacao_nacional, "\xBA"), " em rela\xE7\xE3o a quantidade de OSCs no \xE2mbito nacional. Nesse ranking, o estado\xA0 (", evolucao_tx_primeiro_colocado_estado, ", ", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_primeiro_colocado_estado), ") e o munic\xEDpio\xA0 (", evolucao_tx_primeiro_colocado_municipio, ",\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_primeiro_colocado_municipio), " OSCs) s\xE3o os que cont\xEAm mais OSCs. O estado\xA0 (", evolucao_tx_ultimo_colocado_estado, ") e o munic\xEDpio\xA0 (", evolucao_tx_ultimo_colocado_municipio, ") s\xE3o os que cont\xEAm menos OSCs,\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_ultimo_colocado_estado), " e\xA0", /*#__PURE__*/React.createElement("strong", null, evolucao_nr_quantidade_oscs_ultimo_colocado_municipio), " respectivamente."), /*#__PURE__*/React.createElement("p", {
+    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, this.renderRankingText(evolucao_nr_colocacao_nacional, evolucao_tx_primeiro_colocado_estado, evolucao_nr_quantidade_oscs_primeiro_colocado_estado, evolucao_tx_primeiro_colocado_municipio, evolucao_nr_quantidade_oscs_primeiro_colocado_municipio, evolucao_tx_ultimo_colocado_estado, evolucao_nr_quantidade_oscs_ultimo_colocado_estado, evolucao_tx_ultimo_colocado_municipio, evolucao_nr_quantidade_oscs_ultimo_colocado_municipio)), /*#__PURE__*/React.createElement("p", {
       className: "box-chart-font bg-lgt"
     }, /*#__PURE__*/React.createElement("strong", null, "Fonte quantidade OSCs:"), "  ", ft_quantidade_osc, " ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Fonte quantidade trabalhadores:"), " ", ft_quantidade_trabalhadores, " ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Fonte valores de recursos:"), " ", ft_quantidade_recursos, " ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Fonte quantidade projetos:"), " ", ft_quantidade_projetos, " ", /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
       className: "btn btn-outline-primary",
