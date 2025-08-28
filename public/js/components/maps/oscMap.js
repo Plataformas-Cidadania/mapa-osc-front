@@ -882,11 +882,16 @@ class OscMap extends React.Component {
     });
   }
   loadSituacao() {
+    console.log('this.state.origem', this.state.origem, this.state);
+    let localidadeUrl = '';
+    if (this.state.origem > 0) {
+      localidadeUrl = '/localidade/' + this.state.origem;
+    }
     let _this = this;
     this.setState(function () {
       $.ajax({
         method: 'GET',
-        url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral',
+        url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral' + localidadeUrl,
         data: {},
         cache: false,
         success: function (data) {
