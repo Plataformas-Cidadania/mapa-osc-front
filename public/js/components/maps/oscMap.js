@@ -8,7 +8,7 @@ class OscMap extends React.Component {
       processingOscUfs: false,
       processingOscPontos: false,
       processingHeatMap: false,
-      processingList: false,
+      processingList: true,
       processingExportacao: false,
       textoProcessingExportacao: "",
       mapId: props.mapId,
@@ -888,7 +888,9 @@ class OscMap extends React.Component {
       localidadeUrl = '/localidade/' + this.state.origem;
     }
     let _this = this;
-    this.setState(function () {
+    this.setState({
+      processingList: true
+    }, function () {
       $.ajax({
         method: 'GET',
         url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral' + localidadeUrl,
@@ -896,10 +898,15 @@ class OscMap extends React.Component {
         cache: false,
         success: function (data) {
           _this.setState({
-            situacao: data
+            situacao: data,
+            processingList: false
           });
         },
-        error: function (xhr, status, err) {}
+        error: function (xhr, status, err) {
+          _this.setState({
+            processingList: false
+          });
+        }
       });
     });
   }
@@ -2058,16 +2065,43 @@ class OscMap extends React.Component {
     let processingOscPontos = this.state.processingOscPontos;
     let processingHeatMap = this.state.processingHeatMap;
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("style", null, `
-                  .itens {
-                    border: solid 1px #CCCCCC;
-                    padding: 15px;
-                    border-radius: 5px;
-                    transition: background-color 0.3s ease;
+                  .stats-container {
+                    position: relative;
                   }
 
-                  .itens:hover {
-                    background-color: #3A559B;
-                    color: #FFFFFF;
+                  .stat-card {
+                    position: relative;
+                    overflow: visible;
+                  }
+
+                  .custom-tooltip {
+                    animation: fadeIn 0.2s ease-in-out;
+                  }
+
+                  @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(5px); }
+                    to { opacity: 1; transform: translateY(0); }
+                  }
+
+                  .main-stat {
+                    position: relative;
+                    overflow: hidden;
+                  }
+
+                  .main-stat::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                    transition: left 0.5s;
+
+                  }
+
+                  .main-stat:hover::before {
+                    left: 100%;
                   }
 
                 `), /*#__PURE__*/React.createElement("div", {
@@ -2194,31 +2228,156 @@ class OscMap extends React.Component {
       "data-toggle": "modal",
       "data-target": "#modalExportar2"
     }, "Dicion\xE1rio de dados"))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-      className: "row"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "col  text-center"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "itens"
-    }, /*#__PURE__*/React.createElement("p", null, "Quantidade de OSCs"), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("strong", null, this.state.totalOscList)))), Array.isArray(this.state.situacao) && this.state.situacao.map((item, key) => /*#__PURE__*/React.createElement("div", {
-      className: "col text-center",
-      key: 'situacao' + key
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "itens"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "tooltips float-right"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fa fa-info-circle tx-pri"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "tooltiptext",
+      className: "stats-container",
       style: {
-        padding: 15,
-        minWidth: 300,
-        content: "none",
-        top: -150,
-        left: -100,
-        border: 'solid 5px #FFFFFF'
+        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        borderRadius: '12px',
+        padding: '20px',
+        marginBottom: '20px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.08)'
       }
-    }, item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[2]?.replace(/^"|"$/g, '')?.trim())), /*#__PURE__*/React.createElement("p", null, "OSCs ", item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]), /*#__PURE__*/React.createElement("h2", null, /*#__PURE__*/React.createElement("strong", null, item.total))))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "row align-items-stretch"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-3"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "main-stat",
+      style: {
+        background: 'linear-gradient(135deg, #3A559B 0%, #2a4082 100%)',
+        borderRadius: '10px',
+        padding: '20px',
+        color: 'white',
+        textAlign: 'center',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: '13px',
+        opacity: '0.9',
+        marginBottom: '8px'
+      }
+    }, "Total de OSCs"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: '2.2rem',
+        fontWeight: 'bold',
+        lineHeight: '1'
+      }
+    }, this.state.totalOscList || '0'))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-9"
+    }, this.state.processingList ? /*#__PURE__*/React.createElement("div", {
+      className: "loading-stats",
+      style: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: 'center'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "spinner-border",
+      role: "status",
+      style: {
+        width: '1.5rem',
+        height: '1.5rem',
+        marginBottom: '8px',
+        color: '#3A559B'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: '#6c757d',
+        fontSize: '13px'
+      }
+    }, "Carregando estat\xEDsticas..."))) : /*#__PURE__*/React.createElement("div", {
+      className: "row h-100"
+    }, Array.isArray(this.state.situacao) && this.state.situacao.map((item, key) => {
+      const situacaoText = item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1] || 'N/A';
+      const tooltipText = item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[2]?.replace(/^"|"$/g, '')?.trim() || '';
+      return /*#__PURE__*/React.createElement("div", {
+        className: `col-md-${this.state.situacao.length <= 2 ? '6' : this.state.situacao.length === 3 ? '4' : '3'} mb-2`,
+        key: 'situacao' + key
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "stat-card",
+        style: {
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+          borderRadius: '8px',
+          padding: '15px',
+          height: '100%',
+          border: '1px solid #e9ecef',
+          transition: 'all 0.2s ease',
+          position: 'relative',
+          cursor: 'pointer'
+        },
+        onMouseEnter: e => {
+          e.currentTarget.style.transform = 'translateY(-1px)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(58, 85, 155, 0.15)';
+        },
+        onMouseLeave: e => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = 'none';
+        }
+      }, tooltipText && /*#__PURE__*/React.createElement("div", {
+        className: "info-icon",
+        style: {
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          cursor: 'help'
+        },
+        onMouseEnter: e => {
+          const tooltip = document.createElement('div');
+          tooltip.className = 'custom-tooltip';
+          tooltip.innerHTML = tooltipText;
+          tooltip.style.cssText = `
+                                                                                     position: absolute;
+                                                                                     background: linear-gradient(135deg, #3A559B 0%, #2a4082 100%);
+                                                                                     color: white;
+                                                                                     padding: 8px 12px;
+                                                                                     border-radius: 6px;
+                                                                                     font-size: 12px;
+                                                                                     width: 150px;
+                                                                                     z-index: 1000;
+                                                                                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                                                                                     top: -40px;
+                                                                                     right: 0;
+                                                                                     white-space: normal;
+                                                                                     line-height: 1.3;
+                                                                                 `;
+          e.target.appendChild(tooltip);
+        },
+        onMouseLeave: e => {
+          const tooltip = e.target.querySelector('.custom-tooltip');
+          if (tooltip) tooltip.remove();
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fa fa-info-circle",
+        style: {
+          color: '#3A559B',
+          fontSize: '12px',
+          opacity: '0.7'
+        }
+      })), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: '11px',
+          color: '#3A559B',
+          marginBottom: '6px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          fontWeight: '600'
+        }
+      }, "OSCs ", situacaoText), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: '1.6rem',
+          fontWeight: 'bold',
+          color: '#2c3e50'
+        }
+      }, item.total || '0')));
+    })))))), origem != 0 && origem != 'busca-avancada' ? /*#__PURE__*/React.createElement("ul", {
       className: "nav nav-pills mb-3 text-center mt-2",
       id: "pills-tab",
       role: "tablist",

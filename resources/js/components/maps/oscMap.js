@@ -8,7 +8,7 @@ class OscMap extends React.Component{
             processingOscUfs: false,
             processingOscPontos: false,
             processingHeatMap: false,
-            processingList: false,
+            processingList: true,
             processingExportacao: false,
             textoProcessingExportacao: "",
             mapId: props.mapId,
@@ -946,7 +946,7 @@ class OscMap extends React.Component{
         }
 
         let _this = this;
-        this.setState(function (){
+        this.setState({processingList: true}, function (){
             $.ajax({
                 method:'GET',
                 url: getBaseUrl2+'osc/quantitativo/situacao-cadastral'+localidadeUrl,
@@ -954,10 +954,10 @@ class OscMap extends React.Component{
                 },
                 cache: false,
                 success: function(data) {
-                    _this.setState({situacao: data});
+                    _this.setState({situacao: data, processingList: false});
                 },
                 error: function(xhr, status, err) {
-
+                    _this.setState({processingList: false});
                 }
 
             });
@@ -2106,16 +2106,43 @@ class OscMap extends React.Component{
         return(
             <div>
                 <style>{`
-                  .itens {
-                    border: solid 1px #CCCCCC;
-                    padding: 15px;
-                    border-radius: 5px;
-                    transition: background-color 0.3s ease;
+                  .stats-container {
+                    position: relative;
                   }
 
-                  .itens:hover {
-                    background-color: #3A559B;
-                    color: #FFFFFF;
+                  .stat-card {
+                    position: relative;
+                    overflow: visible;
+                  }
+
+                  .custom-tooltip {
+                    animation: fadeIn 0.2s ease-in-out;
+                  }
+
+                  @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(5px); }
+                    to { opacity: 1; transform: translateY(0); }
+                  }
+
+                  .main-stat {
+                    position: relative;
+                    overflow: hidden;
+                  }
+
+                  .main-stat::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                    transition: left 0.5s;
+
+                  }
+
+                  .main-stat:hover::before {
+                    left: 100%;
                   }
 
                 `}</style>
@@ -2236,37 +2263,83 @@ class OscMap extends React.Component{
                             <br/>
 
 
-                            <div className="row">
-                                <div className="col  text-center">
-                                    <div className="itens">
-                                        <p>Quantidade de OSCs</p>
-                                        <h1><strong>{this.state.totalOscList}</strong></h1>
-                                    </div>
-
-                                </div>
-                                {Array.isArray(this.state.situacao) &&
-                                    this.state.situacao.map((item, key) => (
-                                        <div className="col text-center" key={'situacao'+key}>
-                                            <div className="itens">
-
-                                                <div className="tooltips float-right">
-                                                    <i className="fa fa-info-circle tx-pri"/>
-                                                    <div className="tooltiptext" style={{padding: 15, minWidth: 300, content: "none", top: -150, left: -100, border: 'solid 5px #FFFFFF'}}>{item.dc_situacao_cadastral
-                                                        ?.replace('(', '')
-                                                        ?.replace(')', '')
-                                                        ?.split(',')[2]
-                                                        ?.replace(/^"|"$/g, '')
-                                                        ?.trim()
-                                                    }</div>
-                                                </div>
-
-                                                <p>OSCs {item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1]}</p>
-                                                <h2><strong>{item.total}</strong></h2>
-                                            </div>
+                            <div className="stats-container" style={{background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)', borderRadius: '12px', padding: '20px', marginBottom: '20px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)'}}>
+                                <div className="row align-items-stretch">
+                                    <div className="col-md-3">
+                                        <div className="main-stat" style={{background: 'linear-gradient(135deg, #3A559B 0%, #2a4082 100%)', borderRadius: '10px', padding: '20px', color: 'white', textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                            <div style={{fontSize: '13px', opacity: '0.9', marginBottom: '8px'}}>Total de OSCs</div>
+                                            <div style={{fontSize: '2.2rem', fontWeight: 'bold', lineHeight: '1'}}>{this.state.totalOscList || '0'}</div>
                                         </div>
+                                    </div>
+                                    <div className="col-md-9">
+                                        {this.state.processingList ? (
+                                            <div className="loading-stats" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100px'}}>
+                                                <div style={{textAlign: 'center'}}>
+                                                    <div className="spinner-border" role="status" style={{width: '1.5rem', height: '1.5rem', marginBottom: '8px', color: '#3A559B'}}></div>
+                                                    <div style={{color: '#6c757d', fontSize: '13px'}}>Carregando estatísticas...</div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="row h-100">
+                                                {Array.isArray(this.state.situacao) &&
+                                                    this.state.situacao.map((item, key) => {
+                                                        const situacaoText = item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[1] || 'N/A';
+                                                        const tooltipText = item.dc_situacao_cadastral?.replace('(', '')?.replace(')', '')?.split(',')[2]?.replace(/^"|"$/g, '')?.trim() || '';
 
-                                    ))
-                                }
+                                                        return (
+                                                            <div className={`col-md-${this.state.situacao.length <= 2 ? '6' : this.state.situacao.length === 3 ? '4' : '3'} mb-2`} key={'situacao'+key}>
+                                                                <div className="stat-card" style={{background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)', borderRadius: '8px', padding: '15px', height: '100%', border: '1px solid #e9ecef', transition: 'all 0.2s ease', position: 'relative', cursor: 'pointer'}}
+                                                                     onMouseEnter={(e) => {
+                                                                         e.currentTarget.style.transform = 'translateY(-1px)';
+                                                                         e.currentTarget.style.boxShadow = '0 4px 12px rgba(58, 85, 155, 0.15)';
+                                                                     }}
+                                                                     onMouseLeave={(e) => {
+                                                                         e.currentTarget.style.transform = 'translateY(0)';
+                                                                         e.currentTarget.style.boxShadow = 'none';
+                                                                     }}>
+
+                                                                    {tooltipText && (
+                                                                        <div className="info-icon" style={{position: 'absolute', top: '8px', right: '8px', cursor: 'help'}}
+                                                                             onMouseEnter={(e) => {
+                                                                                 const tooltip = document.createElement('div');
+                                                                                 tooltip.className = 'custom-tooltip';
+                                                                                 tooltip.innerHTML = tooltipText;
+                                                                                 tooltip.style.cssText = `
+                                                                                     position: absolute;
+                                                                                     background: linear-gradient(135deg, #3A559B 0%, #2a4082 100%);
+                                                                                     color: white;
+                                                                                     padding: 8px 12px;
+                                                                                     border-radius: 6px;
+                                                                                     font-size: 12px;
+                                                                                     width: 150px;
+                                                                                     z-index: 1000;
+                                                                                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                                                                                     top: -40px;
+                                                                                     right: 0;
+                                                                                     white-space: normal;
+                                                                                     line-height: 1.3;
+                                                                                 `;
+                                                                                 e.target.appendChild(tooltip);
+                                                                             }}
+                                                                             onMouseLeave={(e) => {
+                                                                                 const tooltip = e.target.querySelector('.custom-tooltip');
+                                                                                 if (tooltip) tooltip.remove();
+                                                                             }}>
+                                                                            <i className="fa fa-info-circle" style={{color: '#3A559B', fontSize: '12px', opacity: '0.7'}}></i>
+                                                                        </div>
+                                                                    )}
+
+                                                                    <div style={{fontSize: '11px', color: '#3A559B', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '600'}}>OSCs {situacaoText}</div>
+                                                                    <div style={{fontSize: '1.6rem', fontWeight: 'bold', color: '#2c3e50'}}>{item.total || '0'}</div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })
+                                                }
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
 
 
