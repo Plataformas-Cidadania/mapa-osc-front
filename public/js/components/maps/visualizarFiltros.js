@@ -74,6 +74,27 @@ class VisualizarFiltros extends React.Component {
         //txt += "<b><i>Município:</i></b> " + dadosgerais.tx_nome_municipio + ", ";
       }
 
+      if (dadosgerais.cd_situacao_cadastral) {
+        $.ajax({
+          url: 'https://mapaosc.ipea.gov.br/api/api/situacao_cadastral',
+          type: 'GET',
+          async: false,
+          dataType: 'json',
+          error: function (e) {
+            console.log("ERRO no AJAX :" + e);
+          },
+          success: function (data) {
+            if (data.length > 0) {
+              let situacao = data.find(function (item) {
+                return item.cd_situacao_cadastral === parseInt(dadosgerais.cd_situacao_cadastral);
+              });
+              if (situacao) {
+                txt.push( /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("b", null, /*#__PURE__*/React.createElement("i", null, " Situa\xE7\xE3o Cadastral:")), " ", situacao.tx_nome_situacao_cadastral, ", "));
+              }
+            }
+          }
+        });
+      }
       let txt_nj = [];
       txt_nj.push( /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("b", null, /*#__PURE__*/React.createElement("i", null, "Natureza Jur\xEDdica: "))));
       if (dadosgerais.naturezaJuridica_associacaoPrivada) {

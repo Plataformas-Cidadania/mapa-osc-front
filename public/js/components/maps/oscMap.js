@@ -38,6 +38,7 @@ class OscMap extends React.Component {
         'tx_nome_uf': 'UF',
         'cd_identificador_osc': 'CNPJ',
         'cd_situacao_imovel_osc': '',
+        'cd_situacao_cadastral': '',
         'anoFundacaoMIN': 'Ano fundação maior que',
         'anoFundacaoMAX': 'menor que',
         'tx_nome_municipio': 'Municipio',
@@ -1169,15 +1170,19 @@ class OscMap extends React.Component {
           busca: this.props.strJson
         },
         cache: false,
+        beforeSend: function () {
+          console.log('🚀 Enviando busca avançada:', this.props.strJson);
+        }.bind(this),
         success: function (data) {
           if (!data) {
             $('#modalAvancada').modal('show');
-            console.log('sem resultados');
+            console.log('❌ Sem resultados');
             this.setState({
               processingOscPontos: false
             });
             return;
           }
+          console.log('✅ Busca retornou:', data?.length || 'dados', 'resultados');
           //CONVERSÃO DA ESTRUTURA DO ARRAY NO FRONT////
           let data2 = [];
           data = JSON.parse(data);

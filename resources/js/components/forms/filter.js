@@ -15,6 +15,7 @@ class Filter extends React.Component{
                 'anoFundacaoMIN',
                 'anoFundacaoMAX',
                 'tx_nome_municipio',
+                'cd_situacao_cadastral',
                 'cd_objetivo_osc',
                 'cd_meta_osc',
                 'cd_regiao',
@@ -122,6 +123,7 @@ class Filter extends React.Component{
             dataParticipacoes:[],
             dataConferencias:[],
             dataFormaParticipacoes:[],
+            dataSituacaoCadastral:[],
         };
 
         this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
@@ -206,7 +208,7 @@ class Filter extends React.Component{
         this.setValorRecebido = this.setValorRecebido.bind(this);
 
         this.objetivos = this.objetivos.bind(this);
-
+        this.situacaoCadastral = this.situacaoCadastral.bind(this);
 
         this.conselhos = this.conselhos.bind(this);
         this.participacoes = this.participacoes.bind(this);
@@ -235,6 +237,7 @@ class Filter extends React.Component{
 
     componentDidMount(){
         this.objetivos();
+        this.situacaoCadastral();
         this.conselhos();
         this.participacoes();
         this.conferencias();
@@ -271,7 +274,24 @@ class Filter extends React.Component{
         }
 
         if(type==='input' || type==='search' || type==='range'){
-            json.avancado.dadosGerais[name] = value;
+            if(name === 'cd_situacao_cadastral') {
+                if(value === '0' || value === '' || !value) {
+                    // Remove o campo se o valor for 0, vazio ou falsy (opção padrão)
+                    delete json.avancado.dadosGerais[name];
+                } else {
+                    // Converte para inteiro para garantir o tipo correto
+                    json.avancado.dadosGerais[name] = parseInt(value);
+                }
+            } else if(value && value !== '' && value !== '0') {
+                // Para outros campos, só adiciona se tiver valor válido
+                json.avancado.dadosGerais[name] = value;
+            } else {
+                // Remove campos vazios
+                delete json.avancado.dadosGerais[name];
+            }
+            if(name === 'cd_situacao_cadastral') {
+                console.log('📝 JSON final com situacao_cadastral:', JSON.stringify(json.avancado.dadosGerais));
+            }
             this.setState({json: json});
             return;
         }
@@ -523,7 +543,9 @@ class Filter extends React.Component{
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        //console.log(name);
+        if(name === 'cd_situacao_cadastral') {
+            console.log('🔍 Filtro situacao_cadastral selecionado:', value);
+        }
         if(this.state.camposDadosGerais.includes(name)){
             this.setJsonDadosGerais(name, value, 'input');
         }
@@ -1149,6 +1171,21 @@ class Filter extends React.Component{
         });
     }
 
+    situacaoCadastral(){
+        $.ajax({
+            method: 'GET',
+            url: 'https://mapaosc.ipea.gov.br/api/api/situacao_cadastral',
+            cache: false,
+            success: function(data){
+                console.log('✅ Situação Cadastral carregada:', data?.length, 'opções');
+                this.setState({dataSituacaoCadastral: data});
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.log('❌ Erro situação cadastral:', err);
+            }.bind(this)
+        });
+    }
+
 
     objetivosMetas(id){
         this.setState({loadingList: true});
@@ -1761,6 +1798,18 @@ class Filter extends React.Component{
                 );
             });
         }
+        
+        let situacaoCadastral = null;
+        if(this.state.dataSituacaoCadastral){
+            console.log('Renderizando situação cadastral:', this.state.dataSituacaoCadastral);
+            situacaoCadastral = this.state.dataSituacaoCadastral.map(function (item) {
+                return (
+                    <option value={item.cd_situacao_cadastral} key={"situacao_"+item.cd_situacao_cadastral}>{item.tx_nome_situacao_cadastral}</option>
+                );
+            });
+        } else {
+            console.log('dataSituacaoCadastral não carregado ainda');
+        }
         ////////////////////////////////////////////////////
 
 
@@ -1982,6 +2031,18 @@ class Filter extends React.Component{
                                                 <br/>
                                             </div>
 
+                                        </div>
+
+                                        <div className="col-md-3">
+                                            <div className="label-float">
+                                                <select className="custom-select" name="cd_situacao_cadastral"
+                                                        defaultValue={0} onChange={this.handleInputChange}>
+                                                    <option value="0">Situação Cadastral</option>
+                                                    {situacaoCadastral}
+                                                </select>
+                                                <label htmlFor="name"/>
+                                                <div className="label-box-info-off"/>
+                                            </div>
                                         </div>
 
                                         <div className="col-md-12">

@@ -5,7 +5,7 @@ class Filter extends React.Component {
       json: {
         avancado: {}
       },
-      camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
+      camposDadosGerais: ['tx_razao_social_osc', 'tx_nome_regiao', 'tx_nome_fantasia_osc', 'tx_nome_uf', 'cd_identificador_osc', 'cd_situacao_imovel_osc', 'anoFundacaoMIN', 'anoFundacaoMAX', 'tx_nome_municipio', 'cd_situacao_cadastral', 'cd_objetivo_osc', 'cd_meta_osc', 'cd_regiao', 'cd_uf', 'cd_municipio', 'naturezaJuridica_associacaoPrivada', 'naturezaJuridica_fundacaoPrivada', 'naturezaJuridica_organizacaoReligiosa', 'naturezaJuridica_organizacaoSocial', 'naturezaJuridica_outra'],
       camposRelacoesTrabalhoGovernanca: ["tx_nome_dirigente", "tx_cargo_dirigente", "tx_nome_conselheiro", "totalTrabalhadoresMIN", "totalTrabalhadoresMAX", "totalEmpregadosMIN", "totalEmpregadosMAX", "trabalhadoresDeficienciaMIN", "trabalhadoresDeficienciaMAX", "trabalhadoresVoluntariosMIN", "trabalhadoresVoluntariosMAX"],
       camposEspacosParticipacaoSocial: ["cd_conselho", "dt_data_inicio_conselho", "tx_nome_representante_conselho", "cd_tipo_participacao", "dt_data_fim_conselho", "cd_conferencia", "cd_forma_participacao_conferencia", "anoRealizacaoConferenciaMIN", "anoRealizacaoConferenciaMAX"],
       camposProjetos: ["tx_nome_projeto", "cd_status_projeto", "dt_data_inicio_projeto", "dt_data_fim_projeto", "cd_abrangencia_projeto", "cd_zona_atuacao_projeto", "cd_origem_fonte_recursos_projeto", "tx_nome_financiador", "tx_nome_regiao_localizacao_projeto", "tx_nome_publico_beneficiado", "tx_nome_osc_parceira_projeto", "totalBeneficiariosMIN", "totalBeneficiariosMAX", "cd_objetivo_projeto", "valorTotalMIN", "valorTotalMAX", "cd_meta_projeto", "valorRecebidoMIN", "valorRecebidoMAX"],
@@ -61,7 +61,8 @@ class Filter extends React.Component {
       dataConselhos: [],
       dataParticipacoes: [],
       dataConferencias: [],
-      dataFormaParticipacoes: []
+      dataFormaParticipacoes: [],
+      dataSituacaoCadastral: []
     };
     this.clickSearchRegiao = this.clickSearchRegiao.bind(this);
     this.handleSearchRegiao = this.handleSearchRegiao.bind(this);
@@ -130,6 +131,7 @@ class Filter extends React.Component {
     this.setValorTotal = this.setValorTotal.bind(this);
     this.setValorRecebido = this.setValorRecebido.bind(this);
     this.objetivos = this.objetivos.bind(this);
+    this.situacaoCadastral = this.situacaoCadastral.bind(this);
     this.conselhos = this.conselhos.bind(this);
     this.participacoes = this.participacoes.bind(this);
     this.conferencias = this.conferencias.bind(this);
@@ -151,6 +153,7 @@ class Filter extends React.Component {
   }
   componentDidMount() {
     this.objetivos();
+    this.situacaoCadastral();
     this.conselhos();
     this.participacoes();
     this.conferencias();
@@ -178,7 +181,24 @@ class Filter extends React.Component {
       json.avancado.dadosGerais = {};
     }
     if (type === 'input' || type === 'search' || type === 'range') {
-      json.avancado.dadosGerais[name] = value;
+      if (name === 'cd_situacao_cadastral') {
+        if (value === '0' || value === '' || !value) {
+          // Remove o campo se o valor for 0, vazio ou falsy (opção padrão)
+          delete json.avancado.dadosGerais[name];
+        } else {
+          // Converte para inteiro para garantir o tipo correto
+          json.avancado.dadosGerais[name] = parseInt(value);
+        }
+      } else if (value && value !== '' && value !== '0') {
+        // Para outros campos, só adiciona se tiver valor válido
+        json.avancado.dadosGerais[name] = value;
+      } else {
+        // Remove campos vazios
+        delete json.avancado.dadosGerais[name];
+      }
+      if (name === 'cd_situacao_cadastral') {
+        console.log('📝 JSON final com situacao_cadastral:', JSON.stringify(json.avancado.dadosGerais));
+      }
       this.setState({
         json: json
       });
@@ -443,8 +463,9 @@ class Filter extends React.Component {
     const target = event.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
-    //console.log(name);
+    if (name === 'cd_situacao_cadastral') {
+      console.log('🔍 Filtro situacao_cadastral selecionado:', value);
+    }
     if (this.state.camposDadosGerais.includes(name)) {
       this.setJsonDadosGerais(name, value, 'input');
     }
@@ -1192,6 +1213,22 @@ class Filter extends React.Component {
       }.bind(this)
     });
   }
+  situacaoCadastral() {
+    $.ajax({
+      method: 'GET',
+      url: 'https://mapaosc.ipea.gov.br/api/api/situacao_cadastral',
+      cache: false,
+      success: function (data) {
+        console.log('✅ Situação Cadastral carregada:', data?.length, 'opções');
+        this.setState({
+          dataSituacaoCadastral: data
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('❌ Erro situação cadastral:', err);
+      }.bind(this)
+    });
+  }
   objetivosMetas(id) {
     this.setState({
       loadingList: true
@@ -1827,6 +1864,18 @@ class Filter extends React.Component {
         }, item.tx_nome_abrangencia_projeto);
       });
     }
+    let situacaoCadastral = null;
+    if (this.state.dataSituacaoCadastral) {
+      console.log('Renderizando situação cadastral:', this.state.dataSituacaoCadastral);
+      situacaoCadastral = this.state.dataSituacaoCadastral.map(function (item) {
+        return /*#__PURE__*/React.createElement("option", {
+          value: item.cd_situacao_cadastral,
+          key: "situacao_" + item.cd_situacao_cadastral
+        }, item.tx_nome_situacao_cadastral);
+      });
+    } else {
+      console.log('dataSituacaoCadastral não carregado ainda');
+    }
     ////////////////////////////////////////////////////
 
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -2135,6 +2184,21 @@ class Filter extends React.Component {
         display: (this.state.searchMunicipio || this.state.listMunicipio) && !this.state.filters.municipio ? '' : 'none'
       }
     }, municipios)), /*#__PURE__*/React.createElement("br", null))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-3"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("select", {
+      className: "custom-select",
+      name: "cd_situacao_cadastral",
+      defaultValue: 0,
+      onChange: this.handleInputChange
+    }, /*#__PURE__*/React.createElement("option", {
+      value: "0"
+    }, "Situa\xE7\xE3o Cadastral"), situacaoCadastral), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "name"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Natureza Jur\xEDdica:"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "custom-control custom-checkbox "
