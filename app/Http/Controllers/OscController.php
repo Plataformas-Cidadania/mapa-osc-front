@@ -32,6 +32,11 @@ class OscController extends Controller{
         $osc = curlOSC($id);
         $situacao = curlSituacao();
 
+        // Verificar se os dados da OSC foram obtidos corretamente
+        if (!$osc || !is_object($osc)) {
+            abort(404, 'OSC não encontrada');
+        }
+
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
@@ -63,11 +68,16 @@ class OscController extends Controller{
 
         if (is_array($situacao) || $situacao instanceof Traversable) {
             foreach ($situacao as $item) {
-                $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
+                if (is_object($item) && isset($item->cd_situacao_cadastral) && isset($item->tx_nome_situacao_cadastral)) {
+                    $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
+                }
             }
         }
 
-        $valorSituacao = $situacaoArray[$osc->cd_situacao_cadastral] ?? null; //cd_stituacao_cadastral
+        $valorSituacao = null;
+        if (isset($osc->cd_situacao_cadastral) && isset($situacaoArray[$osc->cd_situacao_cadastral])) {
+            $valorSituacao = $situacaoArray[$osc->cd_situacao_cadastral];
+        }
 
         //return $valorSituacao;
 
@@ -305,6 +315,11 @@ class OscController extends Controller{
         //Log::info(curl_error($ch));
         curl_close( $ch );
         $dataJSON = json_decode($data);
+
+        // Verificar se os dados foram obtidos corretamente
+        if (!$dataJSON || !is_object($dataJSON)) {
+            abort(404, 'OSC não encontrada');
+        }
 
         return view($this->module.'.declaration', ['osc' => $dataJSON, 'id_osc' => $id_osc]);
     }

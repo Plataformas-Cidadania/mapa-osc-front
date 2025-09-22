@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Declaração - {{$osc->tx_razao_social_osc}}</title>
+    <title>Declaração - {{$osc->tx_razao_social_osc ?? 'OSC'}}</title>
 </head>
 <body>
 <div id="printDivCertificate" class="conteudoCertificate" style="padding-left: 0;">
@@ -16,7 +16,7 @@
                 <div>
                     <?php
                     $logo = "img/sem-imagem.png";
-                    if(substr($osc->im_logo, 0, 10)=='data:image'){
+                    if(isset($osc->im_logo) && substr($osc->im_logo, 0, 10)=='data:image'){
                         $logo =  $osc->im_logo;
                     }else{
                         $api = env('APP_API_ROUTE');
@@ -40,7 +40,7 @@
                     }*/
                     ?>
                     @if($logo!=="")
-                        <img src="{{$logo}}" alt="{{$osc->tx_razao_social_osc}}" title="{{$osc->tx_razao_social_osc}}" width="120" style="position: absolute; top: -130px; left: 600px">
+                        <img src="{{$logo}}" alt="{{$osc->tx_razao_social_osc ?? 'OSC'}}" title="{{$osc->tx_razao_social_osc ?? 'OSC'}}" width="120" style="position: absolute; top: -130px; left: 600px">
                     @endif
 
 
@@ -53,10 +53,10 @@
                 <br>
                 <h2 id="title">Declaração</h2>
                 <p>
-                    Declaramos que {{$osc->tx_razao_social_osc}} (CNPJ {{$osc->cd_identificador_osc}}) está cadastrada
+                    Declaramos que {{$osc->tx_razao_social_osc ?? 'OSC'}} (CNPJ {{$osc->cd_identificador_osc ?? 'N/A'}}) está cadastrada
                     no Mapa das Organizações da Sociedade Civil até a data de {{date('d/m/Y')}}.
                 </p>
-                <div>{!! QrCode::size(250)->generate(env('APP_URL').'detalhar/'.$id_osc.'/'.clean($osc->tx_razao_social_osc)); !!}</div>
+                <div>{!! QrCode::size(250)->generate(env('APP_URL').'detalhar/'.$id_osc.'/'.clean($osc->tx_razao_social_osc ?? 'osc')); !!}</div>
                 <br>
                 <div class="text-center footer-print">mapaosc.ipea.gov.br</div>
             </div>

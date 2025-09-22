@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // Tratar erros 404 especificamente para rotas de OSC
+        if ($this->isHttpException($exception) && $exception->getStatusCode() == 404) {
+            if ($request->is('osc/*') || $request->is('detalhar/*') || $request->is('declaracao/*')) {
+                return response()->view('errors.404', [], 404);
+            }
+        }
+        
         return parent::render($request, $exception);
     }
 }

@@ -358,10 +358,24 @@ if ( ! function_exists('curl') ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $data = curl_exec($ch);
         $error = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        
+        if ($error || $httpCode !== 200 || !$data) {
+            \Illuminate\Support\Facades\Log::error("Erro ao buscar {$string} para OSC {$id}: {$error} - HTTP {$httpCode}");
+            return null;
+        }
+        
         $data = json_decode($data);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            \Illuminate\Support\Facades\Log::error("Erro ao decodificar JSON {$string} da OSC {$id}: " . json_last_error_msg());
+            return null;
+        }
 
         return $data;
     }
@@ -379,10 +393,24 @@ if ( ! function_exists('curlOSC') ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $data = curl_exec($ch);
         $error = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        
+        if ($error || $httpCode !== 200 || !$data) {
+            \Illuminate\Support\Facades\Log::error("Erro ao buscar OSC {$id}: {$error} - HTTP {$httpCode}");
+            return null;
+        }
+        
         $data = json_decode($data);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            \Illuminate\Support\Facades\Log::error("Erro ao decodificar JSON da OSC {$id}: " . json_last_error_msg());
+            return null;
+        }
 
         return $data;
     }
