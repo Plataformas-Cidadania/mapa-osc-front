@@ -8,6 +8,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Traversable;
 
 class OscController extends Controller{
 
@@ -28,46 +29,15 @@ class OscController extends Controller{
     }
 
     public function details($id){
-
-        $osc = curlOSC($id);
-        $situacao = curlSituacao();
-
-        // Verificar se os dados da OSC foram obtidos corretamente
-        if (!$osc || !is_object($osc)) {
+        $results = $this->makeParallelRequests($id);
+        
+        if (!$results['osc'] || !is_object($results['osc'])) {
             abort(404, 'OSC não encontrada');
         }
 
-        $cabecalho = curl('cabecalho', $id);
-        $dados_gerais = curl('dados_gerais', $id);
-        $descricao = curl('descricao', $id);
-
-        $certificacoes = curlList('certificados', $id);
-        $area_atuacao = curlList('areas_atuacao', $id);
-        $area_atuacao_rep = curlList('areas_atuacao_rep', $id);
-        $projetos = curlList('projetos', $id);
-
-        $objetivos_osc = curlList('objetivos', $id);
-
-        $logData = json_encode($cabecalho);
-
-        $governancas = curlListParametros('rel_trabalho_e_governanca', $id, 'governanca');
-        $conselhos_fiscais = curlListParametros('rel_trabalho_e_governanca', $id, 'conselho_fiscal');
-        $quadros_societarios = curlListParametros('quadro-societario-por-osc', $id, '');
-
-        $relacoes_trabalho_governanca = curlListParametros('rel_trabalho_e_governanca', $id, 'relacoes_trabalho');
-
-        $participacao_social_conselhos = curlListParametros('participacao_social', $id, 'conselhos_politicas_publicas');
-        $participacao_social_conferencia = curlListParametros('participacao_social', $id, 'conferencias_politicas_publicas');
-        $participacao_social_outros = curlListParametros('participacao_social', $id, 'outros_espacos_participacao_social');
-
-        $recursos = curlList('anos_recursos', $id);
-
         $situacaoArray = [];
-
-        //return $situacao;
-
-        if (is_array($situacao) || $situacao instanceof Traversable) {
-            foreach ($situacao as $item) {
+        if (is_array($results['situacao']) || $results['situacao'] instanceof \Traversable) {
+            foreach ($results['situacao'] as $item) {
                 if (is_object($item) && isset($item->cd_situacao_cadastral) && isset($item->tx_nome_situacao_cadastral)) {
                     $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
                 }
@@ -75,38 +45,120 @@ class OscController extends Controller{
         }
 
         $valorSituacao = null;
-        if (isset($osc->cd_situacao_cadastral) && isset($situacaoArray[$osc->cd_situacao_cadastral])) {
-            $valorSituacao = $situacaoArray[$osc->cd_situacao_cadastral];
+        if (isset($results['osc']->cd_situacao_cadastral) && isset($situacaoArray[$results['osc']->cd_situacao_cadastral])) {
+            $valorSituacao = $situacaoArray[$results['osc']->cd_situacao_cadastral];
         }
-
-        //return $valorSituacao;
 
         return view($this->module.'.detail', [
             'id_osc' => $id,
             'stituacao_cadastral' => $valorSituacao,
-            'situacao' => $situacao,
-            'osc' => $osc,
-            'cabecalho' => $cabecalho,
-            'dados_gerais' => $dados_gerais,
-            'descricao' => $descricao,
-            'certificacoes' => $certificacoes,
-
-            'area_atuacao' => $area_atuacao,
-            'area_atuacao_rep' => $area_atuacao_rep,
-
-            'governancas' => $governancas,
-            'conselhos_fiscais' => $conselhos_fiscais,
-            'quadros_societarios' => $quadros_societarios,
-            'relacoes_trabalho_governanca' => $relacoes_trabalho_governanca,
-
-            'participacao_social_conselhos' => $participacao_social_conselhos,
-            'participacao_social_conferencia' => $participacao_social_conferencia,
-            'participacao_social_outros' => $participacao_social_outros,
-
-            'recursos' => $recursos,
-            'projetos' => $projetos,
-            'objetivos_osc' => $objetivos_osc,
+            'situacao' => $results['situacao'],
+            'osc' => $results['osc'],
+            'cabecalho' => $results['cabecalho'],
+            'dados_gerais' => $results['dados_gerais'],
+            'descricao' => $results['descricao'],
+            'certificacoes' => $results['certificacoes'],
+            'area_atuacao' => $results['area_atuacao'],
+            'area_atuacao_rep' => $results['area_atuacao_rep'],
+            'governancas' => $results['governancas'],
+            'conselhos_fiscais' => $results['conselhos_fiscais'],
+            'quadros_societarios' => $results['quadros_societarios'],
+            'relacoes_trabalho_governanca' => $results['relacoes_trabalho_governanca'],
+            'participacao_social_conselhos' => $results['participacao_social_conselhos'],
+            'participacao_social_conferencia' => $results['participacao_social_conferencia'],
+            'participacao_social_outros' => $results['participacao_social_outros'],
+            'recursos' => $results['recursos'],
+            'projetos' => $results['projetos'],
+            'objetivos_osc' => $results['objetivos_osc'],
         ]);
+    }
+
+    private function makeParallelRequests($id) {
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $urls = [
+            'osc' => $api."osc/{$id}",
+            'situacao' => $api."situacao_cadastral",
+            'cabecalho' => $api."osc/cabecalho/{$id}",
+            'dados_gerais' => $api."osc/dados_gerais/{$id}",
+            'descricao' => $api."osc/descricao/{$id}",
+            'certificacoes' => $api."osc/certificados/{$id}",
+            'area_atuacao' => $api."osc/areas_atuacao/{$id}",
+            'area_atuacao_rep' => $api."osc/areas_atuacao_rep/{$id}",
+            'projetos' => $api."osc/projetos/{$id}",
+            'objetivos_osc' => $api."osc/objetivos/{$id}",
+            'rel_trabalho_governanca' => $api."osc/rel_trabalho_e_governanca/{$id}",
+            'quadros_societarios' => $api."osc/quadro-societario-por-osc/{$id}",
+            'participacao_social' => $api."osc/participacao_social/{$id}",
+            'recursos' => $api."osc/anos_recursos/{$id}",
+        ];
+
+        $multiHandle = curl_multi_init();
+        $curlHandles = [];
+        $results = [];
+
+        foreach ($urls as $key => $url) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+            
+            curl_multi_add_handle($multiHandle, $ch);
+            $curlHandles[$key] = $ch;
+        }
+
+        $running = null;
+        do {
+            curl_multi_exec($multiHandle, $running);
+            curl_multi_select($multiHandle);
+        } while ($running > 0);
+
+        foreach ($curlHandles as $key => $ch) {
+            $data = curl_multi_getcontent($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            if ($httpCode === 200 && $data) {
+                $decoded = json_decode($data);
+                $results[$key] = (json_last_error() === JSON_ERROR_NONE) ? $decoded : [];
+            } else {
+                $results[$key] = [];
+            }
+
+            curl_multi_remove_handle($multiHandle, $ch);
+            curl_close($ch);
+        }
+
+        curl_multi_close($multiHandle);
+
+        // Processar dados específicos
+        if ($results['rel_trabalho_governanca']) {
+            $data = json_decode(json_encode($results['rel_trabalho_governanca']), true);
+            $results['governancas'] = $data['governanca'] ?? [];
+            $results['conselhos_fiscais'] = $data['conselho_fiscal'] ?? [];
+            $results['relacoes_trabalho_governanca'] = $data['relacoes_trabalho'] ?? [];
+        } else {
+            $results['governancas'] = [];
+            $results['conselhos_fiscais'] = [];
+            $results['relacoes_trabalho_governanca'] = [];
+        }
+
+        if ($results['participacao_social']) {
+            $data = json_decode(json_encode($results['participacao_social']), true);
+            $results['participacao_social_conselhos'] = $data['conselhos_politicas_publicas'] ?? [];
+            $results['participacao_social_conferencia'] = $data['conferencias_politicas_publicas'] ?? [];
+            $results['participacao_social_outros'] = $data['outros_espacos_participacao_social'] ?? [];
+        } else {
+            $results['participacao_social_conselhos'] = [];
+            $results['participacao_social_conferencia'] = [];
+            $results['participacao_social_outros'] = [];
+        }
+
+        return $results;
     }
 
     public function getOscsUf($estado_id){

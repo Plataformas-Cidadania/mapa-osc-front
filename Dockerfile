@@ -1,48 +1,40 @@
-FROM php:7.2-fpm
+FROM php:7.4-fpm
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y git
-
-RUN  apt-get install -y libzip-dev \
-     && docker-php-ext-install zip
-
-# Install system dependencies
-RUN  apt-get install -y \
-    libpq-dev \
-    libmcrypt-dev \
-    openssl \
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
     libxml2-dev \
-    libpng-dev \ 
-    libcurl4-openssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+    zip \
+    unzip \
+    libpq-dev \
+    dnsutils \
+    iputils-ping
 
-SHELL ["/bin/bash", "--login", "-c"]
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Activate NVM
-ENV NVM_DIR="/root/.nvm"
-RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# Install Node.js 12
-RUN nvm install 12.16.2 && nvm use 12.16.2
-    
 # Install PHP extensions
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install xml \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install bcmath \
-    && docker-php-ext-install json \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install curl
+RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd opcache
 
-# Install PHP extensions for pgsql
-# RUN docker-php-ext-install pdo pdo_pgsql pgsql
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Set working directory
+WORKDIR /var/www
 
-CMD ./wait-for-it.sh db_mapa:5432 -- ./start.sh
+# Copy existing application directory contents
+COPY . /var/www
 
+# Create necessary directories and set permissions
+RUN mkdir -p /var/www/storage/logs /var/www/bootstrap/cache
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+# Change current user to www
+USER www-data
+
+# Expose port 8000 and start php-fpm server
 EXPOSE 8000
+CMD ["php", "-d", "memory_limit=512M", "-d", "max_execution_time=300", "-d", "default_socket_timeout=30", "-d", "opcache.enable=1", "-d", "opcache.memory_consumption=128", "-d", "curl.cainfo=", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
