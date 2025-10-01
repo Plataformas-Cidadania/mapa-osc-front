@@ -524,6 +524,8 @@ if ( ! function_exists('curlList') ) {
         if(!is_array($data)){
             $data = [];
         }
+        
+        \Illuminate\Support\Facades\Log::info('curlList ' . $string . ' retornou ' . count($data) . ' itens');
 
         return $data;
     }
@@ -658,6 +660,8 @@ if ( ! function_exists('curlListAno') ) {
         } else {
             $data = [];
         }
+        
+        \Illuminate\Support\Facades\Log::info('curlListAno ' . $string . '/' . $ano . ' retornou ' . count($data) . ' itens');
 
         return $data;
     }

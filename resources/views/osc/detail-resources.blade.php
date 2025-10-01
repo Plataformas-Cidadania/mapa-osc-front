@@ -186,6 +186,100 @@
                 @endforeach
             </div>
             @endif
+            
+            {{-- Gráfico de Recursos --}}
+            @if(!empty($recursos) && count($recursos) > 0)
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Evolução dos Recursos por Ano</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-recursos"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+@if(!empty($recursos) && count($recursos) > 0)
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/osc/chart-data/{{$id_osc}}')
+        .then(response => response.json())
+        .then(data => {
+            const anos = Object.keys(data).sort();
+            const publicos = [];
+            const privados = [];
+            const naoFinanceiros = [];
+            const proprios = [];
+            
+            anos.forEach(ano => {
+                publicos.push(data[ano].publicos || 0);
+                privados.push(data[ano].privados || 0);
+                naoFinanceiros.push(data[ano].nao_financeiros || 0);
+                proprios.push(data[ano].proprios || 0);
+            });
+            
+            const options = {
+                series: [{
+                    name: 'Recursos Públicos',
+                    data: publicos
+                }, {
+                    name: 'Recursos Privados',
+                    data: privados
+                }, {
+                    name: 'Recursos Não Financeiros',
+                    data: naoFinanceiros
+                }, {
+                    name: 'Recursos Próprios',
+                    data: proprios
+                }],
+                chart: {
+                    type: 'line',
+                    height: 400
+                },
+                xaxis: {
+                    categories: anos,
+                    title: {
+                        text: 'Anos'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Valor (R$)'
+                    },
+                    labels: {
+                        formatter: function (val) {
+                            return 'R$ ' + val.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                        }
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return 'R$ ' + val.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                        }
+                    }
+                },
+                colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'],
+                stroke: {
+                    curve: 'smooth'
+                }
+            };
+            
+            const chart = new ApexCharts(document.querySelector("#chart-recursos"), options);
+            chart.render();
+        })
+        .catch(error => {
+            console.error('Erro ao carregar dados do gráfico:', error);
+            document.getElementById('chart-recursos').innerHTML = '<p class="alert alert-warning">Erro ao carregar dados do gráfico.</p>';
+        });
+});
+@endif
+</script>

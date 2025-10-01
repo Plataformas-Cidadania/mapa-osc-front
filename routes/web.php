@@ -127,6 +127,7 @@ Route::get('/menu/osc/ipeadata', 'TesteController@ipeadata');
 
 Route::get('detalhar/{id}', 'OscController@details');
 Route::get('detalhar/{id}/{title}', 'OscController@details');
+Route::get('osc/chart-data/{id}', 'OscController@chartData');
 
 
 Route::get('minhaconta-oscs/{id}/', 'MyAccountOscController@list');

@@ -507,4 +507,64 @@ class OscController extends Controller{
 
     }
 
+    public function chartData($id) {
+        $recursos = curlList('anos_recursos', $id);
+        $chartData = [];
+        
+        foreach($recursos as $ano) {
+            $recursos_ano = curlListAno('recursos', $id, $ano);
+            
+            $totais = [
+                'publicos' => 0,
+                'privados' => 0,
+                'nao_financeiros' => 0,
+                'proprios' => 0
+            ];
+            
+            if(!empty($recursos_ano)) {
+                // Recursos Públicos (tipo 1)
+                if(isset($recursos_ano[1]) && is_array($recursos_ano[1])) {
+                    foreach($recursos_ano[1] as $key => $item) {
+                        if(is_numeric($key) && isset($item['nr_valor_recursos_osc'])) {
+                            $totais['publicos'] += floatval($item['nr_valor_recursos_osc']) / 100;
+                        }
+                    }
+                }
+                
+                // Recursos Privados (tipo 2)
+                if(isset($recursos_ano[2]) && is_array($recursos_ano[2])) {
+                    foreach($recursos_ano[2] as $key => $item) {
+                        if(is_numeric($key) && isset($item['nr_valor_recursos_osc'])) {
+                            $totais['privados'] += floatval($item['nr_valor_recursos_osc']) / 100;
+                        }
+                    }
+                }
+                
+                // Recursos Não Financeiros (tipo 3)
+                if(isset($recursos_ano[3]) && is_array($recursos_ano[3])) {
+                    foreach($recursos_ano[3] as $key => $item) {
+                        if(is_numeric($key) && isset($item['nr_valor_recursos_osc'])) {
+                            $totais['nao_financeiros'] += floatval($item['nr_valor_recursos_osc']) / 100;
+                        }
+                    }
+                }
+                
+                // Recursos Próprios (tipo 4)
+                if(isset($recursos_ano[4]) && is_array($recursos_ano[4])) {
+                    foreach($recursos_ano[4] as $key => $item) {
+                        if(is_numeric($key) && isset($item['nr_valor_recursos_osc'])) {
+                            $totais['proprios'] += floatval($item['nr_valor_recursos_osc']) / 100;
+                        }
+                    }
+                }
+            }
+            
+            $chartData[$ano] = $totais;
+        }
+        
+        return response()->json($chartData);
+    }
+
+
+
 }
