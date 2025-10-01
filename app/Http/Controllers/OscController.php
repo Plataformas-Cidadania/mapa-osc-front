@@ -29,12 +29,36 @@ class OscController extends Controller{
 
     public function details($id){
 
+
         $osc = curlOSC($id);
+        //return $id;
+        // Verificar se a OSC foi encontrada
+        /*if (!$osc || !is_object($osc)) {
+            abort(404, 'OSC não encontrada');
+        }*/
+
+
         $situacao = curlSituacao();
 
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
+
+        // Verificar se dados essenciais foram carregados
+        if (!$cabecalho || !isset($cabecalho->tx_razao_social_osc)) {
+            Log::warning('Cabecalho não encontrado para OSC: ' . $id);
+            $cabecalho = (object) ['tx_razao_social_osc' => 'OSC não encontrada'];
+        }
+
+        if (!$dados_gerais) {
+            Log::warning('Dados gerais não encontrados para OSC: ' . $id);
+            $dados_gerais = (object) [];
+        }
+
+        if (!$descricao) {
+            Log::warning('Descrição não encontrada para OSC: ' . $id);
+            $descricao = (object) ['tx_historico' => ''];
+        }
 
         $certificacoes = curlList('certificados', $id);
         $area_atuacao = curlList('areas_atuacao', $id);
@@ -61,13 +85,15 @@ class OscController extends Controller{
 
         //return $situacao;
 
+
+
         if (is_array($situacao) || $situacao instanceof Traversable) {
             foreach ($situacao as $item) {
                 $situacaoArray[$item->cd_situacao_cadastral] = $item->tx_nome_situacao_cadastral;
             }
         }
 
-        $valorSituacao = $situacaoArray[$osc->cd_situacao_cadastral] ?? null; //cd_stituacao_cadastral
+        $valorSituacao = (is_object($osc) && isset($osc->cd_situacao_cadastral)) ? ($situacaoArray[$osc->cd_situacao_cadastral] ?? null) : null;
 
         //return $valorSituacao;
 

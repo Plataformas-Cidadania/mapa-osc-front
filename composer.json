@@ -14,7 +14,9 @@
         "laravel/tinker": "^1.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "laravelcollective/html": "~5.0",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -12,6 +12,11 @@
 <div id="multiCollapse7" class="collapse multi-collapse show">
     <div class="row">
         <div class="col-md-12">
+            @if(empty($projetos) || count($projetos) == 0)
+                <div class="alert alert-info">
+                    <p>{{$txt_alert}}</p>
+                </div>
+            @else
             <div class="accordion" id="accordionProject">
                 @foreach($projetos as $key => $projeto)
                     <?php
@@ -286,6 +291,7 @@
 
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

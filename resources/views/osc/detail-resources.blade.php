@@ -12,6 +12,11 @@
 <div id="multiCollapse8" class="collapse multi-collapse show">
     <div class="row">
         <div class="col-md-12">
+            @if(empty($recursos) || count($recursos) == 0)
+                <div class="alert alert-info">
+                    <p>{{$txt_alert}}</p>
+                </div>
+            @else
             <div class="accordion" id="accordionExample">
                 @foreach($recursos as $key => $recurso)
                     <div class="card">
@@ -180,6 +185,7 @@
                     </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </div>
