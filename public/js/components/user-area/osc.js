@@ -1,947 +1,727 @@
-'use strict';
+class Osc extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logo: null,
+      form: {
+        email: '',
+        name: '',
+        endereco: '',
+        tx_endereco: ''
+      },
+      txt: {
+        email: '',
+        name: '',
+        endereco: '',
+        tx_endereco: ''
+      },
+      button: true,
+      loading: false,
+      requireds: {
+        name: true,
+        email: true,
+        tx_razao_social_osc: true,
+        tx_sigla_osc: true,
+        cd_situacao_imovel_osc: true,
+        tx_nome_responsavel_legal: true,
+        cnpj: true
+      },
+      showMsg: false,
+      msg: '',
+      showIcon: false,
+      objetivos: null,
+      subobjetivos: null,
+      titleMeta: null,
+      titleObjetivo: "",
+      buttonObjetivos: 0,
+      dataChkboxMetas: [],
+      tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar'
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.updateOsc = this.updateOsc.bind(this);
+    this.validate = this.validate.bind(this);
+    this.getCabecalho = this.getCabecalho.bind(this);
+    this.getOsc = this.getOsc.bind(this);
+    //this.checkMetas = this.checkMetas.bind(this);
+    //this.listChkboxMetas = this.listChkboxMetas.bind(this);
+    //this.checkMetas = this.checkMetas.bind(this);
+    //this.listObjetivos = this.listObjetivos.bind(this);
+    //this.listChkboxMetas = this.listChkboxMetas.bind(this);
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+    //this.listArea = this.listArea.bind(this);
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Osc = (function (_React$Component) {
-    _inherits(Osc, _React$Component);
-
-    function Osc(props) {
-        _classCallCheck(this, Osc);
-
-        _get(Object.getPrototypeOf(Osc.prototype), 'constructor', this).call(this, props);
-        this.state = {
-            logo: null,
-            form: {
-                email: '',
-                name: '',
-                endereco: '',
-                tx_endereco: ''
-            },
-            txt: {
-                email: '',
-                name: '',
-                endereco: '',
-                tx_endereco: ''
-            },
-            button: true,
-            loading: false,
-            requireds: {
-                name: true,
-                email: true,
-                tx_razao_social_osc: true,
-                tx_sigla_osc: true,
-                cd_situacao_imovel_osc: true,
-                tx_nome_responsavel_legal: true,
-                cnpj: true
-            },
-            showMsg: false,
-            msg: '',
-            showIcon: false,
-            objetivos: null,
-            subobjetivos: null,
-            titleMeta: null,
-            titleObjetivo: "",
-            buttonObjetivos: 0,
-
-            dataChkboxMetas: [],
-
-            tooltip: 'Informações provenientes de bases de dados oficiais. Não é possível editar'
-
-        };
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.updateOsc = this.updateOsc.bind(this);
-        this.validate = this.validate.bind(this);
-        this.getCabecalho = this.getCabecalho.bind(this);
-        this.getOsc = this.getOsc.bind(this);
-        //this.checkMetas = this.checkMetas.bind(this);
-        //this.listChkboxMetas = this.listChkboxMetas.bind(this);
-        //this.checkMetas = this.checkMetas.bind(this);
-        //this.listObjetivos = this.listObjetivos.bind(this);
-        //this.listChkboxMetas = this.listChkboxMetas.bind(this);
-
-        //this.listArea = this.listArea.bind(this);
-
-        this.saveLogo = this.saveLogo.bind(this);
+    this.saveLogo = this.saveLogo.bind(this);
+  }
+  componentDidMount() {
+    this.getCabecalho();
+    this.getOsc();
+    this.getLogo();
+    //this.listArea();
+    //this.listChkboxMetas();
+    //this.listObjetivos();
+  }
+  getCabecalho() {
+    this.setState({
+      button: false
+    });
+    $.ajax({
+      method: 'GET',
+      //url: getBaseUrl2+'osc/cabecalho/455128',
+      url: getBaseUrl2 + 'osc/cabecalho/' + this.props.id,
+      cache: false,
+      success: function (data) {
+        this.setState({
+          loading: false,
+          txt: data,
+          button: true
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
+  }
+  getOsc() {
+    this.setState({
+      button: false
+    });
+    $.ajax({
+      method: 'GET',
+      //url: getBaseUrl2+'osc/dados_gerais/455128',
+      url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
+      cache: false,
+      success: function (data) {
+        this.setState({
+          loading: false,
+          form: data,
+          button: true
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
+  }
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    let form = this.state.form;
+    let txt = this.state.txt;
+    form[name] = value;
+    this.setState({
+      form: form,
+      txt: txt
+    });
+  }
+  validate() {
+    let valid = true;
+    let requireds = this.state.requireds;
+    let form = this.state.form;
+    let txt = this.state.txt;
+    this.setState({
+      requireds: requireds
+    });
+    return valid;
+  }
+  updateOsc(e) {
+    e.preventDefault();
+    if (!this.validate()) {
+      return;
     }
+    const data = {
+      id_osc: this.props.id,
+      tx_sigla_osc: this.state.form.tx_sigla_osc,
+      tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
+      cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc === null ? -1 : this.state.form.cd_situacao_imovel_osc,
+      dt_fundacao_osc: this.state.form.dt_fundacao_osc,
+      tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
+      tx_email: this.state.form.tx_email,
+      tx_site: this.state.form.tx_site,
+      tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
+      tx_resumo_osc: this.state.form.tx_resumo_osc
+    };
+    if (this.state.form.dt_ano_cadastro_cnpj !== null) {
+      data.dt_ano_cadastro_cnpj = this.state.form.dt_ano_cadastro_cnpj;
+    }
+    if (this.state.form.dt_fundacao_osc !== null) {
+      data.dt_fundacao_osc = this.state.form.dt_fundacao_osc;
+    }
+    this.setState({
+      loading: true,
+      button: false,
+      showMsg: false,
+      msg: ''
+    }, function () {
+      $.ajax({
+        method: 'PUT',
+        //url: getBaseUrl2+'osc/dados_gerais/455128',
+        url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+        },
+        data: data,
+        /*data:{
+            //id_osc: 455128,
+            id_osc: this.props.id,
+            tx_sigla_osc: this.state.form.tx_sigla_osc,
+            tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
+            cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
+            dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
+            dt_fundacao_osc: this.state.form.dt_fundacao_osc,
+            tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
+            tx_email: this.state.form.tx_email,
+            tx_site: this.state.form.tx_site,
+            tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
+            tx_resumo_osc: this.state.form.tx_resumo_osc,
+        },*/
+        cache: false,
+        success: function (data) {
+          let msg = 'Dados alterados com sucesso!';
+          this.setState({
+            loading: false,
+            msg: msg,
+            showMsg: true,
+            updateOk: true,
+            button: true
+          });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error(status, err.toString());
+          let msg = "Ocorreu um erro!";
+          this.setState({
+            loading: false,
+            msg: msg,
+            showMsg: true,
+            updateOk: true,
+            button: true
+          });
+        }.bind(this)
+      });
+    });
+  }
 
-    _createClass(Osc, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.getCabecalho();
-            this.getOsc();
-            this.getLogo();
-            //this.listArea();
-            //this.listChkboxMetas();
-            //this.listObjetivos();
-        }
-    }, {
-        key: 'getCabecalho',
-        value: function getCabecalho() {
-            this.setState({ button: false });
-            $.ajax({
-                method: 'GET',
-                //url: getBaseUrl2+'osc/cabecalho/455128',
-                url: getBaseUrl2 + 'osc/cabecalho/' + this.props.id,
-                cache: false,
-                success: (function (data) {
-                    this.setState({ loading: false, txt: data, button: true });
-                }).bind(this),
-                error: (function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }).bind(this)
-            });
-        }
-    }, {
-        key: 'getOsc',
-        value: function getOsc() {
-            this.setState({ button: false });
-            $.ajax({
-                method: 'GET',
-                //url: getBaseUrl2+'osc/dados_gerais/455128',
-                url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
-                cache: false,
-                success: (function (data) {
-                    this.setState({ loading: false, form: data, button: true });
-                }).bind(this),
-                error: (function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }).bind(this)
-            });
-        }
-    }, {
-        key: 'handleInputChange',
-        value: function handleInputChange(event) {
-            var target = event.target;
-            var value = target.type === 'checkbox' ? target.checked : target.value;
-            var name = target.name;
+  /*listArea(){
+      this.setState({button:false});
+      $.ajax({
+          method: 'GET',
+          cache: false,
+          url: getBaseUrl+'menu/osc/objetivo_projeto',
+          success: function (data) {
+              data.find(function(item){
+                  item.checked = false;
+                  item.metas = null;
+              });
+              this.setState({loading: false, objetivos: data, button:true})
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error(status, err.toString());
+          }.bind(this)
+      });
+  }*/
+  /*listObjetivos(){
+        $.ajax({
+          method: 'GET',
+          cache: false,
+          url: getBaseUrl2+'osc/objetivos/'+455128,
+          success: function (data) {
+              //console.log('-----data', data);
+              let objetosSelected = [];
+              data.find(function(item){
+                  objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
+              });
+                const arrUnique = [...new Set(objetosSelected)];
+                this.setState({loading: false, datalistObjetivos: arrUnique})
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error(status, err.toString());
+          }.bind(this)
+      });
+  }*/
 
-            var form = this.state.form;
-            var txt = this.state.txt;
-            form[name] = value;
-
-            this.setState({ form: form, txt: txt });
-        }
-    }, {
-        key: 'validate',
-        value: function validate() {
-            var valid = true;
-
-            var requireds = this.state.requireds;
-            var form = this.state.form;
-            var txt = this.state.txt;
-
-            this.setState({ requireds: requireds });
-            return valid;
-        }
-    }, {
-        key: 'updateOsc',
-        value: function updateOsc(e) {
-            e.preventDefault();
-
-            if (!this.validate()) {
-                return;
-            }
-
-            var data = {
-                id_osc: this.props.id,
-                tx_sigla_osc: this.state.form.tx_sigla_osc,
-                tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-                cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc === null ? -1 : this.state.form.cd_situacao_imovel_osc,
-                dt_fundacao_osc: this.state.form.dt_fundacao_osc,
-                tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
-                tx_email: this.state.form.tx_email,
-                tx_site: this.state.form.tx_site,
-                tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
-                tx_resumo_osc: this.state.form.tx_resumo_osc
-            };
-
-            if (this.state.form.dt_ano_cadastro_cnpj !== null) {
-                data.dt_ano_cadastro_cnpj = this.state.form.dt_ano_cadastro_cnpj;
-            }
-
-            if (this.state.form.dt_fundacao_osc !== null) {
-                data.dt_fundacao_osc = this.state.form.dt_fundacao_osc;
-            }
-
-            this.setState({ loading: true, button: false, showMsg: false, msg: '' }, function () {
-                $.ajax({
-                    method: 'PUT',
-                    //url: getBaseUrl2+'osc/dados_gerais/455128',
-                    url: getBaseUrl2 + 'osc/dados_gerais/' + this.props.id,
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
-                    },
-                    data: data,
-                    /*data:{
-                        //id_osc: 455128,
-                        id_osc: this.props.id,
-                        tx_sigla_osc: this.state.form.tx_sigla_osc,
-                        tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-                        cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc,
-                        dt_ano_cadastro_cnpj: this.state.form.dt_ano_cadastro_cnpj,
-                        dt_fundacao_osc: this.state.form.dt_fundacao_osc,
-                        tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
-                        tx_email: this.state.form.tx_email,
-                        tx_site: this.state.form.tx_site,
-                        tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
-                        tx_resumo_osc: this.state.form.tx_resumo_osc,
-                    },*/
-                    cache: false,
-                    success: (function (data) {
-                        var msg = 'Dados alterados com sucesso!';
-                        this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true });
-                    }).bind(this),
-                    error: (function (xhr, status, err) {
-                        console.error(status, err.toString());
-                        var msg = "Ocorreu um erro!";
-                        this.setState({ loading: false, msg: msg, showMsg: true, updateOk: true, button: true });
-                    }).bind(this)
+  /*callSubobjetivos(id){
+      this.setState({button:false});
+      $.ajax({
+          method: 'GET',
+          cache: false,
+          url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+          success: function (data) {
+                let objetivos = this.state.objetivos;
+              let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
+                data.find(function(item){
+                  item.display = true;
+                  item.checked = false;
                 });
-            });
-        }
-
-        /*listArea(){
-            this.setState({button:false});
-            $.ajax({
-                method: 'GET',
-                cache: false,
-                url: getBaseUrl+'menu/osc/objetivo_projeto',
-                success: function (data) {
-                    data.find(function(item){
-                        item.checked = false;
-                        item.metas = null;
-                    });
-                    this.setState({loading: false, objetivos: data, button:true})
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }.bind(this)
-            });
-        }*/
-        /*listObjetivos(){
-              $.ajax({
-                method: 'GET',
-                cache: false,
-                url: getBaseUrl2+'osc/objetivos/'+455128,
-                success: function (data) {
-                    //console.log('-----data', data);
-                    let objetosSelected = [];
-                    data.find(function(item){
-                        objetosSelected.push(item.meta_projeto.objetivo_projeto.cd_objetivo_projeto);
-                    });
-                      const arrUnique = [...new Set(objetosSelected)];
-                      this.setState({loading: false, datalistObjetivos: arrUnique})
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }.bind(this)
-            });
-        }*/
-
-        /*callSubobjetivos(id){
-            this.setState({button:false});
-            $.ajax({
-                method: 'GET',
-                cache: false,
-                url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
-                success: function (data) {
-                      let objetivos = this.state.objetivos;
-                    let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                      data.find(function(item){
-                        item.display = true;
-                        item.checked = false;
+                objetivos.find(function(item){
+                  if(item.metas){
+                      item.metas.find(function(itemMeta){
+                          itemMeta.display = false;
                       });
-                      objetivos.find(function(item){
-                        if(item.metas){
-                            item.metas.find(function(itemMeta){
-                                itemMeta.display = false;
-                            });
-                            if(item.cd_objetivo_projeto === id){
-                                item.metas.find(function(itemMeta){
-                                    itemMeta.display = true;
-                                });
-                            }
-                        }
-                        if(item.cd_objetivo_projeto === id && !item.metas){
-                            item.metas = data;
-                        }
-                    });
-                        this.setState({
-                        loading: false,
-                        objetivos: objetivos,
-                        id_area:id,
-                        buttonObjetivos:id,
-                        titleMeta:true,
-                        titleObjetivo:titleObjetivo
-                    })
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }.bind(this)
-            });
-        }*/
+                      if(item.cd_objetivo_projeto === id){
+                          item.metas.find(function(itemMeta){
+                              itemMeta.display = true;
+                          });
+                      }
+                  }
+                  if(item.cd_objetivo_projeto === id && !item.metas){
+                      item.metas = data;
+                  }
+              });
+                  this.setState({
+                  loading: false,
+                  objetivos: objetivos,
+                  id_area:id,
+                  buttonObjetivos:id,
+                  titleMeta:true,
+                  titleObjetivo:titleObjetivo
+              })
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error(status, err.toString());
+          }.bind(this)
+      });
+  }*/
 
-        /*listChkboxMetas(){
-              $.ajax({
-                method: 'GET',
-                cache: false,
-                url: getBaseUrl2+'osc/objetivos/'+455128,
-                success: function (data) {
-                    data.find(function(item){
-                        item.checked = true;
-                        item.metas = null;
-                    });
-                      this.setState({dataChkboxMetas: data})
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }.bind(this)
-            });
-        }
-          checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta){
-            let objetivos = this.state.objetivos;
-            objetivos.find(function(item){
-                if(item.cd_objetivo_projeto === cd_objetivo){
-                    item.metas.find(function (itemMeta) {
-                        if(itemMeta.cd_meta_projeto === cd_meta){
-                            itemMeta.checked = true;
-                        }
-                    });
-                }
-            });
-              if(checkedMeta===true){
-                $.ajax({
-                    method: 'POST',
-                    url: getBaseUrl2+'osc/objetivo',
-                    data: {
-                        cd_meta_osc: cd_meta,
-                        id_osc: 455128,
-                        ft_objetivo_osc: 'Representante de OSC',
-                    },
-                    cache: false,
-                    success: function(data){
-                        this.listChkboxMetas();
-                    }.bind(this),
-                    error: function(xhr, status, err){
-                        console.log(status, err.toString());
-                    }.bind(this)
-                });
-            }else{
-                $.ajax({
-                    method: 'DELETE',
-                    url: getBaseUrl2+'osc/objetivo/'+id_objetivo_osc,
-                    data: {
-                      },
-                    cache: false,
-                    success: function(data){
-                        this.listChkboxMetas();
-                    }.bind(this),
-                    error: function(xhr, status, err){
-                        console.log(status, err.toString());
-                    }.bind(this)
-                });
-            }
-                this.setState({objetivos: objetivos});
-        }
-          callSubobjetivos(id){
-            this.setState({button:false});
-            $.ajax({
-                method: 'GET',
-                cache: false,
-                url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
-                success: function (data) {
-                      let objetivos = this.state.objetivos;
-                        let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
-                      data.find(function(item){
-                        item.display = true;
-                        item.checked = false;
-                      });
-                    objetivos.find(function(item){
-                        if(item.metas){
-                            item.metas.find(function(itemMeta){
-                                itemMeta.display = false;
-                            });
-                              if(item.cd_objetivo_projeto === id){
-                                item.metas.find(function(itemMeta){
-                                    itemMeta.display = true;
-                                });
-                            }
-                        }
-                        if(item.cd_objetivo_projeto === id && !item.metas){
-                            item.metas = data;
-                        }
-                    });
-                      this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(status, err.toString());
-                }.bind(this)
-            });
-        }*/
-
-    }, {
-        key: 'setLogo',
-        value: function setLogo() {
-            document.getElementById('logoOsc').value = "";
-            document.getElementById('logoOsc').click();
-        }
-    }, {
-        key: 'saveLogo',
-        value: function saveLogo(e) {
-            var file = e.target.files[0];
-            var formData = new FormData();
-            formData.append("logo", file, file.name);
-
-            $.ajax({
-                method: 'POST',
-                url: getBaseUrl2 + 'osc/logo/' + this.props.id,
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+  /*listChkboxMetas(){
+        $.ajax({
+          method: 'GET',
+          cache: false,
+          url: getBaseUrl2+'osc/objetivos/'+455128,
+          success: function (data) {
+              data.find(function(item){
+                  item.checked = true;
+                  item.metas = null;
+              });
+                this.setState({dataChkboxMetas: data})
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error(status, err.toString());
+          }.bind(this)
+      });
+  }
+    checkMetas(cd_objetivo, cd_meta, id_objetivo_osc, checkedMeta){
+      let objetivos = this.state.objetivos;
+      objetivos.find(function(item){
+          if(item.cd_objetivo_projeto === cd_objetivo){
+              item.metas.find(function (itemMeta) {
+                  if(itemMeta.cd_meta_projeto === cd_meta){
+                      itemMeta.checked = true;
+                  }
+              });
+          }
+      });
+        if(checkedMeta===true){
+          $.ajax({
+              method: 'POST',
+              url: getBaseUrl2+'osc/objetivo',
+              data: {
+                  cd_meta_osc: cd_meta,
+                  id_osc: 455128,
+                  ft_objetivo_osc: 'Representante de OSC',
+              },
+              cache: false,
+              success: function(data){
+                  this.listChkboxMetas();
+              }.bind(this),
+              error: function(xhr, status, err){
+                  console.log(status, err.toString());
+              }.bind(this)
+          });
+      }else{
+          $.ajax({
+              method: 'DELETE',
+              url: getBaseUrl2+'osc/objetivo/'+id_objetivo_osc,
+              data: {
                 },
-                data: formData,
-                processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
-                contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
-                cache: false,
-                success: (function (data) {
-                    this.setState({ logo: data });
-                    //this.setState({logo: data});
-                }).bind(this),
-                error: (function (xhr, status, err) {
-                    console.log(status, err.toString());
-                }).bind(this)
-            });
-        }
-    }, {
-        key: 'getLogo',
-        value: function getLogo() {
-            $.ajax({
-                method: 'GET',
-                url: getBaseUrl2 + 'osc/logo/' + this.props.id,
-                processData: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
-                contentType: false, //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
-                cache: false,
-                success: (function (data) {
-                    this.setState({ logo: data });
-                    //this.setState({logo: data});
-                }).bind(this),
-                error: (function (xhr, status, err) {
-                    console.log(status, err.toString());
-                }).bind(this)
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
+              cache: false,
+              success: function(data){
+                  this.listChkboxMetas();
+              }.bind(this),
+              error: function(xhr, status, err){
+                  console.log(status, err.toString());
+              }.bind(this)
+          });
+      }
+          this.setState({objetivos: objetivos});
+  }
+    callSubobjetivos(id){
+      this.setState({button:false});
+      $.ajax({
+          method: 'GET',
+          cache: false,
+          url: getBaseUrl+'componente/metas_objetivo_projeto/'+id,
+          success: function (data) {
+                let objetivos = this.state.objetivos;
+                  let titleObjetivo = this.state.objetivos[id-1].tx_nome_objetivo_projeto;
+                data.find(function(item){
+                  item.display = true;
+                  item.checked = false;
+                });
+              objetivos.find(function(item){
+                  if(item.metas){
+                      item.metas.find(function(itemMeta){
+                          itemMeta.display = false;
+                      });
+                        if(item.cd_objetivo_projeto === id){
+                          item.metas.find(function(itemMeta){
+                              itemMeta.display = true;
+                          });
+                      }
+                  }
+                  if(item.cd_objetivo_projeto === id && !item.metas){
+                      item.metas = data;
+                  }
+              });
+                this.setState({loading: false, objetivos: objetivos, id_area:id, buttonObjetivos:id, titleMeta:true, titleObjetivo:titleObjetivo})
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error(status, err.toString());
+          }.bind(this)
+      });
+  }*/
 
-            /*function padDigits(number, digits) {
-                return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
-            }*/
+  setLogo() {
+    document.getElementById('logoOsc').value = "";
+    document.getElementById('logoOsc').click();
+  }
+  saveLogo(e) {
+    let file = e.target.files[0];
+    let formData = new FormData();
+    formData.append("logo", file, file.name);
+    $.ajax({
+      method: 'POST',
+      url: getBaseUrl2 + 'osc/logo/' + this.props.id,
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+      },
+      data: formData,
+      processData: false,
+      //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+      contentType: false,
+      //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+      cache: false,
+      success: function (data) {
+        this.setState({
+          logo: data
+        });
+        //this.setState({logo: data});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(status, err.toString());
+      }.bind(this)
+    });
+  }
+  getLogo() {
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'osc/logo/' + this.props.id,
+      processData: false,
+      //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+      contentType: false,
+      //NECESSÁRIO PARA O UPLOAD DE ARQUIVOS
+      cache: false,
+      success: function (data) {
+        this.setState({
+          logo: data
+        });
+        //this.setState({logo: data});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(status, err.toString());
+      }.bind(this)
+    });
+  }
+  render() {
+    /*function padDigits(number, digits) {
+        return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+    }*/
 
-            /*let objetivos = null;
-            let metas = [];
-            if(this.state.objetivos){
-                objetivos = this.state.objetivos.map(function (item) {
-                    let checkedMetas = false;
-                      if(this.state.datalistObjetivos){
-                        if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
-                            checkedMetas = true;
+    /*let objetivos = null;
+    let metas = [];
+    if(this.state.objetivos){
+        objetivos = this.state.objetivos.map(function (item) {
+            let checkedMetas = false;
+              if(this.state.datalistObjetivos){
+                if(this.state.datalistObjetivos.indexOf(item.cd_objetivo_projeto) != -1){
+                    checkedMetas = true;
+                }
+            }
+              let png = padDigits(item.cd_objetivo_projeto, 2);
+              if(item.metas){
+                metas.push(item.metas.map(function (itemMeta) {
+                    if(itemMeta.checked){
+                        checkedMetas = true;
+                    }
+                      let checkedMeta = false;
+                    let id_objetivo_osc = 0;
+                    this.state.dataChkboxMetas.find((itemChecked) => {
+                        if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc){
+                            checkedMeta = true;
+                            id_objetivo_osc = itemChecked.id_objetivo_osc;
                         }
-                    }
-                      let png = padDigits(item.cd_objetivo_projeto, 2);
-                      if(item.metas){
-                        metas.push(item.metas.map(function (itemMeta) {
-                            if(itemMeta.checked){
-                                checkedMetas = true;
-                            }
-                              let checkedMeta = false;
-                            let id_objetivo_osc = 0;
-                            this.state.dataChkboxMetas.find((itemChecked) => {
-                                if(itemMeta.cd_meta_projeto === itemChecked.cd_meta_osc){
-                                    checkedMeta = true;
-                                    id_objetivo_osc = itemChecked.id_objetivo_osc;
-                                }
-                            });
-                            return(
-                                <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
-                                    <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta)}>
-                                        <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required  defaultChecked={checkedMeta} onChange={this.handleInputChange}/>
-                                        <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto}  >{itemMeta.tx_nome_meta_projeto}</label>
-                                    </div>
-                                    <hr />
-                                </div>
-                            );
-                        }.bind(this)));
-                    }
-                      return (
-                        <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
-                            <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
-                            <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
-                                <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
-                            </label>
+                    });
+                    return(
+                        <div key={"subarea_"+itemMeta.cd_meta_projeto} style={{display: itemMeta.display ? '' : 'none'}}>
+                            <div className="custom-control custom-checkbox" onChange={() => this.checkMetas(item.cd_objetivo_projeto, itemMeta.cd_meta_projeto, id_objetivo_osc, !checkedMeta)}>
+                                <input type="checkbox" className="custom-control-input" id={"subarea_"+itemMeta.cd_meta_projeto} required  defaultChecked={checkedMeta} onChange={this.handleInputChange}/>
+                                <label className="custom-control-label" htmlFor={"subarea_"+itemMeta.cd_meta_projeto}  >{itemMeta.tx_nome_meta_projeto}</label>
+                            </div>
+                            <hr />
                         </div>
                     );
-                }.bind(this));
-            }*/
-
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'div',
-                    { className: 'container' },
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        React.createElement(
-                            'div',
-                            { className: 'col-md-12' },
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-12' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'title-user-area' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'mn-accordion-icon' },
-                                            React.createElement('i', { className: 'fa fa-file-alt', 'aria-hidden': 'true' })
-                                        ),
-                                        React.createElement(
-                                            'h3',
-                                            null,
-                                            'Dados gerais'
-                                        ),
-                                        React.createElement('hr', null),
-                                        React.createElement('br', null)
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'row' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-3' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'img-upload', onClick: this.setLogo, style: { cursor: 'pointer' } },
-                                        React.createElement('img', {
-                                            /*src={`data:image/png;base64,${this.state.logo}`}*/
-                                            src: this.state.logo,
-                                            alt: '' }),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'img-upload-i' },
-                                            React.createElement('i', { className: 'fas fa-image tx-pri' })
-                                        )
-                                    ),
-                                    React.createElement('input', { type: 'file', id: 'logoOsc', onChange: this.saveLogo, style: { display: 'none' } })
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'col-md-9' },
-                                    React.createElement('br', null),
-                                    React.createElement(
-                                        'p',
-                                        null,
-                                        React.createElement(
-                                            'strong',
-                                            null,
-                                            'Nome:'
-                                        ),
-                                        ' ',
-                                        this.state.txt.tx_razao_social_osc,
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'strong',
-                                            null,
-                                            'CNPJ:'
-                                        ),
-                                        ' ',
-                                        this.state.txt.cd_identificador_osc,
-                                        React.createElement('br', null),
-                                        React.createElement(
-                                            'strong',
-                                            null,
-                                            'Natureza Jurídica:'
-                                        ),
-                                        ' ',
-                                        this.state.txt.tx_nome_natureza_juridica_osc,
-                                        React.createElement('br', null)
-                                    )
-                                )
-                            ),
-                            React.createElement('br', null),
-                            React.createElement('br', null),
-                            React.createElement(
-                                'form',
-                                null,
-                                React.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-3' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_sigla_osc', onChange: this.handleInputChange, value: this.state.form.tx_sigla_osc,
-                                                placeholder: 'Insira a Sigla' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_sigla_osc' },
-                                                'Sigla'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-9' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g", type: 'text', name: 'tx_nome_fantasia_osc', onChange: this.handleInputChange, value: this.state.form.tx_nome_fantasia_osc,
-                                                placeholder: 'Insira o Nome Fantasia', disabled: true }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_razao_social_osc' },
-                                                'Nome Fantasia'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-row' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'form-group col-md-7' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'alert alert-secondary' },
-                                            React.createElement(
-                                                'div',
-                                                { className: 'tooltips float-right' },
-                                                React.createElement('i', { className: 'fas fa-database tx-pri' }),
-                                                React.createElement(
-                                                    'span',
-                                                    { className: 'tooltiptext' },
-                                                    this.state.tooltip
-                                                )
-                                            ),
-                                            React.createElement(
-                                                'strong',
-                                                null,
-                                                'Endereço:'
-                                            ),
-                                            React.createElement('br', null),
-                                            this.state.form.tx_endereco,
-                                            ', ',
-                                            this.state.form.nr_localizacao,
-                                            React.createElement('br', null),
-                                            this.state.form.tx_bairro,
-                                            ', ',
-                                            this.state.form.tx_nome_municipio,
-                                            ' - ',
-                                            this.state.form.tx_nome_uf,
-                                            React.createElement('br', null),
-                                            React.createElement(
-                                                'strong',
-                                                null,
-                                                'CEP.:'
-                                            ),
-                                            ' ',
-                                            this.state.form.nr_cep
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'form-row' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'form-group col-md-4' },
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'inputEstado' },
-                                            'Situação do Imóvel'
-                                        ),
-                                        React.createElement(
-                                            'select',
-                                            { name: 'cd_situacao_imovel_osc', className: "form-control", value: this.state.form.cd_situacao_imovel_osc, onChange: this.handleInputChange },
-                                            React.createElement(
-                                                'option',
-                                                { value: '-1' },
-                                                'Selecione'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '1' },
-                                                'Próprio'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '2' },
-                                                'Alugado'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '3' },
-                                                'Cedido'
-                                            ),
-                                            React.createElement(
-                                                'option',
-                                                { value: '4' },
-                                                'Comodato'
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'form-group col-md-4' },
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'inputAddress2' },
-                                            'Ano de inscrição do CNPJ'
-                                        ),
-                                        React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_ano_cadastro_cnpj', onChange: this.handleInputChange, value: this.state.form.dt_ano_cadastro_cnpj, disabled: true })
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'form-group col-md-4' },
-                                        React.createElement(
-                                            'label',
-                                            { htmlFor: 'inputCity' },
-                                            'Ano de Fundação'
-                                        ),
-                                        React.createElement('input', { className: "form-control form-g ", type: 'date', name: 'dt_fundacao_osc', onChange: this.handleInputChange, value: this.state.form.dt_fundacao_osc })
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-12' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_nome_responsavel_legal', onChange: this.handleInputChange, value: this.state.form.tx_nome_responsavel_legal,
-                                                placeholder: 'Insira o Responsável Legal' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_email' },
-                                                'Responsável Legal'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-6' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_email', onChange: this.handleInputChange, value: this.state.form.tx_email,
-                                                placeholder: 'Insira o endereço de email da OSC' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_email' },
-                                                'E-mail oficial da OSC'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-6' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_site', onChange: this.handleInputChange, value: this.state.form.tx_site,
-                                                placeholder: 'Ex.: http://www.seudominio.com.br' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_site' },
-                                                'Website'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-6' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float' },
-                                            React.createElement('input', { className: "form-control form-g ", type: 'text', name: 'tx_telefone', onChange: this.handleInputChange, value: this.state.form.tx_telefone,
-                                                placeholder: 'Se houver, insira o telefone' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_telefone' },
-                                                'Telefone'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-off' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-12' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'label-float-tx' },
-                                            React.createElement('textarea', { className: 'form-control form-g', name: 'tx_resumo_osc', onChange: this.handleInputChange, value: this.state.form.tx_resumo_osc,
-                                                rows: '3', placeholder: 'O que a OSC faz' }),
-                                            React.createElement(
-                                                'label',
-                                                { htmlFor: 'tx_resumo_osc' },
-                                                'O que a OSC faz'
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { className: 'label-box-info-tx' },
-                                                React.createElement(
-                                                    'p',
-                                                    null,
-                                                    ' '
-                                                )
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement('br', null),
-                                React.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    React.createElement(
-                                        'div',
-                                        { className: 'col-md-12' },
-                                        React.createElement(
-                                            'div',
-                                            { style: { marginTop: '-10px' } },
-                                            React.createElement(
-                                                'div',
-                                                { style: { display: this.state.loading ? 'block' : 'none' } },
-                                                React.createElement('i', { className: 'fa fa-spin fa-spinner' }),
-                                                ' Processando ',
-                                                React.createElement('br', null),
-                                                ' ',
-                                                React.createElement('br', null)
-                                            ),
-                                            React.createElement(
-                                                'div',
-                                                { style: { display: this.state.showMsg ? 'block' : 'none' }, className: 'alert alert-' + (this.state.updateOk ? "success" : "danger") },
-                                                React.createElement('i', { className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle") }),
-                                                this.state.msg
-                                            ),
-                                            React.createElement(
-                                                'button',
-                                                { type: 'button', className: 'btn btn-success', onClick: this.updateOsc },
-                                                React.createElement('i', {
-                                                    className: 'fas fa-cloud-download-alt' }),
-                                                ' Salvar'
-                                            ),
-                                            React.createElement('br', null)
-                                        )
-                                    )
-                                ),
-                                React.createElement('br', null),
-                                React.createElement('br', null)
-                            ),
-                            React.createElement('div', { className: 'space' })
-                        )
-                    )
-                )
+                }.bind(this)));
+            }
+              return (
+                <div className="custom-control custom-checkbox" key={"area_"+item.cd_objetivo_projeto} onChange={() => this.callSubobjetivos(item.cd_objetivo_projeto)} style={{paddingLeft: 0}}>
+                    <input type="checkbox" className="custom-control-input" id={"area_"+item.cd_objetivo_projeto} required />
+                    <label  htmlFor={"area_"+item.cd_objetivo_projeto} style={{marginLeft: '0', marginRight: '5px', paddingBottom: 0, }}>
+                        <img src={"img/ods/" + png + ".png"} alt="" className={(checkedMetas ? "" : "item-off") + (this.state.buttonObjetivos==item.cd_objetivo_projeto ? " item-focus" : "")} width="83" style={{position: 'relative'}} title={item.tx_nome_objetivo_projeto}/>
+                    </label>
+                </div>
             );
-        }
-    }]);
+        }.bind(this));
+    }*/
 
-    return Osc;
-})(React.Component);
-
-ReactDOM.render(React.createElement(Osc, { id: id }), document.getElementById('osc'));
-/*<div className="col-md-6">
-   <div className="label-float">
-       <input className={"form-control form-g "} type="text" name="tx_telefone" onChange={this.handleInputChange} value={this.state.form.tx_telefone}
-              placeholder="Se houver, insira o celular" />
-       <label htmlFor="tx_telefone">Celular</label>
-       <div className="label-box-info-off">
-           <p>&nbsp;</p>
-       </div>
-   </div>
-</div>*/ /*<div className="row">
-            <div className="col-md-12">
-                <strong>Objetivos do Desenvolvimento Sustentável - ODS</strong><hr/>
-                <div>
-                    {objetivos}
-                    <br/><br/>
-                </div>
-                <div style={{display: this.state.titleMeta ? '' : 'none'}}>
-                    <strong>Metas Relacionadas ao ODS definido</strong><hr/>
-                    <div>
-                        <strong>{this.state.titleObjetivo}</strong><br/><br/>
-                        {metas}
-                    </div>
-                </div>
-            </div>
-         </div>*/
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      className: "container"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "title-user-area"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "mn-accordion-icon"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-file-alt",
+      "aria-hidden": "true"
+    })), /*#__PURE__*/React.createElement("h3", null, "Dados gerais"), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("br", null)))), /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-3"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "img-upload",
+      onClick: this.setLogo,
+      style: {
+        cursor: 'pointer'
+      }
+    }, /*#__PURE__*/React.createElement("img", {
+      /*src={`data:image/png;base64,${this.state.logo}`}*/
+      src: this.state.logo,
+      alt: ""
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "img-upload-i"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-image tx-pri"
+    }))), /*#__PURE__*/React.createElement("input", {
+      type: "file",
+      id: "logoOsc",
+      onChange: this.saveLogo,
+      style: {
+        display: 'none'
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-9"
+    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Nome:"), " ", this.state.txt.tx_razao_social_osc, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "CNPJ:"), " ", this.state.txt.cd_identificador_osc, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Natureza Jur\xEDdica:"), " ", this.state.txt.tx_nome_natureza_juridica_osc, /*#__PURE__*/React.createElement("br", null)))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-3"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g",
+      type: "text",
+      name: "tx_sigla_osc",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_sigla_osc,
+      placeholder: "Insira a Sigla"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_sigla_osc"
+    }, "Sigla"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-9"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g",
+      type: "text",
+      name: "tx_nome_fantasia_osc",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_nome_fantasia_osc,
+      placeholder: "Insira o Nome Fantasia",
+      disabled: true
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_razao_social_osc"
+    }, "Nome Fantasia"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0"))))), /*#__PURE__*/React.createElement("div", {
+      className: "form-row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-7"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-secondary"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "tooltips float-right"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-database tx-pri"
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "tooltiptext"
+    }, this.state.tooltip)), /*#__PURE__*/React.createElement("strong", null, "Endere\xE7o:"), /*#__PURE__*/React.createElement("br", null), this.state.form.tx_endereco, ", ", this.state.form.nr_localizacao, /*#__PURE__*/React.createElement("br", null), this.state.form.tx_bairro, ", ", this.state.form.tx_nome_municipio, " - ", this.state.form.tx_nome_uf, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "CEP.:"), " ", this.state.form.nr_cep))), /*#__PURE__*/React.createElement("div", {
+      className: "form-row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "inputEstado"
+    }, "Situa\xE7\xE3o do Im\xF3vel"), /*#__PURE__*/React.createElement("select", {
+      name: "cd_situacao_imovel_osc",
+      className: "form-control",
+      value: this.state.form.cd_situacao_imovel_osc,
+      onChange: this.handleInputChange
+    }, /*#__PURE__*/React.createElement("option", {
+      value: "-1"
+    }, "Selecione"), /*#__PURE__*/React.createElement("option", {
+      value: "1"
+    }, "Pr\xF3prio"), /*#__PURE__*/React.createElement("option", {
+      value: "2"
+    }, "Alugado"), /*#__PURE__*/React.createElement("option", {
+      value: "3"
+    }, "Cedido"), /*#__PURE__*/React.createElement("option", {
+      value: "4"
+    }, "Comodato"))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "inputAddress2"
+    }, "Ano de inscri\xE7\xE3o do CNPJ"), /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "date",
+      name: "dt_ano_cadastro_cnpj",
+      onChange: this.handleInputChange,
+      value: this.state.form.dt_ano_cadastro_cnpj,
+      disabled: true
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "inputCity"
+    }, "Ano de Funda\xE7\xE3o"), /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "date",
+      name: "dt_fundacao_osc",
+      onChange: this.handleInputChange,
+      value: this.state.form.dt_fundacao_osc
+    }))), /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_nome_responsavel_legal",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_nome_responsavel_legal,
+      placeholder: "Insira o Respons\xE1vel Legal"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_email"
+    }, "Respons\xE1vel Legal"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-6"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_email",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_email,
+      placeholder: "Insira o endere\xE7o de email da OSC"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_email"
+    }, "E-mail oficial da OSC"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-6"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_site",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_site,
+      placeholder: "Ex.: http://www.seudominio.com.br"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_site"
+    }, "Website"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-6"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_telefone",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_telefone,
+      placeholder: "Se houver, insira o telefone"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_telefone"
+    }, "Telefone"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float-tx"
+    }, /*#__PURE__*/React.createElement("textarea", {
+      className: "form-control form-g",
+      name: "tx_resumo_osc",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_resumo_osc,
+      rows: "3",
+      placeholder: "O que a OSC faz"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_resumo_osc"
+    }, "O que a OSC faz"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-tx"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0"))))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+      className: "row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "col-md-12"
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '-10px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.loading ? 'block' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-spin fa-spinner"
+    }), " Processando ", /*#__PURE__*/React.createElement("br", null), " ", /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: this.state.showMsg ? 'block' : 'none'
+      },
+      className: 'alert alert-' + (this.state.updateOk ? "success" : "danger")
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "far " + (this.state.updateOk ? "fa-check-circle" : "fa-times-circle")
+    }), this.state.msg), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "btn btn-success",
+      onClick: this.updateOsc
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-cloud-download-alt"
+    }), " Salvar"), /*#__PURE__*/React.createElement("br", null)))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      className: "space"
+    })))));
+  }
+}
+ReactDOM.render(/*#__PURE__*/React.createElement(Osc, {
+  id: id
+}), document.getElementById('osc'));

@@ -1,7 +1,4 @@
-'use strict';
-
-var Enquete = function Enquete() {
-    return React.createElement(Page, null);
+const Enquete = () => {
+  return /*#__PURE__*/React.createElement(Page, null);
 };
-
-ReactDOM.render(React.createElement(Enquete, null), document.getElementById('enquete'));
+ReactDOM.render(/*#__PURE__*/React.createElement(Enquete, null), document.getElementById('enquete'));
