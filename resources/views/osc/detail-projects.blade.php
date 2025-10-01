@@ -86,14 +86,14 @@
                                         <div class="line-add">
                                                 <?php echo iconType($projetos_descricao->ft_valor_total_projeto); ?>
                                             <h2>Valor total</h2>
-                                            <p>{{$projetos_descricao->nr_valor_total_projeto == null || $projetos_descricao->nr_valor_total_projeto == '' ? $txt_alert_abb : "R$ ".number_format((float)$projetos_descricao->nr_valor_total_projeto, 2, ',', '.')}}</p>
+                                            <p>{{$projetos_descricao->nr_valor_total_projeto == null || $projetos_descricao->nr_valor_total_projeto == '' ? $txt_alert_abb : "R$ ".number_format((float)$projetos_descricao->nr_valor_total_projeto/100, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="line-add">
                                                 <?php echo iconType($projetos_descricao->ft_valor_captado_projeto); ?>
                                             <h2>Valor recebido</h2>
-                                            <p>{{$projetos_descricao->nr_valor_captado_projeto == null || $projetos_descricao->nr_valor_captado_projeto == '' ? $txt_alert_abb : "R$ ".number_format((float)$projetos_descricao->nr_valor_captado_projeto, 2, ',', '.')}}</p>
+                                            <p>{{$projetos_descricao->nr_valor_captado_projeto == null || $projetos_descricao->nr_valor_captado_projeto == '' ? $txt_alert_abb : "R$ ".number_format((float)$projetos_descricao->nr_valor_captado_projeto/100, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

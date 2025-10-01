@@ -357,7 +357,7 @@ if ( ! function_exists('curl') ) {
         $url = $api."osc/".$string."/".$id;
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL: ' . $url);
             return (object) [];
         }
 
@@ -372,13 +372,13 @@ if ( ! function_exists('curl') ) {
         curl_close($ch);
 
         if ($error || $data === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL: ' . $error . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL: ' . $error . ' - URL: ' . $url);
             return (object) [];
         }
 
         $decoded = json_decode($data);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON: ' . json_last_error_msg() . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro JSON: ' . json_last_error_msg() . ' - URL: ' . $url);
             return (object) [];
         }
 
@@ -397,7 +397,7 @@ if ( ! function_exists('curlOSC') ) {
         $url = $api."osc/".$id;
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para OSC: ' . $id);
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para OSC: ' . $id);
             return null;
         }
 
@@ -413,22 +413,22 @@ if ( ! function_exists('curlOSC') ) {
         curl_close($ch);
 
         if ($error || $data === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL OSC: ' . $error . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL OSC: ' . $error . ' - URL: ' . $url);
             return null;
         }
 
         if ($httpCode !== 200) {
-            \Illuminate\Support\Facades\Log::error('HTTP Error OSC: ' . $httpCode . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('HTTP Error OSC: ' . $httpCode . ' - URL: ' . $url);
             return null;
         }
 
         $decoded = json_decode($data);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON OSC: ' . json_last_error_msg() . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro JSON OSC: ' . json_last_error_msg() . ' - URL: ' . $url);
             return null;
         }
 
-        \Illuminate\Support\Facades\Log::info('OSC carregada com sucesso: ' . $id);
+        //\Illuminate\Support\Facades\Log::info('OSC carregada com sucesso: ' . $id);
 
         return $decoded;
     }
@@ -445,7 +445,7 @@ if ( ! function_exists('curlSituacao') ) {
         $url = $api."situacao_cadastral";
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para situacao');
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para situacao');
             return [];
         }
 
@@ -460,13 +460,13 @@ if ( ! function_exists('curlSituacao') ) {
         curl_close($ch);
 
         if ($error || $data === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL situacao: ' . $error);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL situacao: ' . $error);
             return [];
         }
 
         $decoded = json_decode($data);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON situacao: ' . json_last_error_msg());
+            //\Illuminate\Support\Facades\Log::error('Erro JSON situacao: ' . json_last_error_msg());
             return [];
         }
 
@@ -485,7 +485,7 @@ if ( ! function_exists('curlList') ) {
         $url = $api."osc/".$string."/".$id;
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para curlList: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para curlList: ' . $url);
             return [];
         }
 
@@ -506,26 +506,26 @@ if ( ! function_exists('curlList') ) {
         //\Illuminate\Support\Facades\Log::info('curlList Error: ' . $error);
 
         if ($error || $response === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL curlList: ' . $error . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL curlList: ' . $error . ' - URL: ' . $url);
             return [];
         }
 
         if ($httpCode !== 200) {
-            \Illuminate\Support\Facades\Log::error('HTTP Error curlList: ' . $httpCode . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('HTTP Error curlList: ' . $httpCode . ' - URL: ' . $url);
             return [];
         }
 
         $data = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON curlList: ' . json_last_error_msg() . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro JSON curlList: ' . json_last_error_msg() . ' - URL: ' . $url);
             return [];
         }
 
         if(!is_array($data)){
             $data = [];
         }
-        
-        \Illuminate\Support\Facades\Log::info('curlList ' . $string . ' retornou ' . count($data) . ' itens');
+
+        //\Illuminate\Support\Facades\Log::info('curlList ' . $string . ' retornou ' . count($data) . ' itens');
 
         return $data;
     }
@@ -569,7 +569,7 @@ if ( ! function_exists('curlListParametros') ) {
         $url = $api."osc/".$string."/".$id;
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL');
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL');
             return [];
         }
 
@@ -585,13 +585,13 @@ if ( ! function_exists('curlListParametros') ) {
         curl_close($ch);
 
         if ($error || $string === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL: ' . $error . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL: ' . $error . ' - URL: ' . $url);
             return [];
         }
 
         $data = json_decode($string, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON: ' . json_last_error_msg() . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro JSON: ' . json_last_error_msg() . ' - URL: ' . $url);
             return [];
         }
 
@@ -617,38 +617,38 @@ if ( ! function_exists('curlListAno') ) {
         $url = $api."osc/".$string."/".$ano."/".$id;
         $ch = curl_init();
         if ($ch === false) {
-            \Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para curlListAno: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Falha ao inicializar cURL para curlListAno: ' . $url);
             return [];
         }
-        
+
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        
+
         $response = curl_exec($ch);
         $error = curl_error($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        \Illuminate\Support\Facades\Log::info('curlListAno URL: ' . $url);
-        \Illuminate\Support\Facades\Log::info('curlListAno Response: ' . $response);
-        \Illuminate\Support\Facades\Log::info('curlListAno HTTP Code: ' . $httpCode);
+        //\Illuminate\Support\Facades\Log::info('curlListAno URL: ' . $url);
+        //\Illuminate\Support\Facades\Log::info('curlListAno Response: ' . $response);
+        //\Illuminate\Support\Facades\Log::info('curlListAno HTTP Code: ' . $httpCode);
 
         if ($error || $response === false) {
-            \Illuminate\Support\Facades\Log::error('Erro cURL curlListAno: ' . $error . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro cURL curlListAno: ' . $error . ' - URL: ' . $url);
             return [];
         }
-        
+
         if ($httpCode !== 200) {
-            \Illuminate\Support\Facades\Log::error('HTTP Error curlListAno: ' . $httpCode . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('HTTP Error curlListAno: ' . $httpCode . ' - URL: ' . $url);
             return [];
         }
 
         $data = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            \Illuminate\Support\Facades\Log::error('Erro JSON curlListAno: ' . json_last_error_msg() . ' - URL: ' . $url);
+            //\Illuminate\Support\Facades\Log::error('Erro JSON curlListAno: ' . json_last_error_msg() . ' - URL: ' . $url);
             return [];
         }
 
@@ -660,8 +660,8 @@ if ( ! function_exists('curlListAno') ) {
         } else {
             $data = [];
         }
-        
-        \Illuminate\Support\Facades\Log::info('curlListAno ' . $string . '/' . $ano . ' retornou ' . count($data) . ' itens');
+
+        //\Illuminate\Support\Facades\Log::info('curlListAno ' . $string . '/' . $ano . ' retornou ' . count($data) . ' itens');
 
         return $data;
     }
