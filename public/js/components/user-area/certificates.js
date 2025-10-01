@@ -333,6 +333,6 @@ class Certificates extends React.Component {
     }), " Adicionar novo t\xEDtulo")))), modal, modalExcluir);
   }
 }
-ReactDOM.render( /*#__PURE__*/React.createElement(Certificates, {
+ReactDOM.render(/*#__PURE__*/React.createElement(Certificates, {
   id: id
 }), document.getElementById('certificates'));

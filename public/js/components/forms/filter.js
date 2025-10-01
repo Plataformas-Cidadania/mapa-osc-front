@@ -1258,7 +1258,6 @@ class Filter extends React.Component {
       this.handleSubmit(); // Substitua pelo método que manipula a submissão do formulário
     }
   }
-
   objetivosMetasProjetos(id) {
     this.setState({
       loadingList: true
@@ -1663,7 +1662,7 @@ class Filter extends React.Component {
             }, subitem.tx_nome_subarea_atuacao)), /*#__PURE__*/React.createElement("br", null));
           }.bind(this));
         }
-        subAreaAtuacao.push( /*#__PURE__*/React.createElement("div", {
+        subAreaAtuacao.push(/*#__PURE__*/React.createElement("div", {
           key: "divArea_" + item.cd_area_atuacao,
           className: "card",
           style: {

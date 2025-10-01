@@ -35,4 +35,4 @@ class HeaderUser extends React.Component {
     }), /*#__PURE__*/React.createElement("br", null)))));
   }
 }
-ReactDOM.render( /*#__PURE__*/React.createElement(HeaderUser, null), document.getElementById('header-user'));
+ReactDOM.render(/*#__PURE__*/React.createElement(HeaderUser, null), document.getElementById('header-user'));

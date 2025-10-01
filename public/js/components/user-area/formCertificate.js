@@ -229,7 +229,6 @@ class FormCertificate extends React.Component {
     });
     //}
   }
-
   setUf(item) {
     let filters = this.state.filters;
     let form = this.state.form;

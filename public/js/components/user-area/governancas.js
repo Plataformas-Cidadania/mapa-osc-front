@@ -733,6 +733,6 @@ class Governancas extends React.Component {
     }, "Atualize suas informa\xE7\xF5es sobre volunt\xE1rios"))))))));
   }
 }
-ReactDOM.render( /*#__PURE__*/React.createElement(Governancas, {
+ReactDOM.render(/*#__PURE__*/React.createElement(Governancas, {
   id: id
 }), document.getElementById('governancas'));

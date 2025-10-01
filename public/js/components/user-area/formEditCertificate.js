@@ -144,7 +144,6 @@ class FormEditCertificate extends React.Component {
         //data.cd_municipio = 3303302;
         //data.cd_municipio = null
       }
-
       $.ajax({
         method: 'PUT',
         url: getBaseUrl2 + 'osc/certificado/' + this.state.editId,
@@ -227,7 +226,6 @@ class FormEditCertificate extends React.Component {
     });
     //}
   }
-
   setUf(item) {
     let filters = this.state.filters;
     let form = this.state.form;

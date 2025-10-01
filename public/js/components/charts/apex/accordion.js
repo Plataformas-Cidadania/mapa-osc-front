@@ -48,7 +48,6 @@ class Accordion extends React.Component {
       });
     }
   }
-
   toggleAccordion(index) {
     this.setState(prevState => ({
       activeIndex: prevState.activeIndex === index ? -1 : index

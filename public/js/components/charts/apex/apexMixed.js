@@ -45,13 +45,11 @@ class ApexMixed extends React.Component {
             }
           }
         },
-
         stroke: {
           width: [2, 2, 5]
           /*width: [0, 2, 5],
           curve: 'smooth'*/
         },
-
         plotOptions: {
           bar: {
             columnWidth: '50%'
@@ -93,7 +91,6 @@ class ApexMixed extends React.Component {
           }
           //type: 'datetime'
         },
-
         /*yaxis: props?.nome ? {
             title: {
                 text: props?.nome,
@@ -121,7 +118,6 @@ class ApexMixed extends React.Component {
             }
           }
         },
-
         tooltip: props?.nome ? {
           shared: false,
           intersect: true,

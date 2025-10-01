@@ -137,7 +137,6 @@ class OscMap extends React.Component {
     this.zoomToFeature = this.zoomToFeature.bind(this);
     //this.onEachFeature = this.onEachFeature.bind(this);
   }
-
   componentDidMount() {
     this.loadFirstMap();
     this.loadMap();
@@ -145,7 +144,6 @@ class OscMap extends React.Component {
     this.loadSituacao();
     //this.loadAllUfs();
   }
-
   componentWillReceiveProps(props) {
     //console.log('will receve props');
     //console.log(props.data);
@@ -429,7 +427,6 @@ class OscMap extends React.Component {
       //this.loadMap();
     });
   }
-
   controlBasicMap(thisReact) {
     return L.Control.extend({
       options: {
@@ -1013,7 +1010,6 @@ class OscMap extends React.Component {
             }*/
           });
         },
-
         error: function (xhr, status, err) {
           console.error(status, err.toString());
           _this.setState({
@@ -1101,7 +1097,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
-
           data = data2;
           //console.log(data);
           /////////////////////////////////////////////
@@ -1138,7 +1133,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //array_push($data2, [$item->id_osc, $item->geo_lat, $item->geo_lng]);
           }
-
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1237,7 +1231,6 @@ class OscMap extends React.Component {
             data2.push([data[i].id_osc, data[i].geo_lat, data[i].geo_lng]);
             //}
           }
-
           data = data2;
           /////////////////////////////////////////////
           //this.setState({data: data, processingOscPontos: false}, function(){
@@ -1418,7 +1411,6 @@ class OscMap extends React.Component {
         // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -30] // point from which the popup should open relative to the iconAnchor
       });
-
       let marker = L.marker(L.latLng(item[1], item[2]), {
         icon: icon
       })
@@ -1434,7 +1426,6 @@ class OscMap extends React.Component {
         _this.dataOSC(item[0], marker);
         //this.openPopup();
       });
-
       markers.addLayer(marker);
     });
     //mapElements.map.addLayer(markers);
@@ -1483,7 +1474,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaIdhGroup.addLayer(areaIdh);
     this.setState({
       mapElements: mapElements
@@ -1525,7 +1515,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaIdhGroup.addLayer(areaIDHM);
     this.setState({
       mapElements: mapElements
@@ -1650,7 +1639,6 @@ class OscMap extends React.Component {
       }
       //onEachFeature: this.onEachFeature //listeners
     });
-
     mapElements.areaOscGroup.addLayer(areaOsc);
     this.setState({
       mapElements: mapElements
@@ -1986,7 +1974,7 @@ class OscMap extends React.Component {
         pages.push(p[4]);
         pages.push(p[5]);
         pages.push(p[6]);
-        pages.push( /*#__PURE__*/React.createElement("li", {
+        pages.push(/*#__PURE__*/React.createElement("li", {
           className: "page-item "
         }, /*#__PURE__*/React.createElement("a", {
           className: "page-link",
@@ -1995,7 +1983,7 @@ class OscMap extends React.Component {
         pages.push(p[n_paginas - 1]);
       } else if (pagina === n_paginas - 1 || pagina === n_paginas - 2) {
         pages.push(p[0]);
-        pages.push( /*#__PURE__*/React.createElement("li", {
+        pages.push(/*#__PURE__*/React.createElement("li", {
           className: "page-item "
         }, /*#__PURE__*/React.createElement("a", {
           className: "page-link",
@@ -2011,7 +1999,7 @@ class OscMap extends React.Component {
         pages.push(p[n_paginas - 1]);
       } else {
         pages.push(p[0]);
-        pages.push( /*#__PURE__*/React.createElement("li", {
+        pages.push(/*#__PURE__*/React.createElement("li", {
           className: "page-item "
         }, /*#__PURE__*/React.createElement("a", {
           className: "page-link",
@@ -2025,7 +2013,7 @@ class OscMap extends React.Component {
           pages.push(p[parseInt(pagina) + 1]);
           pages.push(p[parseInt(pagina) + 2]);
           pages.push(p[parseInt(pagina) + 3]);
-          pages.push( /*#__PURE__*/React.createElement("li", {
+          pages.push(/*#__PURE__*/React.createElement("li", {
             className: "page-item "
           }, /*#__PURE__*/React.createElement("a", {
             className: "page-link",

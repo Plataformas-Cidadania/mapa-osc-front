@@ -33,12 +33,10 @@ class ApexBar extends React.Component {
         stroke: {
           show: false // Desabilitar para barras
         },
-
         xaxis: {
           categories: props?.data?.labels
           //categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         },
-
         yaxis: {
           title: {
             text: '$ (thousands)'

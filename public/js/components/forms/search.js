@@ -22,7 +22,6 @@ class Search extends React.Component {
       //  {id: 3, title: "Estado", txt: 'Digite o nome do estado...', rota: 'busca/estado/', qtd: '10', campo: 'eduf_nm_uf'},
       //  {id: 4, title: "Região", txt: 'Digite o nome da região...', rota: 'busca/regiao/', qtd: '10', campo: 'edre_nm_regiao'},
       ],
-
       searchOsc: '',
       searchOscId: 1,
       searchOscTxt: 'Encontre uma OSC, digite o nome ou CNPJ...',
@@ -207,7 +206,7 @@ class Search extends React.Component {
 
     // Adição do elemento que permite a pesquisa direta do que foi escrito no mapa, apenas para "Organizacao"
     if (this.state.searchOsc != '' && this.state.msg === '' && this.state.searchOsc.length > 2 && this.state.searchOscId == 1) {
-      menuList.unshift( /*#__PURE__*/React.createElement("li", {
+      menuList.unshift(/*#__PURE__*/React.createElement("li", {
         key: 'menuList' + this.state.listMenuItem.length,
         className: "list-group-item d-flex"
       }, /*#__PURE__*/React.createElement("a", {
@@ -279,4 +278,4 @@ class Search extends React.Component {
     }), " Utilize a Consulta Avan\xE7ada"))));
   }
 }
-ReactDOM.render( /*#__PURE__*/React.createElement(Search, null), document.getElementById('search'));
+ReactDOM.render(/*#__PURE__*/React.createElement(Search, null), document.getElementById('search'));
