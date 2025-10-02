@@ -30,6 +30,14 @@
                     $projetos_tipo_parceria = curl('projeto/tipo_parcerias', $projeto->id);
                     $projetos_objetivo = curlList('projeto/objetivos', $projeto->id);
 
+                    $s_projeto = [
+                        1 => 'Arquivado, cancelado ou indeferido',
+                        2 => 'Finalizado',
+                        3 => 'Proposta',
+                        4 => 'Projeto em andamento',
+                        5 => 'Outro',
+                    ];
+
                     ?>
                     <div class="card">
                         <div class="card-header" id="headingP{{$key}}">
@@ -51,7 +59,7 @@
                                         <div class="line-add">
                                             <?php echo iconType($projetos_descricao->ft_status_projeto); ?>
                                             <h2>Situação do projeto</h2>
-                                            <p>{{$projetos_descricao->cd_status_projeto == null ? $txt_alert_abb : $projetos_descricao->cd_status_projeto}}</p>
+                                            <p>{{$projetos_descricao->cd_status_projeto == null ? $txt_alert_abb : $s_projeto[$projetos_descricao->cd_status_projeto]}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

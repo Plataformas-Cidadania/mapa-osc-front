@@ -186,9 +186,9 @@
                 @endforeach
             </div>
             @endif
-            
+
             {{-- Gráfico de Recursos --}}
-            @if(!empty($recursos) && count($recursos) > 0)
+            {{--@if(!empty($recursos) && count($recursos) > 0)
             <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            @endif
+            @endif--}}
         </div>
     </div>
 </div>
@@ -218,14 +218,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const privados = [];
             const naoFinanceiros = [];
             const proprios = [];
-            
+
             anos.forEach(ano => {
                 publicos.push(data[ano].publicos || 0);
                 privados.push(data[ano].privados || 0);
                 naoFinanceiros.push(data[ano].nao_financeiros || 0);
                 proprios.push(data[ano].proprios || 0);
             });
-            
+
             const options = {
                 series: [{
                     name: 'Recursos Públicos',
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     curve: 'smooth'
                 }
             };
-            
+
             const chart = new ApexCharts(document.querySelector("#chart-recursos"), options);
             chart.render();
         })
