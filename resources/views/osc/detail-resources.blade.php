@@ -188,7 +188,7 @@
             @endif
 
             {{-- Gráfico de Recursos --}}
-            {{--@if(!empty($recursos) && count($recursos) > 0)
+            @if(!empty($recursos) && count($recursos) > 0)
             <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            @endif--}}
+            @endif
         </div>
     </div>
 </div>
