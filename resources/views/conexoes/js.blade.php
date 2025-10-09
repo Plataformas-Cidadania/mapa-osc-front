@@ -113,11 +113,8 @@
 <script src="js/components/login/menuUsuarioMobile.js"></script>
 
 @if($rota=='detalhar/{id}/{title}' || $rota=='detalhar/{id}')
-    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
-    <script src="js/components/charts/polarChart.js"></script>
-    <script src="js/components/osc/preenchimento.js"></script>
+    <script src="js/components/osc/polar-simple.js"></script>
     <script src="js/components/osc/selo.js"></script>
 @endif
 @if($rota=='/')

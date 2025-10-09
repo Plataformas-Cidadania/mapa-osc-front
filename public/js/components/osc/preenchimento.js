@@ -30,25 +30,7 @@ class Preenchimento extends React.Component {
         transparencia.serie.push(data[0].transparencia_projetos_atividades_programas);
         transparencia.serie.push(data[0].transparencia_relacoes_trabalho_governanca);
         transparencia.serie.push(data[0].transparencia_titulos_certificacoes);
-
-        /*////////////////////*/
-        let soma = [];
-        soma.push(data[0].transparencia_area_atuacao / 800 * 100);
-        soma.push(data[0].transparencia_dados_gerais / 800 * 100);
-        soma.push(data[0].transparencia_descricao / 800 * 100);
-        soma.push(data[0].transparencia_espacos_participacao_social / 800 * 100);
-        soma.push(data[0].transparencia_fontes_recursos / 800 * 100);
-        soma.push(data[0].transparencia_projetos_atividades_programas / 800 * 100);
-        soma.push(data[0].transparencia_relacoes_trabalho_governanca / 800 * 100);
-        soma.push(data[0].transparencia_titulos_certificacoes / 800 * 100);
-        var total = 0;
-        var numeros = soma;
-        for (var i = 0; i < numeros.length; i++) {
-          total += parseInt(numeros[i]);
-        }
-
-        /*////////////////////*/
-
+        const total = parseFloat(data[0].transparencia_osc);
         _this.setState({
           data: transparencia,
           total: total
@@ -62,21 +44,43 @@ class Preenchimento extends React.Component {
       }
     });
   }
+  renderChart() {
+    if (!this.state.data) return;
+    const options = {
+      series: this.state.data.serie.map(val => parseFloat(val)),
+      chart: {
+        type: 'polarArea',
+        height: 300
+      },
+      labels: this.state.data.labels,
+      colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'],
+      legend: {
+        position: 'bottom'
+      },
+      plotOptions: {
+        polarArea: {
+          rings: {
+            strokeWidth: 1
+          },
+          spokes: {
+            strokeWidth: 1
+          }
+        }
+      }
+    };
+    const chart = new ApexCharts(document.querySelector('#polarChart'), options);
+    chart.render();
+  }
   render() {
-    console.log('this.state.data', this.state.data);
-    let polarChart = null;
-    if (this.state.data) {
-      polarChart = /*#__PURE__*/React.createElement(PolarChart, {
-        polarChart: "polarChart",
-        data: this.state.data
-      });
-    }
     if (this.state.data === null || this.state.data === []) {
-      return /*#__PURE__*/React.createElement("div", null);
+      return /*#__PURE__*/React.createElement("div", null, "Carregando...");
     }
-    return /*#__PURE__*/React.createElement("div", null, polarChart, /*#__PURE__*/React.createElement("div", {
+    setTimeout(() => this.renderChart(), 100);
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      id: "polarChart"
+    }), /*#__PURE__*/React.createElement("div", {
       className: "indice-total"
-    }, this.state.total));
+    }, this.state.total, "%"));
   }
 }
 ReactDOM.render(/*#__PURE__*/React.createElement(Preenchimento, {
