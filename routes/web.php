@@ -237,4 +237,9 @@ Route::get('/detalhar-users-document/{id}', 'UserAreaController@detailDocument')
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('/get-descricao', 'UserAreaController@getDescricao')->middleware('auth');
 
+// ROTAS CONSELHOS
+Route::get('/dashboard-conselho', 'UserAreaController@dashboardConselho');
+Route::get('/conselho', 'UserAreaController@conselho');
+Route::get('/conselheiro', 'UserAreaController@conselheiro');
+
 

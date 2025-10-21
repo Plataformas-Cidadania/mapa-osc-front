@@ -77,6 +77,18 @@ class UserAreaController extends Controller
         return view('user-area', ['pgUserArea' => 'videos']);
     }
 
+    public function dashboardConselho(){
+        return view('user-area', ['pgUserArea' => 'dashboard-conselho']);
+    }
+    
+    public function conselho(){
+        return view('user-area', ['pgUserArea' => 'conselhos']);
+    }
+    
+    public function conselheiro(){
+        return view('user-area', ['pgUserArea' => 'conselheiros']);
+    }
+
     /*public function video(){
         return view('user-area', ['pgUserArea' => 'video']);
     }*/

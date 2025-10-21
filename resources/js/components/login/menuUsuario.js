@@ -70,6 +70,9 @@ class MenuUsuario extends React.Component{
                     <a href="dados-user" style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
                         <button className="dropdown-item" type="button">Meus Dados</button>
                     </a>
+                    <a href="dashboard-conselho" style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
+                        <button className="dropdown-item" type="button">Conselhos</button>
+                    </a>
                     {/*<a href="oscs-user">
                         <button className="dropdown-item " type="button">Editar</button>
                     </a>*/}

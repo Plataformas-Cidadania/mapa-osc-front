@@ -460,6 +460,18 @@
     <script src="js/components/osc/tour.js"></script>
     <script src="js/components/user-area/objetivos.js"></script>
 @endif
+@if($rota=="dashboard-conselho" || $rota=="conselho" || $rota=="conselheiro")
+    <script src="js/components/conselho/menu.js"></script>
+@endif
+@if($rota=="dashboard-conselho")
+    <script src="js/components/conselho/dashboard.js"></script>
+@endif
+@if($rota=="conselho")
+    <script src="js/components/conselho/conselhos.js"></script>
+@endif
+@if($rota=="conselheiro")
+    <script src="js/components/conselheiro/conselheiros.js"></script>
+@endif
 @if($rota=="register")
     <script src="js/components/join/register.js"></script>
 @endif
