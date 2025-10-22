@@ -5,12 +5,138 @@ class Conselhos extends React.Component {
             loading: true,
             conselhos: [],
             showModal: false,
-            editingConselho: null
+            editingConselho: null,
+            form: {
+                tx_nome_conselho: '',
+                tx_ato_legal: '',
+                tx_website: '',
+                bo_conselho_ativo: true,
+                cd_nivel_federativo: 1,
+                cd_tipo_abrangencia: 1
+            },
+            nivelFederativo: [],
+            tipoAbrangencia: []
         };
     }
 
     componentDidMount() {
         this.loadConselhos();
+        this.loadNivelFederativo();
+        this.loadTipoAbrangencia();
+    }
+
+    loadNivelFederativo() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'nivel_federativo',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({ nivelFederativo: data || [] });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('Erro ao carregar níveis federativos:', err);
+            }.bind(this)
+        });
+    }
+
+    loadTipoAbrangencia() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'abrangencia_conselho',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({ tipoAbrangencia: data || [] });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('Erro ao carregar tipos de abrangência:', err);
+            }.bind(this)
+        });
+    }
+
+    openModal(conselho = null) {
+        if (conselho) {
+            this.setState({
+                showModal: true,
+                editingConselho: conselho,
+                form: {
+                    tx_nome_conselho: conselho.tx_nome_conselho || '',
+                    tx_ato_legal: conselho.tx_ato_legal || '',
+                    tx_website: conselho.tx_website || '',
+                    bo_conselho_ativo: conselho.bo_conselho_ativo || true,
+                    cd_nivel_federativo: conselho.cd_nivel_federativo || 1,
+                    cd_tipo_abrangencia: conselho.cd_tipo_abrangencia || 1
+                }
+            });
+        } else {
+            this.setState({
+                showModal: true,
+                editingConselho: null,
+                form: {
+                    tx_nome_conselho: '',
+                    tx_ato_legal: '',
+                    tx_website: '',
+                    bo_conselho_ativo: true,
+                    cd_nivel_federativo: 1,
+                    cd_tipo_abrangencia: 1
+                }
+            });
+        }
+    }
+
+    closeModal() {
+        this.setState({
+            showModal: false,
+            editingConselho: null,
+            form: {
+                tx_nome_conselho: '',
+                tx_ato_legal: '',
+                tx_website: '',
+                bo_conselho_ativo: true,
+                cd_nivel_federativo: 1,
+                cd_tipo_abrangencia: 1
+            }
+        });
+    }
+
+    handleInputChange(field, value) {
+        this.setState({
+            form: {
+                ...this.state.form,
+                [field]: value
+            }
+        });
+    }
+
+    saveConselho() {
+        const url = this.state.editingConselho
+            ? getBaseUrl2 + 'confocos/conselho/' + this.state.editingConselho.id_conselho
+            : getBaseUrl2 + 'confocos/conselho';
+
+        const method = this.state.editingConselho ? 'PUT' : 'POST';
+
+        $.ajax({
+            method: method,
+            url: url,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token'),
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(this.state.form),
+            success: function() {
+                this.closeModal();
+                this.loadConselhos();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('Erro ao salvar conselho:', err);
+                alert('Erro ao salvar conselho');
+            }.bind(this)
+        });
     }
 
     loadConselhos() {
@@ -39,7 +165,7 @@ class Conselhos extends React.Component {
         if (confirm('Tem certeza que deseja excluir este conselho?')) {
             $.ajax({
                 method: 'DELETE',
-                url: getBaseUrl2 + 'representacao_conselho/' + id,
+                url: getBaseUrl2 + 'confocos/conselho/' + id,
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
@@ -52,6 +178,110 @@ class Conselhos extends React.Component {
                 }
             });
         }
+    }
+
+    renderModal() {
+        return React.createElement(
+            'div',
+            { className: 'modal', style: { display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' } },
+            React.createElement(
+                'div',
+                { className: 'modal-dialog' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-header' },
+                        React.createElement('h5', { className: 'modal-title' },
+                            this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'
+                        ),
+                        React.createElement(
+                            'button',
+                            {
+                                type: 'button',
+                                className: 'close',
+                                onClick: () => this.closeModal()
+                            },
+                            '×'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement('label', null, 'Nome do Conselho'),
+                            React.createElement('input', {
+                                type: 'text',
+                                className: 'form-control',
+                                value: this.state.form.tx_nome_conselho,
+                                onChange: (e) => this.handleInputChange('tx_nome_conselho', e.target.value)
+                            })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement('label', null, 'Ato Legal'),
+                            React.createElement('input', {
+                                type: 'text',
+                                className: 'form-control',
+                                value: this.state.form.tx_ato_legal,
+                                onChange: (e) => this.handleInputChange('tx_ato_legal', e.target.value)
+                            })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement('label', null, 'Website'),
+                            React.createElement('input', {
+                                type: 'text',
+                                className: 'form-control',
+                                value: this.state.form.tx_website,
+                                onChange: (e) => this.handleInputChange('tx_website', e.target.value)
+                            })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement(
+                                'label',
+                                null,
+                                React.createElement('input', {
+                                    type: 'checkbox',
+                                    checked: this.state.form.bo_conselho_ativo,
+                                    onChange: (e) => this.handleInputChange('bo_conselho_ativo', e.target.checked)
+                                }),
+                                ' Conselho Ativo'
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        React.createElement(
+                            'button',
+                            {
+                                type: 'button',
+                                className: 'btn btn-secondary',
+                                onClick: () => this.closeModal()
+                            },
+                            'Cancelar'
+                        ),
+                        React.createElement(
+                            'button',
+                            {
+                                type: 'button',
+                                className: 'btn btn-primary',
+                                onClick: () => this.saveConselho()
+                            },
+                            'Salvar'
+                        )
+                    )
+                )
+            )
+        );
     }
 
     render() {
@@ -69,9 +299,9 @@ class Conselhos extends React.Component {
                     React.createElement('h5', null, 'Meus Conselhos'),
                     React.createElement(
                         'button',
-                        { 
+                        {
                             className: 'btn btn-primary',
-                            onClick: () => this.setState({showModal: true, editingConselho: null})
+                            onClick: () => this.openModal()
                         },
                         'Novo Conselho'
                     )
@@ -93,7 +323,7 @@ class Conselhos extends React.Component {
                 React.createElement('h5', null, 'Meus Conselhos'),
                 React.createElement(
                     'button',
-                    { 
+                    {
                         className: 'btn btn-primary',
                         onClick: () => this.setState({showModal: true, editingConselho: null})
                     },
@@ -123,7 +353,7 @@ class Conselhos extends React.Component {
                     React.createElement(
                         'tbody',
                         null,
-                        this.state.conselhos.map(conselho => 
+                        this.state.conselhos.map(conselho =>
                             React.createElement(
                                 'tr',
                                 { key: conselho.id_conselho },
@@ -133,10 +363,10 @@ class Conselhos extends React.Component {
                                 React.createElement(
                                     'td',
                                     null,
-                                    conselho.tx_website ? 
+                                    conselho.tx_website ?
                                         React.createElement(
                                             'a',
-                                            { 
+                                            {
                                                 href: `http://${conselho.tx_website}`,
                                                 target: '_blank',
                                                 rel: 'noopener noreferrer'
@@ -149,7 +379,7 @@ class Conselhos extends React.Component {
                                     null,
                                     React.createElement(
                                         'span',
-                                        { 
+                                        {
                                             className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
                                         },
                                         conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'
@@ -162,7 +392,7 @@ class Conselhos extends React.Component {
                                         'button',
                                         {
                                             className: 'btn btn-sm btn-warning mr-2',
-                                            onClick: () => this.setState({showModal: true, editingConselho: conselho})
+                                            onClick: () => this.openModal(conselho)
                                         },
                                         'Editar'
                                     ),
@@ -178,7 +408,8 @@ class Conselhos extends React.Component {
                             )
                         )
                     )
-                )
+                ),
+                this.state.showModal ? this.renderModal() : null
             )
         );
     }
