@@ -10,7 +10,7 @@ class Conselheiros extends React.Component {
             form: {
                 tx_nome_conselheiro: '',
                 tx_orgao_origem: '',
-                cd_identificador_orgao: '',
+                cd_identificador_osc: '',
                 dt_data_vinculo: '',
                 dt_data_final_vinculo: '',
                 bo_conselheiro_ativo: true,
@@ -52,7 +52,7 @@ class Conselheiros extends React.Component {
                 form: {
                     tx_nome_conselheiro: conselheiro.tx_nome_conselheiro || '',
                     tx_orgao_origem: conselheiro.tx_orgao_origem || '',
-                    cd_identificador_orgao: conselheiro.cd_identificador_orgao || '',
+                    cd_identificador_osc: conselheiro.cd_identificador_osc || '',
                     dt_data_vinculo: conselheiro.dt_data_vinculo ? conselheiro.dt_data_vinculo.split(' ')[0] : '',
                     dt_data_final_vinculo: conselheiro.dt_data_final_vinculo ? conselheiro.dt_data_final_vinculo.split(' ')[0] : '',
                     bo_conselheiro_ativo: conselheiro.bo_conselheiro_ativo !== undefined ? conselheiro.bo_conselheiro_ativo : true,
@@ -67,7 +67,7 @@ class Conselheiros extends React.Component {
                 form: {
                     tx_nome_conselheiro: '',
                     tx_orgao_origem: '',
-                    cd_identificador_orgao: '',
+                    cd_identificador_osc: '',
                     dt_data_vinculo: '',
                     dt_data_final_vinculo: '',
                     bo_conselheiro_ativo: true,
@@ -79,13 +79,13 @@ class Conselheiros extends React.Component {
     }
 
     closeModal() {
-        this.setState({ 
-            showModal: false, 
+        this.setState({
+            showModal: false,
             editingConselheiro: null,
             form: {
                 tx_nome_conselheiro: '',
                 tx_orgao_origem: '',
-                cd_identificador_orgao: '',
+                cd_identificador_osc: '',
                 dt_data_vinculo: '',
                 dt_data_final_vinculo: '',
                 bo_conselheiro_ativo: true,
@@ -94,6 +94,7 @@ class Conselheiros extends React.Component {
             }
         });
     }
+
 
     handleInputChange(field, value) {
         this.setState({
@@ -111,6 +112,12 @@ class Conselheiros extends React.Component {
 
         const method = this.state.editingConselheiro ? 'PUT' : 'POST';
 
+        const formData = {
+            ...this.state.form,
+            dt_data_vinculo: this.state.form.dt_data_vinculo || null,
+            dt_data_final_vinculo: this.state.form.dt_data_final_vinculo || null
+        };
+
         $.ajax({
             method: method,
             url: url,
@@ -118,7 +125,7 @@ class Conselheiros extends React.Component {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token'),
                 'Content-Type': 'application/json'
             },
-            data: JSON.stringify(this.state.form),
+            data: JSON.stringify(formData),
             success: function() {
                 this.closeModal();
                 this.loadConselheiros();
@@ -231,10 +238,10 @@ class Conselheiros extends React.Component {
                                 onChange: (e) => this.handleInputChange('id_conselho', e.target.value)
                             },
                                 React.createElement('option', { value: '' }, 'Selecione um conselho'),
-                                this.state.conselhos.map(conselho => 
-                                    React.createElement('option', { 
-                                        key: conselho.id_conselho, 
-                                        value: conselho.id_conselho 
+                                this.state.conselhos.map(conselho =>
+                                    React.createElement('option', {
+                                        key: conselho.id_conselho,
+                                        value: conselho.id_conselho
                                     }, conselho.tx_nome_conselho)
                                 )
                             )
