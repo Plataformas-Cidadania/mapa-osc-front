@@ -290,10 +290,10 @@ class Conselheiros extends React.Component {
       return React.createElement('tr', {
         key: conselheiro.id_conselheiro
       }, React.createElement('td', null, conselheiro.tx_nome_conselheiro), React.createElement('td', null, conselheiro.tx_orgao_origem), React.createElement('td', null, conselho ? conselho.tx_nome_conselho : '-'), React.createElement('td', null, conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'), React.createElement('td', null, conselheiro.bo_eh_governamental ? 'Sim' : 'Não'), React.createElement('td', null, React.createElement('button', {
-        className: 'btn btn-sm btn-outline-primary me-2',
+        className: 'btn btn-sm btn-warning mr-2',
         onClick: () => this.openModal(conselheiro)
       }, 'Editar'), React.createElement('button', {
-        className: 'btn btn-sm btn-outline-danger',
+        className: 'btn btn-sm btn-danger',
         onClick: () => this.deleteConselheiro(conselheiro.id_conselheiro)
       }, 'Excluir')));
     })))))))), this.state.showModal && this.renderModal());

@@ -398,7 +398,7 @@ class Conselheiros extends React.Component {
                                                     React.createElement(
                                                         'button',
                                                         {
-                                                            className: 'btn btn-sm btn-outline-primary me-2',
+                                                            className: 'btn btn-sm btn-warning mr-2',
                                                             onClick: () => this.openModal(conselheiro)
                                                         },
                                                         'Editar'
@@ -406,7 +406,7 @@ class Conselheiros extends React.Component {
                                                     React.createElement(
                                                         'button',
                                                         {
-                                                            className: 'btn btn-sm btn-outline-danger',
+                                                            className: 'btn btn-sm btn-danger',
                                                             onClick: () => this.deleteConselheiro(conselheiro.id_conselheiro)
                                                         },
                                                         'Excluir'
