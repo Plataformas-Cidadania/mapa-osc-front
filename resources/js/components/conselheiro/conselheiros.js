@@ -274,7 +274,7 @@ class Conselheiros extends React.Component {
                             <option value="false">Inativos</option>
                         </select>
                     </div>
-                    <div className="col-md-3">
+                    {/*<div className="col-md-3">
                         <select
                             className="form-control"
                             value={this.state.filters.governamental}
@@ -284,7 +284,7 @@ class Conselheiros extends React.Component {
                             <option value="true">Governamental</option>
                             <option value="false">Não Governamental</option>
                         </select>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         );

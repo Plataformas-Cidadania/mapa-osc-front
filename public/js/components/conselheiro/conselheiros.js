@@ -253,19 +253,7 @@ class Conselheiros extends React.Component {
       value: "true"
     }, "Ativos"), /*#__PURE__*/React.createElement("option", {
       value: "false"
-    }, "Inativos"))), /*#__PURE__*/React.createElement("div", {
-      className: "col-md-3"
-    }, /*#__PURE__*/React.createElement("select", {
-      className: "form-control",
-      value: this.state.filters.governamental,
-      onChange: e => this.handleFilterChange('governamental', e.target.value)
-    }, /*#__PURE__*/React.createElement("option", {
-      value: ""
-    }, "Todos os tipos"), /*#__PURE__*/React.createElement("option", {
-      value: "true"
-    }, "Governamental"), /*#__PURE__*/React.createElement("option", {
-      value: "false"
-    }, "N\xE3o Governamental")))));
+    }, "Inativos")))));
   }
   renderDetailModal() {
     if (!this.state.detailConselheiro) return null;
