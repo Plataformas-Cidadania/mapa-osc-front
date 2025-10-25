@@ -181,276 +181,184 @@ class Conselhos extends React.Component {
     }
 
     renderModal() {
-        return React.createElement(
-            'div',
-            { className: 'modal', style: { display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' } },
-            React.createElement(
-                'div',
-                { className: 'modal-dialog' },
-                React.createElement(
-                    'div',
-                    { className: 'modal-content' },
-                    React.createElement(
-                        'div',
-                        { className: 'modal-header' },
-                        React.createElement('h5', { className: 'modal-title' },
-                            this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'
-                        ),
-                        React.createElement(
-                            'button',
-                            {
-                                type: 'button',
-                                className: 'close',
-                                onClick: () => this.closeModal()
-                            },
-                            '×'
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'modal-body' },
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement('label', null, 'Nome do Conselho'),
-                            React.createElement('input', {
-                                type: 'text',
-                                className: 'form-control',
-                                value: this.state.form.tx_nome_conselho,
-                                onChange: (e) => this.handleInputChange('tx_nome_conselho', e.target.value)
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement('label', null, 'Ato Legal'),
-                            React.createElement('input', {
-                                type: 'text',
-                                className: 'form-control',
-                                value: this.state.form.tx_ato_legal,
-                                onChange: (e) => this.handleInputChange('tx_ato_legal', e.target.value)
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement('label', null, 'Website'),
-                            React.createElement('input', {
-                                type: 'text',
-                                className: 'form-control',
-                                value: this.state.form.tx_website,
-                                onChange: (e) => this.handleInputChange('tx_website', e.target.value)
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement('label', null, 'Nível Federativo'),
-                            React.createElement(
-                                'select',
-                                {
-                                    className: 'form-control',
-                                    value: this.state.form.cd_nivel_federativo,
-                                    onChange: (e) => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')
-                                },
-                                React.createElement('option', { value: '' }, 'Selecione...'),
-                                this.state.nivelFederativo.map(nivel =>
-                                    React.createElement('option', {
-                                        key: nivel.cd_nivel_federativo,
-                                        value: nivel.cd_nivel_federativo
-                                    }, nivel.tx_nome_nivel_federativo)
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement('label', null, 'Tipo de Abrangência'),
-                            React.createElement(
-                                'select',
-                                {
-                                    className: 'form-control',
-                                    value: this.state.form.cd_tipo_abrangencia,
-                                    onChange: (e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value ? parseInt(e.target.value) : '')
-                                },
-                                React.createElement('option', { value: '' }, 'Selecione...'),
-                                this.state.tipoAbrangencia.map(tipo =>
-                                    React.createElement('option', {
-                                        key: tipo.cd_tipo_abrangencia,
-                                        value: tipo.cd_tipo_abrangencia
-                                    }, tipo.tx_nome_abrangencia)
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            React.createElement(
-                                'label',
-                                null,
-                                React.createElement('input', {
-                                    type: 'checkbox',
-                                    checked: this.state.form.bo_conselho_ativo,
-                                    onChange: (e) => this.handleInputChange('bo_conselho_ativo', e.target.checked)
-                                }),
-                                ' Conselho Ativo'
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'modal-footer' },
-                        React.createElement(
-                            'button',
-                            {
-                                type: 'button',
-                                className: 'btn btn-secondary',
-                                onClick: () => this.closeModal()
-                            },
-                            'Cancelar'
-                        ),
-                        React.createElement(
-                            'button',
-                            {
-                                type: 'button',
-                                className: 'btn btn-primary',
-                                onClick: () => this.saveConselho()
-                            },
-                            'Salvar'
-                        )
-                    )
-                )
-            )
+        return (
+            <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">
+                                {this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'}
+                            </h5>
+                            <button type="button" className="close" onClick={() => this.closeModal()}>
+                                ×
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>Nome do Conselho</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.form.tx_nome_conselho}
+                                    onChange={(e) => this.handleInputChange('tx_nome_conselho', e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Ato Legal</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.form.tx_ato_legal}
+                                    onChange={(e) => this.handleInputChange('tx_ato_legal', e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Website</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.form.tx_website}
+                                    onChange={(e) => this.handleInputChange('tx_website', e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Nível Federativo</label>
+                                <select
+                                    className="form-control"
+                                    value={this.state.form.cd_nivel_federativo}
+                                    onChange={(e) => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')}
+                                >
+                                    <option value="">Selecione...</option>
+                                    {this.state.nivelFederativo.map(nivel =>
+                                        <option key={nivel.cd_nivel_federativo} value={nivel.cd_nivel_federativo}>
+                                            {nivel.tx_nome_nivel_federativo}
+                                        </option>
+                                    )}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Tipo de Abrangência</label>
+                                <select
+                                    className="form-control"
+                                    value={this.state.form.cd_tipo_abrangencia}
+                                    onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value ? parseInt(e.target.value) : '')}
+                                >
+                                    <option value="">Selecione...</option>
+                                    {this.state.tipoAbrangencia.map(tipo =>
+                                        <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
+                                            {tipo.tx_nome_abrangencia}
+                                        </option>
+                                    )}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.form.bo_conselho_ativo}
+                                        onChange={(e) => this.handleInputChange('bo_conselho_ativo', e.target.checked)}
+                                    />
+                                    {' '}Conselho Ativo
+                                </label>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={() => this.closeModal()}>
+                                Cancelar
+                            </button>
+                            <button type="button" className="btn btn-primary" onClick={() => this.saveConselho()}>
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 
     render() {
         if (this.state.loading) {
-            return React.createElement('div', { className: 'text-center' }, 'Carregando...');
+            return <div className="text-center">Carregando...</div>;
         }
 
         if (this.state.conselhos.length === 0) {
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'div',
-                    { className: 'd-flex justify-content-between mb-3' },
-                    React.createElement('h5', null, 'Meus Conselhos'),
-                    React.createElement(
-                        'button',
-                        {
-                            className: 'btn btn-primary',
-                            onClick: () => this.openModal()
-                        },
-                        'Novo Conselho'
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'alert alert-info' },
-                    'Nenhum conselho encontrado.'
-                )
+            return (
+                <div className="container-fluid">
+                    <div className="bg-white border-bottom py-3 px-4">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h4 className="mb-0">Conselhos</h4>
+                            <button className="btn btn-primary" onClick={() => this.openModal()}>
+                                Novo Conselho
+                            </button>
+                        </div>
+                    </div>
+                    <div className="bg-white p-4 text-center py-5">
+                        <i className="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 className="text-muted">Nenhum conselho encontrado</h5>
+                        <p className="text-muted">Clique no botão "Novo Conselho" para começar</p>
+                    </div>
+                    {this.state.showModal && this.renderModal()}
+                </div>
             );
         }
 
-        return React.createElement(
-            'div',
-            null,
-            React.createElement(
-                'div',
-                { className: 'd-flex justify-content-between mb-3' },
-                React.createElement('h5', null, 'Meus Conselhos'),
-                React.createElement(
-                    'button',
-                    {
-                        className: 'btn btn-primary',
-                        onClick: () => this.setState({showModal: true, editingConselho: null})
-                    },
-                    'Novo Conselho'
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'table-responsive' },
-                React.createElement(
-                    'table',
-                    { className: 'table table-striped' },
-                    React.createElement(
-                        'thead',
-                        null,
-                        React.createElement(
-                            'tr',
-                            null,
-                            React.createElement('th', null, 'ID'),
-                            React.createElement('th', null, 'Nome'),
-                            React.createElement('th', null, 'Ato Legal'),
-                            React.createElement('th', null, 'Website'),
-                            React.createElement('th', null, 'Status'),
-                            React.createElement('th', null, 'Ações')
-                        )
-                    ),
-                    React.createElement(
-                        'tbody',
-                        null,
-                        this.state.conselhos.map(conselho =>
-                            React.createElement(
-                                'tr',
-                                { key: conselho.id_conselho },
-                                React.createElement('td', null, conselho.id_conselho),
-                                React.createElement('td', null, conselho.tx_nome_conselho || 'N/A'),
-                                React.createElement('td', null, conselho.tx_ato_legal || 'N/A'),
-                                React.createElement(
-                                    'td',
-                                    null,
-                                    conselho.tx_website ?
-                                        React.createElement(
-                                            'a',
-                                            {
-                                                href: `http://${conselho.tx_website}`,
-                                                target: '_blank',
-                                                rel: 'noopener noreferrer'
-                                            },
-                                            conselho.tx_website
-                                        ) : 'N/A'
-                                ),
-                                React.createElement(
-                                    'td',
-                                    null,
-                                    React.createElement(
-                                        'span',
-                                        {
-                                            className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
-                                        },
-                                        conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'
-                                    )
-                                ),
-                                React.createElement(
-                                    'td',
-                                    null,
-                                    React.createElement(
-                                        'button',
-                                        {
-                                            className: 'btn btn-sm btn-warning mr-2',
-                                            onClick: () => this.openModal(conselho)
-                                        },
-                                        'Editar'
-                                    ),
-                                    /*React.createElement(
-                                        'button',
-                                        {
-                                            className: 'btn btn-sm btn-danger',
-                                            onClick: () => this.deleteConselho(conselho.id_conselho)
-                                        },
-                                        'Excluir'
-                                    )*/
-                                )
-                            )
-                        )
-                    )
-                ),
-                this.state.showModal ? this.renderModal() : null
-            )
+        return (
+            <div className="container-fluid">
+                <div className="bg-white border-bottom py-3 px-4">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h2>Meus conselhos</h2>
+                        <button className="btn btn-primary" onClick={() => this.openModal()}>
+                            Novo Conselho
+                        </button>
+                    </div>
+                </div>
+                <div className="bg-white p-4">
+                    <div className="table-responsive">
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Ato Legal</th>
+                                        <th>Website</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.conselhos.map(conselho =>
+                                        <tr key={conselho.id_conselho}>
+                                            <td>{conselho.id_conselho}</td>
+                                            <td>{conselho.tx_nome_conselho || 'N/A'}</td>
+                                            <td>{conselho.tx_ato_legal || 'N/A'}</td>
+                                            <td>
+                                                {conselho.tx_website ?
+                                                    <a href={`http://${conselho.tx_website}`} target="_blank" rel="noopener noreferrer">
+                                                        {conselho.tx_website}
+                                                    </a> : 'N/A'
+                                                }
+                                            </td>
+                                            <td>
+                                                <span className={`badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`}>
+                                                    {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-warning mr-2"
+                                                    onClick={() => this.openModal(conselho)}
+                                                >
+                                                    Editar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+                {this.state.showModal && this.renderModal()}
+            </div>
         );
     }
 }

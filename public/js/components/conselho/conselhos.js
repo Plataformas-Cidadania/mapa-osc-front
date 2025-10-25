@@ -173,135 +173,142 @@ class Conselhos extends React.Component {
     }
   }
   renderModal() {
-    return React.createElement('div', {
-      className: 'modal',
+    return /*#__PURE__*/React.createElement("div", {
+      className: "modal",
       style: {
         display: 'block',
         backgroundColor: 'rgba(0,0,0,0.5)'
       }
-    }, React.createElement('div', {
-      className: 'modal-dialog'
-    }, React.createElement('div', {
-      className: 'modal-content'
-    }, React.createElement('div', {
-      className: 'modal-header'
-    }, React.createElement('h5', {
-      className: 'modal-title'
-    }, this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'), React.createElement('button', {
-      type: 'button',
-      className: 'close',
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-dialog"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-content"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "modal-header"
+    }, /*#__PURE__*/React.createElement("h5", {
+      className: "modal-title"
+    }, this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "close",
       onClick: () => this.closeModal()
-    }, '×')), React.createElement('div', {
-      className: 'modal-body'
-    }, React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, 'Nome do Conselho'), React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
+    }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+      className: "modal-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
       value: this.state.form.tx_nome_conselho,
       onChange: e => this.handleInputChange('tx_nome_conselho', e.target.value)
-    })), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, 'Ato Legal'), React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Ato Legal"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
       value: this.state.form.tx_ato_legal,
       onChange: e => this.handleInputChange('tx_ato_legal', e.target.value)
-    })), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, 'Website'), React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Website"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
       value: this.state.form.tx_website,
       onChange: e => this.handleInputChange('tx_website', e.target.value)
-    })), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, 'Nível Federativo'), React.createElement('select', {
-      className: 'form-control',
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "N\xEDvel Federativo"), /*#__PURE__*/React.createElement("select", {
+      className: "form-control",
       value: this.state.form.cd_nivel_federativo,
       onChange: e => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')
-    }, React.createElement('option', {
-      value: ''
-    }, 'Selecione...'), this.state.nivelFederativo.map(nivel => React.createElement('option', {
+    }, /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, "Selecione..."), this.state.nivelFederativo.map(nivel => /*#__PURE__*/React.createElement("option", {
       key: nivel.cd_nivel_federativo,
       value: nivel.cd_nivel_federativo
-    }, nivel.tx_nome_nivel_federativo)))), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, 'Tipo de Abrangência'), React.createElement('select', {
-      className: 'form-control',
+    }, nivel.tx_nome_nivel_federativo)))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Tipo de Abrang\xEAncia"), /*#__PURE__*/React.createElement("select", {
+      className: "form-control",
       value: this.state.form.cd_tipo_abrangencia,
       onChange: e => this.handleInputChange('cd_tipo_abrangencia', e.target.value ? parseInt(e.target.value) : '')
-    }, React.createElement('option', {
-      value: ''
-    }, 'Selecione...'), this.state.tipoAbrangencia.map(tipo => React.createElement('option', {
+    }, /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, "Selecione..."), this.state.tipoAbrangencia.map(tipo => /*#__PURE__*/React.createElement("option", {
       key: tipo.cd_tipo_abrangencia,
       value: tipo.cd_tipo_abrangencia
-    }, tipo.tx_nome_abrangencia)))), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('label', null, React.createElement('input', {
-      type: 'checkbox',
+    }, tipo.tx_nome_abrangencia)))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
       checked: this.state.form.bo_conselho_ativo,
       onChange: e => this.handleInputChange('bo_conselho_ativo', e.target.checked)
-    }), ' Conselho Ativo'))), React.createElement('div', {
-      className: 'modal-footer'
-    }, React.createElement('button', {
-      type: 'button',
-      className: 'btn btn-secondary',
+    }), ' ', "Conselho Ativo"))), /*#__PURE__*/React.createElement("div", {
+      className: "modal-footer"
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "btn btn-secondary",
       onClick: () => this.closeModal()
-    }, 'Cancelar'), React.createElement('button', {
-      type: 'button',
-      className: 'btn btn-primary',
+    }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "btn btn-primary",
       onClick: () => this.saveConselho()
-    }, 'Salvar')))));
+    }, "Salvar")))));
   }
   render() {
     if (this.state.loading) {
-      return React.createElement('div', {
-        className: 'text-center'
-      }, 'Carregando...');
+      return /*#__PURE__*/React.createElement("div", {
+        className: "text-center"
+      }, "Carregando...");
     }
     if (this.state.conselhos.length === 0) {
-      return React.createElement('div', null, React.createElement('div', {
-        className: 'd-flex justify-content-between mb-3'
-      }, React.createElement('h5', null, 'Meus Conselhos'), React.createElement('button', {
-        className: 'btn btn-primary',
+      return /*#__PURE__*/React.createElement("div", {
+        className: "container-fluid"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "bg-white border-bottom py-3 px-4"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "d-flex justify-content-between align-items-center"
+      }, /*#__PURE__*/React.createElement("h4", {
+        className: "mb-0"
+      }, "Conselhos"), /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-primary",
         onClick: () => this.openModal()
-      }, 'Novo Conselho')), React.createElement('div', {
-        className: 'alert alert-info'
-      }, 'Nenhum conselho encontrado.'));
+      }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
+        className: "bg-white p-4 text-center py-5"
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-users fa-3x text-muted mb-3"
+      }), /*#__PURE__*/React.createElement("h5", {
+        className: "text-muted"
+      }, "Nenhum conselho encontrado"), /*#__PURE__*/React.createElement("p", {
+        className: "text-muted"
+      }, "Clique no bot\xE3o \"Novo Conselho\" para come\xE7ar")), this.state.showModal && this.renderModal());
     }
-    return React.createElement('div', null, React.createElement('div', {
-      className: 'd-flex justify-content-between mb-3'
-    }, React.createElement('h5', null, 'Meus Conselhos'), React.createElement('button', {
-      className: 'btn btn-primary',
-      onClick: () => this.setState({
-        showModal: true,
-        editingConselho: null
-      })
-    }, 'Novo Conselho')), React.createElement('div', {
-      className: 'table-responsive'
-    }, React.createElement('table', {
-      className: 'table table-striped'
-    }, React.createElement('thead', null, React.createElement('tr', null, React.createElement('th', null, 'ID'), React.createElement('th', null, 'Nome'), React.createElement('th', null, 'Ato Legal'), React.createElement('th', null, 'Website'), React.createElement('th', null, 'Status'), React.createElement('th', null, 'Ações'))), React.createElement('tbody', null, this.state.conselhos.map(conselho => React.createElement('tr', {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "container-fluid"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "bg-white border-bottom py-3 px-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "d-flex justify-content-between align-items-center"
+    }, /*#__PURE__*/React.createElement("h2", null, "Meus conselhos"), /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary",
+      onClick: () => this.openModal()
+    }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
+      className: "bg-white p-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "table-responsive"
+    }, /*#__PURE__*/React.createElement("table", {
+      className: "table table-striped"
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Website"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.conselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
       key: conselho.id_conselho
-    }, React.createElement('td', null, conselho.id_conselho), React.createElement('td', null, conselho.tx_nome_conselho || 'N/A'), React.createElement('td', null, conselho.tx_ato_legal || 'N/A'), React.createElement('td', null, conselho.tx_website ? React.createElement('a', {
+    }, /*#__PURE__*/React.createElement("td", null, conselho.id_conselho), /*#__PURE__*/React.createElement("td", null, conselho.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_ato_legal || 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_website ? /*#__PURE__*/React.createElement("a", {
       href: `http://${conselho.tx_website}`,
-      target: '_blank',
-      rel: 'noopener noreferrer'
-    }, conselho.tx_website) : 'N/A'), React.createElement('td', null, React.createElement('span', {
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, conselho.tx_website) : 'N/A'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
       className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
-    }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo')), React.createElement('td', null, React.createElement('button', {
-      className: 'btn btn-sm btn-warning mr-2',
+    }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo')), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-sm btn-warning mr-2",
       onClick: () => this.openModal(conselho)
-    }, 'Editar')
-    /*React.createElement(
-        'button',
-        {
-            className: 'btn btn-sm btn-danger',
-            onClick: () => this.deleteConselho(conselho.id_conselho)
-        },
-        'Excluir'
-    )*/))))), this.state.showModal ? this.renderModal() : null));
+    }, "Editar")))))))), this.state.showModal && this.renderModal());
   }
 }
 ReactDOM.render(/*#__PURE__*/React.createElement(Conselhos, null), document.getElementById('conselhos'));
