@@ -241,5 +241,8 @@ Route::get('/get-descricao', 'UserAreaController@getDescricao')->middleware('aut
 Route::get('/dashboard-conselho', 'UserAreaController@dashboardConselho');
 Route::get('/conselho', 'UserAreaController@conselho');
 Route::get('/conselheiro', 'UserAreaController@conselheiro');
+Route::get('/conselhos', function () {
+    return view('conselhos');
+});
 
 

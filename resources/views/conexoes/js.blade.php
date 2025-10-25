@@ -472,6 +472,9 @@
 @if($rota=="conselheiro")
     <script src="js/components/conselheiro/conselheiros.js"></script>
 @endif
+@if($rota=="conselhos")
+    <script src="js/components/public/conselhos-publicos.js"></script>
+@endif
 @if($rota=="register")
     <script src="js/components/join/register.js"></script>
 @endif
