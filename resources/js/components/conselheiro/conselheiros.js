@@ -238,67 +238,63 @@ class Conselheiros extends React.Component {
     renderFilters() {
         return React.createElement(
             'div',
-            { className: 'card mb-3' },
+            { className: 'mb-3' },
+            React.createElement('h6', { className: 'mb-3' }, 'Filtros'),
             React.createElement(
                 'div',
-                { className: 'card-body' },
-                React.createElement('h6', { className: 'card-title' }, 'Filtros'),
+                { className: 'row' },
                 React.createElement(
                     'div',
-                    { className: 'row' },
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-3' },
-                        React.createElement('input', {
-                            type: 'text',
-                            className: 'form-control',
-                            placeholder: 'Buscar por nome ou órgão...',
-                            value: this.state.filters.search,
-                            onChange: (e) => this.handleFilterChange('search', e.target.value)
-                        })
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-3' },
-                        React.createElement('select', {
-                            className: 'form-control',
-                            value: this.state.filters.conselho,
-                            onChange: (e) => this.handleFilterChange('conselho', e.target.value)
-                        },
-                            React.createElement('option', { value: '' }, 'Todos os conselhos'),
-                            this.state.conselhos.map(conselho =>
-                                React.createElement('option', {
-                                    key: conselho.id_conselho,
-                                    value: conselho.id_conselho
-                                }, conselho.tx_nome_conselho)
-                            )
+                    { className: 'col-md-3' },
+                    React.createElement('input', {
+                        type: 'text',
+                        className: 'form-control',
+                        placeholder: 'Buscar por nome ou órgão...',
+                        value: this.state.filters.search,
+                        onChange: (e) => this.handleFilterChange('search', e.target.value)
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-3' },
+                    React.createElement('select', {
+                        className: 'form-control',
+                        value: this.state.filters.conselho,
+                        onChange: (e) => this.handleFilterChange('conselho', e.target.value)
+                    },
+                        React.createElement('option', { value: '' }, 'Todos os conselhos'),
+                        this.state.conselhos.map(conselho =>
+                            React.createElement('option', {
+                                key: conselho.id_conselho,
+                                value: conselho.id_conselho
+                            }, conselho.tx_nome_conselho)
                         )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-3' },
-                        React.createElement('select', {
-                            className: 'form-control',
-                            value: this.state.filters.ativo,
-                            onChange: (e) => this.handleFilterChange('ativo', e.target.value)
-                        },
-                            React.createElement('option', { value: '' }, 'Todos os status'),
-                            React.createElement('option', { value: 'true' }, 'Ativos'),
-                            React.createElement('option', { value: 'false' }, 'Inativos')
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'col-md-3' },
-                        React.createElement('select', {
-                            className: 'form-control',
-                            value: this.state.filters.governamental,
-                            onChange: (e) => this.handleFilterChange('governamental', e.target.value)
-                        },
-                            React.createElement('option', { value: '' }, 'Todos os tipos'),
-                            React.createElement('option', { value: 'true' }, 'Governamental'),
-                            React.createElement('option', { value: 'false' }, 'Não Governamental')
-                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-3' },
+                    React.createElement('select', {
+                        className: 'form-control',
+                        value: this.state.filters.ativo,
+                        onChange: (e) => this.handleFilterChange('ativo', e.target.value)
+                    },
+                        React.createElement('option', { value: '' }, 'Todos os status'),
+                        React.createElement('option', { value: 'true' }, 'Ativos'),
+                        React.createElement('option', { value: 'false' }, 'Inativos')
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'col-md-3' },
+                    React.createElement('select', {
+                        className: 'form-control',
+                        value: this.state.filters.governamental,
+                        onChange: (e) => this.handleFilterChange('governamental', e.target.value)
+                    },
+                        React.createElement('option', { value: '' }, 'Todos os tipos'),
+                        React.createElement('option', { value: 'true' }, 'Governamental'),
+                        React.createElement('option', { value: 'false' }, 'Não Governamental')
                     )
                 )
             )
@@ -589,97 +585,90 @@ class Conselheiros extends React.Component {
         return React.createElement(
             'div',
             { className: 'container-fluid' },
-            this.renderFilters(),
             React.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'card' },
                 React.createElement(
                     'div',
-                    { className: 'col-12' },
+                    { className: 'card-header d-flex justify-content-between align-items-center' },
+                    React.createElement('h5', { className: 'mb-0' }, 'Conselheiros'),
+                    React.createElement(
+                        'button',
+                        {
+                            className: 'btn btn-primary',
+                            onClick: () => this.openModal()
+                        },
+                        'Novo Conselheiro'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'card-body' },
+                    this.renderFilters(),
+                    React.createElement('br'),
                     React.createElement(
                         'div',
-                        { className: 'card' },
+                        { className: 'table-responsive' },
                         React.createElement(
-                            'div',
-                            { className: 'card-header d-flex justify-content-between align-items-center' },
-                            React.createElement('h5', { className: 'mb-0' }, 'Conselheiros'),
+                            'table',
+                            { className: 'table table-striped' },
                             React.createElement(
-                                'button',
-                                {
-                                    className: 'btn btn-primary',
-                                    onClick: () => this.openModal()
-                                },
-                                'Novo Conselheiro'
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            React.createElement(
-                                'div',
-                                { className: 'table-responsive' },
+                                'thead',
+                                null,
                                 React.createElement(
-                                    'table',
-                                    { className: 'table table-striped' },
-                                    React.createElement(
-                                        'thead',
-                                        null,
-                                        React.createElement(
-                                            'tr',
-                                            null,
-                                            React.createElement('th', null, 'Nome'),
-                                            React.createElement('th', null, 'Órgão'),
-                                            React.createElement('th', null, 'Conselho'),
-                                            React.createElement('th', null, 'Ativo'),
-                                            React.createElement('th', null, 'Governamental'),
-                                            React.createElement('th', null, 'Ações')
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'tbody',
-                                        null,
-                                        this.state.filteredConselheiros.map(conselheiro => {
-                                            const conselho = this.state.conselhos.find(c => c.id_conselho === conselheiro.id_conselho);
-                                            return React.createElement(
-                                                'tr',
-                                                { key: conselheiro.id_conselheiro },
-                                                React.createElement('td', null, conselheiro.tx_nome_conselheiro),
-                                                React.createElement('td', null, conselheiro.tx_orgao_origem),
-                                                React.createElement('td', null, conselho ? conselho.tx_nome_conselho : '-'),
-                                                React.createElement('td', null, conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'),
-                                                React.createElement('td', null, conselheiro.bo_eh_governamental ? 'Sim' : 'Não'),
-                                                React.createElement(
-                                                    'td',
-                                                    null,
-                                                    React.createElement(
-                                                        'button',
-                                                        {
-                                                            className: 'btn btn-sm btn-info mr-1',
-                                                            onClick: () => this.openDetailModal(conselheiro)
-                                                        },
-                                                        'Detalhes'
-                                                    ),
-                                                    React.createElement(
-                                                        'button',
-                                                        {
-                                                            className: 'btn btn-sm btn-warning mr-1',
-                                                            onClick: () => this.openModal(conselheiro)
-                                                        },
-                                                        'Editar'
-                                                    ),
-                                                    React.createElement(
-                                                        'button',
-                                                        {
-                                                            className: 'btn btn-sm btn-danger',
-                                                            onClick: () => this.deleteConselheiro(conselheiro.id_conselheiro)
-                                                        },
-                                                        'Excluir'
-                                                    )
-                                                )
-                                            );
-                                        })
-                                    )
+                                    'tr',
+                                    null,
+                                    React.createElement('th', null, 'Nome'),
+                                    React.createElement('th', null, 'Órgão'),
+                                    React.createElement('th', null, 'Conselho'),
+                                    React.createElement('th', null, 'Ativo'),
+                                    React.createElement('th', null, 'Governamental'),
+                                    React.createElement('th', null, 'Ações')
                                 )
+                            ),
+                            React.createElement(
+                                'tbody',
+                                null,
+                                this.state.filteredConselheiros.map(conselheiro => {
+                                    const conselho = this.state.conselhos.find(c => c.id_conselho === conselheiro.id_conselho);
+                                    return React.createElement(
+                                        'tr',
+                                        { key: conselheiro.id_conselheiro },
+                                        React.createElement('td', null, conselheiro.tx_nome_conselheiro),
+                                        React.createElement('td', null, conselheiro.tx_orgao_origem),
+                                        React.createElement('td', null, conselho ? conselho.tx_nome_conselho : '-'),
+                                        React.createElement('td', null, conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'),
+                                        React.createElement('td', null, conselheiro.bo_eh_governamental ? 'Sim' : 'Não'),
+                                        React.createElement(
+                                            'td',
+                                            null,
+                                            React.createElement(
+                                                'button',
+                                                {
+                                                    className: 'btn btn-sm btn-info mr-1',
+                                                    onClick: () => this.openDetailModal(conselheiro)
+                                                },
+                                                'Detalhes'
+                                            ),
+                                            React.createElement(
+                                                'button',
+                                                {
+                                                    className: 'btn btn-sm btn-warning mr-1',
+                                                    onClick: () => this.openModal(conselheiro)
+                                                },
+                                                'Editar'
+                                            ),
+                                            React.createElement(
+                                                'button',
+                                                {
+                                                    className: 'btn btn-sm btn-danger',
+                                                    onClick: () => this.deleteConselheiro(conselheiro.id_conselheiro)
+                                                },
+                                                'Excluir'
+                                            )
+                                        )
+                                    );
+                                })
                             )
                         )
                     )

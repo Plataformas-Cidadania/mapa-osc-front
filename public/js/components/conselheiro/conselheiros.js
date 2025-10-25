@@ -217,11 +217,9 @@ class Conselheiros extends React.Component {
   }
   renderFilters() {
     return React.createElement('div', {
-      className: 'card mb-3'
-    }, React.createElement('div', {
-      className: 'card-body'
+      className: 'mb-3'
     }, React.createElement('h6', {
-      className: 'card-title'
+      className: 'mb-3'
     }, 'Filtros'), React.createElement('div', {
       className: 'row'
     }, React.createElement('div', {
@@ -267,7 +265,7 @@ class Conselheiros extends React.Component {
       value: 'true'
     }, 'Governamental'), React.createElement('option', {
       value: 'false'
-    }, 'Não Governamental'))))));
+    }, 'Não Governamental')))));
   }
   renderDetailModal() {
     if (!this.state.detailConselheiro) return null;
@@ -430,10 +428,6 @@ class Conselheiros extends React.Component {
     }
     return React.createElement('div', {
       className: 'container-fluid'
-    }, this.renderFilters(), React.createElement('div', {
-      className: 'row'
-    }, React.createElement('div', {
-      className: 'col-12'
     }, React.createElement('div', {
       className: 'card'
     }, React.createElement('div', {
@@ -445,7 +439,7 @@ class Conselheiros extends React.Component {
       onClick: () => this.openModal()
     }, 'Novo Conselheiro')), React.createElement('div', {
       className: 'card-body'
-    }, React.createElement('div', {
+    }, this.renderFilters(), React.createElement('br'), React.createElement('div', {
       className: 'table-responsive'
     }, React.createElement('table', {
       className: 'table table-striped'
@@ -463,7 +457,7 @@ class Conselheiros extends React.Component {
         className: 'btn btn-sm btn-danger',
         onClick: () => this.deleteConselheiro(conselheiro.id_conselheiro)
       }, 'Excluir')));
-    })))))))), this.state.showModal && this.renderModal(), this.state.showDetailModal && this.renderDetailModal());
+    })))))), this.state.showModal && this.renderModal(), this.state.showDetailModal && this.renderDetailModal());
   }
 }
 ReactDOM.render(/*#__PURE__*/React.createElement(Conselheiros, null), document.getElementById('conselheiros'));
