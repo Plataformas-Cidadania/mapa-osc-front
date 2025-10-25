@@ -11,8 +11,8 @@ class Conselhos extends React.Component {
                 tx_ato_legal: '',
                 tx_website: '',
                 bo_conselho_ativo: true,
-                cd_nivel_federativo: 1,
-                cd_tipo_abrangencia: 1
+                cd_nivel_federativo: '',
+                cd_tipo_abrangencia: ''
             },
             nivelFederativo: [],
             tipoAbrangencia: []
@@ -28,7 +28,7 @@ class Conselhos extends React.Component {
     loadNivelFederativo() {
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'nivel_federativo',
+            url: getBaseUrl2 + 'confocos/nivel_federativo',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
             },
@@ -45,7 +45,7 @@ class Conselhos extends React.Component {
     loadTipoAbrangencia() {
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'abrangencia_conselho',
+            url: getBaseUrl2 + 'confocos/abrangencia_conselho',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
             },
@@ -69,8 +69,8 @@ class Conselhos extends React.Component {
                     tx_ato_legal: conselho.tx_ato_legal || '',
                     tx_website: conselho.tx_website || '',
                     bo_conselho_ativo: conselho.bo_conselho_ativo || true,
-                    cd_nivel_federativo: conselho.cd_nivel_federativo || 1,
-                    cd_tipo_abrangencia: conselho.cd_tipo_abrangencia || 1
+                    cd_nivel_federativo: conselho.cd_nivel_federativo || '',
+                    cd_tipo_abrangencia: conselho.cd_tipo_abrangencia || ''
                 }
             });
         } else {
@@ -82,8 +82,8 @@ class Conselhos extends React.Component {
                     tx_ato_legal: '',
                     tx_website: '',
                     bo_conselho_ativo: true,
-                    cd_nivel_federativo: 1,
-                    cd_tipo_abrangencia: 1
+                    cd_nivel_federativo: '',
+                    cd_tipo_abrangencia: ''
                 }
             });
         }
@@ -98,8 +98,8 @@ class Conselhos extends React.Component {
                 tx_ato_legal: '',
                 tx_website: '',
                 bo_conselho_ativo: true,
-                cd_nivel_federativo: 1,
-                cd_tipo_abrangencia: 1
+                cd_nivel_federativo: '',
+                cd_tipo_abrangencia: ''
             }
         });
     }
@@ -241,6 +241,46 @@ class Conselhos extends React.Component {
                                 value: this.state.form.tx_website,
                                 onChange: (e) => this.handleInputChange('tx_website', e.target.value)
                             })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement('label', null, 'Nível Federativo'),
+                            React.createElement(
+                                'select',
+                                {
+                                    className: 'form-control',
+                                    value: this.state.form.cd_nivel_federativo,
+                                    onChange: (e) => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')
+                                },
+                                React.createElement('option', { value: '' }, 'Selecione...'),
+                                this.state.nivelFederativo.map(nivel =>
+                                    React.createElement('option', {
+                                        key: nivel.cd_nivel_federativo,
+                                        value: nivel.cd_nivel_federativo
+                                    }, nivel.tx_nome_nivel_federativo)
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            React.createElement('label', null, 'Tipo de Abrangência'),
+                            React.createElement(
+                                'select',
+                                {
+                                    className: 'form-control',
+                                    value: this.state.form.cd_tipo_abrangencia,
+                                    onChange: (e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value ? parseInt(e.target.value) : '')
+                                },
+                                React.createElement('option', { value: '' }, 'Selecione...'),
+                                this.state.tipoAbrangencia.map(tipo =>
+                                    React.createElement('option', {
+                                        key: tipo.cd_tipo_abrangencia,
+                                        value: tipo.cd_tipo_abrangencia
+                                    }, tipo.tx_nome_abrangencia)
+                                )
+                            )
                         ),
                         React.createElement(
                             'div',
@@ -396,14 +436,14 @@ class Conselhos extends React.Component {
                                         },
                                         'Editar'
                                     ),
-                                    React.createElement(
+                                    /*React.createElement(
                                         'button',
                                         {
                                             className: 'btn btn-sm btn-danger',
                                             onClick: () => this.deleteConselho(conselho.id_conselho)
                                         },
                                         'Excluir'
-                                    )
+                                    )*/
                                 )
                             )
                         )
