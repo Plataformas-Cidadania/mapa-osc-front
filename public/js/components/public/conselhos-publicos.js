@@ -151,7 +151,7 @@ class ConselhosPublicos extends React.Component {
   render() {
     if (this.state.loading) {
       return /*#__PURE__*/React.createElement("div", {
-        className: "container-fluid"
+        className: "container"
       }, /*#__PURE__*/React.createElement("div", {
         className: "text-center py-5"
       }, /*#__PURE__*/React.createElement("div", {
@@ -162,7 +162,7 @@ class ConselhosPublicos extends React.Component {
       }, "Carregando..."))));
     }
     return /*#__PURE__*/React.createElement("div", {
-      className: "container-fluid"
+      className: "container"
     }, /*#__PURE__*/React.createElement("div", {
       className: "bg-white border-bottom py-3 px-4"
     }, /*#__PURE__*/React.createElement("h4", {

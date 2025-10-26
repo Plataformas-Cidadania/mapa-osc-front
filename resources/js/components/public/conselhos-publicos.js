@@ -65,15 +65,15 @@ class ConselhosPublicos extends React.Component {
 
     organizeData() {
         const { conselhos, conselheiros } = this.state;
-        
+
         const organized = conselhos.map(conselho => ({
             ...conselho,
             conselheiros: conselheiros.filter(c => c.id_conselho === conselho.id_conselho)
         }));
 
-        this.setState({ 
+        this.setState({
             filteredData: organized,
-            loading: false 
+            loading: false
         }, () => {
             this.applyFilters();
         });
@@ -102,7 +102,7 @@ class ConselhosPublicos extends React.Component {
                     c.tx_nome_conselheiro.toLowerCase().includes(this.state.filters.search.toLowerCase()) ||
                     c.tx_orgao_origem.toLowerCase().includes(this.state.filters.search.toLowerCase())
                 )
-            })).filter(conselho => 
+            })).filter(conselho =>
                 conselho.tx_nome_conselho.toLowerCase().includes(this.state.filters.search.toLowerCase()) ||
                 conselho.conselheiros.length > 0
             );
@@ -115,7 +115,7 @@ class ConselhosPublicos extends React.Component {
         if (this.state.filters.ativo !== '') {
             filtered = filtered.map(conselho => ({
                 ...conselho,
-                conselheiros: conselho.conselheiros.filter(c => 
+                conselheiros: conselho.conselheiros.filter(c =>
                     c.bo_conselheiro_ativo == (this.state.filters.ativo === 'true')
                 )
             }));
@@ -170,7 +170,7 @@ class ConselhosPublicos extends React.Component {
     render() {
         if (this.state.loading) {
             return (
-                <div className="container-fluid">
+                <div className="container">
                     <div className="text-center py-5">
                         <div className="spinner-border" role="status">
                             <span className="sr-only">Carregando...</span>
@@ -181,7 +181,7 @@ class ConselhosPublicos extends React.Component {
         }
 
         return (
-            <div className="container-fluid">
+            <div className="container">
                 <div className="bg-white border-bottom py-3 px-4">
                     <h4 className="mb-0">Conselhos</h4>
                 </div>
@@ -202,7 +202,7 @@ class ConselhosPublicos extends React.Component {
                                         {conselho.conselheiros.length} conselheiro(s)
                                     </small>
                                 </div>
-                                
+
                                 {conselho.conselheiros.length === 0 ? (
                                     <div className="ml-4 text-muted">
                                         <small>Nenhum conselheiro cadastrado</small>
