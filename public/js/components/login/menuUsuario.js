@@ -97,7 +97,7 @@ class MenuUsuario extends React.Component {
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
-    }, "Conselhos")), /*#__PURE__*/React.createElement("a", {
+    }, "Meus Conselhos")), /*#__PURE__*/React.createElement("a", {
       href: "representacoes"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
