@@ -30,7 +30,12 @@ class Conselheiros extends React.Component {
     }
 
     componentDidMount() {
-        this.loadConselheiros();
+        const urlParams = new URLSearchParams(window.location.search);
+        const id_conselho = urlParams.get('conselho');
+        this.setState({ 
+            filters: { ...this.state.filters, conselho: id_conselho || '' } 
+        });
+        this.loadConselheiros(id_conselho);
         this.loadConselhos();
     }
 
@@ -194,10 +199,14 @@ class Conselheiros extends React.Component {
         });
     }
 
-    loadConselheiros() {
+    loadConselheiros(id_conselho = null) {
+        const url = id_conselho 
+            ? getBaseUrl2 + `confocos/conselheiro-por-conselho/${id_conselho}`
+            : getBaseUrl2 + 'confocos/conselheiro';
+            
         $.ajax({
             method: 'GET',
-            url: getBaseUrl2 + 'confocos/conselheiro',
+            url: url,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
             },

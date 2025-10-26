@@ -182,7 +182,7 @@ class DashboardConselho extends React.Component {
                         <div className="card" style={{border: 0, background: "#F8F8F8", boxShadow: '0 0 3px #FFFFFF'}}>
                             <div className="card-body text-center">
                                 <h5>Total de Conselhos</h5>
-                                <h2>{this.state.stats.totalConselhos}</h2>
+                                <h2>{this.state.representacoes.length}</h2>
                                 <i className="fas fa-users fa-2x"></i>
                             </div>
                         </div>
@@ -226,8 +226,11 @@ class DashboardConselho extends React.Component {
                                     <td>{item.conselho?.tx_nome_conselho || 'N/A'}</td>
                                     <td>{item.conselho?.nivel_federativo?.tx_nome_nivel_federativo || 'N/A'}</td>
                                     <td className="text-center">
+                                        <a href={`conselheiro?conselho=${item.conselho?.id_conselho}`} className="btn btn-primary btn-sm mr-2">
+                                            <i className="fa fa-users"/> Conselheiros
+                                        </a>
                                         <button className="btn btn-danger btn-sm"
-                                                onClick={() => this.removeRepresentacao(item.id_conselho)}>
+                                                onClick={() => this.removeRepresentacao(item.id_representacao_conselho)}>
                                             <i className="fa fa-trash"/> Remover
                                         </button>
                                     </td>

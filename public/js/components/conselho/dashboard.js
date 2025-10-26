@@ -190,7 +190,7 @@ class DashboardConselho extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "card-body text-center"
-    }, /*#__PURE__*/React.createElement("h5", null, "Total de Conselhos"), /*#__PURE__*/React.createElement("h2", null, this.state.stats.totalConselhos), /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("h5", null, "Total de Conselhos"), /*#__PURE__*/React.createElement("h2", null, this.state.representacoes.length), /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users fa-2x"
     })))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-6"
@@ -238,9 +238,14 @@ class DashboardConselho extends React.Component {
       scope: "row"
     }, index + 1), /*#__PURE__*/React.createElement("td", null, item.conselho?.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, item.conselho?.nivel_federativo?.tx_nome_nivel_federativo || 'N/A'), /*#__PURE__*/React.createElement("td", {
       className: "text-center"
-    }, /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement("a", {
+      href: `conselheiro?conselho=${item.conselho?.id_conselho}`,
+      className: "btn btn-primary btn-sm mr-2"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-users"
+    }), " Conselheiros"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-danger btn-sm",
-      onClick: () => this.removeRepresentacao(item.id_conselho)
+      onClick: () => this.removeRepresentacao(item.id_representacao_conselho)
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-trash"
     }), " Remover")))))))), this.state.showModalAdd && /*#__PURE__*/React.createElement("div", {
