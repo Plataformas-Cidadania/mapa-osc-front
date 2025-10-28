@@ -174,6 +174,8 @@ class DashboardConselho extends React.Component {
         }
     }
 
+
+
     render() {
         return (
             <div>
@@ -230,7 +232,7 @@ class DashboardConselho extends React.Component {
                                             <i className="fa fa-users"/> Conselheiros
                                         </a>
                                         <button className="btn btn-danger btn-sm"
-                                                onClick={() => this.removeRepresentacao(item.id_representacao_conselho)}>
+                                                onClick={() => this.removeRepresentacao(item.id_representacao)}>
                                             <i className="fa fa-trash"/> Remover
                                         </button>
                                     </td>

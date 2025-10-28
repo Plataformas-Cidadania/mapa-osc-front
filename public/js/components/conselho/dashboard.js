@@ -245,7 +245,7 @@ class DashboardConselho extends React.Component {
       className: "fa fa-users"
     }), " Conselheiros"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-danger btn-sm",
-      onClick: () => this.removeRepresentacao(item.id_representacao_conselho)
+      onClick: () => this.removeRepresentacao(item.id_representacao)
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-trash"
     }), " Remover")))))))), this.state.showModalAdd && /*#__PURE__*/React.createElement("div", {
