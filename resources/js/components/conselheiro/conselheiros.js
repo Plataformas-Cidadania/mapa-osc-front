@@ -6,10 +6,8 @@ class Conselheiros extends React.Component {
             conselheiros: [],
             filteredConselheiros: [],
             conselhos: [],
-            showModal: false,
-            showDetailModal: false,
+            showForm: false,
             editingConselheiro: null,
-            detailConselheiro: null,
             filters: {
                 search: '',
                 conselho: '',
@@ -61,43 +59,9 @@ class Conselheiros extends React.Component {
         });
     }
 
-    openModal(conselheiro = null) {
-        if (conselheiro) {
-            this.setState({
-                showModal: true,
-                editingConselheiro: conselheiro,
-                form: {
-                    tx_nome_conselheiro: conselheiro.tx_nome_conselheiro || '',
-                    tx_orgao_origem: conselheiro.tx_orgao_origem || '',
-                    cd_identificador_osc: conselheiro.cd_identificador_osc || '',
-                    dt_data_vinculo: conselheiro.dt_data_vinculo ? conselheiro.dt_data_vinculo.split(' ')[0] : '',
-                    dt_data_final_vinculo: conselheiro.dt_data_final_vinculo ? conselheiro.dt_data_final_vinculo.split(' ')[0] : '',
-                    bo_conselheiro_ativo: conselheiro.bo_conselheiro_ativo !== undefined ? conselheiro.bo_conselheiro_ativo : true,
-                    bo_eh_governamental: conselheiro.bo_eh_governamental !== undefined ? conselheiro.bo_eh_governamental : true,
-                    id_conselho: conselheiro.id_conselho || ''
-                }
-            });
-        } else {
-            this.setState({
-                showModal: true,
-                editingConselheiro: null,
-                form: {
-                    tx_nome_conselheiro: '',
-                    tx_orgao_origem: '',
-                    cd_identificador_osc: '',
-                    dt_data_vinculo: '',
-                    dt_data_final_vinculo: '',
-                    bo_conselheiro_ativo: true,
-                    bo_eh_governamental: true,
-                    id_conselho: this.state.filters.conselho || ''
-                }
-            });
-        }
-    }
-
-    closeModal() {
+    showHideForm() {
         this.setState({
-            showModal: false,
+            showForm: !this.state.showForm,
             editingConselheiro: null,
             form: {
                 tx_nome_conselheiro: '',
@@ -107,22 +71,27 @@ class Conselheiros extends React.Component {
                 dt_data_final_vinculo: '',
                 bo_conselheiro_ativo: true,
                 bo_eh_governamental: true,
-                id_conselho: ''
+                id_conselho: this.state.filters.conselho || ''
+            },
+            search: '',
+            oscsSearch: []
+        });
+    }
+
+    editConselheiro(conselheiro) {
+        this.setState({
+            showForm: true,
+            editingConselheiro: conselheiro,
+            form: {
+                tx_nome_conselheiro: conselheiro.tx_nome_conselheiro || '',
+                tx_orgao_origem: conselheiro.tx_orgao_origem || '',
+                cd_identificador_osc: conselheiro.cd_identificador_osc || '',
+                dt_data_vinculo: conselheiro.dt_data_vinculo ? conselheiro.dt_data_vinculo.split(' ')[0] : '',
+                dt_data_final_vinculo: conselheiro.dt_data_final_vinculo ? conselheiro.dt_data_final_vinculo.split(' ')[0] : '',
+                bo_conselheiro_ativo: conselheiro.bo_conselheiro_ativo !== undefined ? conselheiro.bo_conselheiro_ativo : true,
+                bo_eh_governamental: conselheiro.bo_eh_governamental !== undefined ? conselheiro.bo_eh_governamental : true,
+                id_conselho: conselheiro.id_conselho || ''
             }
-        });
-    }
-
-    openDetailModal(conselheiro) {
-        this.setState({
-            showDetailModal: true,
-            detailConselheiro: conselheiro
-        });
-    }
-
-    closeDetailModal() {
-        this.setState({
-            showDetailModal: false,
-            detailConselheiro: null
         });
     }
 
@@ -227,7 +196,7 @@ class Conselheiros extends React.Component {
             },
             data: JSON.stringify(formData),
             success: function() {
-                this.closeModal();
+                this.showHideForm();
                 this.loadConselheiros(this.state.filters.conselho);
             }.bind(this),
             error: function(xhr, status, err) {
@@ -337,204 +306,135 @@ class Conselheiros extends React.Component {
         );
     }
 
-    renderDetailModal() {
-        if (!this.state.detailConselheiro) return null;
-
-        const conselho = this.state.conselhos.find(c => c.id_conselho === this.state.detailConselheiro.id_conselho);
-
+    renderForm() {
         return (
-            <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Detalhes do Conselheiro</h5>
-                            <button type="button" className="close" onClick={() => this.closeDetailModal()}>
-                                ×
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row mb-3">
-                                <div className="col-md-6">
-                                    <strong>ID: </strong>{this.state.detailConselheiro.id_conselheiro}
-                                </div>
-                                <div className="col-md-6">
-                                    <strong>Nome: </strong>{this.state.detailConselheiro.tx_nome_conselheiro}
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="row mb-3">
-                                <div className="col-md-6">
-                                    <strong>Órgão de Origem: </strong>{this.state.detailConselheiro.tx_orgao_origem || 'N/A'}
-                                </div>
-                                <div className="col-md-6">
-                                    <strong>Conselho: </strong>{conselho ? conselho.tx_nome_conselho : 'N/A'}
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="row mb-3">
-                                <div className="col-md-6">
-                                    <strong>Data de Vínculo: </strong>
-                                    {this.state.detailConselheiro.dt_data_vinculo ?
-                                        new Date(this.state.detailConselheiro.dt_data_vinculo).toLocaleDateString('pt-BR') : 'N/A'}
-                                </div>
-                                <div className="col-md-6">
-                                    <strong>Data Final de Vínculo: </strong>
-                                    {this.state.detailConselheiro.dt_data_final_vinculo ?
-                                        new Date(this.state.detailConselheiro.dt_data_final_vinculo).toLocaleDateString('pt-BR') : 'N/A'}
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <strong>Status: </strong>
-                                    <span className={this.state.detailConselheiro.bo_conselheiro_ativo ? 'badge badge-success' : 'badge badge-danger'}>
-                                        {this.state.detailConselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
-                                    </span>
-                                </div>
-                                <div className="col-md-6">
-                                    <strong>Tipo: </strong>
-                                    <span className={this.state.detailConselheiro.bo_eh_governamental ? 'badge badge-primary' : 'badge badge-secondary'}>
-                                        {this.state.detailConselheiro.bo_eh_governamental ? 'Governamental' : 'Não Governamental'}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => this.closeDetailModal()}>
-                                Fechar
-                            </button>
+            <div className="bg-lgt box-itens-g min-h mb-4">
+                {/*<h3>{this.state.editingConselheiro ? 'Editar Conselheiro' : 'Novo Conselheiro'}</h3>*/}
+                <div className="row">
+                    <div className="col-md-6" style={{marginBottom:0, paddingBottom: 0}}>
+                        <div className="form-group">
+                            <label>Nome</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={this.state.form.tx_nome_conselheiro}
+                                onChange={(e) => this.handleInputChange('tx_nome_conselheiro', e.target.value)}
+                            />
                         </div>
                     </div>
-                </div>
-            </div>
-        );
-    }
-
-    renderModal() {
-        return (
-            <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">
-                                {this.state.editingConselheiro ? 'Editar Conselheiro' : 'Novo Conselheiro'}
-                            </h5>
-                            <button type="button" className="close" onClick={() => this.closeModal()}>
-                                ×
-                            </button>
+                    <div className="col-md-6" style={{marginBottom:0, paddingBottom: 0}}>
+                        <div className="form-group">
+                            <div className="form-check" style={{marginTop:28}}>
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    checked={this.state.form.bo_eh_governamental}
+                                    onChange={(e) => this.handleInputChange('bo_eh_governamental', e.target.checked)}
+                                    style={{width: 20, height: 20}}
+                                />
+                                <label className="form-check-label">Governamental</label>
+                            </div>
                         </div>
-                        <div className="modal-body">
-                            <div className="form-group">
-                                <label>Nome</label>
+                    </div>
+                    <div className="col-md-12" style={{margin: '0', padding: '0 10px'}}>
+                        <div className="form-group">
+                            <label>Órgão de Origem</label>
+                            {this.state.form.bo_eh_governamental ? (
+                                <div>
+                                    <input
+                                        className="form-control"
+                                        placeholder="Digite o CNPJ..."
+                                        onClick={this.clickSearch.bind(this)}
+                                        onChange={this.handleSearch.bind(this)}
+                                        value={this.state.search}
+                                    />
+                                    <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
+                                        <div className="text-center">
+                                            <img src="/img/load.gif" width="60" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
+                                        </div>
+                                        {this.state.oscsSearch.map(item =>
+                                            <li key={item.id_osc} className="list-group-item" onClick={() => this.selectOsc(item.id_osc, item.tx_nome_osc)}>
+                                                {item.tx_nome_osc}
+                                            </li>
+                                        )}
+                                    </ul>
+                                    {this.state.form.tx_orgao_origem && (
+                                        <small className="text-muted">OSC selecionada: {this.state.form.tx_orgao_origem}</small>
+                                    )}
+                                </div>
+                            ) : (
                                 <input
                                     type="text"
                                     className="form-control"
-                                    value={this.state.form.tx_nome_conselheiro}
-                                    onChange={(e) => this.handleInputChange('tx_nome_conselheiro', e.target.value)}
+                                    value={this.state.form.tx_orgao_origem}
+                                    onChange={(e) => this.handleInputChange('tx_orgao_origem', e.target.value)}
+                                    placeholder="Digite o nome do órgão..."
                                 />
-                            </div>
-                            <div className="form-group">
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        checked={this.state.form.bo_eh_governamental}
-                                        onChange={(e) => this.handleInputChange('bo_eh_governamental', e.target.checked)}
-                                    />
-                                    <label className="form-check-label">Governamental</label>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Órgão de Origem</label>
-                                {this.state.form.bo_eh_governamental ? (
-                                    <div>
-                                        <input 
-                                            className="form-control" 
-                                            placeholder="Digite o CNPJ..." 
-                                            onClick={this.clickSearch.bind(this)} 
-                                            onChange={this.handleSearch.bind(this)} 
-                                            value={this.state.search}
-                                        />
-                                        <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
-                                            <div className="text-center">
-                                                <img src="/img/load.gif" width="60" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
-                                            </div>
-                                            {this.state.oscsSearch.map(item => 
-                                                <li key={item.id_osc} className="list-group-item" onClick={() => this.selectOsc(item.id_osc, item.tx_nome_osc)}>
-                                                    {item.tx_nome_osc}
-                                                </li>
-                                            )}
-                                        </ul>
-                                        {this.state.form.tx_orgao_origem && (
-                                            <small className="text-muted">OSC selecionada: {this.state.form.tx_orgao_origem}</small>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={this.state.form.tx_orgao_origem}
-                                        onChange={(e) => this.handleInputChange('tx_orgao_origem', e.target.value)}
-                                        placeholder="Digite o nome do órgão..."
-                                    />
-                                )}
-                            </div>
-                            {!this.state.filters.conselho && (
-                                <div className="form-group">
-                                    <label>Conselho</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.form.id_conselho}
-                                        onChange={(e) => this.handleInputChange('id_conselho', e.target.value)}
-                                    >
-                                        <option value="">Selecione um conselho</option>
-                                        {this.state.conselhos.map(conselho =>
-                                            <option key={conselho.id_conselho} value={conselho.id_conselho}>
-                                                {conselho.tx_nome_conselho}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div>
                             )}
-                            <div className="form-group">
-                                <label>Data de Vínculo</label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    value={this.state.form.dt_data_vinculo}
-                                    onChange={(e) => this.handleInputChange('dt_data_vinculo', e.target.value)}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Data Final de Vínculo</label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    value={this.state.form.dt_data_final_vinculo}
-                                    onChange={(e) => this.handleInputChange('dt_data_final_vinculo', e.target.value)}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        checked={this.state.form.bo_conselheiro_ativo}
-                                        onChange={(e) => this.handleInputChange('bo_conselheiro_ativo', e.target.checked)}
-                                    />
-                                    <label className="form-check-label">Conselheiro Ativo</label>
-                                </div>
-                            </div>
-
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => this.closeModal()}>
-                                Cancelar
-                            </button>
-                            <button type="button" className="btn btn-primary" onClick={() => this.saveConselheiro()}>
-                                Salvar
-                            </button>
+                    </div>
+                    {!this.state.filters.conselho && (
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <label>Conselho</label>
+                                <select
+                                    className="form-control"
+                                    value={this.state.form.id_conselho}
+                                    onChange={(e) => this.handleInputChange('id_conselho', e.target.value)}
+                                >
+                                    <option value="">Selecione um conselho</option>
+                                    {this.state.conselhos.map(conselho =>
+                                        <option key={conselho.id_conselho} value={conselho.id_conselho}>
+                                            {conselho.tx_nome_conselho}
+                                        </option>
+                                    )}
+                                </select>
+                            </div>
                         </div>
+                    )}
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label>Data de Vínculo</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                value={this.state.form.dt_data_vinculo}
+                                onChange={(e) => this.handleInputChange('dt_data_vinculo', e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="">
+                            <label>Data Final de Vínculo</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                value={this.state.form.dt_data_final_vinculo}
+                                onChange={(e) => this.handleInputChange('dt_data_final_vinculo', e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="" style={{margin: '0', padding: '0 10px'}}>
+                        <div className="form-group">
+                            <div className="form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    checked={this.state.form.bo_conselheiro_ativo}
+                                    onChange={(e) => this.handleInputChange('bo_conselheiro_ativo', e.target.checked)}
+                                    style={{width: 20, height: 20}}
+                                />
+                                <label className="form-check-label">Conselheiro Ativo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-12">
+                        <button type="button" className="btn btn-secondary mr-2" onClick={() => this.showHideForm()}>
+                            Cancelar
+                        </button>
+                        <button type="button" className="btn btn-primary" onClick={() => this.saveConselheiro()}>
+                            Salvar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -551,12 +451,20 @@ class Conselheiros extends React.Component {
                 <div className="bg-white border-bottom py-3 px-4">
                     <div className="d-flex justify-content-between align-items-center">
                         <h2>Meus conselheiros</h2>
-                        <button className="btn btn-primary" onClick={() => this.openModal()}>
-                            Novo Conselheiro
-                        </button>
+                        <div>
+                            <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block"}}>
+                                <i className="fas fa-2x fa-plus-circle"/>
+                            </a>
+                            <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none"}}>
+                                <i className="fas fa-2x fa-times-circle"/>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div className="bg-white p-4">
+                        <div style={{display: this.state.showForm ? 'block' : 'none'}}>
+                            {this.renderForm()}
+                        </div>
                         {this.renderFilters()}
                         <br/>
                         <div className="table-responsive">
@@ -582,15 +490,10 @@ class Conselheiros extends React.Component {
                                                 <td>{conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'}</td>
                                                 <td>{conselheiro.bo_eh_governamental ? 'Sim' : 'Não'}</td>
                                                 <td>
-                                                    <button
-                                                        className="btn btn-sm btn-info mr-1"
-                                                        onClick={() => this.openDetailModal(conselheiro)}
-                                                    >
-                                                        Detalhes
-                                                    </button>
+
                                                     <button
                                                         className="btn btn-sm btn-warning mr-1"
-                                                        onClick={() => this.openModal(conselheiro)}
+                                                        onClick={() => this.editConselheiro(conselheiro)}
                                                     >
                                                         Editar
                                                     </button>
@@ -608,8 +511,7 @@ class Conselheiros extends React.Component {
                             </table>
                         </div>
                 </div>
-                {this.state.showModal && this.renderModal()}
-                {this.state.showDetailModal && this.renderDetailModal()}
+
             </div>
         );
     }
