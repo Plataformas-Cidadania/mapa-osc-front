@@ -179,7 +179,7 @@ class DashboardConselho extends React.Component {
     render() {
         return (
             <div>
-                <div className="row">
+               {/* <div className="row">
                     <div className="col-md-6">
                         <div className="card" style={{border: 0, background: "#F8F8F8", boxShadow: '0 0 3px #FFFFFF'}}>
                             <div className="card-body text-center">
@@ -198,7 +198,7 @@ class DashboardConselho extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
                 <br/>
                 <div className="title-user-area">
                     <h3><i className="fas fa-users"/> Meus Conselhos</h3>
@@ -231,10 +231,12 @@ class DashboardConselho extends React.Component {
                                         <a href={`conselheiro?conselho=${item.conselho?.id_conselho}`} className="btn btn-primary btn-sm mr-2">
                                             <i className="fa fa-users"/> Conselheiros
                                         </a>
-                                        <button className="btn btn-danger btn-sm"
-                                                onClick={() => this.removeRepresentacao(item.id_representacao)}>
+                                        <button className="btn btn-danger btn-sm" onClick={() => this.removeRepresentacao(item.conselho?.id_conselho)}>
                                             <i className="fa fa-trash"/> Remover
                                         </button>
+                                        {/*<button className="btn btn-danger btn-sm" onClick={() => this.removeRepresentacao(item.id_representacao)}>
+                                            <i className="fa fa-trash"/> Remover
+                                        </button>*/}
                                     </td>
                                 </tr>
                             ))}

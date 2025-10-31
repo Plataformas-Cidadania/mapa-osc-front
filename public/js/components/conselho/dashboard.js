@@ -177,35 +177,7 @@ class DashboardConselho extends React.Component {
     }
   }
   render() {
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      className: "row"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "col-md-6"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card",
-      style: {
-        border: 0,
-        background: "#F8F8F8",
-        boxShadow: '0 0 3px #FFFFFF'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card-body text-center"
-    }, /*#__PURE__*/React.createElement("h5", null, "Total de Conselhos"), /*#__PURE__*/React.createElement("h2", null, this.state.representacoes.length), /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-users fa-2x"
-    })))), /*#__PURE__*/React.createElement("div", {
-      className: "col-md-6"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card",
-      style: {
-        border: 0,
-        background: "#F8F8F8",
-        boxShadow: '0 0 3px #FFFFFF'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card-body text-center"
-    }, /*#__PURE__*/React.createElement("h5", null, "Total de Conselheiros"), /*#__PURE__*/React.createElement("h2", null, this.state.stats.totalConselheiros), /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-user-tie fa-2x"
-    }))))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "title-user-area"
     }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
@@ -245,7 +217,7 @@ class DashboardConselho extends React.Component {
       className: "fa fa-users"
     }), " Conselheiros"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-danger btn-sm",
-      onClick: () => this.removeRepresentacao(item.id_representacao)
+      onClick: () => this.removeRepresentacao(item.conselho?.id_conselho)
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-trash"
     }), " Remover")))))))), this.state.showModalAdd && /*#__PURE__*/React.createElement("div", {

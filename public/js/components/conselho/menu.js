@@ -10,18 +10,18 @@ class MenuConselho extends React.Component {
     }, /*#__PURE__*/React.createElement("ul", {
       className: "menu-area"
     }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+      href: "oscs-user"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-list-alt"
+    }), " Minhas OSCs")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "dashboard-conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-tachometer-alt"
-    }), " Dashboard")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    }), " Meus Conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
     }), " Conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-      href: "conselheiro"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-user-tie"
-    }), " Conselheiros")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "logout-user"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-power-off",

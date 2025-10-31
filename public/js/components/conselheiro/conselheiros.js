@@ -86,7 +86,7 @@ class Conselheiros extends React.Component {
           dt_data_final_vinculo: '',
           bo_conselheiro_ativo: true,
           bo_eh_governamental: true,
-          id_conselho: ''
+          id_conselho: this.state.filters.conselho || ''
         }
       });
     }
@@ -174,7 +174,7 @@ class Conselheiros extends React.Component {
       data: JSON.stringify(formData),
       success: function () {
         this.closeModal();
-        this.loadConselheiros();
+        this.loadConselheiros(this.state.filters.conselho);
       }.bind(this),
       error: function (xhr, status, err) {
         console.error('Erro ao salvar conselheiro:', err);
@@ -215,7 +215,7 @@ class Conselheiros extends React.Component {
           Authorization: 'Bearer ' + localStorage.getItem('@App:token')
         },
         success: function () {
-          this.loadConselheiros();
+          this.loadConselheiros(this.state.filters.conselho);
         }.bind(this),
         error: function (xhr, status, err) {
           console.error(status, err.toString());
@@ -358,7 +358,7 @@ class Conselheiros extends React.Component {
       className: "form-control",
       value: this.state.form.tx_orgao_origem,
       onChange: e => this.handleInputChange('tx_orgao_origem', e.target.value)
-    })), /*#__PURE__*/React.createElement("div", {
+    })), !this.state.filters.conselho && /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, "Conselho"), /*#__PURE__*/React.createElement("select", {
       className: "form-control",

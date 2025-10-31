@@ -10,9 +10,10 @@ class MenuConselho extends React.Component{
         menu = [
             <div key="menu">
                 <ul className="menu-area">
-                    <li><a href="dashboard-conselho"><i className="fas fa-tachometer-alt"/> Dashboard</a></li>
+                    <li><a href="oscs-user"><i className="fas fa-list-alt"/> Minhas OSCs</a></li>
+                    <li><a href="dashboard-conselho"><i className="fas fa-tachometer-alt"/> Meus Conselhos</a></li>
                     <li><a href="conselho"><i className="fas fa-users"/> Conselhos</a></li>
-                    <li><a href="conselheiro"><i className="fas fa-user-tie"/> Conselheiros</a></li>
+                    {/*<li><a href="conselheiro"><i className="fas fa-user-tie"/> Conselheiros</a></li>*/}
                     <li><a href="logout-user"><i className="fa fa-power-off" aria-hidden="true"/> Sair</a></li>
                 </ul>
             </div>

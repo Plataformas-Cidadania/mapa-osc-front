@@ -34,6 +34,7 @@ class Menu extends React.Component{
                 <div key="menu">
                     <ul className="menu-area">
                         <li><a href="oscs-user"><i className="fas fa-list-alt"/> Minhas OSCs</a></li>
+                        <li><a href="dashboard-conselho"><i className="fas fa-tachometer-alt"/> Meus Conselhos</a></li>
                         <li><a href="dados-user"><i className="fa fa-user" aria-hidden="true"/> Meus dados</a></li>
                         <li><a href="trocar-senha"><i className="fa fa-user" aria-hidden="true"/> Trocar Senha</a></li>
                         <li><a href="logout-user"><i className="fa fa-power-off" aria-hidden="true"/> Sair</a></li>

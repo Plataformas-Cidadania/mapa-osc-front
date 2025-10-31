@@ -86,7 +86,7 @@ class Conselheiros extends React.Component {
                     dt_data_final_vinculo: '',
                     bo_conselheiro_ativo: true,
                     bo_eh_governamental: true,
-                    id_conselho: ''
+                    id_conselho: this.state.filters.conselho || ''
                 }
             });
         }
@@ -190,7 +190,7 @@ class Conselheiros extends React.Component {
             data: JSON.stringify(formData),
             success: function() {
                 this.closeModal();
-                this.loadConselheiros();
+                this.loadConselheiros(this.state.filters.conselho);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error('Erro ao salvar conselheiro:', err);
@@ -234,7 +234,7 @@ class Conselheiros extends React.Component {
                     Authorization: 'Bearer ' + localStorage.getItem('@App:token')
                 },
                 success: function() {
-                    this.loadConselheiros();
+                    this.loadConselheiros(this.state.filters.conselho);
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(status, err.toString());
@@ -404,21 +404,23 @@ class Conselheiros extends React.Component {
                                     onChange={(e) => this.handleInputChange('tx_orgao_origem', e.target.value)}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Conselho</label>
-                                <select
-                                    className="form-control"
-                                    value={this.state.form.id_conselho}
-                                    onChange={(e) => this.handleInputChange('id_conselho', e.target.value)}
-                                >
-                                    <option value="">Selecione um conselho</option>
-                                    {this.state.conselhos.map(conselho =>
-                                        <option key={conselho.id_conselho} value={conselho.id_conselho}>
-                                            {conselho.tx_nome_conselho}
-                                        </option>
-                                    )}
-                                </select>
-                            </div>
+                            {!this.state.filters.conselho && (
+                                <div className="form-group">
+                                    <label>Conselho</label>
+                                    <select
+                                        className="form-control"
+                                        value={this.state.form.id_conselho}
+                                        onChange={(e) => this.handleInputChange('id_conselho', e.target.value)}
+                                    >
+                                        <option value="">Selecione um conselho</option>
+                                        {this.state.conselhos.map(conselho =>
+                                            <option key={conselho.id_conselho} value={conselho.id_conselho}>
+                                                {conselho.tx_nome_conselho}
+                                            </option>
+                                        )}
+                                    </select>
+                                </div>
+                            )}
                             <div className="form-group">
                                 <label>Data de Vínculo</label>
                                 <input
