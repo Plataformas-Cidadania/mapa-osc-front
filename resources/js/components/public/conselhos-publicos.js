@@ -112,14 +112,15 @@ class ConselhosPublicos extends React.Component {
         }));
 
         if (this.state.filters.search) {
+            const searchTerm = this.state.filters.search.toLowerCase();
             filtered = filtered.map(conselho => ({
                 ...conselho,
                 conselheiros: conselho.conselheiros.filter(c =>
-                    c.tx_nome_conselheiro.toLowerCase().includes(this.state.filters.search.toLowerCase()) ||
-                    c.tx_orgao_origem.toLowerCase().includes(this.state.filters.search.toLowerCase())
+                    (c.tx_nome_conselheiro && c.tx_nome_conselheiro.toLowerCase().includes(searchTerm)) ||
+                    (c.tx_orgao_origem && c.tx_orgao_origem.toLowerCase().includes(searchTerm))
                 )
             })).filter(conselho =>
-                conselho.tx_nome_conselho.toLowerCase().includes(this.state.filters.search.toLowerCase()) ||
+                (conselho.tx_nome_conselho && conselho.tx_nome_conselho.toLowerCase().includes(searchTerm)) ||
                 conselho.conselheiros.length > 0
             );
         }
@@ -129,20 +130,18 @@ class ConselhosPublicos extends React.Component {
         }
 
         if (this.state.filters.ativo !== '') {
+            const isActive = this.state.filters.ativo === 'true';
             filtered = filtered.map(conselho => ({
                 ...conselho,
-                conselheiros: conselho.conselheiros.filter(c =>
-                    c.bo_conselheiro_ativo == (this.state.filters.ativo === 'true')
-                )
+                conselheiros: conselho.conselheiros.filter(c => c.bo_conselheiro_ativo === isActive)
             }));
         }
 
         if (this.state.filters.governamental !== '') {
+            const isGovernamental = this.state.filters.governamental === 'true';
             filtered = filtered.map(conselho => ({
                 ...conselho,
-                conselheiros: conselho.conselheiros.filter(c =>
-                    c.bo_eh_governamental == (this.state.filters.governamental === 'true')
-                )
+                conselheiros: conselho.conselheiros.filter(c => c.bo_eh_governamental === isGovernamental)
             }));
         }
 
@@ -304,19 +303,19 @@ class ConselhosPublicos extends React.Component {
     renderCards() {
         return (
             <div className="row">
-                {this.state.filteredData.map(conselho => (
-                    <div key={conselho.id_conselho} className="col-md-6 col-lg-4 mb-4">
+                {this.state.filteredData.map((conselho, index) => (
+                    <div key={`card-${conselho.id_conselho}-${index}`} className="col-md-6 col-lg-4 mb-4">
                         <div className="card h-100 shadow-sm">
                             <div className="card-header bg-light border-bottom">
                                 <h6 className="mb-0 text-dark">
                                     <i className="fas fa-building mr-2 text-secondary"></i>
-                                    {conselho.tx_nome_conselho}
+                                    {conselho.tx_nome_conselho || 'Sem nome'}
                                 </h6>
                             </div>
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <span className="badge badge-light border">
-                                        {conselho.conselheiros.length} conselheiro(s)
+                                        {conselho.conselheiros ? conselho.conselheiros.length : 0} conselheiro(s)
                                     </span>
                                     <span className={`badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`}>
                                         {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}
@@ -341,13 +340,13 @@ class ConselhosPublicos extends React.Component {
                                 
                                 <div className="mt-3">
                                     <small className="text-muted d-block mb-2">Conselheiros:</small>
-                                    {conselho.conselheiros.length === 0 ? (
+                                    {!conselho.conselheiros || conselho.conselheiros.length === 0 ? (
                                         <small className="text-muted">Nenhum conselheiro cadastrado</small>
                                     ) : (
                                         <div className="conselheiros-preview">
-                                            {conselho.conselheiros.slice(0, 3).map(conselheiro => (
-                                                <div key={conselheiro.id_conselheiro} className="d-flex justify-content-between align-items-center py-1 border-bottom">
-                                                    <small className="text-truncate mr-2">{conselheiro.tx_nome_conselheiro}</small>
+                                            {conselho.conselheiros.slice(0, 3).map((conselheiro, cIndex) => (
+                                                <div key={`preview-${conselheiro.id_conselheiro}-${cIndex}`} className="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                    <small className="text-truncate mr-2">{conselheiro.tx_nome_conselheiro || 'Sem nome'}</small>
                                                     <div>
                                                         <span className={`badge badge-sm ${conselheiro.bo_conselheiro_ativo ? 'badge-success' : 'badge-secondary'} mr-1`}>
                                                             {conselheiro.bo_conselheiro_ativo ? 'A' : 'I'}
@@ -376,7 +375,7 @@ class ConselhosPublicos extends React.Component {
         return (
             <div className="accordion" id="conselhosAccordion">
                 {this.state.filteredData.map((conselho, index) => (
-                    <div key={conselho.id_conselho} className="card mb-3 border-0 shadow-sm">
+                    <div key={`list-${conselho.id_conselho}-${index}`} className="card mb-3 border-0 shadow-sm">
                         <div className="card-header bg-light" id={`heading${index}`}>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
@@ -410,13 +409,13 @@ class ConselhosPublicos extends React.Component {
                                     </div>
                                 ) : (
                                     <div className="row">
-                                        {conselho.conselheiros.map(conselheiro => (
-                                            <div key={conselheiro.id_conselheiro} className="col-md-6 mb-3">
+                                        {conselho.conselheiros && conselho.conselheiros.map((conselheiro, cIndex) => (
+                                            <div key={`list-item-${conselheiro.id_conselheiro}-${cIndex}`} className="col-md-6 mb-3">
                                                 <div className="card border-left border-left-secondary">
                                                     <div className="card-body py-2">
                                                         <div className="d-flex justify-content-between align-items-start">
                                                             <div>
-                                                                <h6 className="mb-1">{conselheiro.tx_nome_conselheiro}</h6>
+                                                                <h6 className="mb-1">{conselheiro.tx_nome_conselheiro || 'Sem nome'}</h6>
                                                                 {conselheiro.tx_orgao_origem && (
                                                                     <small className="text-muted d-block">{conselheiro.tx_orgao_origem}</small>
                                                                 )}

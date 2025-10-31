@@ -107,24 +107,27 @@ class ConselhosPublicos extends React.Component {
       conselheiros: this.state.conselheiros.filter(c => c.id_conselho === conselho.id_conselho)
     }));
     if (this.state.filters.search) {
+      const searchTerm = this.state.filters.search.toLowerCase();
       filtered = filtered.map(conselho => ({
         ...conselho,
-        conselheiros: conselho.conselheiros.filter(c => c.tx_nome_conselheiro.toLowerCase().includes(this.state.filters.search.toLowerCase()) || c.tx_orgao_origem.toLowerCase().includes(this.state.filters.search.toLowerCase()))
-      })).filter(conselho => conselho.tx_nome_conselho.toLowerCase().includes(this.state.filters.search.toLowerCase()) || conselho.conselheiros.length > 0);
+        conselheiros: conselho.conselheiros.filter(c => c.tx_nome_conselheiro && c.tx_nome_conselheiro.toLowerCase().includes(searchTerm) || c.tx_orgao_origem && c.tx_orgao_origem.toLowerCase().includes(searchTerm))
+      })).filter(conselho => conselho.tx_nome_conselho && conselho.tx_nome_conselho.toLowerCase().includes(searchTerm) || conselho.conselheiros.length > 0);
     }
     if (this.state.filters.conselho) {
       filtered = filtered.filter(conselho => conselho.id_conselho == this.state.filters.conselho);
     }
     if (this.state.filters.ativo !== '') {
+      const isActive = this.state.filters.ativo === 'true';
       filtered = filtered.map(conselho => ({
         ...conselho,
-        conselheiros: conselho.conselheiros.filter(c => c.bo_conselheiro_ativo == (this.state.filters.ativo === 'true'))
+        conselheiros: conselho.conselheiros.filter(c => c.bo_conselheiro_ativo === isActive)
       }));
     }
     if (this.state.filters.governamental !== '') {
+      const isGovernamental = this.state.filters.governamental === 'true';
       filtered = filtered.map(conselho => ({
         ...conselho,
-        conselheiros: conselho.conselheiros.filter(c => c.bo_eh_governamental == (this.state.filters.governamental === 'true'))
+        conselheiros: conselho.conselheiros.filter(c => c.bo_eh_governamental === isGovernamental)
       }));
     }
     this.setState({
@@ -307,8 +310,8 @@ class ConselhosPublicos extends React.Component {
   renderCards() {
     return /*#__PURE__*/React.createElement("div", {
       className: "row"
-    }, this.state.filteredData.map(conselho => /*#__PURE__*/React.createElement("div", {
-      key: conselho.id_conselho,
+    }, this.state.filteredData.map((conselho, index) => /*#__PURE__*/React.createElement("div", {
+      key: `card-${conselho.id_conselho}-${index}`,
       className: "col-md-6 col-lg-4 mb-4"
     }, /*#__PURE__*/React.createElement("div", {
       className: "card h-100 shadow-sm"
@@ -318,13 +321,13 @@ class ConselhosPublicos extends React.Component {
       className: "mb-0 text-dark"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-building mr-2 text-secondary"
-    }), conselho.tx_nome_conselho)), /*#__PURE__*/React.createElement("div", {
+    }), conselho.tx_nome_conselho || 'Sem nome')), /*#__PURE__*/React.createElement("div", {
       className: "card-body"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center mb-3"
     }, /*#__PURE__*/React.createElement("span", {
       className: "badge badge-light border"
-    }, conselho.conselheiros.length, " conselheiro(s)"), /*#__PURE__*/React.createElement("span", {
+    }, conselho.conselheiros ? conselho.conselheiros.length : 0, " conselheiro(s)"), /*#__PURE__*/React.createElement("span", {
       className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
     }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo')), conselho.tx_ato_legal && /*#__PURE__*/React.createElement("div", {
       className: "mb-2"
@@ -343,16 +346,16 @@ class ConselhosPublicos extends React.Component {
       className: "mt-3"
     }, /*#__PURE__*/React.createElement("small", {
       className: "text-muted d-block mb-2"
-    }, "Conselheiros:"), conselho.conselheiros.length === 0 ? /*#__PURE__*/React.createElement("small", {
+    }, "Conselheiros:"), !conselho.conselheiros || conselho.conselheiros.length === 0 ? /*#__PURE__*/React.createElement("small", {
       className: "text-muted"
     }, "Nenhum conselheiro cadastrado") : /*#__PURE__*/React.createElement("div", {
       className: "conselheiros-preview"
-    }, conselho.conselheiros.slice(0, 3).map(conselheiro => /*#__PURE__*/React.createElement("div", {
-      key: conselheiro.id_conselheiro,
+    }, conselho.conselheiros.slice(0, 3).map((conselheiro, cIndex) => /*#__PURE__*/React.createElement("div", {
+      key: `preview-${conselheiro.id_conselheiro}-${cIndex}`,
       className: "d-flex justify-content-between align-items-center py-1 border-bottom"
     }, /*#__PURE__*/React.createElement("small", {
       className: "text-truncate mr-2"
-    }, conselheiro.tx_nome_conselheiro), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    }, conselheiro.tx_nome_conselheiro || 'Sem nome'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
       className: `badge badge-sm ${conselheiro.bo_conselheiro_ativo ? 'badge-success' : 'badge-secondary'} mr-1`
     }, conselheiro.bo_conselheiro_ativo ? 'A' : 'I'), /*#__PURE__*/React.createElement("span", {
       className: `badge badge-sm ${conselheiro.bo_eh_governamental ? 'badge-secondary' : 'badge-light border'}`
@@ -365,7 +368,7 @@ class ConselhosPublicos extends React.Component {
       className: "accordion",
       id: "conselhosAccordion"
     }, this.state.filteredData.map((conselho, index) => /*#__PURE__*/React.createElement("div", {
-      key: conselho.id_conselho,
+      key: `list-${conselho.id_conselho}-${index}`,
       className: "card mb-3 border-0 shadow-sm"
     }, /*#__PURE__*/React.createElement("div", {
       className: "card-header bg-light",
@@ -401,8 +404,8 @@ class ConselhosPublicos extends React.Component {
       className: "mb-0"
     }, "Nenhum conselheiro cadastrado")) : /*#__PURE__*/React.createElement("div", {
       className: "row"
-    }, conselho.conselheiros.map(conselheiro => /*#__PURE__*/React.createElement("div", {
-      key: conselheiro.id_conselheiro,
+    }, conselho.conselheiros && conselho.conselheiros.map((conselheiro, cIndex) => /*#__PURE__*/React.createElement("div", {
+      key: `list-item-${conselheiro.id_conselheiro}-${cIndex}`,
       className: "col-md-6 mb-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "card border-left border-left-secondary"
@@ -412,7 +415,7 @@ class ConselhosPublicos extends React.Component {
       className: "d-flex justify-content-between align-items-start"
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", {
       className: "mb-1"
-    }, conselheiro.tx_nome_conselheiro), conselheiro.tx_orgao_origem && /*#__PURE__*/React.createElement("small", {
+    }, conselheiro.tx_nome_conselheiro || 'Sem nome'), conselheiro.tx_orgao_origem && /*#__PURE__*/React.createElement("small", {
       className: "text-muted d-block"
     }, conselheiro.tx_orgao_origem)), /*#__PURE__*/React.createElement("div", {
       className: "text-right"
