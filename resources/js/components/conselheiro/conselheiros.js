@@ -25,15 +25,18 @@ class Conselheiros extends React.Component {
                 bo_conselheiro_ativo: true,
                 bo_eh_governamental: true,
                 id_conselho: ''
-            }
+            },
+            search: '',
+            oscsSearch: [],
+            loadingSearch: false
         };
     }
 
     componentDidMount() {
         const urlParams = new URLSearchParams(window.location.search);
         const id_conselho = urlParams.get('conselho');
-        this.setState({ 
-            filters: { ...this.state.filters, conselho: id_conselho || '' } 
+        this.setState({
+            filters: { ...this.state.filters, conselho: id_conselho || '' }
         });
         this.loadConselheiros(id_conselho);
         this.loadConselhos();
@@ -167,6 +170,41 @@ class Conselheiros extends React.Component {
         });
     }
 
+    handleSearch(e) {
+        const val = e.target.value || ' ';
+        this.setState({ search: val }, () => this.listSearch(this.state.search));
+    }
+
+    clickSearch() {
+        this.listSearch(this.state.search || ' ');
+    }
+
+    listSearch(search) {
+        if (search.length < 4) return;
+        this.setState({ loadingSearch: true, oscsSearch: [] });
+        let term = search.replace('/', '').normalize('NFD').replace(/[̀-ͯ]/g, '');
+        term = term.startsWith('0') ? term.slice(1) : term;
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'busca/osc/' + term,
+            cache: false,
+            success: (data) => this.setState({ oscsSearch: data, loadingSearch: false }),
+            error: (xhr, status, err) => this.setState({ loadingSearch: false })
+        });
+    }
+
+    selectOsc(id_osc, tx_nome_osc) {
+        this.setState({
+            form: {
+                ...this.state.form,
+                cd_identificador_osc: id_osc,
+                tx_orgao_origem: tx_nome_osc
+            },
+            search: '',
+            oscsSearch: []
+        });
+    }
+
     saveConselheiro() {
         const url = this.state.editingConselheiro
             ? getBaseUrl2 + 'confocos/conselheiro/' + this.state.editingConselheiro.id_conselheiro
@@ -200,10 +238,10 @@ class Conselheiros extends React.Component {
     }
 
     loadConselheiros(id_conselho = null) {
-        const url = id_conselho 
+        const url = id_conselho
             ? getBaseUrl2 + `confocos/conselheiro-por-conselho/${id_conselho}`
             : getBaseUrl2 + 'confocos/conselheiro';
-            
+
         $.ajax({
             method: 'GET',
             url: url,
@@ -396,13 +434,50 @@ class Conselheiros extends React.Component {
                                 />
                             </div>
                             <div className="form-group">
+                                <div className="form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        checked={this.state.form.bo_eh_governamental}
+                                        onChange={(e) => this.handleInputChange('bo_eh_governamental', e.target.checked)}
+                                    />
+                                    <label className="form-check-label">Governamental</label>
+                                </div>
+                            </div>
+                            <div className="form-group">
                                 <label>Órgão de Origem</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.form.tx_orgao_origem}
-                                    onChange={(e) => this.handleInputChange('tx_orgao_origem', e.target.value)}
-                                />
+                                {this.state.form.bo_eh_governamental ? (
+                                    <div>
+                                        <input 
+                                            className="form-control" 
+                                            placeholder="Digite o CNPJ..." 
+                                            onClick={this.clickSearch.bind(this)} 
+                                            onChange={this.handleSearch.bind(this)} 
+                                            value={this.state.search}
+                                        />
+                                        <ul className="box-search-itens" style={{display: this.state.search ? '' : 'none'}}>
+                                            <div className="text-center">
+                                                <img src="/img/load.gif" width="60" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
+                                            </div>
+                                            {this.state.oscsSearch.map(item => 
+                                                <li key={item.id_osc} className="list-group-item" onClick={() => this.selectOsc(item.id_osc, item.tx_nome_osc)}>
+                                                    {item.tx_nome_osc}
+                                                </li>
+                                            )}
+                                        </ul>
+                                        {this.state.form.tx_orgao_origem && (
+                                            <small className="text-muted">OSC selecionada: {this.state.form.tx_orgao_origem}</small>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={this.state.form.tx_orgao_origem}
+                                        onChange={(e) => this.handleInputChange('tx_orgao_origem', e.target.value)}
+                                        placeholder="Digite o nome do órgão..."
+                                    />
+                                )}
                             </div>
                             {!this.state.filters.conselho && (
                                 <div className="form-group">
@@ -450,17 +525,7 @@ class Conselheiros extends React.Component {
                                     <label className="form-check-label">Conselheiro Ativo</label>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        checked={this.state.form.bo_eh_governamental}
-                                        onChange={(e) => this.handleInputChange('bo_eh_governamental', e.target.checked)}
-                                    />
-                                    <label className="form-check-label">É Governamental</label>
-                                </div>
-                            </div>
+
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => this.closeModal()}>

@@ -25,7 +25,10 @@ class Conselheiros extends React.Component {
         bo_conselheiro_ativo: true,
         bo_eh_governamental: true,
         id_conselho: ''
-      }
+      },
+      search: '',
+      oscsSearch: [],
+      loadingSearch: false
     };
   }
   componentDidMount() {
@@ -154,6 +157,47 @@ class Conselheiros extends React.Component {
         ...this.state.form,
         [field]: value
       }
+    });
+  }
+  handleSearch(e) {
+    const val = e.target.value || ' ';
+    this.setState({
+      search: val
+    }, () => this.listSearch(this.state.search));
+  }
+  clickSearch() {
+    this.listSearch(this.state.search || ' ');
+  }
+  listSearch(search) {
+    if (search.length < 4) return;
+    this.setState({
+      loadingSearch: true,
+      oscsSearch: []
+    });
+    let term = search.replace('/', '').normalize('NFD').replace(/[̀-ͯ]/g, '');
+    term = term.startsWith('0') ? term.slice(1) : term;
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'busca/osc/' + term,
+      cache: false,
+      success: data => this.setState({
+        oscsSearch: data,
+        loadingSearch: false
+      }),
+      error: (xhr, status, err) => this.setState({
+        loadingSearch: false
+      })
+    });
+  }
+  selectOsc(id_osc, tx_nome_osc) {
+    this.setState({
+      form: {
+        ...this.state.form,
+        cd_identificador_osc: id_osc,
+        tx_orgao_origem: tx_nome_osc
+      },
+      search: '',
+      oscsSearch: []
     });
   }
   saveConselheiro() {
@@ -353,11 +397,48 @@ class Conselheiros extends React.Component {
       onChange: e => this.handleInputChange('tx_nome_conselheiro', e.target.value)
     })), /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "\xD3rg\xE3o de Origem"), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-check"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      className: "form-check-input",
+      checked: this.state.form.bo_eh_governamental,
+      onChange: e => this.handleInputChange('bo_eh_governamental', e.target.checked)
+    }), /*#__PURE__*/React.createElement("label", {
+      className: "form-check-label"
+    }, "Governamental"))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "\xD3rg\xE3o de Origem"), this.state.form.bo_eh_governamental ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+      className: "form-control",
+      placeholder: "Digite o CNPJ...",
+      onClick: this.clickSearch.bind(this),
+      onChange: this.handleSearch.bind(this),
+      value: this.state.search
+    }), /*#__PURE__*/React.createElement("ul", {
+      className: "box-search-itens",
+      style: {
+        display: this.state.search ? '' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "text-center"
+    }, /*#__PURE__*/React.createElement("img", {
+      src: "/img/load.gif",
+      width: "60",
+      style: {
+        display: this.state.loadingSearch ? '' : 'none'
+      }
+    })), this.state.oscsSearch.map(item => /*#__PURE__*/React.createElement("li", {
+      key: item.id_osc,
+      className: "list-group-item",
+      onClick: () => this.selectOsc(item.id_osc, item.tx_nome_osc)
+    }, item.tx_nome_osc))), this.state.form.tx_orgao_origem && /*#__PURE__*/React.createElement("small", {
+      className: "text-muted"
+    }, "OSC selecionada: ", this.state.form.tx_orgao_origem)) : /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control",
       value: this.state.form.tx_orgao_origem,
-      onChange: e => this.handleInputChange('tx_orgao_origem', e.target.value)
+      onChange: e => this.handleInputChange('tx_orgao_origem', e.target.value),
+      placeholder: "Digite o nome do \xF3rg\xE3o..."
     })), !this.state.filters.conselho && /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, "Conselho"), /*#__PURE__*/React.createElement("select", {
@@ -394,18 +475,7 @@ class Conselheiros extends React.Component {
       onChange: e => this.handleInputChange('bo_conselheiro_ativo', e.target.checked)
     }), /*#__PURE__*/React.createElement("label", {
       className: "form-check-label"
-    }, "Conselheiro Ativo"))), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "form-check"
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      className: "form-check-input",
-      checked: this.state.form.bo_eh_governamental,
-      onChange: e => this.handleInputChange('bo_eh_governamental', e.target.checked)
-    }), /*#__PURE__*/React.createElement("label", {
-      className: "form-check-label"
-    }, "\xC9 Governamental")))), /*#__PURE__*/React.createElement("div", {
+    }, "Conselheiro Ativo")))), /*#__PURE__*/React.createElement("div", {
       className: "modal-footer"
     }, /*#__PURE__*/React.createElement("button", {
       type: "button",
