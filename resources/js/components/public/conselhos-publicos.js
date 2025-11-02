@@ -360,7 +360,8 @@ class ConselhosPublicos extends React.Component {
                     const isActive = conselho.bo_conselho_ativo;
 
                     return (
-                        <div key={conselho.id_conselho} className="col-md-6 col-lg-4 mb-4">
+                        <React.Fragment key={`conselho-${conselho.id_conselho}-${index}-${JSON.stringify(this.state.filters)}`}>
+                        <div className="col-md-6 col-lg-4 mb-4">
                             <div className="card h-100 shadow-sm border-0 position-relative overflow-hidden" style={{transition: 'all 0.3s ease'}}>
                                 {/* Decorative background pattern */}
                                 <div className="position-absolute w-100 h-100" style={{
@@ -649,6 +650,7 @@ class ConselhosPublicos extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        </React.Fragment>
                     );
                 })}
             </div>

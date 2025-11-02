@@ -362,8 +362,9 @@ class ConselhosPublicos extends React.Component {
       const hasDocuments = conselhoDocumentos.length > 0;
       const hasWebsite = conselho.tx_website;
       const isActive = conselho.bo_conselho_ativo;
-      return /*#__PURE__*/React.createElement("div", {
-        key: conselho.id_conselho,
+      return /*#__PURE__*/React.createElement(React.Fragment, {
+        key: `conselho-${conselho.id_conselho}-${index}-${JSON.stringify(this.state.filters)}`
+      }, /*#__PURE__*/React.createElement("div", {
         className: "col-md-6 col-lg-4 mb-4"
       }, /*#__PURE__*/React.createElement("div", {
         className: "card h-100 shadow-sm border-0 position-relative overflow-hidden",
@@ -672,7 +673,7 @@ class ConselhosPublicos extends React.Component {
         }
       }, /*#__PURE__*/React.createElement("i", {
         className: "fas fa-external-link-alt me-1"
-      }), " \xA0 Visitar")))));
+      }), " \xA0 Visitar"))))));
     }));
   }
   renderList() {
