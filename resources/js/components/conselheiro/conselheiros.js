@@ -162,12 +162,12 @@ class Conselheiros extends React.Component {
         });
     }
 
-    selectOsc(id_osc, tx_nome_osc) {
+    selectOsc(osc) {
         this.setState({
             form: {
                 ...this.state.form,
-                cd_identificador_osc: id_osc,
-                tx_orgao_origem: tx_nome_osc
+                cd_identificador_osc: osc.cd_identificador_osc,
+                tx_orgao_origem: osc.tx_nome_osc
             },
             search: '',
             oscsSearch: []
@@ -339,7 +339,7 @@ class Conselheiros extends React.Component {
                     <div className="col-md-12" style={{margin: '0', padding: '0 10px'}}>
                         <div className="form-group">
                             <label>Órgão de Origem</label>
-                            {this.state.form.bo_eh_governamental ? (
+                            {!this.state.form.bo_eh_governamental ? (
                                 <div>
                                     <input
                                         className="form-control"
@@ -353,13 +353,13 @@ class Conselheiros extends React.Component {
                                             <img src="/img/load.gif" width="60" style={{display: this.state.loadingSearch ? '' : 'none'}}/>
                                         </div>
                                         {this.state.oscsSearch.map(item =>
-                                            <li key={item.id_osc} className="list-group-item" onClick={() => this.selectOsc(item.id_osc, item.tx_nome_osc)}>
+                                            <li key={item.id_osc} className="list-group-item" onClick={() => this.selectOsc(item)}>
                                                 {item.tx_nome_osc}
                                             </li>
                                         )}
                                     </ul>
                                     {this.state.form.tx_orgao_origem && (
-                                        <small className="text-muted">OSC selecionada: {this.state.form.tx_orgao_origem}</small>
+                                        <small className="text-muted">OSC selecionada: CNPJ: {this.state.form.cd_identificador_osc} - {this.state.form.tx_orgao_origem}</small>
                                     )}
                                 </div>
                             ) : (

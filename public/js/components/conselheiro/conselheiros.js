@@ -160,12 +160,12 @@ class Conselheiros extends React.Component {
       })
     });
   }
-  selectOsc(id_osc, tx_nome_osc) {
+  selectOsc(osc) {
     this.setState({
       form: {
         ...this.state.form,
-        cd_identificador_osc: id_osc,
-        tx_orgao_origem: tx_nome_osc
+        cd_identificador_osc: osc.cd_identificador_osc,
+        tx_orgao_origem: osc.tx_nome_osc
       },
       search: '',
       oscsSearch: []
@@ -329,7 +329,7 @@ class Conselheiros extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "\xD3rg\xE3o de Origem"), this.state.form.bo_eh_governamental ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("label", null, "\xD3rg\xE3o de Origem"), !this.state.form.bo_eh_governamental ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
       className: "form-control",
       placeholder: "Digite o CNPJ...",
       onClick: this.clickSearch.bind(this),
@@ -351,10 +351,10 @@ class Conselheiros extends React.Component {
     })), this.state.oscsSearch.map(item => /*#__PURE__*/React.createElement("li", {
       key: item.id_osc,
       className: "list-group-item",
-      onClick: () => this.selectOsc(item.id_osc, item.tx_nome_osc)
+      onClick: () => this.selectOsc(item)
     }, item.tx_nome_osc))), this.state.form.tx_orgao_origem && /*#__PURE__*/React.createElement("small", {
       className: "text-muted"
-    }, "OSC selecionada: ", this.state.form.tx_orgao_origem)) : /*#__PURE__*/React.createElement("input", {
+    }, "OSC selecionada: CNPJ: ", this.state.form.cd_identificador_osc, " - ", this.state.form.tx_orgao_origem)) : /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control",
       value: this.state.form.tx_orgao_origem,
