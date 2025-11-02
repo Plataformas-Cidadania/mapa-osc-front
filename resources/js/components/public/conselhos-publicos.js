@@ -348,7 +348,9 @@ class ConselhosPublicos extends React.Component {
     renderCards() {
         const baseColor = '#3A559B';
         const { filteredData, documentos } = this.state;
-        
+
+        console.log('filteredData:::::::::::::', filteredData)
+
         return (
             <div className="row">
                 {filteredData.map((conselho, index) => {
@@ -356,7 +358,7 @@ class ConselhosPublicos extends React.Component {
                     const hasDocuments = conselhoDocumentos.length > 0;
                     const hasWebsite = conselho.tx_website;
                     const isActive = conselho.bo_conselho_ativo;
-                    
+
                     return (
                         <div key={conselho.id_conselho} className="col-md-6 col-lg-4 mb-4">
                             <div className="card h-100 shadow-sm border-0 position-relative overflow-hidden" style={{transition: 'all 0.3s ease'}}>
@@ -365,7 +367,7 @@ class ConselhosPublicos extends React.Component {
                                     background: `linear-gradient(135deg, ${baseColor}05 0%, transparent 50%)`,
                                     zIndex: 1
                                 }}></div>
-                                
+
                                 {/* Floating geometric shapes */}
                                 <div className="position-absolute" style={{
                                     top: '15px',
@@ -386,9 +388,9 @@ class ConselhosPublicos extends React.Component {
                                     transform: 'rotate(45deg)',
                                     zIndex: 1
                                 }}></div>
-                                
+
                                 {/* Header */}
-                                <div className="card-header border-0 position-relative" style={{
+                                <div className="card-header border-0 position-relative p-2" style={{
                                     background: `linear-gradient(135deg, ${baseColor} 0%, ${baseColor}dd 100%)`,
                                     zIndex: 2
                                 }}>
@@ -404,18 +406,18 @@ class ConselhosPublicos extends React.Component {
                                                 <i className="fas fa-landmark text-white" style={{fontSize: '18px'}}></i>
                                             </div>
                                         </div>
-                                        <div className="flex-grow-1">
+                                        <div className="flex-grow-1" style={{paddingLeft: 8}}>
                                             <h6 className="mb-1 text-white fw-bold" style={{fontSize: '14px'}}>
                                                 {conselho.tx_nome_conselho || 'Sem nome'}
                                             </h6>
-                                            <div className="d-flex align-items-center">
+                                            <div className="d-flex align-items-center justify-content-between">
                                                 <span className="text-white" style={{opacity: 0.8, fontSize: '12px'}}>
-                                                    <i className="fas fa-users me-1"></i>
+                                                    <i className="fas fa-users me-1"></i> &nbsp;
                                                     {conselho.conselheiros.length} membros
                                                 </span>
                                                 {isActive && (
                                                     <span className="ms-2 badge" style={{
-                                                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                                                        backgroundColor: '#FFFFFF',
                                                         color: '#28a745',
                                                         border: '1px solid rgba(40, 167, 69, 0.3)',
                                                         fontSize: '10px'
@@ -464,13 +466,12 @@ class ConselhosPublicos extends React.Component {
                                     <div className="row g-1 mb-2">
                                         {hasWebsite && (
                                             <div className="col-6">
-                                                <div className="d-flex align-items-center p-2 rounded" style={{backgroundColor: '#f8f9fa'}}>
+                                                <div className="d-flex align-items-center p-2 rounded">
                                                     <div className="me-2">
                                                         <i className="fas fa-globe" style={{color: baseColor, fontSize: '14px'}}></i>
                                                     </div>
                                                     <div>
-                                                        <small className="text-muted d-block" style={{fontSize: '9px'}}>Website</small>
-                                                        <small className="fw-medium" style={{fontSize: '10px'}}>Disponível</small>
+                                                        <small className="text-muted d-block " style={{fontSize: '9px', paddingLeft: 5}}> Website</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -491,14 +492,14 @@ class ConselhosPublicos extends React.Component {
                                         {conselho.tx_ato_legal && (
                                             <div className="col-12">
                                                 <div className="d-flex align-items-start p-2 rounded" style={{backgroundColor: '#f8f9fa'}}>
-                                                    <div className="me-2 mt-1">
+                                                    {/*<div className="me-2 mt-1">
                                                         <i className="fas fa-gavel" style={{color: '#6c757d', fontSize: '12px'}}></i>
-                                                    </div>
+                                                    </div>*/}
                                                     <div className="flex-grow-1">
                                                         <small className="text-muted d-block" style={{fontSize: '9px'}}>Ato Legal</small>
-                                                        <small className="text-dark" style={{fontSize: '10px', lineHeight: '1.3'}}>
-                                                            {conselho.tx_ato_legal.length > 60 ? 
-                                                                conselho.tx_ato_legal.substring(0, 60) + '...' : 
+                                                        <small className="text-dark" style={{fontSize: '14px', lineHeight: '1.3'}}>
+                                                            {conselho.tx_ato_legal.length > 60 ?
+                                                                conselho.tx_ato_legal.substring(0, 60) + '...' :
                                                                 conselho.tx_ato_legal
                                                             }
                                                         </small>
@@ -512,20 +513,20 @@ class ConselhosPublicos extends React.Component {
                                     <div className="conselheiros-section">
                                         <div className="d-flex align-items-center justify-content-between mb-2">
                                             <small className="text-muted fw-bold" style={{fontSize: '10px'}}>
-                                                <i className="fas fa-users me-1" style={{color: baseColor}}></i>
+                                                <i className="fas fa-users me-1" style={{color: baseColor}}></i> &nbsp;
                                                 CONSELHEIROS
                                             </small>
                                             {conselho.conselheiros.length > 0 && (
-                                                <button 
+                                                <button
                                                     className="btn btn-sm p-0 text-decoration-none"
-                                                    style={{color: baseColor, fontSize: '9px'}}
+                                                    style={{color: baseColor, fontSize: '12px'}}
                                                     onClick={() => this.showConselheirosModal(conselho)}
                                                 >
                                                     Ver todos ({conselho.conselheiros.length})
                                                 </button>
                                             )}
                                         </div>
-                                        
+
                                         {conselho.conselheiros.length === 0 ? (
                                             <div className="text-center py-3">
                                                 <div className="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style={{
@@ -543,11 +544,11 @@ class ConselhosPublicos extends React.Component {
                                                 <div className="d-flex align-items-center mb-2">
                                                     <div className="d-flex" style={{marginLeft: '0'}}>
                                                         {conselho.conselheiros.slice(0, 3).map((conselheiro, cIndex) => {
-                                                            const initial = conselheiro.tx_nome_conselheiro ? 
+                                                            const initial = conselheiro.tx_nome_conselheiro ?
                                                                 conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?';
-                                                            
+
                                                             return (
-                                                                <div 
+                                                                <div
                                                                     key={conselheiro.id_conselheiro}
                                                                     className="rounded-circle d-flex align-items-center justify-content-center border border-white"
                                                                     style={{
@@ -568,7 +569,7 @@ class ConselhosPublicos extends React.Component {
                                                             );
                                                         })}
                                                         {conselho.conselheiros.length > 3 && (
-                                                            <div 
+                                                            <div
                                                                 className="rounded-circle d-flex align-items-center justify-content-center border border-white"
                                                                 style={{
                                                                     width: '24px',
@@ -592,20 +593,20 @@ class ConselhosPublicos extends React.Component {
                                                                 <span className="badge badge-sm" style={{
                                                                     backgroundColor: '#17a2b815',
                                                                     color: '#17a2b8',
-                                                                    fontSize: '8px',
+                                                                    fontSize: '12px',
                                                                     padding: '1px 4px'
                                                                 }}>
-                                                                    <i className="fas fa-university me-1"></i>Gov
+                                                                    <i className="fas fa-university me-1"></i> Gov
                                                                 </span>
                                                             )}
                                                             {conselho.conselheiros.some(c => !c.bo_eh_governamental) && (
                                                                 <span className="badge badge-sm" style={{
                                                                     backgroundColor: '#28a74515',
                                                                     color: '#28a745',
-                                                                    fontSize: '8px',
+                                                                    fontSize: '12px',
                                                                     padding: '1px 4px'
                                                                 }}>
-                                                                    <i className="fas fa-users me-1"></i>Civil
+                                                                    <i className="fas fa-users me-1"></i> Civil
                                                                 </span>
                                                             )}
                                                         </div>
@@ -619,17 +620,17 @@ class ConselhosPublicos extends React.Component {
                                 {/* Footer */}
                                 <div className="card-footer bg-light border-0 position-relative" style={{zIndex: 2}}>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <small className="text-muted" style={{fontSize: '9px'}}>
+                                        {/*<small className="text-muted" style={{fontSize: '9px'}}>
                                             <i className="fas fa-calendar me-1"></i>
-                                            {conselho.dt_data_cadastro ? 
-                                                new Date(conselho.dt_data_cadastro).toLocaleDateString('pt-BR') : 
-                                                'Data não informada'
+                                            {conselho.dt_data_cadastro ?
+                                                new Date(conselho.dt_data_cadastro).toLocaleDateString('pt-BR') :
+                                                ' Data não informada'
                                             }
-                                        </small>
+                                        </small>*/}
                                         {hasWebsite && (
-                                            <a 
-                                                href={`http://${conselho.tx_website}`} 
-                                                target="_blank" 
+                                            <a
+                                                href={`http://${conselho.tx_website}`}
+                                                target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="btn btn-sm rounded-pill px-3"
                                                 style={{
@@ -640,7 +641,7 @@ class ConselhosPublicos extends React.Component {
                                                     padding: '4px 8px'
                                                 }}
                                             >
-                                                <i className="fas fa-external-link-alt me-1"></i>
+                                                <i className="fas fa-external-link-alt me-1"></i> &nbsp;
                                                 Visitar
                                             </a>
                                         )}
@@ -817,22 +818,22 @@ class ConselhosPublicos extends React.Component {
     renderConselheirosModal() {
         const { selectedConselho, showConselheirosModal } = this.state;
         const baseColor = '#3A559B';
-        
+
         if (!showConselheirosModal || !selectedConselho) return null;
-        
+
         return (
             <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}} onClick={this.closeConselheirosModal}>
                 <div className="modal-dialog modal-lg modal-dialog-scrollable" onClick={(e) => e.stopPropagation()}>
                     <div className="modal-content">
                         <div className="modal-header" style={{backgroundColor: baseColor, color: 'white'}}>
                             <div className="d-flex align-items-center">
-                                <i className="fas fa-users me-2"></i>
+                                <i className="fas fa-users me-2 fa-3x" style={{marginRight: 10}}></i>
                                 <div>
-                                    <h5 className="modal-title mb-0">{selectedConselho.tx_nome_conselho}</h5>
+                                    <h5 className="modal-title" style={{color: '#FFFFFF'}}><strong>{selectedConselho.tx_nome_conselho}</strong></h5>
                                     <small style={{opacity: 0.8}}>{selectedConselho.conselheiros.length} conselheiros</small>
                                 </div>
                             </div>
-                            <button type="button" className="btn-close btn-close-white" onClick={this.closeConselheirosModal}></button>
+                            <div type="button" className="btn-close btn-close-white" onClick={this.closeConselheirosModal}></div>
                         </div>
                         <div className="modal-body p-0">
                             {selectedConselho.conselheiros.length === 0 ? (
@@ -845,8 +846,8 @@ class ConselhosPublicos extends React.Component {
                                     <table className="table table-hover mb-0">
                                         <thead className="bg-light">
                                             <tr>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Nome</th>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Órgão</th>
+                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px', width: '60%'}} >Nome</th>
+                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px', width: '40%'}}>Órgão</th>
                                                 <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Status</th>
                                                 <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Tipo</th>
                                             </tr>
@@ -863,9 +864,10 @@ class ConselhosPublicos extends React.Component {
                                                                     backgroundColor: conselheiro.bo_conselheiro_ativo ? baseColor : '#6c757d',
                                                                     color: 'white',
                                                                     fontSize: '12px',
-                                                                    fontWeight: 'bold'
+                                                                    fontWeight: 'bold',
+                                                                    marginRight: 10
                                                                 }}>
-                                                                    {conselheiro.tx_nome_conselheiro ? 
+                                                                    {conselheiro.tx_nome_conselheiro ?
                                                                         conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'
                                                                     }
                                                                 </div>
@@ -883,13 +885,13 @@ class ConselhosPublicos extends React.Component {
                                                         </span>
                                                     </td>
                                                     <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '10px'}}>
+                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '10px', color: "#FFFFFF"}}>
                                                             <i className={`fas ${conselheiro.bo_conselheiro_ativo ? 'fa-check-circle' : 'fa-pause-circle'} me-1`}></i>
                                                             {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
                                                         </span>
                                                     </td>
                                                     <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`} style={{fontSize: '10px'}}>
+                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`} style={{fontSize: '10px', color: "#FFFFFF"}}>
                                                             <i className={`fas ${conselheiro.bo_eh_governamental ? 'fa-university' : 'fa-users'} me-1`}></i>
                                                             {conselheiro.bo_eh_governamental ? 'Governamental' : 'Civil'}
                                                         </span>
@@ -904,7 +906,7 @@ class ConselhosPublicos extends React.Component {
                         <div className="modal-footer bg-light">
                             <div className="d-flex justify-content-between align-items-center w-100">
                                 <small className="text-muted">
-                                    <i className="fas fa-info-circle me-1"></i>
+                                    <i className="fas fa-info-circle me-1"></i> &nbsp;
                                     {selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length} ativos de {selectedConselho.conselheiros.length} total
                                 </small>
                                 <button type="button" className="btn btn-secondary btn-sm" onClick={this.closeConselheirosModal}>
@@ -958,7 +960,7 @@ class ConselhosPublicos extends React.Component {
                         </div>
                     )}
                 </div>
-                
+
                 {this.renderConselheirosModal()}
             </div>
         );
