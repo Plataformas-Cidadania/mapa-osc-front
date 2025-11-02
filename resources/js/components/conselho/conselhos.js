@@ -5,7 +5,14 @@ class Conselhos extends React.Component {
             loading: true,
             conselhos: [],
             showModal: false,
+            showDocumentosModal: false,
+            showUploadModal: false,
+            selectedConselhoId: null,
             editingConselho: null,
+            uploadForm: {
+                titulo: '',
+                arquivo: null
+            },
             form: {
                 tx_nome_conselho: '',
                 tx_ato_legal: '',
@@ -15,8 +22,19 @@ class Conselhos extends React.Component {
                 cd_tipo_abrangencia: ''
             },
             nivelFederativo: [],
-            tipoAbrangencia: []
+            tipoAbrangencia: [],
+            documentos: {}
         };
+        
+        this.setDocumento = this.setDocumento.bind(this);
+        this.saveDocumento = this.saveDocumento.bind(this);
+        this.loadDocumentos = this.loadDocumentos.bind(this);
+        this.deleteDocumento = this.deleteDocumento.bind(this);
+        this.openDocumentosModal = this.openDocumentosModal.bind(this);
+        this.closeDocumentosModal = this.closeDocumentosModal.bind(this);
+        this.openUploadModal = this.openUploadModal.bind(this);
+        this.closeUploadModal = this.closeUploadModal.bind(this);
+        this.handleUploadChange = this.handleUploadChange.bind(this);
     }
 
     componentDidMount() {
@@ -152,6 +170,11 @@ class Conselhos extends React.Component {
                     loading: false,
                     conselhos: data || []
                 });
+                if (data && data.length > 0) {
+                    data.forEach(conselho => {
+                        this.loadDocumentos(conselho.id_conselho);
+                    });
+                }
                 console.log('conselho:::::::::', data);
             }.bind(this),
             error: function(xhr, status, err) {
@@ -178,6 +201,124 @@ class Conselhos extends React.Component {
                 }
             });
         }
+    }
+
+    setDocumento(conselhoId) {
+        this.openUploadModal(conselhoId);
+    }
+
+    openUploadModal(conselhoId) {
+        this.setState({
+            showUploadModal: true,
+            selectedConselhoId: conselhoId,
+            uploadForm: { titulo: '', arquivo: null }
+        });
+    }
+
+    closeUploadModal() {
+        this.setState({
+            showUploadModal: false,
+            selectedConselhoId: null,
+            uploadForm: { titulo: '', arquivo: null }
+        });
+    }
+
+    handleUploadChange(field, value) {
+        this.setState({
+            uploadForm: {
+                ...this.state.uploadForm,
+                [field]: value
+            }
+        });
+    }
+
+    saveDocumento() {
+        if (!this.state.uploadForm.arquivo || !this.state.uploadForm.titulo) {
+            alert('Por favor, selecione um arquivo e digite um título.');
+            return;
+        }
+        
+        let formData = new FormData();
+        formData.append("documento", this.state.uploadForm.arquivo);
+        formData.append("id_conselho", this.state.selectedConselhoId);
+        formData.append("tx_titulo_documento", this.state.uploadForm.titulo);
+
+        $.ajax({
+            method: 'POST',
+            url: getBaseUrl2 + 'confocos/documento-conselho',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function(data) {
+                this.loadDocumentos(this.state.selectedConselhoId);
+                this.closeUploadModal();
+                alert('Documento enviado com sucesso!');
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+                alert('Erro ao enviar documento');
+            }.bind(this)
+        });
+    }
+
+    loadDocumentos(conselhoId) {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'confocos/documento-por-conselho/' + conselhoId,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({
+                    documentos: {
+                        ...this.state.documentos,
+                        [conselhoId]: data || []
+                    }
+                });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('Erro ao carregar documentos:', err);
+            }.bind(this)
+        });
+    }
+
+    deleteDocumento(documentoId, conselhoId) {
+        if (confirm('Tem certeza que deseja excluir este documento?')) {
+            $.ajax({
+                method: 'DELETE',
+                url: getBaseUrl2 + 'confocos/documento-conselho/' + documentoId,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+                },
+                success: function() {
+                    this.loadDocumentos(conselhoId);
+                    alert('Documento excluído com sucesso!');
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(status, err.toString());
+                    alert('Erro ao excluir documento');
+                }.bind(this)
+            });
+        }
+    }
+
+    openDocumentosModal(conselhoId) {
+        this.setState({
+            showDocumentosModal: true,
+            selectedConselhoId: conselhoId
+        });
+    }
+
+    closeDocumentosModal() {
+        this.setState({
+            showDocumentosModal: false,
+            selectedConselhoId: null
+        });
     }
 
     renderModal() {
@@ -344,12 +485,37 @@ class Conselhos extends React.Component {
                                                 </span>
                                             </td>
                                             <td>
-                                                <button
-                                                    className="btn btn-sm btn-warning mr-2"
-                                                    onClick={() => this.openModal(conselho)}
-                                                >
-                                                    Editar
-                                                </button>
+                                                <div className="d-flex flex-wrap gap-1">
+                                                    <button
+                                                        className="btn btn-sm btn-outline-primary"
+                                                        onClick={() => this.openModal(conselho)}
+                                                        title="Editar conselho"
+                                                    >
+                                                        <i className="fas fa-edit"></i>
+                                                    </button>
+                                                    
+                                                    <button
+                                                        className="btn btn-sm btn-outline-success"
+                                                        onClick={() => this.setDocumento(conselho.id_conselho)}
+                                                        title="Enviar documento"
+                                                    >
+                                                        <i className="fas fa-cloud-upload-alt"></i>
+                                                    </button>
+                                                    
+                                                    {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
+                                                        <button 
+                                                            className="btn btn-sm btn-outline-info position-relative"
+                                                            onClick={() => this.openDocumentosModal(conselho.id_conselho)}
+                                                            title={`${this.state.documentos[conselho.id_conselho].length} documento(s)`}
+                                                        >
+                                                            <i className="fas fa-folder-open"></i>
+                                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                                                {this.state.documentos[conselho.id_conselho].length}
+                                                            </span>
+                                                        </button>
+                                                    )}
+                                                </div>
+
                                             </td>
                                         </tr>
                                     )}
@@ -358,6 +524,118 @@ class Conselhos extends React.Component {
                     </div>
                 </div>
                 {this.state.showModal && this.renderModal()}
+                {this.state.showDocumentosModal && this.renderDocumentosModal()}
+                {this.state.showUploadModal && this.renderUploadModal()}
+            </div>
+        );
+    }
+
+    renderDocumentosModal() {
+        const documentos = this.state.documentos[this.state.selectedConselhoId] || [];
+        
+        return (
+            <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">
+                                <i className="fas fa-folder-open mr-2"></i>
+                                Documentos do Conselho
+                            </h5>
+                            <button type="button" className="close" onClick={this.closeDocumentosModal}>
+                                ×
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            {documentos.length === 0 ? (
+                                <div className="text-center py-4">
+                                    <i className="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                                    <p className="text-muted">Nenhum documento encontrado</p>
+                                </div>
+                            ) : (
+                                <div className="list-group">
+                                    {documentos.map(doc => (
+                                        <div key={doc.id_documento_conselho} className="list-group-item d-flex justify-content-between align-items-center">
+                                            <div className="d-flex align-items-center">
+                                                <i className="fas fa-file-alt text-primary mr-3"></i>
+                                                <div>
+                                                    <h6 className="mb-1">{doc.tx_titulo_documento}</h6>
+                                                    <small className="text-muted">
+                                                        Tipo: {doc.tx_tipo_arquivo} | Data: {new Date(doc.dt_data_cadastro).toLocaleDateString()}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div className="btn-group">
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => this.deleteDocumento(doc.id_documento_conselho, this.state.selectedConselhoId)}
+                                                    title="Excluir documento"
+                                                >
+                                                    <i className="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.closeDocumentosModal}>
+                                Fechar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    renderUploadModal() {
+        return (
+            <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">
+                                <i className="fas fa-cloud-upload-alt mr-2"></i>
+                                Enviar Documento
+                            </h5>
+                            <button type="button" className="close" onClick={this.closeUploadModal}>
+                                ×
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>Título do Documento</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.uploadForm.titulo}
+                                    onChange={(e) => this.handleUploadChange('titulo', e.target.value)}
+                                    placeholder="Digite o título do documento"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Arquivo</label>
+                                <input
+                                    type="file"
+                                    className="form-control-file"
+                                    onChange={(e) => this.handleUploadChange('arquivo', e.target.files[0])}
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt"
+                                />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.closeUploadModal}>
+                                Cancelar
+                            </button>
+                            <button type="button" className="btn btn-success" onClick={this.saveDocumento}>
+                                <i className="fas fa-upload mr-1"></i>
+                                Enviar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
