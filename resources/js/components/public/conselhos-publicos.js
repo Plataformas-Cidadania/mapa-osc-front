@@ -7,6 +7,7 @@ class ConselhosPublicos extends React.Component {
             conselheiros: [],
             filteredData: [],
             viewMode: 'cards',
+            documentos: {},
             stats: {
                 totalConselhos: 0,
                 totalConselheiros: 0,
@@ -20,6 +21,8 @@ class ConselhosPublicos extends React.Component {
                 governamental: ''
             }
         };
+
+        this.loadDocumentos = this.loadDocumentos.bind(this);
     }
 
     componentDidMount() {
@@ -86,12 +89,36 @@ class ConselhosPublicos extends React.Component {
             conselheirosGovernamentais: conselheiros.filter(c => c.bo_eh_governamental).length
         };
 
+        // Load documents for each conselho
+        conselhos.forEach(conselho => {
+            this.loadDocumentos(conselho.id_conselho);
+        });
+
         this.setState({
             filteredData: organized,
             stats,
             loading: false
         }, () => {
             this.applyFilters();
+        });
+    }
+
+    loadDocumentos(conselhoId) {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'confocos/documento-por-conselho/' + conselhoId,
+            cache: false,
+            success: (data) => {
+                this.setState({
+                    documentos: {
+                        ...this.state.documentos,
+                        [conselhoId]: data || []
+                    }
+                });
+            },
+            error: (xhr, status, err) => {
+                console.error('Erro ao carregar documentos:', err);
+            }
         });
     }
 
@@ -321,14 +348,14 @@ class ConselhosPublicos extends React.Component {
                                         {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}
                                     </span>
                                 </div>
-                                
+
                                 {conselho.tx_ato_legal && (
                                     <div className="mb-2">
                                         <small className="text-muted d-block">Ato Legal:</small>
                                         <small>{conselho.tx_ato_legal}</small>
                                     </div>
                                 )}
-                                
+
                                 {conselho.tx_website && (
                                     <div className="mb-2">
                                         <small className="text-muted d-block">Website:</small>
@@ -337,7 +364,24 @@ class ConselhosPublicos extends React.Component {
                                         </a>
                                     </div>
                                 )}
-                                
+
+                                {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
+                                    <div className="mb-3">
+                                        <small className="text-muted d-block mb-2">Documentos:</small>
+                                        <div className="d-flex flex-wrap">
+                                            {this.state.documentos[conselho.id_conselho].slice(0, 2).map(doc => (
+                                                <span key={doc.id_documento_conselho} className="badge badge-light border mr-1 mb-1" title={doc.tx_titulo_documento}>
+                                                    <i className="fas fa-file-alt mr-1"></i>
+                                                    {doc.tx_titulo_documento.length > 15 ? doc.tx_titulo_documento.substring(0, 15) + '...' : doc.tx_titulo_documento}
+                                                </span>
+                                            ))}
+                                            {this.state.documentos[conselho.id_conselho].length > 2 && (
+                                                <span className="badge badge-secondary">+{this.state.documentos[conselho.id_conselho].length - 2}</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="mt-3">
                                     <small className="text-muted d-block mb-2">Conselheiros:</small>
                                     {!conselho.conselheiros || conselho.conselheiros.length === 0 ? (
@@ -378,12 +422,12 @@ class ConselhosPublicos extends React.Component {
                     <div key={`list-${conselho.id_conselho}-${index}`} className="card mb-3 border-0 shadow-sm">
                         <div className="card-header bg-light" id={`heading${index}`}>
                             <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 className="mb-0">
-                                        <button 
-                                            className="btn btn-link text-decoration-none p-0 text-left text-dark" 
-                                            type="button" 
-                                            data-toggle="collapse" 
+                                <div className=" w-100">
+                                    <h6 className="mb-0" >
+                                        <button
+                                            className="btn btn-link text-decoration-none p-0 text-left text-dark w-100"
+                                            type="button"
+                                            data-toggle="collapse"
                                             data-target={`#collapse${index}`}
                                         >
                                             <i className="fas fa-building text-secondary mr-2"></i>
@@ -402,37 +446,87 @@ class ConselhosPublicos extends React.Component {
                         </div>
                         <div id={`collapse${index}`} className="collapse" data-parent="#conselhosAccordion">
                             <div className="card-body">
+                                {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
+                                    <div className="mb-4">
+                                        <h6 className="text-secondary mb-3">
+                                            <i className="fas fa-folder-open mr-2"></i>
+                                            Documentos ({this.state.documentos[conselho.id_conselho].length})
+                                        </h6>
+                                        <div className="row">
+                                            {this.state.documentos[conselho.id_conselho].map(doc => (
+                                                <div key={doc.id_documento_conselho} className="col-md-4 mb-2">
+                                                    <div className="card border-0 bg-light">
+                                                        <div className="card-body py-2 px-3">
+                                                            <div className="d-flex align-items-center">
+                                                                <i className="fas fa-file-alt text-primary mr-2"></i>
+                                                                <div className="flex-grow-1">
+                                                                    <small className="d-block font-weight-bold text-truncate" title={doc.tx_titulo_documento}>
+                                                                        {doc.tx_titulo_documento}
+                                                                    </small>
+                                                                    <small className="text-muted">
+                                                                        {doc.tx_tipo_arquivo} | {new Date(doc.dt_data_cadastro).toLocaleDateString()}
+                                                                    </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {conselho.conselheiros.length === 0 ? (
                                     <div className="text-center text-muted py-3">
                                         <i className="fas fa-users fa-2x mb-2"></i>
                                         <p className="mb-0">Nenhum conselheiro cadastrado</p>
                                     </div>
                                 ) : (
-                                    <div className="row">
-                                        {conselho.conselheiros && conselho.conselheiros.map((conselheiro, cIndex) => (
-                                            <div key={`list-item-${conselheiro.id_conselheiro}-${cIndex}`} className="col-md-6 mb-3">
-                                                <div className="card border-left border-left-secondary">
-                                                    <div className="card-body py-2">
-                                                        <div className="d-flex justify-content-between align-items-start">
-                                                            <div>
-                                                                <h6 className="mb-1">{conselheiro.tx_nome_conselheiro || 'Sem nome'}</h6>
-                                                                {conselheiro.tx_orgao_origem && (
-                                                                    <small className="text-muted d-block">{conselheiro.tx_orgao_origem}</small>
-                                                                )}
-                                                            </div>
-                                                            <div className="text-right">
-                                                                <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'badge-success' : 'badge-secondary'} d-block mb-1`}>
-                                                                    {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
-                                                                </span>
-                                                                <span className={`badge ${conselheiro.bo_eh_governamental ? 'badge-secondary' : 'badge-light border'}`}>
-                                                                    {conselheiro.bo_eh_governamental ? 'Gov.' : 'Não Gov.'}
-                                                                </span>
+                                    <div>
+                                        <h6 className="text-secondary mb-3">
+                                            <i className="fas fa-users mr-2"></i>
+                                            Conselheiros ({conselho.conselheiros.length})
+                                        </h6>
+                                        <div className="conselheiros-container" style={{maxHeight: '400px', overflowY: 'auto'}}>
+                                            <div className="row">
+                                                {conselho.conselheiros && conselho.conselheiros.map((conselheiro, cIndex) => (
+                                                    <div key={`list-item-${conselheiro.id_conselheiro}-${cIndex}`} className="col-md-6 col-lg-4 mb-2">
+                                                        <div className="card border-0 bg-light h-100">
+                                                            <div className="card-body py-2 px-3">
+                                                                <div className="d-flex justify-content-between align-items-start">
+                                                                    <div className="flex-grow-1 mr-2">
+                                                                        <h6 className="mb-1 text-truncate" title={conselheiro.tx_nome_conselheiro}>
+                                                                            {conselheiro.tx_nome_conselheiro || 'Sem nome'}
+                                                                        </h6>
+                                                                        {conselheiro.tx_orgao_origem && (
+                                                                            <small className="text-muted d-block text-truncate" title={conselheiro.tx_orgao_origem}>
+                                                                                {conselheiro.tx_orgao_origem}
+                                                                            </small>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="text-right flex-shrink-0">
+                                                                        <span className={`badge badge-sm ${conselheiro.bo_conselheiro_ativo ? 'badge-success' : 'badge-secondary'} d-block mb-1`}>
+                                                                            {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
+                                                                        </span>
+                                                                        <span className={`badge badge-sm ${conselheiro.bo_eh_governamental ? 'badge-secondary' : 'badge-light border'}`}>
+                                                                            {conselheiro.bo_eh_governamental ? 'Gov.' : 'Não Gov.'}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                ))}
                                             </div>
-                                        ))}
+                                            {conselho.conselheiros.length > 12 && (
+                                                <div className="text-center mt-2">
+                                                    <small className="text-muted">
+                                                        <i className="fas fa-info-circle mr-1"></i>
+                                                        Role para ver todos os {conselho.conselheiros.length} conselheiros
+                                                    </small>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -464,7 +558,7 @@ class ConselhosPublicos extends React.Component {
                 {this.renderHero()}
                 {this.renderStats()}
                 {this.renderFilters()}
-                
+
                 <div className="container py-4">
                     {this.state.filteredData.length === 0 ? (
                         <div className="text-center py-5">
