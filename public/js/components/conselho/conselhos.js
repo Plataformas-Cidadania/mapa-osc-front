@@ -23,6 +23,8 @@ class Conselhos extends React.Component {
       },
       nivelFederativo: [],
       tipoAbrangencia: [],
+      selectedEstado: '',
+      municipios: [],
       documentos: {}
     };
     this.setDocumento = this.setDocumento.bind(this);
@@ -38,41 +40,76 @@ class Conselhos extends React.Component {
   componentDidMount() {
     this.loadConselhos();
     this.loadNivelFederativo();
-    this.loadTipoAbrangencia();
   }
   loadNivelFederativo() {
+    this.setState({
+      nivelFederativo: [{
+        "cd_nivel_federativo": 1,
+        "tx_nome_nivel_federativo": "Nacional"
+      }, {
+        "cd_nivel_federativo": 2,
+        "tx_nome_nivel_federativo": "Estadual"
+      }, {
+        "cd_nivel_federativo": 3,
+        "tx_nome_nivel_federativo": "Municipal"
+      }]
+    });
+  }
+  loadGeographicData(nivelFederativo) {
+    if (nivelFederativo == 1) {
+      this.setState({
+        tipoAbrangencia: [{
+          cd_tipo_abrangencia: 'BR',
+          tx_nome_abrangencia: 'Brasil'
+        }]
+      });
+    } else if (nivelFederativo == 2) {
+      this.loadEstados();
+    } else if (nivelFederativo == 3) {
+      this.loadEstados();
+    }
+  }
+  loadEstados() {
     $.ajax({
       method: 'GET',
-      url: getBaseUrl2 + 'confocos/nivel_federativo',
+      url: getBaseUrl2 + 'geo/estados',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('@App:token')
       },
       cache: false,
       success: function (data) {
+        const estados = Object.values(data).map(estado => ({
+          cd_tipo_abrangencia: estado.id_regiao,
+          tx_nome_abrangencia: estado.tx_nome_regiao
+        }));
         this.setState({
-          nivelFederativo: data || []
+          tipoAbrangencia: estados
         });
       }.bind(this),
       error: function (xhr, status, err) {
-        console.error('Erro ao carregar níveis federativos:', err);
+        console.error('Erro ao carregar estados:', err);
       }.bind(this)
     });
   }
-  loadTipoAbrangencia() {
+  loadMunicipios(estadoId) {
     $.ajax({
       method: 'GET',
-      url: getBaseUrl2 + 'confocos/abrangencia_conselho',
+      url: getBaseUrl2 + 'geo/municipios/estado/' + estadoId,
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('@App:token')
       },
       cache: false,
       success: function (data) {
+        const municipios = (data || []).map(municipio => ({
+          cd_tipo_abrangencia: municipio.id_regiao,
+          tx_nome_abrangencia: municipio.tx_nome_regiao
+        }));
         this.setState({
-          tipoAbrangencia: data || []
+          municipios
         });
       }.bind(this),
       error: function (xhr, status, err) {
-        console.error('Erro ao carregar tipos de abrangência:', err);
+        console.error('Erro ao carregar municípios:', err);
       }.bind(this)
     });
   }
@@ -126,6 +163,27 @@ class Conselhos extends React.Component {
         [field]: value
       }
     });
+    if (field === 'cd_nivel_federativo') {
+      this.loadGeographicData(value);
+      this.setState({
+        form: {
+          ...this.state.form,
+          [field]: value,
+          cd_tipo_abrangencia: ''
+        },
+        selectedEstado: '',
+        municipios: []
+      });
+    } else if (field === 'selectedEstado' && this.state.form.cd_nivel_federativo == 3) {
+      this.loadMunicipios(value);
+      this.setState({
+        selectedEstado: value,
+        form: {
+          ...this.state.form,
+          cd_tipo_abrangencia: ''
+        }
+      });
+    }
   }
   saveConselho() {
     const url = this.state.editingConselho ? getBaseUrl2 + 'confocos/conselho/' + this.state.editingConselho.id_conselho : getBaseUrl2 + 'confocos/conselho';
@@ -360,18 +418,51 @@ class Conselhos extends React.Component {
     }, "Selecione..."), this.state.nivelFederativo.map(nivel => /*#__PURE__*/React.createElement("option", {
       key: nivel.cd_nivel_federativo,
       value: nivel.cd_nivel_federativo
-    }, nivel.tx_nome_nivel_federativo)))), /*#__PURE__*/React.createElement("div", {
+    }, nivel.tx_nome_nivel_federativo)))), this.state.form.cd_nivel_federativo == 1 && /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Tipo de Abrang\xEAncia"), /*#__PURE__*/React.createElement("select", {
+    }, /*#__PURE__*/React.createElement("label", null, "Pa\xEDs"), /*#__PURE__*/React.createElement("select", {
       className: "form-control",
       value: this.state.form.cd_tipo_abrangencia,
-      onChange: e => this.handleInputChange('cd_tipo_abrangencia', e.target.value ? parseInt(e.target.value) : '')
+      onChange: e => this.handleInputChange('cd_tipo_abrangencia', e.target.value)
     }, /*#__PURE__*/React.createElement("option", {
       value: ""
     }, "Selecione..."), this.state.tipoAbrangencia.map(tipo => /*#__PURE__*/React.createElement("option", {
       key: tipo.cd_tipo_abrangencia,
       value: tipo.cd_tipo_abrangencia
-    }, tipo.tx_nome_abrangencia)))), /*#__PURE__*/React.createElement("div", {
+    }, tipo.tx_nome_abrangencia)))), this.state.form.cd_nivel_federativo == 2 && /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Estado"), /*#__PURE__*/React.createElement("select", {
+      className: "form-control",
+      value: this.state.form.cd_tipo_abrangencia,
+      onChange: e => this.handleInputChange('cd_tipo_abrangencia', e.target.value)
+    }, /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, "Selecione..."), this.state.tipoAbrangencia.map(tipo => /*#__PURE__*/React.createElement("option", {
+      key: tipo.cd_tipo_abrangencia,
+      value: tipo.cd_tipo_abrangencia
+    }, tipo.tx_nome_abrangencia)))), this.state.form.cd_nivel_federativo == 3 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Estado"), /*#__PURE__*/React.createElement("select", {
+      className: "form-control",
+      value: this.state.selectedEstado,
+      onChange: e => this.handleInputChange('selectedEstado', e.target.value)
+    }, /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, "Selecione..."), this.state.tipoAbrangencia.map(estado => /*#__PURE__*/React.createElement("option", {
+      key: estado.cd_tipo_abrangencia,
+      value: estado.cd_tipo_abrangencia
+    }, estado.tx_nome_abrangencia)))), this.state.selectedEstado && /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Munic\xEDpio"), /*#__PURE__*/React.createElement("select", {
+      className: "form-control",
+      value: this.state.form.cd_tipo_abrangencia,
+      onChange: e => this.handleInputChange('cd_tipo_abrangencia', e.target.value)
+    }, /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, "Selecione..."), this.state.municipios.map(municipio => /*#__PURE__*/React.createElement("option", {
+      key: municipio.cd_tipo_abrangencia,
+      value: municipio.cd_tipo_abrangencia
+    }, municipio.tx_nome_abrangencia))))), /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",

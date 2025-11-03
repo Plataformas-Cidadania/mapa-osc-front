@@ -201,8 +201,8 @@ class DashboardConselho extends React.Component {
                 </div>*/}
                 <br/>
                 <div className="title-user-area">
-                    <h3><i className="fas fa-users"/> Meus Conselhos</h3>
-                    <p>Nessa área você pode gerenciar seus conselhos</p>
+                    <h3><i className="fas fa-users"/> Meus conselheiros</h3>
+                    <p>Nessa área você pode gerenciar seus conselheiros</p>
                     <button className="btn btn-primary float-right"
                             onClick={() => { this.setState({showModalAdd: true}); this.loadTodosConselhos(); }}
                             style={{ marginTop: '-80px' }}>
