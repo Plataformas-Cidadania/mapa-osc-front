@@ -12,7 +12,8 @@ class DashboardConselho extends React.Component {
             search: '',
             todosConselhos: [],
             conselhosSearch: [],
-            loadingSearch: false
+            loadingSearch: false,
+            nivelFederativo: []
         };
 
         this.handleSearch = this.handleSearch.bind(this);
@@ -24,6 +25,7 @@ class DashboardConselho extends React.Component {
     componentDidMount() {
         this.loadStats();
         this.loadRepresentacoes();
+        this.loadNivelFederativo();
     }
 
     loadStats() {
@@ -174,6 +176,28 @@ class DashboardConselho extends React.Component {
         }
     }
 
+    loadNivelFederativo() {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'confocos/nivel_federativo',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: function(data) {
+                this.setState({ nivelFederativo: data || [] });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('Erro ao carregar níveis federativos:', err);
+            }.bind(this)
+        });
+    }
+
+    getNivelFederativoName(codigo) {
+        const nivel = this.state.nivelFederativo.find(n => n.cd_nivel_federativo == codigo);
+        return nivel ? nivel.tx_nome_nivel_federativo : null;
+    }
+
 
 
     render() {
@@ -217,7 +241,7 @@ class DashboardConselho extends React.Component {
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome do Conselho</th>
-                                    <th>Nível Federativo</th>
+                                    <th width="150">N. Federativo</th>
                                     <th className="text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -225,15 +249,20 @@ class DashboardConselho extends React.Component {
                             {this.state.representacoes.map((item, index) => (
                                 <tr key={item.id_representacao_conselho}>
                                     <th scope="row">{index+1}</th>
-                                    <td>{item.conselho?.tx_nome_conselho || 'N/A'}</td>
-                                    <td>{item.conselho?.nivel_federativo?.tx_nome_nivel_federativo || 'N/A'}</td>
-                                    <td className="text-center">
-                                        <a href={`conselheiro?conselho=${item.conselho?.id_conselho}`} className="btn btn-primary btn-sm mr-2">
-                                            <i className="fa fa-users"/> Conselheiros
-                                        </a>
-                                        <button className="btn btn-danger btn-sm" onClick={() => this.removeRepresentacao(item.conselho?.id_conselho)}>
-                                            <i className="fa fa-trash"/> Remover
-                                        </button>
+                                    <td width="500">{item.conselho?.tx_nome_conselho || 'N/A'}</td>
+                                    <td>{this.getNivelFederativoName(item.conselho?.cd_nivel_federativo) || 'N/A'}</td>
+                                    <td className="text-right" width="300">
+                                        <div className="btn btn-outline-primary">
+                                            <a href={`conselheiro?conselho=${item.conselho?.id_conselho}`}>
+                                                <i className="fa fa-users"/> Conselheiros
+                                            </a>
+                                        </div>
+                                        &nbsp;
+                                        <div className="btn btn-danger" onClick={() => this.removeRepresentacao(item.conselho?.id_conselho)}>
+                                            <a style={{cursor:'pointer'}}>
+                                                <i className="fa fa-trash"/>
+                                            </a>
+                                        </div>
                                         {/*<button className="btn btn-danger btn-sm" onClick={() => this.removeRepresentacao(item.id_representacao)}>
                                             <i className="fa fa-trash"/> Remover
                                         </button>*/}

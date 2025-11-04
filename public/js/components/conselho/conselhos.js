@@ -42,17 +42,21 @@ class Conselhos extends React.Component {
     this.loadNivelFederativo();
   }
   loadNivelFederativo() {
-    this.setState({
-      nivelFederativo: [{
-        "cd_nivel_federativo": 1,
-        "tx_nome_nivel_federativo": "Nacional"
-      }, {
-        "cd_nivel_federativo": 2,
-        "tx_nome_nivel_federativo": "Estadual"
-      }, {
-        "cd_nivel_federativo": 3,
-        "tx_nome_nivel_federativo": "Municipal"
-      }]
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'confocos/nivel_federativo',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+      },
+      cache: false,
+      success: function (data) {
+        this.setState({
+          nivelFederativo: data || []
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error('Erro ao carregar níveis federativos:', err);
+      }.bind(this)
     });
   }
   loadGeographicData(nivelFederativo) {

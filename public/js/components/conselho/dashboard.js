@@ -12,7 +12,8 @@ class DashboardConselho extends React.Component {
       search: '',
       todosConselhos: [],
       conselhosSearch: [],
-      loadingSearch: false
+      loadingSearch: false,
+      nivelFederativo: []
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.addConselho = this.addConselho.bind(this);
@@ -22,6 +23,7 @@ class DashboardConselho extends React.Component {
   componentDidMount() {
     this.loadStats();
     this.loadRepresentacoes();
+    this.loadNivelFederativo();
   }
   loadStats() {
     this.loadConselhos();
@@ -176,6 +178,28 @@ class DashboardConselho extends React.Component {
       });
     }
   }
+  loadNivelFederativo() {
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'confocos/nivel_federativo',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+      },
+      cache: false,
+      success: function (data) {
+        this.setState({
+          nivelFederativo: data || []
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error('Erro ao carregar níveis federativos:', err);
+      }.bind(this)
+    });
+  }
+  getNivelFederativoName(codigo) {
+    const nivel = this.state.nivelFederativo.find(n => n.cd_nivel_federativo == codigo);
+    return nivel ? nivel.tx_nome_nivel_federativo : null;
+  }
   render() {
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
       className: "title-user-area"
@@ -202,25 +226,35 @@ class DashboardConselho extends React.Component {
       className: "table"
     }, /*#__PURE__*/React.createElement("thead", {
       className: "thead-light"
-    }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("th", null, "N\xEDvel Federativo"), /*#__PURE__*/React.createElement("th", {
+    }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("th", {
+      width: "150"
+    }, "N. Federativo"), /*#__PURE__*/React.createElement("th", {
       className: "text-center"
     }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.representacoes.map((item, index) => /*#__PURE__*/React.createElement("tr", {
       key: item.id_representacao_conselho
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, index + 1), /*#__PURE__*/React.createElement("td", null, item.conselho?.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, item.conselho?.nivel_federativo?.tx_nome_nivel_federativo || 'N/A'), /*#__PURE__*/React.createElement("td", {
-      className: "text-center"
+    }, index + 1), /*#__PURE__*/React.createElement("td", {
+      width: "500"
+    }, item.conselho?.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, this.getNivelFederativoName(item.conselho?.cd_nivel_federativo) || 'N/A'), /*#__PURE__*/React.createElement("td", {
+      className: "text-right",
+      width: "300"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "btn btn-outline-primary"
     }, /*#__PURE__*/React.createElement("a", {
-      href: `conselheiro?conselho=${item.conselho?.id_conselho}`,
-      className: "btn btn-primary btn-sm mr-2"
+      href: `conselheiro?conselho=${item.conselho?.id_conselho}`
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-users"
-    }), " Conselheiros"), /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-danger btn-sm",
+    }), " Conselheiros")), "\xA0", /*#__PURE__*/React.createElement("div", {
+      className: "btn btn-danger",
       onClick: () => this.removeRepresentacao(item.conselho?.id_conselho)
+    }, /*#__PURE__*/React.createElement("a", {
+      style: {
+        cursor: 'pointer'
+      }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-trash"
-    }), " Remover")))))))), this.state.showModalAdd && /*#__PURE__*/React.createElement("div", {
+    })))))))))), this.state.showModalAdd && /*#__PURE__*/React.createElement("div", {
       className: "modal",
       style: {
         display: 'block',
