@@ -115,6 +115,22 @@ class Conselhos extends React.Component {
         });
     }
 
+    getAvailableAbrangencia(sourceArray) {
+        const currentNivel = this.state.form.cd_nivel_federativo;
+        const currentConselhoId = this.state.editingConselho?.id_conselho;
+        
+        const registeredAbrangencias = this.state.conselhos
+            .filter(conselho => 
+                conselho.cd_nivel_federativo == currentNivel && 
+                conselho.id_conselho !== currentConselhoId
+            )
+            .map(conselho => conselho.cd_tipo_abrangencia.toString());
+        
+        return sourceArray.filter(item => 
+            !registeredAbrangencias.includes(item.cd_tipo_abrangencia.toString())
+        );
+    }
+
     openModal(conselho = null) {
         if (conselho) {
             this.setState({
@@ -486,7 +502,7 @@ class Conselhos extends React.Component {
                                                 onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
                                             >
                                                 <option value="">Selecione...</option>
-                                                {this.state.tipoAbrangencia.map(tipo =>
+                                                {this.getAvailableAbrangencia(this.state.tipoAbrangencia).map(tipo =>
                                                     <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
                                                         {tipo.tx_nome_abrangencia}
                                                     </option>
@@ -520,7 +536,7 @@ class Conselhos extends React.Component {
                                                         onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
                                                     >
                                                         <option value="">Selecione...</option>
-                                                        {this.state.municipios.map(municipio =>
+                                                        {this.getAvailableAbrangencia(this.state.municipios).map(municipio =>
                                                             <option key={municipio.cd_tipo_abrangencia} value={municipio.cd_tipo_abrangencia}>
                                                                 {municipio.tx_nome_abrangencia}
                                                             </option>
