@@ -17,7 +17,7 @@ class MenuConselho extends React.Component {
       href: "conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-file"
-    }), " Meus conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    }), " Conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "dashboard-conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"

@@ -156,6 +156,21 @@ class Conselhos extends React.Component {
       }
     });
   }
+  generateConselhoName() {
+    const nivel = this.state.nivelFederativo.find(n => n.cd_nivel_federativo == this.state.form.cd_nivel_federativo);
+    const abrangencia = this.state.form.cd_nivel_federativo == 3 ? this.state.municipios.find(m => m.cd_tipo_abrangencia == this.state.form.cd_tipo_abrangencia) : this.state.tipoAbrangencia.find(a => a.cd_tipo_abrangencia == this.state.form.cd_tipo_abrangencia);
+    if (nivel && abrangencia) {
+      const nivelText = nivel.tx_nome_nivel_federativo.toLowerCase();
+      const preposicao = this.state.form.cd_nivel_federativo == 3 ? 'do município de' : this.state.form.cd_nivel_federativo == 2 ? 'do estado de' : 'do';
+      const nomeConselho = `Conselho ${nivelText} de Fomento e Colaboração ${preposicao} ${abrangencia.tx_nome_abrangencia}`;
+      this.setState({
+        form: {
+          ...this.state.form,
+          tx_nome_conselho: nomeConselho
+        }
+      });
+    }
+  }
   handleInputChange(field, value) {
     this.setState({
       form: {
@@ -169,7 +184,8 @@ class Conselhos extends React.Component {
         form: {
           ...this.state.form,
           [field]: value,
-          cd_tipo_abrangencia: ''
+          cd_tipo_abrangencia: '',
+          tx_nome_conselho: ''
         },
         selectedEstado: '',
         municipios: []
@@ -183,6 +199,8 @@ class Conselhos extends React.Component {
           cd_tipo_abrangencia: ''
         }
       });
+    } else if (field === 'cd_tipo_abrangencia') {
+      setTimeout(() => this.generateConselhoName(), 100);
     }
   }
   saveConselho() {
@@ -373,14 +391,14 @@ class Conselhos extends React.Component {
         backgroundColor: 'rgba(0,0,0,0.5)'
       }
     }, /*#__PURE__*/React.createElement("div", {
-      className: "modal-dialog"
+      className: "modal-dialog modal-lg"
     }, /*#__PURE__*/React.createElement("div", {
       className: "modal-content"
     }, /*#__PURE__*/React.createElement("div", {
       className: "modal-header"
     }, /*#__PURE__*/React.createElement("h5", {
       className: "modal-title"
-    }, this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'), /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement("strong", null, this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho')), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "close",
       onClick: () => this.closeModal()
@@ -388,12 +406,14 @@ class Conselhos extends React.Component {
       className: "modal-body"
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("input", {
-      type: "text",
-      className: "form-control",
-      value: this.state.form.tx_nome_conselho,
-      onChange: e => this.handleInputChange('tx_nome_conselho', e.target.value)
-    })), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("label", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("div", {
+      className: "form-control bg-light",
+      style: {
+        minHeight: '60px',
+        padding: '6px 12px',
+        fontWeight: 'bold'
+      }
+    }, this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome')), /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, "Ato Legal"), /*#__PURE__*/React.createElement("input", {
       type: "text",
@@ -407,7 +427,7 @@ class Conselhos extends React.Component {
       className: "form-control",
       value: this.state.form.tx_website,
       onChange: e => this.handleInputChange('tx_website', e.target.value)
-    })), /*#__PURE__*/React.createElement("div", {
+    })), !this.state.editingConselho && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, "N\xEDvel Federativo"), /*#__PURE__*/React.createElement("select", {
       className: "form-control",
@@ -462,7 +482,7 @@ class Conselhos extends React.Component {
     }, "Selecione..."), this.state.municipios.map(municipio => /*#__PURE__*/React.createElement("option", {
       key: municipio.cd_tipo_abrangencia,
       value: municipio.cd_tipo_abrangencia
-    }, municipio.tx_nome_abrangencia))))), /*#__PURE__*/React.createElement("div", {
+    }, municipio.tx_nome_abrangencia)))))), /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",
@@ -499,7 +519,7 @@ class Conselhos extends React.Component {
         className: "btn btn-primary",
         onClick: () => this.openModal()
       }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
-        className: "bg-white p-4 text-center py-5"
+        className: "bg-white text-center"
       }, /*#__PURE__*/React.createElement("i", {
         className: "fas fa-users fa-3x text-muted mb-3"
       }), /*#__PURE__*/React.createElement("h5", {
@@ -518,18 +538,20 @@ class Conselhos extends React.Component {
       className: "btn btn-primary",
       onClick: () => this.openModal()
     }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
-      className: "bg-white p-4"
+      className: ""
     }, /*#__PURE__*/React.createElement("div", {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Website"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.conselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.conselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
       key: conselho.id_conselho
-    }, /*#__PURE__*/React.createElement("td", null, conselho.id_conselho), /*#__PURE__*/React.createElement("td", null, conselho.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_ato_legal || 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_website ? /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("td", null, conselho.tx_nome_conselho || 'N/A', " ", /*#__PURE__*/React.createElement("br", null), conselho.tx_website ? /*#__PURE__*/React.createElement("a", {
       href: `http://${conselho.tx_website}`,
       target: "_blank",
       rel: "noopener noreferrer"
-    }, conselho.tx_website) : 'N/A'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("i", {
+      class: "fa fa-globe"
+    }), " ", conselho.tx_website) : 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_ato_legal || 'N/A'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
       className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
     }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo')), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
       className: "d-flex flex-wrap gap-1"

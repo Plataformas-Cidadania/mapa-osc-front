@@ -153,6 +153,27 @@ class Conselhos extends React.Component {
         });
     }
 
+    generateConselhoName() {
+        const nivel = this.state.nivelFederativo.find(n => n.cd_nivel_federativo == this.state.form.cd_nivel_federativo);
+        const abrangencia = this.state.form.cd_nivel_federativo == 3 ?
+            this.state.municipios.find(m => m.cd_tipo_abrangencia == this.state.form.cd_tipo_abrangencia) :
+            this.state.tipoAbrangencia.find(a => a.cd_tipo_abrangencia == this.state.form.cd_tipo_abrangencia);
+
+        if (nivel && abrangencia) {
+            const nivelText = nivel.tx_nome_nivel_federativo.toLowerCase();
+            const preposicao = this.state.form.cd_nivel_federativo == 3 ? 'do município de' :
+                              this.state.form.cd_nivel_federativo == 2 ? 'do estado de' : 'do';
+            const nomeConselho = `Conselho ${nivelText} de Fomento e Colaboração ${preposicao} ${abrangencia.tx_nome_abrangencia}`;
+
+            this.setState({
+                form: {
+                    ...this.state.form,
+                    tx_nome_conselho: nomeConselho
+                }
+            });
+        }
+    }
+
     handleInputChange(field, value) {
         this.setState({
             form: {
@@ -167,7 +188,8 @@ class Conselhos extends React.Component {
                 form: {
                     ...this.state.form,
                     [field]: value,
-                    cd_tipo_abrangencia: ''
+                    cd_tipo_abrangencia: '',
+                    tx_nome_conselho: ''
                 },
                 selectedEstado: '',
                 municipios: []
@@ -181,6 +203,8 @@ class Conselhos extends React.Component {
                     cd_tipo_abrangencia: ''
                 }
             });
+        } else if (field === 'cd_tipo_abrangencia') {
+            setTimeout(() => this.generateConselhoName(), 100);
         }
     }
 
@@ -377,11 +401,11 @@ class Conselhos extends React.Component {
     renderModal() {
         return (
             <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">
-                                {this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'}
+                                <strong>{this.state.editingConselho ? 'Editar Conselho' : 'Novo Conselho'}</strong>
                             </h5>
                             <button type="button" className="close" onClick={() => this.closeModal()}>
                                 ×
@@ -390,12 +414,9 @@ class Conselhos extends React.Component {
                         <div className="modal-body">
                             <div className="form-group">
                                 <label>Nome do Conselho</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.form.tx_nome_conselho}
-                                    onChange={(e) => this.handleInputChange('tx_nome_conselho', e.target.value)}
-                                />
+                                <div className="form-control bg-light" style={{minHeight: '60px', padding: '6px 12px', fontWeight: 'bold'}}>
+                                    {this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome'}
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label>Ato Legal</label>
@@ -415,91 +436,98 @@ class Conselhos extends React.Component {
                                     onChange={(e) => this.handleInputChange('tx_website', e.target.value)}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Nível Federativo</label>
-                                <select
-                                    className="form-control"
-                                    value={this.state.form.cd_nivel_federativo}
-                                    onChange={(e) => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')}
-                                >
-                                    <option value="">Selecione...</option>
-                                    {this.state.nivelFederativo.map(nivel =>
-                                        <option key={nivel.cd_nivel_federativo} value={nivel.cd_nivel_federativo}>
-                                            {nivel.tx_nome_nivel_federativo}
-                                        </option>
-                                    )}
-                                </select>
-                            </div>
-                            {this.state.form.cd_nivel_federativo == 1 && (
-                                <div className="form-group">
-                                    <label>País</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.form.cd_tipo_abrangencia}
-                                        onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
-                                    >
-                                        <option value="">Selecione...</option>
-                                        {this.state.tipoAbrangencia.map(tipo =>
-                                            <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
-                                                {tipo.tx_nome_abrangencia}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div>
-                            )}
-                            {this.state.form.cd_nivel_federativo == 2 && (
-                                <div className="form-group">
-                                    <label>Estado</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.form.cd_tipo_abrangencia}
-                                        onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
-                                    >
-                                        <option value="">Selecione...</option>
-                                        {this.state.tipoAbrangencia.map(tipo =>
-                                            <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
-                                                {tipo.tx_nome_abrangencia}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div>
-                            )}
-                            {this.state.form.cd_nivel_federativo == 3 && (
-                                <>
+                            {!this.state.editingConselho &&
+                                <div>
                                     <div className="form-group">
-                                        <label>Estado</label>
+                                        <label>Nível Federativo</label>
                                         <select
                                             className="form-control"
-                                            value={this.state.selectedEstado}
-                                            onChange={(e) => this.handleInputChange('selectedEstado', e.target.value)}
+                                            value={this.state.form.cd_nivel_federativo}
+                                            onChange={(e) => this.handleInputChange('cd_nivel_federativo', e.target.value ? parseInt(e.target.value) : '')}
                                         >
                                             <option value="">Selecione...</option>
-                                            {this.state.tipoAbrangencia.map(estado =>
-                                                <option key={estado.cd_tipo_abrangencia} value={estado.cd_tipo_abrangencia}>
-                                                    {estado.tx_nome_abrangencia}
+                                            {this.state.nivelFederativo.map(nivel =>
+                                                <option key={nivel.cd_nivel_federativo} value={nivel.cd_nivel_federativo}>
+                                                    {nivel.tx_nome_nivel_federativo}
                                                 </option>
                                             )}
                                         </select>
                                     </div>
-                                    {this.state.selectedEstado && (
+                                    {this.state.form.cd_nivel_federativo == 1 && (
                                         <div className="form-group">
-                                            <label>Município</label>
+                                            <label>País</label>
                                             <select
                                                 className="form-control"
                                                 value={this.state.form.cd_tipo_abrangencia}
                                                 onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
                                             >
                                                 <option value="">Selecione...</option>
-                                                {this.state.municipios.map(municipio =>
-                                                    <option key={municipio.cd_tipo_abrangencia} value={municipio.cd_tipo_abrangencia}>
-                                                        {municipio.tx_nome_abrangencia}
+                                                {this.state.tipoAbrangencia.map(tipo =>
+                                                    <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
+                                                        {tipo.tx_nome_abrangencia}
                                                     </option>
                                                 )}
                                             </select>
                                         </div>
                                     )}
-                                </>
-                            )}
+                                    {this.state.form.cd_nivel_federativo == 2 && (
+                                        <div className="form-group">
+                                            <label>Estado</label>
+                                            <select
+                                                className="form-control"
+                                                value={this.state.form.cd_tipo_abrangencia}
+                                                onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
+                                            >
+                                                <option value="">Selecione...</option>
+                                                {this.state.tipoAbrangencia.map(tipo =>
+                                                    <option key={tipo.cd_tipo_abrangencia} value={tipo.cd_tipo_abrangencia}>
+                                                        {tipo.tx_nome_abrangencia}
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
+                                    )}
+                                    {this.state.form.cd_nivel_federativo == 3 && (
+                                        <>
+                                            <div className="form-group">
+                                                <label>Estado</label>
+                                                <select
+                                                    className="form-control"
+                                                    value={this.state.selectedEstado}
+                                                    onChange={(e) => this.handleInputChange('selectedEstado', e.target.value)}
+                                                >
+                                                    <option value="">Selecione...</option>
+                                                    {this.state.tipoAbrangencia.map(estado =>
+                                                        <option key={estado.cd_tipo_abrangencia} value={estado.cd_tipo_abrangencia}>
+                                                            {estado.tx_nome_abrangencia}
+                                                        </option>
+                                                    )}
+                                                </select>
+                                            </div>
+                                            {this.state.selectedEstado && (
+                                                <div className="form-group">
+                                                    <label>Município</label>
+                                                    <select
+                                                        className="form-control"
+                                                        value={this.state.form.cd_tipo_abrangencia}
+                                                        onChange={(e) => this.handleInputChange('cd_tipo_abrangencia', e.target.value)}
+                                                    >
+                                                        <option value="">Selecione...</option>
+                                                        {this.state.municipios.map(municipio =>
+                                                            <option key={municipio.cd_tipo_abrangencia} value={municipio.cd_tipo_abrangencia}>
+                                                                {municipio.tx_nome_abrangencia}
+                                                            </option>
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            }
+
+
+
                             <div className="form-group">
                                 <label>
                                     <input
@@ -541,7 +569,7 @@ class Conselhos extends React.Component {
                             </button>
                         </div>
                     </div>
-                    <div className="bg-white p-4 text-center py-5">
+                    <div className="bg-white text-center">
                         <i className="fas fa-users fa-3x text-muted mb-3"></i>
                         <h5 className="text-muted">Nenhum conselho encontrado</h5>
                         <p className="text-muted">Clique no botão "Novo Conselho" para começar</p>
@@ -561,15 +589,13 @@ class Conselhos extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="bg-white p-4">
+                <div className="">
                     <div className="table-responsive">
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Nome</th>
                                         <th>Ato Legal</th>
-                                        <th>Website</th>
                                         <th>Status</th>
                                         <th>Ações</th>
                                     </tr>
@@ -577,16 +603,14 @@ class Conselhos extends React.Component {
                                 <tbody>
                                     {this.state.conselhos.map(conselho =>
                                         <tr key={conselho.id_conselho}>
-                                            <td>{conselho.id_conselho}</td>
-                                            <td>{conselho.tx_nome_conselho || 'N/A'}</td>
-                                            <td>{conselho.tx_ato_legal || 'N/A'}</td>
-                                            <td>
+                                            <td>{conselho.tx_nome_conselho || 'N/A'} <br/>
                                                 {conselho.tx_website ?
                                                     <a href={`http://${conselho.tx_website}`} target="_blank" rel="noopener noreferrer">
-                                                        {conselho.tx_website}
+                                                        <i class="fa fa-globe"></i> {conselho.tx_website}
                                                     </a> : 'N/A'
                                                 }
                                             </td>
+                                            <td>{conselho.tx_ato_legal || 'N/A'}</td>
                                             <td>
                                                 <span className={`badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`}>
                                                     {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}

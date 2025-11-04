@@ -26,7 +26,6 @@ class Menu extends React.Component{
     }
 
 
-
     render(){
         let menu = [];
         if(pageRoute===false) {
