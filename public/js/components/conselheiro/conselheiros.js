@@ -247,7 +247,7 @@ class Conselheiros extends React.Component {
     }, "Filtros"), /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "col-md-3"
+      className: "col-md-6"
     }, /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control",
@@ -255,17 +255,6 @@ class Conselheiros extends React.Component {
       value: this.state.filters.search,
       onChange: e => this.handleFilterChange('search', e.target.value)
     })), /*#__PURE__*/React.createElement("div", {
-      className: "col-md-3"
-    }, /*#__PURE__*/React.createElement("select", {
-      className: "form-control",
-      value: this.state.filters.conselho,
-      onChange: e => this.handleFilterChange('conselho', e.target.value)
-    }, /*#__PURE__*/React.createElement("option", {
-      value: ""
-    }, "Todos os conselhos"), this.state.conselhos.map(conselho => /*#__PURE__*/React.createElement("option", {
-      key: conselho.id_conselho,
-      value: conselho.id_conselho
-    }, conselho.tx_nome_conselho)))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-3"
     }, /*#__PURE__*/React.createElement("select", {
       className: "form-control",

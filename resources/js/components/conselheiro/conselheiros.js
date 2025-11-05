@@ -257,7 +257,7 @@ class Conselheiros extends React.Component {
                 <br/>
                 <h6 className="mb-3">Filtros</h6>
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <input
                             type="text"
                             className="form-control"
@@ -266,7 +266,7 @@ class Conselheiros extends React.Component {
                             onChange={(e) => this.handleFilterChange('search', e.target.value)}
                         />
                     </div>
-                    <div className="col-md-3">
+                    {/*<div className="col-md-3">
                         <select
                             className="form-control"
                             value={this.state.filters.conselho}
@@ -279,7 +279,7 @@ class Conselheiros extends React.Component {
                                 </option>
                             )}
                         </select>
-                    </div>
+                    </div>*/}
                     <div className="col-md-3">
                         <select
                             className="form-control"
