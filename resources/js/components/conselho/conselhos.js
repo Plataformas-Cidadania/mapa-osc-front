@@ -623,7 +623,7 @@ class Conselhos extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="title-user-area">
-                    <h3><i className="fas fa-users"/> Conselhos</h3>
+                    <h3><i className="fas fa-users"/> Conselhos de Fomento</h3>
                     <p>Nessa área você pode gerenciar e criar concelhos</p>
                     <button className="btn btn-primary float-right"
                             onClick={() => this.openModal()}

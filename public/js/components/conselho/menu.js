@@ -17,11 +17,11 @@ class MenuConselho extends React.Component {
       href: "conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-file"
-    }), " Conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    }), " Conselhos de Fomento")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "dashboard-conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
-    }), " Meus conselheiros")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    }), " Meus conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "logout-user"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-power-off",

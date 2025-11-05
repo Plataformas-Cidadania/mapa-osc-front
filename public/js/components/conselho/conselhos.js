@@ -562,7 +562,7 @@ class Conselhos extends React.Component {
       className: "title-user-area"
     }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
-    }), " Conselhos"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar e criar concelhos"), /*#__PURE__*/React.createElement("button", {
+    }), " Conselhos de Fomento"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar e criar concelhos"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary float-right",
       onClick: () => this.openModal(),
       style: {

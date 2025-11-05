@@ -205,7 +205,7 @@ class DashboardConselho extends React.Component {
       className: "title-user-area"
     }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
-    }), " Meus conselheiros"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode vincular e gerenciar seus conselheiros"), /*#__PURE__*/React.createElement("button", {
+    }), " Meus conselhos"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode vincular e gerenciar seus conselhos"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary float-right",
       onClick: () => {
         this.setState({
