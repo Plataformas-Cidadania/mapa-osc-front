@@ -251,10 +251,16 @@ class DashboardConselho extends React.Component {
                                     <th scope="row">{index+1}</th>
                                     <td width="500">{item.conselho?.tx_nome_conselho || 'N/A'}</td>
                                     <td>{this.getNivelFederativoName(item.conselho?.cd_nivel_federativo) || 'N/A'}</td>
-                                    <td className="text-right" width="300">
+                                    <td className="text-right" width="450">
                                         <div className="btn btn-outline-primary">
                                             <a href={`conselheiro?conselho=${item.conselho?.id_conselho}`}>
                                                 <i className="fa fa-users"/> Conselheiros
+                                            </a>
+                                        </div>
+                                        &nbsp;
+                                        <div className="btn btn-outline-info">
+                                            <a href={`arquivos-conselho?conselho=${item.conselho?.id_conselho}`}>
+                                                <i className="fas fa-folder-open"/> Arquivos
                                             </a>
                                         </div>
                                         &nbsp;
@@ -263,9 +269,6 @@ class DashboardConselho extends React.Component {
                                                 <i className="fa fa-trash"/>
                                             </a>
                                         </div>
-                                        {/*<button className="btn btn-danger btn-sm" onClick={() => this.removeRepresentacao(item.id_representacao)}>
-                                            <i className="fa fa-trash"/> Remover
-                                        </button>*/}
                                     </td>
                                 </tr>
                             ))}

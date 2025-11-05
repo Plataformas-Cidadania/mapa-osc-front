@@ -4,11 +4,13 @@ class Conselhos extends React.Component {
     this.state = {
       loading: true,
       conselhos: [],
+      filteredConselhos: [],
+      searchTerm: '',
       showModal: false,
       showDocumentosModal: false,
       showUploadModal: false,
       selectedConselhoId: null,
-      editingConselho: null,
+      editingConselheiro: null,
       uploadForm: {
         titulo: '',
         arquivo: null
@@ -245,7 +247,8 @@ class Conselhos extends React.Component {
       success: function (data) {
         this.setState({
           loading: false,
-          conselhos: data || []
+          conselhos: data || [],
+          filteredConselhos: data || []
         });
         if (data && data.length > 0) {
           data.forEach(conselho => {
@@ -279,6 +282,21 @@ class Conselhos extends React.Component {
         }
       });
     }
+  }
+  handleSearch(searchTerm) {
+    this.setState({
+      searchTerm
+    });
+    if (!searchTerm.trim()) {
+      this.setState({
+        filteredConselhos: this.state.conselhos
+      });
+      return;
+    }
+    const filtered = this.state.conselhos.filter(conselho => conselho.tx_nome_conselho.toLowerCase().includes(searchTerm.toLowerCase()));
+    this.setState({
+      filteredConselhos: filtered
+    });
   }
   setDocumento(conselhoId) {
     this.openUploadModal(conselhoId);
@@ -548,12 +566,20 @@ class Conselhos extends React.Component {
       className: "btn btn-primary",
       onClick: () => this.openModal()
     }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
+      className: "bg-white px-4 py-3"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
+      placeholder: "Pesquisar por nome do conselho...",
+      value: this.state.searchTerm,
+      onChange: e => this.handleSearch(e.target.value)
+    })), /*#__PURE__*/React.createElement("div", {
       className: ""
     }, /*#__PURE__*/React.createElement("div", {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.conselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
       key: conselho.id_conselho
     }, /*#__PURE__*/React.createElement("td", null, conselho.tx_nome_conselho || 'N/A', " ", /*#__PURE__*/React.createElement("br", null), conselho.tx_website ? /*#__PURE__*/React.createElement("a", {
       href: `http://${conselho.tx_website}`,
@@ -571,21 +597,7 @@ class Conselhos extends React.Component {
       title: "Editar conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-edit"
-    })), /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-sm btn-outline-success",
-      onClick: () => this.setDocumento(conselho.id_conselho),
-      title: "Enviar documento"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-cloud-upload-alt"
-    })), this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-sm btn-outline-info position-relative",
-      onClick: () => this.openDocumentosModal(conselho.id_conselho),
-      title: `${this.state.documentos[conselho.id_conselho].length} documento(s)`
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-folder-open"
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
-    }, this.state.documentos[conselho.id_conselho].length)))))))))), this.state.showModal && this.renderModal(), this.state.showDocumentosModal && this.renderDocumentosModal(), this.state.showUploadModal && this.renderUploadModal());
+    })))))))))), this.state.showModal && this.renderModal(), this.state.showDocumentosModal && this.renderDocumentosModal(), this.state.showUploadModal && this.renderUploadModal());
   }
   renderDocumentosModal() {
     const documentos = this.state.documentos[this.state.selectedConselhoId] || [];

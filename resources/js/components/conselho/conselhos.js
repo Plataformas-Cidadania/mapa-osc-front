@@ -4,11 +4,13 @@ class Conselhos extends React.Component {
         this.state = {
             loading: true,
             conselhos: [],
+            filteredConselhos: [],
+            searchTerm: '',
             showModal: false,
             showDocumentosModal: false,
             showUploadModal: false,
             selectedConselhoId: null,
-            editingConselho: null,
+            editingConselheiro: null,
             uploadForm: {
                 titulo: '',
                 arquivo: null
@@ -118,15 +120,15 @@ class Conselhos extends React.Component {
     getAvailableAbrangencia(sourceArray) {
         const currentNivel = this.state.form.cd_nivel_federativo;
         const currentConselhoId = this.state.editingConselho?.id_conselho;
-        
+
         const registeredAbrangencias = this.state.conselhos
-            .filter(conselho => 
-                conselho.cd_nivel_federativo == currentNivel && 
+            .filter(conselho =>
+                conselho.cd_nivel_federativo == currentNivel &&
                 conselho.id_conselho !== currentConselhoId
             )
             .map(conselho => conselho.cd_tipo_abrangencia.toString());
-        
-        return sourceArray.filter(item => 
+
+        return sourceArray.filter(item =>
             !registeredAbrangencias.includes(item.cd_tipo_abrangencia.toString())
         );
     }
@@ -268,7 +270,8 @@ class Conselhos extends React.Component {
             success: function(data) {
                 this.setState({
                     loading: false,
-                    conselhos: data || []
+                    conselhos: data || [],
+                    filteredConselhos: data || []
                 });
                 if (data && data.length > 0) {
                     data.forEach(conselho => {
@@ -301,6 +304,21 @@ class Conselhos extends React.Component {
                 }
             });
         }
+    }
+
+    handleSearch(searchTerm) {
+        this.setState({ searchTerm });
+        
+        if (!searchTerm.trim()) {
+            this.setState({ filteredConselhos: this.state.conselhos });
+            return;
+        }
+        
+        const filtered = this.state.conselhos.filter(conselho =>
+            conselho.tx_nome_conselho.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        
+        this.setState({ filteredConselhos: filtered });
     }
 
     setDocumento(conselhoId) {
@@ -612,6 +630,15 @@ class Conselhos extends React.Component {
                         </button>
                     </div>
                 </div>
+                <div className="bg-white px-4 py-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Pesquisar por nome do conselho..."
+                        value={this.state.searchTerm}
+                        onChange={(e) => this.handleSearch(e.target.value)}
+                    />
+                </div>
                 <div className="">
                     <div className="table-responsive">
                             <table className="table table-striped">
@@ -624,7 +651,7 @@ class Conselhos extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.conselhos.map(conselho =>
+                                    {this.state.filteredConselhos.map(conselho =>
                                         <tr key={conselho.id_conselho}>
                                             <td>{conselho.tx_nome_conselho || 'N/A'} <br/>
                                                 {conselho.tx_website ?
@@ -649,7 +676,7 @@ class Conselhos extends React.Component {
                                                         <i className="fas fa-edit"></i>
                                                     </button>
 
-                                                    <button
+                                                    {/*<button
                                                         className="btn btn-sm btn-outline-success"
                                                         onClick={() => this.setDocumento(conselho.id_conselho)}
                                                         title="Enviar documento"
@@ -668,7 +695,7 @@ class Conselhos extends React.Component {
                                                                 {this.state.documentos[conselho.id_conselho].length}
                                                             </span>
                                                         </button>
-                                                    )}
+                                                    )}*/}
                                                 </div>
 
                                             </td>

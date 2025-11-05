@@ -242,7 +242,7 @@ class Conselheiros extends React.Component {
   renderFilters() {
     return /*#__PURE__*/React.createElement("div", {
       className: "mb-3"
-    }, /*#__PURE__*/React.createElement("h6", {
+    }, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("h6", {
       className: "mb-3"
     }, "Filtros"), /*#__PURE__*/React.createElement("div", {
       className: "row"
@@ -305,33 +305,29 @@ class Conselheiros extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "form-check",
-      style: {
-        marginTop: 28
-      }
+    }, /*#__PURE__*/React.createElement("label", null, "Tipo"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "mr-3"
     }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      className: "form-check-input",
-      checked: this.state.form.bo_eh_governamental,
-      onChange: e => this.handleInputChange('bo_eh_governamental', e.target.checked),
-      style: {
-        width: 20,
-        height: 20
-      }
-    }), /*#__PURE__*/React.createElement("label", {
-      className: "form-check-label"
-    }, "Governamental")))), /*#__PURE__*/React.createElement("div", {
+      type: "radio",
+      name: "bo_eh_governamental",
+      checked: this.state.form.bo_eh_governamental === true,
+      onChange: () => this.handleInputChange('bo_eh_governamental', true)
+    }), ' ', "Governamental"), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
+      type: "radio",
+      name: "bo_eh_governamental",
+      checked: this.state.form.bo_eh_governamental === false,
+      onChange: () => this.handleInputChange('bo_eh_governamental', false)
+    }), ' ', "N\xE3o governamental")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12",
       style: {
         margin: '0',
-        padding: '0 10px'
+        padding: '0 12px'
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "\xD3rg\xE3o de Origem"), !this.state.form.bo_eh_governamental ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("label", null, this.state.form.bo_eh_governamental ? 'Órgão Governamental' : 'OSCs ao que está vinculado', " "), !this.state.form.bo_eh_governamental ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
       className: "form-control",
-      placeholder: "Digite o CNPJ...",
+      placeholder: "Digite o CNPJ ou nome...",
       onClick: this.clickSearch.bind(this),
       onChange: this.handleSearch.bind(this),
       value: this.state.search
@@ -354,7 +350,7 @@ class Conselheiros extends React.Component {
       onClick: () => this.selectOsc(item)
     }, item.tx_nome_osc))), this.state.form.tx_orgao_origem && /*#__PURE__*/React.createElement("small", {
       className: "text-muted"
-    }, "OSC selecionada: CNPJ: ", this.state.form.cd_identificador_osc, " - ", this.state.form.tx_orgao_origem)) : /*#__PURE__*/React.createElement("input", {
+    }, "CNPJ: ", this.state.form.cd_identificador_osc, " - ", this.state.form.tx_orgao_origem)) : /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control",
       value: this.state.form.tx_orgao_origem,
@@ -377,7 +373,7 @@ class Conselheiros extends React.Component {
       className: "col-md-6"
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Data de V\xEDnculo"), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("label", null, "In\xEDcio do v\xEDnculo como conselheiro"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       className: "form-control",
       value: this.state.form.dt_data_vinculo,
@@ -386,7 +382,7 @@ class Conselheiros extends React.Component {
       className: "col-md-6"
     }, /*#__PURE__*/React.createElement("div", {
       className: ""
-    }, /*#__PURE__*/React.createElement("label", null, "Data Final de V\xEDnculo"), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("label", null, "Final do v\xEDnculo com conselheiro"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       className: "form-control",
       value: this.state.form.dt_data_final_vinculo,
@@ -433,14 +429,16 @@ class Conselheiros extends React.Component {
     return /*#__PURE__*/React.createElement("div", {
       className: "container-fluid"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "bg-white border-bottom py-3 px-4"
+      className: "bg-white border-bottom "
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center"
     }, /*#__PURE__*/React.createElement("h2", null, "Meus conselheiros"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
       className: "btn-add",
       onClick: () => this.showHideForm(),
       style: {
-        display: this.state.showForm ? "none" : "block"
+        display: this.state.showForm ? "none" : "block",
+        position: 'relative',
+        bottom: -100
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-2x fa-plus-circle"
@@ -452,9 +450,7 @@ class Conselheiros extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-2x fa-times-circle"
-    }))))), /*#__PURE__*/React.createElement("div", {
-      className: "bg-white p-4"
-    }, /*#__PURE__*/React.createElement("div", {
+    }))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         display: this.state.showForm ? 'block' : 'none'
       }
@@ -462,11 +458,11 @@ class Conselheiros extends React.Component {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "\xD3rg\xE3o"), /*#__PURE__*/React.createElement("th", null, "Conselho"), /*#__PURE__*/React.createElement("th", null, "Ativo"), /*#__PURE__*/React.createElement("th", null, "Governamental"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselheiros.map(conselheiro => {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "\xD3rg\xE3o"), /*#__PURE__*/React.createElement("th", null, "Conselho"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselheiros.map(conselheiro => {
       const conselho = this.state.conselhos.find(c => c.id_conselho === conselheiro.id_conselho);
       return /*#__PURE__*/React.createElement("tr", {
         key: conselheiro.id_conselheiro
-      }, /*#__PURE__*/React.createElement("td", null, conselheiro.tx_nome_conselheiro), /*#__PURE__*/React.createElement("td", null, conselheiro.tx_orgao_origem), /*#__PURE__*/React.createElement("td", null, conselho ? conselho.tx_nome_conselho : '-'), /*#__PURE__*/React.createElement("td", null, conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'), /*#__PURE__*/React.createElement("td", null, conselheiro.bo_eh_governamental ? 'Sim' : 'Não'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+      }, /*#__PURE__*/React.createElement("td", null, conselheiro.tx_nome_conselheiro), /*#__PURE__*/React.createElement("td", null, conselheiro.tx_orgao_origem), /*#__PURE__*/React.createElement("td", null, conselho ? conselho.tx_nome_conselho : '-'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
         className: "btn btn-sm btn-warning mr-1",
         onClick: () => this.editConselheiro(conselheiro)
       }, "Editar"), /*#__PURE__*/React.createElement("button", {

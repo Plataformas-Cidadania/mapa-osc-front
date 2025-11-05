@@ -238,7 +238,7 @@ class DashboardConselho extends React.Component {
       width: "500"
     }, item.conselho?.tx_nome_conselho || 'N/A'), /*#__PURE__*/React.createElement("td", null, this.getNivelFederativoName(item.conselho?.cd_nivel_federativo) || 'N/A'), /*#__PURE__*/React.createElement("td", {
       className: "text-right",
-      width: "300"
+      width: "450"
     }, /*#__PURE__*/React.createElement("div", {
       className: "btn btn-outline-primary"
     }, /*#__PURE__*/React.createElement("a", {
@@ -246,6 +246,12 @@ class DashboardConselho extends React.Component {
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-users"
     }), " Conselheiros")), "\xA0", /*#__PURE__*/React.createElement("div", {
+      className: "btn btn-outline-info"
+    }, /*#__PURE__*/React.createElement("a", {
+      href: `arquivos-conselho?conselho=${item.conselho?.id_conselho}`
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-folder-open"
+    }), " Arquivos")), "\xA0", /*#__PURE__*/React.createElement("div", {
       className: "btn btn-danger",
       onClick: () => this.removeRepresentacao(item.conselho?.id_conselho)
     }, /*#__PURE__*/React.createElement("a", {

@@ -254,6 +254,7 @@ class Conselheiros extends React.Component {
     renderFilters() {
         return (
             <div className="mb-3">
+                <br/>
                 <h6 className="mb-3">Filtros</h6>
                 <div className="row">
                     <div className="col-md-3">
@@ -324,26 +325,37 @@ class Conselheiros extends React.Component {
                     </div>
                     <div className="col-md-6" style={{marginBottom:0, paddingBottom: 0}}>
                         <div className="form-group">
-                            <div className="form-check" style={{marginTop:28}}>
-                                <input
-                                    type="checkbox"
-                                    className="form-check-input"
-                                    checked={this.state.form.bo_eh_governamental}
-                                    onChange={(e) => this.handleInputChange('bo_eh_governamental', e.target.checked)}
-                                    style={{width: 20, height: 20}}
-                                />
-                                <label className="form-check-label">Governamental</label>
+                            <label>Tipo</label>
+                            <div>
+                                <label className="mr-3">
+                                    <input
+                                        type="radio"
+                                        name="bo_eh_governamental"
+                                        checked={this.state.form.bo_eh_governamental === true}
+                                        onChange={() => this.handleInputChange('bo_eh_governamental', true)}
+                                    />
+                                    {' '}Governamental
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="bo_eh_governamental"
+                                        checked={this.state.form.bo_eh_governamental === false}
+                                        onChange={() => this.handleInputChange('bo_eh_governamental', false)}
+                                    />
+                                    {' '}Não governamental
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-12" style={{margin: '0', padding: '0 10px'}}>
+                    <div className="col-md-12" style={{margin: '0', padding: '0 12px'}}>
                         <div className="form-group">
-                            <label>Órgão de Origem</label>
+                            <label>{this.state.form.bo_eh_governamental ? 'Órgão Governamental' : 'OSCs ao que está vinculado'} </label>
                             {!this.state.form.bo_eh_governamental ? (
                                 <div>
                                     <input
                                         className="form-control"
-                                        placeholder="Digite o CNPJ..."
+                                        placeholder="Digite o CNPJ ou nome..."
                                         onClick={this.clickSearch.bind(this)}
                                         onChange={this.handleSearch.bind(this)}
                                         value={this.state.search}
@@ -359,7 +371,7 @@ class Conselheiros extends React.Component {
                                         )}
                                     </ul>
                                     {this.state.form.tx_orgao_origem && (
-                                        <small className="text-muted">OSC selecionada: CNPJ: {this.state.form.cd_identificador_osc} - {this.state.form.tx_orgao_origem}</small>
+                                        <small className="text-muted">CNPJ: {this.state.form.cd_identificador_osc} - {this.state.form.tx_orgao_origem}</small>
                                     )}
                                 </div>
                             ) : (
@@ -394,7 +406,7 @@ class Conselheiros extends React.Component {
                     )}
                     <div className="col-md-6">
                         <div className="form-group">
-                            <label>Data de Vínculo</label>
+                            <label>Início do vínculo como conselheiro</label>
                             <input
                                 type="date"
                                 className="form-control"
@@ -405,7 +417,7 @@ class Conselheiros extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <div className="">
-                            <label>Data Final de Vínculo</label>
+                            <label>Final do vínculo com conselheiro</label>
                             <input
                                 type="date"
                                 className="form-control"
@@ -448,11 +460,11 @@ class Conselheiros extends React.Component {
 
         return (
             <div className="container-fluid">
-                <div className="bg-white border-bottom py-3 px-4">
+                <div className="bg-white border-bottom ">
                     <div className="d-flex justify-content-between align-items-center">
                         <h2>Meus conselheiros</h2>
                         <div>
-                            <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block"}}>
+                            <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block", position: 'relative' ,bottom: -100}}>
                                 <i className="fas fa-2x fa-plus-circle"/>
                             </a>
                             <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none"}}>
@@ -461,7 +473,7 @@ class Conselheiros extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white p-4">
+                <div>
                         <div style={{display: this.state.showForm ? 'block' : 'none'}}>
                             {this.renderForm()}
                         </div>
@@ -474,8 +486,8 @@ class Conselheiros extends React.Component {
                                         <th>Nome</th>
                                         <th>Órgão</th>
                                         <th>Conselho</th>
-                                        <th>Ativo</th>
-                                        <th>Governamental</th>
+                                        {/*<th>Ativo</th>*/}
+                                        {/*<th>Governamental</th>*/}
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -487,8 +499,8 @@ class Conselheiros extends React.Component {
                                                 <td>{conselheiro.tx_nome_conselheiro}</td>
                                                 <td>{conselheiro.tx_orgao_origem}</td>
                                                 <td>{conselho ? conselho.tx_nome_conselho : '-'}</td>
-                                                <td>{conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'}</td>
-                                                <td>{conselheiro.bo_eh_governamental ? 'Sim' : 'Não'}</td>
+                                                {/*<td>{conselheiro.bo_conselheiro_ativo ? 'Sim' : 'Não'}</td>*/}
+                                                {/*<td>{conselheiro.bo_eh_governamental ? 'Sim' : 'Não'}</td>*/}
                                                 <td>
 
                                                     <button

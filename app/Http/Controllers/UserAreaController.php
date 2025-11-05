@@ -88,6 +88,10 @@ class UserAreaController extends Controller
     public function conselheiro(){
         return view('user-area', ['pgUserArea' => 'conselheiros']);
     }
+    
+    public function arquivosConselho(){
+        return view('conselho.arquivos-conselho');
+    }
 
     /*public function video(){
         return view('user-area', ['pgUserArea' => 'video']);
