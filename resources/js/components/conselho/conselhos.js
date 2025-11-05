@@ -308,16 +308,16 @@ class Conselhos extends React.Component {
 
     handleSearch(searchTerm) {
         this.setState({ searchTerm });
-        
+
         if (!searchTerm.trim()) {
             this.setState({ filteredConselhos: this.state.conselhos });
             return;
         }
-        
+
         const filtered = this.state.conselhos.filter(conselho =>
             conselho.tx_nome_conselho.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        
+
         this.setState({ filteredConselhos: filtered });
     }
 
@@ -622,15 +622,18 @@ class Conselhos extends React.Component {
 
         return (
             <div className="container-fluid">
-                <div className="bg-white border-bottom py-3 px-4">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h2>Meus conselhos</h2>
-                        <button className="btn btn-primary" onClick={() => this.openModal()}>
-                            Novo Conselho
-                        </button>
-                    </div>
+                <div className="title-user-area">
+                    <h3><i className="fas fa-users"/> Conselhos</h3>
+                    <p>Nessa área você pode gerenciar e criar concelhos</p>
+                    <button className="btn btn-primary float-right"
+                            onClick={() => this.openModal()}
+                            style={{ marginTop: '-80px' }}>
+                        <i className="fa fa-plus"/> Novo conselho
+                    </button>
+                    <hr/>
                 </div>
-                <div className="bg-white px-4 py-3">
+
+                <div className="bg-white px-3 py-3">
                     <input
                         type="text"
                         className="form-control"

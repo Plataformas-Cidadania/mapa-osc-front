@@ -559,14 +559,19 @@ class Conselhos extends React.Component {
     return /*#__PURE__*/React.createElement("div", {
       className: "container-fluid"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "bg-white border-bottom py-3 px-4"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "d-flex justify-content-between align-items-center"
-    }, /*#__PURE__*/React.createElement("h2", null, "Meus conselhos"), /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-primary",
-      onClick: () => this.openModal()
-    }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
-      className: "bg-white px-4 py-3"
+      className: "title-user-area"
+    }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users"
+    }), " Conselhos"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar e criar concelhos"), /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary float-right",
+      onClick: () => this.openModal(),
+      style: {
+        marginTop: '-80px'
+      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-plus"
+    }), " Novo conselho"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("div", {
+      className: "bg-white px-3 py-3"
     }, /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control",
