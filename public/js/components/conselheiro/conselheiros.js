@@ -421,7 +421,11 @@ class Conselheiros extends React.Component {
       className: "bg-white border-bottom "
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center"
-    }, /*#__PURE__*/React.createElement("h2", null, "Meus conselheiros"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "title-user-area"
+    }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users"
+    }), " Meus conselheiros"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar seus conselheiros")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
       className: "btn-add",
       onClick: () => this.showHideForm(),
       style: {
@@ -435,7 +439,9 @@ class Conselheiros extends React.Component {
       className: "btn-add btn-add-warning",
       onClick: () => this.showHideForm(),
       style: {
-        display: this.state.showForm ? "block" : "none"
+        display: this.state.showForm ? "block" : "none",
+        position: 'relative',
+        bottom: -100
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-2x fa-times-circle"

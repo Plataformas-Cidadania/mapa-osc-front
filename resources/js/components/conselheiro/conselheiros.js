@@ -462,12 +462,17 @@ class Conselheiros extends React.Component {
             <div className="container-fluid">
                 <div className="bg-white border-bottom ">
                     <div className="d-flex justify-content-between align-items-center">
-                        <h2>Meus conselheiros</h2>
+
+                        <div className="title-user-area">
+                            <h3><i className="fas fa-users"/> Meus conselheiros</h3>
+                            <p>Nessa área você pode gerenciar seus conselheiros</p>
+                        </div>
+
                         <div>
                             <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block", position: 'relative' ,bottom: -100}}>
                                 <i className="fas fa-2x fa-plus-circle"/>
                             </a>
-                            <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none"}}>
+                            <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none", position: 'relative' ,bottom: -100}}>
                                 <i className="fas fa-2x fa-times-circle"/>
                             </a>
                         </div>
