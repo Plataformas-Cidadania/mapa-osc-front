@@ -22,7 +22,8 @@ class Conselheiros extends React.Component {
                 dt_data_final_vinculo: '',
                 bo_conselheiro_ativo: true,
                 bo_eh_governamental: true,
-                id_conselho: ''
+                id_conselho: '',
+                cd_tipo_conselheiro: 'Titular'
             },
             search: '',
             oscsSearch: [],
@@ -71,7 +72,8 @@ class Conselheiros extends React.Component {
                 dt_data_final_vinculo: '',
                 bo_conselheiro_ativo: true,
                 bo_eh_governamental: true,
-                id_conselho: this.state.filters.conselho || ''
+                id_conselho: this.state.filters.conselho || '',
+                cd_tipo_conselheiro: 'Titular'
             },
             search: '',
             oscsSearch: []
@@ -90,7 +92,8 @@ class Conselheiros extends React.Component {
                 dt_data_final_vinculo: conselheiro.dt_data_final_vinculo ? conselheiro.dt_data_final_vinculo.split(' ')[0] : '',
                 bo_conselheiro_ativo: conselheiro.bo_conselheiro_ativo !== undefined ? conselheiro.bo_conselheiro_ativo : true,
                 bo_eh_governamental: conselheiro.bo_eh_governamental !== undefined ? conselheiro.bo_eh_governamental : true,
-                id_conselho: conselheiro.id_conselho || ''
+                id_conselho: conselheiro.id_conselho || '',
+                cd_tipo_conselheiro: conselheiro.cd_tipo_conselheiro || 'Titular'
             }
         });
     }
@@ -325,7 +328,7 @@ class Conselheiros extends React.Component {
                     </div>
                     <div className="col-md-6" style={{marginBottom:0, paddingBottom: 0}}>
                         <div className="form-group">
-                            <label>Tipo</label>
+                            <label>Representação</label>
                             <div>
                                 <label className="mr-3">
                                     <input
@@ -426,7 +429,7 @@ class Conselheiros extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className="" style={{margin: '0', padding: '0 10px'}}>
+                    <div className="col-md-6" style={{margin: '0', padding: '0 10px 0 20px'}}>
                         <div className="form-group">
                             <div className="form-check">
                                 <input
@@ -437,6 +440,31 @@ class Conselheiros extends React.Component {
                                     style={{width: 20, height: 20}}
                                 />
                                 <label className="form-check-label">Conselheiro Ativo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-6" style={{marginBottom:0, paddingBottom: 0}}>
+                        <div className="form-group">
+                            <label>Tipo</label>
+                            <div>
+                                <label className="mr-3">
+                                    <input
+                                        type="radio"
+                                        name="cd_tipo_conselheiro"
+                                        checked={this.state.form.cd_tipo_conselheiro === 1}
+                                        onChange={() => this.handleInputChange('cd_tipo_conselheiro', 1)}
+                                    />
+                                    {' '}Titular
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="cd_tipo_conselheiro"
+                                        checked={this.state.form.cd_tipo_conselheiro === 2}
+                                        onChange={() => this.handleInputChange('cd_tipo_conselheiro', 2)}
+                                    />
+                                    {' '}Suplente
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -469,10 +497,10 @@ class Conselheiros extends React.Component {
                         </div>
 
                         <div>
-                            <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block", position: 'relative' ,bottom: -100}}>
+                            <a className="btn-add" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "none" : "block", position: 'relative' ,bottom: -50}}>
                                 <i className="fas fa-2x fa-plus-circle"/>
                             </a>
-                            <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none", position: 'relative' ,bottom: -100}}>
+                            <a className="btn-add btn-add-warning" onClick={() => this.showHideForm()} style={{display: this.state.showForm ? "block" : "none", position: 'relative' ,bottom: -50}}>
                                 <i className="fas fa-2x fa-times-circle"/>
                             </a>
                         </div>
@@ -493,7 +521,7 @@ class Conselheiros extends React.Component {
                                         <th>Conselho</th>
                                         {/*<th>Ativo</th>*/}
                                         {/*<th>Governamental</th>*/}
-                                        <th>Ações</th>
+                                        <th width={150}>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>

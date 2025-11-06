@@ -22,7 +22,8 @@ class Conselheiros extends React.Component {
         dt_data_final_vinculo: '',
         bo_conselheiro_ativo: true,
         bo_eh_governamental: true,
-        id_conselho: ''
+        id_conselho: '',
+        cd_tipo_conselheiro: 'Titular'
       },
       search: '',
       oscsSearch: [],
@@ -71,7 +72,8 @@ class Conselheiros extends React.Component {
         dt_data_final_vinculo: '',
         bo_conselheiro_ativo: true,
         bo_eh_governamental: true,
-        id_conselho: this.state.filters.conselho || ''
+        id_conselho: this.state.filters.conselho || '',
+        cd_tipo_conselheiro: 'Titular'
       },
       search: '',
       oscsSearch: []
@@ -89,7 +91,8 @@ class Conselheiros extends React.Component {
         dt_data_final_vinculo: conselheiro.dt_data_final_vinculo ? conselheiro.dt_data_final_vinculo.split(' ')[0] : '',
         bo_conselheiro_ativo: conselheiro.bo_conselheiro_ativo !== undefined ? conselheiro.bo_conselheiro_ativo : true,
         bo_eh_governamental: conselheiro.bo_eh_governamental !== undefined ? conselheiro.bo_eh_governamental : true,
-        id_conselho: conselheiro.id_conselho || ''
+        id_conselho: conselheiro.id_conselho || '',
+        cd_tipo_conselheiro: conselheiro.cd_tipo_conselheiro || 'Titular'
       }
     });
   }
@@ -294,7 +297,7 @@ class Conselheiros extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Tipo"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    }, /*#__PURE__*/React.createElement("label", null, "Representa\xE7\xE3o"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
       className: "mr-3"
     }, /*#__PURE__*/React.createElement("input", {
       type: "radio",
@@ -377,10 +380,10 @@ class Conselheiros extends React.Component {
       value: this.state.form.dt_data_final_vinculo,
       onChange: e => this.handleInputChange('dt_data_final_vinculo', e.target.value)
     }))), /*#__PURE__*/React.createElement("div", {
-      className: "",
+      className: "col-md-6",
       style: {
         margin: '0',
-        padding: '0 10px'
+        padding: '0 10px 0 20px'
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
@@ -398,6 +401,26 @@ class Conselheiros extends React.Component {
     }), /*#__PURE__*/React.createElement("label", {
       className: "form-check-label"
     }, "Conselheiro Ativo")))), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-6",
+      style: {
+        marginBottom: 0,
+        paddingBottom: 0
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Tipo"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      className: "mr-3"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "radio",
+      name: "cd_tipo_conselheiro",
+      checked: this.state.form.cd_tipo_conselheiro === 1,
+      onChange: () => this.handleInputChange('cd_tipo_conselheiro', 1)
+    }), ' ', "Titular"), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
+      type: "radio",
+      name: "cd_tipo_conselheiro",
+      checked: this.state.form.cd_tipo_conselheiro === 2,
+      onChange: () => this.handleInputChange('cd_tipo_conselheiro', 2)
+    }), ' ', "Suplente")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("button", {
       type: "button",
@@ -431,7 +454,7 @@ class Conselheiros extends React.Component {
       style: {
         display: this.state.showForm ? "none" : "block",
         position: 'relative',
-        bottom: -100
+        bottom: -50
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-2x fa-plus-circle"
@@ -441,7 +464,7 @@ class Conselheiros extends React.Component {
       style: {
         display: this.state.showForm ? "block" : "none",
         position: 'relative',
-        bottom: -100
+        bottom: -50
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-2x fa-times-circle"
@@ -453,7 +476,9 @@ class Conselheiros extends React.Component {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "\xD3rg\xE3o"), /*#__PURE__*/React.createElement("th", null, "Conselho"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselheiros.map(conselheiro => {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "\xD3rg\xE3o"), /*#__PURE__*/React.createElement("th", null, "Conselho"), /*#__PURE__*/React.createElement("th", {
+      width: 150
+    }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselheiros.map(conselheiro => {
       const conselho = this.state.conselhos.find(c => c.id_conselho === conselheiro.id_conselho);
       return /*#__PURE__*/React.createElement("tr", {
         key: conselheiro.id_conselheiro
