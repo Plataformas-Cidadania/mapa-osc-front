@@ -230,7 +230,7 @@ class DashboardConselho extends React.Component {
                     <button className="btn btn-primary float-right"
                             onClick={() => { this.setState({showModalAdd: true}); this.loadTodosConselhos(); }}
                             style={{ marginTop: '-80px' }}>
-                        <i className="fa fa-plus"/> Adicionar Conselho
+                        <i className="fa fa-plus"/> Vincular conselho
                     </button>
                     <hr/><br/>
                 </div>
@@ -289,6 +289,7 @@ class DashboardConselho extends React.Component {
                                         <span>&times;</span>
                                     </button>
                                 </div>
+
                                 <div className="modal-body">
                                     <input
                                         className="form-control mb-3"
@@ -323,11 +324,17 @@ class DashboardConselho extends React.Component {
                                             </div>
                                         )}
                                     </div>
+                                    <div class="mt-2">
+                                        <p>Não encontrou o conselho desejado? <a href="/conselho"><strong>Clique aqui para cadastrar</strong></a>.</p>
+                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
                 )}
+
             </div>
         );
     }

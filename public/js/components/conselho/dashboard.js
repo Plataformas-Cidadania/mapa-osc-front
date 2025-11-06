@@ -218,7 +218,7 @@ class DashboardConselho extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fa fa-plus"
-    }), " Adicionar Conselho"), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+    }), " Vincular conselho"), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
@@ -316,7 +316,11 @@ class DashboardConselho extends React.Component {
       className: "text-center p-3"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-info-circle"
-    }), " Nenhum conselho encontrado")))))));
+    }), " Nenhum conselho encontrado")), /*#__PURE__*/React.createElement("div", {
+      class: "mt-2"
+    }, /*#__PURE__*/React.createElement("p", null, "N\xE3o encontrou o conselho desejado? ", /*#__PURE__*/React.createElement("a", {
+      href: "/conselho"
+    }, /*#__PURE__*/React.createElement("strong", null, "Clique aqui para cadastrar")), ".")))))));
   }
 }
 ReactDOM.render(/*#__PURE__*/React.createElement(DashboardConselho, null), document.getElementById('dashboard-conselho'));
