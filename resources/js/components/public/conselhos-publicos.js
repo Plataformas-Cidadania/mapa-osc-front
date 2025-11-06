@@ -93,7 +93,6 @@ class ConselhosPublicos extends React.Component {
             conselheirosGovernamentais: conselheiros.filter(c => c.bo_eh_governamental).length
         };
 
-        // Load documents for each conselho
         conselhos.forEach(conselho => {
             this.loadDocumentos(conselho.id_conselho);
         });
@@ -195,17 +194,103 @@ class ConselhosPublicos extends React.Component {
 
     renderHero() {
         return (
-            <div className="bg-white border-bottom py-5">
-                <div className="container">
+            <div className="position-relative overflow-hidden" style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                minHeight: '400px'
+            }}>
+                <div className="position-absolute" style={{
+                    top: '-50px',
+                    right: '-50px',
+                    width: '200px',
+                    height: '200px',
+                    background: 'rgba(255,255,255,0.1)',
+                    borderRadius: '50%',
+                    filter: 'blur(40px)'
+                }}></div>
+                <div className="position-absolute" style={{
+                    bottom: '-30px',
+                    left: '-30px',
+                    width: '150px',
+                    height: '150px',
+                    background: 'rgba(255,255,255,0.08)',
+                    borderRadius: '20px',
+                    transform: 'rotate(45deg)',
+                    filter: 'blur(20px)'
+                }}></div>
+
+                <div className="container position-relative" style={{paddingTop: '80px', paddingBottom: '80px'}}>
                     <div className="row align-items-center">
-                        <div className="col-md-8">
-                            <h1 className="display-4 mb-3 text-dark">Conselhos Públicos</h1>
-                            <p className="lead mb-0 text-muted">
+                        <div className="col-lg-8">
+                            <div className="mb-4">
+                                <div className="d-inline-flex align-items-center px-3 py-2 rounded-pill mb-3" style={{
+                                    background: 'rgba(255,255,255,0.15)',
+                                    backdropFilter: 'blur(10px)',
+                                    border: '1px solid rgba(255,255,255,0.2)'
+                                }}>
+                                    <i className="fas fa-landmark me-2 text-white"></i>
+                                    <span className="text-white fw-medium" style={{fontSize: '14px'}}>Transparência Pública</span>
+                                </div>
+                            </div>
+                            <h1 className="display-4 fw-bold text-white mb-4" style={{lineHeight: '1.2'}}>
+                                Conselhos <span style={{color: '#FFD700'}}>Públicos</span>
+                            </h1>
+                            <p className="lead text-white mb-4" style={{opacity: 0.9, fontSize: '1.25rem'}}>
                                 Transparência e participação social através dos conselhos e seus conselheiros
                             </p>
+                            <div className="d-flex flex-wrap gap-3">
+                                <div className="d-flex align-items-center text-white">
+                                    <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
+                                        width: '40px',
+                                        height: '40px',
+                                        background: 'rgba(255,255,255,0.2)'
+                                    }}>
+                                        <i className="fas fa-eye" style={{fontSize: '16px'}}></i>
+                                    </div>
+                                    <span style={{fontSize: '14px'}}>Transparência</span>
+                                </div>
+                                <div className="d-flex align-items-center text-white">
+                                    <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
+                                        width: '40px',
+                                        height: '40px',
+                                        background: 'rgba(255,255,255,0.2)'
+                                    }}>
+                                        <i className="fas fa-handshake" style={{fontSize: '16px'}}></i>
+                                    </div>
+                                    <span style={{fontSize: '14px'}}>Participação</span>
+                                </div>
+                                <div className="d-flex align-items-center text-white">
+                                    <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
+                                        width: '40px',
+                                        height: '40px',
+                                        background: 'rgba(255,255,255,0.2)'
+                                    }}>
+                                        <i className="fas fa-balance-scale" style={{fontSize: '16px'}}></i>
+                                    </div>
+                                    <span style={{fontSize: '14px'}}>Controle Social</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-4 text-center">
-                            <i className="fas fa-users fa-5x text-muted" style={{opacity: 0.3}}></i>
+                        <div className="col-lg-4 text-center">
+                            <div className="position-relative">
+                                <div className="rounded-circle mx-auto d-flex align-items-center justify-content-center" style={{
+                                    width: '200px',
+                                    height: '200px',
+                                    background: 'rgba(255,255,255,0.1)',
+                                    backdropFilter: 'blur(20px)',
+                                    border: '2px solid rgba(255,255,255,0.2)'
+                                }}>
+                                    <i className="fas fa-users text-white" style={{fontSize: '80px', opacity: 0.8}}></i>
+                                </div>
+                                <div className="position-absolute" style={{
+                                    top: '20px',
+                                    right: '20px',
+                                    width: '60px',
+                                    height: '60px',
+                                    background: 'rgba(255,215,0,0.3)',
+                                    borderRadius: '50%',
+                                    animation: 'pulse 2s infinite'
+                                }}></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,46 +300,94 @@ class ConselhosPublicos extends React.Component {
 
     renderStats() {
         const { stats } = this.state;
+        const statsData = [
+            {
+                icon: 'fas fa-landmark',
+                value: stats.totalConselhos,
+                label: 'Conselhos',
+                color: '#667eea',
+                bgColor: 'rgba(102, 126, 234, 0.1)'
+            },
+            {
+                icon: 'fas fa-users',
+                value: stats.totalConselheiros,
+                label: 'Conselheiros',
+                color: '#764ba2',
+                bgColor: 'rgba(118, 75, 162, 0.1)'
+            },
+            {
+                icon: 'fas fa-check-circle',
+                value: stats.conselheirosAtivos,
+                label: 'Ativos',
+                color: '#10b981',
+                bgColor: 'rgba(16, 185, 129, 0.1)'
+            },
+            {
+                icon: 'fas fa-university',
+                value: stats.conselheirosGovernamentais,
+                label: 'Governamentais',
+                color: '#f59e0b',
+                bgColor: 'rgba(245, 158, 11, 0.1)'
+            }
+        ];
+
         return (
-            <div className="bg-light py-4">
+            <div className="position-relative" style={{
+                background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
+                marginTop: '-60px',
+                paddingTop: '80px',
+                paddingBottom: '40px'
+            }}>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-3 text-center">
-                            <div className="card border-0 bg-white shadow-sm">
-                                <div className="card-body">
-                                    <i className="fas fa-building fa-2x text-secondary mb-2"></i>
-                                    <h3 className="text-dark mb-1">{stats.totalConselhos}</h3>
-                                    <small className="text-muted">Conselhos</small>
+                    <div className="row g-4">
+                        {statsData.map((stat, index) => (
+                            <div key={index} className="col-md-6 col-lg-3 card-animate">
+                                <div className="stats-card position-relative overflow-hidden rounded-3 p-4 h-100" style={{
+                                    background: 'white',
+                                    boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                                    border: '1px solid rgba(0,0,0,0.05)'
+                                }}>
+                                    <div className="position-absolute" style={{
+                                        top: '-20px',
+                                        right: '-20px',
+                                        width: '80px',
+                                        height: '80px',
+                                        background: stat.bgColor,
+                                        borderRadius: '50%',
+                                        opacity: 0.6
+                                    }}></div>
+
+                                    <div className="position-relative">
+                                        <div className="d-flex align-items-center justify-content-between mb-3">
+                                            <div className="rounded-3 d-flex align-items-center justify-content-center" style={{
+                                                width: '56px',
+                                                height: '56px',
+                                                background: stat.bgColor,
+                                                border: `2px solid ${stat.color}20`
+                                            }}>
+                                                <i className={stat.icon} style={{color: stat.color, fontSize: '24px'}}></i>
+                                            </div>
+                                            <div className="text-end">
+                                                <div className="fw-bold" style={{fontSize: '2rem', color: stat.color, lineHeight: '1'}}>
+                                                    {stat.value.toLocaleString()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 className="fw-bold text-dark mb-1" style={{fontSize: '14px'}}>
+                                                {stat.label}
+                                            </h6>
+                                            <div className="progress" style={{height: '4px', background: '#f1f5f9'}}>
+                                                <div className="progress-bar" style={{
+                                                    background: `linear-gradient(90deg, ${stat.color}, ${stat.color}80)`,
+                                                    width: '75%'
+                                                }}></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-3 text-center">
-                            <div className="card border-0 bg-white shadow-sm">
-                                <div className="card-body">
-                                    <i className="fas fa-users fa-2x text-secondary mb-2"></i>
-                                    <h3 className="text-dark mb-1">{stats.totalConselheiros}</h3>
-                                    <small className="text-muted">Conselheiros</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 text-center">
-                            <div className="card border-0 bg-white shadow-sm">
-                                <div className="card-body">
-                                    <i className="fas fa-check-circle fa-2x text-success mb-2"></i>
-                                    <h3 className="text-dark mb-1">{stats.conselheirosAtivos}</h3>
-                                    <small className="text-muted">Ativos</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 text-center">
-                            <div className="card border-0 bg-white shadow-sm">
-                                <div className="card-body">
-                                    <i className="fas fa-university fa-2x text-secondary mb-2"></i>
-                                    <h3 className="text-dark mb-1">{stats.conselheirosGovernamentais}</h3>
-                                    <small className="text-muted">Governamentais</small>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -263,30 +396,48 @@ class ConselhosPublicos extends React.Component {
 
     renderFilters() {
         return (
-            <div className="bg-white shadow-sm py-4">
-                <div className="container">
-                    <div className="row align-items-end mb-3">
+            <div className="position-sticky" style={{
+                top: '0',
+                zIndex: 100,
+                background: 'rgba(255,255,255,0.95)',
+                backdropFilter: 'blur(20px)',
+                borderBottom: '1px solid rgba(0,0,0,0.08)'
+            }}>
+                <div className="container py-4">
+                    <div className="row g-3 align-items-end">
                         <div className="col-md-3">
-                            <label className="form-label mb-1">Buscar</label>
-                            <div className="input-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"><i className="fas fa-search"></i></span>
+                            <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Buscar</label>
+                            <div className="position-relative">
+                                <div className="position-absolute start-0 top-50 translate-middle-y ps-3" style={{zIndex: 5}}>
+                                    <i className="fas fa-search text-muted" style={{fontSize: '14px'}}></i>
                                 </div>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control ps-5 rounded-3 border-0"
                                     placeholder="Nome ou órgão..."
                                     value={this.state.filters.search}
                                     onChange={(e) => this.handleFilterChange('search', e.target.value)}
+                                    style={{
+                                        background: '#f8fafc',
+                                        border: '2px solid transparent',
+                                        fontSize: '14px',
+                                        height: '48px',
+                                        transition: 'all 0.3s ease'
+                                    }}
                                 />
                             </div>
                         </div>
-                        <div className="col-md-2">
-                            <label className="form-label mb-1">Conselho</label>
+                        {/*<div className="col-md-2">
+                            <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Conselho</label>
                             <select
-                                className="form-control"
+                                className="form-select rounded-3 border-0"
                                 value={this.state.filters.conselho}
                                 onChange={(e) => this.handleFilterChange('conselho', e.target.value)}
+                                style={{
+                                    background: '#f8fafc',
+                                    fontSize: '14px',
+                                    height: '48px'
+                                }}
                             >
                                 <option value="">Todos</option>
                                 {this.state.conselhos.map(conselho =>
@@ -295,13 +446,18 @@ class ConselhosPublicos extends React.Component {
                                     </option>
                                 )}
                             </select>
-                        </div>
+                        </div>*/}
                         <div className="col-md-2">
-                            <label className="form-label mb-1">Status</label>
+                            <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Status</label><br/>
                             <select
-                                className="form-control"
+                                className="form-select rounded-3 border-0"
                                 value={this.state.filters.ativo}
                                 onChange={(e) => this.handleFilterChange('ativo', e.target.value)}
+                                style={{
+                                    background: '#f8fafc',
+                                    fontSize: '14px',
+                                    height: '48px'
+                                }}
                             >
                                 <option value="">Todos</option>
                                 <option value="true">Ativos</option>
@@ -309,11 +465,16 @@ class ConselhosPublicos extends React.Component {
                             </select>
                         </div>
                         <div className="col-md-2">
-                            <label className="form-label mb-1">Tipo</label>
+                            <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Tipo</label>
                             <select
-                                className="form-control"
+                                className="form-select rounded-3 border-0"
                                 value={this.state.filters.governamental}
                                 onChange={(e) => this.handleFilterChange('governamental', e.target.value)}
+                                style={{
+                                    background: '#f8fafc',
+                                    fontSize: '14px',
+                                    height: '48px'
+                                }}
                             >
                                 <option value="">Todos</option>
                                 <option value="true">Governamental</option>
@@ -321,21 +482,36 @@ class ConselhosPublicos extends React.Component {
                             </select>
                         </div>
                         <div className="col-md-3">
-                            <label className="form-label mb-1">Visualização</label>
-                            <div className="btn-group w-100" role="group">
+                            <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Visualização</label>
+                            <div className="btn-group w-100 rounded-3 overflow-hidden" role="group" style={{
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                                border: '1px solid #e2e8f0'
+                            }}>
                                 <button
                                     type="button"
-                                    className={`btn ${this.state.viewMode === 'cards' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                    className={`btn ${this.state.viewMode === 'cards' ? 'text-white' : 'text-dark'} fw-medium`}
                                     onClick={() => this.setState({viewMode: 'cards'})}
+                                    style={{
+                                        background: this.state.viewMode === 'cards' ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#ffffff',
+                                        border: 'none',
+                                        fontSize: '13px',
+                                        height: '48px'
+                                    }}
                                 >
-                                    <i className="fas fa-th"></i> Cards
+                                    <i className="fas fa-th me-2"></i>Cards
                                 </button>
                                 <button
                                     type="button"
-                                    className={`btn ${this.state.viewMode === 'list' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                    className={`btn ${this.state.viewMode === 'list' ? 'text-white' : 'text-dark'} fw-medium`}
                                     onClick={() => this.setState({viewMode: 'list'})}
+                                    style={{
+                                        background: this.state.viewMode === 'list' ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#ffffff',
+                                        border: 'none',
+                                        fontSize: '13px',
+                                        height: '48px'
+                                    }}
                                 >
-                                    <i className="fas fa-list"></i> Lista
+                                    <i className="fas fa-list me-2"></i>Lista
                                 </button>
                             </div>
                         </div>
@@ -346,311 +522,121 @@ class ConselhosPublicos extends React.Component {
     }
 
     renderCards() {
-        const baseColor = '#3A559B';
         const { filteredData, documentos } = this.state;
 
-        console.log('filteredData:::::::::::::', filteredData)
-
         return (
-            <div className="row">
+            <div className="row g-4">
                 {filteredData.map((conselho, index) => {
                     const conselhoDocumentos = documentos[conselho.id_conselho] || [];
                     const hasDocuments = conselhoDocumentos.length > 0;
                     const hasWebsite = conselho.tx_website;
                     const isActive = conselho.bo_conselho_ativo;
+                    const activeCount = conselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length;
+                    const govCount = conselho.conselheiros.filter(c => c.bo_eh_governamental).length;
 
                     return (
-                        <React.Fragment key={`conselho-${conselho.id_conselho}-${index}-${JSON.stringify(this.state.filters)}`}>
-                        <div className="col-md-6 col-lg-4 mb-4">
-                            <div className="card h-100 shadow-sm border-0 position-relative overflow-hidden" style={{transition: 'all 0.3s ease'}}>
-                                {/* Decorative background pattern */}
-                                <div className="position-absolute w-100 h-100" style={{
-                                    background: `linear-gradient(135deg, ${baseColor}05 0%, transparent 50%)`,
-                                    zIndex: 1
-                                }}></div>
+                        <div key={`conselho-${conselho.id_conselho}-${index}`} className="col-lg-6 col-xl-4 mb-3">
+                            <div className="card border-0 h-100" style={{
+                                background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+                                borderRadius: '20px',
+                                boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                overflow: 'hidden',
+                                position: 'relative'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-8px)';
+                                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)';
+                            }}>
 
-                                {/* Floating geometric shapes */}
-                                <div className="position-absolute" style={{
-                                    top: '15px',
-                                    right: '15px',
-                                    width: '60px',
-                                    height: '60px',
-                                    background: `linear-gradient(45deg, ${baseColor}10, ${baseColor}05)`,
-                                    borderRadius: '50%',
-                                    zIndex: 1
-                                }}></div>
-                                <div className="position-absolute" style={{
-                                    bottom: '20px',
-                                    left: '10px',
-                                    width: '30px',
-                                    height: '30px',
-                                    background: `${baseColor}08`,
-                                    borderRadius: '4px',
-                                    transform: 'rotate(45deg)',
-                                    zIndex: 1
+                                {/* Subtle accent line */}
+                                <div className="position-absolute top-0 start-0 w-100" style={{
+                                    height: '4px',
+                                    background: isActive ? 'linear-gradient(90deg, #10b981, #059669)' : 'linear-gradient(90deg, #e5e7eb, #d1d5db)'
                                 }}></div>
 
                                 {/* Header */}
-                                <div className="card-header border-0 position-relative p-2" style={{
-                                    background: `linear-gradient(135deg, ${baseColor} 0%, ${baseColor}dd 100%)`,
-                                    zIndex: 2
-                                }}>
-                                    <div className="d-flex align-items-center">
-                                        <div className="me-3">
-                                            <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
-                                                width: '48px',
-                                                height: '48px',
-                                                background: 'rgba(255,255,255,0.15)',
-                                                backdropFilter: 'blur(10px)',
-                                                border: '1px solid rgba(255,255,255,0.2)'
-                                            }}>
-                                                <i className="fas fa-landmark text-white" style={{fontSize: '18px'}}></i>
-                                            </div>
+                                <div className="p-4 pb-3">
+                                    <h6 className="fw-bold mb-2 text-dark" style={{
+                                        fontSize: '1.1rem',
+                                        lineHeight: '1.3'
+                                    }}>
+                                        {conselho.tx_nome_conselho || 'Sem nome'}
+                                    </h6>
+                                    <div className="d-flex align-items-center gap-3 text-muted" style={{fontSize: '0.85rem'}}>
+                                        <span><i className="fas fa-users me-1"></i> {conselho.conselheiros.length} membros &nbsp;&nbsp;</span>
+                                        <span><i className="fas fa-check-circle me-1"></i> {activeCount} ativos</span>
+                                    </div>
+                                </div>
+
+                                {/* Avatars */}
+                                {conselho.conselheiros.length > 0 && (
+                                    <div className="px-4 pb-3">
+                                        <div className="d-flex align-items-center gap-1">
+                                            {conselho.conselheiros.slice(0, 10).map((conselheiro, idx) => (
+                                                <div key={idx} className="rounded-circle d-flex align-items-center justify-content-center" style={{
+                                                    width: '28px',
+                                                    height: '28px',
+                                                    background: conselheiro.bo_conselheiro_ativo ? '#28a745' : '#6c757d',
+                                                    color: 'white',
+                                                    fontSize: '11px',
+                                                    fontWeight: '600'
+                                                }}>
+                                                    {conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'}
+                                                </div>
+                                            ))}
+                                            {conselho.conselheiros.length > 10 && (
+                                                <div className="rounded-circle d-flex align-items-center justify-content-center ms-1" style={{
+                                                    width: '28px',
+                                                    height: '28px',
+                                                    background: '#e9ecef',
+                                                    color: '#6c757d',
+                                                    fontSize: '10px',
+                                                    fontWeight: '600'
+                                                }}>
+                                                    +{conselho.conselheiros.length - 10}
+                                                </div>
+                                            )}
                                         </div>
-                                        <div className="flex-grow-1" style={{paddingLeft: 8}}>
-                                            <h6 className="mb-1 text-white fw-bold" style={{fontSize: '14px'}}>
-                                                {conselho.tx_nome_conselho || 'Sem nome'}
-                                            </h6>
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <span className="text-white" style={{opacity: 0.8, fontSize: '12px'}}>
-                                                    <i className="fas fa-users me-1"></i> &nbsp;
-                                                    {conselho.conselheiros.length} membros
-                                                </span>
-                                                {isActive && (
-                                                    <span className="ms-2 badge" style={{
-                                                        backgroundColor: '#FFFFFF',
-                                                        color: '#28a745',
-                                                        border: '1px solid rgba(40, 167, 69, 0.3)',
-                                                        fontSize: '10px'
-                                                    }}>
-                                                        <i className="fas fa-check-circle me-1"></i>Ativo
-                                                    </span>
-                                                )}
-                                            </div>
+                                    </div>
+                                )}
+
+                                {/* Stats */}
+                                <div className="px-4 pb-3">
+                                    <div className="d-flex gap-3 justify-content-between">
+                                        <div className="text-center">
+                                            <div className="fw-bold text-primary" style={{fontSize: '1.1rem'}}>{govCount}</div>
+                                            <small className="text-muted">Governamental</small>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="fw-bold text-warning" style={{fontSize: '1.1rem'}}>{conselho.conselheiros.length - govCount}</div>
+                                            <small className="text-muted">Sociedade Civil</small>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="fw-bold text-info" style={{fontSize: '1.1rem'}}>{conselhoDocumentos.length}</div>
+                                            <small className="text-muted">Documentos</small>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Body */}
-                                <div className="card-body px-3 py-3 position-relative" style={{zIndex: 2}}>
-                                    {/* Quick info badges */}
-                                    <div className="mb-2">
-                                        <div className="d-flex flex-wrap gap-1">
-                                            {conselho.tx_nome_nivel_federativo && (
-                                                <span className="badge" style={{
-                                                    backgroundColor: `${baseColor}15`,
-                                                    color: baseColor,
-                                                    border: `1px solid ${baseColor}30`,
-                                                    fontSize: '10px',
-                                                    padding: '2px 6px'
-                                                }}>
-                                                    <i className="fas fa-layer-group me-1"></i>
-                                                    {conselho.tx_nome_nivel_federativo}
-                                                </span>
-                                            )}
-                                            {conselho.tx_nome_abrangencia && (
-                                                <span className="badge" style={{
-                                                    backgroundColor: `${baseColor}15`,
-                                                    color: baseColor,
-                                                    border: `1px solid ${baseColor}30`,
-                                                    fontSize: '10px',
-                                                    padding: '2px 6px'
-                                                }}>
-                                                    <i className="fas fa-map-marker-alt me-1"></i>
-                                                    {conselho.tx_nome_abrangencia}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
 
-                                    {/* Features grid */}
-                                    <div className="row g-1 mb-2">
-                                        {hasWebsite && (
-                                            <div className="col-6">
-                                                <div className="d-flex align-items-center p-2 rounded">
-                                                    <div className="me-2">
-                                                        <i className="fas fa-globe" style={{color: baseColor, fontSize: '14px'}}></i>
-                                                    </div>
-                                                    <div>
-                                                        <small className="text-muted d-block " style={{fontSize: '9px', paddingLeft: 5}}> Website</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                        {hasDocuments && (
-                                            <div className="col-6">
-                                                <div className="d-flex align-items-center p-2 rounded" style={{backgroundColor: '#f8f9fa'}}>
-                                                    <div className="me-2">
-                                                        <i className="fas fa-file-alt" style={{color: '#ffc107', fontSize: '14px'}}></i>
-                                                    </div>
-                                                    <div>
-                                                        <small className="text-muted d-block" style={{fontSize: '9px'}}>Documentos</small>
-                                                        <small className="fw-medium" style={{fontSize: '10px'}}>{conselhoDocumentos.length}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                        {conselho.tx_ato_legal && (
-                                            <div className="col-12">
-                                                <div className="d-flex align-items-start p-2 rounded" style={{backgroundColor: '#f8f9fa'}}>
-                                                    {/*<div className="me-2 mt-1">
-                                                        <i className="fas fa-gavel" style={{color: '#6c757d', fontSize: '12px'}}></i>
-                                                    </div>*/}
-                                                    <div className="flex-grow-1">
-                                                        <small className="text-muted d-block" style={{fontSize: '9px'}}>Ato Legal</small>
-                                                        <small className="text-dark" style={{fontSize: '14px', lineHeight: '1.3'}}>
-                                                            {conselho.tx_ato_legal.length > 60 ?
-                                                                conselho.tx_ato_legal.substring(0, 60) + '...' :
-                                                                conselho.tx_ato_legal
-                                                            }
-                                                        </small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Conselheiros preview */}
-                                    <div className="conselheiros-section">
-                                        <div className="d-flex align-items-center justify-content-between mb-2">
-                                            <small className="text-muted fw-bold" style={{fontSize: '10px'}}>
-                                                <i className="fas fa-users me-1" style={{color: baseColor}}></i> &nbsp;
-                                                CONSELHEIROS
-                                            </small>
-                                            {conselho.conselheiros.length > 0 && (
-                                                <button
-                                                    className="btn btn-sm p-0 text-decoration-none"
-                                                    style={{color: baseColor, fontSize: '12px'}}
-                                                    onClick={() => this.showConselheirosModal(conselho)}
-                                                >
-                                                    Ver todos ({conselho.conselheiros.length})
-                                                </button>
-                                            )}
-                                        </div>
-
-                                        {conselho.conselheiros.length === 0 ? (
-                                            <div className="text-center py-3">
-                                                <div className="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style={{
-                                                    width: '40px',
-                                                    height: '40px',
-                                                    backgroundColor: '#f8f9fa'
-                                                }}>
-                                                    <i className="fas fa-user-slash text-muted" style={{fontSize: '16px'}}></i>
-                                                </div>
-                                                <small className="text-muted d-block" style={{fontSize: '10px'}}>Nenhum conselheiro</small>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                {/* Avatar stack */}
-                                                <div className="d-flex align-items-center mb-2">
-                                                    <div className="d-flex" style={{marginLeft: '0'}}>
-                                                        {conselho.conselheiros.slice(0, 3).map((conselheiro, cIndex) => {
-                                                            const initial = conselheiro.tx_nome_conselheiro ?
-                                                                conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?';
-
-                                                            return (
-                                                                <div
-                                                                    key={conselheiro.id_conselheiro}
-                                                                    className="rounded-circle d-flex align-items-center justify-content-center border border-white"
-                                                                    style={{
-                                                                        width: '24px',
-                                                                        height: '24px',
-                                                                        backgroundColor: conselheiro.bo_conselheiro_ativo ? baseColor : '#6c757d',
-                                                                        color: 'white',
-                                                                        fontSize: '10px',
-                                                                        fontWeight: 'bold',
-                                                                        marginLeft: cIndex > 0 ? '-8px' : '0',
-                                                                        zIndex: 10 - cIndex,
-                                                                        position: 'relative'
-                                                                    }}
-                                                                    title={conselheiro.tx_nome_conselheiro}
-                                                                >
-                                                                    {initial}
-                                                                </div>
-                                                            );
-                                                        })}
-                                                        {conselho.conselheiros.length > 3 && (
-                                                            <div
-                                                                className="rounded-circle d-flex align-items-center justify-content-center border border-white"
-                                                                style={{
-                                                                    width: '24px',
-                                                                    height: '24px',
-                                                                    backgroundColor: '#e9ecef',
-                                                                    color: '#6c757d',
-                                                                    fontSize: '9px',
-                                                                    fontWeight: 'bold',
-                                                                    marginLeft: '-6px',
-                                                                    zIndex: 5
-                                                                }}
-                                                                title={`+${conselho.conselheiros.length - 3} conselheiros`}
-                                                            >
-                                                                +{conselho.conselheiros.length - 3}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                    <div className="ms-3 flex-grow-1">
-                                                        <div className="d-flex gap-1">
-                                                            {conselho.conselheiros.some(c => c.bo_eh_governamental) && (
-                                                                <span className="badge badge-sm" style={{
-                                                                    backgroundColor: '#17a2b815',
-                                                                    color: '#17a2b8',
-                                                                    fontSize: '12px',
-                                                                    padding: '1px 4px'
-                                                                }}>
-                                                                    <i className="fas fa-university me-1"></i> Gov
-                                                                </span>
-                                                            )}
-                                                            {conselho.conselheiros.some(c => !c.bo_eh_governamental) && (
-                                                                <span className="badge badge-sm" style={{
-                                                                    backgroundColor: '#28a74515',
-                                                                    color: '#28a745',
-                                                                    fontSize: '12px',
-                                                                    padding: '1px 4px'
-                                                                }}>
-                                                                    <i className="fas fa-users me-1"></i> Civil
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
 
                                 {/* Footer */}
-                                <div className="card-footer bg-light border-0 position-relative" style={{zIndex: 2}}>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        {/*<small className="text-muted" style={{fontSize: '9px'}}>
-                                            <i className="fas fa-calendar me-1"></i>
-                                            {conselho.dt_data_cadastro ?
-                                                new Date(conselho.dt_data_cadastro).toLocaleDateString('pt-BR') :
-                                                ' Data não informada'
-                                            }
-                                        </small>*/}
-                                        {hasWebsite && (
-                                            <a
-                                                href={`http://${conselho.tx_website}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="btn btn-sm rounded-pill px-3"
-                                                style={{
-                                                    backgroundColor: baseColor,
-                                                    color: 'white',
-                                                    fontSize: '10px',
-                                                    border: 'none',
-                                                    padding: '4px 8px'
-                                                }}
-                                            >
-                                                <i className="fas fa-external-link-alt me-1"></i> &nbsp;
-                                                Visitar
-                                            </a>
-                                        )}
-                                    </div>
+                                <div className="px-4 pb-4">
+                                    <button
+                                        className="btn btn-outline-primary btn-sm w-100"
+                                        onClick={() => this.showConselheirosModal(conselho)}
+                                    >
+                                        <i className="fas fa-users me-2"></i>
+                                        Ver Detalhes
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        </React.Fragment>
                     );
                 })}
             </div>
@@ -662,151 +648,60 @@ class ConselhosPublicos extends React.Component {
             <div className="list-view-modern">
                 {this.state.filteredData.map((conselho, index) => (
                     <div key={`list-${conselho.id_conselho}-${index}`} className="card mb-4 shadow-sm border-0">
-                        <div className="card-header bg-white border-bottom-0 py-3">
+                        <div className="card-body p-4">
                             <div className="row align-items-center">
                                 <div className="col-md-8">
                                     <div className="d-flex align-items-center">
-                                        <div className="conselho-icon mr-3">
-                                            <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                                                <i className="fas fa-building text-white"></i>
+                                        <div className="me-3">
+                                            <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
+                                                width: '40px',
+                                                height: '40px',
+                                                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                                                color: 'white'
+                                            }}>
+                                                <i className="fas fa-landmark"></i>
                                             </div>
                                         </div>
                                         <div>
-                                            <h5 className="mb-1 text-dark font-weight-bold">{conselho.tx_nome_conselho}</h5>
-                                            <div className="d-flex flex-wrap align-items-center">
-                                                <span className="badge badge-light border mr-2 mb-1">
-                                                    <i className="fas fa-users mr-1"></i>
-                                                    {conselho.conselheiros.length}
+                                            <h5 className="mb-1 text-dark fw-bold">{conselho.tx_nome_conselho}</h5>
+                                            <div className="d-flex flex-wrap align-items-center gap-2">
+                                                <span className="badge bg-light text-dark border">
+                                                    <i className="fas fa-users me-1"></i>
+                                                    {conselho.conselheiros.length} conselheiros
                                                 </span>
                                                 {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
-                                                    <span className="badge badge-light border mr-2 mb-1">
-                                                        <i className="fas fa-file-alt mr-1"></i>
-                                                        {this.state.documentos[conselho.id_conselho].length}
+                                                    <span className="badge bg-warning text-dark">
+                                                        <i className="fas fa-file-alt me-1"></i>
+                                                        {this.state.documentos[conselho.id_conselho].length} documentos
                                                     </span>
                                                 )}
-                                                <span className={`badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'} mb-1`}>
+                                                <span className={`badge ${conselho.bo_conselho_ativo ? 'bg-success' : 'bg-secondary'}`}>
                                                     {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-4 text-right">
-                                    <div className="d-flex justify-content-end align-items-center">
+                                <div className="col-md-4 text-end">
+                                    <div className="d-flex justify-content-end align-items-center gap-2">
                                         {conselho.tx_website && (
                                             <a
                                                 href={`http://${conselho.tx_website}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="btn btn-outline-secondary btn-sm rounded-pill mr-2"
-                                                title="Visitar website"
+                                                className="btn btn-outline-primary btn-sm rounded-pill"
                                             >
-                                                <i className="fas fa-external-link-alt mr-1"></i>
+                                                <i className="fas fa-external-link-alt me-1"></i>
                                                 Site
                                             </a>
                                         )}
                                         <button
                                             className="btn btn-primary btn-sm rounded-pill px-3"
-                                            type="button"
-                                            data-toggle="collapse"
-                                            data-target={`#collapse${index}`}
-                                            title="Ver detalhes do conselho"
+                                            onClick={() => this.showConselheirosModal(conselho)}
                                         >
-                                            <i className="fas fa-eye mr-1"></i>
-                                            Detalhes
+                                            <i className="fas fa-eye me-1"></i>
+                                            Ver Conselheiros
                                         </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id={`collapse${index}`} className="collapse">
-                            <div className="card-body bg-light">
-                                <div className="row">
-                                    {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
-                                        <div className="col-lg-4 mb-4">
-                                            <div className="documents-section">
-                                                <h6 className="text-secondary mb-3 font-weight-bold">
-                                                    <i className="fas fa-folder-open mr-2 text-primary"></i>
-                                                    Documentos
-                                                </h6>
-                                                <div className="documents-grid">
-                                                    {this.state.documentos[conselho.id_conselho].map(doc => (
-                                                        <div key={doc.id_documento_conselho} className="document-item bg-white rounded p-3 mb-2 shadow-sm">
-                                                            <div className="d-flex align-items-start">
-                                                                <div className="document-icon mr-3">
-                                                                    <div className="bg-primary rounded d-flex align-items-center justify-content-center" style={{width: '32px', height: '32px'}}>
-                                                                        <i className="fas fa-file-alt text-white" style={{fontSize: '14px'}}></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="flex-grow-1">
-                                                                    <h6 className="mb-1 text-truncate" title={doc.tx_titulo_documento}>
-                                                                        {doc.tx_titulo_documento}
-                                                                    </h6>
-                                                                    <small className="text-muted d-block">
-                                                                        {doc.tx_tipo_arquivo} • {new Date(doc.dt_data_cadastro).toLocaleDateString()}
-                                                                    </small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className={`${this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 ? 'col-lg-8' : 'col-lg-12'} px-0`}>
-                                        <div className="conselheiros-section">
-                                            <h6 className="text-secondary mb-3 font-weight-bold px-3">
-                                                <i className="fas fa-users mr-2 text-primary"></i>
-                                                Conselheiros
-                                            </h6>
-                                            {conselho.conselheiros.length === 0 ? (
-                                                <div className="empty-state text-center py-5">
-                                                    <div className="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style={{width: '60px', height: '60px'}}>
-                                                        <i className="fas fa-users fa-2x text-muted"></i>
-                                                    </div>
-                                                    <p className="text-muted mb-0">Nenhum conselheiro cadastrado</p>
-                                                </div>
-                                            ) : (
-                                                <div className="w-100">
-                                                    <table className="table table-hover mb-0 w-100">
-                                                        <thead className="bg-white">
-                                                            <tr>
-                                                                <th className="border-0 font-weight-bold text-secondary" style={{width: '60%'}}>Nome</th>
-                                                                <th className="border-0 font-weight-bold text-secondary" style={{width: '40%'}}>Órgão</th>
-                                                                <th className="border-0 font-weight-bold text-secondary">Status</th>
-                                                                <th className="border-0 font-weight-bold text-secondary">Tipo</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {conselho.conselheiros.map((conselheiro, cIndex) => (
-                                                                <tr key={`table-${conselheiro.id_conselheiro}-${cIndex}`} className="border-bottom">
-                                                                    <td className="py-3">
-                                                                        <div className="font-weight-medium text-dark">
-                                                                            {conselheiro.tx_nome_conselheiro || 'Sem nome'}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td className="py-3">
-                                                                        <span className="text-muted">{conselheiro.tx_orgao_origem || '-'}</span>
-                                                                    </td>
-                                                                    <td className="py-3">
-                                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'badge-success' : 'badge-secondary'}`}>
-                                                                            {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
-                                                                        </span>
-                                                                    </td>
-                                                                    <td className="py-3">
-                                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'badge-secondary' : 'badge-outline-secondary'}`}>
-                                                                            {conselheiro.bo_eh_governamental ? 'Governamental' : 'Não Governamental'}
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            )}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -819,23 +714,23 @@ class ConselhosPublicos extends React.Component {
 
     renderConselheirosModal() {
         const { selectedConselho, showConselheirosModal } = this.state;
-        const baseColor = '#3A559B';
+        const baseColor = '#667eea';
 
         if (!showConselheirosModal || !selectedConselho) return null;
 
         return (
-            <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}} onClick={this.closeConselheirosModal}>
+            <div className="modal fade show modal-modern" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}} onClick={this.closeConselheirosModal}>
                 <div className="modal-dialog modal-lg modal-dialog-scrollable" onClick={(e) => e.stopPropagation()}>
                     <div className="modal-content">
-                        <div className="modal-header" style={{backgroundColor: baseColor, color: 'white'}}>
+                        <div className="modal-header" style={{background: `linear-gradient(135deg, ${baseColor}, #764ba2)`, color: 'white'}}>
                             <div className="d-flex align-items-center">
-                                <i className="fas fa-users me-2 fa-3x" style={{marginRight: 10}}></i>
+                                <i className="fas fa-users me-3" style={{fontSize: '24px'}}></i>
                                 <div>
-                                    <h5 className="modal-title" style={{color: '#FFFFFF'}}><strong>{selectedConselho.tx_nome_conselho}</strong></h5>
+                                    <h5 className="modal-title text-white fw-bold">{selectedConselho.tx_nome_conselho}</h5>
                                     <small style={{opacity: 0.8}}>{selectedConselho.conselheiros.length} conselheiros</small>
                                 </div>
                             </div>
-                            <div type="button" className="btn-close btn-close-white" onClick={this.closeConselheirosModal}></div>
+                            <button type="button" className="btn-close btn-close-white" onClick={this.closeConselheirosModal}></button>
                         </div>
                         <div className="modal-body p-0">
                             {selectedConselho.conselheiros.length === 0 ? (
@@ -845,11 +740,11 @@ class ConselhosPublicos extends React.Component {
                                 </div>
                             ) : (
                                 <div className="table-responsive">
-                                    <table className="table table-hover mb-0">
+                                    <table className="table table-hover mb-0 table-modern">
                                         <thead className="bg-light">
                                             <tr>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px', width: '60%'}} >Nome</th>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px', width: '40%'}}>Órgão</th>
+                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Nome</th>
+                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Órgão</th>
                                                 <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Status</th>
                                                 <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Tipo</th>
                                             </tr>
@@ -859,15 +754,14 @@ class ConselhosPublicos extends React.Component {
                                                 <tr key={conselheiro.id_conselheiro}>
                                                     <td className="py-3">
                                                         <div className="d-flex align-items-center">
-                                                            <div className="me-2">
+                                                            <div className="me-3">
                                                                 <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
                                                                     width: '32px',
                                                                     height: '32px',
                                                                     backgroundColor: conselheiro.bo_conselheiro_ativo ? baseColor : '#6c757d',
                                                                     color: 'white',
                                                                     fontSize: '12px',
-                                                                    fontWeight: 'bold',
-                                                                    marginRight: 10
+                                                                    fontWeight: 'bold'
                                                                 }}>
                                                                     {conselheiro.tx_nome_conselheiro ?
                                                                         conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'
@@ -887,13 +781,13 @@ class ConselhosPublicos extends React.Component {
                                                         </span>
                                                     </td>
                                                     <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '10px', color: "#FFFFFF"}}>
+                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '10px'}}>
                                                             <i className={`fas ${conselheiro.bo_conselheiro_ativo ? 'fa-check-circle' : 'fa-pause-circle'} me-1`}></i>
                                                             {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
                                                         </span>
                                                     </td>
                                                     <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`} style={{fontSize: '10px', color: "#FFFFFF"}}>
+                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`} style={{fontSize: '10px'}}>
                                                             <i className={`fas ${conselheiro.bo_eh_governamental ? 'fa-university' : 'fa-users'} me-1`}></i>
                                                             {conselheiro.bo_eh_governamental ? 'Governamental' : 'Civil'}
                                                         </span>
@@ -908,7 +802,7 @@ class ConselhosPublicos extends React.Component {
                         <div className="modal-footer bg-light">
                             <div className="d-flex justify-content-between align-items-center w-100">
                                 <small className="text-muted">
-                                    <i className="fas fa-info-circle me-1"></i> &nbsp;
+                                    <i className="fas fa-info-circle me-1"></i>
                                     {selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length} ativos de {selectedConselho.conselheiros.length} total
                                 </small>
                                 <button type="button" className="btn btn-secondary btn-sm" onClick={this.closeConselheirosModal}>
@@ -925,13 +819,24 @@ class ConselhosPublicos extends React.Component {
     render() {
         if (this.state.loading) {
             return (
-                <div>
-                    <div className="bg-white py-5">
-                        <div className="container text-center">
-                            <div className="spinner-border text-secondary" role="status">
-                                <span className="sr-only">Carregando...</span>
+                <div className="conselhos-publicos">
+                    <div className="d-flex align-items-center justify-content-center" style={{
+                        minHeight: '100vh',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                    }}>
+                        <div className="text-center">
+                            <div className="position-relative mb-4">
+                                <div className="rounded-circle mx-auto d-flex align-items-center justify-content-center glass-morphism loading-pulse" style={{
+                                    width: '80px',
+                                    height: '80px'
+                                }}>
+                                    <div className="spinner-border text-white" role="status" style={{width: '2rem', height: '2rem'}}>
+                                        <span className="visually-hidden">Carregando...</span>
+                                    </div>
+                                </div>
                             </div>
-                            <p className="mt-3 mb-0 text-muted">Carregando conselhos...</p>
+                            <h5 className="text-white fw-bold mb-2">Carregando Conselhos</h5>
+                            <p className="text-white" style={{opacity: 0.8, fontSize: '14px'}}>Aguarde enquanto organizamos os dados...</p>
                         </div>
                     </div>
                 </div>
@@ -939,24 +844,44 @@ class ConselhosPublicos extends React.Component {
         }
 
         return (
-            <div>
-                {this.renderHero()}
+            <div className="conselhos-publicos">
+                <div className="hero-section">
+                    {this.renderHero()}
+                </div>
                 {this.renderStats()}
-                {this.renderFilters()}
+                <div className="filters-section">
+                    {this.renderFilters()}
+                </div>
 
-                <div className="container py-4">
+                <div className="container py-5">
                     {this.state.filteredData.length === 0 ? (
-                        <div className="text-center py-5">
-                            <i className="fas fa-search fa-3x text-muted mb-3"></i>
-                            <h5 className="text-muted">Nenhum conselho encontrado</h5>
-                            <p className="text-muted">Tente ajustar os filtros para encontrar o que procura</p>
+                        <div className="empty-state text-center py-5 animate-fade-in">
+                            <div className="empty-icon">
+                                <i className="fas fa-search" style={{fontSize: '40px', color: '#94a3b8'}}></i>
+                            </div>
+                            <h4 className="fw-bold text-dark mb-3">Nenhum conselho encontrado</h4>
+                            <p className="text-muted mb-4" style={{fontSize: '16px'}}>Tente ajustar os filtros para encontrar o que procura</p>
+                            <button
+                                className="btn rounded-pill px-4 py-2"
+                                style={{
+                                    background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                                    color: 'white',
+                                    border: 'none',
+                                    fontSize: '14px'
+                                }}
+                                onClick={() => this.setState({filters: {search: '', conselho: '', ativo: '', governamental: ''}}, () => this.applyFilters())}
+                            >
+                                <i className="fas fa-refresh me-2"></i>Limpar Filtros
+                            </button>
                         </div>
                     ) : (
-                        <div>
+                        <div className="animate-fade-in">
                             <div className="d-flex justify-content-between align-items-center mb-4">
-                                <h5 className="mb-0">
-                                    {this.state.filteredData.length} conselho(s) encontrado(s)
-                                </h5>
+                                <div>
+                                    <h4 className="fw-bold text-dark mb-1">
+                                        {this.state.filteredData.length} conselho{this.state.filteredData.length !== 1 ? 's' : ''} encontrado{this.state.filteredData.length !== 1 ? 's' : ''}
+                                    </h4>
+                                </div>
                             </div>
                             {this.state.viewMode === 'cards' ? this.renderCards() : this.renderList()}
                         </div>
