@@ -198,8 +198,6 @@ class DashboardConselho extends React.Component {
         return nivel ? nivel.tx_nome_nivel_federativo : null;
     }
 
-
-
     render() {
         return (
             <div>
