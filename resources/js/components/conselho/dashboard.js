@@ -117,7 +117,7 @@ class DashboardConselho extends React.Component {
         this.setState({ loadingSearch: true });
         $.ajax({
             method: 'GET',
-            url: 'https://mapaosc.ipea.gov.br/api/api/confocos/conselho',
+            url: 'confocos/conselho',
             cache: false,
             success: function(data) {
                 console.log('Todos conselhos:', data);
