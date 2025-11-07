@@ -229,7 +229,7 @@ class ConselhosPublicos extends React.Component {
       style: {
         fontSize: '14px'
       }
-    }, "Transpar\xEAncia P\xFAblica"))), /*#__PURE__*/React.createElement("h1", {
+    }, " Transpar\xEAncia P\xFAblica"))), /*#__PURE__*/React.createElement("h1", {
       className: "display-4 fw-bold text-white mb-4",
       style: {
         lineHeight: '1.2'
@@ -264,7 +264,7 @@ class ConselhosPublicos extends React.Component {
       style: {
         fontSize: '14px'
       }
-    }, "Transpar\xEAncia")), /*#__PURE__*/React.createElement("div", {
+    }, " \xA0Transpar\xEAncia"), "\xA0\xA0\xA0"), /*#__PURE__*/React.createElement("div", {
       className: "d-flex align-items-center text-white"
     }, /*#__PURE__*/React.createElement("div", {
       className: "rounded-circle me-2 d-flex align-items-center justify-content-center",
@@ -282,7 +282,7 @@ class ConselhosPublicos extends React.Component {
       style: {
         fontSize: '14px'
       }
-    }, "Participa\xE7\xE3o")), /*#__PURE__*/React.createElement("div", {
+    }, " \xA0Participa\xE7\xE3o"), "\xA0\xA0\xA0"), /*#__PURE__*/React.createElement("div", {
       className: "d-flex align-items-center text-white"
     }, /*#__PURE__*/React.createElement("div", {
       className: "rounded-circle me-2 d-flex align-items-center justify-content-center",
@@ -300,7 +300,7 @@ class ConselhosPublicos extends React.Component {
       style: {
         fontSize: '14px'
       }
-    }, "Controle Social")))), /*#__PURE__*/React.createElement("div", {
+    }, " \xA0Controle Social")))), /*#__PURE__*/React.createElement("div", {
       className: "col-lg-4 text-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "position-relative"
@@ -463,17 +463,7 @@ class ConselhosPublicos extends React.Component {
       }
     }, "Buscar"), /*#__PURE__*/React.createElement("div", {
       className: "position-relative"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "position-absolute start-0 top-50 translate-middle-y ps-3",
-      style: {
-        zIndex: 5
-      }
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-search text-muted",
-      style: {
-        fontSize: '14px'
-      }
-    })), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "form-control ps-5 rounded-3 border-0",
       placeholder: "Nome ou \xF3rg\xE3o...",
@@ -558,7 +548,7 @@ class ConselhosPublicos extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-th me-2"
-    }), "Cards"), /*#__PURE__*/React.createElement("button", {
+    }), " Cards"), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: `btn ${this.state.viewMode === 'list' ? 'text-white' : 'text-dark'} fw-medium`,
       onClick: () => this.setState({
@@ -572,7 +562,7 @@ class ConselhosPublicos extends React.Component {
       }
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-list me-2"
-    }), "Lista"))))));
+    }), " Lista"))))));
   }
   renderCards() {
     const {
@@ -695,76 +685,108 @@ class ConselhosPublicos extends React.Component {
         onClick: () => this.showConselheirosModal(conselho)
       }, /*#__PURE__*/React.createElement("i", {
         className: "fas fa-users me-2"
-      }), "Ver Detalhes"))));
+      }), "\xA0 Ver detalhes"))));
     }));
   }
   renderList() {
     return /*#__PURE__*/React.createElement("div", {
-      className: "list-view-modern"
-    }, this.state.filteredData.map((conselho, index) => /*#__PURE__*/React.createElement("div", {
-      key: `list-${conselho.id_conselho}-${index}`,
-      className: "card mb-4 shadow-sm border-0"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card-body p-4"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "row align-items-center"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "col-md-8"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "d-flex align-items-center"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "me-3"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "rounded-circle d-flex align-items-center justify-content-center",
-      style: {
-        width: '40px',
-        height: '40px',
-        background: 'linear-gradient(135deg, #667eea, #764ba2)',
-        color: 'white'
-      }
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-landmark"
-    }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", {
-      className: "mb-1 text-dark fw-bold"
-    }, conselho.tx_nome_conselho), /*#__PURE__*/React.createElement("div", {
-      className: "d-flex flex-wrap align-items-center gap-2"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "badge bg-light text-dark border"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-users me-1"
-    }), conselho.conselheiros.length, " conselheiros"), this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "badge bg-warning text-dark"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-file-alt me-1"
-    }), this.state.documentos[conselho.id_conselho].length, " documentos"), /*#__PURE__*/React.createElement("span", {
-      className: `badge ${conselho.bo_conselho_ativo ? 'bg-success' : 'bg-secondary'}`
-    }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'))))), /*#__PURE__*/React.createElement("div", {
-      className: "col-md-4 text-end"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "d-flex justify-content-end align-items-center gap-2"
-    }, conselho.tx_website && /*#__PURE__*/React.createElement("a", {
-      href: `http://${conselho.tx_website}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "btn btn-outline-primary btn-sm rounded-pill"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-external-link-alt me-1"
-    }), "Site"), /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-primary btn-sm rounded-pill px-3",
-      onClick: () => this.showConselheirosModal(conselho)
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-eye me-1"
-    }), "Ver Conselheiros"))))))));
+      className: "list-view"
+    }, this.state.filteredData.map((conselho, index) => {
+      const conselhoDocumentos = this.state.documentos[conselho.id_conselho] || [];
+      const activeCount = conselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length;
+      const govCount = conselho.conselheiros.filter(c => c.bo_eh_governamental).length;
+      return /*#__PURE__*/React.createElement("div", {
+        key: `list-${conselho.id_conselho}-${index}`,
+        className: "card mb-3 border-0 shadow-sm"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "card-body p-4"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "d-flex align-items-center justify-content-between"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "d-flex align-items-center flex-grow-1"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "flex-grow-1"
+      }, /*#__PURE__*/React.createElement("h6", {
+        className: "fw-bold mb-2 text-dark"
+      }, conselho.tx_nome_conselho), /*#__PURE__*/React.createElement("div", {
+        className: "d-flex align-items-center gap-4 mb-2"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "text-muted",
+        style: {
+          fontSize: '0.85rem'
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-users me-1"
+      }), " ", conselho.conselheiros.length, " membros \xA0\xA0\xA0"), /*#__PURE__*/React.createElement("span", {
+        className: "text-muted",
+        style: {
+          fontSize: '0.85rem'
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-check-circle me-1"
+      }), " ", activeCount, " ativos")), /*#__PURE__*/React.createElement("div", {
+        className: "d-flex align-items-center gap-1"
+      }, conselho.conselheiros.slice(0, 12).map((conselheiro, idx) => /*#__PURE__*/React.createElement("div", {
+        key: idx,
+        className: "rounded-circle d-flex align-items-center justify-content-center",
+        style: {
+          width: '24px',
+          height: '24px',
+          background: conselheiro.bo_conselheiro_ativo ? '#28a745' : '#6c757d',
+          color: 'white',
+          fontSize: '10px',
+          fontWeight: '600'
+        }
+      }, conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?')), conselho.conselheiros.length > 12 && /*#__PURE__*/React.createElement("div", {
+        className: "rounded-circle d-flex align-items-center justify-content-center ms-1",
+        style: {
+          width: '24px',
+          height: '24px',
+          background: '#e9ecef',
+          color: '#6c757d',
+          fontSize: '9px',
+          fontWeight: '600'
+        }
+      }, "+", conselho.conselheiros.length - 12)))), /*#__PURE__*/React.createElement("div", {
+        className: "d-flex align-items-center gap-4 justify-content-between"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "d-flex gap-3"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "text-center m-2"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "fw-bold text-primary"
+      }, govCount), /*#__PURE__*/React.createElement("small", {
+        className: "text-muted"
+      }, "Gov")), /*#__PURE__*/React.createElement("div", {
+        className: "text-center m-2"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "fw-bold text-warning"
+      }, conselho.conselheiros.length - govCount), /*#__PURE__*/React.createElement("small", {
+        className: "text-muted"
+      }, "Civil")), /*#__PURE__*/React.createElement("div", {
+        className: "text-center m-2"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "fw-bold text-info"
+      }, conselhoDocumentos.length), /*#__PURE__*/React.createElement("small", {
+        className: "text-muted"
+      }, "Docs"))), /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-outline-primary btn-sm",
+        onClick: () => this.showConselheirosModal(conselho)
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-users me-2"
+      }), "Ver Detalhes")))));
+    }));
   }
   renderConselheirosModal() {
     const {
       selectedConselho,
       showConselheirosModal
     } = this.state;
-    const baseColor = '#667eea';
     if (!showConselheirosModal || !selectedConselho) return null;
+    const activeCount = selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length;
+    const govCount = selectedConselho.conselheiros.filter(c => c.bo_eh_governamental).length;
     return /*#__PURE__*/React.createElement("div", {
-      className: "modal fade show modal-modern",
+      className: "modal fade show",
       style: {
         display: 'block',
         backgroundColor: 'rgba(0,0,0,0.5)'
@@ -774,32 +796,79 @@ class ConselhosPublicos extends React.Component {
       className: "modal-dialog modal-lg modal-dialog-scrollable",
       onClick: e => e.stopPropagation()
     }, /*#__PURE__*/React.createElement("div", {
-      className: "modal-content"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "modal-header",
+      className: "modal-content border-0",
       style: {
-        background: `linear-gradient(135deg, ${baseColor}, #764ba2)`,
-        color: 'white'
+        borderRadius: '16px',
+        overflow: 'hidden'
       }
     }, /*#__PURE__*/React.createElement("div", {
-      className: "d-flex align-items-center"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-users me-3",
+      className: "p-4 pb-3",
       style: {
-        fontSize: '24px'
+        background: 'linear-gradient(135deg, #667eea, #764ba2)'
       }
-    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", {
-      className: "modal-title text-white fw-bold"
-    }, selectedConselho.tx_nome_conselho), /*#__PURE__*/React.createElement("small", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "d-flex justify-content-between align-items-start"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", {
+      className: "text-white fw-bold mb-2"
+    }, selectedConselho.tx_nome_conselho), /*#__PURE__*/React.createElement("div", {
+      className: "d-flex align-items-center gap-3 text-white",
       style: {
-        opacity: 0.8
+        fontSize: '0.85rem',
+        opacity: 0.9
       }
-    }, selectedConselho.conselheiros.length, " conselheiros"))), /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users me-1"
+    }), " ", selectedConselho.conselheiros.length, " membros\xA0\xA0\xA0"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-check-circle me-1"
+    }), " ", activeCount, " ativos"))), /*#__PURE__*/React.createElement("a", {
       type: "button",
-      className: "btn-close btn-close-white",
+      className: "",
+      style: {
+        color: 'white',
+        fontSize: '1.5rem',
+        cursor: 'pointer'
+      },
       onClick: this.closeConselheirosModal
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "modal-body p-0"
+    }, "X"))), /*#__PURE__*/React.createElement("div", {
+      className: "px-4 py-3",
+      style: {
+        background: '#f8fafc'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "d-flex gap-4 justify-content-around"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "text-center"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "fw-bold text-primary",
+      style: {
+        fontSize: '1.2rem'
+      }
+    }, govCount), /*#__PURE__*/React.createElement("small", {
+      className: "text-muted"
+    }, "Governamental")), /*#__PURE__*/React.createElement("div", {
+      className: "text-center"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "fw-bold text-warning",
+      style: {
+        fontSize: '1.2rem'
+      }
+    }, selectedConselho.conselheiros.length - govCount), /*#__PURE__*/React.createElement("small", {
+      className: "text-muted"
+    }, "Sociedade Civil")), /*#__PURE__*/React.createElement("div", {
+      className: "text-center"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "fw-bold text-success",
+      style: {
+        fontSize: '1.2rem'
+      }
+    }, activeCount), /*#__PURE__*/React.createElement("small", {
+      className: "text-muted"
+    }, "Ativos")))), /*#__PURE__*/React.createElement("div", {
+      className: "modal-body p-0",
+      style: {
+        maxHeight: '400px',
+        overflowY: 'auto'
+      }
     }, selectedConselho.conselheiros.length === 0 ? /*#__PURE__*/React.createElement("div", {
       className: "text-center py-5"
     }, /*#__PURE__*/React.createElement("i", {
@@ -807,92 +876,84 @@ class ConselhosPublicos extends React.Component {
     }), /*#__PURE__*/React.createElement("h6", {
       className: "text-muted"
     }, "Nenhum conselheiro cadastrado")) : /*#__PURE__*/React.createElement("div", {
-      className: "table-responsive"
-    }, /*#__PURE__*/React.createElement("table", {
-      className: "table table-hover mb-0 table-modern"
-    }, /*#__PURE__*/React.createElement("thead", {
-      className: "bg-light"
-    }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
-      className: "border-0 fw-bold text-secondary",
+      className: "p-3"
+    }, selectedConselho.conselheiros.map((conselheiro, index) => /*#__PURE__*/React.createElement("div", {
+      key: conselheiro.id_conselheiro,
+      className: "d-flex align-items-center p-2 mb-2 rounded-3",
       style: {
-        fontSize: '12px'
+        background: '#f8fafc'
       }
-    }, "Nome"), /*#__PURE__*/React.createElement("th", {
-      className: "border-0 fw-bold text-secondary",
-      style: {
-        fontSize: '12px'
-      }
-    }, "\xD3rg\xE3o"), /*#__PURE__*/React.createElement("th", {
-      className: "border-0 fw-bold text-secondary text-center",
-      style: {
-        fontSize: '12px'
-      }
-    }, "Status"), /*#__PURE__*/React.createElement("th", {
-      className: "border-0 fw-bold text-secondary text-center",
-      style: {
-        fontSize: '12px'
-      }
-    }, "Tipo"))), /*#__PURE__*/React.createElement("tbody", null, selectedConselho.conselheiros.map((conselheiro, index) => /*#__PURE__*/React.createElement("tr", {
-      key: conselheiro.id_conselheiro
-    }, /*#__PURE__*/React.createElement("td", {
-      className: "py-3"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "d-flex align-items-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "me-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "rounded-circle d-flex align-items-center justify-content-center",
       style: {
-        width: '32px',
-        height: '32px',
-        backgroundColor: conselheiro.bo_conselheiro_ativo ? baseColor : '#6c757d',
+        width: '36px',
+        height: '36px',
+        background: conselheiro.bo_conselheiro_ativo ? '#28a745' : '#6c757d',
         color: 'white',
+        fontSize: '13px',
+        fontWeight: '600',
+        marginRight: '15px'
+      }
+    }, conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?')), /*#__PURE__*/React.createElement("div", {
+      className: "flex-grow-1"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "fw-medium text-dark mb-1",
+      style: {
+        fontSize: '14px'
+      }
+    }, conselheiro.tx_nome_conselheiro || 'Sem nome'), conselheiro.tx_orgao_origem && /*#__PURE__*/React.createElement("div", {
+      className: "text-muted mb-2 ",
+      style: {
         fontSize: '12px',
-        fontWeight: 'bold'
+        marginTop: -10
       }
-    }, conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      className: "fw-medium text-dark",
-      style: {
-        fontSize: '13px'
-      }
-    }, conselheiro.tx_nome_conselheiro || 'Sem nome')))), /*#__PURE__*/React.createElement("td", {
-      className: "py-3"
+    }, conselheiro.tx_orgao_origem)), /*#__PURE__*/React.createElement("div", {
+      className: "d-flex gap-2"
     }, /*#__PURE__*/React.createElement("span", {
-      className: "text-muted",
+      className: `badge p-2 ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`,
       style: {
-        fontSize: '12px'
+        fontSize: '12px',
+        color: '#FFFFFF',
+        marginRight: 10
       }
-    }, conselheiro.tx_orgao_origem || '-')), /*#__PURE__*/React.createElement("td", {
-      className: "py-3 text-center"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: `badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`,
+    }, conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'), /*#__PURE__*/React.createElement("span", {
+      className: `badge p-2 ${conselheiro.bo_eh_governamental ? 'bg-primary' : 'bg-warning'}`,
       style: {
-        fontSize: '10px'
+        fontSize: '12px',
+        color: '#FFFFFF'
       }
-    }, /*#__PURE__*/React.createElement("i", {
-      className: `fas ${conselheiro.bo_conselheiro_ativo ? 'fa-check-circle' : 'fa-pause-circle'} me-1`
-    }), conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo')), /*#__PURE__*/React.createElement("td", {
-      className: "py-3 text-center"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: `badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`,
-      style: {
-        fontSize: '10px'
-      }
-    }, /*#__PURE__*/React.createElement("i", {
-      className: `fas ${conselheiro.bo_eh_governamental ? 'fa-university' : 'fa-users'} me-1`
-    }), conselheiro.bo_eh_governamental ? 'Governamental' : 'Civil')))))))), /*#__PURE__*/React.createElement("div", {
+    }, conselheiro.bo_eh_governamental ? 'Gov' : 'Civil')))))), /*#__PURE__*/React.createElement("div", {
       className: "modal-footer bg-light"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center w-100"
-    }, /*#__PURE__*/React.createElement("small", {
-      className: "text-muted"
+    }, /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", {
+      className: "d-flex gap-2"
+    }, this.state.documentos[selectedConselho.id_conselho] && this.state.documentos[selectedConselho.id_conselho].length > 0 && /*#__PURE__*/React.createElement("div", {
+      className: "dropdown"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-outline-success btn-sm dropdown-toggle me-2",
+      type: "button",
+      "data-bs-toggle": "dropdown"
     }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-info-circle me-1"
-    }), selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length, " ativos de ", selectedConselho.conselheiros.length, " total"), /*#__PURE__*/React.createElement("button", {
+      className: "fas fa-download me-1"
+    }), "\xA0 Documentos (", this.state.documentos[selectedConselho.id_conselho].length, ")"), /*#__PURE__*/React.createElement("ul", {
+      className: "dropdown-menu"
+    }, this.state.documentos[selectedConselho.id_conselho].map((doc, index) => /*#__PURE__*/React.createElement("li", {
+      key: index
+    }, /*#__PURE__*/React.createElement("a", {
+      className: "dropdown-item",
+      href: doc.tx_link_documento,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-file-alt me-2"
+    }), doc.tx_nome_documento || `Documento ${index + 1}`))))), "\xA0", /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "btn btn-secondary btn-sm",
       onClick: this.closeConselheirosModal
-    }, "Fechar"))))));
+    }, "Fechar")))))));
   }
   render() {
     if (this.state.loading) {

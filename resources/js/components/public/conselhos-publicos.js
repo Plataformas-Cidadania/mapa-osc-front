@@ -228,7 +228,7 @@ class ConselhosPublicos extends React.Component {
                                     border: '1px solid rgba(255,255,255,0.2)'
                                 }}>
                                     <i className="fas fa-landmark me-2 text-white"></i>
-                                    <span className="text-white fw-medium" style={{fontSize: '14px'}}>Transparência Pública</span>
+                                    <span className="text-white fw-medium" style={{fontSize: '14px'}}> Transparência Pública</span>
                                 </div>
                             </div>
                             <h1 className="display-4 fw-bold text-white mb-4" style={{lineHeight: '1.2'}}>
@@ -246,7 +246,7 @@ class ConselhosPublicos extends React.Component {
                                     }}>
                                         <i className="fas fa-eye" style={{fontSize: '16px'}}></i>
                                     </div>
-                                    <span style={{fontSize: '14px'}}>Transparência</span>
+                                    <span style={{fontSize: '14px'}}> &nbsp;Transparência</span>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div className="d-flex align-items-center text-white">
                                     <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
@@ -256,7 +256,7 @@ class ConselhosPublicos extends React.Component {
                                     }}>
                                         <i className="fas fa-handshake" style={{fontSize: '16px'}}></i>
                                     </div>
-                                    <span style={{fontSize: '14px'}}>Participação</span>
+                                    <span style={{fontSize: '14px'}}> &nbsp;Participação</span>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div className="d-flex align-items-center text-white">
                                     <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
@@ -266,7 +266,7 @@ class ConselhosPublicos extends React.Component {
                                     }}>
                                         <i className="fas fa-balance-scale" style={{fontSize: '16px'}}></i>
                                     </div>
-                                    <span style={{fontSize: '14px'}}>Controle Social</span>
+                                    <span style={{fontSize: '14px'}}> &nbsp;Controle Social</span>
                                 </div>
                             </div>
                         </div>
@@ -408,9 +408,9 @@ class ConselhosPublicos extends React.Component {
                         <div className="col-md-3">
                             <label className="form-label fw-bold text-dark mb-2" style={{fontSize: '13px'}}>Buscar</label>
                             <div className="position-relative">
-                                <div className="position-absolute start-0 top-50 translate-middle-y ps-3" style={{zIndex: 5}}>
+                                {/*<div className="position-absolute start-0 top-50 translate-middle-y ps-3" style={{zIndex: 5}}>
                                     <i className="fas fa-search text-muted" style={{fontSize: '14px'}}></i>
-                                </div>
+                                </div>*/}
                                 <input
                                     type="text"
                                     className="form-control ps-5 rounded-3 border-0"
@@ -498,7 +498,7 @@ class ConselhosPublicos extends React.Component {
                                         height: '48px'
                                     }}
                                 >
-                                    <i className="fas fa-th me-2"></i>Cards
+                                    <i className="fas fa-th me-2"></i> Cards
                                 </button>
                                 <button
                                     type="button"
@@ -511,7 +511,7 @@ class ConselhosPublicos extends React.Component {
                                         height: '48px'
                                     }}
                                 >
-                                    <i className="fas fa-list me-2"></i>Lista
+                                    <i className="fas fa-list me-2"></i> Lista
                                 </button>
                             </div>
                         </div>
@@ -631,8 +631,8 @@ class ConselhosPublicos extends React.Component {
                                         className="btn btn-outline-primary btn-sm w-100"
                                         onClick={() => this.showConselheirosModal(conselho)}
                                     >
-                                        <i className="fas fa-users me-2"></i>
-                                        Ver Detalhes
+                                        <i className="fas fa-users me-2"></i>&nbsp;
+                                        Ver detalhes
                                     </button>
                                 </div>
                             </div>
@@ -645,169 +645,219 @@ class ConselhosPublicos extends React.Component {
 
     renderList() {
         return (
-            <div className="list-view-modern">
-                {this.state.filteredData.map((conselho, index) => (
-                    <div key={`list-${conselho.id_conselho}-${index}`} className="card mb-4 shadow-sm border-0">
-                        <div className="card-body p-4">
-                            <div className="row align-items-center">
-                                <div className="col-md-8">
-                                    <div className="d-flex align-items-center">
-                                        <div className="me-3">
-                                            <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
-                                                width: '40px',
-                                                height: '40px',
+            <div className="list-view">
+                {this.state.filteredData.map((conselho, index) => {
+                    const conselhoDocumentos = this.state.documentos[conselho.id_conselho] || [];
+                    const activeCount = conselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length;
+                    const govCount = conselho.conselheiros.filter(c => c.bo_eh_governamental).length;
+
+                    return (
+                        <div key={`list-${conselho.id_conselho}-${index}`} className="card mb-3 border-0 shadow-sm">
+                            <div className="card-body p-4">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center flex-grow-1">
+                                        {/*<div className="me-4">
+                                            <div className="rounded-3 d-flex align-items-center justify-content-center" style={{
+                                                width: '48px',
+                                                height: '48px',
                                                 background: 'linear-gradient(135deg, #667eea, #764ba2)',
                                                 color: 'white'
                                             }}>
-                                                <i className="fas fa-landmark"></i>
+                                                <i className="fas fa-landmark" style={{fontSize: '18px'}}></i>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <h5 className="mb-1 text-dark fw-bold">{conselho.tx_nome_conselho}</h5>
-                                            <div className="d-flex flex-wrap align-items-center gap-2">
-                                                <span className="badge bg-light text-dark border">
-                                                    <i className="fas fa-users me-1"></i>
-                                                    {conselho.conselheiros.length} conselheiros
+                                        </div>*/}
+                                        <div className="flex-grow-1">
+                                            <h6 className="fw-bold mb-2 text-dark">{conselho.tx_nome_conselho}</h6>
+                                            <div className="d-flex align-items-center gap-4 mb-2">
+                                                <span className="text-muted" style={{fontSize: '0.85rem'}}>
+                                                    <i className="fas fa-users me-1"></i> {conselho.conselheiros.length} membros &nbsp;&nbsp;&nbsp;
                                                 </span>
-                                                {this.state.documentos[conselho.id_conselho] && this.state.documentos[conselho.id_conselho].length > 0 && (
-                                                    <span className="badge bg-warning text-dark">
-                                                        <i className="fas fa-file-alt me-1"></i>
-                                                        {this.state.documentos[conselho.id_conselho].length} documentos
-                                                    </span>
+                                                <span className="text-muted" style={{fontSize: '0.85rem'}}>
+                                                    <i className="fas fa-check-circle me-1"></i> {activeCount} ativos
+                                                </span>
+                                            </div>
+                                            <div className="d-flex align-items-center gap-1">
+                                                {conselho.conselheiros.slice(0, 12).map((conselheiro, idx) => (
+                                                    <div key={idx} className="rounded-circle d-flex align-items-center justify-content-center" style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                        background: conselheiro.bo_conselheiro_ativo ? '#28a745' : '#6c757d',
+                                                        color: 'white',
+                                                        fontSize: '10px',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'}
+                                                    </div>
+                                                ))}
+                                                {conselho.conselheiros.length > 12 && (
+                                                    <div className="rounded-circle d-flex align-items-center justify-content-center ms-1" style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                        background: '#e9ecef',
+                                                        color: '#6c757d',
+                                                        fontSize: '9px',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        +{conselho.conselheiros.length - 12}
+                                                    </div>
                                                 )}
-                                                <span className={`badge ${conselho.bo_conselho_ativo ? 'bg-success' : 'bg-secondary'}`}>
-                                                    {conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo'}
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-md-4 text-end">
-                                    <div className="d-flex justify-content-end align-items-center gap-2">
-                                        {conselho.tx_website && (
-                                            <a
-                                                href={`http://${conselho.tx_website}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="btn btn-outline-primary btn-sm rounded-pill"
-                                            >
-                                                <i className="fas fa-external-link-alt me-1"></i>
-                                                Site
-                                            </a>
-                                        )}
+                                    <div className="d-flex align-items-center gap-4 justify-content-between">
+                                        <div className="d-flex gap-3">
+                                            <div className="text-center m-2">
+                                                <div className="fw-bold text-primary">{govCount}</div>
+                                                <small className="text-muted">Gov</small>
+                                            </div>
+                                            <div className="text-center m-2">
+                                                <div className="fw-bold text-warning">{conselho.conselheiros.length - govCount}</div>
+                                                <small className="text-muted">Civil</small>
+                                            </div>
+                                            <div className="text-center m-2">
+                                                <div className="fw-bold text-info">{conselhoDocumentos.length}</div>
+                                                <small className="text-muted">Docs</small>
+                                            </div>
+                                        </div>
                                         <button
-                                            className="btn btn-primary btn-sm rounded-pill px-3"
+                                            className="btn btn-outline-primary btn-sm"
                                             onClick={() => this.showConselheirosModal(conselho)}
                                         >
-                                            <i className="fas fa-eye me-1"></i>
-                                            Ver Conselheiros
+                                            <i className="fas fa-users me-2"></i>
+                                            Ver Detalhes
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         );
     }
 
     renderConselheirosModal() {
         const { selectedConselho, showConselheirosModal } = this.state;
-        const baseColor = '#667eea';
 
         if (!showConselheirosModal || !selectedConselho) return null;
 
+        const activeCount = selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length;
+        const govCount = selectedConselho.conselheiros.filter(c => c.bo_eh_governamental).length;
+
         return (
-            <div className="modal fade show modal-modern" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}} onClick={this.closeConselheirosModal}>
+            <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}} onClick={this.closeConselheirosModal}>
                 <div className="modal-dialog modal-lg modal-dialog-scrollable" onClick={(e) => e.stopPropagation()}>
-                    <div className="modal-content">
-                        <div className="modal-header" style={{background: `linear-gradient(135deg, ${baseColor}, #764ba2)`, color: 'white'}}>
-                            <div className="d-flex align-items-center">
-                                <i className="fas fa-users me-3" style={{fontSize: '24px'}}></i>
+                    <div className="modal-content border-0" style={{borderRadius: '16px', overflow: 'hidden'}}>
+                        {/* Header */}
+                        <div className="p-4 pb-3" style={{background: 'linear-gradient(135deg, #667eea, #764ba2)'}}>
+                            <div className="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <h5 className="modal-title text-white fw-bold">{selectedConselho.tx_nome_conselho}</h5>
-                                    <small style={{opacity: 0.8}}>{selectedConselho.conselheiros.length} conselheiros</small>
+                                    <h5 className="text-white fw-bold mb-2">{selectedConselho.tx_nome_conselho}</h5>
+                                    <div className="d-flex align-items-center gap-3 text-white" style={{fontSize: '0.85rem', opacity: 0.9}}>
+                                        <span><i className="fas fa-users me-1"></i> {selectedConselho.conselheiros.length} membros&nbsp;&nbsp;&nbsp;</span>
+                                        <span><i className="fas fa-check-circle me-1"></i> {activeCount} ativos</span>
+                                    </div>
+                                </div>
+                                <a type="button" className="" style={{color: 'white', fontSize: '1.5rem', cursor: 'pointer'}} onClick={this.closeConselheirosModal}>X</a>
+                            </div>
+                        </div>
+
+                        {/* Stats */}
+                        <div className="px-4 py-3" style={{background: '#f8fafc'}}>
+                            <div className="d-flex gap-4 justify-content-around">
+                                <div className="text-center">
+                                    <div className="fw-bold text-primary" style={{fontSize: '1.2rem'}}>{govCount}</div>
+                                    <small className="text-muted">Governamental</small>
+                                </div>
+                                <div className="text-center">
+                                    <div className="fw-bold text-warning" style={{fontSize: '1.2rem'}}>{selectedConselho.conselheiros.length - govCount}</div>
+                                    <small className="text-muted">Sociedade Civil</small>
+                                </div>
+                                <div className="text-center">
+                                    <div className="fw-bold text-success" style={{fontSize: '1.2rem'}}>{activeCount}</div>
+                                    <small className="text-muted">Ativos</small>
                                 </div>
                             </div>
-                            <button type="button" className="btn-close btn-close-white" onClick={this.closeConselheirosModal}></button>
                         </div>
-                        <div className="modal-body p-0">
+
+                        {/* Content */}
+                        <div className="modal-body p-0" style={{maxHeight: '400px', overflowY: 'auto'}}>
                             {selectedConselho.conselheiros.length === 0 ? (
                                 <div className="text-center py-5">
                                     <i className="fas fa-users fa-3x text-muted mb-3"></i>
                                     <h6 className="text-muted">Nenhum conselheiro cadastrado</h6>
                                 </div>
                             ) : (
-                                <div className="table-responsive">
-                                    <table className="table table-hover mb-0 table-modern">
-                                        <thead className="bg-light">
-                                            <tr>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Nome</th>
-                                                <th className="border-0 fw-bold text-secondary" style={{fontSize: '12px'}}>Órgão</th>
-                                                <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Status</th>
-                                                <th className="border-0 fw-bold text-secondary text-center" style={{fontSize: '12px'}}>Tipo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {selectedConselho.conselheiros.map((conselheiro, index) => (
-                                                <tr key={conselheiro.id_conselheiro}>
-                                                    <td className="py-3">
-                                                        <div className="d-flex align-items-center">
-                                                            <div className="me-3">
-                                                                <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
-                                                                    width: '32px',
-                                                                    height: '32px',
-                                                                    backgroundColor: conselheiro.bo_conselheiro_ativo ? baseColor : '#6c757d',
-                                                                    color: 'white',
-                                                                    fontSize: '12px',
-                                                                    fontWeight: 'bold'
-                                                                }}>
-                                                                    {conselheiro.tx_nome_conselheiro ?
-                                                                        conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div className="fw-medium text-dark" style={{fontSize: '13px'}}>
-                                                                    {conselheiro.tx_nome_conselheiro || 'Sem nome'}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-3">
-                                                        <span className="text-muted" style={{fontSize: '12px'}}>
-                                                            {conselheiro.tx_orgao_origem || '-'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '10px'}}>
-                                                            <i className={`fas ${conselheiro.bo_conselheiro_ativo ? 'fa-check-circle' : 'fa-pause-circle'} me-1`}></i>
-                                                            {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-3 text-center">
-                                                        <span className={`badge ${conselheiro.bo_eh_governamental ? 'bg-info' : 'bg-success'}`} style={{fontSize: '10px'}}>
-                                                            <i className={`fas ${conselheiro.bo_eh_governamental ? 'fa-university' : 'fa-users'} me-1`}></i>
-                                                            {conselheiro.bo_eh_governamental ? 'Governamental' : 'Civil'}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                <div className="p-3">
+                                    {selectedConselho.conselheiros.map((conselheiro, index) => (
+                                        <div key={conselheiro.id_conselheiro} className="d-flex align-items-center p-2 mb-2 rounded-3" style={{background: '#f8fafc'}}>
+                                            <div className="me-3">
+                                                <div className="rounded-circle d-flex align-items-center justify-content-center" style={{
+                                                    width: '36px',
+                                                    height: '36px',
+                                                    background: conselheiro.bo_conselheiro_ativo ? '#28a745' : '#6c757d',
+                                                    color: 'white',
+                                                    fontSize: '13px',
+                                                    fontWeight: '600',
+                                                    marginRight: '15px'
+                                                }}>
+                                                    {conselheiro.tx_nome_conselheiro ? conselheiro.tx_nome_conselheiro.charAt(0).toUpperCase() : '?'}
+                                                </div>
+                                            </div>
+                                            <div className="flex-grow-1">
+                                                <div className="fw-medium text-dark mb-1" style={{fontSize: '14px'}}>
+                                                    {conselheiro.tx_nome_conselheiro || 'Sem nome'}
+                                                </div>
+                                                {conselheiro.tx_orgao_origem && (
+                                                    <div className="text-muted mb-2 " style={{fontSize: '12px', marginTop: -10}}>{conselheiro.tx_orgao_origem}</div>
+                                                )}
+                                            </div>
+                                            <div className="d-flex gap-2">
+                                                <span className={`badge p-2 ${conselheiro.bo_conselheiro_ativo ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '12px', color: '#FFFFFF', marginRight: 10}}>
+                                                    {conselheiro.bo_conselheiro_ativo ? 'Ativo' : 'Inativo'}
+                                                </span>
+                                                <span className={`badge p-2 ${conselheiro.bo_eh_governamental ? 'bg-primary' : 'bg-warning'}`} style={{fontSize: '12px', color: '#FFFFFF'}}>
+                                                    {conselheiro.bo_eh_governamental ? 'Gov' : 'Civil'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             )}
                         </div>
+
+                        {/* Footer with download button */}
                         <div className="modal-footer bg-light">
                             <div className="d-flex justify-content-between align-items-center w-100">
-                                <small className="text-muted">
+                                <div></div>
+                                {/*<small className="text-muted">
                                     <i className="fas fa-info-circle me-1"></i>
-                                    {selectedConselho.conselheiros.filter(c => c.bo_conselheiro_ativo).length} ativos de {selectedConselho.conselheiros.length} total
-                                </small>
-                                <button type="button" className="btn btn-secondary btn-sm" onClick={this.closeConselheirosModal}>
-                                    Fechar
-                                </button>
+                                    {activeCount} ativos de {selectedConselho.conselheiros.length} total
+                                </small>*/}
+                                <div className="d-flex gap-2">
+                                    {this.state.documentos[selectedConselho.id_conselho] && this.state.documentos[selectedConselho.id_conselho].length > 0 && (
+                                        <div className="dropdown">
+                                            <button className="btn btn-outline-success btn-sm dropdown-toggle me-2" type="button" data-bs-toggle="dropdown">
+                                                <i className="fas fa-download me-1"></i>&nbsp;
+                                                Documentos ({this.state.documentos[selectedConselho.id_conselho].length})
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                {this.state.documentos[selectedConselho.id_conselho].map((doc, index) => (
+                                                    <li key={index}>
+                                                        <a className="dropdown-item" href={doc.tx_link_documento} target="_blank" rel="noopener noreferrer">
+                                                            <i className="fas fa-file-alt me-2"></i>
+                                                            {doc.tx_nome_documento || `Documento ${index + 1}`}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                    &nbsp;
+                                    <button type="button" className="btn btn-secondary btn-sm" onClick={this.closeConselheirosModal}>
+                                        Fechar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
