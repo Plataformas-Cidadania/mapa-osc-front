@@ -15,13 +15,17 @@
             <div class="bg-lgt box-itens-g" style="height: 440px;">
                 <h2>Quadro de dirigentes</h2>
                 <div style="height: 340px; overflow-y: auto; padding-right: 10px;">
-                    @foreach($governancas as $governanca)
-                        <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
-                            <?php echo iconType($governanca['ft_nome_dirigente']); ?>
-                            <p>{{$governanca['tx_cargo_dirigente']}}</p>
-                            <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
-                        </div>
-                    @endforeach
+                    @if(empty($governancas))
+                        <p class='not-info' style="font-size: 12px">Não constam informações nas bases de dados do Mapa</p>
+                    @else
+                        @foreach($governancas as $governanca)
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e5e5;">
+                                <?php echo iconType($governanca['ft_nome_dirigente']); ?>
+                                <p>{{$governanca['tx_cargo_dirigente']}}</p>
+                                <p><strong>{{$governanca['tx_nome_dirigente']}}</strong></p>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -29,12 +33,16 @@
             <div class="bg-lgt box-itens-g" style="height: 440px;">
                 <h2>Conselho fiscal</h2>
                 <div style="height: 340px; overflow-y: auto; padding-right: 10px;">
-                    @foreach($conselhos_fiscais as $conselho_fiscal)
-                        <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
-                            <?php echo iconType($conselho_fiscal['ft_nome_conselheiro']); ?>
-                            <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
-                        </div>
-                    @endforeach
+                    @if(empty($conselhos_fiscais))
+                        <p class='not-info' style="font-size: 12px">Não constam informações nas bases de dados do Mapa</p>
+                    @else
+                        @foreach($conselhos_fiscais as $conselho_fiscal)
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e5e5;">
+                                <?php echo iconType($conselho_fiscal['ft_nome_conselheiro']); ?>
+                                <p>{{$conselho_fiscal['tx_nome_conselheiro']}}</p>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -46,7 +54,7 @@
                         {{$quadros_societarios['Resposta']}}
                     @else
                         @foreach($quadros_societarios as $quadro_societario)
-                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e5e5;">
                                 <?php echo iconType($quadro_societario['ft_nome_socio']); ?>
                                 <p>{{$quadro_societario['tx_nome_socio']}}</p>
                                 {{--<p><strong>CPF: </strong>{{$quadro_societario['tx_cpf_socio']}}</p>--}}
