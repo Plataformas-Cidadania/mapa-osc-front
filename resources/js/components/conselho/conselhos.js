@@ -453,30 +453,8 @@ class Conselhos extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group">
-                                <label>Nome do Conselho</label>
-                                <div className="form-control bg-light" style={{minHeight: '60px', padding: '6px 12px', fontWeight: 'bold'}}>
-                                    {this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome'}
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Ato Legal</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.form.tx_ato_legal}
-                                    onChange={(e) => this.handleInputChange('tx_ato_legal', e.target.value)}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Website</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.form.tx_website}
-                                    onChange={(e) => this.handleInputChange('tx_website', e.target.value)}
-                                />
-                            </div>
+
+
                             {!this.state.editingConselho &&
                                 <div>
                                     <div className="form-group">
@@ -566,6 +544,33 @@ class Conselhos extends React.Component {
                                     )}
                                 </div>
                             }
+
+                            <div className="form-group">
+                                <label>Nome do Conselho</label>
+                                <div className="form-control bg-light" style={{minHeight: '60px', padding: '6px 12px', fontWeight: 'bold'}}>
+                                    {this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome'}
+                                </div>
+                            </div>
+
+
+                            <div className="form-group">
+                                <label>Ato Legal</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.form.tx_ato_legal}
+                                    onChange={(e) => this.handleInputChange('tx_ato_legal', e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Website</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.form.tx_website}
+                                    onChange={(e) => this.handleInputChange('tx_website', e.target.value)}
+                                />
+                            </div>
 
 
 

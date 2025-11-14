@@ -432,30 +432,7 @@ class Conselhos extends React.Component {
       onClick: () => this.closeModal()
     }, "\xD7")), /*#__PURE__*/React.createElement("div", {
       className: "modal-body"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("div", {
-      className: "form-control bg-light",
-      style: {
-        minHeight: '60px',
-        padding: '6px 12px',
-        fontWeight: 'bold'
-      }
-    }, this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome')), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Ato Legal"), /*#__PURE__*/React.createElement("input", {
-      type: "text",
-      className: "form-control",
-      value: this.state.form.tx_ato_legal,
-      onChange: e => this.handleInputChange('tx_ato_legal', e.target.value)
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "Website"), /*#__PURE__*/React.createElement("input", {
-      type: "text",
-      className: "form-control",
-      value: this.state.form.tx_website,
-      onChange: e => this.handleInputChange('tx_website', e.target.value)
-    })), !this.state.editingConselho && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    }, !this.state.editingConselho && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, "N\xEDvel Federativo"), /*#__PURE__*/React.createElement("select", {
       className: "form-control",
@@ -511,6 +488,29 @@ class Conselhos extends React.Component {
       key: municipio.cd_tipo_abrangencia,
       value: municipio.cd_tipo_abrangencia
     }, municipio.tx_nome_abrangencia)))))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Nome do Conselho"), /*#__PURE__*/React.createElement("div", {
+      className: "form-control bg-light",
+      style: {
+        minHeight: '60px',
+        padding: '6px 12px',
+        fontWeight: 'bold'
+      }
+    }, this.state.form.tx_nome_conselho || 'Selecione o nível federativo e abrangência para gerar o nome')), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Ato Legal"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
+      value: this.state.form.tx_ato_legal,
+      onChange: e => this.handleInputChange('tx_ato_legal', e.target.value)
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("label", null, "Website"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "form-control",
+      value: this.state.form.tx_website,
+      onChange: e => this.handleInputChange('tx_website', e.target.value)
+    })), /*#__PURE__*/React.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",
