@@ -335,7 +335,7 @@
 @endif
 
 {{--Área Restrita--}}
-@if($rota=="login/{carrinho}" || $rota=="login")
+@if($rota=="login/{carrinho}" || $rota=="login" || $rota=="login-conselho")
     <script src="js/components/login/preRegister.js"></script>
     <script src="js/components/login/forgetPassword.js"></script>
     <script src="js/components/login/login.js"></script>

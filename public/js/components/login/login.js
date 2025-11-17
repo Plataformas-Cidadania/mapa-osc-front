@@ -23,6 +23,15 @@ class Login extends React.Component {
         target: 'area-user'
       });
     }
+    
+    // Captura o tipo do data-type do elemento
+    const loginElement = document.getElementById('login');
+    const type = loginElement?.getAttribute('data-type');
+    if (type) {
+      let form = this.state.form;
+      form.type = type;
+      this.setState({ form });
+    }
   }
   handleInputChange(event) {
     const target = event.target;
@@ -81,10 +90,13 @@ class Login extends React.Component {
         success: function (data) {
           console.log(data);
           if (data.access_token) {
-            //location.href = this.state.target;
             localStorage.setItem('@App:token', data.access_token);
-            //location.href = 'area-user';
-            location.href = 'oscs-user';
+            // Redireciona baseado no tipo
+            if (this.state.form.type === 'conselho') {
+              location.href = 'dashboard-conselho';
+            } else {
+              location.href = 'oscs-user';
+            }
           }
           this.setState({
             loading: false,

@@ -10,10 +10,6 @@ class MenuConselho extends React.Component {
     }, /*#__PURE__*/React.createElement("ul", {
       className: "menu-area"
     }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-      href: "oscs-user"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-list-alt"
-    }), " Minhas OSCs")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
       href: "conselho"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-file"

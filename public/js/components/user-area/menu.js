@@ -41,10 +41,6 @@ class Menu extends React.Component {
       }, /*#__PURE__*/React.createElement("i", {
         className: "fas fa-list-alt"
       }), " Minhas OSCs")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "dashboard-conselho"
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fas fa-tachometer-alt"
-      }), " Meus Conselhos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
         href: "dados-user"
       }, /*#__PURE__*/React.createElement("i", {
         className: "fa fa-user",

@@ -14,19 +14,28 @@ class UserLoginController extends Controller
         return view('login', ['carrinho' => $carrinho]);
     }
 
+    public function indexConselho(){
+        return view('login-conselho');
+    }
+
     public function login(Request $request){
 
         Log::info($request);
 
         $email = $request->form['email'];
         $password = $request->form['password'];
+        $type = $request->form['type'] ?? null;
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             //DB::table('sessions')->where('user_id', Auth::user()->id)->delete();
         }
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            return ['status' => 1];
+            $response = ['status' => 1];
+            if ($type === 'conselho') {
+                $response['redirect'] = '/area-conselho';
+            }
+            return $response;
         }
 
         return ['status' => 0, 'msg' => 'E-mail e/ou senha Inválido'];

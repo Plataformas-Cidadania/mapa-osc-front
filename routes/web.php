@@ -161,6 +161,7 @@ Route::get('produtos/{categoria_id}/{subcategoria_id}', ucfirst($rota).'Controll
 //LOGIN E REDEFINIÇÃO DE SENHA/////////////////////////////////////////////////////////////////////
 Route::get('login/{carrinho}', 'UserLoginController@index');//pg de login vindo da seleção do carrinho
 Route::get('login', 'UserLoginController@index');//pg de login rota direta
+Route::get('login-conselho', 'UserLoginController@indexConselho');//pg de login para conselho
 Route::post('login', 'UserLoginController@login');//autenticação de login
 //Route::post('forget-password', 'UserLoginController@forgetPassword');
 //Route::get('reset-password/{token}/{email}', 'UserLoginController@resetPassword');
