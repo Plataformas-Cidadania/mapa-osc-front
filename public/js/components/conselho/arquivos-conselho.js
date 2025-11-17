@@ -105,9 +105,10 @@ class ArquivosConselho extends React.Component {
             titulo: '',
             arquivo: null
           }
+        }, () => {
+          this.loadDocumentos(this.state.conselhoId);
+          alert('Documento enviado com sucesso!');
         });
-        this.loadDocumentos(this.state.conselhoId);
-        alert('Documento enviado com sucesso!');
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(status, err.toString());
@@ -145,7 +146,7 @@ class ArquivosConselho extends React.Component {
         className: "container-fluid"
       }, /*#__PURE__*/React.createElement("div", {
         className: "bg-white text-center py-5"
-      }, /*#__PURE__*/React.createElement("i", {
+      }, /*#__PURE__*/React.createElement("span", {
         className: "fas fa-exclamation-triangle fa-3x text-warning mb-3"
       }), /*#__PURE__*/React.createElement("h5", null, "Conselho n\xE3o especificado"), /*#__PURE__*/React.createElement("p", {
         className: "text-muted"
@@ -157,7 +158,7 @@ class ArquivosConselho extends React.Component {
       className: "bg-white border-bottom py-3 px-4"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center"
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-users"
     }), " Arquivos do Conselho"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar seus arquivos"), this.state.conselho && /*#__PURE__*/React.createElement("small", {
       className: "text-muted"
@@ -166,9 +167,9 @@ class ArquivosConselho extends React.Component {
       onClick: () => this.setState({
         showUploadForm: !this.state.showUploadForm
       })
-    }, this.state.showUploadForm ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("i", {
+    }, this.state.showUploadForm ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-times"
-    }), " Cancelar") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("i", {
+    }), " Cancelar") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-plus"
     }), " Novo Documento")))), this.state.showUploadForm && /*#__PURE__*/React.createElement("div", {
       className: "bg-light border-bottom p-4"
@@ -201,11 +202,12 @@ class ArquivosConselho extends React.Component {
       type: "button",
       className: "btn btn-success btn-block",
       onClick: this.saveDocumento
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-upload"
     }), " Enviar"))))), /*#__PURE__*/React.createElement("div", {
       className: "bg-white"
     }, this.state.documentos.length === 0 ? /*#__PURE__*/React.createElement("div", {
+      key: "empty-state",
       className: "text-center py-5"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-file-alt fa-3x text-muted mb-3"
@@ -214,20 +216,21 @@ class ArquivosConselho extends React.Component {
     }, "Nenhum documento encontrado"), /*#__PURE__*/React.createElement("p", {
       className: "text-muted"
     }, "Clique no bot\xE3o \"Novo Documento\" para come\xE7ar")) : /*#__PURE__*/React.createElement("div", {
+      key: "documents-table",
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "T\xEDtulo"), /*#__PURE__*/React.createElement("th", null, "Tipo"), /*#__PURE__*/React.createElement("th", null, "Data"), /*#__PURE__*/React.createElement("th", {
       width: "100"
-    }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.documentos.map(doc => /*#__PURE__*/React.createElement("tr", {
-      key: doc.id_documento_conselho
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("i", {
+    }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.documentos.map((doc, index) => /*#__PURE__*/React.createElement("tr", {
+      key: `documento-${doc.id_documento_conselho}-${index}`
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-file-alt text-primary mr-2"
     }), doc.tx_titulo_documento), /*#__PURE__*/React.createElement("td", null, doc.tx_tipo_arquivo), /*#__PURE__*/React.createElement("td", null, new Date(doc.dt_data_cadastro).toLocaleDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-sm btn-outline-danger",
       onClick: () => this.deleteDocumento(doc.id_documento_conselho),
       title: "Excluir documento"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-trash-alt"
     }))))))))));
   }

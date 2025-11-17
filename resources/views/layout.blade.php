@@ -36,7 +36,7 @@
     <body id="contrast" >
         @include('layouts.layout1')
         <!-- Piwik -->
-        <script type="text/javascript">
+        {{--<script type="text/javascript">
             var _paq = _paq || [];
             _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
             _paq.push(["setDomains", ["*.mapaosc","*.mapaosc.ipea.gov.br"]]);
@@ -50,7 +50,7 @@
                 g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
             })();
         </script>
-        <noscript><p><img src="//mapaosc.ipea.gov.br/webstats/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+        <noscript><p><img src="//mapaosc.ipea.gov.br/webstats/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>--}}
         <!-- End Piwik Code -->
     </body>
 </html>

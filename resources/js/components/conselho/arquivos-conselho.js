@@ -103,9 +103,10 @@ class ArquivosConselho extends React.Component {
                 this.setState({
                     showUploadForm: false,
                     uploadForm: { titulo: '', arquivo: null }
+                }, () => {
+                    this.loadDocumentos(this.state.conselhoId);
+                    alert('Documento enviado com sucesso!');
                 });
-                this.loadDocumentos(this.state.conselhoId);
-                alert('Documento enviado com sucesso!');
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err.toString());
@@ -143,7 +144,7 @@ class ArquivosConselho extends React.Component {
             return (
                 <div className="container-fluid">
                     <div className="bg-white text-center py-5">
-                        <i className="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                        <span className="fas fa-exclamation-triangle fa-3x text-warning mb-3"></span>
                         <h5>Conselho não especificado</h5>
                         <p className="text-muted">Acesse esta página através do dashboard de conselhos</p>
                     </div>
@@ -156,7 +157,7 @@ class ArquivosConselho extends React.Component {
                 <div className="bg-white border-bottom py-3 px-4">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
-                            <h3><i className="fas fa-users"/> Arquivos do Conselho</h3>
+                            <h3><span className="fas fa-users"></span> Arquivos do Conselho</h3>
                             <p>Nessa área você pode gerenciar seus arquivos</p>
 
                             {this.state.conselho && (
@@ -168,9 +169,9 @@ class ArquivosConselho extends React.Component {
                             onClick={() => this.setState({ showUploadForm: !this.state.showUploadForm })}
                         >
                             {this.state.showUploadForm ? (
-                                <><i className="fas fa-times"></i> Cancelar</>
+                                <><span className="fas fa-times"></span> Cancelar</>
                             ) : (
-                                <><i className="fas fa-plus"></i> Novo Documento</>
+                                <><span className="fas fa-plus"></span> Novo Documento</>
                             )}
                         </button>
                     </div>
@@ -210,7 +211,7 @@ class ArquivosConselho extends React.Component {
                                         className="btn btn-success btn-block"
                                         onClick={this.saveDocumento}
                                     >
-                                        <i className="fas fa-upload"></i> Enviar
+                                        <span className="fas fa-upload"></span> Enviar
                                     </button>
                                 </div>
                             </div>
@@ -220,13 +221,13 @@ class ArquivosConselho extends React.Component {
 
                 <div className="bg-white">
                     {this.state.documentos.length === 0 ? (
-                        <div className="text-center py-5">
+                        <div key="empty-state" className="text-center py-5">
                             <i className="fas fa-file-alt fa-3x text-muted mb-3"></i>
                             <h5 className="text-muted">Nenhum documento encontrado</h5>
                             <p className="text-muted">Clique no botão "Novo Documento" para começar</p>
                         </div>
                     ) : (
-                        <div className="table-responsive">
+                        <div key="documents-table" className="table-responsive">
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
@@ -237,10 +238,10 @@ class ArquivosConselho extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.documentos.map(doc => (
-                                        <tr key={doc.id_documento_conselho}>
+                                    {this.state.documentos.map((doc, index) => (
+                                        <tr key={`documento-${doc.id_documento_conselho}-${index}`}>
                                             <td>
-                                                <i className="fas fa-file-alt text-primary mr-2"></i>
+                                                <span className="fas fa-file-alt text-primary mr-2"></span>
                                                 {doc.tx_titulo_documento}
                                             </td>
                                             <td>{doc.tx_tipo_arquivo}</td>
@@ -251,7 +252,7 @@ class ArquivosConselho extends React.Component {
                                                     onClick={() => this.deleteDocumento(doc.id_documento_conselho)}
                                                     title="Excluir documento"
                                                 >
-                                                    <i className="fas fa-trash-alt"></i>
+                                                    <span className="fas fa-trash-alt"></span>
                                                 </button>
                                             </td>
                                         </tr>

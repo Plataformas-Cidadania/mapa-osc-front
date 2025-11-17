@@ -615,8 +615,8 @@ class Conselhos extends React.Component {
                             </button>
                         </div>
                     </div>
-                    <div className="bg-white text-center">
-                        <i className="fas fa-users fa-3x text-muted mb-3"></i>
+                    <div key="empty-state" className="bg-white text-center">
+                        <span className="fas fa-users fa-3x text-muted mb-3"></span>
                         <h5 className="text-muted">Nenhum conselho encontrado</h5>
                         <p className="text-muted">Clique no botão "Novo Conselho" para começar</p>
                     </div>
@@ -628,12 +628,12 @@ class Conselhos extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="title-user-area">
-                    <h3><i className="fas fa-users"/> Conselhos de Fomento</h3>
+                    <h3><span className="fas fa-users"></span> Conselhos de Fomento</h3>
                     <p>Nessa área você pode gerenciar e criar concelhos</p>
                     <button className="btn btn-primary float-right"
                             onClick={() => this.openModal()}
                             style={{ marginTop: '-80px' }}>
-                        <i className="fa fa-plus"/> Novo conselho
+                        <span className="fa fa-plus"></span> Novo conselho
                     </button>
                     <hr/>
                 </div>
@@ -659,12 +659,12 @@ class Conselhos extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.filteredConselhos.map(conselho =>
-                                        <tr key={conselho.id_conselho}>
+                                    {this.state.filteredConselhos.map((conselho, index) =>
+                                        <tr key={`conselho-${conselho.id_conselho}-${index}`}>
                                             <td>{conselho.tx_nome_conselho || 'N/A'} <br/>
                                                 {conselho.tx_website ?
                                                     <a href={`http://${conselho.tx_website}`} target="_blank" rel="noopener noreferrer">
-                                                        <i class="fa fa-globe"></i> {conselho.tx_website}
+                                                        <span className="fa fa-globe"></span> {conselho.tx_website}
                                                     </a> : 'N/A'
                                                 }
                                             </td>
@@ -681,7 +681,7 @@ class Conselhos extends React.Component {
                                                         onClick={() => this.openModal(conselho)}
                                                         title="Editar conselho"
                                                     >
-                                                        <i className="fas fa-edit"></i>
+                                                        <span className="fas fa-edit"></span>
                                                     </button>
 
                                                     {/*<button
@@ -729,7 +729,7 @@ class Conselhos extends React.Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">
-                                <i className="fas fa-folder-open mr-2"></i>
+                                <span className="fas fa-folder-open mr-2"></span>
                                 Documentos do Conselho
                             </h5>
                             <button type="button" className="close" onClick={this.closeDocumentosModal}>
@@ -739,15 +739,15 @@ class Conselhos extends React.Component {
                         <div className="modal-body">
                             {documentos.length === 0 ? (
                                 <div className="text-center py-4">
-                                    <i className="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                                    <span className="fas fa-file-alt fa-3x text-muted mb-3"></span>
                                     <p className="text-muted">Nenhum documento encontrado</p>
                                 </div>
                             ) : (
                                 <div className="list-group">
-                                    {documentos.map(doc => (
-                                        <div key={doc.id_documento_conselho} className="list-group-item d-flex justify-content-between align-items-center">
+                                    {documentos.map((doc, index) => (
+                                        <div key={`doc-modal-${doc.id_documento_conselho}-${index}`} className="list-group-item d-flex justify-content-between align-items-center">
                                             <div className="d-flex align-items-center">
-                                                <i className="fas fa-file-alt text-primary mr-3"></i>
+                                                <span className="fas fa-file-alt text-primary mr-3"></span>
                                                 <div>
                                                     <h6 className="mb-1">{doc.tx_titulo_documento}</h6>
                                                     <small className="text-muted">
@@ -761,7 +761,7 @@ class Conselhos extends React.Component {
                                                     onClick={() => this.deleteDocumento(doc.id_documento_conselho, this.state.selectedConselhoId)}
                                                     title="Excluir documento"
                                                 >
-                                                    <i className="fas fa-trash-alt"></i>
+                                                    <span className="fas fa-trash-alt"></span>
                                                 </button>
                                             </div>
                                         </div>
@@ -787,7 +787,7 @@ class Conselhos extends React.Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">
-                                <i className="fas fa-cloud-upload-alt mr-2"></i>
+                                <span className="fas fa-cloud-upload-alt mr-2"></span>
                                 Enviar Documento
                             </h5>
                             <button type="button" className="close" onClick={this.closeUploadModal}>
@@ -820,7 +820,7 @@ class Conselhos extends React.Component {
                                 Cancelar
                             </button>
                             <button type="button" className="btn btn-success" onClick={this.saveDocumento}>
-                                <i className="fas fa-upload mr-1"></i>
+                                <span className="fas fa-upload mr-1"></span>
                                 Enviar
                             </button>
                         </div>

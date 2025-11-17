@@ -547,8 +547,9 @@ class Conselhos extends React.Component {
         className: "btn btn-primary",
         onClick: () => this.openModal()
       }, "Novo Conselho"))), /*#__PURE__*/React.createElement("div", {
+        key: "empty-state",
         className: "bg-white text-center"
-      }, /*#__PURE__*/React.createElement("i", {
+      }, /*#__PURE__*/React.createElement("span", {
         className: "fas fa-users fa-3x text-muted mb-3"
       }), /*#__PURE__*/React.createElement("h5", {
         className: "text-muted"
@@ -560,7 +561,7 @@ class Conselhos extends React.Component {
       className: "container-fluid"
     }, /*#__PURE__*/React.createElement("div", {
       className: "title-user-area"
-    }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-users"
     }), " Conselhos de Fomento"), /*#__PURE__*/React.createElement("p", null, "Nessa \xE1rea voc\xEA pode gerenciar e criar concelhos"), /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary float-right",
@@ -568,7 +569,7 @@ class Conselhos extends React.Component {
       style: {
         marginTop: '-80px'
       }
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fa fa-plus"
     }), " Novo conselho"), /*#__PURE__*/React.createElement("hr", null)), /*#__PURE__*/React.createElement("div", {
       className: "bg-white px-3 py-3"
@@ -584,14 +585,14 @@ class Conselhos extends React.Component {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselhos.map(conselho => /*#__PURE__*/React.createElement("tr", {
-      key: conselho.id_conselho
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nome"), /*#__PURE__*/React.createElement("th", null, "Ato Legal"), /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.filteredConselhos.map((conselho, index) => /*#__PURE__*/React.createElement("tr", {
+      key: `conselho-${conselho.id_conselho}-${index}`
     }, /*#__PURE__*/React.createElement("td", null, conselho.tx_nome_conselho || 'N/A', " ", /*#__PURE__*/React.createElement("br", null), conselho.tx_website ? /*#__PURE__*/React.createElement("a", {
       href: `http://${conselho.tx_website}`,
       target: "_blank",
       rel: "noopener noreferrer"
-    }, /*#__PURE__*/React.createElement("i", {
-      class: "fa fa-globe"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "fa fa-globe"
     }), " ", conselho.tx_website) : 'N/A'), /*#__PURE__*/React.createElement("td", null, conselho.tx_ato_legal || 'N/A'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
       className: `badge ${conselho.bo_conselho_ativo ? 'badge-success' : 'badge-secondary'}`
     }, conselho.bo_conselho_ativo ? 'Ativo' : 'Inativo')), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
@@ -600,7 +601,7 @@ class Conselhos extends React.Component {
       className: "btn btn-sm btn-outline-primary",
       onClick: () => this.openModal(conselho),
       title: "Editar conselho"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-edit"
     })))))))))), this.state.showModal && this.renderModal(), this.state.showDocumentosModal && this.renderDocumentosModal(), this.state.showUploadModal && this.renderUploadModal());
   }
@@ -620,7 +621,7 @@ class Conselhos extends React.Component {
       className: "modal-header"
     }, /*#__PURE__*/React.createElement("h5", {
       className: "modal-title"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-folder-open mr-2"
     }), "Documentos do Conselho"), /*#__PURE__*/React.createElement("button", {
       type: "button",
@@ -630,18 +631,18 @@ class Conselhos extends React.Component {
       className: "modal-body"
     }, documentos.length === 0 ? /*#__PURE__*/React.createElement("div", {
       className: "text-center py-4"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-file-alt fa-3x text-muted mb-3"
     }), /*#__PURE__*/React.createElement("p", {
       className: "text-muted"
     }, "Nenhum documento encontrado")) : /*#__PURE__*/React.createElement("div", {
       className: "list-group"
-    }, documentos.map(doc => /*#__PURE__*/React.createElement("div", {
-      key: doc.id_documento_conselho,
+    }, documentos.map((doc, index) => /*#__PURE__*/React.createElement("div", {
+      key: `doc-modal-${doc.id_documento_conselho}-${index}`,
       className: "list-group-item d-flex justify-content-between align-items-center"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex align-items-center"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-file-alt text-primary mr-3"
     }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", {
       className: "mb-1"
@@ -653,7 +654,7 @@ class Conselhos extends React.Component {
       className: "btn btn-sm btn-outline-danger",
       onClick: () => this.deleteDocumento(doc.id_documento_conselho, this.state.selectedConselhoId),
       title: "Excluir documento"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-trash-alt"
     }))))))), /*#__PURE__*/React.createElement("div", {
       className: "modal-footer"
@@ -678,7 +679,7 @@ class Conselhos extends React.Component {
       className: "modal-header"
     }, /*#__PURE__*/React.createElement("h5", {
       className: "modal-title"
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-cloud-upload-alt mr-2"
     }), "Enviar Documento"), /*#__PURE__*/React.createElement("button", {
       type: "button",
@@ -711,7 +712,7 @@ class Conselhos extends React.Component {
       type: "button",
       className: "btn btn-success",
       onClick: this.saveDocumento
-    }, /*#__PURE__*/React.createElement("i", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-upload mr-1"
     }), "Enviar")))));
   }

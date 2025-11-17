@@ -117,7 +117,7 @@ class DashboardConselho extends React.Component {
         this.setState({ loadingSearch: true });
         $.ajax({
             method: 'GET',
-            url: 'confocos/conselho',
+            url: getBaseUrl2 + 'confocos/conselho',
             cache: false,
             success: function(data) {
                 console.log('Todos conselhos:', data);
