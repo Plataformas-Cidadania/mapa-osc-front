@@ -79,19 +79,21 @@ class ArquivosConselho extends React.Component {
     }
 
     saveDocumento() {
-        if (!this.state.uploadForm.arquivo || !this.state.uploadForm.titulo) {
-            alert('Por favor, selecione um arquivo e digite um título.');
+        //if (!this.state.uploadForm.arquivo || !this.state.uploadForm.titulo) {
+        if (!this.state.uploadForm.arquivo) {
+            //alert('Por favor, selecione um arquivo e digite um título.');
+            alert('Por favor, selecione um arquivo');
             return;
         }
 
         let formData = new FormData();
         formData.append("documento", this.state.uploadForm.arquivo);
-        formData.append("id_conselho", this.state.conselhoId);
-        formData.append("tx_titulo_documento", this.state.uploadForm.titulo);
+        //formData.append("id_conselho", this.state.conselhoId);
+        //formData.append("tx_titulo_documento", this.state.uploadForm.titulo);
 
         $.ajax({
             method: 'POST',
-            url: getBaseUrl2 + 'confocos/documento-conselho',
+            url: getBaseUrl2 + 'confocos/documento-conselho/'+this.state.conselhoId,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('@App:token')
             },
@@ -180,7 +182,7 @@ class ArquivosConselho extends React.Component {
                 {this.state.showUploadForm && (
                     <div className="bg-light border-bottom p-4">
                         <div className="row">
-                            <div className="col-md-6">
+                            {/*<div className="col-md-6">
                                 <div className="form-group">
                                     <label>Título do Documento</label>
                                     <input
@@ -191,7 +193,7 @@ class ArquivosConselho extends React.Component {
                                         placeholder="Digite o título do documento"
                                     />
                                 </div>
-                            </div>
+                            </div>*/}
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label>Arquivo</label>
@@ -232,7 +234,7 @@ class ArquivosConselho extends React.Component {
                                 <thead>
                                     <tr>
                                         <th>Título</th>
-                                        <th>Tipo</th>
+                                        {/*<th>Tipo</th>*/}
                                         <th>Data</th>
                                         <th width="100">Ações</th>
                                     </tr>
@@ -241,10 +243,12 @@ class ArquivosConselho extends React.Component {
                                     {this.state.documentos.map((doc, index) => (
                                         <tr key={`documento-${doc.id_documento_conselho}-${index}`}>
                                             <td>
-                                                <span className="fas fa-file-alt text-primary mr-2"></span>
-                                                {doc.tx_titulo_documento}
+                                                <a href={'https://mapaosc.ipea.gov.br/api/api/app/'+doc.tx_caminho_arquivo} target="_blank">
+                                                    <span className="fas fa-file-alt text-primary mr-2"></span>
+                                                    {doc.tx_titulo_documento}
+                                                </a>
                                             </td>
-                                            <td>{doc.tx_tipo_arquivo}</td>
+                                            {/*<td>{doc.tx_tipo_arquivo}</td>*/}
                                             <td>{new Date(doc.dt_data_cadastro).toLocaleDateString()}</td>
                                             <td>
                                                 <button

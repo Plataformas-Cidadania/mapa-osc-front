@@ -80,17 +80,20 @@ class ArquivosConselho extends React.Component {
     });
   }
   saveDocumento() {
-    if (!this.state.uploadForm.arquivo || !this.state.uploadForm.titulo) {
-      alert('Por favor, selecione um arquivo e digite um título.');
+    //if (!this.state.uploadForm.arquivo || !this.state.uploadForm.titulo) {
+    if (!this.state.uploadForm.arquivo) {
+      //alert('Por favor, selecione um arquivo e digite um título.');
+      alert('Por favor, selecione um arquivo');
       return;
     }
     let formData = new FormData();
     formData.append("documento", this.state.uploadForm.arquivo);
-    formData.append("id_conselho", this.state.conselhoId);
-    formData.append("tx_titulo_documento", this.state.uploadForm.titulo);
+    //formData.append("id_conselho", this.state.conselhoId);
+    //formData.append("tx_titulo_documento", this.state.uploadForm.titulo);
+
     $.ajax({
       method: 'POST',
-      url: getBaseUrl2 + 'confocos/documento-conselho',
+      url: getBaseUrl2 + 'confocos/documento-conselho/' + this.state.conselhoId,
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('@App:token')
       },
@@ -176,16 +179,6 @@ class ArquivosConselho extends React.Component {
     }, /*#__PURE__*/React.createElement("div", {
       className: "row"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "col-md-6"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/React.createElement("label", null, "T\xEDtulo do Documento"), /*#__PURE__*/React.createElement("input", {
-      type: "text",
-      className: "form-control",
-      value: this.state.uploadForm.titulo,
-      onChange: e => this.handleUploadChange('titulo', e.target.value),
-      placeholder: "Digite o t\xEDtulo do documento"
-    }))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-4"
     }, /*#__PURE__*/React.createElement("div", {
       className: "form-group"
@@ -220,13 +213,16 @@ class ArquivosConselho extends React.Component {
       className: "table-responsive"
     }, /*#__PURE__*/React.createElement("table", {
       className: "table table-striped"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "T\xEDtulo"), /*#__PURE__*/React.createElement("th", null, "Tipo"), /*#__PURE__*/React.createElement("th", null, "Data"), /*#__PURE__*/React.createElement("th", {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "T\xEDtulo"), /*#__PURE__*/React.createElement("th", null, "Data"), /*#__PURE__*/React.createElement("th", {
       width: "100"
     }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.documentos.map((doc, index) => /*#__PURE__*/React.createElement("tr", {
       key: `documento-${doc.id_documento_conselho}-${index}`
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("a", {
+      href: 'https://mapaosc.ipea.gov.br/api/api/app/' + doc.tx_caminho_arquivo,
+      target: "_blank"
+    }, /*#__PURE__*/React.createElement("span", {
       className: "fas fa-file-alt text-primary mr-2"
-    }), doc.tx_titulo_documento), /*#__PURE__*/React.createElement("td", null, doc.tx_tipo_arquivo), /*#__PURE__*/React.createElement("td", null, new Date(doc.dt_data_cadastro).toLocaleDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    }), doc.tx_titulo_documento)), /*#__PURE__*/React.createElement("td", null, new Date(doc.dt_data_cadastro).toLocaleDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-sm btn-outline-danger",
       onClick: () => this.deleteDocumento(doc.id_documento_conselho),
       title: "Excluir documento"

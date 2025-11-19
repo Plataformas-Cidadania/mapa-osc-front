@@ -924,32 +924,31 @@ class ConselhosPublicos extends React.Component {
         fontSize: '12px',
         color: '#FFFFFF'
       }
-    }, conselheiro.bo_eh_governamental ? 'Gov' : 'Civil')))))), /*#__PURE__*/React.createElement("div", {
+    }, conselheiro.bo_eh_governamental ? 'Gov' : 'Civil'))))), /*#__PURE__*/React.createElement("div", {
+      className: "p-3"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "Documentos (", this.state.documentos[selectedConselho.id_conselho].length, "):"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, this.state.documentos[selectedConselho.id_conselho].map((doc, index) => /*#__PURE__*/React.createElement("div", {
+      key: index,
+      className: "w-100"
+    }, /*#__PURE__*/React.createElement("a", {
+      href: 'https://mapaosc.ipea.gov.br/api/api/app/' + doc.tx_caminho_arquivo,
+      className: "cursor",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      style: {
+        backgroundColor: '#F8F8F8',
+        marginBottom: 5,
+        padding: 7,
+        display: 'block'
+      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-file-alt me-2"
+    }), " \xA0", doc.tx_titulo_documento))))))), /*#__PURE__*/React.createElement("div", {
       className: "modal-footer bg-light"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex justify-content-between align-items-center w-100"
     }, /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", {
       className: "d-flex gap-2"
-    }, this.state.documentos[selectedConselho.id_conselho] && this.state.documentos[selectedConselho.id_conselho].length > 0 && /*#__PURE__*/React.createElement("div", {
-      className: "dropdown"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-outline-success btn-sm dropdown-toggle me-2",
-      type: "button",
-      "data-bs-toggle": "dropdown"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-download me-1"
-    }), "\xA0 Documentos (", this.state.documentos[selectedConselho.id_conselho].length, ")"), /*#__PURE__*/React.createElement("ul", {
-      className: "dropdown-menu"
-    }, this.state.documentos[selectedConselho.id_conselho].map((doc, index) => /*#__PURE__*/React.createElement("li", {
-      key: index
-    }, /*#__PURE__*/React.createElement("a", {
-      className: "dropdown-item",
-      href: doc.tx_link_documento,
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, /*#__PURE__*/React.createElement("i", {
-      className: "fas fa-file-alt me-2"
-    }), doc.tx_nome_documento || `Documento ${index + 1}`))))), "\xA0", /*#__PURE__*/React.createElement("button", {
+    }, "\xA0", /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "btn btn-secondary btn-sm",
       onClick: this.closeConselheirosModal

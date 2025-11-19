@@ -824,6 +824,23 @@ class ConselhosPublicos extends React.Component {
                                     ))}
                                 </div>
                             )}
+
+                            <div className="p-3">
+                                <div><strong>Documentos ({this.state.documentos[selectedConselho.id_conselho].length}):</strong><br/><br/></div>
+                                <div>
+                                    <div >
+                                        {this.state.documentos[selectedConselho.id_conselho].map((doc, index) => (
+                                            <div key={index} className="w-100" >
+                                                <a href={'https://mapaosc.ipea.gov.br/api/api/app/'+doc.tx_caminho_arquivo} className="cursor" target="_blank" rel="noopener noreferrer" style={{backgroundColor: '#F8F8F8', marginBottom: 5, padding: 7, display: 'block'}}>
+                                                    <i className="fas fa-file-alt me-2"></i> &nbsp;
+                                                    {doc.tx_titulo_documento}
+                                                </a>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
 
                         {/* Footer with download button */}
@@ -835,24 +852,7 @@ class ConselhosPublicos extends React.Component {
                                     {activeCount} ativos de {selectedConselho.conselheiros.length} total
                                 </small>*/}
                                 <div className="d-flex gap-2">
-                                    {this.state.documentos[selectedConselho.id_conselho] && this.state.documentos[selectedConselho.id_conselho].length > 0 && (
-                                        <div className="dropdown">
-                                            <button className="btn btn-outline-success btn-sm dropdown-toggle me-2" type="button" data-bs-toggle="dropdown">
-                                                <i className="fas fa-download me-1"></i>&nbsp;
-                                                Documentos ({this.state.documentos[selectedConselho.id_conselho].length})
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                {this.state.documentos[selectedConselho.id_conselho].map((doc, index) => (
-                                                    <li key={index}>
-                                                        <a className="dropdown-item" href={doc.tx_link_documento} target="_blank" rel="noopener noreferrer">
-                                                            <i className="fas fa-file-alt me-2"></i>
-                                                            {doc.tx_nome_documento || `Documento ${index + 1}`}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    )}
+
                                     &nbsp;
                                     <button type="button" className="btn btn-secondary btn-sm" onClick={this.closeConselheirosModal}>
                                         Fechar
