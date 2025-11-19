@@ -16,6 +16,7 @@ class ArquivosConselho extends React.Component {
         this.handleUploadChange = this.handleUploadChange.bind(this);
         this.saveDocumento = this.saveDocumento.bind(this);
         this.deleteDocumento = this.deleteDocumento.bind(this);
+        this.openDocument = this.openDocument.bind(this);
     }
 
     componentDidMount() {
@@ -137,6 +138,42 @@ class ArquivosConselho extends React.Component {
         }
     }
 
+    openDocument(doc) {
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2 + 'confocos/documento-conselho/' + doc.id_documento_conselho,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+            },
+            cache: false,
+            success: (data) => {
+                try {
+                    if (!data.arquivo) {
+                        alert('Arquivo não encontrado');
+                        return;
+                    }
+                    
+                    const byteCharacters = atob(data.arquivo);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], { type: data.tx_tipo_arquivo });
+                    const url = URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                } catch (error) {
+                    console.error('Erro ao abrir documento:', error);
+                    alert('Erro ao abrir o documento');
+                }
+            },
+            error: (xhr, status, err) => {
+                console.error('Erro ao buscar documento:', err);
+                alert('Erro ao carregar o documento');
+            }
+        });
+    }
+
     render() {
         if (this.state.loading) {
             return <div className="text-center">Carregando...</div>;
@@ -243,7 +280,7 @@ class ArquivosConselho extends React.Component {
                                     {this.state.documentos.map((doc, index) => (
                                         <tr key={`documento-${doc.id_documento_conselho}-${index}`}>
                                             <td>
-                                                <a href={'https://mapaosc.ipea.gov.br/api/api/app/'+doc.tx_caminho_arquivo} target="_blank">
+                                                <a href="#" onClick={(e) => { e.preventDefault(); this.openDocument(doc); }}>
                                                     <span className="fas fa-file-alt text-primary mr-2"></span>
                                                     {doc.tx_titulo_documento}
                                                 </a>

@@ -26,6 +26,7 @@ class ConselhosPublicos extends React.Component {
     this.loadDocumentos = this.loadDocumentos.bind(this);
     this.showConselheirosModal = this.showConselheirosModal.bind(this);
     this.closeConselheirosModal = this.closeConselheirosModal.bind(this);
+    this.openDocument = this.openDocument.bind(this);
   }
   componentDidMount() {
     this.loadData();
@@ -171,6 +172,39 @@ class ConselhosPublicos extends React.Component {
     this.setState({
       selectedConselho: null,
       showConselheirosModal: false
+    });
+  }
+  openDocument(doc) {
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'confocos/documento-conselho/' + doc.id_documento_conselho,
+      cache: false,
+      success: data => {
+        try {
+          if (!data.arquivo) {
+            alert('Arquivo não encontrado');
+            return;
+          }
+          const byteCharacters = atob(data.arquivo);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], {
+            type: data.tx_tipo_arquivo
+          });
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
+        } catch (error) {
+          console.error('Erro ao abrir documento:', error);
+          alert('Erro ao abrir o documento');
+        }
+      },
+      error: (xhr, status, err) => {
+        console.error('Erro ao buscar documento:', err);
+        alert('Erro ao carregar o documento');
+      }
     });
   }
   renderHero() {
@@ -930,10 +964,12 @@ class ConselhosPublicos extends React.Component {
       key: index,
       className: "w-100"
     }, /*#__PURE__*/React.createElement("a", {
-      href: 'https://mapaosc.ipea.gov.br/api/api/app/' + doc.tx_caminho_arquivo,
+      href: "#",
+      onClick: e => {
+        e.preventDefault();
+        this.openDocument(doc);
+      },
       className: "cursor",
-      target: "_blank",
-      rel: "noopener noreferrer",
       style: {
         backgroundColor: '#F8F8F8',
         marginBottom: 5,
