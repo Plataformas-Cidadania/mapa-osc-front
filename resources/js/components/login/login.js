@@ -20,9 +20,14 @@ class Login extends React.Component{
     }
 
     componentDidMount(){
+        const loginElement = document.getElementById('login');
+        const dataType = loginElement ? loginElement.getAttribute('data-type') : null;
+        
         if(!this.props.target){
             this.setState({target: 'area-user'});
         }
+        
+        this.setState({dataType: dataType});
     }
 
 
@@ -84,10 +89,13 @@ class Login extends React.Component{
                     console.log(data);
 
                     if(data.access_token){
-                        //location.href = this.state.target;
                         localStorage.setItem('@App:token', data.access_token);
-                        //location.href = 'area-user';
-                        location.href = 'oscs-user';
+                        
+                        if(this.state.dataType === 'conselho'){
+                            location.href = 'dashboard-conselho';
+                        } else {
+                            location.href = 'oscs-user';
+                        }
                     }
 
                     this.setState({loading: false, msgShow: true, msg: data.msg})

@@ -18,11 +18,16 @@ class Login extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
   componentDidMount() {
+    const loginElement = document.getElementById('login');
+    const dataType = loginElement ? loginElement.getAttribute('data-type') : null;
     if (!this.props.target) {
       this.setState({
         target: 'area-user'
       });
     }
+    this.setState({
+      dataType: dataType
+    });
   }
   handleInputChange(event) {
     const target = event.target;
@@ -81,10 +86,12 @@ class Login extends React.Component {
         success: function (data) {
           console.log(data);
           if (data.access_token) {
-            //location.href = this.state.target;
             localStorage.setItem('@App:token', data.access_token);
-            //location.href = 'area-user';
-            location.href = 'oscs-user';
+            if (this.state.dataType === 'conselho') {
+              location.href = 'dashboard-conselho';
+            } else {
+              location.href = 'oscs-user';
+            }
           }
           this.setState({
             loading: false,

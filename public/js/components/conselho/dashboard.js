@@ -231,7 +231,7 @@ class DashboardConselho extends React.Component {
     }, "N. Federativo"), /*#__PURE__*/React.createElement("th", {
       className: "text-center"
     }, "A\xE7\xF5es"))), /*#__PURE__*/React.createElement("tbody", null, this.state.representacoes.map((item, index) => /*#__PURE__*/React.createElement("tr", {
-      key: item.id_representacao_conselho
+      key: `representacao-${item.id_representacao_conselho || index}`
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
     }, index + 1), /*#__PURE__*/React.createElement("td", {
@@ -302,8 +302,8 @@ class DashboardConselho extends React.Component {
         border: '1px solid #ddd',
         borderRadius: '4px'
       }
-    }, (this.state.search ? this.state.conselhosSearch : this.state.todosConselhos).map(item => /*#__PURE__*/React.createElement("div", {
-      key: item.id_conselho,
+    }, (this.state.search ? this.state.conselhosSearch : this.state.todosConselhos).map((item, index) => /*#__PURE__*/React.createElement("div", {
+      key: `conselho-${item.id_conselho}-${index}`,
       className: "p-3 border-bottom",
       onClick: () => this.addConselho(item.id_conselho),
       style: {

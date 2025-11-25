@@ -245,7 +245,7 @@ class DashboardConselho extends React.Component {
                             </thead>
                             <tbody>
                             {this.state.representacoes.map((item, index) => (
-                                <tr key={item.id_representacao_conselho}>
+                                <tr key={`representacao-${item.id_representacao_conselho || index}`}>
                                     <th scope="row">{index+1}</th>
                                     <td width="500">{item.conselho?.tx_nome_conselho || 'N/A'}</td>
                                     <td>{this.getNivelFederativoName(item.conselho?.cd_nivel_federativo) || 'N/A'}</td>
@@ -303,8 +303,8 @@ class DashboardConselho extends React.Component {
                                     )}
 
                                     <div style={{maxHeight: '400px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '4px'}}>
-                                        {(this.state.search ? this.state.conselhosSearch : this.state.todosConselhos).map(item =>
-                                            <div key={item.id_conselho}
+                                        {(this.state.search ? this.state.conselhosSearch : this.state.todosConselhos).map((item, index) =>
+                                            <div key={`conselho-${item.id_conselho}-${index}`}
                                                  className="p-3 border-bottom"
                                                  onClick={() => this.addConselho(item.id_conselho)}
                                                  style={{cursor: 'pointer', backgroundColor: '#f8f9fa'}}>
