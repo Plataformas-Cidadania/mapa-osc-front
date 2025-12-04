@@ -87,6 +87,9 @@ class GraficoController extends Controller
         if(array_key_exists('titulo_colunas', $data['grafico'])) {
             $data['grafico']['titulo_colunas'] = "{'" . str_replace("|", "','", $data['grafico']['titulo_colunas']) . "'}";
         }
+        if(array_key_exists('fontes', $data['grafico']) && !empty($data['grafico']['fontes'])) {
+            $data['grafico']['fontes'] = "{" . $data['grafico']['fontes'] . "}";
+        }
         if(!array_key_exists('inverter_label', $data['grafico'])){
             $data['grafico']['inverter_label'] = false;
         }
@@ -147,6 +150,11 @@ class GraficoController extends Controller
         $grafico->configuracao = str_replace("'", "", ($grafico->configuracao));
         $grafico->titulo_colunas = str_replace("','", "'|'", ($grafico->titulo_colunas));
         $grafico->titulo_colunas = str_replace("'", "", ($grafico->titulo_colunas));
+        
+        // Remove chaves do campo fontes para exibição
+        if (!empty($grafico->fontes)) {
+            $grafico->fontes = str_replace(['{', '}'], '', $grafico->fontes);
+        }
 
 
 
@@ -213,7 +221,9 @@ class GraficoController extends Controller
         if(array_key_exists('titulo_colunas', $data['grafico'])) {
             $data['grafico']['titulo_colunas'] = "{'" . str_replace("|", "','", $data['grafico']['titulo_colunas']) . "'}";
         }
-
+        if(array_key_exists('fontes', $data['grafico']) && !empty($data['grafico']['fontes'])) {
+            $data['grafico']['fontes'] = "{" . $data['grafico']['fontes'] . "}";
+        }
 
         if(!array_key_exists('inverter_label', $data['grafico'])){
             $data['grafico']['inverter_label'] = false;
