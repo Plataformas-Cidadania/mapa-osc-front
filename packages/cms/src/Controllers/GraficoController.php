@@ -25,6 +25,7 @@ class GraficoController extends Controller
             'legenda' => '',
             'legenda_x' => '',
             'legenda_y' => '',
+            'fontes' => '',
             'configuracao' => null,
             'titulo_colunas' => null,
             'inverter_label' => '',
@@ -134,7 +135,7 @@ class GraficoController extends Controller
 
     public function detalhar($id)
     {
-        $grafico = $this->grafico->select(DB::Raw("id_analise, array_to_string(configuracao, ',', '*') as configuracao, array_to_string(titulo_colunas, ',', '*') as titulo_colunas, tipo_grafico, titulo, legenda, legenda_x, legenda_y, inverter_label, slug"))
+        $grafico = $this->grafico->select(DB::Raw("id_analise, array_to_string(configuracao, ',', '*') as configuracao, array_to_string(titulo_colunas, ',', '*') as titulo_colunas, tipo_grafico, titulo, legenda, legenda_x, legenda_y, fontes, inverter_label, slug"))
             ->where([
             ['id_analise', '=', $id],
         ])->firstOrFail();
