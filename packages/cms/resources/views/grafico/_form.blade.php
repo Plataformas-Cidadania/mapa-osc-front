@@ -8,7 +8,10 @@
 {!! Form::text('titulo', null, ['class'=>"form-control width-grande <% validar(grafico.titulo) %>", 'ng-model'=>'grafico.titulo', 'ng-required'=>'true', 'init-model'=>'grafico.titulo', 'placeholder' => '']) !!}<br>
 
 {!! Form::label('legenda', 'Legenda *') !!}<br>
-{!! Form::text('legenda', null, ['class'=>"form-control width-grande <% validar(grafico.legenda) %>", 'ng-model'=>'grafico.legenda', 'ng-required'=>'true', 'init-model'=>'grafico.legenda', 'placeholder' => '']) !!}<br>
+{!! Form::text('legenda', null, ['class'=>"form-control width-grande <% validar(grafico.legenda) %>", 'ng-model'=>'grafico.legenda', 'ng-required'=>'false', 'init-model'=>'grafico.legenda', 'placeholder' => '']) !!}<br>
+
+{!! Form::label('fontes', 'Fontes ') !!}<br>
+{!! Form::text('fontes', null, ['class'=>"form-control width-grande <% validar(grafico.fontes) %>", 'ng-model'=>'grafico.fontes', 'ng-required'=>'false', 'init-model'=>'grafico.fontes', 'placeholder' => '']) !!}<br>
 
 <div style="display: none">
 {!! Form::label('tipo_grafico', 'Tipo') !!}<br>
