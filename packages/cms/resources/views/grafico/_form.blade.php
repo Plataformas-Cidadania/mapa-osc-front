@@ -7,6 +7,8 @@
 {!! Form::label('titulo', 'Título *') !!}<br>
 {!! Form::text('titulo', null, ['class'=>"form-control width-grande <% validar(grafico.titulo) %>", 'ng-model'=>'grafico.titulo', 'ng-required'=>'true', 'init-model'=>'grafico.titulo', 'placeholder' => '']) !!}<br>
 
+{!! Form::label('legenda', 'Legenda *') !!}<br>
+{!! Form::text('legenda', null, ['class'=>"form-control width-grande <% validar(grafico.legenda) %>", 'ng-model'=>'grafico.legenda', 'ng-required'=>'true', 'init-model'=>'grafico.legenda', 'placeholder' => '']) !!}<br>
 
 <div style="display: none">
 {!! Form::label('tipo_grafico', 'Tipo') !!}<br>
@@ -14,8 +16,6 @@
         $tiposGraficos,
 null, ['class'=>"form-control width-medio <% validar(grafico.tipo_grafico) %>", 'ng-model'=>'grafico.tipo_grafico', 'init-model'=>'grafico.tipo_grafico', 'placeholder' => 'Sem Tipo']) !!}<br>
 
-{!! Form::label('legenda', 'Legenda *') !!}<br>
-{!! Form::text('legenda', null, ['class'=>"form-control width-grande <% validar(grafico.legenda) %>", 'ng-model'=>'grafico.legenda', 'ng-required'=>'true', 'init-model'=>'grafico.legenda', 'placeholder' => '']) !!}<br>
 
 {!! Form::label('legenda_x', 'Legenda X *') !!}<br>
 {!! Form::text('legenda_x', null, ['class'=>"form-control width-grande <% validar(grafico.legenda_x) %>", 'ng-model'=>'grafico.legenda_x', 'ng-required'=>'true', 'init-model'=>'grafico.legenda_x', 'placeholder' => '']) !!}<br>
