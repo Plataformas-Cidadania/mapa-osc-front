@@ -295,6 +295,16 @@ class FormEditProjeto extends React.Component{
             },
             cache: false,
             success: function(data){
+                // Formata valores monetários do banco para exibição
+                if (data.nr_valor_total_projeto) {
+                    data.nr_valor_total_projeto = parseFloat(data.nr_valor_total_projeto)
+                        .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+                if (data.nr_valor_captado_projeto) {
+                    data.nr_valor_captado_projeto = parseFloat(data.nr_valor_captado_projeto)
+                        .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+                
                 this.setState({
                     form: data,
 
@@ -333,8 +343,15 @@ class FormEditProjeto extends React.Component{
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
+        // Aplica máscara de moeda
+        if (name === 'nr_valor_total_projeto' || name === 'nr_valor_captado_projeto') {
+            value = value.replace(/\D/g, '');
+            value = (parseInt(value, 10) / 100).toFixed(2);
+            value = value.replace('.', ',').replace(/(\d)(?=(\d{3})+,)/g, '$1.');
+        }
 
         let form = this.state.form;
         form[name] = value;
@@ -390,8 +407,8 @@ class FormEditProjeto extends React.Component{
                     dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
                     tx_link_projeto: this.state.form.tx_link_projeto,
                     nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
-                    nr_valor_total_projeto: clearMoeda(this.state.form.nr_valor_total_projeto),
-                    nr_valor_captado_projeto: clearMoeda(this.state.form.nr_valor_captado_projeto),
+                    nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
+                    nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
                     tx_descricao_projeto: this.state.form.tx_descricao_projeto,
                     tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
                     cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
@@ -1225,7 +1242,7 @@ class FormEditProjeto extends React.Component{
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text"
                                                name="nr_valor_total_projeto" onChange={this.handleInputChange}
-                                               value={formatCurrencyBR(this.state.form.nr_valor_total_projeto)}
+                                               value={this.state.form.nr_valor_total_projeto}
                                                placeholder="Valor Total ex.: 10.000,00" disabled={this.state.form.ft_valor_total_projeto !== 'Representante de OSC'}/>
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
@@ -1238,7 +1255,7 @@ class FormEditProjeto extends React.Component{
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text"
                                                name="nr_valor_captado_projeto" onChange={this.handleInputChange}
-                                               value={formatCurrencyBR(this.state.form.nr_valor_captado_projeto)}
+                                               value={this.state.form.nr_valor_captado_projeto}
                                                placeholder="Valor Recebido ex.: 10.000,00" disabled={this.state.form.ft_valor_captado_projeto !== 'Representante de OSC'}/>
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">

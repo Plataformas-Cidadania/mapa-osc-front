@@ -112,8 +112,15 @@ class FormProjeto extends React.Component{
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
+        // Aplica máscara de moeda
+        if (name === 'nr_valor_total_projeto' || name === 'nr_valor_captado_projeto') {
+            value = value.replace(/\D/g, '');
+            value = (parseInt(value, 10) / 100).toFixed(2);
+            value = value.replace('.', ',').replace(/(\d)(?=(\d{3})+,)/g, '$1.');
+        }
 
         let form = this.state.form;
         form[name] = value;
@@ -199,8 +206,8 @@ class FormProjeto extends React.Component{
                     dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
                     tx_link_projeto: this.state.form.tx_link_projeto,
                     nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
-                    nr_valor_total_projeto: clearMoeda(this.state.form.nr_valor_total_projeto),
-                    nr_valor_captado_projeto: clearMoeda(this.state.form.nr_valor_captado_projeto),
+                    nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
+                    nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
                     tx_descricao_projeto: this.state.form.tx_descricao_projeto,
                     tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
                     cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
@@ -1148,7 +1155,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_total_projeto" onChange={this.handleInputChange}
-                                               value={formatCurrencyBR(this.state.form.nr_valor_total_projeto)}
+                                               value={this.state.form.nr_valor_total_projeto}
                                                placeholder="Valor Total" />
                                         <label htmlFor="nr_valor_total_projeto">Valor Total</label>
                                         <div className="label-box-info-off">
@@ -1160,7 +1167,7 @@ class FormProjeto extends React.Component{
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="nr_valor_captado_projeto" onChange={this.handleInputChange}
-                                               value={formatCurrencyBR(this.state.form.nr_valor_captado_projeto)}
+                                               value={this.state.form.nr_valor_captado_projeto}
                                                placeholder="Valor Recebido" />
                                         <label htmlFor="nr_valor_captado_projeto">Valor Recebido</label>
                                         <div className="label-box-info-off">

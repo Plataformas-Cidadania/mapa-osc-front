@@ -196,7 +196,6 @@ function formatCurrencyBR(value) {
     return value.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 function formatCurrencyBR2(value) {
-    console.log('value', value)
 
     value = value?.replace(/\D/g,"")
     value = value?.replace(/(\d\d)(\d)/,"$1$2");
