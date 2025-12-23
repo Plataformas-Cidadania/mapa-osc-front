@@ -1,4 +1,4 @@
-<?php $superset = DB::table('cmsosc.modulos')->where('id', 9)->where('status', 34)->first(); //34?>
+<?php $superset = DB::table('cmsosc.modulos')->where('id', 34)->where('status', 1)->first(); //34?>
 <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
     <ul id="menu-barra-temp" style="list-style:none;">
         <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
