@@ -1,3 +1,4 @@
+<?php $superset = DB::table('cmsosc.modulos')->where('id', 9)->where('status', 34)->first(); //34?>
 <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
     <ul id="menu-barra-temp" style="list-style:none;">
         <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
@@ -233,8 +234,9 @@
                                 <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Dados</a>
                                     <ul class="noJS menu-desk-sub">
                                         <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>Base de Dados</a></li>
-                                        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>Indicadores</a></li>
-                                        <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente " @endif>Análises</a></li>
+                                        <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente" @endif>Indicadores</a></li>
+                                        @if(!empty($superset))<li role="presentation"><a href="{{$superset->slug}}" @if($rota=="/{{$superset->slug}}") class="corrente" @endif>{{$superset->titulo}}</a></li>@endif
+                                        <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente" @endif>Análises</a></li>
                                     </ul>
                                 </li>
                                 <li role="presentation"><a  @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
