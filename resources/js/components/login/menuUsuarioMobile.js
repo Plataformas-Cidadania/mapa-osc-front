@@ -14,12 +14,18 @@ class MenuUsuarioMobile extends React.Component{
     }
 
     getData(){
+        const token = localStorage.getItem('@App:token');
+        if (!token) {
+            this.setState({loading: false});
+            return;
+        }
+        
         this.setState({loading: true});
         $.ajax({
             method: 'GET',
             url: getBaseUrl2 + 'get-user-auth',
             headers: {
-                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+                Authorization: 'Bearer ' + token
             },
             cache: false,
             success: function (data) {
@@ -27,7 +33,9 @@ class MenuUsuarioMobile extends React.Component{
                 this.setState({loading: false, tx_nome_usuario: tx_nome_usuario})
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(status, err.toString());
+                if (xhr.status === 401) {
+                    localStorage.setItem('@App:token', '');
+                }
                 this.setState({ loading: false });
             }.bind(this)
         });
