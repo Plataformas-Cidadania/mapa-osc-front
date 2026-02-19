@@ -226,7 +226,7 @@
                                 <li role="presentation"><a href="sobre" accesskey="q" @if($rota=='sobre') class="corrente" @endif>O Portal</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($mnPortal as $portal)
-                                            <li role="presentation"><a href="{{ $portal->slug == 'api' ? '/api/api/documentation' : '/' . clean($portal->slug) }}" @if($rota=='quem') class="corrente" @endif>{{$portal->titulo}}</a></li>
+                                            <li role="presentation"><a href="{{ $portal->slug == 'api' ? '/api/api/documentation' : '/' . clean($portal->slug) }}" {{ $portal->slug == 'api' ? 'target="_blank"' : '' }} @if($rota=='quem') class="corrente" @endif>{{$portal->titulo}}</a></li>
                                         @endforeach
                                     </ul>
                                 </li>
@@ -253,7 +253,7 @@
                                 <li role="presentation"><a @if($rota=='contato') class="corrente" @endif>Ajuda</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($mnAjuda as $ajuda)
-                                            <li role="presentation"><a href="{{ $ajuda->slug == 'api' ? '/api/api/documentation' : $ajuda->slug }}">{{$ajuda->titulo}}</a></li>
+                                            <li role="presentation"><a href="{{ $ajuda->slug == 'api' ? '/api/api/documentation' : $ajuda->slug }}" {{ $ajuda->slug == 'api' ? 'target="_blank"' : '' }}>{{$ajuda->titulo}}</a></li>
                                         @endforeach
                                         <li role="presentation"><a href="contato" accesskey="c" @if($rota=='quem') class="contato" @endif>Fale conosco</a></li>
                                     </ul>
