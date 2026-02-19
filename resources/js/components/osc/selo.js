@@ -24,7 +24,10 @@ class Selo extends React.Component {
             success: function(data) {
                 console.log('Resposta da API:', data);
                 
-                if (!data || !data.transparencia_area_atuacao) {
+                // Suporta tanto array quanto objeto
+                let item = Array.isArray(data) ? data[0] : data;
+                
+                if (!item || !item.transparencia_area_atuacao) {
                     console.error('Dados não encontrados ou incompletos');
                     _this.setState({loading: false});
                     return;
@@ -32,14 +35,14 @@ class Selo extends React.Component {
 
                 let soma = [];
 
-                soma.push(data.transparencia_area_atuacao/800*100)
-                soma.push(data.transparencia_dados_gerais/800*100)
-                soma.push(data.transparencia_descricao/800*100)
-                soma.push(data.transparencia_espacos_participacao_social/800*100)
-                soma.push(data.transparencia_fontes_recursos/800*100)
-                soma.push(data.transparencia_projetos_atividades_programas/800*100)
-                soma.push(data.transparencia_relacoes_trabalho_governanca/800*100)
-                soma.push(data.transparencia_titulos_certificacoes/800*100)
+                soma.push(item.transparencia_area_atuacao/800*100)
+                soma.push(item.transparencia_dados_gerais/800*100)
+                soma.push(item.transparencia_descricao/800*100)
+                soma.push(item.transparencia_espacos_participacao_social/800*100)
+                soma.push(item.transparencia_fontes_recursos/800*100)
+                soma.push(item.transparencia_projetos_atividades_programas/800*100)
+                soma.push(item.transparencia_relacoes_trabalho_governanca/800*100)
+                soma.push(item.transparencia_titulos_certificacoes/800*100)
 
                 var total = 0;
                 var numeros = soma;

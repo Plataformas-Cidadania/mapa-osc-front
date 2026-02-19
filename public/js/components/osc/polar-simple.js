@@ -6,21 +6,24 @@ function createPolarChart(id_osc) {
         success: function(data) {
             console.log('Resposta da API polar:', data);
             
-            if (!data || !data.transparencia_area_atuacao) {
+            // Suporta tanto array quanto objeto
+            let item = Array.isArray(data) ? data[0] : data;
+            
+            if (!item || !item.transparencia_area_atuacao) {
                 console.error('Dados não encontrados ou incompletos');
                 document.querySelector('#preenchimento').innerHTML = '<div style="padding: 20px; text-align: center;">Dados não disponíveis</div>';
                 return;
             }
 
             const series = [
-                parseFloat(data.transparencia_area_atuacao),
-                parseFloat(data.transparencia_dados_gerais),
-                parseFloat(data.transparencia_descricao),
-                parseFloat(data.transparencia_espacos_participacao_social),
-                parseFloat(data.transparencia_fontes_recursos),
-                parseFloat(data.transparencia_projetos_atividades_programas),
-                parseFloat(data.transparencia_relacoes_trabalho_governanca),
-                parseFloat(data.transparencia_titulos_certificacoes)
+                parseFloat(item.transparencia_area_atuacao),
+                parseFloat(item.transparencia_dados_gerais),
+                parseFloat(item.transparencia_descricao),
+                parseFloat(item.transparencia_espacos_participacao_social),
+                parseFloat(item.transparencia_fontes_recursos),
+                parseFloat(item.transparencia_projetos_atividades_programas),
+                parseFloat(item.transparencia_relacoes_trabalho_governanca),
+                parseFloat(item.transparencia_titulos_certificacoes)
             ];
 
             const labels = [
@@ -66,7 +69,7 @@ function createPolarChart(id_osc) {
                                 font-weight: 700;
                                 color: #007bff;
                                 margin-bottom: 4px;
-                            ">${parseFloat(data.transparencia_osc).toFixed(1)}%</div>
+                            ">${parseFloat(item.transparencia_osc).toFixed(1)}%</div>
                             <div style="
                                 font-size: 10px;
                                 color: #6c757d;
