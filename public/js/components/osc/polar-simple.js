@@ -1,45 +1,24 @@
 function createPolarChart(id_osc) {
-    $.ajax({
-        method: 'GET',
-        url: getBaseUrl2 + 'osc/indice_preenchimento/' + id_osc,
-        cache: false,
-        success: function(data) {
-            console.log('Resposta da API polar:', data);
-            
-            // Suporta tanto array quanto objeto
-            let item = Array.isArray(data) ? data[0] : data;
-            
-            if (!item || !item.transparencia_area_atuacao) {
-                console.error('Dados não encontrados ou incompletos');
-                document.querySelector('#preenchimento').innerHTML = '<div style="padding: 20px; text-align: center;">Dados não disponíveis</div>';
-                return;
-            }
+  $.ajax({
+    method: 'GET',
+    url: getBaseUrl2 + 'osc/indice_preenchimento/' + id_osc,
+    cache: false,
+    success: function (data) {
+      console.log('Resposta da API polar:', data);
 
-            const series = [
-                parseFloat(item.transparencia_area_atuacao),
-                parseFloat(item.transparencia_dados_gerais),
-                parseFloat(item.transparencia_descricao),
-                parseFloat(item.transparencia_espacos_participacao_social),
-                parseFloat(item.transparencia_fontes_recursos),
-                parseFloat(item.transparencia_projetos_atividades_programas),
-                parseFloat(item.transparencia_relacoes_trabalho_governanca),
-                parseFloat(item.transparencia_titulos_certificacoes)
-            ];
+      // Suporta tanto array quanto objeto
+      let item = Array.isArray(data) ? data[0] : data;
+      if (!item || !item.transparencia_area_atuacao) {
+        console.error('Dados não encontrados ou incompletos');
+        document.querySelector('#preenchimento').innerHTML = '<div style="padding: 20px; text-align: center;">Dados não disponíveis</div>';
+        return;
+      }
+      const series = [parseFloat(item.transparencia_area_atuacao), parseFloat(item.transparencia_dados_gerais), parseFloat(item.transparencia_descricao), parseFloat(item.transparencia_espacos_participacao_social), parseFloat(item.transparencia_fontes_recursos), parseFloat(item.transparencia_projetos_atividades_programas), parseFloat(item.transparencia_relacoes_trabalho_governanca), parseFloat(item.transparencia_titulos_certificacoes)];
+      const labels = ['Áreas e Subáreas de Atuação', 'Dados Gerais', 'Descrição da OSC', 'Espaços de Participação Social', 'Fontes de Recursos', 'Projetos e Programas', 'Trabalho e Governança', 'Titulações e Certificações'];
 
-            const labels = [
-                'Áreas e Subáreas de Atuação',
-                'Dados Gerais',
-                'Descrição da OSC',
-                'Espaços de Participação Social',
-                'Fontes de Recursos',
-                'Projetos e Programas',
-                'Trabalho e Governança',
-                'Titulações e Certificações'
-            ];
-
-            // Layout clean e harmonioso
-            const container = document.querySelector('#preenchimento');
-            container.innerHTML = `
+      // Layout clean e harmonioso
+      const container = document.querySelector('#preenchimento');
+      container.innerHTML = `
                 <div style="
                     background: white;
                     border-radius: 12px;
@@ -79,44 +58,42 @@ function createPolarChart(id_osc) {
                     </div>
                 </div>
             `;
-
-            const options = {
-                series: series,
-                chart: {
-                    type: 'polarArea',
-                    height: 300
-                },
-                labels: labels,
-                colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'],
-                legend: {
-                    position: 'right',
-                    fontSize: '11px',
-                    offsetX: -10,
-                    verticalAlign: 'middle'
-                },
-                plotOptions: {
-                    polarArea: {
-                        rings: {
-                            strokeWidth: 1
-                        },
-                        spokes: {
-                            strokeWidth: 1
-                        }
-                    }
-                }
-            };
-
-            const chart = new ApexCharts(document.querySelector('#polarChart'), options);
-            chart.render();
+      const options = {
+        series: series,
+        chart: {
+          type: 'polarArea',
+          height: 300
         },
-        error: function(xhr, status, err) {
-            console.error('Erro ao carregar dados:', err);
-            document.querySelector('#preenchimento').innerHTML = '<div>Erro ao carregar dados</div>';
+        labels: labels,
+        colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'],
+        legend: {
+          position: 'right',
+          fontSize: '11px',
+          offsetX: -10,
+          verticalAlign: 'middle'
+        },
+        plotOptions: {
+          polarArea: {
+            rings: {
+              strokeWidth: 1
+            },
+            spokes: {
+              strokeWidth: 1
+            }
+          }
         }
-    });
+      };
+      const chart = new ApexCharts(document.querySelector('#polarChart'), options);
+      chart.render();
+    },
+    error: function (xhr, status, err) {
+      console.error('Erro ao carregar dados:', err);
+      document.querySelector('#preenchimento').innerHTML = '<div>Erro ao carregar dados</div>';
+    }
+  });
 }
 
 // Executar quando a página carregar
 if (typeof id_osc !== 'undefined') {
-    createPolarChart(id_osc);
+  createPolarChart(id_osc);
 }
