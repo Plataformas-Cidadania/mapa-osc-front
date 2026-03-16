@@ -11,7 +11,6 @@ class Selo extends React.Component {
         this.load();
     }
 
-
     load(){
         let _this = this;
 
@@ -23,53 +22,31 @@ class Selo extends React.Component {
             },
             cache: false,
             success: function(data) {
-                console.log('Resposta da API:', data);
-
-                // Suporta tanto array quanto objeto
                 let item = Array.isArray(data) ? data[0] : data;
 
-                if (!item || item.transparencia_area_atuacao === undefined) {
-                    console.error('Dados não encontrados ou incompletos');
+                if (!item || item.transparencia_osc === undefined) {
                     _this.setState({loading: false});
                     return;
                 }
 
-                let soma = [];
-
-                soma.push(item.transparencia_area_atuacao)
-                soma.push(item.transparencia_dados_gerais)
-                soma.push(item.transparencia_descricao)
-                soma.push(item.transparencia_espacos_participacao_social)
-                soma.push(item.transparencia_fontes_recursos)
-                soma.push(item.transparencia_projetos_atividades_programas)
-                soma.push(item.transparencia_relacoes_trabalho_governanca)
-                soma.push(item.transparencia_titulos_certificacoes)
-
-
-                var total = 0;
-                var numeros = soma;
-                for ( var i = 0; i < numeros.length; i++ ){
-                    total += parseInt(numeros[i]);
-                }
-
+                let total = parseFloat(item.transparencia_osc);
 
                 let nameImg = 'sem_medalha';
                 let titleImg = 'Sem medalha';
 
-                if(total>50 && total<70){
+                if(total <= 50){
                     nameImg = 'bronze';
                     titleImg = 'Bronze';
-                }else if(total>71 && total<90){
+                }else if(total >= 51 && total <= 70){
                     nameImg = 'prata';
                     titleImg = 'Prata';
-                }else if(total>91 && total<99){
+                }else if(total >= 71 && total <= 90){
                     nameImg = 'ouro';
                     titleImg = 'Ouro';
-                }else if(total>100){
+                }else if(total >= 91){
                     nameImg = 'diamante';
                     titleImg = 'Diamante';
                 }
-
 
                 _this.setState({nameImg: nameImg, titleImg: titleImg });
 
@@ -79,7 +56,6 @@ class Selo extends React.Component {
                 _this.setState({loading: false});
             }
         });
-
 
     }
 
