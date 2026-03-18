@@ -13,6 +13,13 @@
 {!! Form::label('posicao', 'Posição ') !!}<br>
 {!! Form::text('posicao', null, ['class'=>"form-control width-pequeno <% validar(webdoor.posicao) %>", 'ng-model'=>'webdoor.posicao', 'init-model'=>'webdoor.posicao', 'placeholder' => '']) !!}<br>
 
+{!! Form::label('tipo', 'Tipo *') !!}<br>
+{!! Form::select('tipo',
+        array(
+            0 => 'Home',
+            1 => 'Conselho'
+        ),
+null, ['class'=>"form-control width-medio <% validar(webdoor.tipo) %>", 'ng-model'=>'webdoor.tipo', 'ng-required'=>'true', 'init-model'=>'webdoor.tipo', 'placeholder' => '']) !!}<br>
 
 
 

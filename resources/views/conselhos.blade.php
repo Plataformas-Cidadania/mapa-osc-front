@@ -6,7 +6,7 @@
 
 <?php
     $modulo = DB::table('modulos')->where('slug', 'conselhos')->where('status', 1)->first();
-    $webdoors = \App\Webdoor::orderBy('posicao')->where('status', 1)->get();
+    $webdoors = \App\Webdoor::orderBy('posicao')->where('tipo', 1)->where('status', 1)->get();
  ?>
 
 <script>
