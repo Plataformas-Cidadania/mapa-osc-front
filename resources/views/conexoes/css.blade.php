@@ -4,7 +4,7 @@
         border-color: red;
     }
 </style>
-@if($rota=='/')
+@if($rota=='/' || $rota=='conselhos')
     <link rel="stylesheet" href="css/home.css">
 @endif
 @if($rota=='mapa' || $rota=='mapa/{origem}'  || $rota=='mapa-busca-avancada' || $rota=='contato')

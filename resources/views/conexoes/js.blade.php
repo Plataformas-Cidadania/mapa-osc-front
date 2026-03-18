@@ -117,7 +117,7 @@
     <script src="js/components/osc/polar-simple.js"></script>
     <script src="js/components/osc/selo.js"></script>
 @endif
-@if($rota=='/')
+@if($rota=='/' || $rota=='conselhos')
 
     <script src="js/components/enquete/page.js"></script>
     <script src="js/components/enquete/index.js"></script>

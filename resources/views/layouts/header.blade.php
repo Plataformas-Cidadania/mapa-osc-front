@@ -296,7 +296,8 @@
     }
 </style>
 
-    @if($rota=='/')
+
+    @if($rota=='/' || $rota=='conselhos')
         <div class="owl-carousel owl-theme">
             @foreach($webdoors as $webdoor)
                 <a href="{{$webdoor->link}}">
