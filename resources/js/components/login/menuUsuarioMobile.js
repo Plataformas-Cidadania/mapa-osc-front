@@ -35,6 +35,7 @@ class MenuUsuarioMobile extends React.Component{
             error: function (xhr, status, err) {
                 if (xhr.status === 401) {
                     localStorage.setItem('@App:token', '');
+                    localStorage.setItem('@App:userType', '');
                 }
                 this.setState({ loading: false });
             }.bind(this)
@@ -43,6 +44,7 @@ class MenuUsuarioMobile extends React.Component{
 
     logout(){
         localStorage.setItem('@App:token', '');
+        localStorage.setItem('@App:userType', '');
         location.href = 'login';
     }
 
@@ -71,13 +73,16 @@ class MenuUsuarioMobile extends React.Component{
                                 <div className="btn btn-primary btn-login-menu" type="button">Entrar</div>
                             </a>
                         </li>
-                        <li style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
+                        <li style={{display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'}}>
                             <a href="oscs-user" >
                                 <i className="far fa-address-card"/> Minha OSCs
                             </a>
                         </li>
                         <li style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
                             <a href="dados-user"><i className="far fa-edit"/> Meus Dados</a>
+                        </li>
+                        <li style={{display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'conselho' ? '' : 'none'}}>
+                            <a href="dashboard-conselho"><i className="fas fa-users"/> Meus Conselhos</a>
                         </li>
                         <li style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
                             <a href="register">

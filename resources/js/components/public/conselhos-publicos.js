@@ -266,10 +266,10 @@ class ConselhosPublicos extends React.Component {
                                 </div>
                             </div>
                             <h1 className="display-4 fw-bold text-white mb-4" style={{lineHeight: '1.2'}}>
-                                Conselhos <span style={{color: '#FFD700'}}>Públicos</span>
+                                {typeof moduloConselhos !== 'undefined' ? moduloConselhos.titulo : ''}
                             </h1>
                             <p className="lead text-white mb-4" style={{opacity: 0.9, fontSize: '1.25rem'}}>
-                                Transparência e participação social através dos conselhos e seus conselheiros
+                                {typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : '********'}
                             </p>
                             <div className="d-flex flex-wrap gap-3">
                                 <div className="d-flex align-items-center text-white">

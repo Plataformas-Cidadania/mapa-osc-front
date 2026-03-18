@@ -268,17 +268,13 @@ class ConselhosPublicos extends React.Component {
       style: {
         lineHeight: '1.2'
       }
-    }, "Conselhos ", /*#__PURE__*/React.createElement("span", {
-      style: {
-        color: '#FFD700'
-      }
-    }, "P\xFAblicos")), /*#__PURE__*/React.createElement("p", {
+    }, typeof moduloConselhos !== 'undefined' ? moduloConselhos.titulo : ''), /*#__PURE__*/React.createElement("p", {
       className: "lead text-white mb-4",
       style: {
         opacity: 0.9,
         fontSize: '1.25rem'
       }
-    }, "Transpar\xEAncia e participa\xE7\xE3o social atrav\xE9s dos conselhos e seus conselheiros"), /*#__PURE__*/React.createElement("div", {
+    }, typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : '********'), /*#__PURE__*/React.createElement("div", {
       className: "d-flex flex-wrap gap-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex align-items-center text-white"

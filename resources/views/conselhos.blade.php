@@ -3,9 +3,16 @@
 @section('title', 'Conselhos')
 
 @section('content')
-<div id="conselhos-publicos"></div>
-@endsection
 
-@section('script')
-<script src="{{ asset('js/components/public/conselhos-publicos.js') }}"></script>
+<?php
+    $modulo = DB::table('modulos')->where('slug', 'conselhos')->where('status', 1)->first();
+ ?>
+
+<script>
+    var moduloConselhos = {
+        titulo: {!! json_encode(optional($modulo)->titulo ?? 'Conselhos Públicos') !!},
+        descricao: {!! json_encode(optional($modulo)->descricao ?? 'Transparência e participação social através dos conselhos e seus conselheiros') !!}
+    };
+</script>
+<div id="conselhos-publicos"></div>
 @endsection

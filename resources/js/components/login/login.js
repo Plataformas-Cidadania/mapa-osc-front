@@ -90,6 +90,7 @@ class Login extends React.Component{
 
                     if(data.access_token){
                         localStorage.setItem('@App:token', data.access_token);
+                        localStorage.setItem('@App:userType', this.state.dataType === 'conselho' ? 'conselho' : 'osc');
                         
                         if(this.state.dataType === 'conselho'){
                             location.href = 'dashboard-conselho';

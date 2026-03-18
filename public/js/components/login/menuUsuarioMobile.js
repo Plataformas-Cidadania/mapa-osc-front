@@ -38,6 +38,7 @@ class MenuUsuarioMobile extends React.Component {
       error: function (xhr, status, err) {
         if (xhr.status === 401) {
           localStorage.setItem('@App:token', '');
+          localStorage.setItem('@App:userType', '');
         }
         this.setState({
           loading: false
@@ -47,6 +48,7 @@ class MenuUsuarioMobile extends React.Component {
   }
   logout() {
     localStorage.setItem('@App:token', '');
+    localStorage.setItem('@App:userType', '');
     location.href = 'login';
   }
   render() {
@@ -73,7 +75,7 @@ class MenuUsuarioMobile extends React.Component {
       type: "button"
     }, "Entrar"))), /*#__PURE__*/React.createElement("li", {
       style: {
-        display: this.state.tx_nome_usuario ? '' : 'none'
+        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'
       }
     }, /*#__PURE__*/React.createElement("a", {
       href: "oscs-user"
@@ -88,6 +90,14 @@ class MenuUsuarioMobile extends React.Component {
     }, /*#__PURE__*/React.createElement("i", {
       className: "far fa-edit"
     }), " Meus Dados")), /*#__PURE__*/React.createElement("li", {
+      style: {
+        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'conselho' ? '' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("a", {
+      href: "dashboard-conselho"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users"
+    }), " Meus Conselhos")), /*#__PURE__*/React.createElement("li", {
       style: {
         display: this.state.tx_nome_usuario ? 'none' : ''
       }

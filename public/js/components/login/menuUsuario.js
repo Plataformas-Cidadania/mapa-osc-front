@@ -38,6 +38,7 @@ class MenuUsuario extends React.Component {
   }
   logout() {
     localStorage.setItem('@App:token', '');
+    localStorage.setItem('@App:userType', '');
     location.href = 'login';
   }
   render() {
@@ -57,6 +58,11 @@ class MenuUsuario extends React.Component {
       className: "far fa-user"
     })), /*#__PURE__*/React.createElement("p", null, usuario)), /*#__PURE__*/React.createElement("div", {
       className: "dropdown-menu dropdown-menu-right"
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column'
+      }
     }, /*#__PURE__*/React.createElement("a", {
       href: "login",
       style: {
@@ -65,7 +71,19 @@ class MenuUsuario extends React.Component {
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary btn-login-menu",
       type: "button"
-    }, "Entrar")), /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-building"
+    }), " Gerenciar OSC")), /*#__PURE__*/React.createElement("a", {
+      href: "login-conselho",
+      style: {
+        display: this.state.tx_nome_usuario ? 'none' : ''
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary btn-login-menu",
+      type: "button"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users"
+    }), " Gerenciar Conselho"))), /*#__PURE__*/React.createElement("a", {
       href: "register",
       style: {
         display: this.state.tx_nome_usuario ? 'none' : ''
@@ -76,7 +94,7 @@ class MenuUsuario extends React.Component {
     }, "Cadastre-se")), /*#__PURE__*/React.createElement("a", {
       href: "oscs-user",
       style: {
-        display: this.state.tx_nome_usuario ? '' : 'none'
+        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'
       }
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
@@ -84,30 +102,36 @@ class MenuUsuario extends React.Component {
     }, "Minha OSCs")), /*#__PURE__*/React.createElement("a", {
       href: "dados-user",
       style: {
-        display: this.state.tx_nome_usuario ? '' : 'none'
+        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'
       }
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
     }, "Meus Dados")), /*#__PURE__*/React.createElement("a", {
+      href: "representacoes",
+      style: {
+        display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, "Representa\xE7\xF5es")), /*#__PURE__*/React.createElement("a", {
+      href: "buscar-email",
+      style: {
+        display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, "Consultar e-mail")), /*#__PURE__*/React.createElement("a", {
       href: "dashboard-conselho",
       style: {
-        display: this.state.tx_nome_usuario ? '' : 'none'
+        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'conselho' ? '' : 'none'
       }
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
     }, "Meus Conselhos")), /*#__PURE__*/React.createElement("a", {
-      href: "representacoes"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "dropdown-item",
-      type: "button"
-    }, "Representa\xE7\xF5es")), /*#__PURE__*/React.createElement("a", {
-      href: "buscar-email"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "dropdown-item",
-      type: "button"
-    }, "Consultar e-mail")), /*#__PURE__*/React.createElement("a", {
       onClick: this.logout,
       style: {
         display: this.state.tx_nome_usuario ? '' : 'none'

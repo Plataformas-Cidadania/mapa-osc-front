@@ -239,6 +239,7 @@
                                         <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente" @endif>Análises</a></li>
                                     </ul>
                                 </li>
+                                <li role="presentation"><a href="conselhos" a @if($rota=='conselhos') class="corrente" @endif>Conselhos</a></li>
                                 <li role="presentation"><a  @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($midias as $midia)
@@ -284,9 +285,10 @@
 
 <style>
     .btn-login-menu{
-        width: 90%;
+        width: -webkit-fill-available;
         border-radius: 2px;
-        margin: 0 5px 8px 8px;
+        margin: 5px 10px;
+        text-align: left;
     }
 
     .owl-prev, .owl-next{

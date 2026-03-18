@@ -35,6 +35,7 @@ class MenuUsuario extends React.Component{
 
     logout(){
         localStorage.setItem('@App:token', '');
+        localStorage.setItem('@App:userType', '');
         location.href = 'login';
     }
 
@@ -54,34 +55,37 @@ class MenuUsuario extends React.Component{
                     <p>{usuario}</p>
                 </div>
                 <div className="dropdown-menu dropdown-menu-right">
-                    <a href="login" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
-                        <button className="btn btn-primary btn-login-menu" type="button">Entrar</button>
-                    </a>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <a href="login" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
+                            <button className="btn btn-primary btn-login-menu" type="button"><i className="fas fa-building"/> Gerenciar OSC</button>
+                        </a>
+                        <a href="login-conselho" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
+                            <button className="btn btn-primary btn-login-menu" type="button"><i className="fas fa-users"/> Gerenciar Conselho</button>
+                        </a>
+                    </div>
 
                     <a href="register" style={{display: this.state.tx_nome_usuario ? 'none' : ''}}>
                         <button className="dropdown-item" type="button">Cadastre-se</button>
                     </a>
-                    {/*<a href="register">
-                        <button className="dropdown-item" type="button">Estado e Município</button>
-                    </a>*/}
-                    <a href="oscs-user" style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
+
+                    <a href="oscs-user" style={{display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'}}>
                         <button className="dropdown-item" type="button">Minha OSCs</button>
                     </a>
-                    <a href="dados-user" style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
+                    <a href="dados-user" style={{display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'}}>
                         <button className="dropdown-item" type="button">Meus Dados</button>
                     </a>
-                    <a href="dashboard-conselho" style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
-                        <button className="dropdown-item" type="button">Meus Conselhos</button>
-                    </a>
-                    {/*<a href="oscs-user">
-                        <button className="dropdown-item " type="button">Editar</button>
-                    </a>*/}
-                    <a href="representacoes">
+
+                    <a href="representacoes" style={{display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''}}>
                         <button className="dropdown-item" type="button">Representações</button>
                     </a>
-                    <a href="buscar-email">
+                    <a href="buscar-email" style={{display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''}}>
                         <button className="dropdown-item" type="button">Consultar e-mail</button>
                     </a>
+                    {/*{localStorage.getItem('@App:userType')}*/}
+                    <a href="dashboard-conselho" style={{display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'conselho' ? '' : 'none'}}>
+                        <button className="dropdown-item" type="button">Meus Conselhos</button>
+                    </a>
+
                     <a onClick={this.logout} style={{display: this.state.tx_nome_usuario ? '' : 'none'}}>
                         <button className="dropdown-item" type="button">Sair</button>
                     </a>
