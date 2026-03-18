@@ -188,7 +188,9 @@
         <li role="presentation"><a href="base-dados" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Base de Dados</a></li>
         <li role="presentation"><a href="indicadores" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Indicadores</a></li>
         <li role="presentation"><a href="posts/1/analises" @if($rota=='/') class="corrente " @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
-
+        @if(!empty($moduloConselhos))
+        <li role="presentation"><a href="conselhos" a @if($rota=='conselhos') class="corrente" @endif>Conselhos</a></li>
+        @endif
         <li role="presentation"><a @if($rota=='quem') class="corrente" @endif>Biblioteca</a></li>
         <li role="presentation"><a href="posts/3/analises" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Análises</a></li>
         <li role="presentation"><a href="posts/2/noticias" @if($rota=='quem') class="corrente" @endif>&nbsp;&nbsp;&nbsp;Notícias</a></li>
@@ -239,7 +241,9 @@
                                         <li role="presentation"><a href="posts/1/analises"  @if($rota=='/') class="corrente" @endif>Análises</a></li>
                                     </ul>
                                 </li>
+                                @if(!empty($moduloConselhos))
                                 <li role="presentation"><a href="conselhos" a @if($rota=='conselhos') class="corrente" @endif>Conselhos</a></li>
+                                @endif
                                 <li role="presentation"><a  @if($rota=='quem') class="corrente" @endif>Biblioteca</a>
                                     <ul class="noJS menu-desk-sub">
                                         @foreach($midias as $midia)

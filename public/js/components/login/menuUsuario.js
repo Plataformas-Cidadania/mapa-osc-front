@@ -47,6 +47,9 @@ class MenuUsuario extends React.Component {
       let arrayNome = this.state.tx_nome_usuario.split(' ');
       usuario = 'Olá, ' + arrayNome[0] + '. Seja bem-vind@!';
     }
+    let userType = localStorage.getItem('@App:userType');
+    let logado = this.state.tx_nome_usuario;
+    let _conselhosAtivo = typeof conselhosAtivo !== 'undefined' && conselhosAtivo;
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "login",
       "data-toggle": "dropdown",
@@ -58,88 +61,83 @@ class MenuUsuario extends React.Component {
       className: "far fa-user"
     })), /*#__PURE__*/React.createElement("p", null, usuario)), /*#__PURE__*/React.createElement("div", {
       className: "dropdown-menu dropdown-menu-right"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, !logado && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         flexDirection: 'column'
       }
     }, /*#__PURE__*/React.createElement("a", {
-      href: "login",
-      style: {
-        display: this.state.tx_nome_usuario ? 'none' : ''
-      }
+      href: "login"
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary btn-login-menu",
       type: "button"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-building"
-    }), " Gerenciar OSC")), /*#__PURE__*/React.createElement("a", {
-      href: "login-conselho",
-      style: {
-        display: this.state.tx_nome_usuario ? 'none' : ''
-      }
+    }), " Gerenciar OSC")), _conselhosAtivo && /*#__PURE__*/React.createElement("a", {
+      href: "login-conselho"
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-primary btn-login-menu",
       type: "button"
     }, /*#__PURE__*/React.createElement("i", {
       className: "fas fa-users"
     }), " Gerenciar Conselho"))), /*#__PURE__*/React.createElement("a", {
-      href: "register",
-      style: {
-        display: this.state.tx_nome_usuario ? 'none' : ''
-      }
+      href: "register"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
     }, "Cadastre-se")), /*#__PURE__*/React.createElement("a", {
-      href: "oscs-user",
-      style: {
-        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "dropdown-item",
-      type: "button"
-    }, "Minha OSCs")), /*#__PURE__*/React.createElement("a", {
-      href: "dados-user",
-      style: {
-        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'osc' ? '' : 'none'
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "dropdown-item",
-      type: "button"
-    }, "Meus Dados")), /*#__PURE__*/React.createElement("a", {
-      href: "representacoes",
-      style: {
-        display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''
-      }
+      href: "representacoes"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
     }, "Representa\xE7\xF5es")), /*#__PURE__*/React.createElement("a", {
-      href: "buscar-email",
-      style: {
-        display: localStorage.getItem('@App:userType') === 'conselho' ? 'none' : ''
-      }
+      href: "buscar-email"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
-    }, "Consultar e-mail")), /*#__PURE__*/React.createElement("a", {
-      href: "dashboard-conselho",
-      style: {
-        display: this.state.tx_nome_usuario && localStorage.getItem('@App:userType') === 'conselho' ? '' : 'none'
-      }
+    }, "Consultar e-mail"))), logado && userType === 'osc' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
+      href: "oscs-user"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
-    }, "Meus Conselhos")), /*#__PURE__*/React.createElement("a", {
-      onClick: this.logout,
-      style: {
-        display: this.state.tx_nome_usuario ? '' : 'none'
-      }
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-building"
+    }), " Minha OSCs")), /*#__PURE__*/React.createElement("a", {
+      href: "dados-user"
     }, /*#__PURE__*/React.createElement("button", {
       className: "dropdown-item",
       type: "button"
-    }, "Sair"))));
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "far fa-edit"
+    }), " Meus Dados")), /*#__PURE__*/React.createElement("a", {
+      href: "representacoes"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-handshake"
+    }), " Representa\xE7\xF5es")), /*#__PURE__*/React.createElement("a", {
+      href: "buscar-email"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-envelope"
+    }), " Consultar e-mail"))), logado && userType === 'conselho' && _conselhosAtivo && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
+      href: "dashboard-conselho"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-users"
+    }), " Meus Conselhos"))), logado && /*#__PURE__*/React.createElement("a", {
+      onClick: this.logout
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "dropdown-item",
+      type: "button"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fas fa-sign-out-alt"
+    }), " Sair"))));
   }
 }
 ReactDOM.render(/*#__PURE__*/React.createElement(MenuUsuario, null), document.getElementById('menu-usuario'));

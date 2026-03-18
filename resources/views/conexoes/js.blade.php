@@ -109,6 +109,9 @@
     get_location();
 </script>
 
+<script>
+    var conselhosAtivo = {{ !empty($moduloConselhos) ? 'true' : 'false' }};
+</script>
 <script src="js/components/login/menuUsuario.js"></script>
 <script src="js/components/login/menuUsuarioMobile.js"></script>
 
