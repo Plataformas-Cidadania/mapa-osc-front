@@ -15,5 +15,6 @@
         descricao: {!! json_encode(optional($modulo)->descricao ?? 'Transparência e participação social através dos conselhos e seus conselheiros') !!}
     };
 </script>
+<br>
 <div id="conselhos-publicos"></div>
 @endsection
