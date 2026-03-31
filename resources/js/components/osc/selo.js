@@ -34,16 +34,16 @@ class Selo extends React.Component {
                 let nameImg = 'sem_medalha';
                 let titleImg = 'Sem medalha';
 
-                if(total <= 50){
+                if(total >= 25 && total <= 50){
                     nameImg = 'bronze';
                     titleImg = 'Bronze';
-                }else if(total >= 51 && total <= 70){
+                }else if(total > 50 && total <= 70){
                     nameImg = 'prata';
                     titleImg = 'Prata';
-                }else if(total >= 71 && total <= 90){
+                }else if(total > 70 && total <= 90){
                     nameImg = 'ouro';
                     titleImg = 'Ouro';
-                }else if(total >= 91){
+                }else if(total > 90){
                     nameImg = 'diamante';
                     titleImg = 'Diamante';
                 }
