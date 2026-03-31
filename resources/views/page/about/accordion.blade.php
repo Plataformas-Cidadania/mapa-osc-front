@@ -23,9 +23,12 @@
                     @endif
 
                     @if($item->arquivo!="")
+                        @php
+                            $ext = strtoupper(pathinfo($item->arquivo, PATHINFO_EXTENSION));
+                        @endphp
                         <a href="arquivos/items/{{$item->arquivo}}" class="col-md-5 text-center btn-file" target="_blank" style="vertical-align: middle">
-                            <i class="far fa-file-pdf fa-2x" style="padding-top: 10px;"></i>
-                            Baixar o arquivo em PDF
+                            <i class="far fa-file fa-2x" style="padding-top: 10px;"></i>
+                            Baixar o arquivo em {{ $ext }}
                         </a>
                     @endif
 

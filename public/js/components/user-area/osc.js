@@ -133,7 +133,6 @@ class Osc extends React.Component {
       id_osc: this.props.id,
       tx_sigla_osc: this.state.form.tx_sigla_osc,
       tx_nome_fantasia_osc: this.state.form.tx_nome_fantasia_osc,
-      cd_situacao_imovel_osc: this.state.form.cd_situacao_imovel_osc === null ? -1 : this.state.form.cd_situacao_imovel_osc,
       dt_fundacao_osc: this.state.form.dt_fundacao_osc,
       tx_nome_responsavel_legal: this.state.form.tx_nome_responsavel_legal,
       tx_email: this.state.form.tx_email,
@@ -141,6 +140,9 @@ class Osc extends React.Component {
       tx_telefone: this.state.form.tx_telefone == "" ? " " : this.state.form.tx_telefone,
       tx_resumo_osc: this.state.form.tx_resumo_osc
     };
+    if (this.state.form.cd_situacao_imovel_osc !== null && this.state.form.cd_situacao_imovel_osc != "-1") {
+      data.cd_situacao_imovel_osc = this.state.form.cd_situacao_imovel_osc;
+    }
     if (this.state.form.dt_ano_cadastro_cnpj !== null) {
       data.dt_ano_cadastro_cnpj = this.state.form.dt_ano_cadastro_cnpj;
     }
