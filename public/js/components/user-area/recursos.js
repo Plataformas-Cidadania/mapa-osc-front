@@ -270,8 +270,8 @@ class Recursos extends React.Component {
           activeIncert: activeIncert,
           insertMsg: !data2
         }, function () {
-          let teste = data3.shift();
-          this.callRecursos(teste);
+          let anoSelecionado = acao && campoAno > 0 ? parseInt(campoAno) : data3.shift();
+          this.callRecursos(anoSelecionado);
         });
       }.bind(this),
       error: function (xhr, status, err) {

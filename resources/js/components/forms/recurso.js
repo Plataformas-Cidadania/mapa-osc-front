@@ -67,7 +67,7 @@ class Recurso extends React.Component {
                     cache: false,
                     success: function(data) {
                         let msg = 'Dados alterados com sucesso!';
-                        this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', loadingSave: true});
+                        this.setState({id: data.id_recursos_osc, msg: msg, showMsg: true, loading: false, button: true, color: 'success', loadingSave: true});
                     }.bind(this),
                     error: function(xhr, status, err) {
                         console.error(status, err.toString());

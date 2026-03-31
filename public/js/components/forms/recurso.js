@@ -81,6 +81,7 @@ class Recurso extends React.Component {
           success: function (data) {
             let msg = 'Dados alterados com sucesso!';
             this.setState({
+              id: data.id_recursos_osc,
               msg: msg,
               showMsg: true,
               loading: false,
