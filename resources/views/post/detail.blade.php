@@ -53,7 +53,10 @@
 
                 </article>
                 @if($detail->arquivo!="")
-                    <a href="arquivos/posts/{{$detail->arquivo}}" target="_blank" class="btn btn-outline-primary"><i class="far fa-file-pdf"></i> Baixar o arquivo - PDF</a>
+                    @php
+                        $ext = strtoupper(pathinfo($detail->arquivo, PATHINFO_EXTENSION));
+                    @endphp
+                    <a href="arquivos/posts/{{$detail->arquivo}}" target="_blank" class="btn btn-outline-primary"><i class="far fa-file"></i> Baixar o arquivo - {{ $ext }}</a>
                     <br>
 <!--                    <iframe src="arquivos/posts/{{$detail->arquivo}}" frameborder="0" height="1000" width="100%"></iframe>-->
                 @endif

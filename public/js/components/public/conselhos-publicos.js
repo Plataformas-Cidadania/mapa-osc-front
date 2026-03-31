@@ -268,13 +268,16 @@ class ConselhosPublicos extends React.Component {
       style: {
         lineHeight: '1.2'
       }
-    }, typeof moduloConselhos !== 'undefined' ? moduloConselhos.titulo : ''), /*#__PURE__*/React.createElement("p", {
+    }, typeof moduloConselhos !== 'undefined' ? moduloConselhos.titulo : ''), /*#__PURE__*/React.createElement("div", {
       className: "lead text-white mb-4",
       style: {
         opacity: 0.9,
         fontSize: '1.25rem'
+      },
+      dangerouslySetInnerHTML: {
+        __html: typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : ''
       }
-    }, typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : '********'), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("div", {
       className: "d-flex flex-wrap gap-3"
     }, /*#__PURE__*/React.createElement("div", {
       className: "d-flex align-items-center text-white"

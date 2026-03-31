@@ -268,9 +268,9 @@ class ConselhosPublicos extends React.Component {
                             <h1 className="display-4 fw-bold text-white mb-4" style={{lineHeight: '1.2'}}>
                                 {typeof moduloConselhos !== 'undefined' ? moduloConselhos.titulo : ''}
                             </h1>
-                            <p className="lead text-white mb-4" style={{opacity: 0.9, fontSize: '1.25rem'}}>
-                                {typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : '********'}
-                            </p>
+                            <div className="lead text-white mb-4" style={{opacity: 0.9, fontSize: '1.25rem'}}
+                                dangerouslySetInnerHTML={{__html: typeof moduloConselhos !== 'undefined' ? moduloConselhos.descricao : ''}}
+                            />
                             <div className="d-flex flex-wrap gap-3">
                                 <div className="d-flex align-items-center text-white">
                                     <div className="rounded-circle me-2 d-flex align-items-center justify-content-center" style={{
