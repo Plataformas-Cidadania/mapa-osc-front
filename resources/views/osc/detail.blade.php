@@ -46,14 +46,7 @@
     ?>
 
 
-     <?php
-        dd([
-            'valor' => $status->bo_osc_ativa ?? 'NAO_EXISTE',
-            'tipo' => isset($status->bo_osc_ativa) ? gettype($status->bo_osc_ativa) : 'NAO_EXISTE',
-            'export' => var_export($status->bo_osc_ativa ?? null, true),
-        ]);
-     ?>
-     @if(isset($status->bo_osc_ativa) && $status->bo_osc_ativa === false)
+     @if(isset($osc->bo_osc_ativa) && $osc->bo_osc_ativa === false)
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
