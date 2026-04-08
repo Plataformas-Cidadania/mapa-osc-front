@@ -45,63 +45,82 @@
 
     ?>
 
-    <div class="bg-lgt">
+     @if(!$status->bo_osc_ativa)
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <header>
-                        <br>
-                        <h1>{{isset($cabecalho->tx_razao_social_osc) ? $cabecalho->tx_razao_social_osc : 'OSC não encontrada'}}</h1>
-                        <h5><a href="/">Home</a> / <a href="/mapa">OSC</a></h5>
-                        <div class="fa-svg float-right" style="margin-top: -25px;" >
-                            <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
-                            <a href="declaracao/{{$id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
-                            {{--<button onclick="generateTable()">Gerar Tabela</button>--}}
-                        </div>
-                        <br>
-                    </header>
+                    <div class="alert alert-danger">
+                        OSC não se encontra mais na base de dados.
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
 
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div id="data-table-container"></div>
-
-                <div class="alert alert-secondary box-floating d-print-none"  style="z-index: 9999999; padding: 10px 5px; width: 45px;">
-                    <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
-                    <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" ></i>
-                    <ul class="menu-icons menu-right">
-                        <li><a href="detalhar/{{$id_osc}}#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e certificações</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
-                        <li><a href="detalhar/{{$id_osc}}#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
-                        <li style="border-bottom: 0;"><a href="detalhar/{{$id_osc}}#fontes-recursos"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
-                    </ul>
-                    <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
+        <div class="bg-lgt">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <header>
+                            <br>
+                            <h1>{{isset($cabecalho->tx_razao_social_osc) ? $cabecalho->tx_razao_social_osc : 'OSC não encontrada'}}</h1>
+                            <h5><a href="/">Home</a> / <a href="/mapa">OSC</a></h5>
+                            <div class="fa-svg float-right" style="margin-top: -25px;" >
+                                <a class="cursor" title="Imprimir" onclick="window.print()"><i class="fas fa-print fa-2x float-right"></i></a>&nbsp;
+                                <a href="declaracao/{{$id_osc}}" title="Declaração da OSC" target="_blank"><i class="fas fa-certificate fa-2x float-right"></i></a>&nbsp;
+                                {{--<button onclick="generateTable()">Gerar Tabela</button>--}}
+                            </div>
+                            <br>
+                        </header>
+                    </div>
                 </div>
-                @include('osc.detail-general')
-                @include('osc.detail-area')
-                @include('osc.detail-description')
-                @include('osc.detail-titration')
-                @include('osc.detail-governance')
-                @include('osc.detail-participation')
-                @include('osc.detail-projects')
-                @include('osc.detail-resources')
-                <br>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div id="data-table-container"></div>
+
+                    <div class="alert alert-secondary box-floating d-print-none"  style="z-index: 9999999; padding: 10px 5px; width: 45px;">
+                        <i class="fas fa-chevron-right menu-icons-close btn-menu-txt" style="float: right;"></i>
+                        <i class="fas fa-chevron-left menu-icons-close btn-menu-txt-show" ></i>
+                        <ul class="menu-icons menu-right">
+                            <li><a href="detalhar/{{$id_osc}}#dados-gerais"><div><i class="far fa-file-alt"></i></div><p class="menu-icons-txt"> Dados gerais</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#area-atuacao"><div><i class="fas fa-share-alt"></i></div><p class="menu-icons-txt">Área de atuação</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#descricao"><div><i class="fas fa-align-justify"></i></div><p class="menu-icons-txt">Descrição da OSC</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#titulacao"><div><i class="fas fa-certificate"></i></div><p class="menu-icons-txt">Titulações e certificações</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#governanca"><div><i class="fas fa-briefcase"></i></div><p class="menu-icons-txt">Trabalho e governança</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#participacao"><div><i class="fas fa-users"></i></div><p class="menu-icons-txt">Participação social</p></a></li>
+                            <li><a href="detalhar/{{$id_osc}}#projetos"><div><i class="fas fa-project-diagram"></i></div><p class="menu-icons-txt">Projetos</p></a></li>
+                            <li style="border-bottom: 0;"><a href="detalhar/{{$id_osc}}#fontes-recursos"><div><i class="fas fa-boxes"></i></div><p class="menu-icons-txt">Fontes de recursos</p></a></li>
+                        </ul>
+                        <i class="fas fa-times fa-2x float-right btn-right cursor"></i>
+                    </div>
+                    @include('osc.detail-general')
+                    @include('osc.detail-area')
+                    @include('osc.detail-description')
+                    @include('osc.detail-titration')
+                    @include('osc.detail-governance')
+                    @include('osc.detail-participation')
+                    @include('osc.detail-projects')
+                    @include('osc.detail-resources')
+                    <br>
+                </div>
+
             </div>
 
         </div>
 
-    </div>
+    @endif
+
+
+
+
+
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>

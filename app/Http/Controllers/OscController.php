@@ -40,9 +40,14 @@ class OscController extends Controller{
 
         $situacao = curlSituacao();
 
+        $status = curl('', $id);
         $cabecalho = curl('cabecalho', $id);
         $dados_gerais = curl('dados_gerais', $id);
         $descricao = curl('descricao', $id);
+
+
+
+        //Log::warning($dados_gerais);
 
         // Verificar se dados essenciais foram carregados
         if (!$cabecalho || !isset($cabecalho->tx_razao_social_osc)) {
@@ -97,6 +102,8 @@ class OscController extends Controller{
 
         //return $valorSituacao;
 
+        //return response()->json($status);
+
         return view($this->module.'.detail', [
             'id_osc' => $id,
             'stituacao_cadastral' => $valorSituacao,
@@ -122,6 +129,8 @@ class OscController extends Controller{
             'recursos' => $recursos,
             'projetos' => $projetos,
             'objetivos_osc' => $objetivos_osc,
+
+            'status' => $status,
         ]);
     }
 
@@ -510,17 +519,17 @@ class OscController extends Controller{
     public function chartData($id) {
         $recursos = curlList('anos_recursos', $id);
         $chartData = [];
-        
+
         foreach($recursos as $ano) {
             $recursos_ano = curlListAno('recursos', $id, $ano);
-            
+
             $totais = [
                 'publicos' => 0,
                 'privados' => 0,
                 'nao_financeiros' => 0,
                 'proprios' => 0
             ];
-            
+
             if(!empty($recursos_ano)) {
                 // Recursos Públicos (tipo 1)
                 if(isset($recursos_ano[1]) && is_array($recursos_ano[1])) {
@@ -530,7 +539,7 @@ class OscController extends Controller{
                         }
                     }
                 }
-                
+
                 // Recursos Privados (tipo 2)
                 if(isset($recursos_ano[2]) && is_array($recursos_ano[2])) {
                     foreach($recursos_ano[2] as $key => $item) {
@@ -539,7 +548,7 @@ class OscController extends Controller{
                         }
                     }
                 }
-                
+
                 // Recursos Não Financeiros (tipo 3)
                 if(isset($recursos_ano[3]) && is_array($recursos_ano[3])) {
                     foreach($recursos_ano[3] as $key => $item) {
@@ -548,7 +557,7 @@ class OscController extends Controller{
                         }
                     }
                 }
-                
+
                 // Recursos Próprios (tipo 4)
                 if(isset($recursos_ano[4]) && is_array($recursos_ano[4])) {
                     foreach($recursos_ano[4] as $key => $item) {
@@ -558,10 +567,10 @@ class OscController extends Controller{
                     }
                 }
             }
-            
+
             $chartData[$ano] = $totais;
         }
-        
+
         return response()->json($chartData);
     }
 
