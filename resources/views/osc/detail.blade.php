@@ -46,7 +46,7 @@
     ?>
 
 
-     @if(isset($status->bo_osc_ativa) && $status->bo_osc_ativa == false)
+     @if(isset($status->bo_osc_ativa) && !$status->bo_osc_ativa)
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
