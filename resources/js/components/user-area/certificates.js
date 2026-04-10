@@ -5,6 +5,7 @@ class Certificates extends React.Component{
             loadingList:false,
             loading:false,
             certificates:[],
+            bo_nao_possui_certificacoes: false,
             cd_certificado:{
                 1: 'Utilidade Pública Municipal',
                 2: 'Utilidade Pública Estadual',
@@ -62,10 +63,49 @@ class Certificates extends React.Component{
         this.callModal = this.callModal.bind(this);
         //this.edit = this.edit.bind(this);
         this.callModalExcluir = this.callModalExcluir.bind(this);
+        this.handleCheckCertificacoes = this.handleCheckCertificacoes.bind(this);
     }
 
     componentDidMount(){
         this.list();
+        this.getOscData();
+    }
+
+    getOscData(){
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2+'osc/'+this.props.id,
+            cache: false,
+            success: function (data) {
+                this.setState({bo_nao_possui_certificacoes: data.bo_nao_possui_certificacoes || false});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    handleCheckCertificacoes(event){
+        const checked = event.target.checked;
+        this.setState({bo_nao_possui_certificacoes: checked});
+
+        $.ajax({
+            method: 'PUT',
+            url: getBaseUrl2+'osc/'+this.props.id,
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
+            data: {
+                bo_nao_possui_certificacoes: checked,
+                ft_nao_possui_certificacoes: "Representante de OSC"
+            },
+            cache: false,
+            success: function(data) {
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
     }
 
 
@@ -274,6 +314,13 @@ class Certificates extends React.Component{
                     <hr/>
                 </div>
 
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <input type="checkbox" className="custom-control-input" id="checkCertificacoes" checked={this.state.bo_nao_possui_certificacoes} onChange={this.handleCheckCertificacoes} />
+                    <label className="custom-control-label" htmlFor="checkCertificacoes" >Não possui títulos ou certificados</label>
+                </div>
+
+                {!this.state.bo_nao_possui_certificacoes && (
+                <div>
                 <div style={{display: this.state.loadingList ? 'true' : 'none'}}>
                     <img style={{marginTop: '80px'}} src="/img/loading.gif" width={'150px'} alt="carregando" title="carregando"/>
                 </div>
@@ -305,6 +352,8 @@ class Certificates extends React.Component{
                     </div>
 
                 </div>
+                </div>
+                )}
 
                 {modal}
                 {modalExcluir}
