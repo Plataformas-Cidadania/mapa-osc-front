@@ -7,7 +7,8 @@ class Descricao extends React.Component {
         tx_missao_osc: '',
         tx_visao_osc: '',
         tx_finalidades_estatutarias: '',
-        tx_link_estatuto_osc: ''
+        tx_link_estatuto_osc: '',
+        bo_nao_possui_link_estatuto: false
       },
       requireds: {
         tx_historico: true,
@@ -33,9 +34,58 @@ class Descricao extends React.Component {
     this.updateDescricao = this.updateDescricao.bind(this);
     this.validate = this.validate.bind(this);
     this.getDescricao = this.getDescricao.bind(this);
+    this.handleCheckEstatuto = this.handleCheckEstatuto.bind(this);
   }
   componentDidMount() {
     this.getDescricao();
+    this.getOscData();
+  }
+  getOscData() {
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'osc/' + this.props.id,
+      cache: false,
+      success: function (data) {
+        let form = this.state.form;
+        form.bo_nao_possui_link_estatuto = data.bo_nao_possui_link_estatuto || false;
+        if (form.bo_nao_possui_link_estatuto) {
+          form.tx_link_estatuto_osc = '';
+        }
+        this.setState({
+          form: form
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
+  }
+  handleCheckEstatuto(event) {
+    const checked = event.target.checked;
+    let form = this.state.form;
+    form.bo_nao_possui_link_estatuto = checked;
+    if (checked) {
+      form.tx_link_estatuto_osc = '';
+    }
+    this.setState({
+      form: form
+    });
+    $.ajax({
+      method: 'PUT',
+      url: getBaseUrl2 + 'osc/' + this.props.id,
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('@App:token')
+      },
+      data: {
+        bo_nao_possui_link_estatuto: checked,
+        ft_nao_possui_link_estatuto: "Representante de OSC"
+      },
+      cache: false,
+      success: function (data) {}.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
   }
   getDescricao() {
     this.setState({
@@ -194,6 +244,20 @@ class Descricao extends React.Component {
     }, "Finalidades estatut\xE1rias da OSC"), /*#__PURE__*/React.createElement("div", {
       className: "label-box-info-tx-off"
     }, /*#__PURE__*/React.createElement("p", null, "\xA0"))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      className: "custom-control-input",
+      id: "checkConselho",
+      checked: this.state.form.bo_nao_possui_link_estatuto,
+      onChange: this.handleCheckEstatuto
+    }), /*#__PURE__*/React.createElement("label", {
+      className: "custom-control-label",
+      htmlFor: "checkConselho"
+    }, "N\xE3o possui Link para o estatuto")), !this.state.form.bo_nao_possui_link_estatuto && /*#__PURE__*/React.createElement("div", {
       className: "label-float"
     }, /*#__PURE__*/React.createElement("input", {
       className: "form-control form-g ",

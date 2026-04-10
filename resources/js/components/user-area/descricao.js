@@ -8,7 +8,7 @@ class Descricao extends React.Component{
                 tx_visao_osc: '',
                 tx_finalidades_estatutarias: '',
                 tx_link_estatuto_osc: '',
-
+                bo_nao_possui_link_estatuto: false,
             },
             requireds: {
                 tx_historico: true,
@@ -37,10 +37,59 @@ class Descricao extends React.Component{
         this.updateDescricao = this.updateDescricao.bind(this);
         this.validate = this.validate.bind(this);
         this.getDescricao = this.getDescricao.bind(this);
+        this.handleCheckEstatuto = this.handleCheckEstatuto.bind(this);
     }
 
     componentDidMount(){
         this.getDescricao();
+        this.getOscData();
+    }
+
+    getOscData(){
+        $.ajax({
+            method: 'GET',
+            url: getBaseUrl2+'osc/'+this.props.id,
+            cache: false,
+            success: function (data) {
+                let form = this.state.form;
+                form.bo_nao_possui_link_estatuto = data.bo_nao_possui_link_estatuto || false;
+                if(form.bo_nao_possui_link_estatuto){
+                    form.tx_link_estatuto_osc = '';
+                }
+                this.setState({form: form});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    handleCheckEstatuto(event){
+        const checked = event.target.checked;
+        let form = this.state.form;
+        form.bo_nao_possui_link_estatuto = checked;
+        if(checked){
+            form.tx_link_estatuto_osc = '';
+        }
+        this.setState({form: form});
+
+        $.ajax({
+            method: 'PUT',
+            url: getBaseUrl2+'osc/'+this.props.id,
+            headers: {
+                Authorization: 'Bearer '+localStorage.getItem('@App:token')
+            },
+            data: {
+                bo_nao_possui_link_estatuto: checked,
+                ft_nao_possui_link_estatuto: "Representante de OSC"
+            },
+            cache: false,
+            success: function(data) {
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err.toString());
+            }.bind(this)
+        });
     }
 
     getDescricao(){
@@ -165,6 +214,12 @@ class Descricao extends React.Component{
                                             </div>
                                         </div>
 
+                                        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                            <input type="checkbox" className="custom-control-input" id="checkConselho" checked={this.state.form.bo_nao_possui_link_estatuto} onChange={this.handleCheckEstatuto} />
+                                            <label className="custom-control-label" htmlFor="checkConselho" >Não possui Link para o estatuto</label>
+                                        </div>
+
+                                        {!this.state.form.bo_nao_possui_link_estatuto && (
                                         <div className="label-float">
                                             <input className={"form-control form-g "} type="text" name="tx_link_estatuto_osc" onChange={this.handleInputChange} value={this.state.form.tx_link_estatuto_osc}
                                                    placeholder={this.state.placeholder.tx_link_estatuto_osc} />
@@ -173,6 +228,7 @@ class Descricao extends React.Component{
                                                 <p>&nbsp;</p>
                                             </div>
                                         </div>
+                                        )}
 
                                     </div>
                                 </div>
