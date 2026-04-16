@@ -38,7 +38,6 @@ class Descricao extends React.Component {
   }
   componentDidMount() {
     this.getDescricao();
-    this.getOscData();
   }
   getOscData() {
     $.ajax({
@@ -47,7 +46,7 @@ class Descricao extends React.Component {
       cache: false,
       success: function (data) {
         let form = this.state.form;
-        form.bo_nao_possui_link_estatuto = data.bo_nao_possui_link_estatuto || false;
+        form.bo_nao_possui_link_estatuto = !!data.bo_nao_possui_link_estatuto;
         if (form.bo_nao_possui_link_estatuto) {
           form.tx_link_estatuto_osc = '';
         }
@@ -97,11 +96,14 @@ class Descricao extends React.Component {
       url: getBaseUrl2 + 'osc/descricao/' + this.props.id,
       cache: false,
       success: function (data) {
+        data.bo_nao_possui_link_estatuto = !!data.bo_nao_possui_link_estatuto;
         this.setState({
           loading: false,
           form: data,
           button: true
-        });
+        }, function () {
+          this.getOscData();
+        }.bind(this));
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(status, err.toString());
@@ -252,7 +254,7 @@ class Descricao extends React.Component {
       type: "checkbox",
       className: "custom-control-input",
       id: "checkConselho",
-      checked: this.state.form.bo_nao_possui_link_estatuto,
+      checked: !!this.state.form.bo_nao_possui_link_estatuto,
       onChange: this.handleCheckEstatuto
     }), /*#__PURE__*/React.createElement("label", {
       className: "custom-control-label",

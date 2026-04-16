@@ -42,7 +42,6 @@ class Descricao extends React.Component{
 
     componentDidMount(){
         this.getDescricao();
-        this.getOscData();
     }
 
     getOscData(){
@@ -52,7 +51,7 @@ class Descricao extends React.Component{
             cache: false,
             success: function (data) {
                 let form = this.state.form;
-                form.bo_nao_possui_link_estatuto = data.bo_nao_possui_link_estatuto || false;
+                form.bo_nao_possui_link_estatuto = !!data.bo_nao_possui_link_estatuto;
                 if(form.bo_nao_possui_link_estatuto){
                     form.tx_link_estatuto_osc = '';
                 }
@@ -100,7 +99,10 @@ class Descricao extends React.Component{
             url: getBaseUrl2+'osc/descricao/'+this.props.id,
             cache: false,
             success: function (data) {
-                this.setState({loading: false, form: data, button:true})
+                data.bo_nao_possui_link_estatuto = !!data.bo_nao_possui_link_estatuto;
+                this.setState({loading: false, form: data, button:true}, function(){
+                    this.getOscData();
+                }.bind(this));
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(status, err.toString());
@@ -215,7 +217,7 @@ class Descricao extends React.Component{
                                         </div>
 
                                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                            <input type="checkbox" className="custom-control-input" id="checkConselho" checked={this.state.form.bo_nao_possui_link_estatuto} onChange={this.handleCheckEstatuto} />
+                                            <input type="checkbox" className="custom-control-input" id="checkConselho" checked={!!this.state.form.bo_nao_possui_link_estatuto} onChange={this.handleCheckEstatuto} />
                                             <label className="custom-control-label" htmlFor="checkConselho" >Não possui Link para o estatuto</label>
                                         </div>
 
