@@ -32,7 +32,7 @@
     </style>
 
     <div class="bg-lgt">
-        <div class="container">
+        <div class="container containerFull">
             <div class="row">
                 <div class="col-md-12">
                     <header>
@@ -132,5 +132,19 @@
             </div>
         </div>
     </div>
+
+
+
+    @if($rota=="superset")
+        <style>
+            .containerFull {
+                min-width: -webkit-fill-available !important;
+            }
+            .containerFull iframe {
+                border: 0;
+            }
+        </style>
+    @endif
+
 
 @endsection
