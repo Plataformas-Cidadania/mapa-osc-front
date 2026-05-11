@@ -6,7 +6,11 @@ class FormProjeto extends React.Component {
         tx_nome_projeto: '',
         dt_inicio_projeto: '',
         dt_fim_projeto: '',
-        cd_uf: ''
+        cd_uf: '',
+        bo_possui_emenda: false,
+        nr_numero_proposta: '',
+        tx_nome_proposta: '',
+        nr_numero_instrumento: ''
       },
       button: true,
       btnContinue: false,
@@ -117,7 +121,11 @@ class FormProjeto extends React.Component {
       tx_descricao_projeto: '',
       tx_metodologia_monitoramento: '',
       cd_abrangencia_projeto: 0,
-      cd_zona_atuacao_projeto: 0
+      cd_zona_atuacao_projeto: 0,
+      bo_possui_emenda: false,
+      nr_numero_proposta: '',
+      tx_nome_proposta: '',
+      nr_numero_instrumento: ''
     };
     this.setState({
       form: form
@@ -196,7 +204,15 @@ class FormProjeto extends React.Component {
           ft_metodologia_monitoramento: 'Representante de OSC',
           ft_identificador_projeto_externo: 'Representante de OSC',
           ft_municipio: 'Representante de OSC',
-          ft_uf: 'Representante de OSC'
+          ft_uf: 'Representante de OSC',
+          bo_possui_emenda: this.state.form.bo_possui_emenda,
+          ft_possui_emenda: 'Representante de OSC',
+          nr_numero_proposta: this.state.form.nr_numero_proposta,
+          ft_numero_proposta: 'Representante de OSC',
+          tx_nome_proposta: this.state.form.tx_nome_proposta,
+          ft_nome_proposta: 'Representante de OSC',
+          nr_numero_instrumento: this.state.form.nr_numero_instrumento,
+          ft_numero_instrumento: 'Representante de OSC'
         },
         cache: false,
         success: function (data) {
@@ -1301,6 +1317,68 @@ class FormProjeto extends React.Component {
       htmlFor: "cd_zona_atuacao_projeto",
       className: "label-select"
     }, "Atua\xE7\xE3o")), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-4",
+      style: {
+        paddingTop: '10px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "custom-control custom-checkbox"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      className: "custom-control-input",
+      id: "bo_possui_emenda",
+      name: "bo_possui_emenda",
+      onChange: this.handleInputChange,
+      checked: this.state.form.bo_possui_emenda
+    }), /*#__PURE__*/React.createElement("label", {
+      className: "custom-control-label",
+      htmlFor: "bo_possui_emenda"
+    }, "Possui emenda"))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "number",
+      name: "nr_numero_proposta",
+      onChange: this.handleInputChange,
+      value: this.state.form.nr_numero_proposta,
+      placeholder: "N\xFAmero da proposta"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "nr_numero_proposta"
+    }, "N\xFAmero da proposta"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_nome_proposta",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_nome_proposta,
+      placeholder: "Nome da proposta"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_nome_proposta"
+    }, "Nome da proposta"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "number",
+      name: "nr_numero_instrumento",
+      onChange: this.handleInputChange,
+      value: this.state.form.nr_numero_instrumento,
+      placeholder: "N\xFAmero do instrumento"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "nr_numero_instrumento"
+    }, "N\xFAmero do instrumento"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-success",

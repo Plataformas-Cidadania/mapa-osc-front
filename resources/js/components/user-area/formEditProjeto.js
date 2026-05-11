@@ -413,6 +413,14 @@ class FormEditProjeto extends React.Component{
                     tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
                     cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
                     cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
+                    bo_possui_emenda: this.state.form.bo_possui_emenda,
+                    ft_possui_emenda: 'Representante de OSC',
+                    nr_numero_proposta: this.state.form.nr_numero_proposta,
+                    ft_numero_proposta: 'Representante de OSC',
+                    tx_nome_proposta: this.state.form.tx_nome_proposta,
+                    ft_nome_proposta: 'Representante de OSC',
+                    nr_numero_instrumento: this.state.form.nr_numero_instrumento,
+                    ft_numero_instrumento: 'Representante de OSC',
                 },
                 cache: false,
                 success: function(data) {
@@ -1316,6 +1324,43 @@ class FormEditProjeto extends React.Component{
                                         <option value="2">Urbana</option>
                                         <option value="3">Rural/Urbana</option>
                                     </select><br/>
+                                </div>
+
+                                <div className="col-md-4" style={{paddingTop: '10px'}}>
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="bo_possui_emenda_edit" name="bo_possui_emenda" onChange={this.handleInputChange} checked={this.state.form.bo_possui_emenda || false} />
+                                        <label className="custom-control-label" htmlFor="bo_possui_emenda_edit">Possui emenda</label>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="number" name="nr_numero_proposta" onChange={this.handleInputChange}
+                                               value={this.state.form.nr_numero_proposta || ''}
+                                               placeholder="Número da proposta" />
+                                        <label htmlFor="nr_numero_proposta">Número da proposta</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="text" name="tx_nome_proposta" onChange={this.handleInputChange}
+                                               value={this.state.form.tx_nome_proposta || ''}
+                                               placeholder="Nome da proposta" />
+                                        <label htmlFor="tx_nome_proposta">Nome da proposta</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="number" name="nr_numero_instrumento" onChange={this.handleInputChange}
+                                               value={this.state.form.nr_numero_instrumento || ''}
+                                               placeholder="Número do instrumento" />
+                                        <label htmlFor="nr_numero_instrumento">Número do instrumento</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
                                 </div>
 
                                 <div className="col-md-12">

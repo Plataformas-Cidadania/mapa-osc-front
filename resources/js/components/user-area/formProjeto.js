@@ -7,6 +7,10 @@ class FormProjeto extends React.Component{
                 dt_inicio_projeto: '',
                 dt_fim_projeto: '',
                 cd_uf: '',
+                bo_possui_emenda: false,
+                nr_numero_proposta: '',
+                tx_nome_proposta: '',
+                nr_numero_instrumento: '',
             },
             button: true,
             btnContinue: false,
@@ -147,6 +151,10 @@ class FormProjeto extends React.Component{
             tx_metodologia_monitoramento: '',
             cd_abrangencia_projeto: 0,
             cd_zona_atuacao_projeto: 0,
+            bo_possui_emenda: false,
+            nr_numero_proposta: '',
+            tx_nome_proposta: '',
+            nr_numero_instrumento: '',
         };
 
         this.setState({form: form});
@@ -228,6 +236,14 @@ class FormProjeto extends React.Component{
                     ft_identificador_projeto_externo: 'Representante de OSC',
                     ft_municipio: 'Representante de OSC',
                     ft_uf: 'Representante de OSC',
+                    bo_possui_emenda: this.state.form.bo_possui_emenda,
+                    ft_possui_emenda: 'Representante de OSC',
+                    nr_numero_proposta: this.state.form.nr_numero_proposta,
+                    ft_numero_proposta: 'Representante de OSC',
+                    tx_nome_proposta: this.state.form.tx_nome_proposta,
+                    ft_nome_proposta: 'Representante de OSC',
+                    nr_numero_instrumento: this.state.form.nr_numero_instrumento,
+                    ft_numero_instrumento: 'Representante de OSC',
                 },
                 cache: false,
                 success: function(data) {
@@ -905,7 +921,6 @@ class FormProjeto extends React.Component{
             }.bind(this));
         }
 
-
         let publico_projeto = null;
         if(this.state.datalistPublicos) {
             publico_projeto = this.state.datalistPublicos.map(function (item, index) {
@@ -1222,6 +1237,43 @@ class FormProjeto extends React.Component{
                                         <option value="3">Rural/Urbana</option>
                                     </select>
                                     <label htmlFor="cd_zona_atuacao_projeto" className="label-select">Atuação</label>
+                                </div>
+
+                                <div className="col-md-4" style={{paddingTop: '10px'}}>
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="bo_possui_emenda" name="bo_possui_emenda" onChange={this.handleInputChange} checked={this.state.form.bo_possui_emenda} />
+                                        <label className="custom-control-label" htmlFor="bo_possui_emenda">Possui emenda</label>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="number" name="nr_numero_proposta" onChange={this.handleInputChange}
+                                               value={this.state.form.nr_numero_proposta}
+                                               placeholder="Número da proposta" />
+                                        <label htmlFor="nr_numero_proposta">Número da proposta</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="text" name="tx_nome_proposta" onChange={this.handleInputChange}
+                                               value={this.state.form.tx_nome_proposta}
+                                               placeholder="Nome da proposta" />
+                                        <label htmlFor="tx_nome_proposta">Nome da proposta</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-4">
+                                    <div className="label-float">
+                                        <input className={"form-control form-g "} type="number" name="nr_numero_instrumento" onChange={this.handleInputChange}
+                                               value={this.state.form.nr_numero_instrumento}
+                                               placeholder="Número do instrumento" />
+                                        <label htmlFor="nr_numero_instrumento">Número do instrumento</label>
+                                        <div className="label-box-info-off"><p>&nbsp;</p></div>
+                                    </div>
                                 </div>
 
                                 <div className="col-md-12">

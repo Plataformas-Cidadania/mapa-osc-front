@@ -366,7 +366,15 @@ class FormEditProjeto extends React.Component {
           tx_descricao_projeto: this.state.form.tx_descricao_projeto,
           tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
           cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
-          cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto
+          cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
+          bo_possui_emenda: this.state.form.bo_possui_emenda,
+          ft_possui_emenda: 'Representante de OSC',
+          nr_numero_proposta: this.state.form.nr_numero_proposta,
+          ft_numero_proposta: 'Representante de OSC',
+          tx_nome_proposta: this.state.form.tx_nome_proposta,
+          ft_nome_proposta: 'Representante de OSC',
+          nr_numero_instrumento: this.state.form.nr_numero_instrumento,
+          ft_numero_instrumento: 'Representante de OSC'
         },
         cache: false,
         success: function (data) {
@@ -1319,6 +1327,68 @@ class FormEditProjeto extends React.Component {
     }, "Urbana"), /*#__PURE__*/React.createElement("option", {
       value: "3"
     }, "Rural/Urbana")), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement("div", {
+      className: "col-md-4",
+      style: {
+        paddingTop: '10px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "custom-control custom-checkbox"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      className: "custom-control-input",
+      id: "bo_possui_emenda_edit",
+      name: "bo_possui_emenda",
+      onChange: this.handleInputChange,
+      checked: this.state.form.bo_possui_emenda || false
+    }), /*#__PURE__*/React.createElement("label", {
+      className: "custom-control-label",
+      htmlFor: "bo_possui_emenda_edit"
+    }, "Possui emenda"))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "number",
+      name: "nr_numero_proposta",
+      onChange: this.handleInputChange,
+      value: this.state.form.nr_numero_proposta || '',
+      placeholder: "N\xFAmero da proposta"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "nr_numero_proposta"
+    }, "N\xFAmero da proposta"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "text",
+      name: "tx_nome_proposta",
+      onChange: this.handleInputChange,
+      value: this.state.form.tx_nome_proposta || '',
+      placeholder: "Nome da proposta"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "tx_nome_proposta"
+    }, "Nome da proposta"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
+      className: "form-group col-md-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "label-float"
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "form-control form-g ",
+      type: "number",
+      name: "nr_numero_instrumento",
+      onChange: this.handleInputChange,
+      value: this.state.form.nr_numero_instrumento || '',
+      placeholder: "N\xFAmero do instrumento"
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "nr_numero_instrumento"
+    }, "N\xFAmero do instrumento"), /*#__PURE__*/React.createElement("div", {
+      className: "label-box-info-off"
+    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-12"
     }, /*#__PURE__*/React.createElement("button", {
       className: "btn btn-success",
