@@ -32,7 +32,7 @@
     </style>
 
     <div class="bg-lgt">
-        <div class="container containerFull">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <header>
@@ -46,7 +46,7 @@
         </div>
     </div>
     <br>
-    <div class="container">
+    <div class="container containerFull">
         <div class="row">
             @if(count($subMenus)>1)
             <div class="col-md-3">
@@ -134,9 +134,9 @@
     </div>
 
 
-    <?php echo $rota;?>
+    <?php //echo $rota;?>
     @if(trim($rota)=="superset")
-            <?php echo $rota;?>
+            <?php //echo $rota;?>
         <style>
             .containerFull {
                 min-width: -webkit-fill-available !important;
