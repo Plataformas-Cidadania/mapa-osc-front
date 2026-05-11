@@ -134,8 +134,9 @@
     </div>
 
 
-
-    @if($rota=="superset")
+    <?php echo $rota;?>
+    @if(trim($rota)=="superset")
+            <?php echo $rota;?>
         <style>
             .containerFull {
                 min-width: -webkit-fill-available !important;
