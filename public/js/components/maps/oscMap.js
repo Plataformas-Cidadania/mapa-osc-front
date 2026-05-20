@@ -136,13 +136,146 @@ class OscMap extends React.Component {
     //this.resetHighlight = this.resetHighlight.bind(this);
     this.zoomToFeature = this.zoomToFeature.bind(this);
     //this.onEachFeature = this.onEachFeature.bind(this);
+    this.loadAreasAtuacao = this.loadAreasAtuacao.bind(this);
+    this.aplicarFiltroArea = this.aplicarFiltroArea.bind(this);
   }
   componentDidMount() {
     this.loadFirstMap();
     this.loadMap();
     this.loadOscList();
     this.loadSituacao();
+    this.loadAreasAtuacao();
     //this.loadAllUfs();
+  }
+  loadAreasAtuacao() {
+    $.ajax({
+      method: 'GET',
+      url: getBaseUrl2 + 'area_atuacao',
+      cache: false,
+      success: function (data) {
+        this.setState({
+          areasAtuacao: data || []
+        });
+        let container = document.getElementById('filtro-area-container');
+        if (container && data) {
+          container.innerHTML = '';
+          data.forEach(function (area) {
+            let div = document.createElement('div');
+            div.style.marginBottom = '4px';
+            div.innerHTML = '<label style="cursor:pointer;font-size:12px;margin:0;display:flex;align-items:center;gap:4px;">' + '<input type="checkbox" value="' + area.cd_area_atuacao + '"/> ' + area.tx_nome_area_atuacao + '</label>';
+            container.appendChild(div);
+          });
+        }
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(status, err.toString());
+      }
+    });
+  }
+  aplicarFiltroArea() {
+    let checkboxes = document.querySelectorAll('#filtro-area-container input[type=checkbox]:checked');
+
+    // Sem filtro = recarrega tudo como no primeiro carregamento
+    if (checkboxes.length === 0) {
+      let mapElements = this.state.mapElements;
+      mapElements.markersGroup.clearLayers();
+      this.setState({
+        mapElements: mapElements,
+        paginaOscList: 0
+      }, function () {
+        this.loadOscList();
+        this.loadSituacao();
+        // Recarrega territórios/clusters conforme a origem
+        let origem = this.state.origem;
+        if (origem === 'busca-avancada') {
+          this.loadDataPontosOscPesquisaAvancada();
+        } else if (parseInt(origem) > 53) {
+          this.loadDataPontosPorMunicipio();
+        } else if (parseInt(origem) >= 11 && parseInt(origem) <= 53) {
+          this.loadTerritorioUf();
+        } else if (parseInt(origem) >= 1 && parseInt(origem) <= 5) {
+          this.loadTerritorio();
+        } else if (parseInt(origem) === 0) {
+          this.loadTerritorio();
+        } else {
+          this.loadDataPontosOscPesquisa();
+        }
+      });
+      return;
+    }
+    let areasObj = {};
+    checkboxes.forEach(function (cb) {
+      areasObj['cd_area_atuacao-' + cb.value] = true;
+    });
+    let busca = JSON.stringify({
+      avancado: {
+        areasSubareasAtuacao: areasObj
+      }
+    });
+    this.setState({
+      processingOscPontos: true,
+      processingList: true
+    });
+
+    // Atualiza lista
+    $.ajax({
+      method: 'POST',
+      url: 'osc/busca_avancada/lista',
+      data: {
+        busca: busca,
+        pagina: 0
+      },
+      cache: false,
+      success: function (data) {
+        this.setState({
+          dataOscList: data,
+          totalOscList: data.length,
+          paginaOscList: 0,
+          processingList: false
+        }, function () {
+          this.getLogos();
+        });
+      }.bind(this),
+      error: function () {
+        this.setState({
+          processingList: false
+        });
+      }.bind(this)
+    });
+
+    // Atualiza mapa
+    $.ajax({
+      method: 'POST',
+      url: 'osc/busca_avancada/geo',
+      data: {
+        busca: busca
+      },
+      cache: false,
+      success: function (data) {
+        if (!data) {
+          this.setState({
+            processingOscPontos: false
+          });
+          return;
+        }
+        data = JSON.parse(data);
+        let mapElements = this.state.mapElements;
+        mapElements.markersGroup.clearLayers();
+        this.setState({
+          dataOscCluster: data,
+          totalOscList: data.length,
+          processingOscPontos: false,
+          mapElements: mapElements
+        }, function () {
+          this.populateMapCluster();
+        });
+      }.bind(this),
+      error: function () {
+        this.setState({
+          processingOscPontos: false
+        });
+      }.bind(this)
+    });
   }
   componentWillReceiveProps(props) {
     //console.log('will receve props');
@@ -415,6 +548,48 @@ class OscMap extends React.Component {
     let divControlZoomMap = controlZoomMapObj.getContainer();
     //coloca o div do controle no div externo
     controlsMap.appendChild(divControlZoomMap);
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////CONTROLE FILTRO AREA ATUACAO//////////////////////////////////////////
+    let controlFiltroArea = L.Control.extend({
+      options: {
+        position: 'topleft'
+      },
+      onAdd: function () {
+        let container = L.DomUtil.create('div', 'leaflet-control');
+        container.style.background = 'white';
+        container.style.borderRadius = '8px';
+        container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+
+        // Botão toggle
+        let btnToggle = L.DomUtil.create('div', '', container);
+        btnToggle.innerHTML = '<i class="fas fa-filter"></i> <span style="font-size:13px;font-weight:600;">Área de Atuação</span>';
+        btnToggle.style.cssText = 'cursor:pointer;padding:8px 12px;white-space:nowrap;';
+
+        // Painel (inicia fechado)
+        let painel = L.DomUtil.create('div', '', container);
+        painel.id = 'filtro-area-painel';
+        painel.style.cssText = 'display:none;padding:8px;border-top:1px solid #eee;max-height:350px;overflow-y:auto;min-width:220px;';
+        let checkContainer = L.DomUtil.create('div', '', painel);
+        checkContainer.id = 'filtro-area-container';
+        checkContainer.innerHTML = '<small style="color:#999;">Carregando...</small>';
+        let btnAplicar = L.DomUtil.create('button', 'btn btn-primary btn-sm btn-block', painel);
+        btnAplicar.innerHTML = '<i class="fas fa-search"></i> Filtrar';
+        btnAplicar.style.marginTop = '8px';
+        btnAplicar.onclick = function (e) {
+          e.stopPropagation();
+          thisReact.aplicarFiltroArea();
+        };
+        btnToggle.onclick = function (e) {
+          e.stopPropagation();
+          painel.style.display = painel.style.display === 'none' ? 'block' : 'none';
+        };
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(container);
+        return container;
+      }
+    });
+    mapElements.map.addControl(new controlFiltroArea());
     /////////////////////////////////////////////////////////////////////////////////////
 
     //DESABILITA O ZOOM PELO SCHROLL DO MOUSE
@@ -2097,6 +2272,16 @@ class OscMap extends React.Component {
                     left: 100%;
                   }
 
+                  .loading-dots {
+                    animation: blink 1.4s infinite;
+                  }
+
+                  @keyframes blink {
+                    0%, 20% { opacity: 0; }
+                    50% { opacity: 1; }
+                    80%, 100% { opacity: 0; }
+                  }
+
                 `), /*#__PURE__*/React.createElement("div", {
       className: "modal fade",
       id: "modalAvancada",
@@ -2258,7 +2443,9 @@ class OscMap extends React.Component {
         fontWeight: 'bold',
         lineHeight: '1'
       }
-    }, this.state.totalOscList || '0'))), /*#__PURE__*/React.createElement("div", {
+    }, this.state.processingList || this.state.processingOscPontos ? /*#__PURE__*/React.createElement("span", {
+      className: "loading-dots"
+    }, "...") : this.state.totalOscList || '0'))), /*#__PURE__*/React.createElement("div", {
       className: "col-md-9"
     }, this.state.processingList ? /*#__PURE__*/React.createElement("div", {
       className: "loading-stats",
