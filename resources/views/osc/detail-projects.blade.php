@@ -30,13 +30,26 @@
                     $projetos_tipo_parceria = curl('projeto/tipo_parcerias', $projeto->id);
                     $projetos_objetivo = curlList('projeto/objetivos', $projeto->id);
 
-                    $s_projeto = [
-                        1 => 'Arquivado, cancelado ou indeferido',
-                        2 => 'Finalizado',
-                        3 => 'Proposta',
-                        4 => 'Projeto em andamento',
-                        5 => 'Outro',
-                    ];
+                    if(!isset($s_projeto)){
+                        $api = env('APP_API_ROUTE');
+                        if(env('LOCALHOST_DOCKER') == 1){
+                            $api = env('HOST_DOCKER')."api/";
+                        }
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $api.'status_projeto');
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                        $response = curl_exec($ch);
+                        curl_close($ch);
+                        $statusList = json_decode($response);
+                        $s_projeto = [];
+                        if(is_array($statusList)){
+                            foreach($statusList as $item){
+                                $s_projeto[$item->cd_status_projeto] = $item->tx_nome_status_projeto;
+                            }
+                        }
+                    }
 
                     ?>
                     <div class="card">
@@ -59,7 +72,7 @@
                                         <div class="line-add">
                                             <?php echo iconType($projetos_descricao->ft_status_projeto); ?>
                                             <h2>Situação do projeto</h2>
-                                            <p>{{$projetos_descricao->cd_status_projeto == null ? $txt_alert_abb : $s_projeto[$projetos_descricao->cd_status_projeto]}}</p>
+                                            <p>{{$projetos_descricao->cd_status_projeto == null ? $txt_alert_abb : (isset($s_projeto[$projetos_descricao->cd_status_projeto]) ? $s_projeto[$projetos_descricao->cd_status_projeto] : 'Não informado')}}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
