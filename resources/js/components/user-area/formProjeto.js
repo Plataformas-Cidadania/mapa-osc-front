@@ -199,52 +199,62 @@ class FormProjeto extends React.Component{
         }
 
         this.setState({loading: true, button: false, showMsg: false, msg: ''}, function(){
+
+            const data = {
+                //id_osc: 455128,
+                id_osc: this.props.id_osc,
+                tx_nome_projeto: this.state.form.tx_nome_projeto,
+                cd_status_projeto: this.state.form.cd_status_projeto,
+                dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
+                dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
+                tx_link_projeto: this.state.form.tx_link_projeto,
+                nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
+                nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
+                nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
+                tx_descricao_projeto: this.state.form.tx_descricao_projeto,
+                tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
+                cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
+                cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
+
+                ft_nome_projeto: 'Representante de OSC',
+                ft_status_projeto: 'Representante de OSC',
+                ft_data_inicio_projeto: 'Representante de OSC',
+                ft_data_fim_projeto: 'Representante de OSC',
+                ft_link_projeto: 'Representante de OSC',
+                ft_total_beneficiarios: 'Representante de OSC',
+                ft_valor_captado_projeto: 'Representante de OSC',
+                ft_valor_total_projeto: 'Representante de OSC',
+                ft_abrangencia_projeto: 'Representante de OSC',
+                ft_zona_atuacao_projeto: 'Representante de OSC',
+                ft_descricao_projeto: 'Representante de OSC',
+                ft_metodologia_monitoramento: 'Representante de OSC',
+                ft_identificador_projeto_externo: 'Representante de OSC',
+                ft_municipio: 'Representante de OSC',
+                ft_uf: 'Representante de OSC',
+                bo_possui_emenda: this.state.form.bo_possui_emenda,
+                ft_possui_emenda: 'Representante de OSC',
+                ft_numero_proposta: 'Representante de OSC',
+                tx_nome_proposta: this.state.form.tx_nome_proposta,
+                ft_nome_proposta: 'Representante de OSC',
+                ft_numero_instrumento: 'Representante de OSC',
+            };
+
+            if (this.state.form.nr_numero_proposta !== '') {
+                data.nr_numero_proposta = this.state.form.nr_numero_proposta;
+            }
+
+            if (this.state.form.nr_numero_instrumento !== '') {
+                data.nr_numero_instrumento = this.state.form.nr_numero_instrumento;
+            }
+
+
             $.ajax({
                 method:'POST',
                 url: getBaseUrl2+'osc/projeto',
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('@App:token')
                 },
-                data:{
-                    //id_osc: 455128,
-                    id_osc: this.props.id_osc,
-                    tx_nome_projeto: this.state.form.tx_nome_projeto,
-                    cd_status_projeto: this.state.form.cd_status_projeto,
-                    dt_data_inicio_projeto: this.state.form.dt_data_inicio_projeto,
-                    dt_data_fim_projeto: this.state.form.dt_data_fim_projeto,
-                    tx_link_projeto: this.state.form.tx_link_projeto,
-                    nr_total_beneficiarios: this.state.form.nr_total_beneficiarios,
-                    nr_valor_total_projeto: this.state.form.nr_valor_total_projeto,
-                    nr_valor_captado_projeto: this.state.form.nr_valor_captado_projeto,
-                    tx_descricao_projeto: this.state.form.tx_descricao_projeto,
-                    tx_metodologia_monitoramento: this.state.form.tx_metodologia_monitoramento,
-                    cd_abrangencia_projeto: this.state.form.cd_abrangencia_projeto,
-                    cd_zona_atuacao_projeto: this.state.form.cd_zona_atuacao_projeto,
-
-                    ft_nome_projeto: 'Representante de OSC',
-                    ft_status_projeto: 'Representante de OSC',
-                    ft_data_inicio_projeto: 'Representante de OSC',
-                    ft_data_fim_projeto: 'Representante de OSC',
-                    ft_link_projeto: 'Representante de OSC',
-                    ft_total_beneficiarios: 'Representante de OSC',
-                    ft_valor_captado_projeto: 'Representante de OSC',
-                    ft_valor_total_projeto: 'Representante de OSC',
-                    ft_abrangencia_projeto: 'Representante de OSC',
-                    ft_zona_atuacao_projeto: 'Representante de OSC',
-                    ft_descricao_projeto: 'Representante de OSC',
-                    ft_metodologia_monitoramento: 'Representante de OSC',
-                    ft_identificador_projeto_externo: 'Representante de OSC',
-                    ft_municipio: 'Representante de OSC',
-                    ft_uf: 'Representante de OSC',
-                    bo_possui_emenda: this.state.form.bo_possui_emenda,
-                    ft_possui_emenda: 'Representante de OSC',
-                    nr_numero_proposta: this.state.form.nr_numero_proposta,
-                    ft_numero_proposta: 'Representante de OSC',
-                    tx_nome_proposta: this.state.form.tx_nome_proposta,
-                    ft_nome_proposta: 'Representante de OSC',
-                    nr_numero_instrumento: this.state.form.nr_numero_instrumento,
-                    ft_numero_instrumento: 'Representante de OSC',
-                },
+                data: data,
                 cache: false,
                 success: function(data) {
 
