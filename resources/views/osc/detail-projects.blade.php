@@ -239,6 +239,29 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="col-md-12">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="line-add">
+                                                        <?php echo iconType($projetos_descricao->ft_numero_proposta); ?>
+                                                    <h2>Total de beneficiários</h2>
+                                                    <p>{{$projetos_descricao->nr_numero_proposta == null ? $txt_alert_abb : $projetos_descricao->nr_numero_proposta}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="line-add">
+                                                        <?php echo iconType($projetos_descricao->ft_numero_instrumento); ?>
+                                                    <h2>Total de beneficiários</h2>
+                                                    <p>{{$projetos_descricao->nr_numero_instrumento == null ? $txt_alert_abb : $projetos_descricao->nr_numero_instrumento}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <div class="item-detail alert alert-secondary" >
                                             <h4>Objetivos do Desenvolvimento Sustentável - ODS:</h4>

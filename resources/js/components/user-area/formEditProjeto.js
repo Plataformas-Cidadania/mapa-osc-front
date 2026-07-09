@@ -304,7 +304,7 @@ class FormEditProjeto extends React.Component{
                     data.nr_valor_captado_projeto = parseFloat(data.nr_valor_captado_projeto)
                         .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
-                
+
                 this.setState({
                     form: data,
 
@@ -417,8 +417,8 @@ class FormEditProjeto extends React.Component{
                     ft_possui_emenda: 'Representante de OSC',
                     nr_numero_proposta: this.state.form.nr_numero_proposta,
                     ft_numero_proposta: 'Representante de OSC',
-                    tx_nome_proposta: this.state.form.tx_nome_proposta,
-                    ft_nome_proposta: 'Representante de OSC',
+                    /*tx_nome_proposta: this.state.form.tx_nome_proposta,
+                    ft_nome_proposta: 'Representante de OSC',*/
                     nr_numero_instrumento: this.state.form.nr_numero_instrumento,
                     ft_numero_instrumento: 'Representante de OSC',
                 },
@@ -1335,7 +1335,7 @@ class FormEditProjeto extends React.Component{
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">
-                                        <input className={"form-control form-g "} type="number" name="nr_numero_proposta" onChange={this.handleInputChange}
+                                        <input className={"form-control form-g "} type="text" name="nr_numero_proposta" onChange={this.handleInputChange}
                                                value={this.state.form.nr_numero_proposta || ''}
                                                placeholder="Número da proposta" />
                                         <label htmlFor="nr_numero_proposta">Número da proposta</label>
@@ -1343,7 +1343,7 @@ class FormEditProjeto extends React.Component{
                                     </div>
                                 </div>
 
-                                <div className="form-group col-md-4">
+                                {/*<div className="form-group col-md-4">
                                     <div className="label-float">
                                         <input className={"form-control form-g "} type="text" name="tx_nome_proposta" onChange={this.handleInputChange}
                                                value={this.state.form.tx_nome_proposta || ''}
@@ -1351,7 +1351,8 @@ class FormEditProjeto extends React.Component{
                                         <label htmlFor="tx_nome_proposta">Nome da proposta</label>
                                         <div className="label-box-info-off"><p>&nbsp;</p></div>
                                     </div>
-                                </div>
+                                </div>*/}
+
 
                                 <div className="form-group col-md-4">
                                     <div className="label-float">

@@ -371,8 +371,8 @@ class FormEditProjeto extends React.Component {
           ft_possui_emenda: 'Representante de OSC',
           nr_numero_proposta: this.state.form.nr_numero_proposta,
           ft_numero_proposta: 'Representante de OSC',
-          tx_nome_proposta: this.state.form.tx_nome_proposta,
-          ft_nome_proposta: 'Representante de OSC',
+          /*tx_nome_proposta: this.state.form.tx_nome_proposta,
+          ft_nome_proposta: 'Representante de OSC',*/
           nr_numero_instrumento: this.state.form.nr_numero_instrumento,
           ft_numero_instrumento: 'Representante de OSC'
         },
@@ -1349,7 +1349,7 @@ class FormEditProjeto extends React.Component {
       className: "label-float"
     }, /*#__PURE__*/React.createElement("input", {
       className: "form-control form-g ",
-      type: "number",
+      type: "text",
       name: "nr_numero_proposta",
       onChange: this.handleInputChange,
       value: this.state.form.nr_numero_proposta || '',
@@ -1357,21 +1357,6 @@ class FormEditProjeto extends React.Component {
     }), /*#__PURE__*/React.createElement("label", {
       htmlFor: "nr_numero_proposta"
     }, "N\xFAmero da proposta"), /*#__PURE__*/React.createElement("div", {
-      className: "label-box-info-off"
-    }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
-      className: "form-group col-md-4"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "label-float"
-    }, /*#__PURE__*/React.createElement("input", {
-      className: "form-control form-g ",
-      type: "text",
-      name: "tx_nome_proposta",
-      onChange: this.handleInputChange,
-      value: this.state.form.tx_nome_proposta || '',
-      placeholder: "Nome da proposta"
-    }), /*#__PURE__*/React.createElement("label", {
-      htmlFor: "tx_nome_proposta"
-    }, "Nome da proposta"), /*#__PURE__*/React.createElement("div", {
       className: "label-box-info-off"
     }, /*#__PURE__*/React.createElement("p", null, "\xA0")))), /*#__PURE__*/React.createElement("div", {
       className: "form-group col-md-4"
