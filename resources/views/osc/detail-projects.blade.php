@@ -246,7 +246,7 @@
                                             <div class="col-md-4">
                                                 <div class="line-add">
                                                         <?php echo iconType($projetos_descricao->ft_numero_proposta); ?>
-                                                    <h2>Total de beneficiários</h2>
+                                                    <h2>Número da proposta</h2>
                                                     <p>{{$projetos_descricao->nr_numero_proposta == null ? $txt_alert_abb : $projetos_descricao->nr_numero_proposta}}</p>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                                             <div class="col-md-4">
                                                 <div class="line-add">
                                                         <?php echo iconType($projetos_descricao->ft_numero_instrumento); ?>
-                                                    <h2>Total de beneficiários</h2>
+                                                    <h2>Número do instrumento</h2>
                                                     <p>{{$projetos_descricao->nr_numero_instrumento == null ? $txt_alert_abb : $projetos_descricao->nr_numero_instrumento}}</p>
                                                 </div>
                                             </div>
