@@ -123,6 +123,9 @@
                 <li>
                     <a href="cms/termos"><i class="fa fa-fw fa-file-text-o"></i> Termos</a>
                 </li>
+                <li>
+                    <a href="cms/areas-atuacao"><i class="fa fa-fw fa-tags"></i> Área de atuação</a>
+                </li>
 <!--                <li>
                     <a href="cms/publications"><i class="fa fa-fw fa-file-text-o"></i> Publicações</a>
                 </li>-->

@@ -294,6 +294,14 @@ Route::group(['middleware' => 'cms'], function () {
         Route::get('/cms/positionUp-termo/{id}', 'Cms\Controllers\TermoController@positionUp');
         Route::get('/cms/positionDown-termo/{id}', 'Cms\Controllers\TermoController@positionDown');
 
+        //AREAS DE ATUACAO
+        Route::get('/cms/areas-atuacao', 'Cms\Controllers\AreaAtuacaoController@index');
+        Route::get('/cms/listar-areas-atuacao', 'Cms\Controllers\AreaAtuacaoController@listar');
+        Route::post('/cms/inserir-area-atuacao', 'Cms\Controllers\AreaAtuacaoController@inserir');
+        Route::get('/cms/area-atuacao/{id}', 'Cms\Controllers\AreaAtuacaoController@detalhar');
+        Route::post('/cms/alterar-area-atuacao/{id}', 'Cms\Controllers\AreaAtuacaoController@alterar');
+        Route::get('/cms/excluir-area-atuacao/{id}', 'Cms\Controllers\AreaAtuacaoController@excluir');
+
         //TEXTS
         Route::get('/cms/texts', 'Cms\Controllers\TextController@index');
         Route::get('/cms/listar-texts', 'Cms\Controllers\TextController@listar');

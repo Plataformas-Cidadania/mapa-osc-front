@@ -189,6 +189,10 @@ mix.scripts('packages/cms/resources/assets/js/controllers/alterarTeaserCtrl.js',
 mix.scripts('packages/cms/resources/assets/js/controllers/termoCtrl.js', 'public/assets-cms/js/controllers/termoCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarTermoCtrl.js', 'public/assets-cms/js/controllers/alterarTermoCtrl.js');
 
+//Area de Atuacao
+mix.scripts('packages/cms/resources/assets/js/controllers/areaAtuacaoCtrl.js', 'public/assets-cms/js/controllers/areaAtuacaoCtrl.js');
+mix.scripts('packages/cms/resources/assets/js/controllers/alterarAreaAtuacaoCtrl.js', 'public/assets-cms/js/controllers/alterarAreaAtuacaoCtrl.js');
+
 //Text
 mix.scripts('packages/cms/resources/assets/js/controllers/textCtrl.js', 'public/assets-cms/js/controllers/textCtrl.js');
 mix.scripts('packages/cms/resources/assets/js/controllers/alterarTextCtrl.js', 'public/assets-cms/js/controllers/alterarTextCtrl.js');

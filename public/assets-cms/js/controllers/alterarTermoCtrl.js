@@ -9,8 +9,6 @@ cmsApp.controller('alterarTermoCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 
     $scope.removerImagem = false;
 
-    console.log('termo:::::::::::::::::', $scope);
-
     $scope.alterar = function (file){
 
         if(file==null){
