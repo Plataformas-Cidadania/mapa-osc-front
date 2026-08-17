@@ -453,6 +453,30 @@ class OscController extends Controller{
         return $data;
     }
 
+    public function buscaAvancadaOscSituacaoCadastral(Request $request){
+        $data = $request->all();
+        $busca = $data['busca'];
+
+        $api = env('APP_API_ROUTE');
+        if(env('LOCALHOST_DOCKER') == 1){
+            $api = env('HOST_DOCKER')."api/";
+        }
+
+        $url = $api."osc/busca_avancada/quantitativo/situacao-cadastral";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $busca);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec( $ch );
+        Log::info(curl_error($ch));
+        curl_close( $ch );
+
+        return json_decode($data, true);
+    }
+
     public function exportarAvancadaOsc(Request $request){
 
         $data = $request->all();
