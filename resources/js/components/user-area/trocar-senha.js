@@ -77,8 +77,25 @@ class TrocarSenha extends React.Component{
                     this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
                 }.bind(this),
                 error: function(xhr, status, err) {
+
                     console.error(status, err.toString());
-                    this.setState({loading: false,  msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+
+                    if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+                        let mensagens = [];
+                        let errors = xhr.responseJSON.errors;
+
+                        for (let campo in errors) {
+                            errors[campo].forEach(function(msg) {
+                                mensagens.push(msg);
+                            });
+                        }
+
+                        this.setState({loading: false, msg: mensagens.join(' '), showMsg: true, button: true, color: 'danger'});
+                        return;
+                    }
+
+                    this.setState({loading: false, msg: 'Ocorreu um erro!', showMsg: true, button: true, color: 'danger'});
+
                 }.bind(this)
             });
         });
