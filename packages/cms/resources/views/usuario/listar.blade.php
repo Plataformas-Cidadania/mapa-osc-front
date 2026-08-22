@@ -15,9 +15,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box-padrao">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                        <input class="form-control" type="text" ng-model="dadoPesquisa" placeholder="Faça sua busca"/>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Buscar por</label>
+                            <select class="form-control" ng-model="campoPesquisa">
+                                <option value="tx_email_usuario">E-mail</option>
+                                <option value="tx_nome_usuario">Nome</option>
+                                <option value="nr_cpf_usuario">CPF</option>
+                            </select>
+                        </div>
+                        <div class="col-md-9">
+                            <label>Valor</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                                <input class="form-control" type="text" ng-model="dadoPesquisa" placeholder="Faça sua busca"/>
+                            </div>
+                        </div>
                     </div>
                     <br>
                     <div><% mensagemUsuarior %></div>
@@ -31,7 +44,6 @@
                                 <i ng-if="ordem=='id_usuario' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
                                 <i ng-if="ordem=='id_usuario' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
-                           {{-- <th>Imagem</th>--}}
                             <th ng-click="ordernarPor('tx_email_usuario')" style="usuarior:pointer;">
                                 E-mail
                                 <i ng-if="ordem=='usuario' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
@@ -42,22 +54,24 @@
                                 <i ng-if="ordem=='usuario' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
                                 <i ng-if="ordem=='usuario' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
                             </th>
+                            <th ng-click="ordernarPor('nr_cpf_usuario')" style="usuarior:pointer;">
+                                CPF
+                                <i ng-if="ordem=='nr_cpf_usuario' && sentidoOrdem=='asc'" class="fa fa-angle-double-down"></i>
+                                <i ng-if="ordem=='nr_cpf_usuario' && sentidoOrdem=='desc'" class="fa fa-angle-double-up"></i>
+                            </th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="usuario in usuarios">
                             <td><% usuario.id_usuario %></td>
-                            {{--<td><img ng-show="usuario.imagem" ng-src="imagens/usuarios/xs-<% usuario.imagem %>" width="60"></td>--}}
                             <td><% usuario.tx_email_usuario %></td>
                             <td><% usuario.tx_nome_usuario %></td>
-                            {{--<td><a href="cms/usuario/<% usuario.id_usuario %>"><% usuario.dt_vencimento | date: 'dd/MM/yyyy' %></a></td>--}}
+                            <td><% usuario.nr_cpf_usuario %></td>
                             <td class="text-right">
                                 <div>
-                                    {{--<a href="cms/items/<% usuario.id %>"><i class="fa fa-sitemap fa-2x" title="Itens"></i></a>&nbsp;&nbsp;--}}
-                                    <!--<a href="cms/usuario/<% usuario.id_usuario %>"><i class="fa fa-edit fa-2x" title="Editar"></i></a>&nbsp;&nbsp;-->
-                                    <a  ng-class="<% usuario.bo_ativo %> == 1 ? 'color-success' : 'color-success-inactive'"  style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(usuario.id_usuario);"></i></a>&nbsp;&nbsp;
-                                    <!--<a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(usuario.id_usuario, usuario.tx_programa, null)"></i></a>-->
+                                    <a ng-class="<% usuario.bo_ativo %> == 1 ? 'color-success' : 'color-success-inactive'" style="cursor: pointer;"><i class="fa fa-check-circle fa-2x" aria-hidden="true" ng-click="status(usuario.id_usuario);"></i></a>&nbsp;&nbsp;
+                                    <a><i data-toggle="modal" data-target="#modalExcluir" class="fa fa-remove fa-2x" ng-click="perguntaExcluir(usuario.id_usuario, usuario.tx_nome_usuario, usuario.nr_cpf_usuario)"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -69,13 +83,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!--<button class="btn btn-primary btn-block" ng-click="loadMore()" ng-hide="currentPage==lastPage">Load More</button>-->
                 <div ng-show="totalItens > 0" class="clan-paginacao">
                     <div class="item-paginacao">
                         <uib-pagination total-items="totalItens" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" items-per-page="itensPerPage" num-pages="numPages"></uib-pagination>
                     </div>
                     <div class="item-paginacao">
-                        <select class="form-control itens-por-pagina item-paginacao"  ng-model="itensPerPage">
+                        <select class="form-control itens-por-pagina item-paginacao" ng-model="itensPerPage">
                             <option>10</option>
                             <option>25</option>
                             <option ng-selected="true">50</option>
@@ -89,10 +102,8 @@
             </div>
         </div>
 
-        <!-- Modal Excluir-->
         <div class="modal fade" id="modalExcluir" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -100,11 +111,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-3" ng-if="imagemExcluir">
-                                <img  ng-src="imagens/usuarios/xs-<% imagemExcluir %>" width="100">
-                            </div>
-                            <div class="col-md-9">
-                                <p><% tituloExcluir %></p>
+                            <div class="col-md-12">
+                                <p>Confirma a exclusão do usuário <strong><% tituloExcluir %></strong>?</p>
+                                <p ng-if="cpfExcluir">CPF: <% cpfExcluir %></p>
+                                <p class="text-warning">A OSC vinculada não será excluída.</p>
                             </div>
                         </div>
                         <div ng-show="processandoExcluir"><i class="fa fa-spinner fa-spin"></i> Processando...</div>
@@ -120,6 +130,5 @@
                 </div>
             </div>
         </div>
-        <!-- Fim Modal Excluir-->
     </div>
 @endsection
