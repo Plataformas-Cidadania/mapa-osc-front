@@ -172,6 +172,29 @@ class OscMap extends React.Component {
       }
     });
   }
+  getSelectedAreasAtuacao() {
+    let checkboxes = document.querySelectorAll('#filtro-area-container input[type=checkbox]:checked');
+    let areasObj = {};
+    checkboxes.forEach(function (cb) {
+      areasObj['cd_area_atuacao-' + cb.value] = true;
+    });
+    return areasObj;
+  }
+  getBuscaAtualParaFiltros() {
+    let buscaAtual = {};
+    if (this.state.origem === 'busca-avancada' && this.props.strJson) {
+      try {
+        buscaAtual = JSON.parse(this.props.strJson).avancado || {};
+      } catch (e) {
+        buscaAtual = {};
+      }
+    }
+    let areasSelecionadas = this.getSelectedAreasAtuacao();
+    if (Object.keys(areasSelecionadas).length > 0) {
+      buscaAtual.areasSubareasAtuacao = Object.assign({}, buscaAtual.areasSubareasAtuacao || {}, areasSelecionadas);
+    }
+    return buscaAtual;
+  }
   aplicarFiltroArea() {
     let checkboxes = document.querySelectorAll('#filtro-area-container input[type=checkbox]:checked');
 
@@ -203,14 +226,8 @@ class OscMap extends React.Component {
       });
       return;
     }
-    let areasObj = {};
-    checkboxes.forEach(function (cb) {
-      areasObj['cd_area_atuacao-' + cb.value] = true;
-    });
     let busca = JSON.stringify({
-      avancado: {
-        areasSubareasAtuacao: areasObj
-      }
+      avancado: this.getBuscaAtualParaFiltros()
     });
     this.setState({
       processingOscPontos: true,
@@ -1057,17 +1074,33 @@ class OscMap extends React.Component {
   loadSituacao() {
     console.log('this.state.origem', this.state.origem, this.state);
     let localidadeUrl = '';
+    let method = 'GET';
+    let url = getBaseUrl2 + 'osc/quantitativo/situacao-cadastral';
+    let data = {};
     if (this.state.origem > 0) {
       localidadeUrl = '/localidade/' + this.state.origem;
+    }
+    let buscaAtual = this.getBuscaAtualParaFiltros();
+    let temBuscaAtual = Object.keys(buscaAtual).length > 0;
+    if (temBuscaAtual) {
+      method = 'POST';
+      url = 'osc/busca_avancada/quantitativo/situacao-cadastral';
+      data = {
+        busca: JSON.stringify({
+          avancado: buscaAtual
+        })
+      };
+    } else if (localidadeUrl) {
+      url = getBaseUrl2 + 'osc/quantitativo/situacao-cadastral' + localidadeUrl;
     }
     let _this = this;
     this.setState({
       processingList: true
     }, function () {
       $.ajax({
-        method: 'GET',
-        url: getBaseUrl2 + 'osc/quantitativo/situacao-cadastral' + localidadeUrl,
-        data: {},
+        method: method,
+        url: url,
+        data: data,
         cache: false,
         success: function (data) {
           _this.setState({

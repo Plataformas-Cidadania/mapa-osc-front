@@ -7,15 +7,13 @@ cmsApp.controller('usuarioCtrl', ['$scope', '$http', 'Upload', '$timeout', funct
     $scope.maxSize = 5;
     $scope.itensPerPage = 50;
     $scope.dadoPesquisa = '';
-    $scope.campos = "id_usuario, tx_email_usuario, tx_nome_usuario, bo_ativo";
+    $scope.campos = "id_usuario, tx_email_usuario, tx_nome_usuario, nr_cpf_usuario, bo_ativo";
     $scope.campoPesquisa = "tx_email_usuario";
     $scope.processandoListagem = false;
     $scope.processandoExcluir = false;
     $scope.ordem = "id_usuario";
     $scope.sentidoOrdem = "desc";
-    var $listar = false;//para impedir de carregar o conteúdo dos watchs no carregamento da página.
-
-
+    var $listar = false;
 
     $scope.$watch('currentPage', function(){
         if($listar){
@@ -28,6 +26,11 @@ cmsApp.controller('usuarioCtrl', ['$scope', '$http', 'Upload', '$timeout', funct
         }
     });
     $scope.$watch('dadoPesquisa', function(){
+        if($listar){
+            listarUsuarios();
+        }
+    });
+    $scope.$watch('campoPesquisa', function(){
         if($listar){
             listarUsuarios();
         }
@@ -47,26 +50,23 @@ cmsApp.controller('usuarioCtrl', ['$scope', '$http', 'Upload', '$timeout', funct
                 ordem: $scope.ordem,
                 sentido: $scope.sentidoOrdem
             }
-        }).success(function(data, status, headers, config){
+        }).success(function(data){
             $scope.usuarios = data.data;
             $scope.lastPage = data.last_page;
             $scope.totalItens = data.total;
             $scope.primeiroDaPagina = data.from;
             $scope.ultimoDaPagina = data.to;
             $listar = true;
-            //console.log(data);
             $scope.processandoListagem = false;
         }).error(function(data){
-            $scope.message = "Ocorreu um erro: "+data;
+            $scope.message = "Ocorreu um erro: " + data;
             $scope.processandoListagem = false;
         });
     };
 
-
     $scope.ordernarPor = function(ordem){
         $scope.ordem = ordem;
-        //console.log($scope.ordem);
-        if($scope.sentidoOrdem=="asc"){
+        if($scope.sentidoOrdem == "asc"){
             $scope.sentidoOrdem = "desc";
         }else{
             $scope.sentidoOrdem = "asc";
@@ -75,19 +75,11 @@ cmsApp.controller('usuarioCtrl', ['$scope', '$http', 'Upload', '$timeout', funct
         listarUsuarios();
     };
 
-    $scope.validar = function(){
-
-    };
-
-
     listarUsuarios();
-
-    //INSERIR/////////////////////////////
 
     $scope.tinymceOptions = tinymceOptions;
     $scope.mostrarForm = false;
     $scope.processandoInserir = false;
-
 
     $scope.limparImagem = function(){
         delete $scope.picFile;
@@ -95,39 +87,53 @@ cmsApp.controller('usuarioCtrl', ['$scope', '$http', 'Upload', '$timeout', funct
     };
 
     $scope.validar = function(valor) {
-        //console.log(valor);
-        if(valor===undefined){
+        if(valor === undefined){
             return "campo-obrigatorio";
         }
         return "";
     };
-    /////////////////////////////////
 
-
-    //////////////////////////////////
-    //////////////////////////////////
     $scope.status = function(id){
-        console.log(id);
         $scope.mensagemStatus = '';
         $scope.idStatus = '';
         $scope.processandoStatus = true;
         $http({
-            url: 'cms/status-usuario-osc/'+id,
+            url: 'cms/status-usuario-osc/' + id,
             method: 'GET'
-        }).success(function(data, status, headers, config){
-            //console.log(data);
+        }).success(function(){
             $scope.processandoStatus = false;
-            //$scope.excluido = true;
             $scope.mensagemStatus = 'color-success';
             $scope.idStatus = id;
             listarUsuarios();
         }).error(function(data){
-            $scope.message = "Ocorreu um erro: "+data;
+            $scope.message = "Ocorreu um erro: " + data;
             $scope.processandoStatus = false;
             $scope.mensagemStatus = "Erro ao tentar status!";
         });
     };
 
+    $scope.perguntaExcluir = function(id, titulo, cpf){
+        $scope.idExcluir = id;
+        $scope.tituloExcluir = titulo;
+        $scope.cpfExcluir = cpf;
+        $scope.excluido = false;
+        $scope.mensagemExcluido = "";
+    };
 
+    $scope.excluir = function(id){
+        $scope.processandoExcluir = true;
+        $http({
+            url: 'cms/excluir-usuario-osc/' + id,
+            method: 'GET'
+        }).success(function(data){
+            $scope.processandoExcluir = false;
+            $scope.excluido = true;
+            $scope.mensagemExcluido = data.message || "Excluído com sucesso!";
+            listarUsuarios();
+        }).error(function(data){
+            $scope.processandoExcluir = false;
+            $scope.mensagemExcluido = data && data.message ? data.message : "Erro ao tentar excluir!";
+        });
+    };
 
 }]);

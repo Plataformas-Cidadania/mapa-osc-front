@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class UsuarioController extends Controller
 {
@@ -28,12 +29,16 @@ class UsuarioController extends Controller
     {
         $campos = explode(", ", $request->campos);
         $usuarios = DB::table('portal.tb_usuario')
-            ->select($campos)
-            ->where([
-                [$request->campoPesquisa, 'ilike', "%$request->dadoPesquisa%"],
-            ])
+            ->select($campos);
+
+        if (!empty($request->dadoPesquisa)) {
+            $usuarios->where($request->campoPesquisa, 'ilike', "%$request->dadoPesquisa%");
+        }
+
+        $usuarios = $usuarios
             ->orderBy($request->ordem, $request->sentido)
             ->paginate($request->itensPorPagina);
+
         return $usuarios;
     }
 
@@ -63,5 +68,28 @@ class UsuarioController extends Controller
         $usuario = DB::table('portal.tb_usuario')->where('id_usuario', $id)->first();
         $ativo = !$usuario->bo_ativo;
         DB::table('portal.tb_usuario')->where('id_usuario', $id)->update(['bo_ativo' => $ativo]);
+    }
+
+    public function excluir($id)
+    {
+        try {
+            $usuario = DB::table('portal.tb_usuario')
+                ->where('id_usuario', $id)
+                ->first();
+
+            if (!$usuario) {
+                return response()->json(['message' => 'Usuário não encontrado.'], 404);
+            }
+
+            DB::transaction(function () use ($id) {
+                DB::table('portal.tb_representacao')->where('id_usuario', $id)->delete();
+                DB::table('portal.tb_token')->where('id_usuario', $id)->delete();
+                DB::table('portal.tb_usuario')->where('id_usuario', $id)->delete();
+            });
+
+            return response()->json(['message' => 'Usuário excluído com sucesso.']);
+        } catch (Throwable $e) {
+            return response()->json(['message' => 'Erro ao excluir usuário.'], 500);
+        }
     }
 }
