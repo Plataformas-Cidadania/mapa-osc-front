@@ -74,7 +74,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => env('DB_PGSQL_SCHEMA', 'public'),
+            'schema' => array_filter(explode(',', env('DB_PGSQL_SCHEMA', 'public'))),
             'sslmode' => 'prefer',
         ],
 

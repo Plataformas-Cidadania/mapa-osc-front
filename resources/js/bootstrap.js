@@ -39,3 +39,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/**
+ * Redireciona automaticamente para a tela de troca de senha sempre que a API
+ * retornar 403 com o flag "troca_senha_obrigatoria", de forma global.
+ */
+$(document).ajaxError(function (event, xhr) {
+    if (xhr.status === 403 && xhr.responseJSON && xhr.responseJSON.troca_senha_obrigatoria) {
+        if (window.location.pathname.indexOf('trocar-senha') === -1) {
+            localStorage.setItem('@App:mensagemTrocaSenhaObrigatoria', xhr.responseJSON.message || '');
+            location.href = 'trocar-senha';
+        }
+    }
+});
