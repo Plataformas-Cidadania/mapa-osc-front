@@ -1,5 +1,7 @@
-class Login extends React.Component{
-    constructor(props){
+class Login extends React.Component {
+
+    constructor(props) {
+
         super(props);
         this.state = {
             form: {},
@@ -17,19 +19,22 @@ class Login extends React.Component{
         this.login = this.login.bind(this);
         this.validate = this.validate.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.redirecionarPosLogin = this.redirecionarPosLogin.bind(this);
+
     }
 
-    componentDidMount(){
+    componentDidMount() {
+
         const loginElement = document.getElementById('login');
         const dataType = loginElement ? loginElement.getAttribute('data-type') : null;
-        
+
         if(!this.props.target){
             this.setState({target: 'area-user'});
         }
-        
-        this.setState({dataType: dataType});
-    }
 
+        this.setState({dataType: dataType});
+
+    }
 
     handleInputChange(event) {
         const target = event.target;
@@ -42,7 +47,8 @@ class Login extends React.Component{
         this.setState({form: form});
     }
 
-    validate(){
+    validate() {
+
         //console.log(this.state.form);
         let valid = true;
 
@@ -62,9 +68,19 @@ class Login extends React.Component{
 
         this.setState({requireds: requireds});
         return valid;
+
+    }
+
+    redirecionarPosLogin(){
+        if(this.state.dataType === 'conselho'){
+            location.href = 'dashboard-conselho';
+        } else {
+            location.href = 'oscs-user';
+        }
     }
 
     login(e){
+
         e.preventDefault();
 
         if(!this.validate()){
@@ -91,12 +107,37 @@ class Login extends React.Component{
                     if(data.access_token){
                         localStorage.setItem('@App:token', data.access_token);
                         localStorage.setItem('@App:userType', this.state.dataType === 'conselho' ? 'conselho' : 'osc');
-                        
-                        if(this.state.dataType === 'conselho'){
-                            location.href = 'dashboard-conselho';
-                        } else {
-                            location.href = 'oscs-user';
-                        }
+
+                        // Verifica se o usuário precisa trocar a senha antes de liberar o acesso normal
+                        $.ajax({
+                            method: 'GET',
+                            url: getBaseUrl2 + 'get-user-auth',
+                            headers: {
+                                Authorization: 'Bearer ' + data.access_token
+                            },
+                            cache: false,
+                            success: function(usuario){
+
+                                if(usuario && usuario.troca_senha_obrigatoria){
+                                    localStorage.setItem(
+                                        '@App:mensagemTrocaSenhaObrigatoria',
+                                        usuario.mensagem_troca_senha_obrigatoria || 'Por motivos de segurança, sua senha precisa ser alterada antes de continuar.'
+                                    );
+                                    location.href = 'trocar-senha';
+                                    return;
+                                }
+
+                                this.redirecionarPosLogin();
+
+                            }.bind(this),
+                            error: function(){
+                                // Se a checagem falhar por algum motivo, não bloqueia o login normal.
+                                // O middleware do backend continua protegendo os outros endpoints de qualquer forma.
+                                this.redirecionarPosLogin();
+                            }.bind(this)
+                        });
+
+                        return;
                     }
 
                     this.setState({loading: false, msgShow: true, msg: data.msg})
@@ -114,16 +155,11 @@ class Login extends React.Component{
             });
         });
 
-
     }
 
-    render(){
-
-
-
+    render() {
 
         let titleLogin = "Já tenho cadastro";
-
 
         return(
             <div>

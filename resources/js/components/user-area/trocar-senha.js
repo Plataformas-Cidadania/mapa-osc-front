@@ -12,10 +12,18 @@ class TrocarSenha extends React.Component{
                 senha_atual: true,
                 nova_senha: true,
             },
+            requisitosSenha: {
+                minLength: false,
+                minuscula: false,
+                maiuscula: false,
+                numero: false,
+                especial: false,
+            },
             showMsg: false,
             msg: '',
             showSenhaAtual: false,
-            showNovaSenha: false
+            showNovaSenha: false,
+            mensagemTrocaObrigatoria: null,
 
         };
 
@@ -24,6 +32,26 @@ class TrocarSenha extends React.Component{
         this.trocarSenha = this.trocarSenha.bind(this);
         this.showHideSenhaAtual = this.showHideSenhaAtual.bind(this);
         this.showHideNovaSenha = this.showHideNovaSenha.bind(this);
+        this.avaliarRequisitosSenha = this.avaliarRequisitosSenha.bind(this);
+    }
+
+    componentDidMount(){
+        const mensagem = localStorage.getItem('@App:mensagemTrocaSenhaObrigatoria');
+
+        if(mensagem){
+            this.setState({mensagemTrocaObrigatoria: mensagem});
+            localStorage.removeItem('@App:mensagemTrocaSenhaObrigatoria');
+        }
+    }
+
+    avaliarRequisitosSenha(senha){
+        return {
+            minLength: senha.length >= 8,
+            minuscula: /[a-z]/.test(senha),
+            maiuscula: /[A-Z]/.test(senha),
+            numero: /\d/.test(senha),
+            especial: /[@#$!%&*_\-]/.test(senha),
+        };
     }
 
     handleInputChange(event) {
@@ -33,6 +61,11 @@ class TrocarSenha extends React.Component{
 
         let form = this.state.form;
         form[name] = value;
+
+        if (name === 'nova_senha') {
+            this.setState({form: form, requisitosSenha: this.avaliarRequisitosSenha(value)});
+            return;
+        }
 
         this.setState({form: form});
     }
@@ -45,6 +78,14 @@ class TrocarSenha extends React.Component{
                 valid = false;
             }
         }
+
+        let requisitos = this.state.requisitosSenha;
+        for(let i in requisitos){
+            if (!requisitos[i]){
+                valid = false;
+            }
+        }
+
         return valid;
     }
 
@@ -52,7 +93,7 @@ class TrocarSenha extends React.Component{
         e.preventDefault();
 
         if(!this.validate()){
-            this.setState({loading: false,  msg: 'Informe os campos obrigatórios *', showMsg: true, button: true, color: 'danger'});
+            this.setState({loading: false,  msg: 'Preencha os campos obrigatórios e cumpra todos os requisitos de senha *', showMsg: true, button: true, color: 'danger'});
             return;
         }
 
@@ -74,7 +115,7 @@ class TrocarSenha extends React.Component{
                         this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'danger'});
                         return;
                     }
-                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success'});
+                    this.setState({msg: msg, showMsg: true, loading: false, button: true, color: 'success', mensagemTrocaObrigatoria: null});
                 }.bind(this),
                 error: function(xhr, status, err) {
 
@@ -111,8 +152,40 @@ class TrocarSenha extends React.Component{
         this.setState({showNovaSenha: !this.state.showNovaSenha});
     }
 
+    renderIconeCheck(cumprido) {
+
+        if(cumprido){
+
+            return (
+                <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" style={{marginRight: '6px', verticalAlign: 'middle'}}>
+                    <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+            );
+
+        }
+
+        return (
+            <svg width="14" height="14" viewBox="0 0 384 512" fill="currentColor" style={{marginRight: '6px', verticalAlign: 'middle'}}>
+                <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+            </svg>
+        );
+
+    }
+
+    renderRequisito(cumprido, texto) {
+
+        return (
+            <li className={cumprido ? 'text-success' : 'text-danger'} style={{listStyle: 'none'}}>
+                <strong>{this.renderIconeCheck(cumprido)}</strong>
+                {texto}
+            </li>
+        );
+
+    }
+
     render(){
 
+        const req = this.state.requisitosSenha;
 
         return (
             <div>
@@ -121,6 +194,14 @@ class TrocarSenha extends React.Component{
                     <hr/>
                     <br/>
                 </div>
+
+                {this.state.mensagemTrocaObrigatoria &&
+                    <div className="alert alert-warning" role="alert">
+                        <i className="fa fa-exclamation-triangle" style={{marginRight: '8px'}} />
+                        {this.state.mensagemTrocaObrigatoria}
+                    </div>
+                }
+
                 <div className="row">
                     <div className="col-md-12">
                         <form>
@@ -151,7 +232,16 @@ class TrocarSenha extends React.Component{
                                     />
                                     <a onClick={this.showHideNovaSenha}><i id="faView" className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                 </div>
-                                <br/><br/>
+
+                                <ul style={{padding: 0, marginTop: '8px'}}>
+                                    {this.renderRequisito(req.minLength, 'Pelo menos 8 caracteres')}
+                                    {this.renderRequisito(req.minuscula, 'Pelo menos uma letra minúscula')}
+                                    {this.renderRequisito(req.maiuscula, 'Pelo menos uma letra maiúscula')}
+                                    {this.renderRequisito(req.numero, 'Pelo menos um número')}
+                                    {this.renderRequisito(req.especial, 'Pelo menos um caractere especial (@ # $ ! % & * _ -)')}
+                                </ul>
+
+                                <br/>
                             </div>
 
                             <div className="clear-float"/>
