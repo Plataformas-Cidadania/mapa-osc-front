@@ -233,7 +233,7 @@ class TrocarSenha extends React.Component{
                                     <a onClick={this.showHideNovaSenha}><i id="faView" className="far fa-eye-slash" style={{cursor: 'pointer'}} /></a>
                                 </div>
 
-                                <ul style={{padding: 0, marginTop: '8px'}}>
+                                <ul style={{padding: 0, marginTop: '8px', marginBottom: '0px', fontSize: '13px'}}>
                                     {this.renderRequisito(req.minLength, 'Pelo menos 8 caracteres')}
                                     {this.renderRequisito(req.minuscula, 'Pelo menos uma letra minúscula')}
                                     {this.renderRequisito(req.maiuscula, 'Pelo menos uma letra maiúscula')}
