@@ -189,7 +189,7 @@ class ResetPassword extends React.Component{
                                         {/*<input type="email" name="email" className={"form-control "+(this.state.requireds.email ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite o e-mail"/><br/>*/}
                                         <input type="password" name="tx_senha_usuario" className={"form-control "+(this.state.requireds.tx_senha_usuario ? '' : 'invalid-field')} onChange={this.handleInputChange} placeholder="Digite a nova senha"/><br/>
 
-                                        <ul style={{padding: 0, marginTop: '8px'}}>
+                                        <ul style={{padding: 0, marginTop: '8px', fontSize: '14px'}}>
                                             {this.renderRequisito(req.minLength, 'Pelo menos 8 caracteres')}
                                             {this.renderRequisito(req.minuscula, 'Pelo menos uma letra minúscula')}
                                             {this.renderRequisito(req.maiuscula, 'Pelo menos uma letra maiúscula')}
