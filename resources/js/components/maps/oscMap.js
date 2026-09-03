@@ -2141,7 +2141,62 @@ class OscMap extends React.Component{
             return text;
         }
 
-        function formatCnpjCpf(value){
+        function formatCnpjCpf(value) {
+            if (!value) {
+                return '';
+            }
+
+            // Remove tudo que não seja letra ou número
+            const documento = value
+                .toUpperCase()
+                .replace(/[^A-Z0-9]/g, '');
+
+            // CPF continua sendo somente numérico e com 11 dígitos
+            if (/^\d{11}$/.test(documento)) {
+                return documento.replace(
+                    /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                    '$1.$2.$3-$4'
+                );
+            }
+
+            // CNPJ antigo ou novo:
+            // 12 primeiras posições = letras ou números
+            // 2 últimas posições = dígitos verificadores numéricos
+            if (/^[A-Z0-9]{12}\d{2}$/.test(documento)) {
+                return documento.replace(
+                    /([A-Z0-9]{2})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]{4})(\d{2})/,
+                    '$1.$2.$3/$4-$5'
+                );
+            }
+
+            // Mantém comportamento tolerante para valores incompletos/inválidos
+            return documento;
+        }
+
+        function identificarFilialMatriz(cnpj) {
+            if (!cnpj) {
+                return 'CNPJ inválido';
+            }
+
+            cnpj = cnpj
+                .toUpperCase()
+                .replace(/[^A-Z0-9]/g, '');
+
+            // CNPJ precisa continuar tendo 14 posições
+            if (!/^[A-Z0-9]{12}\d{2}$/.test(cnpj)) {
+                return 'CNPJ inválido';
+            }
+
+            const ordemEstabelecimento = cnpj.slice(8, 12);
+
+            if (ordemEstabelecimento === '0001') {
+                return 'Matriz';
+            }
+
+            return 'Filial';
+        }
+
+        function formatCnpjCpfOLD(value){
             const cnpjCpf = value.replace(/\D/g, '');
 
             if (cnpjCpf.length === 11) {
@@ -2151,7 +2206,7 @@ class OscMap extends React.Component{
             return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
         }
         ////////////////////////////////////////////
-        function identificarFilialMatriz(cnpj) {
+        function identificarFilialMatrizOLD(cnpj) {
             // Remover caracteres não numéricos
             cnpj = cnpj.replace(/\D/g, '');
 

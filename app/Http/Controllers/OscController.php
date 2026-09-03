@@ -21,6 +21,60 @@ class OscController extends Controller{
         $this->table = 'oscs';
     }
 
+    private function normalizeApiObject($payload, array $defaults){
+
+        if(is_array($payload)){
+            $payload = (object) $payload;
+        }
+
+        if(!is_object($payload)){
+            $payload = (object) [];
+        }
+
+        foreach($defaults as $key => $value){
+            if(!property_exists($payload, $key)){
+                $payload->{$key} = $value;
+            }
+        }
+
+        return $payload;
+
+    }
+
+    private function getDadosGeraisDefaults(){
+
+        return [
+            'ft_nome_fantasia_osc' => '',
+            'tx_nome_fantasia_osc' => null,
+            'ft_sigla_osc' => '',
+            'tx_sigla_osc' => null,
+            'tx_endereco' => null,
+            'tx_endereco_complemento' => null,
+            'tx_bairro' => null,
+            'tx_nome_municipio' => null,
+            'tx_sigla_uf' => null,
+            'nr_cep' => null,
+            'tx_telefone' => null,
+            'ft_telefone' => '',
+            'tx_email' => null,
+            'ft_email' => '',
+            'tx_site' => null,
+            'ft_site' => '',
+            'ft_situacao_imovel_osc' => '',
+            'tx_nome_situacao_imovel_osc' => null,
+            'ft_ano_cadastro_cnpj' => '',
+            'dt_ano_cadastro_cnpj' => null,
+            'ft_fundacao_osc' => '',
+            'dt_fundacao_osc' => null,
+            'ft_nome_responsavel_legal' => '',
+            'tx_nome_responsavel_legal' => null,
+            'tx_resumo_osc' => null,
+            'tx_nome_classe_atividade_economica' => null,
+            'geo_localizacao' => [],
+        ];
+
+    }
+
     public function edit(){
 
         return view($this->module.'.edit');
@@ -57,8 +111,9 @@ class OscController extends Controller{
 
         if (!$dados_gerais) {
             Log::warning('Dados gerais não encontrados para OSC: ' . $id);
-            $dados_gerais = (object) [];
         }
+
+        $dados_gerais = $this->normalizeApiObject($dados_gerais, $this->getDadosGeraisDefaults());
 
         if (!$descricao) {
             Log::warning('Descrição não encontrada para OSC: ' . $id);

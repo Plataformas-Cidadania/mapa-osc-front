@@ -22,6 +22,45 @@
                     <?php
 
                     $projetos_descricao = curl('projeto', $projeto->id);
+                    if(is_array($projetos_descricao)){
+                        $projetos_descricao = (object) $projetos_descricao;
+                    }
+                    if(!is_object($projetos_descricao)){
+                        $projetos_descricao = (object) [];
+                    }
+                    foreach([
+                        'ft_nome_projeto' => '',
+                        'ft_descricao_projeto' => '',
+                        'tx_descricao_projeto' => null,
+                        'ft_status_projeto' => '',
+                        'cd_status_projeto' => null,
+                        'ft_data_inicio_projeto' => '',
+                        'dt_data_inicio_projeto' => null,
+                        'ft_data_fim_projeto' => '',
+                        'dt_data_fim_projeto' => null,
+                        'ft_link_projeto' => '',
+                        'tx_link_projeto' => null,
+                        'ft_total_beneficiarios' => '',
+                        'nr_total_beneficiarios' => null,
+                        'ft_valor_total_projeto' => '',
+                        'nr_valor_total_projeto' => null,
+                        'ft_valor_captado_projeto' => '',
+                        'nr_valor_captado_projeto' => null,
+                        'ft_zona_atuacao_projeto' => '',
+                        'cd_zona_atuacao_projeto' => null,
+                        'ft_abrangencia_projeto' => '',
+                        'cd_abrangencia_projeto' => null,
+                        'ft_metodologia_monitoramento' => '',
+                        'tx_metodologia_monitoramento' => null,
+                        'ft_numero_proposta' => '',
+                        'nr_numero_proposta' => null,
+                        'ft_numero_instrumento' => '',
+                        'nr_numero_instrumento' => null,
+                    ] as $property => $defaultValue){
+                        if(!property_exists($projetos_descricao, $property)){
+                            $projetos_descricao->{$property} = $defaultValue;
+                        }
+                    }
                     $projetos_localizacao = curl('projeto/localizacoes', $projeto->id);
                     $projetos_beneficiado = curl('projeto/publicos', $projeto->id);
                     $projetos_recurso = curl('projeto/recursos', $projeto->id);
