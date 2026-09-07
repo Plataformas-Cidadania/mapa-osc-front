@@ -15,8 +15,7 @@ class Representacoes extends React.Component {
     }
 
     handleInputChange(event) {
-        // Remove everything except digits
-        const raw = event.target.value.replace(/\D/g, '');
+        const raw = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         this.setState({
             cnpj: raw,
             buttonEnabled: raw.length > 0,
@@ -91,7 +90,7 @@ class Representacoes extends React.Component {
                                         value={cnpj}
                                         onChange={this.handleInputChange}
                                         className="form-control"
-                                        placeholder="Apenas números"
+                                        placeholder="CNPJ"
                                     />
                                 </div>
 
