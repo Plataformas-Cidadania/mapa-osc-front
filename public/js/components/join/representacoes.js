@@ -13,8 +13,7 @@ class Representacoes extends React.Component {
     this.searchRepresentacoes = this.searchRepresentacoes.bind(this);
   }
   handleInputChange(event) {
-    // Remove everything except digits
-    const raw = event.target.value.replace(/\D/g, '');
+    const raw = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     this.setState({
       cnpj: raw,
       buttonEnabled: raw.length > 0,
@@ -93,7 +92,7 @@ class Representacoes extends React.Component {
       value: cnpj,
       onChange: this.handleInputChange,
       className: "form-control",
-      placeholder: "Apenas n\xFAmeros"
+      placeholder: "CNPJ"
     })), showMsg && /*#__PURE__*/React.createElement("div", {
       className: "text-danger mb-2"
     }, msg), loading && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("i", {

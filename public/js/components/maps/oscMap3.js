@@ -1942,19 +1942,23 @@ class OscMap extends React.Component {
       return text;
     }
     function formatCnpjCpf(value) {
-      const cnpjCpf = value.replace(/\D/g, '');
-      if (cnpjCpf.length === 11) {
-        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3-\$4");
+      if (!value) {
+        return '';
       }
-      return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
+      const documento = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (/^\d{11}$/.test(documento)) {
+        return documento.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      }
+      if (/^[A-Z0-9]{12}\d{2}$/.test(documento)) {
+        return documento.replace(/([A-Z0-9]{2})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]{4})(\d{2})/, '$1.$2.$3/$4-$5');
+      }
+      return documento;
     }
     ////////////////////////////////////////////
     function identificarFilialMatriz(cnpj) {
-      // Remover caracteres não numéricos
-      cnpj = cnpj.replace(/\D/g, '');
+      cnpj = cnpj.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-      // Verificar se a string possui 14 dígitos
-      if (cnpj.length !== 14) {
+      if (!/^[A-Z0-9]{12}\d{2}$/.test(cnpj)) {
         return "CNPJ inválido";
       }
 

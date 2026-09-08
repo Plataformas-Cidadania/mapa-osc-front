@@ -701,22 +701,41 @@ if ( ! function_exists('iconType') ) {
     }
 }
 
+
 if (!function_exists('cnpjFormat')) {
     function cnpjFormat($value) {
-        // Remove tudo que não for número
-        $cnpj = preg_replace('/\D/', '', $value);
+        if (empty($value)) {
+            return '';
+        }
 
-        // Preenche com zeros à esquerda para garantir 14 dígitos
-        $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
+        $cnpj = strtoupper($value);
+        $cnpj = preg_replace('/[^A-Z0-9]/', '', $cnpj);
 
-        // Aplica a formatação
+        // Compatibilidade com comportamento antigo:
+        // se for exclusivamente numérico e menor que 14,
+        // completa com zeros à esquerda
+        if (ctype_digit($cnpj) && strlen($cnpj) < 14) {
+            $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
+        }
+
+        // Deve possuir 14 posições
+        if (strlen($cnpj) !== 14) {
+            return $value;
+        }
+
+        // 12 posições alfanuméricas + 2 DVs numéricos
+        if (!preg_match('/^[A-Z0-9]{14}$/', $cnpj)) {
+            return $value;
+        }
+
         return preg_replace(
-            '/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/',
+            '/([A-Z0-9]{2})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]{4})([A-Z0-9]{2})/',
             '$1.$2.$3/$4-$5',
             $cnpj
         );
     }
 }
+
 
 //if (!function_exists('cnpjFormat')) {
 //    function cnpjFormat($value) {
@@ -738,4 +757,3 @@ if (!function_exists('cnpjFormat')) {
 //        return $value;
 //    }
 //}
-

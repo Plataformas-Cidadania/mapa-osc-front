@@ -161,7 +161,7 @@ class Search extends React.Component {
         let razao_social_osc = '';
         if (this.state.searchNameCampo === 'tx_nome_osc' && !item.hasOwnProperty('edmu_nm_municipio')) {
           tx_nome = item.tx_nome_osc;
-          cod_cnpj = item.cd_identificador_osc.padStart(14, "0"); // fix cnpj
+          cod_cnpj = normalizeCnpj(item.cd_identificador_osc);
           origem_id = item.id_osc;
           origem_url = "detalhar/" + origem_id;
           razao_social_osc = item.tx_razao_social_osc;
@@ -213,12 +213,24 @@ class Search extends React.Component {
         onClick: () => this.startAdvancedSearch(this.state.searchOsc)
       }, /*#__PURE__*/React.createElement("p", null, "Pressioner ENTER para buscar por \"", this.state.searchOsc, "\" no mapa"))));
     }
+    function normalizeCnpj(cnpj) {
+      if (!cnpj || cnpj === "") {
+        return "";
+      }
+      let normalized = String(cnpj).toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (/^\d+$/.test(normalized) && normalized.length < 14) {
+        normalized = normalized.padStart(14, "0");
+      }
+      return normalized;
+    }
     function return_cnpj(cnpj) {
-      if (!cnpj || cnpj == "") return "";else return "CNPJ:" + cnpj;
+      cnpj = normalizeCnpj(cnpj);
+      if (!cnpj || cnpj.length !== 14) return "";
+      return "CNPJ: " + `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8, 12)}-${cnpj.slice(12, 14)}`;
     }
     function identificarFilialMatriz(cnpj) {
-      if (!cnpj || cnpj == "") return "";
-      cnpj = cnpj.replace(/\D/g, '');
+      cnpj = normalizeCnpj(cnpj);
+      if (!cnpj || cnpj.length !== 14) return "";
       if (cnpj.slice(8, 12) !== '0001') {
         return "Filial";
       } else {
