@@ -123,11 +123,12 @@ class Search extends React.Component {
             data: data,
             cache: false,
             success: function(data){
-                this.setState({listMenuItem: data, loadingList: false}, function(){});
+                this.setState({listMenuItem: Array.isArray(data) ? data : [], loadingList: false}, function(){});
             }.bind(this),
             error: function(xhr, status, err){
                 console.log(status, err.toString());
-                this.setState({loadingList: false, msg: xhr.responseJSON.msg});
+                let msg = xhr.responseJSON && xhr.responseJSON.msg ? xhr.responseJSON.msg : err.toString();
+                this.setState({listMenuItem: [], loadingList: false, msg: msg});
             }.bind(this)
         });
     }
@@ -148,7 +149,7 @@ class Search extends React.Component {
             )
         }.bind(this));
 
-        let menuList;
+        let menuList = [];
         if (Array.isArray(this.state.listMenuItem)) {
             menuList = this.state.listMenuItem.map(function (item, index) {
                 let tx_nome = '';
@@ -156,12 +157,14 @@ class Search extends React.Component {
                 let cod_cnpj = '';
                 let origem_url = '';
                 let razao_social_osc = '';
+                let texto_secundario = '';
                 if (this.state.searchNameCampo === 'tx_nome_osc' && !item.hasOwnProperty('edmu_nm_municipio')) {
                     tx_nome = item.tx_nome_osc;
                     cod_cnpj = normalizeCnpj(item.cd_identificador_osc);
                     origem_id = item.id_osc;
                     origem_url = "detalhar/" + origem_id;
                     razao_social_osc = item.tx_razao_social_osc;
+                    texto_secundario = getTextoSecundarioOsc(item);
                 } else if (this.state.searchNameCampo === 'todos') {
                     if (item.hasOwnProperty('edmu_nm_municipio')) {
                         if (item.edmu_nm_municipio !== undefined) {
@@ -185,6 +188,7 @@ class Search extends React.Component {
                     >
                         <a href={origem_url} title={razao_social_osc ? 'RAZÃO SOCIAL : '+ razao_social_osc : ''} >
                             {tx_nome} <p style={{padding: '0 5px', borderRadius: 5, backgroundColor: '#ebe7e7', display: 'inline-block', fontSize: 10, margin: 0}}>{identificarFilialMatriz(cod_cnpj)}</p>
+                            {texto_secundario ? <span style={{display: 'block', fontSize: 11}}>{texto_secundario}</span> : ''}
                             <span style={{display: 'block', fontSize: 10}}>{return_cnpj(cod_cnpj)} </span>
 
                         </a>
@@ -224,6 +228,24 @@ class Search extends React.Component {
                 return "";
 
             return "CNPJ: " + `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8, 12)}-${cnpj.slice(12, 14)}`;
+        }
+        function getTextoSecundarioOsc(item) {
+            let nome = normalizarTextoComparacao(item.tx_nome_osc);
+            let razaoSocial = item.tx_razao_social_osc ? item.tx_razao_social_osc.trim() : '';
+            let nomeFantasia = item.tx_nome_fantasia_osc ? item.tx_nome_fantasia_osc.trim() : '';
+
+            if (razaoSocial && normalizarTextoComparacao(razaoSocial) !== nome) {
+                return razaoSocial;
+            }
+
+            if (nomeFantasia && normalizarTextoComparacao(nomeFantasia) !== nome) {
+                return nomeFantasia;
+            }
+
+            return '';
+        }
+        function normalizarTextoComparacao(texto) {
+            return texto ? texto.trim().toUpperCase() : '';
         }
         function identificarFilialMatriz(cnpj) {
             cnpj = normalizeCnpj(cnpj);
