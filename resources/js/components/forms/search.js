@@ -262,6 +262,111 @@ class Search extends React.Component {
 
         return (
             <div className="row justify-content-md-center">
+                <style>{`
+                    .search-container {
+                        display: block;
+                        position: relative;
+                        width: 100%;
+                    }
+                    .search-container .search-icon {
+                        left: 16px;
+                        top: 25px;
+                        z-index: 4;
+                    }
+                    .search-container #searchInput {
+                        background: #ffffff;
+                        border: 1px solid #d7dde5;
+                        border-radius: 26px;
+                        box-shadow: 0 10px 28px rgba(15, 23, 42, .10);
+                        box-sizing: border-box;
+                        color: #111827;
+                        font-size: 16px;
+                        height: 54px;
+                        padding: 0 18px 0 44px;
+                        transition: border-color .15s ease, box-shadow .15s ease, border-radius .15s ease;
+                        width: 100%;
+                    }
+                    .search-container #searchInput:hover,
+                    .search-container #searchInput:focus {
+                        border-color: #9fb4c8;
+                        box-shadow: 0 12px 32px rgba(15, 23, 42, .14) !important;
+                        outline: none;
+                    }
+                    .search-container #searchInput:focus {
+                        border-radius: 26px 26px 0 0;
+                    }
+                    .search-container .dropdownSearch {
+                        background: #ffffff;
+                        border: 1px solid #d7dde5;
+                        border-top: 0;
+                        border-radius: 0 0 18px 18px;
+                        box-shadow: 0 18px 34px rgba(15, 23, 42, .14);
+                        box-sizing: border-box;
+                        left: 0;
+                        max-height: 460px;
+                        overflow-y: auto;
+                        padding: 8px 10px;
+                        top: 54px;
+                        width: 100%;
+                    }
+                    .search-container .dropdownSearch ul {
+                        max-height: none;
+                        overflow: visible;
+                    }
+                    .search-container .dropdownSearch li.list-group-item {
+                        padding: 10px 12px;
+                    }
+                    .search-container .dropdownSearch li.list-group-item:hover,
+                    .search-container .dropdownSearch li.list-group-item:focus-within {
+                        background: #f4f8fb !important;
+                    }
+                    .search-container .dropdownSearch li.list-group-item:hover a,
+                    .search-container .dropdownSearch li.list-group-item:focus-within a {
+                        color: #263238 !important;
+                    }
+                    .search-container .dropdownSearch li.list-group-item > a > p {
+                        background: #eef2f7 !important;
+                        border-radius: 8px !important;
+                        color: #52616b;
+                        display: inline-block;
+                        font-size: 10px !important;
+                        line-height: 15px;
+                        margin: 0 0 0 6px !important;
+                        padding: 0 6px !important;
+                        vertical-align: 2px;
+                    }
+                    .search-container .dropdownSearch li.list-group-item > a > span {
+                        color: #697986;
+                        line-height: 15px;
+                    }
+                    .search-container .dropdownSearch li.list-group-item > a > span:first-of-type {
+                        color: #52616b;
+                        display: -webkit-box !important;
+                        font-size: 11px !important;
+                        line-height: 15px;
+                        margin-top: 3px;
+                        overflow: hidden;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                    }
+                    @media (min-width: 768px) {
+                        .row.justify-content-md-center > .col-md-5 {
+                            flex: 0 0 680px;
+                            max-width: 680px;
+                        }
+                    }
+                    @media (max-width: 767px) {
+                        .row.justify-content-md-center > .col-md-5 {
+                            flex: 0 0 100%;
+                            max-width: 100%;
+                            padding-left: 16px;
+                            padding-right: 16px;
+                        }
+                        .search-container .dropdownSearch {
+                            max-height: 68vh;
+                        }
+                    }
+                `}</style>
                 <div className="col-md-5">
                     <br/><br/>
                         <h2 className="text-center">Busque uma OSC no Mapa</h2>
