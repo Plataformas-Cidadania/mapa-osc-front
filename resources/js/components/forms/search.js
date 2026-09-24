@@ -46,7 +46,7 @@ class Search extends React.Component {
             }
         }
     }
-    
+
     handleSearchOsc(e){
         //this.setState({searchOsc: ''});
         let search = e.target.value ? e.target.value : ' ';
@@ -64,13 +64,13 @@ class Search extends React.Component {
         });
 
     }
-    
+
     // Cria um elemento form shadow para permitir o browser fazer o redirecionamento pra nós. Fiz isso para evitar problemas de criar url post, criptografia e token
     startAdvancedSearch(oscName) {
         const shadowForm = document.createElement('form');
-        shadowForm.action = 'mapa-busca-avancada'; 
+        shadowForm.action = 'mapa-busca-avancada';
         shadowForm.method = 'POST';
-      
+
         const jsonInput = document.createElement('input');
         jsonInput.type = 'hidden';
         jsonInput.name = 'json';
@@ -85,7 +85,7 @@ class Search extends React.Component {
         document.body.appendChild(shadowForm);
         shadowForm.submit();
       }
-      
+
     btnSearch(id, txt, rota, qtd, campo){
         this.setState({
             msg: '',
@@ -141,9 +141,9 @@ class Search extends React.Component {
                 <li
                     key={'menu' + item.id}
                     onClick={() => this.btnSearch(item.id, item.txt, item.rota, item.qtd, item.campo)}
-                    className="cursor"
-                    style={{borderBottom: item.id === this.state.searchOscId ? 'solid 2px #1b4b72' : ''}}
+                    className={item.id === this.state.searchOscId ? 'cursor active' : 'cursor'}
                 >
+                    <i className={item.id === 1 ? 'fas fa-landmark' : 'fas fa-map-marker-alt'} aria-hidden="true"/>
                     {item.title}
                 </li>
             )
@@ -180,7 +180,7 @@ class Search extends React.Component {
                     }
                     origem_url = "mapa/" + origem_id;
                 }
-                
+
                 return (
                     <li
                         key={'menuList' + index}
@@ -263,50 +263,176 @@ class Search extends React.Component {
         return (
             <div className="row justify-content-md-center">
                 <style>{`
+                    .search-home { text-align: center; }
+                    .search-home h2 {
+                        color: #071f45;
+                        font-size: 36px;
+                        font-weight: 700;
+                        letter-spacing: 0;
+                        margin-bottom: 8px;
+                    }
+                    .search-home-subtitle {
+                        color: #697986;
+                        font-size: 17px;
+                        margin-bottom: 24px;
+                    }
+                    .search-panel {
+                        background: #ffffff;
+
+                        border-radius: 18px;
+                        box-shadow: none;
+                        padding: 24px;
+                        text-align: left;
+                    }
+                    .search-panel .menu-small {
+                        background: #f3f6fa;
+                        border-radius: 14px;
+                        display: inline-flex;
+                        gap: 4px;
+                        margin-bottom: 18px !important;
+                        padding: 4px;
+                    }
+                    .search-panel .menu-small li {
+                        align-items: center;
+                        border: 0 !important;
+                        border-radius: 11px;
+                        color: #697986;
+                        display: flex;
+                        font-size: 15px;
+                        font-weight: 600;
+                        gap: 10px;
+                        min-height: 42px;
+                        padding: 0 22px;
+                    }
+                    .search-panel .menu-small li i {
+                        align-items: center;
+                        color: inherit !important;
+                        display: inline-flex;
+                        font-size: 16px;
+                        justify-content: center;
+                        margin-right: 0 !important;
+                        width: 18px;
+                    }
+                    .search-panel .menu-small li.active {
+                        background: #0d67bd;
+                        box-shadow: none;
+                        color: #ffffff;
+                    }
+                    .advanced-search-action {
+                        align-items: center;
+                        border: 1px solid #b9d7f5;
+                        border-radius: 16px;
+                        color: #0d67bd !important;
+                        display: inline-flex;
+                        font-size: 15px;
+                        font-weight: 700;
+                        gap: 10px;
+                        justify-content: center;
+                        margin-top: 18px;
+                        min-height: 48px;
+                        padding: 0 28px;
+                        text-decoration: none;
+                        transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+                    }
+                    .advanced-search-action:hover {
+                        background: #f4f8fb;
+                        border-color: #8fc0ef;
+                        color: #0a559e;
+                        text-decoration: none;
+                    }
+                    .advanced-search-action .fa-chevron-right {
+                        font-size: 12px;
+                    }
+                    .advanced-search-action i {
+                        align-items: center;
+                        color: inherit !important;
+                        display: inline-flex;
+                        justify-content: center;
+                        width: 18px;
+                    }
                     .search-container {
                         display: block;
                         position: relative;
                         width: 100%;
                     }
+                    .search-input-row {
+                        position: relative;
+                    }
                     .search-container .search-icon {
                         left: 16px;
-                        top: 25px;
+                        top: 29px;
                         z-index: 4;
                     }
                     .search-container #searchInput {
                         background: #ffffff;
                         border: 1px solid #d7dde5;
-                        border-radius: 26px;
-                        box-shadow: 0 10px 28px rgba(15, 23, 42, .10);
+                        border-radius: 16px;
+                        box-shadow: none;
                         box-sizing: border-box;
                         color: #111827;
                         font-size: 16px;
-                        height: 54px;
-                        padding: 0 18px 0 44px;
-                        transition: border-color .15s ease, box-shadow .15s ease, border-radius .15s ease;
+                        height: 58px;
+                        padding: 0 166px 0 44px;
+                        transition: border-color .15s ease, border-radius .15s ease;
                         width: 100%;
                     }
                     .search-container #searchInput:hover,
                     .search-container #searchInput:focus {
                         border-color: #9fb4c8;
-                        box-shadow: 0 12px 32px rgba(15, 23, 42, .14) !important;
+                        box-shadow: none !important;
                         outline: none;
                     }
                     .search-container #searchInput:focus {
-                        border-radius: 26px 26px 0 0;
+                        border-radius: 16px 16px 0 0;
                     }
+                    .search-clear-button {
+                        align-items: center;
+                        background: #edf2f7;
+                        border: 0;
+                        border-radius: 50%;
+                        color: #697986;
+                        display: flex;
+                        font-size: 20px;
+                        height: 34px;
+                        justify-content: center;
+                        position: absolute;
+                        right: 126px;
+                        top: 12px;
+                        width: 34px;
+                        z-index: 5;
+                    }
+                    .search-submit-button {
+                        align-items: center;
+                        background: #0d67bd;
+                        border: 0;
+                        border-radius: 13px;
+                        box-shadow: none;
+                        color: #ffffff;
+                        display: flex;
+                        font-size: 15px;
+                        font-weight: 700;
+                        gap: 8px;
+                        height: 46px;
+                        justify-content: center;
+                        position: absolute;
+                        right: 6px;
+                        top: 6px;
+                        width: 112px;
+                        z-index: 5;
+                    }
+                    .search-submit-button:hover { background: #075aa8; }
                     .search-container .dropdownSearch {
                         background: #ffffff;
                         border: 1px solid #d7dde5;
                         border-top: 0;
                         border-radius: 0 0 18px 18px;
-                        box-shadow: 0 18px 34px rgba(15, 23, 42, .14);
+                        box-shadow: none;
                         box-sizing: border-box;
                         left: 0;
                         max-height: 460px;
                         overflow-y: auto;
                         padding: 8px 10px;
-                        top: 54px;
+                        top: 58px;
                         width: 100%;
                     }
                     .search-container .dropdownSearch ul {
@@ -351,32 +477,80 @@ class Search extends React.Component {
                     }
                     @media (min-width: 768px) {
                         .row.justify-content-md-center > .col-md-5 {
-                            flex: 0 0 680px;
-                            max-width: 680px;
+                            flex: 0 0 760px;
+                            max-width: 760px;
                         }
                     }
                     @media (max-width: 767px) {
+                        .search-home h2 { font-size: 28px; }
+                        .search-home-subtitle {
+                            font-size: 15px;
+                            margin-bottom: 18px;
+                        }
+                        .search-panel {
+                            border-radius: 18px;
+                            padding: 16px;
+                        }
+                        .search-panel .menu-small {
+                            display: flex;
+                            width: 100%;
+                        }
+                        .search-panel .menu-small li {
+                            flex: 1;
+                            justify-content: center;
+                            padding: 0 10px;
+                        }
+                        .advanced-search-action {
+                            width: 100%;
+                        }
                         .row.justify-content-md-center > .col-md-5 {
                             flex: 0 0 100%;
                             max-width: 100%;
                             padding-left: 16px;
                             padding-right: 16px;
                         }
+                        .search-container #searchInput {
+                            height: 56px;
+                            padding-right: 110px;
+                        }
+                        .search-clear-button {
+                            right: 58px;
+                            top: 11px;
+                        }
+                        .search-submit-button {
+                            font-size: 0;
+                            height: 44px;
+                            right: 6px;
+                            top: 6px;
+                            width: 46px;
+                        }
+                        .search-submit-button i {
+                            font-size: 15px;
+                        }
                         .search-container .dropdownSearch {
                             max-height: 68vh;
+                            top: 56px;
                         }
                     }
                 `}</style>
-                <div className="col-md-5">
+                <div className="col-md-5 search-home">
                     <br/><br/>
                         <h2 className="text-center">Busque uma OSC no Mapa</h2>
-                        <ul className="menu-small mb-2">
-                            {menu}
-                        </ul>
-                        {/*NOVA BUSCA*/}
-                        <div className="search-container">
-                            <i className="fa fa-search search-icon" aria-hidden="true"/>
-                            <input type="text" id="searchInput"  placeholder={this.state.searchOscTxt} onChange={this.handleSearchOsc}/>
+                        <p className="search-home-subtitle">Encontre organiza{"\u00e7\u00f5es"} da sociedade civil em todo o Brasil</p>
+                        <div className="search-panel">
+                            <ul className="menu-small mb-2">
+                                {menu}
+                            </ul>
+                            {/*NOVA BUSCA*/}
+                            <div className="search-container">
+                                <div className="search-input-row">
+                                    <i className="fa fa-search search-icon" aria-hidden="true"/>
+                                    <input type="text" id="searchInput" value={this.state.searchOsc} placeholder={this.state.searchOscTxt} onChange={this.handleSearchOsc}/>
+                                    {this.state.searchOsc ? <button type="button" className="search-clear-button" onClick={() => this.setState({searchOsc: '', listMenuItem: [], msg: ''})}>{"\u00d7"}</button> : ''}
+                                    <button type="button" className="search-submit-button" onClick={() => this.state.searchOsc.trim() ? this.startAdvancedSearch(this.state.searchOsc.trim()) : null}>
+                                        <i className="fa fa-search" aria-hidden="true"/> Buscar
+                                    </button>
+                                </div>
                                 <div className="dropdownSearch" id="myDropdownSearch" >
                                     <div>
                                         <div className="text-center">
@@ -391,6 +565,14 @@ class Search extends React.Component {
                                     </div>
                                 </div>
                                 {/*<i class="fa fa-spinner search-icon-spinner fa-spin" aria-hidden="true" />*/}
+                            </div>
+                            <div className="text-center">
+                                <a className="advanced-search-action" href="filtro">
+                                    <i className="fas fa-sliders-h" aria-hidden="true"/>
+                                    Utilize a Consulta Avan{"\u00e7"}ada
+                                    <i className="fas fa-chevron-right" aria-hidden="true"/>
+                                </a>
+                            </div>
                         </div>
                         {/*NOVA BUSCA*/}
                     <br/>
@@ -414,9 +596,6 @@ class Search extends React.Component {
                             </div>
                         </ul>*/}
 
-                    <div className="text-center">
-                        <a className="btn btn-outline-primary btn-sm" href="filtro" style={{marginTop: '8px'}}><i className="fas fa-search"/> Utilize a Consulta Avançada</a>
-                    </div>
 
 
                 </div>
@@ -434,7 +613,4 @@ ReactDOM.render(
     <Search />,
     document.getElementById('search')
 );
-
-
-
 
